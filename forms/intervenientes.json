@@ -307,8 +307,467 @@
                             "errorMessage": "Invalid number of rows",
                             "formDefId": "interveniente",
                             "height": "500",
-                            "id": "autorizantes_partic",
+                            "id": "autorizantes_vend_partic",
                             "label": "Autorizantes",
+                            "loadBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "nif",
+                                    "formDefId": "interveniente"
+                                }
+                            },
+                            "options": [
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Nome",
+                                    "value": "nome",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Nº Doc. ID",
+                                    "value": "cc",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "nl2br",
+                                    "label": "Morada",
+                                    "value": "morada",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "date",
+                                    "label": "Validade",
+                                    "value": "validade",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "NIF",
+                                    "value": "nif",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Estado Civil",
+                                    "value": "estado_civil",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Naturalidade",
+                                    "value": "naturalidade",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "options",
+                                    "label": "Regime casamento",
+                                    "value": "regime_casamento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Cônjuge",
+                                    "value": "conjuge",
+                                    "width": ""
+                                }
+                            ],
+                            "pageSize": "20",
+                            "permission_rules": {},
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "showRowNumber": "",
+                            "storeBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "nif",
+                                    "formDefId": "interveniente"
+                                }
+                            },
+                            "submit-label-normal": "",
+                            "submit-label-readonly": "",
+                            "uniqueKey": "",
+                            "validateMaxRow": "",
+                            "validateMinRow": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "width": "900"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section1",
+                "join": "",
+                "label": "Vendedores são particulares",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {},
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "crc",
+                            "label": "CRC (código):",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.DatePicker",
+                        "properties": {
+                            "allowManual": "",
+                            "currentDateAs": "",
+                            "dataFormat": "",
+                            "datePickerType": "",
+                            "endDateFieldId": "",
+                            "format": "yy-mm-dd",
+                            "id": "validade",
+                            "label": "Validade",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "startDateFieldId": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": "",
+                            "yearRange": "c, c+10"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "quem_representa",
+                            "label": "Quem representa?",
+                            "multiple": "",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "",
+                                    "value": ""
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Todos Sócios",
+                                    "value": "todos_socios"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Todos membros CA",
+                                    "value": "todos_membros_ca"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Gerente ou administrador (objeto social)",
+                                    "value": "gerente_admin"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Procurador",
+                                    "value": "procurador"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "rcbe",
+                            "label": "Temos RCBE?",
+                            "multiple": "",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "",
+                                    "value": ""
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Sim",
+                                    "value": "sim"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Não (alerta para apresentar na outorga)",
+                                    "value": "nao"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CheckBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "ata",
+                            "label": "Tem ata?",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Sim",
+                                    "value": "sim"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Não",
+                                    "value": "nao"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.plugin.enterprise.FormGrid",
+                        "properties": {
+                            "abortRelatedRunningProcesses": "",
+                            "deleteFiles": "",
+                            "deleteGridData": "",
+                            "deleteMessage": "Delete row?",
+                            "deleteSubformData": "",
+                            "disabledAdd": "",
+                            "disabledDelete": "",
+                            "enableSorting": "",
+                            "errorMessage": "Invalid number of rows",
+                            "formDefId": "interveniente",
+                            "height": "500",
+                            "id": "representantes_vend",
+                            "label": "Representantes",
+                            "loadBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "nif",
+                                    "formDefId": "interveniente"
+                                }
+                            },
+                            "options": [
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Nome",
+                                    "value": "nome",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Nº Doc. ID",
+                                    "value": "cc",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "nl2br",
+                                    "label": "Morada",
+                                    "value": "morada",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "date",
+                                    "label": "Validade",
+                                    "value": "validade",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "NIF",
+                                    "value": "nif",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Estado Civil",
+                                    "value": "estado_civil",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Naturalidade",
+                                    "value": "naturalidade",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "options",
+                                    "label": "Regime casamento",
+                                    "value": "regime_casamento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Cônjuge",
+                                    "value": "conjuge",
+                                    "width": ""
+                                }
+                            ],
+                            "pageSize": "20",
+                            "permission_rules": {},
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "showRowNumber": "",
+                            "storeBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "nif",
+                                    "formDefId": "interveniente"
+                                }
+                            },
+                            "submit-label-normal": "",
+                            "submit-label-readonly": "",
+                            "uniqueKey": "",
+                            "validateMaxRow": "",
+                            "validateMinRow": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "width": "900"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section2",
+                "join": "",
+                "label": "Vendedor é uma sociedade",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {},
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.plugin.enterprise.FormGrid",
+                        "properties": {
+                            "abortRelatedRunningProcesses": "",
+                            "deleteFiles": "",
+                            "deleteGridData": "",
+                            "deleteMessage": "Delete row?",
+                            "deleteSubformData": "",
+                            "disabledAdd": "",
+                            "disabledDelete": "",
+                            "enableSorting": "",
+                            "errorMessage": "Invalid number of rows",
+                            "formDefId": "interveniente",
+                            "height": "500",
+                            "id": "proponentes_partic",
+                            "label": "Proponentes são particulares",
                             "loadBinder": {
                                 "className": "org.joget.plugin.enterprise.MultirowFormBinder",
                                 "properties": {
@@ -406,23 +865,115 @@
                         }
                     },
                     {
-                        "className": "org.joget.apps.form.lib.Radio",
+                        "className": "org.joget.plugin.enterprise.FormGrid",
                         "properties": {
-                            "id": "field7",
-                            "label": "Radio",
+                            "abortRelatedRunningProcesses": "",
+                            "deleteFiles": "",
+                            "deleteGridData": "",
+                            "deleteMessage": "Delete row?",
+                            "deleteSubformData": "",
+                            "disabledAdd": "",
+                            "disabledDelete": "",
+                            "enableSorting": "",
+                            "errorMessage": "Invalid number of rows",
+                            "formDefId": "interveniente",
+                            "height": "500",
+                            "id": "autorizantes_prop",
+                            "label": "Autorizantes",
+                            "loadBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "nif",
+                                    "formDefId": "interveniente"
+                                }
+                            },
+                            "options": [
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Nome",
+                                    "value": "nome",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Nº Doc. ID",
+                                    "value": "cc",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "nl2br",
+                                    "label": "Morada",
+                                    "value": "morada",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "date",
+                                    "label": "Validade",
+                                    "value": "validade",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "NIF",
+                                    "value": "nif",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Estado Civil",
+                                    "value": "estado_civil",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Naturalidade",
+                                    "value": "naturalidade",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "options",
+                                    "label": "Regime casamento",
+                                    "value": "regime_casamento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Cônjuge",
+                                    "value": "conjuge",
+                                    "width": ""
+                                }
+                            ],
+                            "pageSize": "20",
                             "permission_rules": {},
-                            "readonly": "False",
-                            "readonlyLabel": "False"
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.Radio",
-                        "properties": {
-                            "id": "field8",
-                            "label": "Radio",
-                            "permission_rules": {},
-                            "readonly": "False",
-                            "readonlyLabel": "False"
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "showRowNumber": "",
+                            "storeBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "nif",
+                                    "formDefId": "interveniente"
+                                }
+                            },
+                            "submit-label-normal": "",
+                            "submit-label-readonly": "",
+                            "uniqueKey": "",
+                            "validateMaxRow": "",
+                            "validateMinRow": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "width": "900"
                         }
                     }
                 ],
@@ -430,9 +981,267 @@
             }],
             "properties": {
                 "comment": "",
-                "id": "section1",
+                "id": "section6",
                 "join": "",
-                "label": "Vendedores são particulares",
+                "label": "Proponentes",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.plugin.enterprise.FormGrid",
+                        "properties": {
+                            "abortRelatedRunningProcesses": "",
+                            "deleteFiles": "",
+                            "deleteGridData": "",
+                            "deleteMessage": "Delete row?",
+                            "deleteSubformData": "",
+                            "disabledAdd": "",
+                            "disabledDelete": "",
+                            "enableSorting": "",
+                            "errorMessage": "Invalid number of rows",
+                            "formDefId": "interveniente",
+                            "height": "500",
+                            "id": "hipotecantes_nao_prop",
+                            "label": "Hipotecantes",
+                            "loadBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "nif",
+                                    "formDefId": "interveniente"
+                                }
+                            },
+                            "options": [
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Nome",
+                                    "value": "nome",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Nº Doc. ID",
+                                    "value": "cc",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "nl2br",
+                                    "label": "Morada",
+                                    "value": "morada",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "date",
+                                    "label": "Validade",
+                                    "value": "validade",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "NIF",
+                                    "value": "nif",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Estado Civil",
+                                    "value": "estado_civil",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Naturalidade",
+                                    "value": "naturalidade",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "options",
+                                    "label": "Regime casamento",
+                                    "value": "regime_casamento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Cônjuge",
+                                    "value": "conjuge",
+                                    "width": ""
+                                }
+                            ],
+                            "pageSize": "20",
+                            "permission_rules": {},
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "showRowNumber": "",
+                            "storeBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "nif",
+                                    "formDefId": "interveniente"
+                                }
+                            },
+                            "submit-label-normal": "",
+                            "submit-label-readonly": "",
+                            "uniqueKey": "",
+                            "validateMaxRow": "",
+                            "validateMinRow": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "width": "900"
+                        }
+                    },
+                    {
+                        "className": "org.joget.plugin.enterprise.FormGrid",
+                        "properties": {
+                            "abortRelatedRunningProcesses": "",
+                            "deleteFiles": "",
+                            "deleteGridData": "",
+                            "deleteMessage": "Delete row?",
+                            "deleteSubformData": "",
+                            "disabledAdd": "",
+                            "disabledDelete": "",
+                            "enableSorting": "",
+                            "errorMessage": "Invalid number of rows",
+                            "formDefId": "interveniente",
+                            "height": "500",
+                            "id": "autorizantes_hip",
+                            "label": "Autorizantes",
+                            "loadBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "nif",
+                                    "formDefId": "interveniente"
+                                }
+                            },
+                            "options": [
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Nome",
+                                    "value": "nome",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Nº Doc. ID",
+                                    "value": "cc",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "nl2br",
+                                    "label": "Morada",
+                                    "value": "morada",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "date",
+                                    "label": "Validade",
+                                    "value": "validade",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "NIF",
+                                    "value": "nif",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Estado Civil",
+                                    "value": "estado_civil",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Naturalidade",
+                                    "value": "naturalidade",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "options",
+                                    "label": "Regime casamento",
+                                    "value": "regime_casamento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Cônjuge",
+                                    "value": "conjuge",
+                                    "width": ""
+                                }
+                            ],
+                            "pageSize": "20",
+                            "permission_rules": {},
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "showRowNumber": "",
+                            "storeBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "nif",
+                                    "formDefId": "interveniente"
+                                }
+                            },
+                            "submit-label-normal": "",
+                            "submit-label-readonly": "",
+                            "uniqueKey": "",
+                            "validateMaxRow": "",
+                            "validateMinRow": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "width": "900"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section5",
+                "join": "",
+                "label": "Hipotecantes distintos dos proponentes",
                 "loadBinder": {
                     "className": "",
                     "properties": {}
@@ -459,39 +1268,145 @@
             "className": "org.joget.apps.form.model.Section",
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
-                "elements": [],
+                "elements": [{
+                    "className": "org.joget.plugin.enterprise.FormGrid",
+                    "properties": {
+                        "abortRelatedRunningProcesses": "",
+                        "deleteFiles": "",
+                        "deleteGridData": "",
+                        "deleteMessage": "Delete row?",
+                        "deleteSubformData": "",
+                        "disabledAdd": "",
+                        "disabledDelete": "",
+                        "enableSorting": "",
+                        "errorMessage": "Invalid number of rows",
+                        "formDefId": "interveniente",
+                        "height": "500",
+                        "id": "fiadores",
+                        "label": "",
+                        "loadBinder": {
+                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                            "properties": {
+                                "foreignKey": "nif",
+                                "formDefId": "interveniente"
+                            }
+                        },
+                        "options": [
+                            {
+                                "format": "",
+                                "formatType": "text",
+                                "label": "Nome",
+                                "value": "nome",
+                                "width": ""
+                            },
+                            {
+                                "format": "",
+                                "formatType": "text",
+                                "label": "Nº Doc. ID",
+                                "value": "cc",
+                                "width": ""
+                            },
+                            {
+                                "format": "",
+                                "formatType": "nl2br",
+                                "label": "Morada",
+                                "value": "morada",
+                                "width": ""
+                            },
+                            {
+                                "format": "",
+                                "formatType": "date",
+                                "label": "Validade",
+                                "value": "validade",
+                                "width": ""
+                            },
+                            {
+                                "format": "",
+                                "formatType": "text",
+                                "label": "NIF",
+                                "value": "nif",
+                                "width": ""
+                            },
+                            {
+                                "format": "",
+                                "formatType": "text",
+                                "label": "Estado Civil",
+                                "value": "estado_civil",
+                                "width": ""
+                            },
+                            {
+                                "format": "",
+                                "formatType": "text",
+                                "label": "Naturalidade",
+                                "value": "naturalidade",
+                                "width": ""
+                            },
+                            {
+                                "format": "",
+                                "formatType": "options",
+                                "label": "Regime casamento",
+                                "value": "regime_casamento",
+                                "width": ""
+                            },
+                            {
+                                "format": "",
+                                "formatType": "text",
+                                "label": "Cônjuge",
+                                "value": "conjuge",
+                                "width": ""
+                            }
+                        ],
+                        "pageSize": "20",
+                        "permission_rules": {},
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "showRowNumber": "",
+                        "storeBinder": {
+                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                            "properties": {
+                                "foreignKey": "nif",
+                                "formDefId": "interveniente"
+                            }
+                        },
+                        "submit-label-normal": "",
+                        "submit-label-readonly": "",
+                        "uniqueKey": "",
+                        "validateMaxRow": "",
+                        "validateMinRow": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "width": "900"
+                    }
+                }],
                 "properties": {"width": "100%"}
             }],
             "properties": {
-                "id": "section2",
-                "label": "Section",
-                "permission_rules": {}
-            }
-        },
-        {
-            "className": "org.joget.apps.form.model.Section",
-            "elements": [{
-                "className": "org.joget.apps.form.model.Column",
-                "elements": [],
-                "properties": {"width": "100%"}
-            }],
-            "properties": {
-                "id": "section5",
-                "label": "Section",
-                "permission_rules": {}
-            }
-        },
-        {
-            "className": "org.joget.apps.form.model.Section",
-            "elements": [{
-                "className": "org.joget.apps.form.model.Column",
-                "elements": [],
-                "properties": {"width": "100%"}
-            }],
-            "properties": {
-                "id": "section3",
-                "label": "Section",
-                "permission_rules": {}
+                "comment": "",
+                "id": "fiadores",
+                "join": "",
+                "label": "Fiadores",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {},
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
             }
         }
     ],
