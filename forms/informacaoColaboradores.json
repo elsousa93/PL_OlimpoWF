@@ -9,7 +9,7 @@
                     "className": "org.joget.apps.form.lib.SelectBox",
                     "properties": {
                         "controlField": "",
-                        "id": "userColaborador",
+                        "id": "user_colaborador",
                         "label": "Colaborador",
                         "multiple": "",
                         "options": [],
@@ -22,7 +22,7 @@
                                 "emptyLabel": "",
                                 "groupId": "",
                                 "grouping": "",
-                                "optionLabel": "",
+                                "optionLabel": "username",
                                 "orgId": "",
                                 "useAjax": ""
                             }
@@ -55,7 +55,7 @@
                             "className": "",
                             "properties": {}
                         },
-                        "value": "#user.a_msilvestre.department.name#",
+                        "value": "#user.{form.info_colaboradores.user_colaborador}.department.name#",
                         "workflowVariable": ""
                     }
                 },
@@ -63,7 +63,7 @@
                     "className": "org.joget.apps.form.lib.TextField",
                     "properties": {
                         "encryption": "",
-                        "id": "nomeCompleto",
+                        "id": "nome_completo",
                         "label": "Nome Completo",
                         "maxlength": "",
                         "placeholder": "",
@@ -93,7 +93,7 @@
                         "datePickerType": "",
                         "endDateFieldId": "",
                         "format": "",
-                        "id": "dataNascimento",
+                        "id": "data_nascimento",
                         "label": "Data de Nascimento",
                         "placeholder": "",
                         "readonly": "",
@@ -166,9 +166,25 @@
     "properties": {
         "description": "",
         "id": "informacaoColaboradores",
-        "loadBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
         "name": "Colaboradores",
-        "storeBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
         "tableName": "info_colaboradores"
     }
 }
