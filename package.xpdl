@@ -7,10 +7,13 @@
     </PackageHeader>
     <Script Type="text/javascript"/>
     <Participants>
-        <Participant Id="participant1" Name="Participant 1">
+        <Participant Id="participant2" Name="Participant 2">
             <ParticipantType Type="ROLE"/>
         </Participant>
-        <Participant Id="participant2" Name="Participant 2">
+        <Participant Id="requester" Name="Requester">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
+        <Participant Id="responder" Name="Responder">
             <ParticipantType Type="ROLE"/>
         </Participant>
     </Participants>
@@ -28,38 +31,38 @@
                 </DataField>
             </DataFields>
             <Activities>
-                <Activity Id="esclarecer" Name="Esclarecer">
+                <Activity Id="esclarecer" Name="1 - Esclarecer">
                     <Implementation>
                         <No/>
                     </Implementation>
-                    <Performer>participant1</Performer>
+                    <Performer>responder</Performer>
                     <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant1"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="211,22"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="responder"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="173,22"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="tool1" Name="Tool 1">
+                <Activity Id="confirmarEsclarecimento" Name="2 - Confirmar Esclarecimento">
                     <Implementation>
-                        <Tool Id="default_application"/>
+                        <No/>
                     </Implementation>
-                    <Performer>participant1</Performer>
+                    <Performer>requester</Performer>
                     <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant1"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="382,18"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="requester"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="352,25"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
             <Transitions>
-                <Transition From="esclarecer" Id="transition0" To="tool1">
+                <Transition From="esclarecer" Id="transition0" To="confirmarEsclarecimento">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
             </Transitions>
             <ExtendedAttributes>
-                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="participant1"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant1,CONNECTING_ACTIVITY_ID=esclarecer,X_OFFSET=74,Y_OFFSET=35,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant1,CONNECTING_ACTIVITY_ID=tool1,X_OFFSET=575,Y_OFFSET=27,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="requester;responder"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=requester,CONNECTING_ACTIVITY_ID=esclarecer,X_OFFSET=74,Y_OFFSET=35,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=requester,CONNECTING_ACTIVITY_ID=confirmarEsclarecimento,X_OFFSET=605,Y_OFFSET=38,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="processo1" Name="Process 1">
