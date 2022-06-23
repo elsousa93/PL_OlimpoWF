@@ -7,125 +7,43 @@
          <appId>workflowPL</appId>
          <id>workflowPL</id>
          <name>PL - Workflow</name>
-         <packageActivityFormMap>
-            <entry>
-               <string>process2::runProcess</string>
-               <packageActivityForm>
-                  <processDefId>process2</processDefId>
-                  <activityDefId>runProcess</activityDefId>
-                  <formId>pedirEsclarecimento</formId>
-                  <type>SINGLE</type>
-                  <autoContinue>false</autoContinue>
-                  <disableSaveAsDraft>false</disableSaveAsDraft>
-               </packageActivityForm>
-            </entry>
-            <entry>
-               <string>processo1::iniciaProcesso</string>
-               <packageActivityForm>
-                  <processDefId>processo1</processDefId>
-                  <activityDefId>iniciaProcesso</activityDefId>
-                  <formId>1Processo</formId>
-                  <type>SINGLE</type>
-                  <autoContinue>false</autoContinue>
-                  <disableSaveAsDraft>false</disableSaveAsDraft>
-               </packageActivityForm>
-            </entry>
-            <entry>
-               <string>process2::confirmarEsclarecimento</string>
-               <packageActivityForm>
-                  <processDefId>process2</processDefId>
-                  <activityDefId>confirmarEsclarecimento</activityDefId>
-                  <formId>confirmarEsclarecimento</formId>
-                  <type>SINGLE</type>
-                  <autoContinue>false</autoContinue>
-                  <disableSaveAsDraft>false</disableSaveAsDraft>
-               </packageActivityForm>
-            </entry>
-            <entry>
-               <string>process2::esclarecer</string>
-               <packageActivityForm>
-                  <processDefId>process2</processDefId>
-                  <activityDefId>esclarecer</activityDefId>
-                  <formId>esclarecer</formId>
-                  <type>SINGLE</type>
-                  <autoContinue>false</autoContinue>
-                  <disableSaveAsDraft>false</disableSaveAsDraft>
-               </packageActivityForm>
-            </entry>
-         </packageActivityFormMap>
-         <packageActivityPluginMap>
-            <entry>
-               <string>process3::route1</string>
-               <packageActivityPlugin>
-                  <processDefId>process3</processDefId>
-                  <activityDefId>route1</activityDefId>
-                  <pluginName>org.joget.apps.app.lib.RulesDecisionPlugin</pluginName>
-                  <pluginProperties>{&quot;rules&quot;:{&quot;ifrules&quot;:[{&quot;revert&quot;:false,&quot;andOr&quot;:&quot;and&quot;,&quot;conditions&quot;:[{&quot;revert&quot;:false,&quot;variable&quot;:&quot;status&quot;,&quot;operation&quot;:&quot;==&quot;,&quot;value&quot;:&quot;hr&quot;}],&quot;actions&quot;:[{&quot;type&quot;:&quot;transition&quot;,&quot;name&quot;:&quot;transition3&quot;,&quot;value&quot;:&quot;&quot;}]}],&quot;else&quot;:[{&quot;type&quot;:&quot;transition&quot;,&quot;name&quot;:&quot;transition2&quot;,&quot;value&quot;:&quot;&quot;}]}}</pluginProperties>
-               </packageActivityPlugin>
-            </entry>
-         </packageActivityPluginMap>
+         <packageActivityFormMap/>
+         <packageActivityPluginMap/>
          <packageParticipantMap>
             <entry>
-               <string>process2::processStartWhiteList</string>
+               <string>CHContratacaoNormal::processStartWhiteList</string>
                <packageParticipant>
-                  <processDefId>process2</processDefId>
-                  <participantId>processStartWhiteList</participantId>
-                  <type>role</type>
-                  <value>loggedInUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>process3::processStartWhiteList</string>
-               <packageParticipant>
-                  <processDefId>process3</processDefId>
+                  <processDefId>CHContratacaoNormal</processDefId>
                   <participantId>processStartWhiteList</participantId>
                   <type>role</type>
                   <value>adminUser</value>
                </packageParticipant>
             </entry>
             <entry>
-               <string>processo1::participant2</string>
+               <string>esclarecimentos::processStartWhiteList</string>
                <packageParticipant>
-                  <processDefId>processo1</processDefId>
-                  <participantId>participant2</participantId>
-                  <type>user</type>
-                  <value>a_cmurteira</value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>process4::processStartWhiteList</string>
-               <packageParticipant>
-                  <processDefId>process4</processDefId>
+                  <processDefId>esclarecimentos</processDefId>
                   <participantId>processStartWhiteList</participantId>
                   <type>role</type>
                   <value>adminUser</value>
                </packageParticipant>
             </entry>
             <entry>
-               <string>processo1::processStartWhiteList</string>
+               <string>CHGlobalEx::processStartWhiteList</string>
                <packageParticipant>
-                  <processDefId>processo1</processDefId>
+                  <processDefId>CHGlobalEx</processDefId>
                   <participantId>processStartWhiteList</participantId>
                   <type>role</type>
                   <value>adminUser</value>
                </packageParticipant>
             </entry>
             <entry>
-               <string>process2::requester</string>
+               <string>CHGlobal::processStartWhiteList</string>
                <packageParticipant>
-                  <processDefId>process2</processDefId>
-                  <participantId>requester</participantId>
-                  <type>requester</type>
-                  <value>runProcess</value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>process2::responder</string>
-               <packageParticipant>
-                  <processDefId>process2</processDefId>
-                  <participantId>responder</participantId>
-                  <type>workflowVariable</type>
-                  <value>equipa_recetora,group</value>
+                  <processDefId>CHGlobal</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>adminUser</value>
                </packageParticipant>
             </entry>
          </packageParticipantMap>
