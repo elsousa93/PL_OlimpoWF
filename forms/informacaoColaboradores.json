@@ -1,219 +1,260 @@
 {
     "className": "org.joget.apps.form.model.Form",
-    "elements": [{
-        "className": "org.joget.apps.form.model.Section",
-        "elements": [{
-            "className": "org.joget.apps.form.model.Column",
-            "elements": [
-                {
-                    "className": "org.joget.apps.form.lib.SelectBox",
-                    "properties": {
-                        "controlField": "",
-                        "id": "user_colaborador",
-                        "label": "Colaborador",
-                        "multiple": "",
-                        "options": [],
-                        "optionsBinder": {
-                            "className": "org.joget.plugin.enterprise.UserOptionsBinder",
-                            "properties": {
-                                "addEmptyOption": "",
-                                "cacheInterval": "",
-                                "deptId": "",
-                                "emptyLabel": "",
-                                "groupId": "",
-                                "grouping": "",
-                                "optionLabel": "username",
-                                "orgId": "",
-                                "useAjax": ""
-                            }
-                        },
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
+    "elements": [
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "user_colaborador",
+                            "label": "Colaborador",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.plugin.enterprise.UserOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "",
+                                    "cacheInterval": "",
+                                    "deptId": "",
+                                    "emptyLabel": "",
+                                    "groupId": "",
+                                    "grouping": "",
+                                    "optionLabel": "username",
+                                    "orgId": "",
+                                    "useAjax": ""
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "nome_completo",
+                            "label": "Nome Completo",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.DefaultValidator",
+                                "properties": {
+                                    "mandatory": "true",
+                                    "message": "",
+                                    "type": ""
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "nome_profissional",
+                            "label": "Nome Profissional",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.DatePicker",
+                        "properties": {
+                            "allowManual": "",
+                            "currentDateAs": "",
+                            "dataFormat": "yyyy-MM-dd",
+                            "datePickerType": "",
+                            "endDateFieldId": "",
+                            "format": "",
+                            "id": "data_nascimento",
+                            "label": "Data de Nascimento",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "startDateFieldId": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": "",
+                            "yearRange": "c-10:c+10"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field6",
+                            "label": "Departamento",
+                            "permissionHidden": "",
+                            "value": "<script type=\"text/javascript\">\n   $(document).change(function(){\n    var valueUser = FormUtil.getValue(\"user_colaborador\");\n    var field1 = FormUtil.getField(\"departamento\");\n    var departmentUser = \"#user.\" + valueUser + \".department.name#\";\n    $(field1).val(departmentUser);\n    });\n<\/script>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "departamento",
+                            "label": "Departamento",
+                            "maxlength": "",
+                            "permissionHidden": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "nif",
+                            "label": "NIF",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.DefaultValidator",
+                                "properties": {
+                                    "mandatory": "true",
+                                    "message": "",
+                                    "type": ""
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "numero_cc",
+                            "label": "Número do Cartão de Cidadão",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.DefaultValidator",
+                                "properties": {
+                                    "mandatory": "true",
+                                    "message": "",
+                                    "type": ""
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "nif",
+                            "label": "NIF",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.DefaultValidator",
+                                "properties": {
+                                    "mandatory": "true",
+                                    "message": "",
+                                    "type": ""
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
                     }
+                ],
+                "properties": {
+                    "customWidth": "",
+                    "horizontal": "",
+                    "label": "",
+                    "width": "100%"
+                }
+            }],
+            "properties": {
+                "comment": "",
+                "id": "informacaoPessoal",
+                "join": "",
+                "label": "Informação Pessoal",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
                 },
-                {
-                    "className": "org.joget.apps.form.lib.TextField",
-                    "properties": {
-                        "encryption": "",
-                        "id": "nome_completo",
-                        "label": "Nome Completo",
-                        "maxlength": "",
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "storeNumeric": "",
-                        "style": "",
-                        "validator": {
-                            "className": "org.joget.apps.form.lib.DefaultValidator",
-                            "properties": {
-                                "mandatory": "true",
-                                "message": "",
-                                "type": ""
-                            }
-                        },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
+                "permission": {
+                    "className": "",
+                    "properties": {}
                 },
-                {
-                    "className": "org.joget.apps.form.lib.TextField",
-                    "properties": {
-                        "encryption": "",
-                        "id": "nome_profissional",
-                        "label": "Nome Profissional",
-                        "maxlength": "",
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "storeNumeric": "",
-                        "style": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
                 },
-                {
-                    "className": "org.joget.apps.form.lib.CustomHTML",
-                    "properties": {
-                        "autoPopulate": "",
-                        "id": "field6",
-                        "label": "Departamento",
-                        "permissionHidden": "",
-                        "value": "<script type=\"text/javascript\">\n   $(document).change(function(){\n    var valueUser = FormUtil.getValue(\"user_colaborador\");\n    var field1 = FormUtil.getField(\"departamento\");\n    var departmentUser = \"#user.\" + valueUser + \".department.name#\";\n    $(field1).val(departmentUser);\n    });\n<\/script>"
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.TextField",
-                    "properties": {
-                        "encryption": "",
-                        "id": "departamento",
-                        "label": "Departamento",
-                        "maxlength": "",
-                        "permissionHidden": "",
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "storeNumeric": "",
-                        "style": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.DatePicker",
-                    "properties": {
-                        "allowManual": "",
-                        "currentDateAs": "",
-                        "dataFormat": "yyyy-MM-dd",
-                        "datePickerType": "",
-                        "endDateFieldId": "",
-                        "format": "",
-                        "id": "data_nascimento",
-                        "label": "Data de Nascimento",
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "startDateFieldId": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": "",
-                        "yearRange": "c-10:c+10"
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.DatePicker",
-                    "properties": {
-                        "allowManual": "",
-                        "currentDateAs": "",
-                        "dataFormat": "yyyy-MM-dd",
-                        "datePickerType": "",
-                        "endDateFieldId": "",
-                        "format": "",
-                        "id": "data_admissao",
-                        "label": "Data de Admissão",
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "startDateFieldId": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": "",
-                        "yearRange": "c-10:c+10"
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.DatePicker",
-                    "properties": {
-                        "allowManual": "",
-                        "currentDateAs": "",
-                        "dataFormat": "yyyy-MM-dd",
-                        "datePickerType": "",
-                        "endDateFieldId": "",
-                        "format": "",
-                        "id": "data_cessao",
-                        "label": "Data de Cessão",
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "startDateFieldId": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": "",
-                        "yearRange": "c-10:c+10"
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.TextField",
-                    "properties": {
-                        "encryption": "",
-                        "id": "nif",
-                        "label": "NIF",
-                        "maxlength": "",
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "storeNumeric": "",
-                        "style": "",
-                        "validator": {
-                            "className": "org.joget.apps.form.lib.DefaultValidator",
-                            "properties": {
-                                "mandatory": "true",
-                                "message": "",
-                                "type": ""
-                            }
-                        },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
-                },
-                {
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [{
                     "className": "org.joget.apps.form.lib.TextField",
                     "properties": {
                         "encryption": "",
@@ -237,143 +278,218 @@
                         "value": "",
                         "workflowVariable": ""
                     }
+                }],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "informacaoContacto",
+                "join": "",
+                "label": "Informação de Contacto",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
                 },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [
                 {
-                    "className": "org.joget.apps.form.lib.TextField",
-                    "properties": {
-                        "encryption": "",
-                        "id": "categoria_profissional",
-                        "label": "Categoria Profissional",
-                        "maxlength": "",
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "storeNumeric": "",
-                        "style": "",
-                        "validator": {
-                            "className": "org.joget.apps.form.lib.DefaultValidator",
+                    "className": "org.joget.apps.form.model.Column",
+                    "elements": [
+                        {
+                            "className": "org.joget.apps.form.lib.TextField",
                             "properties": {
-                                "mandatory": "true",
-                                "message": "",
-                                "type": ""
+                                "encryption": "",
+                                "id": "categoria_profissional",
+                                "label": "Categoria Profissional",
+                                "maxlength": "",
+                                "placeholder": "",
+                                "readonly": "",
+                                "readonlyLabel": "",
+                                "size": "",
+                                "storeNumeric": "",
+                                "style": "",
+                                "validator": {
+                                    "className": "org.joget.apps.form.lib.DefaultValidator",
+                                    "properties": {
+                                        "mandatory": "true",
+                                        "message": "",
+                                        "type": ""
+                                    }
+                                },
+                                "value": "",
+                                "workflowVariable": ""
                             }
                         },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.SelectBox",
-                    "properties": {
-                        "controlField": "",
-                        "id": "perfil",
-                        "label": "Perfil",
-                        "multiple": "",
-                        "options": [{
-                            "grouping": "",
-                            "label": "Júnior",
-                            "value": "junior"
-                        }],
-                        "optionsBinder": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.TextField",
-                    "properties": {
-                        "encryption": "",
-                        "id": "nif",
-                        "label": "NIF",
-                        "maxlength": "",
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "storeNumeric": "",
-                        "style": "",
-                        "validator": {
-                            "className": "org.joget.apps.form.lib.DefaultValidator",
+                        {
+                            "className": "org.joget.apps.form.lib.DatePicker",
                             "properties": {
-                                "mandatory": "true",
-                                "message": "",
-                                "type": ""
+                                "allowManual": "",
+                                "currentDateAs": "",
+                                "dataFormat": "yyyy-MM-dd",
+                                "datePickerType": "",
+                                "endDateFieldId": "",
+                                "format": "",
+                                "id": "data_admissao",
+                                "label": "Data de Admissão",
+                                "placeholder": "",
+                                "readonly": "",
+                                "readonlyLabel": "",
+                                "startDateFieldId": "",
+                                "validator": {
+                                    "className": "",
+                                    "properties": {}
+                                },
+                                "value": "",
+                                "workflowVariable": "",
+                                "yearRange": "c-10:c+10"
+                            }
+                        }
+                    ],
+                    "properties": {"width": "49%"}
+                },
+                {
+                    "className": "org.joget.apps.form.model.Column",
+                    "elements": [
+                        {
+                            "className": "org.joget.apps.form.lib.SelectBox",
+                            "properties": {
+                                "controlField": "",
+                                "id": "perfil",
+                                "label": "Perfil",
+                                "multiple": "",
+                                "options": [
+                                    {
+                                        "grouping": "",
+                                        "label": "Júnior",
+                                        "value": "junior"
+                                    },
+                                    {
+                                        "grouping": "",
+                                        "label": "Sénior",
+                                        "value": "senior"
+                                    }
+                                ],
+                                "optionsBinder": {
+                                    "className": "",
+                                    "properties": {}
+                                },
+                                "readonly": "",
+                                "readonlyLabel": "",
+                                "size": "",
+                                "validator": {
+                                    "className": "",
+                                    "properties": {}
+                                },
+                                "value": "",
+                                "workflowVariable": ""
                             }
                         },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.TextField",
-                    "properties": {
-                        "encryption": "",
-                        "id": "nif",
-                        "label": "NIF",
-                        "maxlength": "",
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "storeNumeric": "",
-                        "style": "",
-                        "validator": {
-                            "className": "org.joget.apps.form.lib.DefaultValidator",
+                        {
+                            "className": "org.joget.apps.form.lib.DatePicker",
                             "properties": {
-                                "mandatory": "true",
-                                "message": "",
-                                "type": ""
+                                "allowManual": "",
+                                "currentDateAs": "",
+                                "dataFormat": "yyyy-MM-dd",
+                                "datePickerType": "",
+                                "endDateFieldId": "",
+                                "format": "",
+                                "id": "data_cessao",
+                                "label": "Data de Cessão",
+                                "placeholder": "",
+                                "readonly": "",
+                                "readonlyLabel": "",
+                                "startDateFieldId": "",
+                                "validator": {
+                                    "className": "",
+                                    "properties": {}
+                                },
+                                "value": "",
+                                "workflowVariable": "",
+                                "yearRange": "c-10:c+10"
                             }
-                        },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
+                        }
+                    ],
+                    "properties": {"width": "49%"}
                 }
             ],
             "properties": {
-                "customWidth": "",
-                "horizontal": "",
-                "label": "",
-                "width": "100%"
+                "comment": "",
+                "id": "informacaoEmpresarial",
+                "join": "",
+                "label": "Informação Empresarial",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
             }
-        }],
-        "properties": {
-            "comment": "",
-            "id": "informacaoPessoal",
-            "join": "",
-            "label": "Informação Pessoal",
-            "loadBinder": {
-                "className": "",
-                "properties": {}
-            },
-            "permission": {
-                "className": "",
-                "properties": {}
-            },
-            "permissionReadonly": "",
-            "readonly": "",
-            "readonlyLabel": "",
-            "regex": "",
-            "reverse": "",
-            "storeBinder": {
-                "className": "",
-                "properties": {}
-            },
-            "visibilityControl": "",
-            "visibilityValue": ""
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "informacaoBancaria",
+                "join": "",
+                "label": "Informação Bancária",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
         }
-    }],
+    ],
     "properties": {
         "description": "",
         "id": "informacaoColaboradores",
