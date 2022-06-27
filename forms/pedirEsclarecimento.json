@@ -90,7 +90,7 @@
                             "properties": {
                                 "cacheInterval": "",
                                 "script": "import org.joget.apps.form.model.*;\r\nimport org.joget.apps.form.service.*;\r\n \r\npublic FormRowSet test() {\r\n    FormRowSet f = new FormRowSet();\r\n    //f.setMultiRow(true);\r\n    String cUserDepartmentDesc = #currentUser.department.description#;\r\n    String cUserDepartmentID = #currentUser.department.id#;\r\n    \r\n    String[] cUserDepDesc = cUserDepartmentDesc.split(';');\r\n\tString[] cUserDepID = cUserDepartmentID.split(';');\r\n\r\n    for(int i = 0; i < cUserDepDesc.length(); i++){\r\n        FormRow r = new FormRow();\r\n\t\tr.put(FormUtil.PROPERTY_VALUE, cUserDepID[i]);\r\n\t\tr.put(FormUtil.PROPERTY_LABEL, cUserDepDesc[i]);\r\n        f.add(r);   \r\n    }\r\n    \r\n    return f;\r\n}\r\nreturn test();",
-                                "useAjax": ""
+                                "useAjax": "true"
                             }
                         },
                         "readonly": "",
@@ -100,7 +100,7 @@
                             "className": "",
                             "properties": {}
                         },
-                        "value": "#currentUser.groups.id#",
+                        "value": "",
                         "workflowVariable": ""
                     }
                 },
