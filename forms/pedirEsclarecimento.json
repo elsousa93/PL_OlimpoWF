@@ -1,191 +1,257 @@
 {
     "className": "org.joget.apps.form.model.Form",
-    "elements": [{
-        "className": "org.joget.apps.form.model.Section",
-        "elements": [{
-            "className": "org.joget.apps.form.model.Column",
-            "elements": [
-                {
-                    "className": "org.joget.apps.form.lib.HiddenField",
-                    "properties": {
-                        "id": "number",
-                        "useDefaultWhenEmpty": "",
-                        "value": "",
-                        "workflowVariable": ""
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.TextField",
-                    "properties": {
-                        "encryption": "",
-                        "id": "p1_activity_id",
-                        "label": "Activity ID - process 1",
-                        "maxlength": "",
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "storeNumeric": "",
-                        "style": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.TextField",
-                    "properties": {
-                        "encryption": "",
-                        "id": "number",
-                        "label": "Number",
-                        "maxlength": "",
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "storeNumeric": "",
-                        "style": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.TextField",
-                    "properties": {
-                        "encryption": "",
-                        "id": "equipa_emissora",
-                        "label": "De:",
-                        "maxlength": "",
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "storeNumeric": "",
-                        "style": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.SelectBox",
-                    "properties": {
-                        "controlField": "",
-                        "id": "field8",
-                        "label": "Select Box",
-                        "multiple": "",
-                        "options": [],
-                        "optionsBinder": {
-                            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
-                            "properties": {
-                                "cacheInterval": "",
-                                "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.service.FormUtil;\r\n \r\npublic FormRowSet load(Element element, String primaryKey, FormData formData) {\r\n    FormRowSet rows = new FormRowSet();\r\n    \r\n    String cUserDepartmentDesc = \"#currentUser.department.description#\";\r\n    String cUserDepartmentID = \"#currentUser.department.id#\";\r\n    \r\n    System.out.println(cUserDepartmentDesc);\r\n    \r\n    String[] cUserDepDesc = cUserDepartmentDesc.split(\";\");\r\n\tString[] cUserDepID = cUserDepartmentID.split(\";\");\r\n    \r\n    //Get the departmants the current user is tied to\r\n    for(int i = 0; i < cUserDepDesc.length; i++ ){\r\n        FormRow option = new FormRow();\r\n        option.setProperty(FormUtil.PROPERTY_VALUE, cUserDepID[i]);\r\n        option.setProperty(FormUtil.PROPERTY_LABEL, cUserDepDesc[i]);\r\n        rows.add(option);\r\n    }\r\n    \r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(element, primaryKey, formData);",
-                                "useAjax": ""
-                            }
-                        },
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.SelectBox",
-                    "properties": {
-                        "controlField": "",
-                        "id": "field8",
-                        "label": "Select Box",
-                        "multiple": "",
-                        "options": [],
-                        "optionsBinder": {
-                            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
-                            "properties": {
-                                "cacheInterval": "",
-                                "script": "import java.util.Map;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.TimeZoneUtil;\r\n \r\npublic FormRowSet load(Element element, String primaryKey, FormData formData) {\r\n    FormRowSet rows = new FormRowSet();\r\n     \r\n    //Get timezones using timezone util\r\n    for(Map.Entry entry : TimeZoneUtil.getList().entrySet()){\r\n        FormRow option = new FormRow();\r\n        option.setProperty(FormUtil.PROPERTY_VALUE, (String) entry.getKey());\r\n        option.setProperty(FormUtil.PROPERTY_LABEL, (String) entry.getValue());\r\n        rows.add(option);\r\n    }\r\n     \r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(element, primaryKey, formData);",
-                                "useAjax": ""
-                            }
-                        },
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.SelectBox",
-                    "properties": {
-                        "controlField": "",
-                        "id": "equipa_recetora",
-                        "label": "Para:",
-                        "multiple": "",
-                        "options": [
-                            {
-                                "grouping": "",
-                                "label": "",
-                                "value": ""
+    "elements": [
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "number",
+                            "useDefaultWhenEmpty": "",
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "number",
+                            "label": "Number",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
                             },
-                            {
-                                "grouping": "",
-                                "label": "Contratação",
-                                "value": "contratacao"
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "p1_activity_id",
+                            "label": "Activity ID - process 1",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
                             },
-                            {
-                                "grouping": "",
-                                "label": "Filtro",
-                                "value": "filtro"
-                            },
-                            {
-                                "grouping": "",
-                                "label": "Produção",
-                                "value": "producao"
-                            },
-                            {
-                                "grouping": "",
-                                "label": "Validação",
-                                "value": "validacao"
-                            }
-                        ],
-                        "optionsBinder": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": "equipa_recetora"
+                            "value": "",
+                            "workflowVariable": ""
+                        }
                     }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "id": "section3",
+                "label": "Section"
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "departamento_corrente",
+                            "label": "Departamento",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                                "properties": {
+                                    "cacheInterval": "",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.service.FormUtil;\r\n \r\npublic FormRowSet load(Element element, String primaryKey, FormData formData) {\r\n    FormRowSet rows = new FormRowSet();\r\n    \r\n    String cUserDepartmentDesc = \"#currentUser.department.description#\";\r\n    String cUserDepartmentID = \"#currentUser.department.id#\";\r\n    \r\n    System.out.println(cUserDepartmentDesc);\r\n    \r\n    String[] cUserDepDesc = cUserDepartmentDesc.split(\";\");\r\n\tString[] cUserDepID = cUserDepartmentID.split(\";\");\r\n    \r\n    //Get the departmants the current user is tied to\r\n    for(int i = 0; i < cUserDepDesc.length; i++ ){\r\n        FormRow option = new FormRow();\r\n        option.setProperty(FormUtil.PROPERTY_VALUE, cUserDepID[i]);\r\n        option.setProperty(FormUtil.PROPERTY_LABEL, cUserDepDesc[i]);\r\n        rows.add(option);\r\n    }\r\n    \r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(element, primaryKey, formData);",
+                                    "useAjax": ""
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "gestor_atual",
+                            "label": "Gestor",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "#currentUser.fullName#",
+                            "workflowVariable": ""
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section2",
+                "join": "",
+                "label": "De:",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
                 },
-                {
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "equipa_recetora",
+                            "label": "Departamento",
+                            "multiple": "",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "",
+                                    "value": ""
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Contratação",
+                                    "value": "contratacao"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Filtro",
+                                    "value": "filtro"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Produção",
+                                    "value": "producao"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Validação",
+                                    "value": "validacao"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": "equipa_recetora"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "false",
+                            "id": "field8",
+                            "label": "Text Field",
+                            "readonly": "False",
+                            "readonlyLabel": "False",
+                            "storeNumeric": "False",
+                            "style": ""
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section1",
+                "join": "",
+                "label": "Para:",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [{
                     "className": "org.joget.apps.form.lib.TextArea",
                     "properties": {
                         "cols": "20",
                         "id": "questao",
-                        "label": "Questão",
+                        "label": "",
                         "placeholder": "",
                         "readonly": "",
                         "readonlyLabel": "",
@@ -197,36 +263,36 @@
                         "value": "",
                         "workflowVariable": ""
                     }
-                }
-            ],
-            "properties": {"width": "100%"}
-        }],
-        "properties": {
-            "comment": "",
-            "id": "section1",
-            "join": "",
-            "label": "",
-            "loadBinder": {
-                "className": "",
-                "properties": {}
-            },
-            "permission": {
-                "className": "",
-                "properties": {}
-            },
-            "permissionReadonly": "",
-            "readonly": "",
-            "readonlyLabel": "",
-            "regex": "",
-            "reverse": "",
-            "storeBinder": {
-                "className": "",
-                "properties": {}
-            },
-            "visibilityControl": "",
-            "visibilityValue": ""
+                }],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section4",
+                "join": "",
+                "label": "Questão",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
         }
-    }],
+    ],
     "properties": {
         "description": "",
         "id": "pedirEsclarecimento",
