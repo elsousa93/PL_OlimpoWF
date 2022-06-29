@@ -12,6 +12,7 @@
       <environmentVariable>
          <id>datalistHashTicketAttachmentCustomer</id>
          <appId>workflowPL</appId>
+         <appVersion>1</appVersion>
          <value>import org.joget.apps.app.service.AppUtil;
 import org.joget.commons.util.LogUtil;
 
@@ -27,7 +28,9 @@ if(ticketId.isEmpty()){
 
 //LogUtil.info(&quot;datalistHashTicketAttachment&quot;, &quot;Getting Ticket Attachment for &quot; + ticketId);
 
-String result = &quot;$$datalist.html.list_ticket_attachment_customer[d-7394514-fn_ticket_id=&quot; + ticketId + &quot;]$$&quot;;
+var valueUser = FormUtil.getValue(&quot;user_colaborador&quot;);
+
+String result = &quot;$$user.&quot; + valueUser + &quot;.department.name$$&quot;;
 result = result.replaceAll(&quot;\\$\\$&quot;, &quot;#&quot;);
 result = AppUtil.processHashVariable(result, null, null, null);
 
