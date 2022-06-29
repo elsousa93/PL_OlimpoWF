@@ -8,7 +8,33 @@
    <datalistDefinitionList/>
    <builderDefinitionList/>
    <pluginDefaultPropertiesList/>
-   <environmentVariableList/>
+   <environmentVariableList>
+      <environmentVariable>
+         <id>datalistHashTicketAttachmentCustomer</id>
+         <appId>workflowPL</appId>
+         <value>import org.joget.apps.app.service.AppUtil;
+import org.joget.commons.util.LogUtil;
+
+if(ticket == null || ticket.length == 0){
+    return &quot;No Ticket ID&quot;;
+}
+
+String ticketId = ticket[0];
+
+if(ticketId.isEmpty()){
+    return &quot;No Ticket ID&quot;;
+}
+
+//LogUtil.info(&quot;datalistHashTicketAttachment&quot;, &quot;Getting Ticket Attachment for &quot; + ticketId);
+
+String result = &quot;$$datalist.html.list_ticket_attachment_customer[d-7394514-fn_ticket_id=&quot; + ticketId + &quot;]$$&quot;;
+result = result.replaceAll(&quot;\\$\\$&quot;, &quot;#&quot;);
+result = AppUtil.processHashVariable(result, null, null, null);
+
+return result;</value>
+         <remarks></remarks>
+      </environmentVariable>
+   </environmentVariableList>
    <messageList/>
    <resourceList/>
    <license>Sz7mdStux960CvUVkRnWtmo7jYQ9hWWCLgYsulcaG+KNgdsYv/sWpjKlC2kFjiG5</license>
