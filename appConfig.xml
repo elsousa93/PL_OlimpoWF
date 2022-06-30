@@ -8,7 +8,25 @@
    <datalistDefinitionList/>
    <builderDefinitionList/>
    <pluginDefaultPropertiesList/>
-   <environmentVariableList/>
+   <environmentVariableList>
+      <environmentVariable>
+         <id>getDepartmentFromUser</id>
+         <appId>workflowPL</appId>
+         <value>import org.joget.apps.app.service.AppUtil;
+import org.joget.commons.util.LogUtil;
+
+
+String valueUser = FormUtil.getValue(&quot;user_colaborador&quot;);
+System.out.println(valueUser);
+
+String result = &quot;$$user.&quot; + valueUser + &quot;.department.name$$&quot;;
+result = result.replaceAll(&quot;\\$\\$&quot;, &quot;#&quot;);
+result = AppUtil.processHashVariable(result, null, null, null);
+
+return result;</value>
+         <remarks></remarks>
+      </environmentVariable>
+   </environmentVariableList>
    <messageList/>
    <resourceList/>
    <license>Sz7mdStux960CvUVkRnWtmo7jYQ9hWWCLgYsulcaG+KNgdsYv/sWpjKlC2kFjiG5</license>
