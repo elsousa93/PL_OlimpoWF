@@ -62,7 +62,25 @@
                         "autoPopulate": "",
                         "id": "template",
                         "label": "",
-                        "value": "<!--<div height=100px style=\" margin-left: 27%; margin-right: 27%; border: 1px solid; display: inline_block; \">\r\n    <div style=\"display: flex; justify-content: space-between;\">\r\n        <img src=\"#appResource.Millennium.jpg#\" alt=\"Logotipo Millennium\" width=\"334\" height=\"52\">\r\n        <div><p>PARABÉNS A DOCUMENTAÇÃO ESTÁ PRONTA<\/p><p>PARA A FORMALIZAÇÃO DO CONTRATO<\/p><\/div>\r\n<\/div>-->\r\n<textarea id=\"mensagem\" name=\"mensagem\" style=\"resize: none;\r\n        height: 300px;\r\n        width: 100%;\r\n        border: none;\r\n        outline: none;\">\r\n    Estimado(a) Sr(a).\r\n    \r\n    nome_texto\r\n    \r\n    Informamos que procedemos à validação final da documentação que nos enviou.\r\n    \r\n    Estamos, naturalmente, ao seu inteiro dispor para qualquer esclarecimento adicional que tenha por conveniente.\r\n    \r\n    / PEDIDO DE CONTACTO /\r\n    \r\n    Em qualquer momento, pode solicitar o nosso contacto.\r\n    \r\n    Envie um SMS para o Tel. N.º 927 820 110 com indicação do número do processo: workflow_texto\r\n    \r\n    O envio do SMS está sujeito ao tarifário que contratou com o seu operador.\r\n    \r\n    No espaço máximo de 1 hora receberá um contacto dos nossos serviços.\r\n    \r\n    Com os melhores cumprimentos,\r\n<\/textarea>\r\n<!--<img src=\"#appResource.MillenniumFooter.jpg#\" alt=\"Logotipo MillenniumFooter\" width=\"100%\" height=\"26\">\r\n<\/div>-->"
+                        "value": "<!--<div height=100px style=\" margin-left: 27%; margin-right: 27%; border: 1px solid; display: inline_block; \">\r\n    <div style=\"display: flex; justify-content: space-between;\">\r\n        <img src=\"#appResource.Millennium.jpg#\" alt=\"Logotipo Millennium\" width=\"334\" height=\"52\">\r\n        <div><p>PARABÉNS A DOCUMENTAÇÃO ESTÁ PRONTA<\/p><p>PARA A FORMALIZAÇÃO DO CONTRATO<\/p><\/div>\r\n<\/div>-->\r\n<textarea id=\"mensagem\" name=\"mensagem\" style=\"resize: none;\r\n        height: 300px;\r\n        width: 100%;\r\n        border: none;\r\n        outline: none;\">\r\n\"#envVariable.templateEmail#\"\r\n<\/textarea>\r\n<!--<img src=\"#appResource.MillenniumFooter.jpg#\" alt=\"Logotipo MillenniumFooter\" width=\"100%\" height=\"26\">\r\n<\/div>-->"
+                    }
+                },
+                {
+                    "className": "org.joget.plugin.enterprise.RichTextEditorField",
+                    "properties": {
+                        "editor": "",
+                        "height": "",
+                        "id": "msgRich",
+                        "label": "Rich Text Editor",
+                        "mode": "full",
+                        "permissionType": "",
+                        "placeholder": "",
+                        "readonly": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": ""
                     }
                 },
                 {
@@ -97,7 +115,7 @@
                         "autoPopulate": "",
                         "id": "field7",
                         "label": "",
-                        "value": "\n<!-- type=submit & name=assignmentComplete para concluir atividade do processo Esclarecimentos-->\n<input type=\"submit\" name=\"submit\" value=\"Enviar Email\" id=\"btn\" style=\"background-color:rgba(0,0,0,0);\"/>\n<script type=\"text/javascript\">\n    var url, value;\n    $(document).ready(function(){\n        value = FormUtil.getValue(\"p1_activity_id\"); //get activity id do processo \"pai\"\n        url = \"window.open('http://192.168.0.104:8080/jw/web/userview/workflowPL/UV_PL_Geral/_/inbox?_mode=assignment&activityId=\" + \"#requestParam.id_atividade#\" + \"');\"; //criar url inserindo activity id corrente do processo \"pai\"\n    });\n    \n    //on click go to page com URL=url\n    var getURL = document.getElementById(\"btn\");\n    getURL.addEventListener(\"click\", function() {\n        eval(url);\n    }, false);\n    \n<\/script>"
+                        "value": "\n<!-- type=submit & name=assignmentComplete para concluir atividade do processo Esclarecimentos-->\n<input type=\"submit\" name=\"submit\" value=\"Enviar Email\" id=\"btn\" style=\"background-color:rgba(0,0,0,0);\"/>\n<script type=\"text/javascript\">\n    var url, value;\n    \n    function replaceP(){\n        var msg = document.getElementById(id).value;\n        msg.value.replace(/\\n/g, \"<br />\");\n    }\n    $(document).ready(function(){\n        value = FormUtil.getValue(\"p1_activity_id\"); //get activity id do processo \"pai\"\n        url = \"window.open('http://192.168.0.104:8080/jw/web/userview/workflowPL/UV_PL_Geral/_/inbox?_mode=assignment&activityId=\" + \"#requestParam.id_atividade#\" + \"');\"; //criar url inserindo activity id corrente do processo \"pai\"\n    });\n    \n    //on click go to page com URL=url\n    var getURL = document.getElementById(\"btn\");\n    getURL.addEventListener(\"click\", function() {\n        eval(url);\n    }, false);\n    \n    \n    \n<\/script>"
                     }
                 }
             ],
