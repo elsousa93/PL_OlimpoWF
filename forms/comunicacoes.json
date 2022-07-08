@@ -45,7 +45,7 @@
                             "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
                             "properties": {
                                 "autoHandleFiles": "",
-                                "autoHandleWorkflowVariable": "true",
+                                "autoHandleWorkflowVariable": "",
                                 "jdbcDatasource": "default",
                                 "sql": "SELECT cp.c_destinatarios, cp.c_assunto, cp.dateCreated\nFROM app_fd_comunicacoes_proce cp\nWHERE cp.c_id_processo = '#process.processId#';"
                             }
@@ -110,9 +110,25 @@
     "properties": {
         "description": "",
         "id": "comunicacoes",
-        "loadBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
-        "name": "Comunicações ",
-        "storeBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "Comunicações",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
         "tableName": "comunicacoes_proce"
     }
 }
