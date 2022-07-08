@@ -642,15 +642,19 @@
                                 "endDateFieldId": "",
                                 "format24hr": "",
                                 "id": "data_fine_agendamento",
-                                "label": "Data FINE para agendamento",
+                                "label": "Data FINE para Agendamento",
                                 "placeholder": "",
                                 "readonly": "",
                                 "readonlyLabel": "",
                                 "showUserTimeZone": "",
                                 "startDateFieldId": "",
                                 "validator": {
-                                    "className": "",
-                                    "properties": {}
+                                    "className": "org.joget.apps.form.lib.DefaultValidator",
+                                    "properties": {
+                                        "mandatory": "true",
+                                        "message": "#i18n.mandatorymsg#",
+                                        "type": ""
+                                    }
                                 },
                                 "value": "",
                                 "workflowVariable": ""
@@ -666,14 +670,18 @@
                                 "endDateFieldId": "",
                                 "format": "",
                                 "id": "validade_proposta",
-                                "label": "Validade da proposta",
+                                "label": "Validade da Proposta",
                                 "placeholder": "",
                                 "readonly": "",
                                 "readonlyLabel": "",
                                 "startDateFieldId": "",
                                 "validator": {
-                                    "className": "",
-                                    "properties": {}
+                                    "className": "org.joget.apps.form.lib.DefaultValidator",
+                                    "properties": {
+                                        "mandatory": "true",
+                                        "message": "#i18n.mandatorymsg#",
+                                        "type": ""
+                                    }
                                 },
                                 "value": "",
                                 "workflowVariable": "",
@@ -696,58 +704,16 @@
                                 "readonlyLabel": "",
                                 "startDateFieldId": "",
                                 "validator": {
-                                    "className": "",
-                                    "properties": {}
+                                    "className": "org.joget.apps.form.lib.DefaultValidator",
+                                    "properties": {
+                                        "mandatory": "true",
+                                        "message": "#i18n.mandatorymsg#",
+                                        "type": ""
+                                    }
                                 },
                                 "value": "",
                                 "workflowVariable": "",
                                 "yearRange": "c-10:c+10"
-                            }
-                        },
-                        {
-                            "className": "org.joget.apps.form.lib.SelectBox",
-                            "properties": {
-                                "controlField": "",
-                                "id": "compra_proc",
-                                "label": "Compra",
-                                "multiple": "",
-                                "options": [],
-                                "optionsBinder": {
-                                    "className": "",
-                                    "properties": {}
-                                },
-                                "readonly": "",
-                                "readonlyLabel": "",
-                                "size": "",
-                                "validator": {
-                                    "className": "",
-                                    "properties": {}
-                                },
-                                "value": "",
-                                "workflowVariable": ""
-                            }
-                        },
-                        {
-                            "className": "org.joget.apps.form.lib.SelectBox",
-                            "properties": {
-                                "controlField": "",
-                                "id": "hipoteca_proc",
-                                "label": "Hipoteca",
-                                "multiple": "",
-                                "options": [],
-                                "optionsBinder": {
-                                    "className": "",
-                                    "properties": {}
-                                },
-                                "readonly": "",
-                                "readonlyLabel": "",
-                                "size": "",
-                                "validator": {
-                                    "className": "",
-                                    "properties": {}
-                                },
-                                "value": "",
-                                "workflowVariable": ""
                             }
                         },
                         {
@@ -894,27 +860,75 @@
                 },
                 {
                     "className": "org.joget.apps.form.model.Column",
-                    "elements": [{
-                        "className": "org.joget.apps.form.lib.TextField",
-                        "properties": {
-                            "encryption": "",
-                            "id": "outros_proc",
-                            "label": "Outros",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "storeNumeric": "",
-                            "style": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "",
-                            "workflowVariable": ""
+                    "elements": [
+                        {
+                            "className": "org.joget.apps.form.lib.TextField",
+                            "properties": {
+                                "encryption": "",
+                                "id": "outros_proc",
+                                "label": "Outros",
+                                "maxlength": "",
+                                "placeholder": "",
+                                "readonly": "",
+                                "readonlyLabel": "",
+                                "size": "",
+                                "storeNumeric": "",
+                                "style": "",
+                                "validator": {
+                                    "className": "",
+                                    "properties": {}
+                                },
+                                "value": "",
+                                "workflowVariable": ""
+                            }
+                        },
+                        {
+                            "className": "org.joget.apps.form.lib.SelectBox",
+                            "properties": {
+                                "controlField": "",
+                                "id": "hipoteca_proc",
+                                "label": "Hipoteca",
+                                "multiple": "",
+                                "options": [],
+                                "optionsBinder": {
+                                    "className": "",
+                                    "properties": {}
+                                },
+                                "readonly": "",
+                                "readonlyLabel": "",
+                                "size": "",
+                                "validator": {
+                                    "className": "",
+                                    "properties": {}
+                                },
+                                "value": "",
+                                "workflowVariable": ""
+                            }
+                        },
+                        {
+                            "className": "org.joget.apps.form.lib.SelectBox",
+                            "properties": {
+                                "controlField": "",
+                                "id": "compra_proc",
+                                "label": "Compra",
+                                "multiple": "",
+                                "options": [],
+                                "optionsBinder": {
+                                    "className": "",
+                                    "properties": {}
+                                },
+                                "readonly": "",
+                                "readonlyLabel": "",
+                                "size": "",
+                                "validator": {
+                                    "className": "",
+                                    "properties": {}
+                                },
+                                "value": "",
+                                "workflowVariable": ""
+                            }
                         }
-                    }],
+                    ],
                     "properties": {
                         "customWidth": "33%",
                         "horizontal": "",
@@ -937,7 +951,7 @@
                 "comment": "-Criar forms para listas de valores\n-Compra e hipoteca pertencem aqui?\n\n",
                 "id": "section1",
                 "join": "",
-                "label": "Detalhe do Processo",
+                "label": "Informação Geral",
                 "loadBinder": {
                     "className": "",
                     "properties": {}
