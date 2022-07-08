@@ -33,10 +33,12 @@
                         "label": "Lista de esclarecimentos",
                         "listId": "list_esclarecimentos",
                         "loadBinder": {
-                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                            "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
                             "properties": {
-                                "foreignKey": "id_processo",
-                                "formDefId": "esclarecer"
+                                "autoHandleFiles": "",
+                                "autoHandleWorkflowVariable": "true",
+                                "jdbcDatasource": "default",
+                                "sql": "SELECT *\nFROM app_fd_esclarecimentos;"
                             }
                         },
                         "options": [
