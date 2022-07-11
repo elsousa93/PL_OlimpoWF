@@ -764,7 +764,7 @@
                             "properties": {
                                 "controlField": "",
                                 "id": "confirma_est_civil",
-                                "label": "Houve alteração do estado civil?",
+                                "label": "Houve Alteração do Estado Civil?",
                                 "options": [
                                     {
                                         "grouping": "",
@@ -863,7 +863,7 @@
                             "properties": {
                                 "encryption": "",
                                 "id": "lei_casamento",
-                                "label": "Lei aplicável ao casamento:",
+                                "label": "Lei Aplicável ao Casamento",
                                 "maxlength": "",
                                 "permission_rules": {"3e334771-7c1d-4882-b298-443c91d6bf3e": {}},
                                 "placeholder": "",
@@ -929,7 +929,7 @@
                             "properties": {
                                 "controlField": "regime_casamento",
                                 "id": "imovel_casa_fam",
-                                "label": "O imóvel é casa de morada de família?",
+                                "label": "O Imóvel é Casa de Morada de Família?",
                                 "multiple": "",
                                 "options": [
                                     {
@@ -964,8 +964,8 @@
                             "className": "org.joget.apps.form.lib.Radio",
                             "properties": {
                                 "controlField": "",
-                                "id": "morada_fisc_n_imovel",
-                                "label": "Confirmação de que a morada fiscal não coincide com a morada do imóvel",
+                                "id": "morada_fisc_imovel",
+                                "label": "Confirmação de que a Morada Fiscal coincide com a Morada do Imóvel",
                                 "options": [
                                     {
                                         "grouping": "",
@@ -1039,7 +1039,7 @@
                         "properties": {
                             "encryption": "",
                             "id": "crc",
-                            "label": "CRC (código):",
+                            "label": "Código da CRC",
                             "maxlength": "",
                             "placeholder": "",
                             "readonly": "",
@@ -1064,8 +1064,8 @@
                             "datePickerType": "",
                             "endDateFieldId": "",
                             "format": "yy-mm-dd",
-                            "id": "validade",
-                            "label": "Validade",
+                            "id": "validade_crc",
+                            "label": "Validade da CRC",
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -1129,18 +1129,12 @@
                         }
                     },
                     {
-                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "className": "org.joget.apps.form.lib.CheckBox",
                         "properties": {
                             "controlField": "",
                             "id": "rcbe",
-                            "label": "Temos RCBE?",
-                            "multiple": "",
+                            "label": "Tem RCBE?",
                             "options": [
-                                {
-                                    "grouping": "",
-                                    "label": "",
-                                    "value": ""
-                                },
                                 {
                                     "grouping": "",
                                     "label": "Sim",
@@ -1148,7 +1142,7 @@
                                 },
                                 {
                                     "grouping": "",
-                                    "label": "Não (alerta para apresentar na outorga)",
+                                    "label": "Não",
                                     "value": "nao"
                                 }
                             ],
@@ -1158,7 +1152,6 @@
                             },
                             "readonly": "",
                             "readonlyLabel": "",
-                            "size": "",
                             "validator": {
                                 "className": "",
                                 "properties": {}
@@ -1172,7 +1165,7 @@
                         "properties": {
                             "controlField": "",
                             "id": "ata",
-                            "label": "Tem ata?",
+                            "label": "Tem Ata?",
                             "options": [
                                 {
                                     "grouping": "",
@@ -1391,6 +1384,76 @@
         },
         {
             "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [{
+                    "className": "org.joget.apps.form.lib.CheckBox",
+                    "properties": {
+                        "controlField": "",
+                        "id": "hip_imovel_terceiro",
+                        "label": "Há autorização do Banco para hipoteca de terceiro ?",
+                        "options": [
+                            {
+                                "grouping": "",
+                                "label": "Sim",
+                                "value": "sim"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Não",
+                                "value": "não"
+                            }
+                        ],
+                        "optionsBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                }],
+                "properties": {
+                    "customWidth": "100%",
+                    "horizontal": "",
+                    "label": "",
+                    "width": "100%"
+                }
+            }],
+            "properties": {
+                "comment": "Validação?\n- Hipotecantes distintos dos proponentes",
+                "id": "hipotecantes",
+                "join": "",
+                "label": "Hipotecantes",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {"3e334771-7c1d-4882-b298-443c91d6bf3e": {}},
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
             "elements": [
                 {
                     "className": "org.joget.apps.form.model.Column",
@@ -1432,13 +1495,20 @@
                             "className": "org.joget.apps.form.lib.CheckBox",
                             "properties": {
                                 "controlField": "",
-                                "id": "hip_imovel_terceiro",
-                                "label": "Hipoteca sobre imóvel de terceiro?",
-                                "options": [{
-                                    "grouping": "",
-                                    "label": "Sim (autorização do banco)",
-                                    "value": "sim"
-                                }],
+                                "id": "meia_fianca",
+                                "label": "Existe meia fiança?",
+                                "options": [
+                                    {
+                                        "grouping": "",
+                                        "label": "Sim",
+                                        "value": "sim"
+                                    },
+                                    {
+                                        "grouping": "",
+                                        "label": "Não",
+                                        "value": "nao"
+                                    }
+                                ],
                                 "optionsBinder": {
                                     "className": "",
                                     "properties": {}
@@ -1452,88 +1522,13 @@
                                 "value": "",
                                 "workflowVariable": ""
                             }
-                        }
-                    ],
-                    "properties": {
-                        "customWidth": "100%",
-                        "horizontal": "",
-                        "label": "",
-                        "width": "100%"
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.model.Column",
-                    "elements": [{
-                        "className": "org.joget.apps.form.lib.Radio",
-                        "properties": {
-                            "controlField": "",
-                            "id": "confirma_est_civil",
-                            "label": "Temos confirmação do estado civil?",
-                            "options": [
-                                {
-                                    "grouping": "",
-                                    "label": "Sim",
-                                    "value": "sim"
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Não",
-                                    "value": "nao"
-                                }
-                            ],
-                            "optionsBinder": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "permission_rules": {"3e334771-7c1d-4882-b298-443c91d6bf3e": {}},
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    }],
-                    "properties": {
-                        "customWidth": "100%",
-                        "horizontal": "",
-                        "label": "",
-                        "width": "100%"
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.model.Column",
-                    "elements": [
-                        {
-                            "className": "org.joget.apps.form.lib.TextField",
-                            "properties": {
-                                "encryption": "",
-                                "id": "lei_casamento",
-                                "label": "Lei aplicável ao casamento:",
-                                "maxlength": "",
-                                "permission_rules": {"3e334771-7c1d-4882-b298-443c91d6bf3e": {}},
-                                "placeholder": "",
-                                "readonly": "",
-                                "readonlyLabel": "",
-                                "size": "",
-                                "storeNumeric": "",
-                                "style": "",
-                                "validator": {
-                                    "className": "",
-                                    "properties": {}
-                                },
-                                "value": "",
-                                "workflowVariable": ""
-                            }
                         },
                         {
                             "className": "org.joget.apps.form.lib.Radio",
                             "properties": {
                                 "controlField": "",
-                                "id": "check_lei_casamento",
-                                "label": "",
+                                "id": "confirma_est_civil",
+                                "label": "Houve Alteração do Estado Civil?",
                                 "options": [
                                     {
                                         "grouping": "",
@@ -1551,251 +1546,6 @@
                                     "properties": {}
                                 },
                                 "permission_rules": {"3e334771-7c1d-4882-b298-443c91d6bf3e": {}},
-                                "readonly": "",
-                                "readonlyLabel": "",
-                                "validator": {
-                                    "className": "",
-                                    "properties": {}
-                                },
-                                "value": "",
-                                "workflowVariable": ""
-                            }
-                        }
-                    ],
-                    "properties": {
-                        "customWidth": "100%",
-                        "horizontal": "true",
-                        "label": "",
-                        "width": "100%"
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.model.Column",
-                    "elements": [{
-                        "className": "org.joget.apps.form.lib.SelectBox",
-                        "properties": {
-                            "controlField": "regime_casamento",
-                            "id": "imovel_casa_fam",
-                            "label": "O imóvel é casa de morada de família?",
-                            "multiple": "",
-                            "options": [
-                                {
-                                    "grouping": "separacao_bens",
-                                    "label": "Sim",
-                                    "value": "sim"
-                                },
-                                {
-                                    "grouping": "separacao_bens",
-                                    "label": "Não",
-                                    "value": "nao"
-                                }
-                            ],
-                            "optionsBinder": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "permissionHidden": "true",
-                            "permission_rules": {"3e334771-7c1d-4882-b298-443c91d6bf3e": {}},
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    }],
-                    "properties": {
-                        "customWidth": "100%",
-                        "horizontal": "",
-                        "label": "",
-                        "width": "100%"
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.model.Column",
-                    "elements": [{
-                        "className": "org.joget.apps.form.lib.Radio",
-                        "properties": {
-                            "controlField": "",
-                            "id": "morada_fisc_n_imovel",
-                            "label": "Confirmação de que a morada fiscal não coincide com a morada do imóvel",
-                            "options": [
-                                {
-                                    "grouping": "",
-                                    "label": "Sim",
-                                    "value": "sim"
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Não",
-                                    "value": "nao"
-                                }
-                            ],
-                            "optionsBinder": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "permission_rules": {"3e334771-7c1d-4882-b298-443c91d6bf3e": {}},
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    }],
-                    "properties": {
-                        "customWidth": "100%",
-                        "horizontal": "",
-                        "label": "",
-                        "width": "100%"
-                    }
-                }
-            ],
-            "properties": {
-                "comment": "Validação?\n- Hipotecantes distintos dos proponentes",
-                "id": "section2_1",
-                "join": "",
-                "label": "Questões",
-                "loadBinder": {
-                    "className": "",
-                    "properties": {}
-                },
-                "permission": {
-                    "className": "",
-                    "properties": {}
-                },
-                "permissionReadonly": "",
-                "permission_rules": {"3e334771-7c1d-4882-b298-443c91d6bf3e": {}},
-                "readonly": "",
-                "readonlyLabel": "",
-                "regex": "",
-                "reverse": "",
-                "storeBinder": {
-                    "className": "",
-                    "properties": {}
-                },
-                "visibilityControl": "",
-                "visibilityValue": ""
-            }
-        },
-        {
-            "className": "org.joget.apps.form.model.Section",
-            "elements": [
-                {
-                    "className": "org.joget.apps.form.model.Column",
-                    "elements": [{
-                        "className": "org.joget.apps.form.lib.Radio",
-                        "properties": {
-                            "controlField": "",
-                            "id": "presentes_out",
-                            "label": "Estarão presentes na outorga?",
-                            "options": [
-                                {
-                                    "grouping": "",
-                                    "label": "Sim",
-                                    "value": "sim"
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Não",
-                                    "value": "nao"
-                                }
-                            ],
-                            "optionsBinder": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "permission_rules": {"3e334771-7c1d-4882-b298-443c91d6bf3e": {}},
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    }],
-                    "properties": {
-                        "customWidth": "100%",
-                        "horizontal": "",
-                        "label": "",
-                        "width": "100%"
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.model.Column",
-                    "elements": [{
-                        "className": "org.joget.apps.form.lib.Radio",
-                        "properties": {
-                            "controlField": "",
-                            "id": "confirma_est_civil",
-                            "label": "Temos confirmação do estado civil?",
-                            "options": [
-                                {
-                                    "grouping": "",
-                                    "label": "Sim",
-                                    "value": "sim"
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Não",
-                                    "value": "nao"
-                                }
-                            ],
-                            "optionsBinder": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "permission_rules": {"3e334771-7c1d-4882-b298-443c91d6bf3e": {}},
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    }],
-                    "properties": {
-                        "customWidth": "100%",
-                        "horizontal": "",
-                        "label": "",
-                        "width": "100%"
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.model.Column",
-                    "elements": [
-                        {
-                            "className": "org.joget.apps.form.lib.CheckBox",
-                            "properties": {
-                                "controlField": "",
-                                "id": "meia_fianca",
-                                "label": "Existe meia fiança?",
-                                "options": [
-                                    {
-                                        "grouping": "",
-                                        "label": "Sim (autorização do banco)",
-                                        "value": "sim"
-                                    },
-                                    {
-                                        "grouping": "",
-                                        "label": "Não",
-                                        "value": "nao"
-                                    }
-                                ],
-                                "optionsBinder": {
-                                    "className": "",
-                                    "properties": {}
-                                },
                                 "readonly": "",
                                 "readonlyLabel": "",
                                 "validator": {
@@ -1809,18 +1559,72 @@
                         {
                             "className": "org.joget.apps.form.lib.SelectBox",
                             "properties": {
-                                "controlField": "regime_casamento",
-                                "id": "imovel_casa_fam",
-                                "label": "O imóvel é casa de morada de família?",
+                                "controlField": "",
+                                "id": "estado_civil_anterior",
+                                "label": "Estado Civil Anterior",
                                 "multiple": "",
                                 "options": [
                                     {
-                                        "grouping": "separacao_bens",
+                                        "grouping": "",
+                                        "label": "",
+                                        "value": ""
+                                    },
+                                    {
+                                        "grouping": "",
+                                        "label": "Solteiro(a)",
+                                        "value": "solteiro"
+                                    },
+                                    {
+                                        "grouping": "",
+                                        "label": "Casado(a)",
+                                        "value": "casado"
+                                    },
+                                    {
+                                        "grouping": "",
+                                        "label": "Divorciado(a)",
+                                        "value": "divorciado"
+                                    },
+                                    {
+                                        "grouping": "",
+                                        "label": "Viúvo(a)",
+                                        "value": "viuvo"
+                                    },
+                                    {
+                                        "grouping": "",
+                                        "label": "Separado judicialmente de pessoas e bens",
+                                        "value": "sep_pessoas_bens"
+                                    }
+                                ],
+                                "optionsBinder": {
+                                    "className": "",
+                                    "properties": {}
+                                },
+                                "permission_rules": {"3e334771-7c1d-4882-b298-443c91d6bf3e": {}},
+                                "readonly": "",
+                                "readonlyLabel": "",
+                                "size": "",
+                                "validator": {
+                                    "className": "",
+                                    "properties": {}
+                                },
+                                "value": "",
+                                "workflowVariable": ""
+                            }
+                        },
+                        {
+                            "className": "org.joget.apps.form.lib.CheckBox",
+                            "properties": {
+                                "controlField": "",
+                                "id": "relacao_parentesco",
+                                "label": "Existe relação de parentesco entre os compradores e os vendedores ?",
+                                "options": [
+                                    {
+                                        "grouping": "",
                                         "label": "Sim",
                                         "value": "sim"
                                     },
                                     {
-                                        "grouping": "separacao_bens",
+                                        "grouping": "",
                                         "label": "Não",
                                         "value": "nao"
                                     }
@@ -1829,11 +1633,8 @@
                                     "className": "",
                                     "properties": {}
                                 },
-                                "permissionHidden": "true",
-                                "permission_rules": {"3e334771-7c1d-4882-b298-443c91d6bf3e": {}},
                                 "readonly": "",
                                 "readonlyLabel": "",
-                                "size": "",
                                 "validator": {
                                     "className": "",
                                     "properties": {}
@@ -1849,13 +1650,23 @@
                         "label": "",
                         "width": "100%"
                     }
+                },
+                {
+                    "className": "org.joget.apps.form.model.Column",
+                    "elements": [],
+                    "properties": {
+                        "customWidth": "100%",
+                        "horizontal": "",
+                        "label": "",
+                        "width": "100%"
+                    }
                 }
             ],
             "properties": {
                 "comment": "Validação?\n- Fiadores",
-                "id": "section2_2_1",
+                "id": "procurador",
                 "join": "",
-                "label": "Questões",
+                "label": "Procuradores",
                 "loadBinder": {
                     "className": "",
                     "properties": {}
