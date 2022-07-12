@@ -46,8 +46,11 @@
             "properties": {}
         },
         "postProcessor": {
-            "className": "org.joget.apps.app.lib.BeanShellTool",
-            "properties": {"script": "import org.joget.workflow.model.service.*;\r\nimport org.joget.commons.util.LogUtil;\r\n \r\n LogUtil.info(\"BeanShell\", \"Running post processing tool\");\r\n \r\nWorkflowManager wm = (WorkflowManager) pluginManager.getBean(\"workflowManager\");\r\nLogUtil.info(\"BeanShell\", \"Running post processing tool 2\");\r\nwm.activityVariable(workflowAssignment.getActivityId(),\"Participant21\", \"admin\");\r\n\r\nLogUtil.info(\"BeanShell\", \"Participant21:\" + processHashVariable(\"#variable.Participant21#\"));\r\n"}
+            "className": "org.joget.tutorial.WorkflowVariableUpdateTool",
+            "properties": {"workflowVarMapping": [{
+                "changeValueTo": "#currentUser.username#",
+                "variable": "Participant21"
+            }]}
         },
         "postProcessorRunOn": "create",
         "storeBinder": {
