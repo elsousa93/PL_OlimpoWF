@@ -109,9 +109,25 @@
     "properties": {
         "description": "",
         "id": "testeAssignarTarefa",
-        "loadBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
         "name": "Teste Assignar Tarefas",
-        "storeBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "org.joget.apps.app.lib.BeanShellTool",
+            "properties": {"script": "import org.joget.workflow.model.service.*;\r\n \r\nWorkflowManager wm = (WorkflowManager) pluginManager.getBean(\"workflowManager\");\r\nwm.activityVariable(workflowAssignment.getActivityId(),\"Participant21\", \"admin\");"}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
         "tableName": "test_assig_tarefa"
     }
 }
