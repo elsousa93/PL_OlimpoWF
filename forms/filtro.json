@@ -1,17 +1,159 @@
 {
     "className": "org.joget.apps.form.model.Form",
-    "elements": [{
-        "className": "org.joget.apps.form.model.Section",
-        "elements": [{
-            "className": "org.joget.apps.form.model.Column",
-            "elements": [],
-            "properties": {"width": "100%"}
-        }],
-        "properties": {
-            "id": "section1",
-            "label": "Section"
+    "elements": [
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.Radio",
+                        "properties": {
+                            "controlField": "",
+                            "id": "urgencia_filtro",
+                            "label": "Urgência de Filtro",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Sim",
+                                    "value": "sim"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Não",
+                                    "value": "nao"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextArea",
+                        "properties": {
+                            "cols": "20",
+                            "id": "motivo_urgencia_filtro",
+                            "label": "Motivo de Urgência de Filtro",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "rows": "5",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "",
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues) {\r\n    boolean result = true;\r\n     \r\n    //get dropdown select box value\r\n    String field1Id = \"urgencia_filtro\";\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field1 = FormUtil.findElement(field1Id, form, formData);\r\n  \r\n    if (field1 != null) {\r\n        //get value of field 1\r\n        String[] field1Values = FormUtil.getElementPropertyValues(field1, formData);\r\n  \r\n        if(field1Values[0].equalsIgnoreCase(\"sim\") && fileUploadValues[0].isEmpty() ){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório quando existe Urgência de Filtro\");\r\n            result = false;\r\n        }\r\n    } else {\r\n        //ignore if the dropdown does not exist\r\n    }\r\n  \r\n    return result;\r\n}\r\n  \r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.Radio",
+                        "properties": {
+                            "controlField": "",
+                            "id": "ok_filtro",
+                            "label": "Ok do Filtro",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Ok",
+                                    "value": "ok"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Not Ok",
+                                    "value": "nok"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "informacao_geral",
+                "join": "",
+                "label": "Informação Geral",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "validacao_documentos",
+                "join": "",
+                "label": "Validação de Documentos",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
         }
-    }],
+    ],
     "properties": {
         "description": "",
         "id": "filtro",
