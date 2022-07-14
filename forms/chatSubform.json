@@ -4,7 +4,65 @@
         "className": "org.joget.apps.form.model.Section",
         "elements": [{
             "className": "org.joget.apps.form.model.Column",
-            "elements": [],
+            "elements": [
+                {
+                    "className": "org.joget.apps.form.lib.Grid",
+                    "properties": {
+                        "errorMessage": "Invalid number of rows",
+                        "id": "painel_mensagem",
+                        "label": "",
+                        "loadBinder": {
+                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                            "properties": {
+                                "foreignKey": "thread_id",
+                                "formDefId": "dataChat"
+                            }
+                        },
+                        "options": [
+                            {
+                                "label": "Username",
+                                "value": "username"
+                            },
+                            {
+                                "label": "Nome Completo",
+                                "value": "nome_completo"
+                            },
+                            {
+                                "label": "Data de Criação",
+                                "value": "dateCreated"
+                            },
+                            {
+                                "label": "Mensagem",
+                                "value": "mensagem"
+                            }
+                        ],
+                        "permissionHidden": "",
+                        "readonly": "true",
+                        "storeBinder": {
+                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                            "properties": {
+                                "foreignKey": "thread_id",
+                                "formDefId": "dataChat"
+                            }
+                        },
+                        "validateMaxRow": "",
+                        "validateMinRow": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        }
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field2",
+                        "label": "",
+                        "value": "<script>\n$(document).ready(function() {\n    decorateTable();\n});\n<\/script>"
+                    }
+                }
+            ],
             "properties": {"width": "100%"}
         }],
         "properties": {
