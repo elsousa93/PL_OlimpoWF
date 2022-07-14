@@ -15,9 +15,25 @@
     "properties": {
         "description": "",
         "id": "chatSubform",
-        "loadBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
         "name": "Chat Subform",
-        "storeBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "org.joget.apps.userview.lib.BeanShellPermission",
+            "properties": {"script": "/**System.out.println(\"===============\");\r\nSystem.out.println(\"#currentUser.id#\");\r\nSystem.out.println(\"#requestParam.primaryKey#\");\r\nSystem.out.println(\"#requestParam.id#\");\r\nSystem.out.println((\"#requestParam.primaryKey#\".contains(\"#currentUser.id#\")) || (\"#requestParam.id#\".equals(\"chat_ajax_subform\")) || (\"#requestParam.id#\".equals(\"GLOBAL\")));\r\n**/\r\n\r\nif (\"#requestParam.primaryKey#\".equals(\"#requestParam.id#\")) {\r\n    //this is a post submission\r\n    return true;\r\n} else {\r\n    //this is either fresh load or ajax load\r\n    return (\"#requestParam.id#\".equals(\"chat_ajax_subform\"))\r\n    || (\"#requestParam.primaryKey#\".contains(\"#currentUser.id#\")) \r\n    || (\"#requestParam.id#\".equals(\"chat_ajax_subform\")) \r\n    || (\"#requestParam.primaryKey#\".equals(\"GLOBAL\"));\r\n}"}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
         "tableName": "mensagens_chat"
     }
 }
