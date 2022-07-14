@@ -4,15 +4,80 @@
         "className": "org.joget.apps.form.model.Section",
         "elements": [{
             "className": "org.joget.apps.form.model.Column",
-            "elements": [{
-                "className": "org.joget.apps.form.lib.CustomHTML",
-                "properties": {
-                    "autoPopulate": "",
-                    "id": "field1",
-                    "label": "",
-                    "value": "<div id=conversas style=\"border: 1 solid\">\n    <p>OLA<\/p>\n<\/div>"
+            "elements": [
+                {
+                    "className": "org.joget.plugin.enterprise.ListGrid",
+                    "properties": {
+                        "abortRelatedRunningProcesses": "",
+                        "buttonLabel": "",
+                        "deleteFiles": "",
+                        "deleteGridData": "",
+                        "deleteMessage": "Delete row?",
+                        "deleteSubformData": "",
+                        "disabledAdd": "",
+                        "disabledDelete": "",
+                        "enableSorting": "",
+                        "errorMessage": "Invalid number of rows",
+                        "formDefId": "",
+                        "height": "500",
+                        "id": "conversas",
+                        "label": "Conversas",
+                        "listId": "chat",
+                        "loadBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "options": [
+                            {
+                                "editable": "no",
+                                "format": "",
+                                "formatType": "text",
+                                "label": "Id",
+                                "value": "id",
+                                "width": ""
+                            },
+                            {
+                                "editable": "no",
+                                "format": "",
+                                "formatType": "text",
+                                "label": "Data de Criação",
+                                "value": "dateCreated",
+                                "width": ""
+                            }
+                        ],
+                        "pageSize": "20",
+                        "permissionHidden": "",
+                        "readonly": "true",
+                        "readonlyLabel": "",
+                        "requestParams": [],
+                        "showRowNumber": "",
+                        "sortField": "sort",
+                        "storeBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "submit-label-normal": "",
+                        "submit-label-readonly": "",
+                        "uniqueKey": "",
+                        "validateMaxRow": "",
+                        "validateMinRow": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "width": "900"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field1",
+                        "label": "",
+                        "value": "<div id=conversas style=\"border: 1px solid black\">\n<\/div>\n\n<script>\n\n\n    public FormRowSet load(String[] values) {\n    FormRowSet rows = new FormRowSet();\n     \n    ExtDirectoryManager directoryManager = (ExtDirectoryManager) AppUtil.getApplicationContext().getBean(\"directoryManager\");\n     \n    //set groupId based on dependency value\n    String groupId = null;\n    if (values != null && values.length > 0) {\n        groupId = values[0];\n    }\n     \n    //Get users using directory manager\n    Collection userList = directoryManager.getUsers(null, null, null, null, groupId, null, null, \"username\", false, null, null);\n    for(Object u : userList){\n        User user = (User) u;\n        FormRow option = new FormRow();\n        if (\"#currentUser.username#\".compareTo(user.getUsername()) > 0) {\n            option.setProperty(FormUtil.PROPERTY_VALUE, \"#currentUser.username#\" + \"-\" + user.getUsername());\n        } else if (\"#currentUser.username#\".compareTo(user.getUsername()) < 0) {\n            option.setProperty(FormUtil.PROPERTY_VALUE, user.getUsername() + \"-\" + \"#currentUser.username#\");\n        } else {\n            continue;\n        }\n        option.setProperty(FormUtil.PROPERTY_LABEL, user.getFirstName() + \" \" + user.getLastName());\n        rows.add(option);\n    }\n     \n    return rows;\n}\n    \n<\/script>"
+                    }
                 }
-            }],
+            ],
             "properties": {"width": "100%"}
         }],
         "properties": {
