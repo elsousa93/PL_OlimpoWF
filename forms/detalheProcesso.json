@@ -1565,24 +1565,43 @@
             "className": "org.joget.apps.form.model.Section",
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
-                "elements": [{
-                    "className": "org.joget.apps.form.lib.TextArea",
-                    "properties": {
-                        "cols": "20",
-                        "id": "observacoes",
-                        "label": "",
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "rows": "5",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.TextArea",
+                        "properties": {
+                            "cols": "20",
+                            "id": "observacoes",
+                            "label": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "rows": "5",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.marketplace.FormRecordLockingField",
+                        "properties": {
+                            "displayNameFormat": "firstLast",
+                            "formDefId": "detalheProcesso",
+                            "id": "record_lock",
+                            "label": "Record Lock",
+                            "lockDuration": "5",
+                            "validator": {
+                                "className": "org.joget.marketplace.FormRecordLockingValidator",
+                                "properties": {
+                                    "errorMessage": "Record is locked. Update is not allowed.",
+                                    "formDefId": "detalheProcesso"
+                                }
+                            }
+                        }
                     }
-                }],
+                ],
                 "properties": {"width": "100%"}
             }],
             "properties": {
