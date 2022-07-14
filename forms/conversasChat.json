@@ -24,8 +24,13 @@
                         "label": "Conversas",
                         "listId": "chat",
                         "loadBinder": {
-                            "className": "",
-                            "properties": {}
+                            "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
+                            "properties": {
+                                "autoHandleFiles": "",
+                                "autoHandleWorkflowVariable": "true",
+                                "jdbcDatasource": "default",
+                                "sql": "SELECT * FROM app_fd_mensagens_chat mc WHERE mc.id like '%#currentUser.username#%' "
+                            }
                         },
                         "options": [
                             {
