@@ -5,75 +5,64 @@
             "className": "org.joget.apps.form.model.Section",
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
-                "elements": [
-                    {
-                        "className": "org.joget.apps.form.lib.HiddenField",
-                        "properties": {
-                            "id": "id_processo",
-                            "useDefaultWhenEmpty": "",
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.SelectBox",
-                        "properties": {
-                            "controlField": "",
-                            "id": "nome_banco",
-                            "label": "Nome do Banco",
-                            "multiple": "",
-                            "options": [
-                                {
-                                    "grouping": "",
-                                    "label": "Novo Banco",
-                                    "value": "nb"
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Montepio Geral",
-                                    "value": "mg"
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Banco Comercial Português",
-                                    "value": "bcp"
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "EuroBic",
-                                    "value": "bic"
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Banco CTT",
-                                    "value": "ctt"
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Banco BNI",
-                                    "value": "bni"
-                                }
-                            ],
-                            "optionsBinder": {
-                                "className": "",
-                                "properties": {}
+                "elements": [{
+                    "className": "org.joget.apps.form.lib.SelectBox",
+                    "properties": {
+                        "controlField": "",
+                        "id": "nome_banco",
+                        "label": "Nome do Banco",
+                        "multiple": "",
+                        "options": [
+                            {
+                                "grouping": "",
+                                "label": "Novo Banco",
+                                "value": "nb"
                             },
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "validator": {
-                                "className": "org.joget.apps.form.lib.DefaultValidator",
-                                "properties": {
-                                    "mandatory": "true",
-                                    "message": "#i18n.mandatorymsg#",
-                                    "type": ""
-                                }
+                            {
+                                "grouping": "",
+                                "label": "Montepio Geral",
+                                "value": "mg"
                             },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
+                            {
+                                "grouping": "",
+                                "label": "Banco Comercial Português",
+                                "value": "bcp"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "EuroBic",
+                                "value": "bic"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Banco CTT",
+                                "value": "ctt"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Banco BNI",
+                                "value": "bni"
+                            }
+                        ],
+                        "optionsBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "validator": {
+                            "className": "org.joget.apps.form.lib.DefaultValidator",
+                            "properties": {
+                                "mandatory": "true",
+                                "message": "#i18n.mandatorymsg#",
+                                "type": ""
+                            }
+                        },
+                        "value": "",
+                        "workflowVariable": ""
                     }
-                ],
+                }],
                 "properties": {"width": "100%"}
             }],
             "properties": {
@@ -347,6 +336,23 @@
                             },
                             "value": "",
                             "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.marketplace.FormRecordLockingField",
+                        "properties": {
+                            "displayNameFormat": "firstLast",
+                            "formDefId": "banco",
+                            "id": "field10",
+                            "label": "Record Lock",
+                            "lockDuration": "5",
+                            "validator": {
+                                "className": "org.joget.marketplace.FormRecordLockingValidator",
+                                "properties": {
+                                    "errorMessage": "Record is locked. Update is not allowed.",
+                                    "formDefId": "banco"
+                                }
+                            }
                         }
                     }
                 ],
