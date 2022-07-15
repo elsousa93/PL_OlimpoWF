@@ -87,13 +87,15 @@
         },
         "postProcessorRunOn": "create",
         "storeBinder": {
-            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+            "className": "org.joget.plugin.enterprise.JdbcStoreBinder",
             "properties": {
                 "autoHandleFiles": "",
                 "autoHandleWorkflowVariable": "true",
-                "cacheInterval": "",
-                "script": "return null;",
-                "useAjax": ""
+                "check_sql": "SELECT\r\n   *\r\nFROM\r\n   app_fd_data_chat\r\nWHERE\r\n   id =  {id}",
+                "delete_sql": "SELECT * FROM app_fd_data_chat",
+                "insert_sql": "SELECT * FROM app_fd_data_chat",
+                "jdbcDatasource": "default",
+                "update_sql": "UPDATE app_fd_table\r\nSET    id = {id},\r\n        c_lida = 'sim'\r\nWHERE  id = {id}"
             }
         },
         "tableName": "mensagens_chat"
