@@ -82,20 +82,21 @@
             "properties": {}
         },
         "postProcessor": {
-            "className": "",
-            "properties": {}
+            "className": "org.joget.apps.app.lib.DatabaseUpdateTool",
+            "properties": {
+                "jdbcDatasource": "default",
+                "query": "UPDATE app_fd_data_chat SET c_lida='sim' WHERE id='ID-000017';"
+            }
         },
-        "postProcessorRunOn": "create",
+        "postProcessorRunOn": "both",
         "storeBinder": {
-            "className": "org.joget.plugin.enterprise.JdbcStoreBinder",
+            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
             "properties": {
                 "autoHandleFiles": "",
-                "autoHandleWorkflowVariable": "",
-                "check_sql": "SELECT\r\n   *\r\nFROM\r\n   app_fd_data_chat\r\nWHERE\r\n   c_thread_id =  {id}",
-                "delete_sql": "SELECT * FROM app_fd_data_chat",
-                "insert_sql": "SELECT * FROM app_fd_data_chat",
-                "jdbcDatasource": "default",
-                "update_sql": "UPDATE app_fd_table\r\nSET c_lida = 'sim'\r\nWHERE  c_thread_id = {id}"
+                "autoHandleWorkflowVariable": "true",
+                "cacheInterval": "",
+                "script": "return null;",
+                "useAjax": ""
             }
         },
         "tableName": "mensagens_chat"
