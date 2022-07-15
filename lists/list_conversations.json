@@ -1,17 +1,52 @@
 {
     "actions": [],
     "binder": {
-        "className": "",
-        "name": "",
-        "properties": {}
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "username",
+            "sql": "SELECT * FROM app_fd_mensagens_chat mc WHERE mc.id like '%#currentUser.id#%' "
+        }
     },
-    "columns": [],
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "id",
+            "name": "id",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_0",
+            "label": "dateModified",
+            "name": "dateModified",
+            "sortable": "false"
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
     "description": "",
-    "filters": [],
+    "filters": [{
+        "id": "filter_0",
+        "label": "dateModified",
+        "name": "dateModified",
+        "type": {
+            "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+            "properties": {}
+        }
+    }],
     "id": "list_conversations",
     "name": "List - Conversations",
     "order": "",
     "orderBy": "",
     "pageSize": "0",
-    "rowActions": []
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "rowActions": [],
+    "showPageSizeSelector": "true",
+    "useSession": "false"
 }
