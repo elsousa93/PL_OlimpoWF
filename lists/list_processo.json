@@ -1,20 +1,66 @@
 {
     "actions": [],
     "binder": {
-        "className": "org.joget.plugin.enterprise.AdvancedFormRowDataListBinder",
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
         "properties": {
-            "customSelectionValue": "",
-            "extraCondition": "",
-            "filters": [],
-            "formDefId": "processo",
-            "functionColumns": [],
-            "groupBy": "",
-            "joins": []
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "IdProcesso",
+            "sql": "SELECT p.id as IdProcesso, dp.*\nFROM app_fd_processos p \nJOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
-    "columns": [],
+    "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "c_n_wf_banco",
+            "name": "c_n_wf_banco",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_2",
+            "label": "c_nome_banco",
+            "name": "c_nome_banco",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_3",
+            "label": "c_nome_cliente",
+            "name": "c_nome_cliente",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "c_tipo_processo",
+            "name": "c_tipo_processo",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_0",
+            "label": "c_data_ultima_alteracao",
+            "name": "c_data_ultima_alteracao",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_5",
+            "label": "c_urgencia",
+            "name": "c_urgencia",
+            "sortable": "false"
+        }
+    ],
     "considerFilterWhenGetTotal": "",
     "description": "",
     "disableResponsive": "",
