@@ -112,13 +112,10 @@
             "properties": {}
         },
         "postProcessor": {
-            "className": "org.joget.plugin.enterprise.FormDataUpdateTool",
+            "className": "org.joget.apps.app.lib.DatabaseUpdateTool",
             "properties": {
-                "fields": [{
-                    "field": "lida",
-                    "value": "sim"
-                }],
-                "formDefId": "dataChat"
+                "jdbcDatasource": "default",
+                "query": "UPDATE app_fd_data_chat dc SET c_lida=\"#form.mensagens_chat.id#\" WHERE c_thread_id='admin-a_dpardal';"
             }
         },
         "postProcessorRunOn": "both",
