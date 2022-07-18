@@ -16,7 +16,7 @@
                             "autoHandleFiles": "",
                             "autoHandleWorkflowVariable": "true",
                             "jdbcDatasource": "default",
-                            "sql": "SELECT mc.id, mc.dateModified, sum(case dc.c_lida when 'não' then 1 else 0 end) as nao_lida FROM app_fd_mensagens_chat mc  \nJOIN app_fd_data_chat dc ON dc.c_thread_id = mc.id \nWHERE mc.id like '%#currentUser.id#%' AND dc.createdby like '#currentUser.id#'\ngroup by mc.id\nORDER BY mc.dateModified desc"
+                            "sql": "SELECT mc.id, mc.dateModified, sum(case dc.c_lida when 'não' then 1 else 0 end) as nao_lida FROM app_fd_mensagens_chat mc  \nJOIN app_fd_data_chat dc ON dc.c_thread_id = mc.id \nWHERE mc.id like '%#currentUser.id#%' AND dc.createdby not like '#currentUser.id#'\ngroup by mc.id\nORDER BY mc.dateModified desc"
                         }
                     },
                     "options": [
