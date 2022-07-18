@@ -81,8 +81,13 @@
         "description": "",
         "id": "conversasChat",
         "loadBinder": {
-            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
-            "properties": {}
+            "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
+            "properties": {
+                "autoHandleFiles": "",
+                "autoHandleWorkflowVariable": "true",
+                "jdbcDatasource": "default",
+                "sql": "SELECT id FROM app_fd_mensagem_chat;"
+            }
         },
         "name": "Chat Conversas",
         "noPermissionMessage": "",
