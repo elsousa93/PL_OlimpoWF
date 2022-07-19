@@ -107,10 +107,18 @@
                         "readonly": "",
                         "readonlyLabel": "",
                         "storeBinder": {
-                            "className": "org.joget.plugin.enterprise.ParentFormBinder",
-                            "properties": {}
+                            "className": "org.joget.plugin.enterprise.JdbcStoreBinder",
+                            "properties": {
+                                "autoHandleFiles": "",
+                                "autoHandleWorkflowVariable": "true",
+                                "check_sql": "SELECT\r\n   *\r\nFROM\r\n   app_fd_comunicacoes_proce\r\nWHERE\r\n   id = \"#form.comunicacoes_proce.id#\"\"",
+                                "delete_sql": "UPDATE app_fd_table\r\nSET    c_mensagem = \"\"\r\nWHERE  id = \"#form.comunicacoes_proce.id#\"",
+                                "insert_sql": "UPDATE app_fd_table\r\nSET    c_mensagem = {template}\r\nWHERE  id = \"#form.comunicacoes_proce.id#\"",
+                                "jdbcDatasource": "default",
+                                "update_sql": "UPDATE app_fd_table\r\nSET    c_mensagem = {template}\r\nWHERE  id = \"#form.comunicacoes_proce.id#\""
+                            }
                         },
-                        "subFormParentId": "id"
+                        "subFormParentId": ""
                     }
                 },
                 {
