@@ -181,8 +181,13 @@
         "description": "",
         "id": "emailProcesso",
         "loadBinder": {
-            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
-            "properties": {}
+            "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
+            "properties": {
+                "autoHandleFiles": "",
+                "autoHandleWorkflowVariable": "true",
+                "jdbcDatasource": "default",
+                "sql": "SELECT * FROM app_fd_comunicacoes_proce WHERE id = \"#requestParam.id#\""
+            }
         },
         "name": "Email",
         "noPermissionMessage": "",
