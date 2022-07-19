@@ -47,7 +47,7 @@
                                 "autoHandleFiles": "",
                                 "autoHandleWorkflowVariable": "",
                                 "jdbcDatasource": "default",
-                                "sql": "SELECT *\nFROM app_fd_comunicacoes_proce cp\nWHERE cp.c_id_processo = '#process.processId#';"
+                                "sql": "SELECT cp.c_destinatarios, cp.assunto, cp.anexos, te.nome, cp.mensagem\nFROM app_fd_comunicacoes_proce cp\nJOIN app_fd_template_email te ON te.id = cp.template\nWHERE cp.c_id_processo = '#process.processId#';"
                             }
                         },
                         "options": [
