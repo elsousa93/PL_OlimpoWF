@@ -186,7 +186,7 @@
                 "autoHandleFiles": "",
                 "autoHandleWorkflowVariable": "true",
                 "jdbcDatasource": "default",
-                "sql": "SELECT * FROM app_fd_comunicacoes_proce WHERE id = \"#requestParam.id#\""
+                "sql": "SELECT cp.c_destinatarios, cp.assunto, cp.anexos, te.nome as 'c_template', cp.mensagem FROM app_fd_comunicacoes_proce cp \nJOIN app_fd_template_email te ON te.id = c_template"
             }
         },
         "name": "Email",
