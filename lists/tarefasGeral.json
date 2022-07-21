@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "(SELECT p.id, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco, p.DateCreated\nFROM shkprocesses sp\nLEFT JOIN app_fd_processos p ON p.id = sp.Id\nJOIN SHKActivities sact ON sact.ProcessId = sp.Id\nJOIN SHKActivityStates ssta ON ssta.oid = sact.State\nJOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nJOIN shkprocessstates sps ON sps.oid = sp.State\nWHERE ssta.KeyValue = 'open.not_running.not_started'\nAND sps.KeyValue = 'open.running')\nUNION \n(SELECT e.id, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco, e.DateCreated\nFROM app_fd_esclarecimentos e\nJOIN shkprocesses sp ON sp.Id = e.id\nJOIN app_fd_processos p ON p.id = e.c_id_processo\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nJOIN SHKActivities sact ON sact.ProcessId = e.id\nJOIN SHKActivityStates ssta ON ssta.oid = sact.State\nJOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\nJOIN shkprocessstates sps ON sps.oid = sp.State\nWHERE ssta.KeyValue = 'open.not_running.not_started'\nAND sps.KeyValue = 'open.running')"
+            "sql": "SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as 'dateCreated', sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco\nFROM shkprocesses sp\nLEFT JOIN app_fd_processos p ON p.id = sp.Id\nJOIN shkprocessstates sps ON sps.oid = sp.State\nJOIN SHKActivities sact ON sact.ProcessId = sp.Id\nJOIN SHKActivityStates ssta ON ssta.oid = sact.State\nJOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nWHERE sps.KeyValue = 'open.running'\nAND ssta.KeyValue = 'open.not_running.not_started'"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -88,31 +88,6 @@
             "exclude_export": "",
             "filterable": true,
             "format": {
-                "className": "org.joget.plugin.enterprise.DateFormatter",
-                "properties": {
-                    "dateStoreInUTC": "true",
-                    "displayFormat": "dd-MM-yyyy hh:mm:ss"
-                }
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_4",
-            "label": "Data Criação",
-            "name": "DateCreated",
-            "sortable": "true",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
                 "className": "",
                 "properties": {}
             },
@@ -130,27 +105,6 @@
     "description": "",
     "disableResponsive": "",
     "filters": [
-        {
-            "datalist_type": "filter",
-            "filterParamName": "d-7291937-fn_DateCreated",
-            "hidden": "",
-            "id": "filter_5",
-            "label": "Data Criação",
-            "name": "DateCreated",
-            "type": {
-                "className": "org.joget.plugin.enterprise.DateRangeDataListFilterType",
-                "properties": {
-                    "dateStoreInUTC": "true",
-                    "format": "mm/dd/yy",
-                    "fromDefaultValue": "",
-                    "fromLabel": "De",
-                    "showFieldLabel": "true",
-                    "toDefaultValue": "",
-                    "toLabel": "Até",
-                    "yearRange": "c-10:c+10"
-                }
-            }
-        },
         {
             "datalist_type": "filter",
             "filterParamName": "d-7291937-fn_NumeroWFBanco",
@@ -210,7 +164,7 @@
     "id": "tarefasGeral",
     "name": "List - Tarefas",
     "order": "1",
-    "orderBy": "DateCreated",
+    "orderBy": "",
     "pageSize": "0",
     "pageSizeSelectorOptions": "10,20,30,40,50,100",
     "responsiveView": [
