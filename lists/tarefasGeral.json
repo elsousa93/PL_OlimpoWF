@@ -135,8 +135,13 @@
             "label": "Data Criação",
             "name": "dateCreated",
             "type": {
-                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
-                "properties": {"defaultValue": ""}
+                "className": "org.joget.plugin.enterprise.DateDataListFilterType",
+                "properties": {
+                    "defaultValue": "",
+                    "format": "dd-MM-yyyy",
+                    "formatJava": "MM/dd/yyyy",
+                    "yearRange": "c-10:c"
+                }
             }
         },
         {
@@ -164,15 +169,6 @@
             }
         },
         {
-            "id": "filter_2",
-            "label": "Atividade",
-            "name": "Atividade",
-            "type": {
-                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
-                "properties": {}
-            }
-        },
-        {
             "id": "filter_1",
             "label": "Processo",
             "name": "Processo",
@@ -189,8 +185,29 @@
             "label": "Urgência",
             "name": "Urgencia",
             "type": {
-                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
-                "properties": {"defaultValue": ""}
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "controlField": "",
+                    "defaultValue": "",
+                    "multiple": "",
+                    "options": [
+                        {
+                            "grouping": "",
+                            "label": "Sim",
+                            "value": "sim"
+                        },
+                        {
+                            "grouping": "",
+                            "label": "Não",
+                            "value": "nao"
+                        }
+                    ],
+                    "optionsBinder": {
+                        "className": "",
+                        "properties": {}
+                    },
+                    "size": ""
+                }
             }
         }
     ],
