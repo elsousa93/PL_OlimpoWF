@@ -150,8 +150,8 @@
             "properties": {}
         },
         "postProcessor": {
-            "className": "org.joget.apps.app.lib.BeanShellTool",
-            "properties": {"script": "import java.util.Map;\r\nimport javax.servlet.http.HttpServletRequest;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport org.joget.apps.app.service.AppService;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.workflow.model.service.WorkflowManager;\r\nimport org.joget.workflow.model.WorkflowAssignment;\r\nimport org.joget.workflow.model.WorkflowProcess;\r\nimport org.joget.workflow.model.WorkflowProcessResult;\r\n  \r\npublic Object execute(WorkflowAssignment assignment, AppDefinition appDef, HttpServletRequest request) {\r\n    \r\n    try{\r\n        AppService appService = (AppService) AppUtil.getApplicationContext().getBean(\"appService\");\r\n        WorkflowManager workflowManager = (WorkflowManager) AppUtil.getApplicationContext().getBean(\"workflowManager\");\r\n        \r\n        //get process\r\n        WorkflowProcess process = appService.getWorkflowProcessForApp(appDef.getAppId(), appDef.getVersion().toString(), \"CHGlobal\");\r\n        LogUtil.info(appDef.toString(), \"ProcessDefId: \" + process.getId());\r\n        \r\n        //start process\r\n        WorkflowProcessResult result = workflowManager.processStart(process.getId());\r\n        \r\n        //get current record id\r\n        String processId = result.getProcess().getInstanceId();\r\n        LogUtil.info(appDef.toString(), \"Process id = \" + processId);\r\n         \r\n    }catch(Throwable e){\r\n        LogUtil.error(appDef.toString(), e, \"Error creating process\");\r\n    }\r\n     \r\n    return null;\r\n}\r\n  \r\n//call execute method with injected variable\r\nreturn execute(workflowAssignment, appDef, request);"}
+            "className": "",
+            "properties": {}
         },
         "postProcessorRunOn": "create",
         "storeBinder": {
