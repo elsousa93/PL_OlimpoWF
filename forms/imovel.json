@@ -128,6 +128,15 @@
                     }
                 },
                 {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "valor_cv_verdadeiro",
+                        "label": "",
+                        "value": "<script> \r\n    console.log(\"f1\");\r\n$('#valor_cv').change(function(){\r\n   \r\n    const getValueInput = () =>{\r\n      let number = document.getElementById(\"valor_cv\").value; \r\n      document.getElementById(\"valor_cv\").innerHTML = number; \r\n    }\r\n    \r\n    var f1 = FormUtil.getField(\"valor_cv\");\r\n    //var number = FormUtil.getValue(\"valor_cv\");\r\n    \r\n    console.log(number);\r\n    \r\n    \r\n    //let number = '1237846';\r\n    number = number.replaceAll('.', \"\");\r\n    number = number.replaceAll('\u20ac', \"\");\r\n    number = number.replaceAll('Eur', \"\");\r\n    number = number.replaceAll(',', '.');\r\n    \r\n    let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(number);\r\n\r\n    num = num.replace(/\\s/g, '.');\r\n    num = num.replaceAll('.\u20ac', ' EUR');\r\n    \r\n    $(f1).val(num);\r\n\r\n    console.log(num); \r\n    \r\n    //formData.addFormError(id, \"Campo obrigatório quando se é casado\");\r\n    \r\n});\r\n<\/script> "
+                    }
+                },
+                {
                     "className": "org.joget.apps.form.lib.TextField",
                     "properties": {
                         "encryption": "",
@@ -141,11 +150,8 @@
                         "storeNumeric": "",
                         "style": "",
                         "validator": {
-                            "className": "org.joget.apps.form.lib.BeanShellValidator",
-                            "properties": {
-                                "decoration": "",
-                                "script": "<script> \r\n    console.log(\"f1\");\r\n$('#valor_cv').change(function(){\r\n   \r\n    const getValueInput = () =>{\r\n      let number = document.getElementById(\"valor_cv\").value; \r\n      document.getElementById(\"valor_cv\").innerHTML = number; \r\n    }\r\n    \r\n    var f1 = FormUtil.getField(\"valor_cv\");\r\n    //var number = FormUtil.getValue(\"valor_cv\");\r\n    \r\n    console.log(number);\r\n    \r\n    \r\n    //let number = '1237846';\r\n    number = number.replaceAll('.', \"\");\r\n    number = number.replaceAll('\u20ac', \"\");\r\n    number = number.replaceAll('Eur', \"\");\r\n    number = number.replaceAll(',', '.');\r\n    \r\n    let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(number);\r\n\r\n    num = num.replace(/\\s/g, '.');\r\n    num = num.replaceAll('.\u20ac', ' EUR');\r\n    \r\n    $(f1).val(num);\r\n\r\n    console.log(num); \r\n    \r\n    //formData.addFormError(id, \"Campo obrigatório quando se é casado\");\r\n    \r\n});\r\n<\/script> "
-                            }
+                            "className": "",
+                            "properties": {}
                         },
                         "value": "",
                         "workflowVariable": ""
