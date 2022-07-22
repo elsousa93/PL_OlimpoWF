@@ -141,8 +141,11 @@
                         "storeNumeric": "",
                         "style": "",
                         "validator": {
-                            "className": "",
-                            "properties": {}
+                            "className": "org.joget.apps.form.lib.BeanShellValidator",
+                            "properties": {
+                                "decoration": "",
+                                "script": "<script> \r\n\r\n$(document).ready(function(){\r\n    const getValueInput = () =>{\r\n      let inputValue = document.getElementById(\"valor_cv\").value; \r\n      document.getElementById(\"valor_cv\").innerHTML = inputValue; \r\n    }\r\n    \r\n    num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(inputValue);\r\n    console.log(num);\r\n})\r\n<\/script> "
+                            }
                         },
                         "value": "",
                         "workflowVariable": ""
