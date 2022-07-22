@@ -144,7 +144,7 @@
                             "className": "org.joget.apps.form.lib.BeanShellValidator",
                             "properties": {
                                 "decoration": "",
-                                "script": "<script> \r\n\r\n$('#valor_cv').change(function(){\r\n    const getValueInput = () =>{\r\n      let inputValue = document.getElementById(\"valor_cv\").value; \r\n      document.getElementById(\"valor_cv\").innerHTML = inputValue; \r\n    }\r\n    \r\n    num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(inputValue);\r\n    console.log(num);\r\n})\r\n<\/script> "
+                                "script": "<script> \r\n\r\n$('#valor_cv').change(function(){\r\n    \r\n    var f1 = FormUtil.getField(\"valor_cv\");\r\n    var t = FormUtil.getValue(\"valor_cv\")\r\n    \r\n    num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(t);\r\n    console.log(num);\r\n    \r\n    $(f1).val(t);\r\n})\r\n<\/script> "
                             }
                         },
                         "value": "",
