@@ -650,6 +650,28 @@
                             "value": "",
                             "workflowVariable": ""
                         }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "valor_emprestimo_verdadeiro",
+                            "label": "",
+                            "permissionHidden": "",
+                            "permission_rules": {},
+                            "value": "<script type=\"text/javascript\">\r\n\r\n    $(document).ready(function(){\r\n\r\n        var f1 = FormUtil.getField(\"valor_imovel\");\r\n        var number = FormUtil.getValue(\"valor_imovel\");\r\n        \r\n        number = number.replaceAll('.', \"\");\r\n        number = number.replaceAll('\u20ac', \"\");\r\n        number = number.replaceAll('Eur', \"\");\r\n        number = number.replaceAll(',', '.');\r\n        \r\n        let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(number);\r\n    \r\n        num = num.replace(/\\s/g, '.');\r\n        num = num.replaceAll('.\u20ac', ' EUR');\r\n        \r\n        $(f1).val(num);\r\n\r\n    });\r\n<\/script> "
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "valor_emprestimo_verdadeiro",
+                            "label": "",
+                            "permissionHidden": "",
+                            "permission_rules": {},
+                            "value": "<script type=\"text/javascript\">\r\n\r\n    $(document).ready(function(){\r\n\r\n        var f1 = FormUtil.getField(\"valor_seguro\");\r\n        var number = FormUtil.getValue(\"valor_seguro\");\r\n        \r\n        number = number.replaceAll('.', \"\");\r\n        number = number.replaceAll('\u20ac', \"\");\r\n        number = number.replaceAll('Eur', \"\");\r\n        number = number.replaceAll(',', '.');\r\n        \r\n        let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(number);\r\n    \r\n        num = num.replace(/\\s/g, '.');\r\n        num = num.replaceAll('.\u20ac', ' EUR');\r\n        \r\n        $(f1).val(num);\r\n\r\n    });\r\n<\/script> "
+                        }
                     }
                 ],
                 "properties": {"width": "100%"}
