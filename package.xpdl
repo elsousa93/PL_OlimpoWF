@@ -743,23 +743,6 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="993,71"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="CHContNormSub" Name="Contratação Normal">
-                    <Implementation>
-                        <SubFlow Execution="SYNCHR" Id="CHContratacaoNormal">
-                            <ActualParameters>
-                                <ActualParameter>status</ActualParameter>
-                                <ActualParameter>complexidade</ActualParameter>
-                                <ActualParameter>banco</ActualParameter>
-                                <ActualParameter>departamento</ActualParameter>
-                            </ActualParameters>
-                        </SubFlow>
-                    </Implementation>
-                    <Performer>participant3</Performer>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="493,14"/>
-                    </ExtendedAttributes>
-                </Activity>
                 <Activity Id="HardcodeWFVariables" Name="Hardcode Values">
                     <Implementation>
                         <Tool Id="default_application"/>
@@ -797,11 +780,6 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="CHContNormSub" Id="transition11" To="subflow3">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="route1" Id="transition12" To="subflow2">
                     <Condition Type="OTHERWISE"/>
                     <ExtendedAttributes>
@@ -813,11 +791,9 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="route1" Id="transition10" To="CHContNormSub">
-                    <Condition Type="CONDITION">complexidade === 'Normal'</Condition>
+                <Transition From="route1" Id="transition10" To="subflow3">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;complexidade&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;Normal&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
             </Transitions>
