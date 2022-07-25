@@ -31,7 +31,7 @@
             "filterable": true,
             "format": {
                 "className": "org.joget.plugin.enterprise.BeanShellFormatter",
-                "properties": {"script": "return value;"}
+                "properties": {"script": "import org.json.JSONArray;\r\nimport org.json.JSONObject;  \r\n\r\n\r\nJSONArray array = new JSONArray(value);  \r\nJSONObject object = array.getJSONObject(0);  \r\nobject.getString(\"createdByName\");\r\n\r\nreturn object.getString(\"createdByName\");;"}
             },
             "headerAlignment": "",
             "hidden": "false",
