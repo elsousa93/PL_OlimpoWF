@@ -12,46 +12,20 @@
                         "id": "nome_banco",
                         "label": "Nome do Banco",
                         "multiple": "",
-                        "options": [
-                            {
-                                "grouping": "",
-                                "label": "",
-                                "value": ""
-                            },
-                            {
-                                "grouping": "",
-                                "label": "Novo Banco",
-                                "value": "nb"
-                            },
-                            {
-                                "grouping": "",
-                                "label": "Montepio Geral",
-                                "value": "mg"
-                            },
-                            {
-                                "grouping": "",
-                                "label": "Banco Comercial Português",
-                                "value": "bcp"
-                            },
-                            {
-                                "grouping": "",
-                                "label": "EuroBic",
-                                "value": "bic"
-                            },
-                            {
-                                "grouping": "",
-                                "label": "Banco CTT",
-                                "value": "ctt"
-                            },
-                            {
-                                "grouping": "",
-                                "label": "Banco BNI",
-                                "value": "bni"
-                            }
-                        ],
+                        "options": [],
                         "optionsBinder": {
-                            "className": "",
-                            "properties": {}
+                            "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                            "properties": {
+                                "addEmptyOption": "true",
+                                "cacheInterval": "",
+                                "emptyLabel": "",
+                                "extraCondition": "c_nome_campo = 'nome_banco'",
+                                "formDefId": "adicionarOpcaoLV",
+                                "groupingColumn": "",
+                                "idColumn": "value",
+                                "labelColumn": "label",
+                                "useAjax": ""
+                            }
                         },
                         "readonly": "",
                         "readonlyLabel": "",
@@ -130,7 +104,7 @@
                             "className": "org.joget.apps.form.lib.BeanShellValidator",
                             "properties": {
                                 "decoration": "",
-                                "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues) {\r\n    boolean result = true;\r\n     \r\n    //get dropdown select box value\r\n    String field1Id = \"nome_banco\";\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field1 = FormUtil.findElement(field1Id, form, formData);\r\n  \r\n    if (field1 != null) {\r\n        //get value of field 1\r\n        String[] field1Values = FormUtil.getElementPropertyValues(field1, formData);\r\n  \r\n        if(field1Values[0].equalsIgnoreCase(\"nb\") && fileUploadValues[0].isEmpty() ){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório quando se trata de um processo do Novo Banco\");\r\n            result = false;\r\n        }\r\n    } else {\r\n        //ignore if the dropdown does not exist\r\n    }\r\n  \r\n    return result;\r\n}\r\n  \r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues) {\r\n    boolean result = true;\r\n     \r\n    //get dropdown select box value\r\n    String field1Id = \"nome_banco\";\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field1 = FormUtil.findElement(field1Id, form, formData);\r\n  \r\n    if (field1 != null) {\r\n        //get value of field 1\r\n        String[] field1Values = FormUtil.getElementPropertyValues(field1, formData);\r\n  \r\n        if(field1Values[0].equalsIgnoreCase(\"NB\") && fileUploadValues[0].isEmpty() ){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório quando se trata de um processo do Novo Banco\");\r\n            result = false;\r\n        }\r\n    } else {\r\n        //ignore if the dropdown does not exist\r\n    }\r\n  \r\n    return result;\r\n}\r\n  \r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
                             }
                         },
                         "value": "",
