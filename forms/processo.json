@@ -163,7 +163,7 @@
         },
         "postProcessor": {
             "className": "org.joget.apps.app.lib.BeanShellTool",
-            "properties": {"script": "import org.joget.workflow.model.service.*;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.app.service.AppUtil;\r\n \r\nString ProcessID = workflowAssignment.getProcessId();\r\nString Username = \"#currentUser.username#\";\r\nString Performer = \"#process.activityInst.{assignment.activityDefId}.performer#\";\r\nString LaneUser = \"User_\" + Performer;\r\n\r\n\r\nWorkflowManager wm = (WorkflowManager) pluginManager.getBean(\"workflowManager\");\r\n\r\nwm.processVariable(ProcessID, LaneUser , Username);"}
+            "properties": {"script": "import org.joget.workflow.model.service.*;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.app.service.AppUtil;\r\n \r\nString ProcessID = workflowAssignment.getProcessId();\r\nString Username = \"#currentUser.username#\";\r\nString Performer = \"#process.activityInst.{assignment.activityDefId}.performer#\";\r\nString LaneUser = \"user_\" + Performer;\r\n\r\n\r\nWorkflowManager wm = (WorkflowManager) pluginManager.getBean(\"workflowManager\");\r\n\r\nwm.processVariable(ProcessID, LaneUser , Username);"}
         },
         "postProcessorRunOn": "both",
         "storeBinder": {
