@@ -658,6 +658,11 @@
                         <BasicType Type="STRING"/>
                     </DataType>
                 </DataField>
+                <DataField Id="user_contratacao_bcp" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
             </DataFields>
             <Activities>
                 <Activity Id="route1">
@@ -758,6 +763,24 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="219,28"/>
                     </ExtendedAttributes>
                 </Activity>
+                <Activity Id="contratacao_normal_crh" Name="Contratação Normal">
+                    <Implementation>
+                        <SubFlow Execution="SYNCHR" Id="CHContratacaoNormal">
+                            <ActualParameters>
+                                <ActualParameter>status</ActualParameter>
+                                <ActualParameter>complexidade</ActualParameter>
+                                <ActualParameter>banco</ActualParameter>
+                                <ActualParameter>departamento</ActualParameter>
+                                <ActualParameter>user_contratacao_bcp</ActualParameter>
+                            </ActualParameters>
+                        </SubFlow>
+                    </Implementation>
+                    <Performer>participant3</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="506,17"/>
+                    </ExtendedAttributes>
+                </Activity>
             </Activities>
             <Transitions>
                 <Transition From="subflow3" Id="transition5" To="subflow4">
@@ -796,7 +819,12 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="route1" Id="transition10" To="subflow3">
+                <Transition From="route1" Id="transition10" To="contratacao_normal_crh">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="contratacao_normal_crh" Id="transition11" To="subflow3">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
