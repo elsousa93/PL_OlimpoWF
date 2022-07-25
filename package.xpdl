@@ -220,6 +220,16 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="528,45"/>
                     </ExtendedAttributes>
                 </Activity>
+                <Activity Id="validacaoBancariaLegal" Name="Validação Bancária e Legal">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>contratacao_bcp</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="contratacao_bcp"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="698,44"/>
+                    </ExtendedAttributes>
+                </Activity>
             </Activities>
             <Transitions>
                 <Transition From="route1" Id="transition1" To="PreenchimentoProcesso">
@@ -237,12 +247,17 @@
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;sub_status&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;2&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
+                <Transition From="PreenchimentoProcesso" Id="transition3" To="validacaoBancariaLegal">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
             </Transitions>
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="participant7;contratacao_bcp;participant4;participant6"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant7,CONNECTING_ACTIVITY_ID=route1,X_OFFSET=88,Y_OFFSET=48,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant4,CONNECTING_ACTIVITY_ID=activity2,X_OFFSET=805,Y_OFFSET=52,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=contratacao_bcp,CONNECTING_ACTIVITY_ID=PreenchimentoProcesso,X_OFFSET=807,Y_OFFSET=57,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=contratacao_bcp,CONNECTING_ACTIVITY_ID=validacaoBancariaLegal,X_OFFSET=945,Y_OFFSET=44,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="CHGlobal" Name="CH-Global">
