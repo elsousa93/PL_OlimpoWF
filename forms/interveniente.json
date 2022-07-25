@@ -51,26 +51,20 @@
                             "id": "tipo_interveniente",
                             "label": "Tipo de Interveniente",
                             "multiple": "",
-                            "options": [
-                                {
-                                    "grouping": "",
-                                    "label": "Vendedor",
-                                    "value": "vendedor"
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Proponente",
-                                    "value": "proponente"
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Hipotecante",
-                                    "value": "hipotecante"
-                                }
-                            ],
+                            "options": [],
                             "optionsBinder": {
-                                "className": "",
-                                "properties": {}
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "extraCondition": "c_nome_campo = 'tipo_interveniente'",
+                                    "formDefId": "adicionarOpcaoLV",
+                                    "groupingColumn": "",
+                                    "idColumn": "value",
+                                    "labelColumn": "label",
+                                    "useAjax": ""
+                                }
                             },
                             "readonly": "",
                             "readonlyLabel": "",
@@ -223,41 +217,20 @@
                                 "id": "estado_civil",
                                 "label": "Estado Civil",
                                 "multiple": "",
-                                "options": [
-                                    {
-                                        "grouping": "",
-                                        "label": "",
-                                        "value": ""
-                                    },
-                                    {
-                                        "grouping": "",
-                                        "label": "Solteiro(a)",
-                                        "value": "solteiro"
-                                    },
-                                    {
-                                        "grouping": "",
-                                        "label": "Casado(a)",
-                                        "value": "casado"
-                                    },
-                                    {
-                                        "grouping": "",
-                                        "label": "Divorciado(a)",
-                                        "value": "divorciado"
-                                    },
-                                    {
-                                        "grouping": "",
-                                        "label": "Viúvo(a)",
-                                        "value": "viuvo"
-                                    },
-                                    {
-                                        "grouping": "",
-                                        "label": "Separado judicialmente de pessoas e bens",
-                                        "value": "sep_pessoas_bens"
-                                    }
-                                ],
+                                "options": [],
                                 "optionsBinder": {
-                                    "className": "",
-                                    "properties": {}
+                                    "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                    "properties": {
+                                        "addEmptyOption": "true",
+                                        "cacheInterval": "",
+                                        "emptyLabel": "",
+                                        "extraCondition": "c_nome_campo = 'estado_civil'",
+                                        "formDefId": "adicionarOpcaoLV",
+                                        "groupingColumn": "",
+                                        "idColumn": "value",
+                                        "labelColumn": "label",
+                                        "useAjax": ""
+                                    }
                                 },
                                 "permission_rules": {"3e334771-7c1d-4882-b298-443c91d6bf3e": {}},
                                 "readonly": "",
@@ -278,31 +251,20 @@
                                 "id": "regime_casamento",
                                 "label": "Regime Casamento",
                                 "multiple": "",
-                                "options": [
-                                    {
-                                        "grouping": "",
-                                        "label": "",
-                                        "value": ""
-                                    },
-                                    {
-                                        "grouping": "",
-                                        "label": "Comunhão de adquiridos",
-                                        "value": "comunhao_adquiridos"
-                                    },
-                                    {
-                                        "grouping": "",
-                                        "label": "Comunhão geral",
-                                        "value": "comunhao_geral"
-                                    },
-                                    {
-                                        "grouping": "",
-                                        "label": "Separação de bens",
-                                        "value": "separacao_bens"
-                                    }
-                                ],
+                                "options": [],
                                 "optionsBinder": {
-                                    "className": "",
-                                    "properties": {}
+                                    "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                    "properties": {
+                                        "addEmptyOption": "true",
+                                        "cacheInterval": "",
+                                        "emptyLabel": "",
+                                        "extraCondition": "c_nome_campo = 'regime_casamento'",
+                                        "formDefId": "adicionarOpcaoLV",
+                                        "groupingColumn": "",
+                                        "idColumn": "value",
+                                        "labelColumn": "label",
+                                        "useAjax": ""
+                                    }
                                 },
                                 "permission_rules": {"3e334771-7c1d-4882-b298-443c91d6bf3e": {}},
                                 "readonly": "",
@@ -312,7 +274,7 @@
                                     "className": "org.joget.apps.form.lib.BeanShellValidator",
                                     "properties": {
                                         "decoration": "",
-                                        "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues) {\r\n    boolean result = true;\r\n     \r\n    //get dropdown select box value\r\n    String field1Id = \"estado_civil\";\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field1 = FormUtil.findElement(field1Id, form, formData);\r\n  \r\n    if (field1 != null) {\r\n        //get value of field 1\r\n        String[] field1Values = FormUtil.getElementPropertyValues(field1, formData);\r\n  \r\n        if(field1Values[0].equalsIgnoreCase(\"casado\") && fileUploadValues[0].isEmpty() ){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório quando se é casado\");\r\n            result = false;\r\n        }\r\n    } else {\r\n        //ignore if the dropdown does not exist\r\n    }\r\n  \r\n    return result;\r\n}\r\n  \r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                        "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues) {\r\n    boolean result = true;\r\n     \r\n    //get dropdown select box value\r\n    String field1Id = \"estado_civil\";\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field1 = FormUtil.findElement(field1Id, form, formData);\r\n  \r\n    if (field1 != null) {\r\n        //get value of field 1\r\n        String[] field1Values = FormUtil.getElementPropertyValues(field1, formData);\r\n  \r\n        if(field1Values[0].equalsIgnoreCase(\"CAS\") && fileUploadValues[0].isEmpty() ){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório quando se é casado\");\r\n            result = false;\r\n        }\r\n    } else {\r\n        //ignore if the dropdown does not exist\r\n    }\r\n  \r\n    return result;\r\n}\r\n  \r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
                                     }
                                 },
                                 "value": "",
@@ -326,31 +288,20 @@
                                 "id": "tipo_documento",
                                 "label": "Tipo de Documento de Identificação",
                                 "multiple": "",
-                                "options": [
-                                    {
-                                        "grouping": "",
-                                        "label": "Carta de Condução",
-                                        "value": "cartaConducao"
-                                    },
-                                    {
-                                        "grouping": "",
-                                        "label": "Bilhete de Identidade",
-                                        "value": "bilheteIdentidade"
-                                    },
-                                    {
-                                        "grouping": "",
-                                        "label": "Cartão de Cidadão",
-                                        "value": "cartaoCidadao"
-                                    },
-                                    {
-                                        "grouping": "",
-                                        "label": "Passaporte",
-                                        "value": "passaporte"
-                                    }
-                                ],
+                                "options": [],
                                 "optionsBinder": {
-                                    "className": "",
-                                    "properties": {}
+                                    "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                    "properties": {
+                                        "addEmptyOption": "true",
+                                        "cacheInterval": "",
+                                        "emptyLabel": "",
+                                        "extraCondition": "c_nome_campo = 'tipo_documento_identificacao'",
+                                        "formDefId": "adicionarOpcaoLV",
+                                        "groupingColumn": "",
+                                        "idColumn": "value",
+                                        "labelColumn": "label",
+                                        "useAjax": ""
+                                    }
                                 },
                                 "readonly": "",
                                 "readonlyLabel": "",
@@ -1216,41 +1167,20 @@
                                 "id": "estado_civil_anterior",
                                 "label": "Estado Civil Anterior",
                                 "multiple": "",
-                                "options": [
-                                    {
-                                        "grouping": "",
-                                        "label": "",
-                                        "value": ""
-                                    },
-                                    {
-                                        "grouping": "",
-                                        "label": "Solteiro(a)",
-                                        "value": "solteiro"
-                                    },
-                                    {
-                                        "grouping": "",
-                                        "label": "Casado(a)",
-                                        "value": "casado"
-                                    },
-                                    {
-                                        "grouping": "",
-                                        "label": "Divorciado(a)",
-                                        "value": "divorciado"
-                                    },
-                                    {
-                                        "grouping": "",
-                                        "label": "Viúvo(a)",
-                                        "value": "viuvo"
-                                    },
-                                    {
-                                        "grouping": "",
-                                        "label": "Separado judicialmente de pessoas e bens",
-                                        "value": "sep_pessoas_bens"
-                                    }
-                                ],
+                                "options": [],
                                 "optionsBinder": {
-                                    "className": "",
-                                    "properties": {}
+                                    "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                    "properties": {
+                                        "addEmptyOption": "true",
+                                        "cacheInterval": "",
+                                        "emptyLabel": "",
+                                        "extraCondition": "c_nome_campo = 'estado_civil_anterior'",
+                                        "formDefId": "adicionarOpcaoLV",
+                                        "groupingColumn": "",
+                                        "idColumn": "value",
+                                        "labelColumn": "label",
+                                        "useAjax": ""
+                                    }
                                 },
                                 "permission_rules": {"3e334771-7c1d-4882-b298-443c91d6bf3e": {}},
                                 "readonly": "",
