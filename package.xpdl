@@ -674,15 +674,15 @@
                         <TransitionRestriction>
                             <Split Type="XOR">
                                 <TransitionRefs>
-                                    <TransitionRef Id="transition3"/>
                                     <TransitionRef Id="transition10"/>
+                                    <TransitionRef Id="transition12"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process3_participant2"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="147,31"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="405,33"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="subflow2" Name="Contratação Complexo">
@@ -692,7 +692,7 @@
                     <Performer>participant2_1</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant2_1"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="324,70"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="480,76"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="subflow3" Name="Filtro Normal">
@@ -702,7 +702,7 @@
                     <Performer>participant3</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="531,19"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="661,17"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="subflow4" Name="Produção Normal">
@@ -712,7 +712,7 @@
                     <Performer>participant3</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="728,20"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="824,17"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="subflow5" Name="Validação Normal">
@@ -722,7 +722,7 @@
                     <Performer>participant3</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="937,19"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="992,17"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="subflow6" Name="Filtro Complexo">
@@ -732,7 +732,7 @@
                     <Performer>participant2_1</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant2_1"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="512,70"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="653,73"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="subflow7" Name="Produção Complexo">
@@ -742,7 +742,7 @@
                     <Performer>participant2_1</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant2_1"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="700,71"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="809,70"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="subflow8" Name="Validação Complexo">
@@ -752,7 +752,7 @@
                     <Performer>participant2_1</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant2_1"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="901,71"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="993,71"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="CHContNormSub" Name="Contratação Normal">
@@ -769,17 +769,21 @@
                     <Performer>participant3</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="299,24"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="493,14"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="HardcodeWFVariables" Name="Hardcode Values">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>process3_participant2</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process3_participant2"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="219,28"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
             <Transitions>
-                <Transition From="route1" Id="transition3" To="subflow2">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="subflow3" Id="transition5" To="subflow4">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
@@ -815,12 +819,22 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
+                <Transition From="route1" Id="transition12" To="subflow2">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="HardcodeWFVariables" Id="transition13" To="route1">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
             </Transitions>
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="process3_participant2;participant3;participant2_1"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process3_participant2,CONNECTING_ACTIVITY_ID=route1,X_OFFSET=62,Y_OFFSET=42,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant3,CONNECTING_ACTIVITY_ID=subflow5,X_OFFSET=1146,Y_OFFSET=34,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant2_1,CONNECTING_ACTIVITY_ID=subflow8,X_OFFSET=1126,Y_OFFSET=86,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant2_1,CONNECTING_ACTIVITY_ID=subflow8,X_OFFSET=1190,Y_OFFSET=85,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process3_participant2,CONNECTING_ACTIVITY_ID=HardcodeWFVariables,X_OFFSET=75,Y_OFFSET=44,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
     </WorkflowProcesses>
