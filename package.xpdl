@@ -127,13 +127,6 @@
         </WorkflowProcess>
         <WorkflowProcess Id="CHContratacaoNormal" Name="CH-Contratação-Normal">
             <ProcessHeader DurationUnit="h"/>
-            <DataFields>
-                <DataField Id="status" IsArray="FALSE">
-                    <DataType>
-                        <BasicType Type="STRING"/>
-                    </DataType>
-                </DataField>
-            </DataFields>
             <Activities>
                 <Activity Id="route1">
                     <Route/>
@@ -190,12 +183,14 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;sub_status&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;1&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route1" Id="transition2" To="activity2">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;sub_status&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;2&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route1" Id="transition3" To="activity3">
@@ -635,8 +630,8 @@
                         <TransitionRestriction>
                             <Split Type="XOR">
                                 <TransitionRefs>
+                                    <TransitionRef Id="transition2"/>
                                     <TransitionRef Id="transition3"/>
-                                    <TransitionRef Id="transition10"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
@@ -644,6 +639,16 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process3_participant2"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="147,31"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="subflow1" Name="Contratação Normal">
+                    <Implementation>
+                        <SubFlow Execution="SYNCHR" Id="CHContratacaoNormal"/>
+                    </Implementation>
+                    <Performer>participant3</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="323,18"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="subflow2" Name="Contratação Complexo">
@@ -718,10 +723,21 @@
                 </Activity>
             </Activities>
             <Transitions>
+                <Transition From="route1" Id="transition2" To="subflow1">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
                 <Transition From="route1" Id="transition3" To="subflow2">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="subflow1" Id="transition4" To="subflow3">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="subflow3" Id="transition5" To="subflow4">
@@ -745,11 +761,6 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="subflow7" Id="transition9" To="subflow8">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="route1" Id="transition10" To="subflow3">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
