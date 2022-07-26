@@ -6,216 +6,28 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco\nFROM shkprocesses sp\nLEFT JOIN app_fd_processos p ON p.id = sp.Id\nJOIN shkprocessstates sps ON sps.oid = sp.State\nJOIN SHKActivities sact ON sact.ProcessId = sp.Id\nJOIN SHKActivityStates ssta ON ssta.oid = sact.State\nJOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\n/*WHERE sps.KeyValue = 'open.running'\nAND ssta.KeyValue = 'open.not_running.not_started'*/\n"
+            "sql": "SELECT sp.Id as id/*, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco*/\nFROM shkprocesses sp\nLEFT JOIN app_fd_processos p ON p.id = sp.Id\nJOIN shkprocessstates sps ON sps.oid = sp.State\nJOIN SHKActivities sact ON sact.ProcessId = sp.Id\nJOIN SHKActivityStates ssta ON ssta.oid = sact.State\nJOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\n/*WHERE sps.KeyValue = 'open.running'\nAND ssta.KeyValue = 'open.not_running.not_started'*/\n"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
-    "columns": [
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_1",
-            "label": "Processo",
-            "name": "Processo",
-            "sortable": "true",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_0",
-            "label": "Data Criação",
-            "name": "dateCreated",
-            "sortable": "true",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_5",
-            "label": "Número Workflow Banco",
-            "name": "NumeroWFBanco",
-            "sortable": "true",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_2",
-            "label": "Nome Banco",
-            "name": "NomeBanco",
-            "sortable": "true",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_3",
-            "label": "Urgência",
-            "name": "Urgencia",
-            "sortable": "true",
-            "style": "",
-            "width": ""
-        }
-    ],
+    "columns": [{
+        "filterable": true,
+        "hidden": "false",
+        "id": "column_4",
+        "label": "id",
+        "name": "id",
+        "sortable": "false"
+    }],
     "considerFilterWhenGetTotal": "",
     "description": "",
     "disableResponsive": "",
-    "filters": [
-        {
-            "datalist_type": "filter",
-            "filterParamName": "d-7291937-fn_dateCreated",
-            "hidden": "",
-            "id": "filter_5",
-            "label": "Data Criação",
-            "name": "dateCreated",
-            "type": {
-                "className": "org.joget.plugin.enterprise.DateDataListFilterType",
-                "properties": {
-                    "defaultValue": "",
-                    "format": "dd-MM-yyyy",
-                    "formatJava": "MM/dd/yyyy",
-                    "yearRange": "c-10:c"
-                }
-            }
-        },
-        {
-            "datalist_type": "filter",
-            "filterParamName": "d-7291937-fn_NumeroWFBanco",
-            "hidden": "",
-            "id": "filter_4",
-            "label": "Número Workflow Banco",
-            "name": "NumeroWFBanco",
-            "type": {
-                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
-                "properties": {"defaultValue": ""}
-            }
-        },
-        {
-            "datalist_type": "filter",
-            "filterParamName": "d-7291937-fn_NomeBanco",
-            "hidden": "",
-            "id": "filter_3",
-            "label": "Nome Banco",
-            "name": "NomeBanco",
-            "type": {
-                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
-                "properties": {"defaultValue": ""}
-            }
-        },
-        {
-            "id": "filter_1",
-            "label": "Processo",
-            "name": "Processo",
-            "type": {
-                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
-                "properties": {}
-            }
-        },
-        {
-            "datalist_type": "filter",
-            "filterParamName": "d-7291937-fn_Urgencia",
-            "hidden": "",
-            "id": "filter_0",
-            "label": "Urgência",
-            "name": "Urgencia",
-            "type": {
-                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
-                "properties": {
-                    "controlField": "",
-                    "defaultValue": "",
-                    "multiple": "",
-                    "options": [
-                        {
-                            "grouping": "",
-                            "label": "Sim",
-                            "value": "sim"
-                        },
-                        {
-                            "grouping": "",
-                            "label": "Não",
-                            "value": "nao"
-                        }
-                    ],
-                    "optionsBinder": {
-                        "className": "",
-                        "properties": {}
-                    },
-                    "size": ""
-                }
-            }
-        }
-    ],
+    "filters": [],
     "hidePageSize": "",
     "id": "tarefasGeral",
     "name": "List - Tarefas",
     "order": "1",
-    "orderBy": "dateCreated",
+    "orderBy": "",
     "pageSize": "0",
     "pageSizeSelectorOptions": "10,20,30,40,50,100",
     "responsiveView": [
