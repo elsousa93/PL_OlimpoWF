@@ -34,9 +34,6 @@
         <Participant Id="remetente" Name="Remetente">
             <ParticipantType Type="ROLE"/>
         </Participant>
-        <Participant Id="participant11" Name="Participant 11">
-            <ParticipantType Type="ROLE"/>
-        </Participant>
         <Participant Id="participant12" Name="Participant 12">
             <ParticipantType Type="ROLE"/>
         </Participant>
@@ -74,6 +71,9 @@
             <ParticipantType Type="ROLE"/>
         </Participant>
         <Participant Id="contratacao_bcp" Name="BCP">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
+        <Participant Id="validacaoBCP" Name="BCP">
             <ParticipantType Type="ROLE"/>
         </Participant>
     </Participants>
@@ -314,21 +314,21 @@
                 </DataField>
             </DataFields>
             <Activities>
-                <Activity Id="activity1" Name="Activity 1">
+                <Activity Id="analiseDocumental" Name="Análise  Documental">
                     <Implementation>
                         <No/>
                     </Implementation>
-                    <Performer>participant11</Performer>
+                    <Performer>validacaoBCP</Performer>
                     <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant11"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="validacaoBCP"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="185,27"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
             <ExtendedAttributes>
-                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="participant11"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant11,CONNECTING_ACTIVITY_ID=activity1,X_OFFSET=75,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant11,CONNECTING_ACTIVITY_ID=activity1,X_OFFSET=430,Y_OFFSET=33,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="validacaoBCP"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=validacaoBCP,CONNECTING_ACTIVITY_ID=analiseDocumental,X_OFFSET=75,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=validacaoBCP,CONNECTING_ACTIVITY_ID=analiseDocumental,X_OFFSET=430,Y_OFFSET=33,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="CHProducaoNormal" Name="CH-Produção-Normal">
@@ -368,7 +368,7 @@
                 </DataField>
             </DataFields>
             <Activities>
-                <Activity Id="activity1" Name="Activity 1">
+                <Activity Id="contratacao_bcp" Name="BCP">
                     <Implementation>
                         <No/>
                     </Implementation>
@@ -381,8 +381,8 @@
             </Activities>
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="participant13"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant13,CONNECTING_ACTIVITY_ID=activity1,X_OFFSET=75,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant13,CONNECTING_ACTIVITY_ID=activity1,X_OFFSET=398,Y_OFFSET=36,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant13,CONNECTING_ACTIVITY_ID=contratacao_bcp,X_OFFSET=75,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant13,CONNECTING_ACTIVITY_ID=contratacao_bcp,X_OFFSET=398,Y_OFFSET=36,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="CHContratacaoComplexo" Name="CH-Contratação-Complexo">
