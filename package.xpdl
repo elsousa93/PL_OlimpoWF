@@ -306,8 +306,55 @@
         </WorkflowProcess>
         <WorkflowProcess Id="CHFiltroNormal" Name="CH-Filtro-Normal">
             <ProcessHeader DurationUnit="h"/>
+            <FormalParameters>
+                <FormalParameter Id="sub_status" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="sub_complexidade" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="sub_banco" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="sub_departamento" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="user_filtro" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+            </FormalParameters>
             <DataFields>
-                <DataField Id="status" IsArray="FALSE">
+                <DataField Id="sub_status" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="sub_complexidade" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="sub_banco" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="sub_departamento" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="user_filtro" IsArray="FALSE">
                     <DataType>
                         <BasicType Type="STRING"/>
                     </DataType>
@@ -678,6 +725,11 @@
                         <BasicType Type="STRING"/>
                     </DataType>
                 </DataField>
+                <DataField Id="user_filtro" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
             </DataFields>
             <Activities>
                 <Activity Id="route1">
@@ -710,7 +762,15 @@
                 </Activity>
                 <Activity Id="subflow3" Name="Filtro Normal">
                     <Implementation>
-                        <SubFlow Execution="SYNCHR" Id="CHFiltroNormal"/>
+                        <SubFlow Execution="SYNCHR" Id="CHFiltroNormal">
+                            <ActualParameters>
+                                <ActualParameter>status</ActualParameter>
+                                <ActualParameter>complexidade</ActualParameter>
+                                <ActualParameter>banco</ActualParameter>
+                                <ActualParameter>departamento</ActualParameter>
+                                <ActualParameter>user_filtro</ActualParameter>
+                            </ActualParameters>
+                        </SubFlow>
                     </Implementation>
                     <Performer>participant3</Performer>
                     <ExtendedAttributes>
