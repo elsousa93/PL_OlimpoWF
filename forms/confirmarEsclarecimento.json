@@ -35,23 +35,6 @@
                         "label": "",
                         "value": "\n<!-- type=submit & name=assignmentComplete para concluir atividade do processo Esclarecimentos-->\n<input type=\"submit\" name=\"assignmentComplete\" value=\"Ver processo\" id=\"nodeGoto\" style=\"background-color:rgba(0,0,0,0);\"/>\n<script type=\"text/javascript\">\n\n    var url, value;\n    $(document).ready(function(){\n        value = FormUtil.getValue(\"p1_activity_id\"); //get activity id do processo \"pai\"\n        url = \"window.open('http://192.168.0.104:8080/jw/web/userview/workflowPL/UV_PL_Geral/_/inbox?_mode=assignment&activityId=\" + value + \"');\"; //criar url inserindo activity id corrente do processo \"pai\"\n    });\n    \n    //on click go to page com URL=url\n    var getURL = document.getElementById(\"nodeGoto\");\n    getURL.addEventListener(\"click\", function() {\n        eval(url);\n    }, false);\n    \n<\/script>"
                     }
-                },
-                {
-                    "className": "org.joget.marketplace.FormRecordLockingField",
-                    "properties": {
-                        "displayNameFormat": "firstLast",
-                        "formDefId": "confirmarEsclarecimento",
-                        "id": "record_lock",
-                        "label": "Record Lock",
-                        "lockDuration": "5",
-                        "validator": {
-                            "className": "org.joget.marketplace.FormRecordLockingValidator",
-                            "properties": {
-                                "errorMessage": "Record is locked. Update is not allowed.",
-                                "formDefId": "confirmarEsclarecimento"
-                            }
-                        }
-                    }
                 }
             ],
             "properties": {"width": "100%"}
