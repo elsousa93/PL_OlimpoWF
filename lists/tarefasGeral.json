@@ -6,67 +6,19 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco\nFROM shkprocesses sp\nLEFT JOIN app_fd_processos p ON p.id = sp.Id\nJOIN shkprocessstates sps ON sps.oid = sp.State\nJOIN SHKActivities sact ON sact.ProcessId = sp.Id\nJOIN SHKActivityStates ssta ON ssta.oid = sact.State\nJOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\n/*WHERE sps.KeyValue = 'open.running'\nAND ssta.KeyValue = 'open.not_running.not_started'*/\n"
+            "sql": "SELECT sp.Id as id /**, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco*/\nFROM shkprocesses sp\nLEFT JOIN app_fd_processos p ON p.id = sp.Id\n/*JOIN shkprocessstates sps ON sps.oid = sp.State\nJOIN SHKActivities sact ON sact.ProcessId = sp.Id\nJOIN SHKActivityStates ssta ON ssta.oid = sact.State\nJOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nWHERE sps.KeyValue = 'open.running'\nAND ssta.KeyValue = 'open.not_running.not_started'*/\n"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
-    "columns": [
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_1",
-            "label": "Processo",
-            "name": "Processo",
-            "sortable": "false"
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_4",
-            "label": "dateCreated",
-            "name": "dateCreated",
-            "sortable": "true",
-            "style": "",
-            "width": ""
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_3",
-            "label": "NomeBanco",
-            "name": "NomeBanco",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_2",
-            "label": "NumeroWFBanco",
-            "name": "NumeroWFBanco",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_0",
-            "label": "Urgencia",
-            "name": "Urgencia",
-            "sortable": "false"
-        }
-    ],
+    "columns": [{
+        "filterable": true,
+        "hidden": "false",
+        "id": "column_5",
+        "label": "id",
+        "name": "id",
+        "sortable": "false"
+    }],
     "considerFilterWhenGetTotal": "",
     "description": "",
     "disableResponsive": "",
@@ -75,7 +27,7 @@
     "id": "tarefasGeral",
     "name": "List - Tarefas",
     "order": "1",
-    "orderBy": "dateCreated",
+    "orderBy": "",
     "pageSize": "0",
     "pageSizeSelectorOptions": "10,20,30,40,50,100",
     "responsiveView": [
