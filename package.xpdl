@@ -1013,7 +1013,25 @@
                 </DataField>
             </DataFields>
             <Activities>
-                <Activity Id="esclarecer" Name="1 - Esclarecer Diligência">
+                <Activity Id="fecha" Name="Fechado?">
+                    <Route/>
+                    <Performer>remetente</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="remetente"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="888,33"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="confirmarDiligencia" Name="2 - Confirmar Diligência">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>remetente</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="remetente"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="678,33"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="resolverDiligencia1" Name="1 - Resolver Diligencia">
                     <Implementation>
                         <No/>
                     </Implementation>
@@ -1025,64 +1043,64 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="destinatario"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="310,3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="309,26"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="route1">
-                    <Route/>
-                    <Performer>destinatario</Performer>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="destinatario"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="182,81"/>
-                    </ExtendedAttributes>
-                </Activity>
-                <Activity Id="fecha" Name="Fechado?">
-                    <Route/>
-                    <Performer>destinatario</Performer>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="destinatario"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="585,73"/>
-                    </ExtendedAttributes>
-                </Activity>
-                <Activity Id="confirmarDiligencia" Name="2 - Confirmar Diligência">
+                <Activity Id="resolverDiligencia2" Name="3 - Resolver Diligência">
                     <Implementation>
                         <No/>
                     </Implementation>
+                    <Performer>destinatario</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="destinatario"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="859,53"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route2">
+                    <Route/>
                     <Performer>remetente</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="remetente"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="550,23"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="439,58"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
             <Transitions>
-                <Transition From="esclarecer" Id="transition0" To="confirmarDiligencia">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="route1" Id="transition3" To="esclarecer">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="confirmarDiligencia" Id="transition2" To="fecha">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="fecha" Id="transition5" To="esclarecer">
+                <Transition From="fecha" Id="transition4" To="resolverDiligencia2">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="resolverDiligencia2" Id="transition3" To="route2">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route2" Id="transition5" To="confirmarDiligencia">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="resolverDiligencia1" Id="transition6" To="route2">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
             </Transitions>
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="remetente;destinatario"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=remetente,CONNECTING_ACTIVITY_ID=route1,X_OFFSET=61,Y_OFFSET=30,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=destinatario,CONNECTING_ACTIVITY_ID=fecha,X_OFFSET=858,Y_OFFSET=81,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=remetente,CONNECTING_ACTIVITY_ID=fecha,X_OFFSET=1235,Y_OFFSET=41,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=remetente,CONNECTING_ACTIVITY_ID=resolverDiligencia1,X_OFFSET=81,Y_OFFSET=36,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
     </WorkflowProcesses>
