@@ -878,6 +878,11 @@
                         </SubFlow>
                     </Implementation>
                     <Performer>participant3</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="506,17"/>
@@ -898,7 +903,7 @@
                     <Performer>participant3</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="661,17"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="723,108"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="sub_filtro_producao_crh" Name="Produção Normal">
@@ -914,9 +919,14 @@
                         </SubFlow>
                     </Implementation>
                     <Performer>participant3</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="824,17"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="825,22"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="sub_validacao_producao_crh" Name="Validação Normal">
@@ -935,6 +945,24 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="991,16"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route2" Name="Deve ir a filtro?">
+                    <Route/>
+                    <Performer>participant3</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition14"/>
+                                    <TransitionRef Id="transition15"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="662,22"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -980,7 +1008,20 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="sub_contratacao_normal_crh" Id="transition11" To="sub_filtro_normal_crh">
+                <Transition From="route2" Id="transition14" To="sub_filtro_normal_crh">
+                    <Condition Type="CONDITION">proxima_operativa === 'filtro'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;filtro&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="sub_contratacao_normal_crh" Id="transition11" To="route2">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route2" Id="transition15" To="sub_filtro_producao_crh">
+                    <Condition Type="OTHERWISE"/>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
