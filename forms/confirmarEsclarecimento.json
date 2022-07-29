@@ -165,84 +165,73 @@
             "className": "org.joget.apps.form.model.Section",
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
-                "elements": [
-                    {
-                        "className": "org.joget.plugin.enterprise.FormGrid",
-                        "properties": {
-                            "abortRelatedRunningProcesses": "",
-                            "deleteFiles": "",
-                            "deleteGridData": "",
-                            "deleteMessage": "",
-                            "deleteSubformData": "",
-                            "disabledAdd": "true",
-                            "disabledDelete": "true",
-                            "enableSorting": "",
-                            "errorMessage": "Invalid number of rows",
-                            "formDefId": "observacaoDiligencia",
-                            "height": "500",
-                            "id": "historico_observacoes",
-                            "label": "",
-                            "loadBinder": {
-                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
-                                "properties": {
-                                    "foreignKey": "id_diligencia",
-                                    "formDefId": "observacaoDiligencia"
-                                }
+                "elements": [{
+                    "className": "org.joget.plugin.enterprise.FormGrid",
+                    "properties": {
+                        "abortRelatedRunningProcesses": "",
+                        "deleteFiles": "",
+                        "deleteGridData": "",
+                        "deleteMessage": "",
+                        "deleteSubformData": "",
+                        "disabledAdd": "true",
+                        "disabledDelete": "true",
+                        "enableSorting": "",
+                        "errorMessage": "Invalid number of rows",
+                        "formDefId": "observacaoDiligencia",
+                        "height": "500",
+                        "id": "historico_observacoes",
+                        "label": "",
+                        "loadBinder": {
+                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                            "properties": {
+                                "foreignKey": "id_diligencia",
+                                "formDefId": "observacaoDiligencia"
+                            }
+                        },
+                        "options": [
+                            {
+                                "format": "",
+                                "formatType": "text",
+                                "label": "Nome",
+                                "value": "nome",
+                                "width": ""
                             },
-                            "options": [
-                                {
-                                    "format": "",
-                                    "formatType": "text",
-                                    "label": "Nome",
-                                    "value": "nome",
-                                    "width": ""
-                                },
-                                {
-                                    "format": "",
-                                    "formatType": "date",
-                                    "label": "Data",
-                                    "value": "dateCreated",
-                                    "width": ""
-                                },
-                                {
-                                    "format": "",
-                                    "formatType": "nl2br",
-                                    "label": "Observação",
-                                    "value": "observacao_diligencia",
-                                    "width": ""
-                                }
-                            ],
-                            "pageSize": "20",
-                            "permissionHidden": "",
-                            "readonly": "true",
-                            "readonlyLabel": "",
-                            "showRowNumber": "",
-                            "storeBinder": {
-                                "className": "",
-                                "properties": {}
+                            {
+                                "format": "",
+                                "formatType": "date",
+                                "label": "Data",
+                                "value": "dateCreated",
+                                "width": ""
                             },
-                            "submit-label-normal": "",
-                            "submit-label-readonly": "",
-                            "uniqueKey": "",
-                            "validateMaxRow": "",
-                            "validateMinRow": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "width": "900"
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.CustomHTML",
-                        "properties": {
-                            "autoPopulate": "",
-                            "id": "field3",
-                            "label": "",
-                            "value": "\n<!-- type=submit & name=assignmentComplete para concluir atividade do processo Esclarecimentos-->\n<input type=\"submit\" name=\"assignmentComplete\" value=\"Ver processo\" id=\"nodeGoto\" style=\"background-color:rgba(0,0,0,0);\"/>\n<script type=\"text/javascript\">\n\n    var url, value;\n    $(document).ready(function(){\n        value = FormUtil.getValue(\"p1_activity_id\"); //get activity id do processo \"pai\"\n        url = \"window.open('http://192.168.0.104:8080/jw/web/userview/workflowPL/UV_PL_Geral/_/inbox?_mode=assignment&activityId=\" + value + \"');\"; //criar url inserindo activity id corrente do processo \"pai\"\n    });\n    \n    //on click go to page com URL=url\n    var getURL = document.getElementById(\"nodeGoto\");\n    getURL.addEventListener(\"click\", function() {\n        eval(url);\n    }, false);\n    \n<\/script>"
-                        }
+                            {
+                                "format": "",
+                                "formatType": "nl2br",
+                                "label": "Observação",
+                                "value": "observacao_diligencia",
+                                "width": ""
+                            }
+                        ],
+                        "pageSize": "20",
+                        "permissionHidden": "",
+                        "readonly": "true",
+                        "readonlyLabel": "",
+                        "showRowNumber": "",
+                        "storeBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "submit-label-normal": "",
+                        "submit-label-readonly": "",
+                        "uniqueKey": "",
+                        "validateMaxRow": "",
+                        "validateMinRow": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "width": "900"
                     }
-                ],
+                }],
                 "properties": {"width": "100%"}
             }],
             "properties": {
