@@ -350,7 +350,7 @@
                 "autoHandleFiles": "",
                 "autoHandleWorkflowVariable": "true",
                 "jdbcDatasource": "default",
-                "sql": "SELECT * FROM app_fd_processos p\nJOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo; "
+                "sql": "SELECT * FROM app_fd_processos p\nJOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nWHERE '#requestParam.id#' = p.id; "
             }
         },
         "name": "Resumo Processo",
