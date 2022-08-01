@@ -215,13 +215,18 @@
         "description": "",
         "id": "resumoProcesso",
         "loadBinder": {
-            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
-            "properties": {}
+            "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
+            "properties": {
+                "autoHandleFiles": "",
+                "autoHandleWorkflowVariable": "true",
+                "jdbcDatasource": "default",
+                "sql": "SELECT * FROM app_fd_processos p\nJOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo; "
+            }
         },
         "name": "Resumo Processo",
         "noPermissionMessage": "",
         "permission": {
-            "className": "org.joget.plugin.enterprise.AdminUserviewPermission",
+            "className": "org.joget.apps.userview.lib.LoggedInUserPermission",
             "properties": {}
         },
         "permission_rules": [{
