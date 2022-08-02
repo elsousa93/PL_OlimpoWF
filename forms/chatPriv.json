@@ -118,8 +118,11 @@
             "properties": {}
         },
         "postProcessor": {
-            "className": "",
-            "properties": {}
+            "className": "org.joget.apps.app.lib.DatabaseUpdateTool",
+            "properties": {
+                "jdbcDatasource": "default",
+                "query": "UPDATE app_fd_data_chat dc SET c_lida=\"sim\" WHERE c_thread_id=\"#requestParam.para#\" AND createdby not like \"#currentUser.id#\";"
+            }
         },
         "postProcessorRunOn": "both",
         "storeBinder": {
