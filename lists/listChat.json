@@ -5,20 +5,38 @@
         "properties": {
             "jdbcDatasource": "default",
             "optimisePaging": "",
-            "primaryKey": "username",
-            "sql": "SELECT mc.id FROM app_fd_mensagens_chat mc  "
+            "primaryKey": "id",
+            "sql": "SELECT mc.id, mc.dateModified, sum(case dc.c_lida when 'não' then 1 else 0 end) as nao_lida FROM app_fd_mensagens_chat mc  \nJOIN app_fd_data_chat dc ON dc.c_thread_id = mc.id \nWHERE mc.id like '%#currentUser.id#%' AND dc.createdby not like '#currentUser.id#'\ngroup by mc.id\nORDER BY mc.dateModified desc"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
-    "columns": [{
-        "filterable": true,
-        "hidden": "false",
-        "id": "column_0",
-        "label": "id",
-        "name": "id",
-        "sortable": "false"
-    }],
+    "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_0",
+            "label": "id",
+            "name": "id",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "dateModified",
+            "name": "dateModified",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_2",
+            "label": "nao_lida",
+            "name": "nao_lida",
+            "sortable": "false"
+        }
+    ],
     "considerFilterWhenGetTotal": "",
     "description": "",
     "filters": [],
