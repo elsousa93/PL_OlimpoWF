@@ -102,13 +102,12 @@
         "description": "",
         "id": "chatPriv",
         "loadBinder": {
-            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+            "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
             "properties": {
                 "autoHandleFiles": "",
                 "autoHandleWorkflowVariable": "true",
-                "cacheInterval": "",
-                "script": "return null;",
-                "useAjax": ""
+                "jdbcDatasource": "default",
+                "sql": "UPDATE app_fd_data_chat dc SET c_lida=\"sim\" WHERE c_thread_id=\"#requestParam.para#\" AND createdby not like \"#currentUser.id#\";"
             }
         },
         "name": "Chat Privado",
