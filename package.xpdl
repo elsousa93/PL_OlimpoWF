@@ -100,6 +100,15 @@
         <Participant Id="filtro_com" Name="Filtro">
             <ParticipantType Type="ROLE"/>
         </Participant>
+        <Participant Id="process14_ProdSistema" Name="Sistema">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
+        <Participant Id="producao_com" Name="Produção Manual">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
+        <Participant Id="ProdRobot_com" Name="Produção Robot">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
     </Participants>
     <Applications>
         <Application Id="default_application"/>
@@ -821,33 +830,6 @@
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=validacao,CONNECTING_ACTIVITY_ID=validacaoContratoDocumentacao,X_OFFSET=398,Y_OFFSET=36,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
-        <WorkflowProcess Id="CHProducaoComplexo" Name="CH-Produção-Complexo">
-            <ProcessHeader DurationUnit="h"/>
-            <DataFields>
-                <DataField Id="status" IsArray="FALSE">
-                    <DataType>
-                        <BasicType Type="STRING"/>
-                    </DataType>
-                </DataField>
-            </DataFields>
-            <Activities>
-                <Activity Id="activity1" Name="Activity 1">
-                    <Implementation>
-                        <No/>
-                    </Implementation>
-                    <Performer>process10_participant12</Performer>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process10_participant12"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="199,28"/>
-                    </ExtendedAttributes>
-                </Activity>
-            </Activities>
-            <ExtendedAttributes>
-                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="process10_participant12"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process10_participant12,CONNECTING_ACTIVITY_ID=activity1,X_OFFSET=75,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process10_participant12,CONNECTING_ACTIVITY_ID=activity1,X_OFFSET=427,Y_OFFSET=40,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
-            </ExtendedAttributes>
-        </WorkflowProcess>
         <WorkflowProcess Id="CHValidacaoComplexo" Name="CH-Validação-Complexo">
             <ProcessHeader DurationUnit="h"/>
             <DataFields>
@@ -1129,6 +1111,11 @@
                         <BasicType Type="STRING"/>
                     </DataType>
                 </DataField>
+                <DataField Id="user_producao_com" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
             </DataFields>
             <Activities>
                 <Activity Id="route1">
@@ -1204,7 +1191,16 @@
                 </Activity>
                 <Activity Id="subflow7" Name="Produção Complexo">
                     <Implementation>
-                        <SubFlow Execution="SYNCHR" Id="CHProducaoComplexo"/>
+                        <SubFlow Execution="SYNCHR" Id="CHProducaoComplexo">
+                            <ActualParameters>
+                                <ActualParameter>status</ActualParameter>
+                                <ActualParameter>complexidade</ActualParameter>
+                                <ActualParameter>banco</ActualParameter>
+                                <ActualParameter>departamento</ActualParameter>
+                                <ActualParameter>user_producao_com</ActualParameter>
+                                <ActualParameter>proxima_operativa</ActualParameter>
+                            </ActualParameters>
+                        </SubFlow>
                     </Implementation>
                     <Performer>participant2_1</Performer>
                     <TransitionRestrictions>
@@ -2296,6 +2292,161 @@
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="filtro_com"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=filtro_com,CONNECTING_ACTIVITY_ID=analiseDocumental,X_OFFSET=75,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=filtro_com,CONNECTING_ACTIVITY_ID=analiseDocumental,X_OFFSET=430,Y_OFFSET=33,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+            </ExtendedAttributes>
+        </WorkflowProcess>
+        <WorkflowProcess Id="CHProducaoComplexoOLD" Name="CH-Produção-Complexo OLD">
+            <ProcessHeader DurationUnit="h"/>
+            <DataFields>
+                <DataField Id="status" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+            </DataFields>
+            <Activities>
+                <Activity Id="activity1" Name="Activity 1">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>process10_participant12</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process10_participant12"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="199,28"/>
+                    </ExtendedAttributes>
+                </Activity>
+            </Activities>
+            <ExtendedAttributes>
+                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="process10_participant12"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process10_participant12,CONNECTING_ACTIVITY_ID=activity1,X_OFFSET=75,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process10_participant12,CONNECTING_ACTIVITY_ID=activity1,X_OFFSET=427,Y_OFFSET=40,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+            </ExtendedAttributes>
+        </WorkflowProcess>
+        <WorkflowProcess Id="CHProducaoComplexo" Name="CH-Produção-Complexo">
+            <ProcessHeader DurationUnit="h"/>
+            <FormalParameters>
+                <FormalParameter Id="sub_status" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="sub_complexidade" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="sub_banco" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="sub_departamento" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="user_producao_com" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="proxima_operativa" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+            </FormalParameters>
+            <DataFields>
+                <DataField Id="sub_status" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="sub_complexidade" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="sub_banco" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="sub_departamento" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="user_producao_com" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="proxima_operativa" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+            </DataFields>
+            <Activities>
+                <Activity Id="processamentoManualMinuta" Name="Processamento Manual de Minuta">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>producao_com</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="producao_com"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="449.94140625,31.71875"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="processamentoRobotMinuta" Name="Processamento da Minuta pelo Robot">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>ProdRobot_com</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="ProdRobot_com"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="478.984375,37.75390625"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="producaoManualRobot" Name="Produção Manual ou por Robot?">
+                    <Route/>
+                    <Performer>process14_ProdSistema</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition2"/>
+                                    <TransitionRef Id="transition3"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process14_ProdSistema"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="232.96875,34.23828125"/>
+                    </ExtendedAttributes>
+                </Activity>
+            </Activities>
+            <Transitions>
+                <Transition From="producaoManualRobot" Id="transition2" Name="Produção Manual" To="processamentoManualMinuta">
+                    <Condition Type="CONDITION">proxima_operativa === 'producao_manual'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;producao_manual&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="producaoManualRobot" Id="transition3" Name="Produção Robot" To="processamentoRobotMinuta">
+                    <Condition Type="OTHERWISE"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+            </Transitions>
+            <ExtendedAttributes>
+                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="process14_ProdSistema;producao_com;ProdRobot_com"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=producao_com,CONNECTING_ACTIVITY_ID=processamentoManualMinuta,X_OFFSET=653,Y_OFFSET=42,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=ProdRobot_com,CONNECTING_ACTIVITY_ID=processamentoRobotMinuta,X_OFFSET=692,Y_OFFSET=50,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process14_ProdSistema,CONNECTING_ACTIVITY_ID=producaoManualRobot,X_OFFSET=87,Y_OFFSET=28,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
     </WorkflowProcesses>
