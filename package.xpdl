@@ -109,6 +109,9 @@
         <Participant Id="ProdRobot_com" Name="Produção Robot">
             <ParticipantType Type="ROLE"/>
         </Participant>
+        <Participant Id="validacao_com" Name="Validação">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
     </Participants>
     <Applications>
         <Application Id="default_application"/>
@@ -830,33 +833,6 @@
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=validacao,CONNECTING_ACTIVITY_ID=validacaoContratoDocumentacao,X_OFFSET=398,Y_OFFSET=36,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
-        <WorkflowProcess Id="CHValidacaoComplexo" Name="CH-Validação-Complexo">
-            <ProcessHeader DurationUnit="h"/>
-            <DataFields>
-                <DataField Id="status" IsArray="FALSE">
-                    <DataType>
-                        <BasicType Type="STRING"/>
-                    </DataType>
-                </DataField>
-            </DataFields>
-            <Activities>
-                <Activity Id="activity1" Name="Activity 1">
-                    <Implementation>
-                        <No/>
-                    </Implementation>
-                    <Performer>process11_participant13</Performer>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process11_participant13"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="176,27"/>
-                    </ExtendedAttributes>
-                </Activity>
-            </Activities>
-            <ExtendedAttributes>
-                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="process11_participant13"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process11_participant13,CONNECTING_ACTIVITY_ID=activity1,X_OFFSET=75,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process11_participant13,CONNECTING_ACTIVITY_ID=activity1,X_OFFSET=398,Y_OFFSET=36,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
-            </ExtendedAttributes>
-        </WorkflowProcess>
         <WorkflowProcess Id="process12" Name="Process 12">
             <ProcessHeader DurationUnit="h"/>
             <DataFields>
@@ -1101,17 +1077,22 @@
                         <BasicType Type="STRING"/>
                     </DataType>
                 </DataField>
+                <DataField Id="user_producao_com" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
                 <DataField Id="user_validacao" IsArray="FALSE">
                     <DataType>
                         <BasicType Type="STRING"/>
                     </DataType>
                 </DataField>
-                <DataField Id="proxima_operativa" IsArray="FALSE">
+                <DataField Id="user_validacao_com" IsArray="FALSE">
                     <DataType>
                         <BasicType Type="STRING"/>
                     </DataType>
                 </DataField>
-                <DataField Id="user_producao_com" IsArray="FALSE">
+                <DataField Id="proxima_operativa" IsArray="FALSE">
                     <DataType>
                         <BasicType Type="STRING"/>
                     </DataType>
@@ -1215,7 +1196,16 @@
                 </Activity>
                 <Activity Id="subflow8" Name="Validação Complexo">
                     <Implementation>
-                        <SubFlow Execution="SYNCHR" Id="CHValidacaoComplexo"/>
+                        <SubFlow Execution="SYNCHR" Id="CHValidacaoComplexo">
+                            <ActualParameters>
+                                <ActualParameter>status</ActualParameter>
+                                <ActualParameter>complexidade</ActualParameter>
+                                <ActualParameter>banco</ActualParameter>
+                                <ActualParameter>departamento</ActualParameter>
+                                <ActualParameter>user_validacao_com</ActualParameter>
+                                <ActualParameter>proxima_operativa</ActualParameter>
+                            </ActualParameters>
+                        </SubFlow>
                     </Implementation>
                     <Performer>participant2_1</Performer>
                     <ExtendedAttributes>
@@ -2447,6 +2437,117 @@
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=producao_com,CONNECTING_ACTIVITY_ID=processamentoManualMinuta,X_OFFSET=653,Y_OFFSET=42,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=ProdRobot_com,CONNECTING_ACTIVITY_ID=processamentoRobotMinuta,X_OFFSET=692,Y_OFFSET=50,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process14_ProdSistema,CONNECTING_ACTIVITY_ID=producaoManualRobot,X_OFFSET=87,Y_OFFSET=28,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+            </ExtendedAttributes>
+        </WorkflowProcess>
+        <WorkflowProcess Id="CHValidacaoComplexoOLD" Name="CH-Validação-Complexo OLD">
+            <ProcessHeader DurationUnit="h"/>
+            <DataFields>
+                <DataField Id="status" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+            </DataFields>
+            <Activities>
+                <Activity Id="activity1" Name="Activity 1">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>process11_participant13</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process11_participant13"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="176,27"/>
+                    </ExtendedAttributes>
+                </Activity>
+            </Activities>
+            <ExtendedAttributes>
+                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="process11_participant13"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process11_participant13,CONNECTING_ACTIVITY_ID=activity1,X_OFFSET=75,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process11_participant13,CONNECTING_ACTIVITY_ID=activity1,X_OFFSET=398,Y_OFFSET=36,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+            </ExtendedAttributes>
+        </WorkflowProcess>
+        <WorkflowProcess Id="CHValidacaoComplexo" Name="CH-Validação-Complexo">
+            <ProcessHeader DurationUnit="h"/>
+            <FormalParameters>
+                <FormalParameter Id="sub_status" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="sub_complexidade" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="sub_banco" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="sub_departamento" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="user_validacao_com" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="proxima_operativa" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+            </FormalParameters>
+            <DataFields>
+                <DataField Id="sub_status" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="sub_complexidade" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="sub_banco" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="sub_departamento" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="user_validacao_com" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="proxima_operativa" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+            </DataFields>
+            <Activities>
+                <Activity Id="validacaoContratoDocumentacao" Name="Validação de Contrato e Documentação">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>validacao_com</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="validacao_com"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="176,27"/>
+                    </ExtendedAttributes>
+                </Activity>
+            </Activities>
+            <ExtendedAttributes>
+                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="validacao_com"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=validacao_com,CONNECTING_ACTIVITY_ID=validacaoContratoDocumentacao,X_OFFSET=75,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=validacao_com,CONNECTING_ACTIVITY_ID=validacaoContratoDocumentacao,X_OFFSET=398,Y_OFFSET=36,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
     </WorkflowProcesses>
