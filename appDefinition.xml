@@ -9,11 +9,22 @@
          <name>PL - Workflow</name>
          <packageActivityFormMap>
             <entry>
-               <string>CHContratacaoNormal::validacaoBancariaLegal</string>
+               <string>diligencias::runProcess</string>
                <packageActivityForm>
-                  <processDefId>CHContratacaoNormal</processDefId>
-                  <activityDefId>validacaoBancariaLegal</activityDefId>
-                  <formId>processo</formId>
+                  <processDefId>diligencias</processDefId>
+                  <activityDefId>runProcess</activityDefId>
+                  <formId>pedirEsclarecimento</formId>
+                  <type>SINGLE</type>
+                  <autoContinue>false</autoContinue>
+                  <disableSaveAsDraft>false</disableSaveAsDraft>
+               </packageActivityForm>
+            </entry>
+            <entry>
+               <string>diligencias::resolverDiligencia1</string>
+               <packageActivityForm>
+                  <processDefId>diligencias</processDefId>
+                  <activityDefId>resolverDiligencia1</activityDefId>
+                  <formId>esclarecer</formId>
                   <type>SINGLE</type>
                   <autoContinue>false</autoContinue>
                   <disableSaveAsDraft>false</disableSaveAsDraft>
@@ -39,50 +50,6 @@
                   <type>SINGLE</type>
                   <autoContinue>false</autoContinue>
                   <disableSaveAsDraft>true</disableSaveAsDraft>
-               </packageActivityForm>
-            </entry>
-            <entry>
-               <string>CHProducaoNormal::processamentoManualMinuta</string>
-               <packageActivityForm>
-                  <processDefId>CHProducaoNormal</processDefId>
-                  <activityDefId>processamentoManualMinuta</activityDefId>
-                  <formId>processo</formId>
-                  <type>SINGLE</type>
-                  <autoContinue>false</autoContinue>
-                  <disableSaveAsDraft>false</disableSaveAsDraft>
-               </packageActivityForm>
-            </entry>
-            <entry>
-               <string>CHContratacaoNormal::PreenchimentoProcesso</string>
-               <packageActivityForm>
-                  <processDefId>CHContratacaoNormal</processDefId>
-                  <activityDefId>PreenchimentoProcesso</activityDefId>
-                  <formId>processo</formId>
-                  <type>SINGLE</type>
-                  <autoContinue>false</autoContinue>
-                  <disableSaveAsDraft>false</disableSaveAsDraft>
-               </packageActivityForm>
-            </entry>
-            <entry>
-               <string>diligencias::runProcess</string>
-               <packageActivityForm>
-                  <processDefId>diligencias</processDefId>
-                  <activityDefId>runProcess</activityDefId>
-                  <formId>pedirEsclarecimento</formId>
-                  <type>SINGLE</type>
-                  <autoContinue>false</autoContinue>
-                  <disableSaveAsDraft>false</disableSaveAsDraft>
-               </packageActivityForm>
-            </entry>
-            <entry>
-               <string>diligencias::resolverDiligencia1</string>
-               <packageActivityForm>
-                  <processDefId>diligencias</processDefId>
-                  <activityDefId>resolverDiligencia1</activityDefId>
-                  <formId>esclarecer</formId>
-                  <type>SINGLE</type>
-                  <autoContinue>false</autoContinue>
-                  <disableSaveAsDraft>false</disableSaveAsDraft>
                </packageActivityForm>
             </entry>
             <entry>
@@ -141,6 +108,17 @@
                </packageActivityForm>
             </entry>
             <entry>
+               <string>CHProducaoNormal::processamentoManualMinuta</string>
+               <packageActivityForm>
+                  <processDefId>CHProducaoNormal</processDefId>
+                  <activityDefId>processamentoManualMinuta</activityDefId>
+                  <formId>processo</formId>
+                  <type>SINGLE</type>
+                  <autoContinue>false</autoContinue>
+                  <disableSaveAsDraft>false</disableSaveAsDraft>
+               </packageActivityForm>
+            </entry>
+            <entry>
                <string>CHGlobal::iniciaProcesso</string>
                <packageActivityForm>
                   <processDefId>CHGlobal</processDefId>
@@ -165,29 +143,11 @@
          </packageActivityFormMap>
          <packageActivityPluginMap>
             <entry>
-               <string>CHContratacaoNormal::PreenchimentoProcesso</string>
-               <packageActivityPlugin>
-                  <processDefId>CHContratacaoNormal</processDefId>
-                  <activityDefId>PreenchimentoProcesso</activityDefId>
-                  <pluginName>org.joget.process.AssignmentFormActions</pluginName>
-                  <pluginProperties>{&quot;runInBackground&quot;:&quot;&quot;,&quot;readonly&quot;:&quot;&quot;,&quot;enableClarification&quot;:&quot;&quot;,&quot;enableReassignment&quot;:&quot;true&quot;,&quot;reassignmentActivityId&quot;:&quot;PreenchimentoProcesso&quot;,&quot;optionsBinder&quot;:{&quot;className&quot;:&quot;org.joget.plugin.enterprise.UserOptionsBinder&quot;,&quot;properties&quot;:{&quot;orgId&quot;:&quot;&quot;,&quot;deptId&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;addEmptyOption&quot;:&quot;&quot;,&quot;emptyLabel&quot;:&quot;&quot;,&quot;optionLabel&quot;:&quot;&quot;,&quot;grouping&quot;:&quot;&quot;,&quot;useAjax&quot;:&quot;&quot;,&quot;cacheInterval&quot;:&quot;&quot;}},&quot;reassignButtonLabel&quot;:&quot;#i18n.msg_realocar#&quot;,&quot;reassignIgnoreValidation&quot;:&quot;true&quot;,&quot;postReassignTool&quot;:{&quot;className&quot;:&quot;&quot;,&quot;properties&quot;:{}},&quot;updateAsigneeField&quot;:&quot;&quot;,&quot;reassignTooltip&quot;:&quot;&quot;,&quot;enableWithdrawal&quot;:&quot;&quot;,&quot;enableApproval&quot;:&quot;&quot;,&quot;completeUpdateStatus&quot;:&quot;&quot;,&quot;completeButtonLabel&quot;:&quot;&quot;,&quot;enableComments&quot;:&quot;&quot;,&quot;enableProcessStatus&quot;:&quot;true&quot;,&quot;showProcessName&quot;:&quot;&quot;,&quot;showFutureActivities&quot;:&quot;&quot;,&quot;showSkippedActivities&quot;:&quot;&quot;,&quot;usernameFormat&quot;:&quot;name&quot;,&quot;processTable&quot;:&quot;{appId}_pd&quot;,&quot;updateStatus&quot;:&quot;true&quot;,&quot;workflowVariable&quot;:&quot;status&quot;,&quot;updateDraft&quot;:&quot;&quot;,&quot;parentFieldId&quot;:&quot;status&quot;,&quot;statusValue&quot;:[{&quot;status&quot;:&quot;Approved&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;},{&quot;status&quot;:&quot;Rejected&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;},{&quot;status&quot;:&quot;Clarification&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;},{&quot;status&quot;:&quot;Reassignment&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;},{&quot;status&quot;:&quot;Withdrawal&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;},{&quot;status&quot;:&quot;Completed&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;},{&quot;status&quot;:&quot;Draft&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;}]}</pluginProperties>
-               </packageActivityPlugin>
-            </entry>
-            <entry>
                <string>CHContratacaoNormal::route1</string>
                <packageActivityPlugin>
                   <processDefId>CHContratacaoNormal</processDefId>
                   <activityDefId>route1</activityDefId>
                   <pluginName>org.joget.apps.app.lib.BeanShellDecisionPlugin</pluginName>
-               </packageActivityPlugin>
-            </entry>
-            <entry>
-               <string>CHContratacaoNormal::validacaoBancariaLegal</string>
-               <packageActivityPlugin>
-                  <processDefId>CHContratacaoNormal</processDefId>
-                  <activityDefId>validacaoBancariaLegal</activityDefId>
-                  <pluginName>org.joget.process.AssignmentFormActions</pluginName>
-                  <pluginProperties>{&quot;runInBackground&quot;:&quot;&quot;,&quot;readonly&quot;:&quot;&quot;,&quot;enableClarification&quot;:&quot;&quot;,&quot;enableReassignment&quot;:&quot;true&quot;,&quot;reassignmentActivityId&quot;:&quot;validacaoBancariaLegal&quot;,&quot;optionsBinder&quot;:{&quot;className&quot;:&quot;org.joget.plugin.enterprise.UserOptionsBinder&quot;,&quot;properties&quot;:{&quot;orgId&quot;:&quot;&quot;,&quot;deptId&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;addEmptyOption&quot;:&quot;&quot;,&quot;emptyLabel&quot;:&quot;&quot;,&quot;optionLabel&quot;:&quot;&quot;,&quot;grouping&quot;:&quot;&quot;,&quot;useAjax&quot;:&quot;&quot;,&quot;cacheInterval&quot;:&quot;&quot;}},&quot;reassignButtonLabel&quot;:&quot;#i18n.msg_realocar#&quot;,&quot;reassignIgnoreValidation&quot;:&quot;true&quot;,&quot;postReassignTool&quot;:{&quot;className&quot;:&quot;&quot;,&quot;properties&quot;:{}},&quot;updateAsigneeField&quot;:&quot;&quot;,&quot;reassignTooltip&quot;:&quot;&quot;,&quot;enableWithdrawal&quot;:&quot;&quot;,&quot;enableApproval&quot;:&quot;&quot;,&quot;completeUpdateStatus&quot;:&quot;&quot;,&quot;completeButtonLabel&quot;:&quot;&quot;,&quot;enableComments&quot;:&quot;&quot;,&quot;enableProcessStatus&quot;:&quot;true&quot;,&quot;showProcessName&quot;:&quot;&quot;,&quot;showFutureActivities&quot;:&quot;&quot;,&quot;showSkippedActivities&quot;:&quot;&quot;,&quot;usernameFormat&quot;:&quot;name&quot;,&quot;processTable&quot;:&quot;{appId}_pd&quot;,&quot;updateStatus&quot;:&quot;true&quot;,&quot;workflowVariable&quot;:&quot;status&quot;,&quot;updateDraft&quot;:&quot;&quot;,&quot;parentFieldId&quot;:&quot;status&quot;,&quot;statusValue&quot;:[{&quot;status&quot;:&quot;Approved&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;},{&quot;status&quot;:&quot;Rejected&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;},{&quot;status&quot;:&quot;Clarification&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;},{&quot;status&quot;:&quot;Reassignment&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;},{&quot;status&quot;:&quot;Withdrawal&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;},{&quot;status&quot;:&quot;Completed&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;},{&quot;status&quot;:&quot;Draft&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;}]}</pluginProperties>
                </packageActivityPlugin>
             </entry>
             <entry>
