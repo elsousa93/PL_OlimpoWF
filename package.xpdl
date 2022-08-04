@@ -1006,16 +1006,58 @@
                         <No/>
                     </Implementation>
                     <Performer>participant23</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant23"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="158,57"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="194,55"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="tool1" Name="Tool 1">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>participant23</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant23"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="272,148"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route1">
+                    <Route/>
+                    <Performer>participant23</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant23"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="93,123"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
+            <Transitions>
+                <Transition From="activity1" Id="transition1" To="tool1">
+                    <Condition Type="CONDITION">flag_sla === 'NO'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;flag_sla&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;NO&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="tool1" Id="transition2" To="activity1">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route1" Id="transition3" To="activity1">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+            </Transitions>
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="participant23"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant23,CONNECTING_ACTIVITY_ID=activity1,X_OFFSET=67,Y_OFFSET=85,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant23,CONNECTING_ACTIVITY_ID=activity1,X_OFFSET=384,Y_OFFSET=49,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant23,CONNECTING_ACTIVITY_ID=activity1,X_OFFSET=432,Y_OFFSET=60,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant23,CONNECTING_ACTIVITY_ID=route1,X_OFFSET=67,Y_OFFSET=85,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="CreditoHabitacao" Name="Crédito Habitação">
