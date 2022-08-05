@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "activity",
-            "sql": "SELECT asst.activityid as 'activityId', a.`name` as 'activityName', proce.name as 'processName',dp.c_urgencia as 'urgencia', dp.c_estado_contratacao as 'estado_contratacao', FROM_UNIXTIME(floor(a.activated/1000)) as 'dateCreated', asst.resourceid as 'resourceId' \nFROM shkassignmentstable asst\nLEFT JOIN app_fd_processos p ON p.id = asst.activityprocessid\nLEFT JOIN app_fd_detalhe_processo dp ON p.c_detalhe_processo = dp.id\nJOIN shkactivities a ON a.id=asst.activityid\nJOIN shkprocesses proce ON proce.id=asst.activityprocessid\n\n\n"
+            "sql": "SELECT asst.activityid as 'activityId', a.`name` as 'activityName', proce.id as 'processId',proce.name as 'processName',dp.c_urgencia as 'urgencia', dp.c_estado_contratacao as 'estado_contratacao', FROM_UNIXTIME(floor(a.activated/1000)) as 'dateCreated', asst.resourceid as 'resourceId' \nFROM shkassignmentstable asst\nLEFT JOIN app_fd_processos p ON p.id = asst.activityprocessid\nLEFT JOIN app_fd_detalhe_processo dp ON p.c_detalhe_processo = dp.id\nJOIN shkactivities a ON a.id=asst.activityid\nJOIN shkprocesses proce ON proce.id=asst.activityprocessid\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -26,6 +26,14 @@
             "id": "column_1",
             "label": "activityName",
             "name": "activityName",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_3",
+            "label": "processId",
+            "name": "processId",
             "sortable": "false"
         },
         {
@@ -73,9 +81,9 @@
     "description": "",
     "filters": [
         {
-            "id": "filter_3",
-            "label": "activityId",
-            "name": "activityId",
+            "id": "filter_4",
+            "label": "processId",
+            "name": "processId",
             "type": {
                 "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
                 "properties": {}
