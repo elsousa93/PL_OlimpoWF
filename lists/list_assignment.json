@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "activity",
-            "sql": "SELECT asst.activityid as 'activityId', a.`name` as 'activityName', proce.activityrequesterprocessId as 'processId',proce.name as 'processName',dp.c_urgencia as 'urgencia', dp.c_estado_contratacao as 'estado_contratacao', FROM_UNIXTIME(floor(a.activated/1000)) as 'dateCreated', asst.resourceid as 'resourceId' \nFROM shkassignmentstable asst\nLEFT JOIN app_fd_processos p ON p.id = asst.activityprocessid\nLEFT JOIN app_fd_detalhe_processo dp ON p.c_detalhe_processo = dp.id\nJOIN shkactivities a ON a.id=asst.activityid\nJOIN shkprocesses proce ON proce.id=asst.activityprocessid\n\n\n"
+            "sql": "SELECT asst.activityid as 'activityId', a.`name` as 'activityName', proce.activityrequesterprocessId as 'processId',proce.name as 'processName',dp.c_urgencia as 'urgencia', dp.c_estado_contratacao as 'estado_contratacao', FROM_UNIXTIME(floor(a.activated/1000)) as 'dateCreated', asst.resourceid as 'resourceId' \nFROM shkassignmentstable asst\nLEFT JOIN app_fd_processos p ON p.id = asst.activityprocessid\nLEFT JOIN app_fd_detalhe_processo dp ON p.c_detalhe_processo = dp.id\nJOIN shkactivities a ON a.id=asst.activityid\nJOIN shkprocesses proce ON proce.id=asst.activityprocessid\nWHERE asst.resourceid LIKE '#currentUser.id#'\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
