@@ -54,10 +54,12 @@
                         "label": "Lista de Diligências",
                         "listId": "list_esclarecimentos",
                         "loadBinder": {
-                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                            "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
                             "properties": {
-                                "foreignKey": "id_processo",
-                                "formDefId": "pedirEsclarecimento"
+                                "autoHandleFiles": "",
+                                "autoHandleWorkflowVariable": "true",
+                                "jdbcDatasource": "default",
+                                "sql": "SELECT p.id as id_processo, d.c_assunto, d.dateCreated, d.c_operativa_remetente, d.c_operativa_destinataria, d.c_gestor_remetente, d.c_gestor_destinatario\nFROM app_fd_info_diligencia d\nJOIN app_fd_processos p ON p.id = d.c_id_processo;"
                             }
                         },
                         "options": [
