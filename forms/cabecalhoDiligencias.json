@@ -1,0 +1,429 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "id_processo",
+                            "useDefaultWhenEmpty": "",
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "p1_activity_id",
+                            "useDefaultWhenEmpty": "",
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "estado",
+                            "useDefaultWhenEmpty": "true",
+                            "value": "",
+                            "workflowVariable": "estado"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "assunto",
+                            "label": "Assunto",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.DefaultValidator",
+                                "properties": {
+                                    "mandatory": "true",
+                                    "message": "",
+                                    "type": ""
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.DatePicker",
+                        "properties": {
+                            "allowManual": "",
+                            "datePickerType": "utcdateTime",
+                            "endDateFieldId": "",
+                            "format24hr": "",
+                            "id": "dateCreated",
+                            "label": "Data de Criação",
+                            "permissionHidden": "",
+                            "placeholder": "",
+                            "readonly": "true",
+                            "readonlyLabel": "",
+                            "showUserTimeZone": "",
+                            "startDateFieldId": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "urgencia",
+                            "label": "Urgência",
+                            "multiple": "",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "",
+                                    "value": ""
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Baixa",
+                                    "value": "baixa"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Média",
+                                    "value": "media"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Alta",
+                                    "value": "alta"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Crítica",
+                                    "value": "critica"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "informacao_diligencia",
+                "join": "",
+                "label": "Informação de Diligência",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "operativa_remetente",
+                            "label": "Operativa",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                                "properties": {
+                                    "cacheInterval": "",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.defaultHashVariablePlugin;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n\r\n\r\npublic void loadAux(FormRowSet rows){\r\n    String cUserDepartmentName = \"#currentUser.department.name#\";\r\n    String cUserDepartmentID = \"#currentUser.department.id#\";\r\n    \r\n    String[] cUserDepName = cUserDepartmentName.split(\";\");\r\n    String[] cUserDepID = cUserDepartmentID.split(\";\");\r\n    \r\n    FormRow option = new FormRow();\r\n    option.setProperty(FormUtil.PROPERTY_VALUE, \"\");\r\n    option.setProperty(FormUtil.PROPERTY_LABEL, \"\");\r\n    rows.add(option);\r\n    \r\n    //LogUtil.info(\"Options binder --- \", \"Departamentos numero = \" + cUserDepName.length);\r\n\r\n    //Adicionar departamentos a que o current user esta ligado as opcoes\r\n    for(int i = 0; i < cUserDepName.length; i++ ){\r\n        FormRow option = new FormRow();\r\n        option.setProperty(FormUtil.PROPERTY_VALUE, cUserDepID[i]);\r\n        option.setProperty(FormUtil.PROPERTY_LABEL, cUserDepName[i]);\r\n        rows.add(option);\r\n    }\r\n}\r\n \r\npublic FormRowSet load(Element element, String primaryKey, FormData formData) {\r\n    FormRowSet rows = new FormRowSet();\r\n    \r\n    //Hash variable que acede ao valor do campo na BD \r\n    String value = \"#form.esclarecimentos.operativa_remetente#\";\r\n    String hash = \"$form.esclarecimentos.operativa_remetente$\";\r\n    \r\n    value = AppUtil.processHashVariable(value,null,null,null);\r\n    \r\n    String subValue = value.substring(1,value.length()-1);\r\n    String compare = hash.substring(1,hash.length()-1);\r\n    \r\n    //System.out.println(compare);\r\n    //System.out.println(subValue);\r\n\r\n    if(subValue.equals(compare)){\r\n        //System.out.println(\"1\");\r\n        loadAux(rows);\r\n    }else{\r\n\t    //System.out.println(\"2\");\r\n\r\n\t\tFormRow option = new FormRow();\r\n\t\toption.setProperty(FormUtil.PROPERTY_VALUE, value);\r\n\t\toption.setProperty(FormUtil.PROPERTY_LABEL, value);\r\n\t\trows.add(option);\r\n\t}\r\n    \r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(element, primaryKey, formData);",
+                                    "useAjax": ""
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.DefaultValidator",
+                                "properties": {
+                                    "mandatory": "true",
+                                    "message": "É necessário selecionar a Operativa.",
+                                    "type": ""
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": "operativa_remetente"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "gestor_remetente",
+                            "label": "Gestor",
+                            "multiple": "",
+                            "options": [{
+                                "grouping": "",
+                                "label": "#currentUser.fullName#",
+                                "value": "#currentUser.username#"
+                            }],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permissionHidden": "",
+                            "readonly": "true",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "#currentUser.username#",
+                            "workflowVariable": "gestor_remetente"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "Rever script:\n- if para confirmar legth de value\n- if para denominar labels consoante value\n- Prints essenciais em comentários\n- Comentar código",
+                "id": "section2",
+                "join": "",
+                "label": "De:",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "operativa_destinataria",
+                            "label": "Operativa",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.plugin.enterprise.DepartmentOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "true",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "orgId": "PL"
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.DefaultValidator",
+                                "properties": {
+                                    "mandatory": "true",
+                                    "message": "",
+                                    "type": ""
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": "operativa_destinataria"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "operativa_destinataria",
+                            "id": "gestor_destinatario",
+                            "label": "Gestor",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.plugin.enterprise.UserOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "true",
+                                    "cacheInterval": "",
+                                    "deptId": "",
+                                    "emptyLabel": "",
+                                    "groupId": "",
+                                    "grouping": "dept",
+                                    "optionLabel": "fullname",
+                                    "orgId": "PL",
+                                    "useAjax": "true"
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": "gestor_destinatario"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section1",
+                "join": "",
+                "label": "Para:",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [{
+                    "className": "org.joget.apps.form.lib.TextArea",
+                    "properties": {
+                        "cols": "20",
+                        "id": "diligencia",
+                        "label": "",
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "rows": "5",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                }],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section4",
+                "join": "",
+                "label": "Descrição da Diligência",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        }
+    ],
+    "properties": {
+        "description": "",
+        "id": "cabecalhoDiligencias",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "Cabeçalho Diligências",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "info_diligencia"
+    }
+}
