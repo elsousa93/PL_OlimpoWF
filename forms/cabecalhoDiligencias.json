@@ -337,14 +337,20 @@
                             "id": "gestor_destinatario",
                             "label": "Gestor",
                             "multiple": "",
-                            "options": [{
-                                "grouping": "",
-                                "label": "#user.{process.activityInst.{assignment.activityDefId}.assignmentUsers[{assignment.processId}]}.fullName#",
-                                "value": "#process.activityInst.{assignment.activityDefId}.assignmentUsers[{assignment.processId}]#"
-                            }],
+                            "options": [],
                             "optionsBinder": {
-                                "className": "",
-                                "properties": {}
+                                "className": "org.joget.plugin.enterprise.UserOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "",
+                                    "cacheInterval": "",
+                                    "deptId": "",
+                                    "emptyLabel": "",
+                                    "groupId": "",
+                                    "grouping": "",
+                                    "optionLabel": "",
+                                    "orgId": "",
+                                    "useAjax": ""
+                                }
                             },
                             "readonly": "",
                             "readonlyLabel": "",
@@ -353,7 +359,7 @@
                                 "className": "",
                                 "properties": {}
                             },
-                            "value": "",
+                            "value": "#process.activityInst.{assignment.activityDefId}.assignmentUsers[{assignment.processId}]#",
                             "workflowVariable": "gestor_destinatario"
                         }
                     },
