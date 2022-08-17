@@ -5,28 +5,39 @@
             "className": "org.joget.apps.form.model.Section",
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
-                "elements": [{
-                    "className": "org.joget.apps.form.lib.SubForm",
-                    "properties": {
-                        "formDefId": "cabecalhoDiligencias",
-                        "id": "pedido_diligencia",
-                        "label": "",
-                        "loadBinder": {
-                            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
-                            "properties": {}
-                        },
-                        "noframe": "",
-                        "parentSubFormId": "",
-                        "permissionHidden": "",
-                        "readonly": "true",
-                        "readonlyLabel": "",
-                        "storeBinder": {
-                            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
-                            "properties": {}
-                        },
-                        "subFormParentId": ""
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.SubForm",
+                        "properties": {
+                            "formDefId": "cabecalhoDiligencias",
+                            "id": "pedido_diligencia",
+                            "label": "",
+                            "loadBinder": {
+                                "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+                                "properties": {}
+                            },
+                            "noframe": "",
+                            "parentSubFormId": "",
+                            "permissionHidden": "",
+                            "readonly": "true",
+                            "readonlyLabel": "",
+                            "storeBinder": {
+                                "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+                                "properties": {}
+                            },
+                            "subFormParentId": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "gestor_destinatario",
+                            "useDefaultWhenEmpty": "true",
+                            "value": "#process.activityInst.{assignment.activityDefId}.assignmentUsers[{assignment.processId}]#",
+                            "workflowVariable": "gestor_destinatario"
+                        }
                     }
-                }],
+                ],
                 "properties": {"width": "100%"}
             }],
             "properties": {
