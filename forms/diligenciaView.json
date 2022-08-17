@@ -5,34 +5,45 @@
             "className": "org.joget.apps.form.model.Section",
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
-                "elements": [{
-                    "className": "org.joget.apps.form.lib.SubForm",
-                    "properties": {
-                        "formDefId": "cabecalhoDiligencias",
-                        "id": "info_diligencia",
-                        "label": "",
-                        "loadBinder": {
-                            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
-                            "properties": {}
-                        },
-                        "noframe": "",
-                        "parentSubFormId": "",
-                        "permissionHidden": "",
-                        "readonly": "true",
-                        "readonlyLabel": "",
-                        "storeBinder": {
-                            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
-                            "properties": {
-                                "autoHandleFiles": "",
-                                "autoHandleWorkflowVariable": "true",
-                                "cacheInterval": "",
-                                "script": "return null;",
-                                "useAjax": ""
-                            }
-                        },
-                        "subFormParentId": ""
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "id_processo",
+                            "useDefaultWhenEmpty": "",
+                            "value": "#form.info_diligencia.id_processo#",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SubForm",
+                        "properties": {
+                            "formDefId": "cabecalhoDiligencias",
+                            "id": "info_diligencia",
+                            "label": "",
+                            "loadBinder": {
+                                "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+                                "properties": {}
+                            },
+                            "noframe": "",
+                            "parentSubFormId": "",
+                            "permissionHidden": "",
+                            "readonly": "true",
+                            "readonlyLabel": "",
+                            "storeBinder": {
+                                "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                                "properties": {
+                                    "autoHandleFiles": "",
+                                    "autoHandleWorkflowVariable": "true",
+                                    "cacheInterval": "",
+                                    "script": "return null;",
+                                    "useAjax": ""
+                                }
+                            },
+                            "subFormParentId": ""
+                        }
                     }
-                }],
+                ],
                 "properties": {"width": "100%"}
             }],
             "properties": {
