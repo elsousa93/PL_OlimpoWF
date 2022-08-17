@@ -568,6 +568,14 @@
                </packageActivityPlugin>
             </entry>
             <entry>
+               <string>CHFiltroComplexo::ultimaAtividadeFil</string>
+               <packageActivityPlugin>
+                  <processDefId>CHFiltroComplexo</processDefId>
+                  <activityDefId>ultimaAtividadeFil</activityDefId>
+                  <pluginName>org.joget.apps.app.lib.BeanShellTool</pluginName>
+               </packageActivityPlugin>
+            </entry>
+            <entry>
                <string>CHContratacaoNormal::finalizarContratacao</string>
                <packageActivityPlugin>
                   <processDefId>CHContratacaoNormal</processDefId>
@@ -595,20 +603,21 @@
                </packageActivityPlugin>
             </entry>
             <entry>
+               <string>CHFiltroNormal::ultimaAtividadeFil</string>
+               <packageActivityPlugin>
+                  <processDefId>CHFiltroNormal</processDefId>
+                  <activityDefId>ultimaAtividadeFil</activityDefId>
+                  <pluginName>org.joget.apps.app.lib.BeanShellTool</pluginName>
+                  <pluginProperties>{&quot;script&quot;:&quot;import org.joget.workflow.model.service.*;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.app.service.AppUtil;\r\n\r\nString ProcessID = workflowAssignment.getProcessId();\r\n\r\n\/\/Set the workflow variable\r\nWorkflowManager wm = (WorkflowManager) pluginManager.getBean(\&quot;workflowManager\&quot;);\r\nwm.processVariable(ProcessID, \&quot;flag_ultima_atividade\&quot; , \&quot;1\&quot;);\r\n&quot;}</pluginProperties>
+               </packageActivityPlugin>
+            </entry>
+            <entry>
                <string>diligencias::fecha</string>
                <packageActivityPlugin>
                   <processDefId>diligencias</processDefId>
                   <activityDefId>fecha</activityDefId>
                   <pluginName>org.joget.apps.app.lib.RulesDecisionPlugin</pluginName>
                   <pluginProperties>{&quot;rules&quot;:{&quot;ifrules&quot;:[{&quot;revert&quot;:false,&quot;andOr&quot;:&quot;and&quot;,&quot;conditions&quot;:[{&quot;revert&quot;:false,&quot;variable&quot;:&quot;estado&quot;,&quot;operation&quot;:&quot;==&quot;,&quot;value&quot;:&quot;resolvido&quot;}],&quot;actions&quot;:[{&quot;type&quot;:&quot;transition&quot;,&quot;name&quot;:&quot;transition7&quot;,&quot;value&quot;:&quot;&quot;}]}],&quot;else&quot;:[{&quot;type&quot;:&quot;transition&quot;,&quot;name&quot;:&quot;transition4&quot;,&quot;value&quot;:&quot;&quot;}]}}</pluginProperties>
-               </packageActivityPlugin>
-            </entry>
-            <entry>
-               <string>CHFiltroNormal::ultimaAtividadeFil</string>
-               <packageActivityPlugin>
-                  <processDefId>CHFiltroNormal</processDefId>
-                  <activityDefId>ultimaAtividadeFil</activityDefId>
-                  <pluginName>org.joget.apps.app.lib.BeanShellTool</pluginName>
                </packageActivityPlugin>
             </entry>
             <entry>
