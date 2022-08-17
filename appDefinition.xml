@@ -586,6 +586,14 @@
                </packageActivityPlugin>
             </entry>
             <entry>
+               <string>CHProducaoComplexo::ultimaAtividadeProd</string>
+               <packageActivityPlugin>
+                  <processDefId>CHProducaoComplexo</processDefId>
+                  <activityDefId>ultimaAtividadeProd</activityDefId>
+                  <pluginName>org.joget.apps.app.lib.BeanShellTool</pluginName>
+               </packageActivityPlugin>
+            </entry>
+            <entry>
                <string>CHProducaoComplexo::processamentoRobotMinuta</string>
                <packageActivityPlugin>
                   <processDefId>CHProducaoComplexo</processDefId>
@@ -609,6 +617,7 @@
                   <processDefId>CHProducaoNormal</processDefId>
                   <activityDefId>ultimaAtividadeProd</activityDefId>
                   <pluginName>org.joget.apps.app.lib.BeanShellTool</pluginName>
+                  <pluginProperties>{&quot;script&quot;:&quot;import org.joget.workflow.model.service.*;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.app.service.AppUtil;\r\n\r\nString ProcessID = workflowAssignment.getProcessId();\r\n\r\n\/\/Set the workflow variable\r\nWorkflowManager wm = (WorkflowManager) pluginManager.getBean(\&quot;workflowManager\&quot;);\r\nwm.processVariable(ProcessID, \&quot;flag_ultima_atividade\&quot; , \&quot;1\&quot;);\r\n&quot;}</pluginProperties>
                </packageActivityPlugin>
             </entry>
             <entry>
