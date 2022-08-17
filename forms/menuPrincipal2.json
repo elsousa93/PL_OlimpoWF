@@ -1090,8 +1090,12 @@
                             }
                         ],
                         "optionsBinder": {
-                            "className": "",
-                            "properties": {}
+                            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                            "properties": {
+                                "cacheInterval": "",
+                                "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.defaultHashVariablePlugin;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n\r\n \r\npublic FormRowSet load(Element element, String primaryKey, FormData formData) {\r\n    \r\n    FormRowSet rows = new FormRowSet();\r\n    \r\n\r\n\r\n    //LogUtil.info(\"Select equipa ----->\", \"Entra:\" + equipa);\r\n    FormRow option = new FormRow();\r\n    //option.setProperty('Contratação1', 'contratacao1');\r\n    option.setProperty('Filtro', 'filtro1');\r\n    rows.add(option);\r\n\r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(element, primaryKey, formData);",
+                                "useAjax": ""
+                            }
                         },
                         "permission_rules": {
                             "1c456b84-44fa-3759-6fc2-5e584209abb6": {},
