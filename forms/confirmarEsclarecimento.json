@@ -180,73 +180,84 @@
             "className": "org.joget.apps.form.model.Section",
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
-                "elements": [{
-                    "className": "org.joget.plugin.enterprise.FormGrid",
-                    "properties": {
-                        "abortRelatedRunningProcesses": "",
-                        "deleteFiles": "",
-                        "deleteGridData": "",
-                        "deleteMessage": "",
-                        "deleteSubformData": "",
-                        "disabledAdd": "true",
-                        "disabledDelete": "true",
-                        "enableSorting": "",
-                        "errorMessage": "Invalid number of rows",
-                        "formDefId": "observacaoDiligencia",
-                        "height": "500",
-                        "id": "historico_observacoes",
-                        "label": "",
-                        "loadBinder": {
-                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
-                            "properties": {
-                                "foreignKey": "id_diligencia",
-                                "formDefId": "observacaoDiligencia"
-                            }
-                        },
-                        "options": [
-                            {
-                                "format": "infoUser",
-                                "formatType": "options",
-                                "label": "Nome",
-                                "value": "gestor_atual",
-                                "width": ""
+                "elements": [
+                    {
+                        "className": "org.joget.plugin.enterprise.FormGrid",
+                        "properties": {
+                            "abortRelatedRunningProcesses": "",
+                            "deleteFiles": "",
+                            "deleteGridData": "",
+                            "deleteMessage": "",
+                            "deleteSubformData": "",
+                            "disabledAdd": "true",
+                            "disabledDelete": "true",
+                            "enableSorting": "",
+                            "errorMessage": "Invalid number of rows",
+                            "formDefId": "observacaoDiligencia",
+                            "height": "500",
+                            "id": "historico_observacoes",
+                            "label": "",
+                            "loadBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "id_diligencia",
+                                    "formDefId": "observacaoDiligencia"
+                                }
                             },
-                            {
-                                "format": "",
-                                "formatType": "date",
-                                "label": "Data",
-                                "value": "dateCreated",
-                                "width": ""
+                            "options": [
+                                {
+                                    "format": "infoUser",
+                                    "formatType": "options",
+                                    "label": "Nome",
+                                    "value": "gestor_atual",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "date",
+                                    "label": "Data",
+                                    "value": "dateCreated",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "nl2br",
+                                    "label": "Observação",
+                                    "value": "observacao_diligencia",
+                                    "width": ""
+                                }
+                            ],
+                            "pageSize": "20",
+                            "permissionHidden": "",
+                            "readonly": "true",
+                            "readonlyLabel": "",
+                            "showRowNumber": "",
+                            "storeBinder": {
+                                "className": "",
+                                "properties": {}
                             },
-                            {
-                                "format": "",
-                                "formatType": "nl2br",
-                                "label": "Observação",
-                                "value": "observacao_diligencia",
-                                "width": ""
-                            }
-                        ],
-                        "pageSize": "20",
-                        "permissionHidden": "",
-                        "readonly": "true",
-                        "readonlyLabel": "",
-                        "showRowNumber": "",
-                        "storeBinder": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "submit-label-normal": "",
-                        "submit-label-readonly": "",
-                        "uniqueKey": "",
-                        "validateMaxRow": "",
-                        "validateMinRow": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "width": "900"
+                            "submit-label-normal": "",
+                            "submit-label-readonly": "",
+                            "uniqueKey": "",
+                            "validateMaxRow": "",
+                            "validateMinRow": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "width": "900"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "edicao_botoes_default",
+                            "label": "",
+                            "value": "<script type=\"text/javascript\">\r\n$(function(){\r\n    $(\"#assignmentComplete\").val(\"SUBMETER\");\r\n    $(\"#saveAsDraft\").val(\"GUARDAR\");\r\n    $(\"#cancel\").text(\"CANCELAR\"); \r\n});\r\n<\/script>"
+                        }
                     }
-                }],
+                ],
                 "properties": {"width": "100%"}
             }],
             "properties": {
