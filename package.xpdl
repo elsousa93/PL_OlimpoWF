@@ -3949,16 +3949,6 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1221.953125,20.91796875"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="ConfigurarSLA" Name="Configurar SLA">
-                    <Implementation>
-                        <Tool Id="default_application"/>
-                    </Implementation>
-                    <Performer>process14_participant7</Performer>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process14_participant7"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="135,36"/>
-                    </ExtendedAttributes>
-                </Activity>
                 <Activity Id="route2">
                     <Route/>
                     <Performer>contratacao_bcp_com</Performer>
@@ -4391,9 +4381,19 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2236,37.265625"/>
                     </ExtendedAttributes>
                 </Activity>
+                <Activity Id="ConfigurarProcsso" Name="Configurar Processo">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>process14_participant7</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process14_participant7"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="132,35.62498298828126"/>
+                    </ExtendedAttributes>
+                </Activity>
             </Activities>
             <Transitions>
-                <Transition From="ConfigurarSLA" Id="transition16" To="route1">
+                <Transition From="ConfigurarProcsso" Id="transition16" To="route1">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
@@ -4818,8 +4818,8 @@
             </Transitions>
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="contratacao_bcp_com;contratacao_nb_com;process14_participant7;contratacao_bic_com;contratacao_mg1_com;contratacao_mg2_com;contratacao_bst_com"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process14_participant7,CONNECTING_ACTIVITY_ID=ConfigurarSLA,X_OFFSET=56,Y_OFFSET=53,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process14_participant7,CONNECTING_ACTIVITY_ID=finalizarContratacao,X_OFFSET=2463,Y_OFFSET=45,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process14_participant7,CONNECTING_ACTIVITY_ID=ConfigurarProcsso,X_OFFSET=56,Y_OFFSET=53,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
     </WorkflowProcesses>
