@@ -278,12 +278,17 @@
                             "multiple": "",
                             "options": [],
                             "optionsBinder": {
-                                "className": "org.joget.plugin.enterprise.DepartmentOptionsBinder",
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
                                 "properties": {
-                                    "addEmptyOption": "true",
+                                    "addEmptyOption": "",
                                     "cacheInterval": "",
                                     "emptyLabel": "",
-                                    "orgId": "PL"
+                                    "extraCondition": "c_nome_campo = 'fase_processo'",
+                                    "formDefId": "adicionarOpcaoLV",
+                                    "groupingColumn": "",
+                                    "idColumn": "value",
+                                    "labelColumn": "label",
+                                    "useAjax": ""
                                 }
                             },
                             "readonly": "",
@@ -356,6 +361,27 @@
                             },
                             "value": "#process.activityInst.{assignment.activityDefId}.performerUser[{assignment.processId}]#",
                             "workflowVariable": "gestor_destinatario"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "field12",
+                            "label": "Text Field",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "#assignment.activityDefId# #assignment.processId#",
+                            "workflowVariable": ""
                         }
                     }
                 ],
