@@ -4,7 +4,81 @@
         "className": "org.joget.apps.form.model.Section",
         "elements": [{
             "className": "org.joget.apps.form.model.Column",
-            "elements": [],
+            "elements": [
+                {
+                    "className": "org.joget.apps.form.lib.SelectBox",
+                    "properties": {
+                        "controlField": "",
+                        "id": "form",
+                        "label": "Formulário",
+                        "multiple": "",
+                        "options": [
+                            {
+                                "grouping": "",
+                                "label": "Processo",
+                                "value": "detalhe_processo"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Banco",
+                                "value": "banco"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Análise Bancária",
+                                "value": "anal_banc_processo"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Análise Legal",
+                                "value": "anal_legal_processo"
+                            }
+                        ],
+                        "optionsBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.SelectBox",
+                    "properties": {
+                        "controlField": "",
+                        "id": "campo",
+                        "label": "Select Box",
+                        "multiple": "",
+                        "options": [],
+                        "optionsBinder": {
+                            "className": "org.joget.plugin.enterprise.JdbcOptionsBinder",
+                            "properties": {
+                                "addEmpty": "",
+                                "cacheInterval": "",
+                                "jdbcDatasource": "default",
+                                "sql": "SELECT column_name as 'id', '#form.campos_log.form#' as 'Label' FROM information_schema.columns\nWHERE table_schema='jwdb' AND  table_name='app_fd_detalhe_processo';",
+                                "useAjax": ""
+                            }
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                }
+            ],
             "properties": {"width": "100%"}
         }],
         "properties": {
