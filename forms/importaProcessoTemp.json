@@ -7,31 +7,6 @@
                 "className": "org.joget.apps.form.model.Column",
                 "elements": [
                     {
-                        "className": "org.joget.apps.form.lib.TextField",
-                        "properties": {
-                            "encryption": "",
-                            "id": "n_wf_banco",
-                            "label": "Número Workflow Banco",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "storeNumeric": "",
-                            "style": "",
-                            "validator": {
-                                "className": "org.joget.apps.form.lib.DefaultValidator",
-                                "properties": {
-                                    "mandatory": "true",
-                                    "message": "#i18n.mandatorymsg#",
-                                    "type": ""
-                                }
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    },
-                    {
                         "className": "org.joget.apps.form.lib.SelectBox",
                         "properties": {
                             "controlField": "",
@@ -221,7 +196,7 @@
                 }
             }],
             "properties": {
-                "comment": "TODO:\n- Verificar se um processo sem nada preenchido é criado\n- Adicionar campos em falta\n- Fazer lógica para importar campos para tabelas diferentes",
+                "comment": "TODO:\n- Adicionar campos em falta (código da agencia)\n",
                 "id": "section1",
                 "join": "",
                 "label": "Detalhe de Processo",
@@ -252,29 +227,38 @@
                 "className": "org.joget.apps.form.model.Column",
                 "elements": [
                     {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "n_wf_banco",
+                            "label": "Número Workflow Banco",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.DefaultValidator",
+                                "properties": {
+                                    "mandatory": "true",
+                                    "message": "#i18n.mandatorymsg#",
+                                    "type": ""
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
                         "className": "org.joget.apps.form.lib.SelectBox",
                         "properties": {
                             "controlField": "",
                             "id": "nome_banco",
                             "label": "Nome do Banco",
                             "multiple": "",
-                            "options": [
-                                {
-                                    "grouping": "",
-                                    "label": "",
-                                    "value": ""
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "BCP",
-                                    "value": "BCP"
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Novo Banco",
-                                    "value": "NB"
-                                }
-                            ],
+                            "options": [],
                             "optionsBinder": {
                                 "className": "org.joget.apps.form.lib.FormOptionsBinder",
                                 "properties": {
@@ -299,6 +283,33 @@
                                     "message": "",
                                     "type": ""
                                 }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "field12",
+                            "label": "Select Box",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                                "properties": {
+                                    "cacheInterval": "",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.defaultHashVariablePlugin;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n\r\n \r\npublic FormRowSet load(Element element, String primaryKey, FormData formData) {\r\n    \r\n    FormRowSet rows = new FormRowSet();\r\n    \r\n    String cUserDepartmentName = \"#currentUser.department.name#\";\r\n    String cUserDepartmentID = \"#currentUser.department.id#\";\r\n    \r\n    String[] cUserDepName = cUserDepartmentName.split(\";\");\r\n    String[] cUserDepID = cUserDepartmentID.split(\";\");\r\n    \r\n    for(int i = 0; i < cUserDepID.length; i++ ){\r\n        if(cUserDepID[i].contains(equipa)){\r\n            //LogUtil.info(\"Select equipa ----->\", \"Entra:\" + equipa);\r\n            FormRow option = new FormRow();\r\n            option.setProperty(FormUtil.PROPERTY_VALUE, cUserDepID[i]);\r\n            option.setProperty(FormUtil.PROPERTY_LABEL, cUserDepName[i]);\r\n            rows.add(option);\r\n        }\r\n        \r\n    }\r\n\r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(element, primaryKey, formData);",
+                                    "useAjax": ""
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
                             },
                             "value": "",
                             "workflowVariable": ""
