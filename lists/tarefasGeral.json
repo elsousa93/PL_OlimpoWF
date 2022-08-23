@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco, c_estado_contratacao AS EstadoContratacao, sact.Id AS ActivityId, from_unixtime(sact.LimitTime/1000, '%Y-%m-%d %H:%i') as limittime, sp.ActivityRequesterProcessId as ProcessId\nFROM shkprocesses sp\nLEFT JOIN app_fd_processos p ON p.id = sp.Id\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.KeyValue LIKE 'open.not_running.not_started' OR ssta.KeyValue LIKE 'open.running')\nAND (c_estado_contratacao is null or c_estado_contratacao <> 'PND')"
+            "sql": "SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco, c_estado_contratacao AS EstadoContratacao, sact.Id AS ActivityId, from_unixtime(sact.LimitTime/1000, '%Y-%m-%d %H:%i') as limittime, sp.ActivityRequesterProcessId as ProcessId, dp.c_robot as Robot\nFROM shkprocesses sp\nLEFT JOIN app_fd_processos p ON p.id = sp.Id\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.KeyValue LIKE 'open.not_running.not_started' OR ssta.KeyValue LIKE 'open.running')\nAND (c_estado_contratacao is null or c_estado_contratacao <> 'PND')"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -18,6 +18,7 @@
             "id": "column_1",
             "label": "id",
             "name": "id",
+            "permission_rules": {},
             "sortable": "false"
         },
         {
@@ -38,6 +39,7 @@
             "id": "column_0",
             "label": "Data de Criação",
             "name": "dateCreated",
+            "permission_rules": {},
             "sortable": "false",
             "style": "",
             "width": ""
@@ -60,6 +62,7 @@
             "id": "column_2",
             "label": "Estado de Contratacao",
             "name": "EstadoContratacao",
+            "permission_rules": {},
             "sortable": "true",
             "style": "",
             "width": ""
@@ -70,6 +73,7 @@
             "id": "column_7",
             "label": "Urgencia",
             "name": "Urgencia",
+            "permission_rules": {},
             "sortable": "false"
         },
         {
@@ -78,6 +82,7 @@
             "id": "column_5",
             "label": "limittime",
             "name": "limittime",
+            "permission_rules": {},
             "sortable": "false"
         },
         {
@@ -86,6 +91,7 @@
             "id": "column_4",
             "label": "Atividade",
             "name": "Atividade",
+            "permission_rules": {},
             "sortable": "false"
         },
         {
@@ -94,6 +100,7 @@
             "id": "column_3",
             "label": "ActivityId",
             "name": "ActivityId",
+            "permission_rules": {},
             "sortable": "false"
         },
         {
@@ -115,9 +122,19 @@
             "include_export": "true",
             "label": "ProcessId",
             "name": "ProcessId",
+            "permission_rules": {},
             "sortable": "false",
             "style": "",
             "width": ""
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_8",
+            "label": "Robot",
+            "name": "Robot",
+            "permission_rules": {},
+            "sortable": "false"
         }
     ],
     "considerFilterWhenGetTotal": "",
@@ -131,6 +148,7 @@
             "id": "filter_1",
             "label": "Atividade",
             "name": "Atividade",
+            "permission_rules": {},
             "type": {
                 "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
                 "properties": {"defaultValue": ""}
@@ -142,6 +160,7 @@
             "id": "filter_0",
             "label": "resourceId",
             "name": "resourceId",
+            "permission_rules": {},
             "type": {
                 "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
                 "properties": {}
@@ -155,6 +174,7 @@
     "orderBy": "Urgencia",
     "pageSize": "0",
     "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "permission_rules": [],
     "responsiveView": [
         {
             "breakpoint": "",
