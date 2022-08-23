@@ -268,16 +268,10 @@
                             "multiple": "",
                             "options": [],
                             "optionsBinder": {
-                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "className": "org.joget.apps.form.lib.BeanShellFormBinder",
                                 "properties": {
-                                    "addEmptyOption": "true",
                                     "cacheInterval": "",
-                                    "emptyLabel": "",
-                                    "extraCondition": "c_nome_campo = 'nome_banco'",
-                                    "formDefId": "adicionarOpcaoLV",
-                                    "groupingColumn": "",
-                                    "idColumn": "value",
-                                    "labelColumn": "label",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.defaultHashVariablePlugin;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n\r\n \r\npublic FormRowSet load(Element element, String primaryKey, FormData formData) {\r\n    \r\n    FormRowSet rows = new FormRowSet();\r\n    \r\n    String cUserDepartmentName = \"#currentUser.department.name#\";\r\n    String cUserDepartmentID = \"#currentUser.department.id#\";\r\n    \r\n    String[] cUserDepName = cUserDepartmentName.split(\";\");\r\n    String[] cUserDepID = cUserDepartmentID.split(\";\");\r\n    \r\n    //if currentUser belongs to more than 1 bank, add empty option to ensure that the right one is chosen\r\n    if(cUserDepID.length > 1 && cUserDepID[0].length() > 11 && cUserDepID[1].length() > 11){\r\n        FormRow option = new FormRow();\r\n        option.setProperty(FormUtil.PROPERTY_VALUE, \"\");\r\n        option.setProperty(FormUtil.PROPERTY_LABEL, \"\");\r\n        rows.add(option);\r\n    }\r\n    \r\n    for(int i = 0; i < cUserDepID.length; i++ ){\r\n        if(cUserDepID[i].length() > 11){\r\n            //LogUtil.info(\"Select equipa ----->\", \"Entra:\" + equipa);\r\n            FormRow option = new FormRow();\r\n            option.setProperty(FormUtil.PROPERTY_VALUE, cUserDepID[i].substring(11,14));\r\n            option.setProperty(FormUtil.PROPERTY_LABEL, cUserDepName[i].substring(11,14));\r\n            rows.add(option);\r\n        }\r\n    }\r\n\r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(element, primaryKey, formData);",
                                     "useAjax": ""
                                 }
                             },
@@ -289,37 +283,9 @@
                                 "className": "org.joget.apps.form.lib.DefaultValidator",
                                 "properties": {
                                     "mandatory": "true",
-                                    "message": "",
+                                    "message": "#i18n.mandatorymsg#",
                                     "type": ""
                                 }
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.SelectBox",
-                        "properties": {
-                            "controlField": "",
-                            "id": "field12",
-                            "label": "Select Box",
-                            "multiple": "",
-                            "options": [],
-                            "optionsBinder": {
-                                "className": "org.joget.apps.form.lib.BeanShellFormBinder",
-                                "properties": {
-                                    "cacheInterval": "",
-                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.defaultHashVariablePlugin;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n\r\n \r\npublic FormRowSet load(Element element, String primaryKey, FormData formData) {\r\n    \r\n    FormRowSet rows = new FormRowSet();\r\n    \r\n    String cUserDepartmentName = \"#currentUser.department.name#\";\r\n    String cUserDepartmentID = \"#currentUser.department.id#\";\r\n    \r\n    String[] cUserDepName = cUserDepartmentName.split(\";\");\r\n    String[] cUserDepID = cUserDepartmentID.split(\";\");\r\n    \r\n    for(int i = 0; i < cUserDepID.length; i++ ){\r\n        if(cUserDepID[i].length() > 11){\r\n            //LogUtil.info(\"Select equipa ----->\", \"Entra:\" + equipa);\r\n            FormRow option = new FormRow();\r\n            option.setProperty(FormUtil.PROPERTY_VALUE, cUserDepID[i].substring(11,14));\r\n            option.setProperty(FormUtil.PROPERTY_LABEL, cUserDepName[i].substring(11,14));\r\n            rows.add(option);\r\n        }\r\n        \r\n    }\r\n\r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(element, primaryKey, formData);",
-                                    "useAjax": ""
-                                }
-                            },
-                            "permission_rules": {"35a48421-7705-205a-acf4-18ee4c3e7a1f": {}},
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
                             },
                             "value": "",
                             "workflowVariable": ""
@@ -351,7 +317,7 @@
                 "properties": {"width": "100%"}
             }],
             "properties": {
-                "comment": "",
+                "comment": "TODO:\n- Lógica do nome do banco se o user tiver 2 departamentos com bancos iguais e complexidades diferentes",
                 "id": "section3",
                 "join": "",
                 "label": "Banco",
