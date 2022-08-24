@@ -21,12 +21,10 @@
                     "id": "field1",
                     "label": "Campos para Log",
                     "loadBinder": {
-                        "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
+                        "className": "org.joget.plugin.enterprise.MultirowFormBinder",
                         "properties": {
-                            "autoHandleFiles": "",
-                            "autoHandleWorkflowVariable": "",
-                            "jdbcDatasource": "default",
-                            "sql": "SELECT * FROM app_fd_campos_log"
+                            "foreignKey": "id",
+                            "formDefId": "camposLog"
                         }
                     },
                     "options": [
@@ -57,11 +55,8 @@
                     "readonlyLabel": "",
                     "showRowNumber": "",
                     "storeBinder": {
-                        "className": "org.joget.plugin.enterprise.MultirowFormBinder",
-                        "properties": {
-                            "foreignKey": "campo",
-                            "formDefId": "camposLog"
-                        }
+                        "className": "",
+                        "properties": {}
                     },
                     "submit-label-normal": "",
                     "submit-label-readonly": "",
