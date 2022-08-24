@@ -57,8 +57,11 @@
                     "readonlyLabel": "",
                     "showRowNumber": "",
                     "storeBinder": {
-                        "className": "",
-                        "properties": {}
+                        "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                        "properties": {
+                            "foreignKey": "id",
+                            "formDefId": "camposLog"
+                        }
                     },
                     "submit-label-normal": "",
                     "submit-label-readonly": "",
@@ -82,9 +85,31 @@
     "properties": {
         "description": "",
         "id": "gestaoCamposLog",
-        "loadBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
         "name": "Gestão Campos  Log",
-        "storeBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+            "properties": {
+                "autoHandleFiles": "",
+                "autoHandleWorkflowVariable": "true",
+                "cacheInterval": "",
+                "script": "return null;",
+                "useAjax": ""
+            }
+        },
         "tableName": "campos_log"
     }
 }
