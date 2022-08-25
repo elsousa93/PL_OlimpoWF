@@ -15,15 +15,6 @@
                     }
                 },
                 {
-                    "className": "org.joget.apps.form.lib.CustomHTML",
-                    "properties": {
-                        "autoPopulate": "",
-                        "id": "field2",
-                        "label": "",
-                        "value": "<button class=\"btn btn-success\" onclick=\" window.open('http://192.168.0.104:8080/jw/web/userview/workflowPL/UV_PL_Geral/_/enviarEmail?fk_id_processo=#process.processId#&id_atividade=#assignment.activityId#'); return false;\">Novo email<\/button>"
-                    }
-                },
-                {
                     "className": "org.joget.plugin.enterprise.ListGrid",
                     "properties": {
                         "abortRelatedRunningProcesses": "",
@@ -42,12 +33,10 @@
                         "label": "Lista de Comunicações",
                         "listId": "list_comunicacoes",
                         "loadBinder": {
-                            "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
+                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
                             "properties": {
-                                "autoHandleFiles": "",
-                                "autoHandleWorkflowVariable": "",
-                                "jdbcDatasource": "default",
-                                "sql": "SELECT *\nFROM app_fd_comunicacoes_proce cp\nWHERE cp.c_id_processo = '#process.processId#';"
+                                "foreignKey": "id_processo",
+                                "formDefId": "comunicacoes"
                             }
                         },
                         "options": [
