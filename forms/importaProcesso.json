@@ -7,6 +7,27 @@
                 "className": "org.joget.apps.form.model.Column",
                 "elements": [
                     {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "n_wf_pl",
+                            "label": "Número Processo PL",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
                         "className": "org.joget.apps.form.lib.SelectBox",
                         "properties": {
                             "controlField": "",
@@ -252,27 +273,6 @@
                         }
                     },
                     {
-                        "className": "org.joget.apps.form.lib.TextField",
-                        "properties": {
-                            "encryption": "",
-                            "id": "field12",
-                            "label": "Text Field",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "storeNumeric": "",
-                            "style": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "#binder.importaProcesso.nome_banco#DPA#binder.importaProcesso.n_wf_banco#",
-                            "workflowVariable": ""
-                        }
-                    },
-                    {
                         "className": "org.joget.apps.form.lib.SelectBox",
                         "properties": {
                             "controlField": "",
@@ -323,6 +323,15 @@
                             },
                             "value": "",
                             "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field13",
+                            "label": "",
+                            "value": "<script type=\"text/javascript\">\r\n    $(document).change(function(){\r\n        var nomeBancoId = \"nome_banco\";\r\n        var nWFBancoId = \"n_wf_banco\";\r\n        var nWFPlId = \"n_wf_pl\";\r\n  \r\n        //get values\r\n \r\n        var nomeBanco = $('[name='+nomeBancoId+']:enabled').val();\r\n        var nWFBanco = $('[name='+nWFBancoId+']:enabled').val();\r\n         \r\n        //function to compare\r\n \r\n        n_wf_pl = nomeBanco + \"DPA\" + nWFBanco;\r\n          \r\n        //store the value to a field\r\n        $('[name='+nWFPlId+']:enabled').val(n_wf_pl);\r\n    });\r\n<\/script>"
                         }
                     }
                 ],
