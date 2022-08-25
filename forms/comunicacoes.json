@@ -33,10 +33,12 @@
                         "label": "Lista de Comunicações",
                         "listId": "list_comunicacoes",
                         "loadBinder": {
-                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                            "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
                             "properties": {
-                                "foreignKey": "id_processo",
-                                "formDefId": "comunicacoes"
+                                "autoHandleFiles": "",
+                                "autoHandleWorkflowVariable": "true",
+                                "jdbcDatasource": "default",
+                                "sql": "SELECT * FROM app_fd_comunicacoes_proce where c_id_processo = '3218%'"
                             }
                         },
                         "options": [
