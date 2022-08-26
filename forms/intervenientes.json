@@ -1,178 +1,320 @@
 {
     "className": "org.joget.apps.form.model.Form",
-    "elements": [{
-        "className": "org.joget.apps.form.model.Section",
-        "elements": [{
-            "className": "org.joget.apps.form.model.Column",
-            "elements": [
-                {
-                    "className": "org.joget.apps.form.lib.HiddenField",
-                    "properties": {
-                        "id": "id_processo",
-                        "useDefaultWhenEmpty": "",
-                        "value": "",
-                        "workflowVariable": ""
-                    }
+    "elements": [
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section11",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
                 },
-                {
-                    "className": "org.joget.plugin.enterprise.FormGrid",
-                    "properties": {
-                        "abortRelatedRunningProcesses": "",
-                        "deleteFiles": "",
-                        "deleteGridData": "",
-                        "deleteMessage": "Delete row?",
-                        "deleteSubformData": "",
-                        "disabledAdd": "",
-                        "disabledDelete": "",
-                        "enableSorting": "",
-                        "errorMessage": "Invalid number of rows",
-                        "formDefId": "interveniente",
-                        "height": "500",
-                        "id": "lista_intervenientes",
-                        "label": "",
-                        "loadBinder": {
-                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
-                            "properties": {
-                                "foreignKey": "id_intervenientes",
-                                "formDefId": "interveniente"
-                            }
-                        },
-                        "options": [
-                            {
-                                "format": "",
-                                "formatType": "text",
-                                "label": "Nome",
-                                "value": "nome",
-                                "width": ""
-                            },
-                            {
-                                "format": "",
-                                "formatType": "text",
-                                "label": "Nº Doc. ID",
-                                "value": "cc",
-                                "width": ""
-                            },
-                            {
-                                "format": "",
-                                "formatType": "nl2br",
-                                "label": "Morada",
-                                "value": "morada",
-                                "width": ""
-                            },
-                            {
-                                "format": "",
-                                "formatType": "date",
-                                "label": "Validade",
-                                "value": "validade",
-                                "width": ""
-                            },
-                            {
-                                "format": "",
-                                "formatType": "text",
-                                "label": "Naturalidade",
-                                "value": "naturalidade",
-                                "width": ""
-                            },
-                            {
-                                "format": "",
-                                "formatType": "text",
-                                "label": "NIF",
-                                "value": "nif",
-                                "width": ""
-                            },
-                            {
-                                "format": "",
-                                "formatType": "text",
-                                "label": "Estado Civil",
-                                "value": "estado_civil",
-                                "width": ""
-                            },
-                            {
-                                "format": "",
-                                "formatType": "options",
-                                "label": "Regime casamento",
-                                "value": "regime_casamento",
-                                "width": ""
-                            },
-                            {
-                                "format": "",
-                                "formatType": "text",
-                                "label": "Cônjuge",
-                                "value": "conjuge",
-                                "width": ""
-                            }
-                        ],
-                        "pageSize": "20",
-                        "permission_rules": {},
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "showRowNumber": "true",
-                        "storeBinder": {
-                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
-                            "properties": {
-                                "foreignKey": "id_intervenientes",
-                                "formDefId": "interveniente"
-                            }
-                        },
-                        "submit-label-normal": "",
-                        "submit-label-readonly": "",
-                        "uniqueKey": "",
-                        "validateMaxRow": "",
-                        "validateMinRow": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "width": "900"
-                    }
+                "permission": {
+                    "className": "",
+                    "properties": {}
                 },
-                {
-                    "className": "org.joget.marketplace.FormRecordLockingField",
-                    "properties": {
-                        "displayNameFormat": "firstLast",
-                        "formDefId": "intervenientes",
-                        "id": "record_lock",
-                        "label": "Formulário bloqueado para edição por:",
-                        "lockDuration": "5",
-                        "validator": {
-                            "className": "org.joget.marketplace.FormRecordLockingValidator",
-                            "properties": {
-                                "errorMessage": "O formulário está bloqueado.",
-                                "formDefId": "intervenientes"
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "interveniente_soc_part",
+                "visibilityValue": "particular"
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "id_processo",
+                            "useDefaultWhenEmpty": "",
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.Radio",
+                        "properties": {
+                            "controlField": "",
+                            "id": "compreendem_portugues",
+                            "label": "Todos Compreendem a Língua Portuguesa ?",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Sim",
+                                    "value": "sim"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Não",
+                                    "value": "nao"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permission_rules": {"3e334771-7c1d-4882-b298-443c91d6bf3e": {}},
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.plugin.enterprise.MultiSelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "intervenientes_nao_compreendem_portugues",
+                            "label": "Intervenientes que não compreende a língua portuguesa",
+                            "multiple": "true",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "width": "40%",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.Radio",
+                        "properties": {
+                            "controlField": "",
+                            "id": "intervenientes_acidentais",
+                            "label": "Existem Outros Intervenientes Acidentais ?",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Sim",
+                                    "value": "sim"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Não",
+                                    "value": "nao"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permission_rules": {"3e334771-7c1d-4882-b298-443c91d6bf3e": {}},
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextArea",
+                        "properties": {
+                            "cols": "20",
+                            "id": "observacoes_intervenientes",
+                            "label": "Observações:",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "rows": "5",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.plugin.enterprise.FormGrid",
+                        "properties": {
+                            "abortRelatedRunningProcesses": "",
+                            "deleteFiles": "",
+                            "deleteGridData": "",
+                            "deleteMessage": "Delete row?",
+                            "deleteSubformData": "",
+                            "disabledAdd": "",
+                            "disabledDelete": "",
+                            "enableSorting": "",
+                            "errorMessage": "Invalid number of rows",
+                            "formDefId": "interveniente",
+                            "height": "500",
+                            "id": "lista_intervenientes",
+                            "label": "",
+                            "loadBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "id_intervenientes",
+                                    "formDefId": "interveniente"
+                                }
+                            },
+                            "options": [
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Nome",
+                                    "value": "nome",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Nº Doc. ID",
+                                    "value": "cc",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "nl2br",
+                                    "label": "Morada",
+                                    "value": "morada",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "date",
+                                    "label": "Validade",
+                                    "value": "validade",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Naturalidade",
+                                    "value": "naturalidade",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "NIF",
+                                    "value": "nif",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Estado Civil",
+                                    "value": "estado_civil",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "options",
+                                    "label": "Regime casamento",
+                                    "value": "regime_casamento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Cônjuge",
+                                    "value": "conjuge",
+                                    "width": ""
+                                }
+                            ],
+                            "pageSize": "20",
+                            "permission_rules": {},
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "showRowNumber": "true",
+                            "storeBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "id_intervenientes",
+                                    "formDefId": "interveniente"
+                                }
+                            },
+                            "submit-label-normal": "",
+                            "submit-label-readonly": "",
+                            "uniqueKey": "",
+                            "validateMaxRow": "",
+                            "validateMinRow": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "width": "900"
+                        }
+                    },
+                    {
+                        "className": "org.joget.marketplace.FormRecordLockingField",
+                        "properties": {
+                            "displayNameFormat": "firstLast",
+                            "formDefId": "intervenientes",
+                            "id": "record_lock",
+                            "label": "Formulário bloqueado para edição por:",
+                            "lockDuration": "5",
+                            "validator": {
+                                "className": "org.joget.marketplace.FormRecordLockingValidator",
+                                "properties": {
+                                    "errorMessage": "O formulário está bloqueado.",
+                                    "formDefId": "intervenientes"
+                                }
                             }
                         }
                     }
-                }
-            ],
-            "properties": {"width": "100%"}
-        }],
-        "properties": {
-            "comment": "",
-            "id": "section1",
-            "join": "",
-            "label": "Intervenientes",
-            "loadBinder": {
-                "className": "",
-                "properties": {}
-            },
-            "permission": {
-                "className": "",
-                "properties": {}
-            },
-            "permissionReadonly": "",
-            "permission_rules": {},
-            "readonly": "",
-            "readonlyLabel": "",
-            "regex": "",
-            "reverse": "",
-            "storeBinder": {
-                "className": "",
-                "properties": {}
-            },
-            "visibilityControl": "",
-            "visibilityValue": ""
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section1",
+                "join": "",
+                "label": "Intervenientes",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {},
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
         }
-    }],
+    ],
     "properties": {
         "description": "",
         "id": "intervenientes",
