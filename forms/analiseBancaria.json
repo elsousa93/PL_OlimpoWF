@@ -25,6 +25,94 @@
                         }
                     },
                     {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "tipo_emprestimo",
+                            "label": "Tipo de Empréstimo",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "true",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "extraCondition": "c_nome_campo = 'tipo_emprestimo'",
+                                    "formDefId": "adicionarOpcaoLV",
+                                    "groupingColumn": "",
+                                    "idColumn": "value",
+                                    "labelColumn": "label",
+                                    "useAjax": ""
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "valor_emprestimo",
+                            "label": "Finalidade Empréstimo",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "valor_emprestimo_verdadeiro",
+                            "label": "",
+                            "permissionHidden": "",
+                            "permission_rules": {},
+                            "value": "<script type=\"text/javascript\">\r\n\r\n    $(document).ready(function(){\r\n\r\n        var f1 = FormUtil.getField(\"valor_emprestimo\");\r\n        var number = FormUtil.getValue(\"valor_emprestimo\");\r\n        \r\n        number = number.replaceAll('.', \"\");\r\n        number = number.replaceAll('\u20ac', \"\");\r\n        number = number.replaceAll('Eur', \"\");\r\n        number = number.replaceAll(',', '.');\r\n        \r\n        let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(number);\r\n    \r\n        num = num.replace(/\\s/g, '.');\r\n        num = num.replaceAll('.\u20ac', ' EUR');\r\n        \r\n        $(f1).val(num);\r\n\r\n    });\r\n<\/script> "
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "tipo_regime",
+                            "label": "Tipo de Regime",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
                         "className": "org.joget.apps.form.lib.TextField",
                         "properties": {
                             "encryption": "",
