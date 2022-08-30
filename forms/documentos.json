@@ -15,27 +15,6 @@
                     }
                 },
                 {
-                    "className": "org.joget.apps.form.lib.TextField",
-                    "properties": {
-                        "encryption": "",
-                        "id": "id_processo",
-                        "label": "Text Field",
-                        "maxlength": "",
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "storeNumeric": "",
-                        "style": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
-                },
-                {
                     "className": "org.joget.plugin.enterprise.FormGrid",
                     "properties": {
                         "abortRelatedRunningProcesses": "",
@@ -52,10 +31,12 @@
                         "id": "documentos",
                         "label": "Documentos",
                         "loadBinder": {
-                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                            "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
                             "properties": {
-                                "foreignKey": "id_processo",
-                                "formDefId": "documentos"
+                                "autoHandleFiles": "",
+                                "autoHandleWorkflowVariable": "true",
+                                "jdbcDatasource": "default",
+                                "sql": "SELECT d.*, dp.*\nFROM app_fd_documento_processo d\nJOIN app_fd_docs_processo dp ON dp.id = d.c_doc_id;"
                             }
                         },
                         "options": [
@@ -93,11 +74,8 @@
                         "readonlyLabel": "",
                         "showRowNumber": "",
                         "storeBinder": {
-                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
-                            "properties": {
-                                "foreignKey": "id_processo",
-                                "formDefId": "documentos"
-                            }
+                            "className": "",
+                            "properties": {}
                         },
                         "submit-label-normal": "Gravar",
                         "submit-label-readonly": "",
