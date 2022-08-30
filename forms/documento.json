@@ -138,121 +138,220 @@
             "className": "org.joget.apps.form.model.Section",
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
-                "elements": [{
-                    "className": "org.joget.plugin.enterprise.SpreadSheetGrid",
-                    "properties": {
-                        "customSettings": "",
-                        "disabledAdd": "",
-                        "disabledDelete": "",
-                        "errorMessage": "Necessita adicionar pelo menos um tipo de documento.",
-                        "fixedColumnsLeft": "0",
-                        "headerSorting": "true",
-                        "id": "field18",
-                        "label": "",
-                        "loadBinder": {
-                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
-                            "properties": {
-                                "foreignKey": "doc_id",
-                                "formDefId": "documentosSeparados"
+                "elements": [
+                    {
+                        "className": "org.joget.plugin.enterprise.FormGrid",
+                        "properties": {
+                            "abortRelatedRunningProcesses": "",
+                            "deleteFiles": "",
+                            "deleteGridData": "",
+                            "deleteMessage": "Delete row?",
+                            "deleteSubformData": "",
+                            "disabledAdd": "",
+                            "disabledDelete": "",
+                            "enableSorting": "",
+                            "errorMessage": "Invalid number of rows",
+                            "formDefId": "documentosSeparados",
+                            "height": "500",
+                            "id": "field11",
+                            "label": "Form Grid",
+                            "loadBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "doc_id",
+                                    "formDefId": "documentosSeparados"
+                                }
+                            },
+                            "options": [
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Nome do Documento",
+                                    "value": "nome_documento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "opcoesDisplayGrid",
+                                    "formatType": "options",
+                                    "label": "Tipo de documento",
+                                    "value": "tipo_documento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Número do Documento",
+                                    "value": "numero_documento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "date",
+                                    "label": "Data de Validade",
+                                    "value": "data_validade_documento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "opcoesDisplayGrid",
+                                    "formatType": "options",
+                                    "label": "Documento Válido",
+                                    "value": "documento_valido",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "date",
+                                    "label": "Data de Consulta",
+                                    "value": "data_consulta",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "opcoesDisplayGrid",
+                                    "formatType": "options",
+                                    "label": "Estado do Documento",
+                                    "value": "estado_documento",
+                                    "width": ""
+                                }
+                            ],
+                            "pageSize": "20",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "showRowNumber": "",
+                            "storeBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "doc_id",
+                                    "formDefId": "documentosSeparados"
+                                }
+                            },
+                            "submit-label-normal": "",
+                            "submit-label-readonly": "",
+                            "uniqueKey": "",
+                            "validateMaxRow": "",
+                            "validateMinRow": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "width": "900"
+                        }
+                    },
+                    {
+                        "className": "org.joget.plugin.enterprise.SpreadSheetGrid",
+                        "properties": {
+                            "customSettings": "",
+                            "disabledAdd": "",
+                            "disabledDelete": "",
+                            "errorMessage": "Necessita adicionar pelo menos um tipo de documento.",
+                            "fixedColumnsLeft": "0",
+                            "headerSorting": "true",
+                            "id": "field18",
+                            "label": "",
+                            "loadBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "doc_id",
+                                    "formDefId": "documentosSeparados"
+                                }
+                            },
+                            "maxHeight": "",
+                            "minSpareRows": "1",
+                            "options": [
+                                {
+                                    "format": "",
+                                    "formatType": "",
+                                    "formula": "",
+                                    "label": "Nome do Documento",
+                                    "readonly": "",
+                                    "regexValidator": "",
+                                    "value": "nome_documento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "opcoesDisplayGrid",
+                                    "formatType": "dropdown",
+                                    "formula": "",
+                                    "label": "Tipo de Documento",
+                                    "readonly": "",
+                                    "regexValidator": "",
+                                    "value": "tipo_documento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "date",
+                                    "formula": "",
+                                    "label": "Data de Validade do Documento",
+                                    "readonly": "",
+                                    "regexValidator": "",
+                                    "value": "data_validade_documento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "opcoesDisplayGrid",
+                                    "formatType": "dropdown",
+                                    "formula": "",
+                                    "label": "Documento Válido",
+                                    "readonly": "",
+                                    "regexValidator": "",
+                                    "value": "documento_valido",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "",
+                                    "formula": "",
+                                    "label": "Número do Documento",
+                                    "readonly": "",
+                                    "regexValidator": "",
+                                    "value": "numero_documento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "time",
+                                    "formula": "",
+                                    "label": "Data de consulta",
+                                    "readonly": "",
+                                    "regexValidator": "",
+                                    "value": "data_consulta",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "opcoesDisplayGrid",
+                                    "formatType": "dropdown",
+                                    "formula": "",
+                                    "label": "Estado do Documento",
+                                    "readonly": "",
+                                    "regexValidator": "",
+                                    "value": "estado_documento",
+                                    "width": ""
+                                }
+                            ],
+                            "readonly": "",
+                            "showRowNumber": "true",
+                            "sortingField": "",
+                            "storeBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "doc_id",
+                                    "formDefId": "documentosSeparados"
+                                }
+                            },
+                            "validateMaxRow": "",
+                            "validateMinRow": "1",
+                            "validator": {
+                                "className": "org.joget.plugin.enterprise.MultirowBasicValidator",
+                                "properties": {"validationrules": [{
+                                    "fieldId": "tipo_documento",
+                                    "mandatory": "true",
+                                    "message": "",
+                                    "validationType": ""
+                                }]}
                             }
-                        },
-                        "maxHeight": "",
-                        "minSpareRows": "1",
-                        "options": [
-                            {
-                                "format": "",
-                                "formatType": "",
-                                "formula": "",
-                                "label": "Nome do Documento",
-                                "readonly": "",
-                                "regexValidator": "",
-                                "value": "nome_documento",
-                                "width": ""
-                            },
-                            {
-                                "format": "opcoesDisplayGrid",
-                                "formatType": "dropdown",
-                                "formula": "",
-                                "label": "Tipo de Documento",
-                                "readonly": "",
-                                "regexValidator": "",
-                                "value": "tipo_documento",
-                                "width": ""
-                            },
-                            {
-                                "format": "",
-                                "formatType": "date",
-                                "formula": "",
-                                "label": "Data de Validade do Documento",
-                                "readonly": "",
-                                "regexValidator": "",
-                                "value": "data_validade_documento",
-                                "width": ""
-                            },
-                            {
-                                "format": "opcoesDisplayGrid",
-                                "formatType": "dropdown",
-                                "formula": "",
-                                "label": "Documento Válido",
-                                "readonly": "",
-                                "regexValidator": "",
-                                "value": "documento_valido",
-                                "width": ""
-                            },
-                            {
-                                "format": "",
-                                "formatType": "",
-                                "formula": "",
-                                "label": "Número do Documento",
-                                "readonly": "",
-                                "regexValidator": "",
-                                "value": "numero_documento",
-                                "width": ""
-                            },
-                            {
-                                "format": "",
-                                "formatType": "time",
-                                "formula": "",
-                                "label": "Data de consulta",
-                                "readonly": "",
-                                "regexValidator": "",
-                                "value": "data_consulta",
-                                "width": ""
-                            },
-                            {
-                                "format": "opcoesDisplayGrid",
-                                "formatType": "dropdown",
-                                "formula": "",
-                                "label": "Estado do Documento",
-                                "readonly": "",
-                                "regexValidator": "",
-                                "value": "estado_documento",
-                                "width": ""
-                            }
-                        ],
-                        "readonly": "",
-                        "showRowNumber": "true",
-                        "sortingField": "",
-                        "storeBinder": {
-                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
-                            "properties": {
-                                "foreignKey": "doc_id",
-                                "formDefId": "documentosSeparados"
-                            }
-                        },
-                        "validateMaxRow": "",
-                        "validateMinRow": "1",
-                        "validator": {
-                            "className": "org.joget.plugin.enterprise.MultirowBasicValidator",
-                            "properties": {"validationrules": [{
-                                "fieldId": "tipo_documento",
-                                "mandatory": "true",
-                                "message": "",
-                                "validationType": ""
-                            }]}
                         }
                     }
-                }],
+                ],
                 "properties": {"width": "100%"}
             }],
             "properties": {
