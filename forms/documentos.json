@@ -36,7 +36,7 @@
                                 "autoHandleFiles": "",
                                 "autoHandleWorkflowVariable": "true",
                                 "jdbcDatasource": "default",
-                                "sql": "SELECT d.*, dp.dateModified AS dateUpload, dp.c_documento AS documento\nFROM app_fd_documento_processo d\nJOIN app_fd_docs_processo dp ON dp.id = d.c_doc_id;"
+                                "sql": "SELECT d.*, dp.id AS ID, dp.dateModified AS dateUpload, dp.c_documento AS documento\nFROM app_fd_documento_processo d\nJOIN app_fd_docs_processo dp ON dp.id = d.c_doc_id;"
                             }
                         },
                         "options": [
@@ -70,7 +70,8 @@
                             }
                         ],
                         "pageSize": "20",
-                        "readonly": "",
+                        "permissionHidden": "",
+                        "readonly": "true",
                         "readonlyLabel": "",
                         "showRowNumber": "",
                         "storeBinder": {
@@ -90,6 +91,15 @@
                             "properties": {}
                         },
                         "width": "900"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field3",
+                        "label": "",
+                        "value": "<script> \nvar url;\n    $(document).ready(function(){\n        //processId = $(':hidden#multiPaged_10_comunicacoes_id_processo').val();\n        url=  \"http://192.168.0.104:8080/jw/web/userview/workflowPL/UV_PL_Geral/_/inserirDocumento?fk_id_doc=#form.processo.docs#&id_atividade=#assignment.activityId#\";\n        });   \n    \n    \n    //\n<\/script>\n<button type=\"button\" onclick=\"location.replace(url)\" >Inserir Documento<\/button>"
                     }
                 },
                 {
