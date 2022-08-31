@@ -1,11 +1,18 @@
 {
     "actions": [],
     "binder": {
-        "className": "",
-        "name": "",
-        "properties": {}
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "id",
+            "sql": "SELECT d.c_tipo_processo, d.id AS id, dp.id AS docId, dp.dateModified AS dateUpload, dp.c_documento AS documento\nFROM app_fd_docs_processo dp\nRIGHT JOIN app_fd_documento_processo d ON dp.id = d.c_doc_id"
+        }
     },
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
     "columns": [],
+    "considerFilterWhenGetTotal": "",
     "description": "",
     "filters": [],
     "id": "listaDocumentos",
@@ -13,5 +20,8 @@
     "order": "",
     "orderBy": "",
     "pageSize": "0",
-    "rowActions": []
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "rowActions": [],
+    "showPageSizeSelector": "true",
+    "useSession": "false"
 }
