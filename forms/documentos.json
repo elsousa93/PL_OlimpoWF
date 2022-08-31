@@ -36,7 +36,7 @@
                                 "autoHandleFiles": "",
                                 "autoHandleWorkflowVariable": "true",
                                 "jdbcDatasource": "default",
-                                "sql": "SELECT d.c_tipo_processo, dp.id AS ID, dp.dateModified AS dateUpload, dp.c_documento AS documento\nFROM app_fd_docs_processo dp\nRIGHT JOIN app_fd_documento_processo d ON dp.id = d.c_doc_id\nWHERE dp.c_id_processo = \"#process.recordId#\";"
+                                "sql": "SELECT d.c_tipo_processo, dp.id AS ID, dp.dateModified AS dateUpload, dp.c_documento AS documento\nFROM app_fd_docs_processo dp\nCROSS JOIN app_fd_documento_processo d ON dp.id = d.c_doc_id\nWHERE dp.c_id_processo = \"#process.recordId#\";"
                             }
                         },
                         "options": [
