@@ -213,8 +213,14 @@
         },
         "postProcessorRunOn": "both",
         "storeBinder": {
-            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
-            "properties": {}
+            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+            "properties": {
+                "autoHandleFiles": "",
+                "autoHandleWorkflowVariable": "true",
+                "cacheInterval": "",
+                "script": "import org.joget.apps.app.service.AppUtil;\nimport org.joget.apps.form.model.Element;\nimport org.joget.apps.form.model.FormData;\nimport org.joget.apps.form.model.FormRow;\nimport org.joget.apps.form.model.FormRowSet;\nimport org.joget.apps.form.model.FormStoreBinder;\nimport org.joget.plugin.base.PluginManager;\n\npublic FormRowSet store(Element element, FormRowSet rows, FormData formData) {\n    \n     if (rows != null && !rows.isEmpty()) {\n        \n        PluginManager pluginManager = (PluginManager) AppUtil.getApplicationContext().getBean(\"pluginManager\");\n        FormStoreBinder binder = (FormStoreBinder) pluginManager.getPlugin(\"org.joget.apps.form.lib.WorkflowFormBinder\");\n        binder.store(element, rows, formData);\n        \n        \n     }\n    \n    \n    return rows;\n}\nreturn store(element, rows, formData);",
+                "useAjax": ""
+            }
         },
         "tableName": "processos"
     }
