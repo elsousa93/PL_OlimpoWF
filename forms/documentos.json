@@ -36,7 +36,7 @@
                                 "autoHandleFiles": "",
                                 "autoHandleWorkflowVariable": "true",
                                 "jdbcDatasource": "default",
-                                "sql": "SELECT d.*, dp.*\nFROM app_fd_documento_processo d\nJOIN app_fd_docs_processo dp ON dp.id = d.c_doc_id;"
+                                "sql": "SELECT d.*, dp.dateModified AS dateUpload, dp.c_documento AS documento\nFROM app_fd_documento_processo d\nJOIN app_fd_docs_processo dp ON dp.id = d.c_doc_id;"
                             }
                         },
                         "options": [
@@ -58,7 +58,7 @@
                                 "format": "yyyy-MM-dd hh:mm:ss|dd-MM-yyyy hh:mm:ss",
                                 "formatType": "date",
                                 "label": "Data de Upload",
-                                "value": "dateModified",
+                                "value": "dateUpload",
                                 "width": ""
                             },
                             {
