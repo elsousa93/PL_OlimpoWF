@@ -1126,27 +1126,133 @@
             "className": "org.joget.apps.form.model.Section",
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
-                "elements": [{
-                    "className": "org.joget.apps.form.lib.TextArea",
-                    "properties": {
-                        "cols": "20",
-                        "id": "observacoes_doc_pagos",
-                        "label": "Observações:",
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "rows": "5",
-                        "validator": {
-                            "className": "org.joget.apps.form.lib.BeanShellValidator",
-                            "properties": {
-                                "decoration": "",
-                                "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\n\r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues) {\r\n    boolean result = true;\r\n    \r\n     \r\n    //get dropdown select box value\r\n    String field1Id = \"documentos_pagos\";\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field1 = FormUtil.findElement(field1Id, form, formData);\r\n  \r\n    if (field1 != null) {\r\n        //get value of field 1\r\n        String[] field1Values = FormUtil.getElementPropertyValues(field1, formData);\r\n  \r\n        if(field1Values[0].equalsIgnoreCase(\"nao\") && fileUploadValues[0].isEmpty() ){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório caso os documentos ainda não tenham sido obtidos\");\r\n            result = false;\r\n        }\r\n    } else {\r\n        //ignore if the dropdown does not exist\r\n    }\r\n  \r\n    return result;\r\n}\r\n  \r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);\r\n\r\n"
-                            }
-                        },
-                        "value": "",
-                        "workflowVariable": ""
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.TextArea",
+                        "properties": {
+                            "cols": "20",
+                            "id": "observacoes_doc_pagos",
+                            "label": "Observações:",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "rows": "5",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "",
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\n\r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues) {\r\n    boolean result = true;\r\n    \r\n     \r\n    //get dropdown select box value\r\n    String field1Id = \"documentos_pagos\";\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field1 = FormUtil.findElement(field1Id, form, formData);\r\n  \r\n    if (field1 != null) {\r\n        //get value of field 1\r\n        String[] field1Values = FormUtil.getElementPropertyValues(field1, formData);\r\n  \r\n        if(field1Values[0].equalsIgnoreCase(\"nao\") && fileUploadValues[0].isEmpty() ){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório caso os documentos ainda não tenham sido obtidos\");\r\n            result = false;\r\n        }\r\n    } else {\r\n        //ignore if the dropdown does not exist\r\n    }\r\n  \r\n    return result;\r\n}\r\n  \r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);\r\n\r\n"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.plugin.enterprise.FormGrid",
+                        "properties": {
+                            "abortRelatedRunningProcesses": "",
+                            "deleteFiles": "",
+                            "deleteGridData": "",
+                            "deleteMessage": "Delete row?",
+                            "deleteSubformData": "",
+                            "disabledAdd": "",
+                            "disabledDelete": "",
+                            "enableSorting": "",
+                            "errorMessage": "Invalid number of rows",
+                            "formDefId": "documentosSeparados",
+                            "height": "500",
+                            "id": "lista_documentos_pedidos",
+                            "label": "",
+                            "loadBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "doc_id",
+                                    "formDefId": "documentosSeparados"
+                                }
+                            },
+                            "options": [
+                                {
+                                    "format": "opcoesDisplayGrid",
+                                    "formatType": "options",
+                                    "label": "Tipo de documento",
+                                    "value": "tipo_documento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "opcoesDisplayGrid",
+                                    "formatType": "options",
+                                    "label": "Estado do Documento",
+                                    "value": "estado_pedido_documento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "date",
+                                    "label": "Data do Pedido",
+                                    "value": "data_pedido",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "date",
+                                    "label": "Data do Pagamento",
+                                    "value": "data_pagamento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "opcoesDisplayGrid",
+                                    "formatType": "options",
+                                    "label": "Natureza do Documento",
+                                    "value": "natureza_documento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "opcoesDisplayGrid",
+                                    "formatType": "options",
+                                    "label": "Estado do Documento",
+                                    "value": "estado_documento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "opcoesDisplayGrid",
+                                    "formatType": "options",
+                                    "label": "Formato do Documento",
+                                    "value": "formato_documento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "opcoesDisplayGrid",
+                                    "formatType": "options",
+                                    "label": "Finalidade do Documento",
+                                    "value": "finalidade_documento",
+                                    "width": ""
+                                }
+                            ],
+                            "pageSize": "20",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "showRowNumber": "",
+                            "storeBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "doc_id",
+                                    "formDefId": "documentosSeparados"
+                                }
+                            },
+                            "submit-label-normal": "",
+                            "submit-label-readonly": "",
+                            "uniqueKey": "",
+                            "validateMaxRow": "",
+                            "validateMinRow": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "width": "900"
+                        }
                     }
-                }],
+                ],
                 "properties": {"width": "100%"}
             }],
             "properties": {
