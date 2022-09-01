@@ -6,22 +6,102 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT d.c_tipo_processo, d.id AS id, dp.id AS docId, dp.dateModified AS dateUpload, dp.c_documento AS documento\nFROM app_fd_docs_processo dp\nRIGHT JOIN app_fd_documento_processo d ON dp.id = d.c_doc_id"
+            "sql": "SELECT d.*, dp.id AS docID, dp.c_documento\nFROM app_fd_documento_processo d\nJOIN app_fd_docs_processo dp ON dp.id = d.c_doc_id\n"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
-    "columns": [],
+    "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_3",
+            "label": "id",
+            "name": "id",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "c_tipo_documento",
+            "name": "c_tipo_documento",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_0",
+            "label": "c_documento",
+            "name": "c_documento",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_5",
+            "label": "c_doc_id",
+            "name": "c_doc_id",
+            "sortable": "false"
+        }
+    ],
     "considerFilterWhenGetTotal": "",
     "description": "",
+    "disableResponsive": "",
     "filters": [],
+    "hidePageSize": "",
     "id": "listaDocumentos",
     "name": "Lista - Documentos",
     "order": "",
     "orderBy": "",
     "pageSize": "0",
     "pageSizeSelectorOptions": "10,20,30,40,50,100",
-    "rowActions": [],
+    "responsiveView": [
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Mobile"
+        },
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Tablet"
+        }
+    ],
+    "rowActions": [
+        {
+            "className": "org.joget.apps.datalist.lib.HyperlinkDataListAction",
+            "icon": "<i class=\"fas fa-link\"><\/i>",
+            "id": "rowAction_0",
+            "label": "Hyperlink",
+            "name": "Data List Hyperlink Action",
+            "properties": {
+                "confirmation": "",
+                "datalist_type": "row_action",
+                "href": "http://192.168.0.104:8080/jw/web/client/app/workflowPL/1/form/download/documento/ID/NOME.?attachment=true",
+                "hrefColumn": "",
+                "hrefParam": "",
+                "label": "ABRIR",
+                "rules": [],
+                "target": "_self"
+            },
+            "type": "text"
+        },
+        {
+            "className": "org.joget.plugin.enterprise.BeanShellDatalistAction",
+            "icon": "<i class=\"fas fa-code\"><\/i>",
+            "id": "rowAction_1",
+            "label": "Bean Shell",
+            "name": "Bean Shell Datalist Action",
+            "properties": {
+                "datalist_type": "row_action",
+                "label": "Bean Shell"
+            },
+            "type": "text"
+        }
+    ],
+    "searchPopup": "",
+    "showDataWhenFilterSet": "",
     "showPageSizeSelector": "true",
-    "useSession": "false"
+    "useSession": ""
 }
