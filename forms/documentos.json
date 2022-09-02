@@ -114,7 +114,7 @@
                                 "autoHandleFiles": "",
                                 "autoHandleWorkflowVariable": "true",
                                 "jdbcDatasource": "default",
-                                "sql": "SELECT d.*, dp.id AS docID, dp.c_documento, dp.c_doc_path\nFROM app_fd_documento_processo d\nJOIN app_fd_docs_processo dp ON dp.id = d.c_doc_id\nWHERE dp.c_id_processo = \"#process.recordId#\";"
+                                "sql": "SELECT d.*, dp.id AS docID, dp.c_documento, dp.c_doc_path, dp.nome_ficheiro\nFROM app_fd_documento_processo d\nJOIN app_fd_docs_processo dp ON dp.id = d.c_doc_id\nWHERE dp.c_id_processo = \"#process.recordId#\";"
                             }
                         },
                         "options": [
@@ -130,16 +130,16 @@
                                 "editable": "no",
                                 "format": "",
                                 "formatType": "html",
-                                "label": "Ficheiro",
-                                "value": "documento",
+                                "label": "Abrir Documento",
+                                "value": "doc_path",
                                 "width": ""
                             },
                             {
                                 "editable": "no",
                                 "format": "",
-                                "formatType": "html",
-                                "label": "Abrir",
-                                "value": "doc_path",
+                                "formatType": "text",
+                                "label": "Nome do ficheiro",
+                                "value": "nome_ficheiro",
                                 "width": ""
                             }
                         ],
@@ -172,61 +172,6 @@
                         "id": "field3",
                         "label": "",
                         "value": "<script> \nvar url;\n    $(document).ready(function(){\n        //processId = $(':hidden#multiPaged_10_comunicacoes_id_processo').val();\n        url=  \"http://192.168.0.104:8080/jw/web/userview/workflowPL/UV_PL_Geral/_/inserirDocumento?fk_id_processo=#process.recordId#&fk_id_doc=#form.processos.docs#&id_atividade=#assignment.activityId#\";\n        });   \n    \n    \n    //\n<\/script>\n<button type=\"button\" onclick=\"location.replace(url)\" >Inserir Documento<\/button>"
-                    }
-                },
-                {
-                    "className": "org.joget.plugin.enterprise.ListGrid",
-                    "properties": {
-                        "abortRelatedRunningProcesses": "",
-                        "buttonLabel": "",
-                        "deleteFiles": "",
-                        "deleteGridData": "",
-                        "deleteMessage": "Delete row?",
-                        "deleteSubformData": "",
-                        "disabledAdd": "",
-                        "disabledDelete": "",
-                        "enableSorting": "",
-                        "errorMessage": "Invalid number of rows",
-                        "formDefId": "",
-                        "height": "500",
-                        "id": "field6",
-                        "label": "List Grid",
-                        "listId": "listaDocumentos",
-                        "loadBinder": {
-                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
-                            "properties": {
-                                "foreignKey": "id_doc",
-                                "formDefId": "documento"
-                            }
-                        },
-                        "options": [{
-                            "editable": "no",
-                            "format": "documento",
-                            "formatType": "file",
-                            "label": "Ficheiro",
-                            "value": "documento",
-                            "width": ""
-                        }],
-                        "pageSize": "20",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "requestParams": [],
-                        "showRowNumber": "",
-                        "sortField": "sort",
-                        "storeBinder": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "submit-label-normal": "",
-                        "submit-label-readonly": "",
-                        "uniqueKey": "",
-                        "validateMaxRow": "",
-                        "validateMinRow": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "width": "900"
                     }
                 },
                 {
