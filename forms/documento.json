@@ -18,6 +18,15 @@
                     {
                         "className": "org.joget.apps.form.lib.HiddenField",
                         "properties": {
+                            "id": "doc_path",
+                            "useDefaultWhenEmpty": "",
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
                             "id": "id_atividade",
                             "useDefaultWhenEmpty": "",
                             "value": "",
@@ -121,6 +130,15 @@
                             "id": "edicao_botoes_default",
                             "label": "",
                             "value": "<script type=\"text/javascript\">\r\n$(function(){\r\n    $(\"#submit\").val(\"Submeter\");\r\n});\r\n<\/script>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field13",
+                            "label": "",
+                            "value": "<script type=\"text/javascript\">\r\n    $(document).change(function(){\r\n        var docPathId = \"doc_path\";\r\n        var docUploaId = \"documento\";\r\n        var docFieldId = \"id_doc\"\r\n  \r\n        //get values\r\n \r\n        var doc = $('[name='+docUploaId+']:enabled').val();\r\n        var docId = $('[name='+docFieldId+']:enabled').val();\r\n        \r\n        var docPath = \"<a href='http://192.168.0.104:8080/jw/web/client/app/workflowPL/1/form/download/documento/\" + docId + \"/\" + doc + \".?attachment=false'>\" + doc + \"<\/a>\";\r\n          \r\n        //store the value to a field\r\n        $('[name='+docPathId+']:enabled').val(docPath);\r\n    });\r\n<\/script>"
                         }
                     }
                 ],
