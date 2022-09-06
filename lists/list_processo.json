@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "IdProcesso",
-            "sql": "SELECT p.id as IdProcesso, dp.*\nFROM app_fd_processos p \nJOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo"
+            "sql": "WITH CONTRATACAO AS (SELECT p.id as IdProcesso, dp.* \n\t\t\t\tFROM app_fd_processos p \n\t\t\t\tJOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo \n\t\t\t\tWHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT%') AND dp.c_fase_processo = \"CTR\"),\nFILTRO AS (SELECT p.id as IdProcesso, dp.* \n\t\t\t\tFROM app_fd_processos p \n\t\t\t\tJOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo \n\t\t\t\tWHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_FLT%') AND dp.c_fase_processo = \"FLT\"),\nPRODUCAO AS (SELECT p.id as IdProcesso, dp.* \n\t\t\t\tFROM app_fd_processos p \n\t\t\t\tJOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo \n\t\t\t\tWHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_PRD%') AND dp.c_fase_processo = \"PRD\" AND dp.c_fase_processo = \"VAL\"),\nVALIDACAO AS (SELECT p.id as IdProcesso, dp.* \n\t\t\t\tFROM app_fd_processos p \n\t\t\t\tJOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo \n\t\t\t\tWHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_VAL%') AND dp.c_fase_processo = \"VAL\")\n                \nSELECT DISTINCT * FROM CONTRATACAO\nUNION\nSELECT DISTINCT * FROM FILTRO\nUNION\nSELECT DISTINCT * FROM PRODUCAO\nUNION\nSELECT DISTINCT * FROM VALIDACAO"
         }
     },
     "buttonPosition": "bottomLeft",
