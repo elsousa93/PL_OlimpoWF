@@ -9,6 +9,7 @@
                     "className": "org.joget.apps.form.lib.HiddenField",
                     "properties": {
                         "id": "id_processo",
+                        "permission_rules": {"63979d93-e2e7-3bfd-2b12-486990df460d": {}},
                         "useDefaultWhenEmpty": "",
                         "value": "",
                         "workflowVariable": ""
@@ -89,7 +90,10 @@
                             }
                         ],
                         "pageSize": "20",
-                        "permission_rules": {},
+                        "permission_rules": {"63979d93-e2e7-3bfd-2b12-486990df460d": {
+                            "permissionHidden": "",
+                            "readonly": "true"
+                        }},
                         "readonly": "",
                         "readonlyLabel": "",
                         "showRowNumber": "true",
@@ -120,6 +124,7 @@
                         "id": "record_lock",
                         "label": "Formulário bloqueado para edição por:",
                         "lockDuration": "5",
+                        "permission_rules": {"63979d93-e2e7-3bfd-2b12-486990df460d": {}},
                         "validator": {
                             "className": "org.joget.marketplace.FormRecordLockingValidator",
                             "properties": {
@@ -146,7 +151,7 @@
                 "properties": {}
             },
             "permissionReadonly": "",
-            "permission_rules": {},
+            "permission_rules": {"63979d93-e2e7-3bfd-2b12-486990df460d": {}},
             "readonly": "",
             "readonlyLabel": "",
             "regex": "",
@@ -164,6 +169,17 @@
         "id": "imoveis",
         "loadBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
         "name": "Imóveis",
+        "permission_rules": [{
+            "permission": {
+                "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                "properties": {
+                    "allowedDeptIds": "PL_INT_VAL_BCP_COM_CRH;PL_INT_VAL_BCP_NOR_CRH;PL_INT_VAL_BNI_COM_CRH;PL_INT_VAL_BNI_NOR_CRH;PL_INT_VAL_BST_COM_CRH;PL_INT_VAL_BST_NOR_CRH;PL_INT_VAL_GEN_COM_CRH;PL_INT_VAL_GEN_NOR_CRH",
+                    "orgId": "PL"
+                }
+            },
+            "permission_key": "63979d93-e2e7-3bfd-2b12-486990df460d",
+            "permission_name": "Validação"
+        }],
         "storeBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
         "tableName": "imoveis"
     }
