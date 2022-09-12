@@ -9,6 +9,12 @@
                     "className": "org.joget.apps.form.lib.HiddenField",
                     "properties": {
                         "id": "id_processo",
+                        "permission_rules": {
+                            "022897b8-cf58-cc55-3da6-34c4ea16dd2a": {},
+                            "0ddbe080-2061-3956-cbf4-97b10368862f": {},
+                            "9dbdfc37-e367-7134-3775-0ed0b5fe10bb": {},
+                            "c62e9ac9-2029-c302-f4ac-c80d01fb0c03": {}
+                        },
                         "useDefaultWhenEmpty": "",
                         "value": "",
                         "workflowVariable": ""
@@ -20,6 +26,12 @@
                         "autoPopulate": "",
                         "id": "field3",
                         "label": "",
+                        "permission_rules": {
+                            "022897b8-cf58-cc55-3da6-34c4ea16dd2a": {},
+                            "0ddbe080-2061-3956-cbf4-97b10368862f": {},
+                            "9dbdfc37-e367-7134-3775-0ed0b5fe10bb": {},
+                            "c62e9ac9-2029-c302-f4ac-c80d01fb0c03": {}
+                        },
                         "value": "<script> \nvar url, processId;\n    $(document).ready(function(){\n        processId = $(':hidden#multiPaged_10_comunicacoes_id_processo').val();\n        url=  \"http://192.168.0.104:8080/jw/web/userview/workflowPL/UV_PL_Geral/_/enviarEmail?fk_id_processo=\" + processId + \"&id_atividade=#assignment.activityId#\";\n        });   \n    \n    \n    //\n<\/script>\n<button type=\"button\" onclick=\"location.replace(url)\" >Novo Email<\/button>"
                     }
                 },
@@ -78,6 +90,12 @@
                         ],
                         "pageSize": "20",
                         "permissionHidden": "",
+                        "permission_rules": {
+                            "022897b8-cf58-cc55-3da6-34c4ea16dd2a": {},
+                            "0ddbe080-2061-3956-cbf4-97b10368862f": {},
+                            "9dbdfc37-e367-7134-3775-0ed0b5fe10bb": {},
+                            "c62e9ac9-2029-c302-f4ac-c80d01fb0c03": {}
+                        },
                         "readonly": "true",
                         "readonlyLabel": "",
                         "requestParams": [],
@@ -116,6 +134,12 @@
                 "properties": {}
             },
             "permissionReadonly": "",
+            "permission_rules": {
+                "022897b8-cf58-cc55-3da6-34c4ea16dd2a": {},
+                "0ddbe080-2061-3956-cbf4-97b10368862f": {},
+                "9dbdfc37-e367-7134-3775-0ed0b5fe10bb": {},
+                "c62e9ac9-2029-c302-f4ac-c80d01fb0c03": {}
+            },
             "readonly": "",
             "readonlyLabel": "",
             "regex": "",
@@ -141,6 +165,52 @@
             "className": "",
             "properties": {}
         },
+        "permission_rules": [
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_VAL_BCP_COM_CRH;PL_INT_VAL_BCP_NOR_CRH;PL_INT_VAL_BNI_COM_CRH;PL_INT_VAL_BNI_NOR_CRH;PL_INT_VAL_BST_COM_CRH;PL_INT_VAL_BST_NOR_CRH;PL_INT_VAL_GEN_COM_CRH;PL_INT_VAL_GEN_NOR_CRH",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "022897b8-cf58-cc55-3da6-34c4ea16dd2a",
+                "permission_name": "Validação"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_PRD_GEN_COM_CRH;PL_INT_PRD_GEN_NOR_CRH;PL_INT_PRD_GEN_RPA_CRH",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "c62e9ac9-2029-c302-f4ac-c80d01fb0c03",
+                "permission_name": "Produção"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_FLT_GEN_COM_CRH;PL_INT_FLT_GEN_NOR_CRH",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "9dbdfc37-e367-7134-3775-0ed0b5fe10bb",
+                "permission_name": "Filtro"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_CNT_ABN_COM_CRH;PL_INT_CNT_ABN_NOR_CRH;PL_INT_CNT_BCP_COM_CRH;PL_INT_CNT_BCP_NOR_CRH;PL_INT_CNT_BIC_COM_CRH;PL_INT_CNT_BIC_NOR_CRH;PL_INT_CNT_BST_COM_CRH;PL_INT_CNT_BST_NOR_CRH;PL_INT_CNT_CTT_COM_CRH;PL_INT_CNT_CTT_NOR_CRH;PL_INT_CNT_MTG_COM_CRH;PL_INT_CNT_MTG_NOR_CRH;PL_INT_CNT_NVB_COM_CRH;PL_INT_CNT_NVB_NOR_CRH",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "0ddbe080-2061-3956-cbf4-97b10368862f",
+                "permission_name": "Contratação"
+            }
+        ],
         "postProcessor": {
             "className": "",
             "properties": {}
