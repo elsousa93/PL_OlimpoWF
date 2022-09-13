@@ -22,145 +22,6 @@
                         "deleteGridData": "",
                         "deleteMessage": "Delete row?",
                         "deleteSubformData": "",
-                        "disabledAdd": "true",
-                        "disabledDelete": "",
-                        "enableSorting": "",
-                        "errorMessage": "Invalid number of rows",
-                        "formDefId": "editarDocumento",
-                        "height": "500",
-                        "id": "documentos",
-                        "label": "Documentos",
-                        "loadBinder": {
-                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
-                            "properties": {
-                                "foreignKey": "id_doc",
-                                "formDefId": "documento"
-                            }
-                        },
-                        "options": [
-                            {
-                                "format": "",
-                                "formatType": "html",
-                                "label": "Documento",
-                                "value": "doc_path",
-                                "width": ""
-                            },
-                            {
-                                "format": "yyyy-MM-dd hh:mm:ss|dd-MM-yyyy hh:mm:ss",
-                                "formatType": "date",
-                                "label": "Data de Upload",
-                                "value": "dateUpload",
-                                "width": ""
-                            }
-                        ],
-                        "pageSize": "20",
-                        "permissionHidden": "",
-                        "readonly": "true",
-                        "readonlyLabel": "",
-                        "showRowNumber": "",
-                        "storeBinder": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "submit-label-normal": "Gravar",
-                        "submit-label-readonly": "",
-                        "uniqueKey": "",
-                        "validateMaxRow": "",
-                        "validateMinRow": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "width": "900"
-                    }
-                },
-                {
-                    "className": "org.joget.plugin.enterprise.ListGrid",
-                    "properties": {
-                        "abortRelatedRunningProcesses": "",
-                        "buttonLabel": "",
-                        "deleteFiles": "",
-                        "deleteGridData": "",
-                        "deleteMessage": "Delete row?",
-                        "deleteSubformData": "",
-                        "disabledAdd": "",
-                        "disabledDelete": "",
-                        "enableSorting": "",
-                        "errorMessage": "Invalid number of rows",
-                        "formDefId": "documento",
-                        "height": "500",
-                        "id": "field5",
-                        "label": "List Grid",
-                        "listId": "listaDocumentos",
-                        "loadBinder": {
-                            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
-                            "properties": {
-                                "autoHandleFiles": "",
-                                "autoHandleWorkflowVariable": "true",
-                                "cacheInterval": "",
-                                "script": "import org.joget.apps.app.model.AppDefinition;\r\nimport org.joget.apps.app.service.AppService;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport java.util.*;\r\n \r\n    FormRowSet f = new FormRowSet();\r\n    f.setMultiRow(true);\r\n \r\n    Connection con = null;\r\n    PreparedStatement stmt = null;\r\n    ResultSet rs = null;\r\n    boolean existe = false;\r\n    \r\n    try{\r\n        DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n        con = ds.getConnection();\r\n        \r\n        if(!con.isClosed()){\r\n            String query = \"SELECT d.id, d.c_tipo_documento AS tipoDocumento, dp.id AS docID, dp.c_nome_ficheiro AS nomeFicheiro FROM app_fd_documento_processo d JOIN app_fd_docs_processo dp ON dp.id = d.c_doc_id WHERE dp.c_id_processo = ?\";\r\n            stmt = con.prepareStatement(query);\r\n            stmt.setObject(1, \"#process.recordId#\");\r\n            rs = stmt.executeQuery();\r\n            //LogUtil.info(\"Beanshell import ---------\", \"1\");\r\n            while (rs.next()) {\r\n                String primaryKey = rs.getString(3);\r\n                String doc = rs.getString(4);\r\n                String doc_path = \"<a href='http://192.168.0.104:8080/jw/web/userview/workflowPL/UV_PL_Geral/_/filaTrabalho?activityId=#assignment.activityId#&_action=submit&_mode=assignment'>\" + \"Editar\" + \"<\/a>\";\r\n                FormRow r1 = new FormRow();\r\n                r1.put(\"nome_ficheiro\", doc);\r\n                r1.put(\"tipo_documento\", rs.getString(2));\r\n                r1.put(\"doc_path\", doc_path);\r\n                f.add(r1);\r\n            }\r\n        }\r\n    }catch(Exception e){\r\n        LogUtil.error(appDef.toString(), e, \"Error getting info from DB\");\r\n    }finally{\r\n        try{\r\n            if(rs != null){\r\n            rs.close();\r\n            }\r\n            if(stmt != null){\r\n                stmt.close();\r\n            }\r\n            if(con != null && !con.isClosed()) {\r\n                con.close();\r\n            }\r\n        }catch(Exception e){\r\n            LogUtil.error(appDef.toString(), e, \"Error closing DB connection\");\r\n        }\r\n    }\r\n    \r\n    return f;",
-                                "useAjax": ""
-                            }
-                        },
-                        "options": [
-                            {
-                                "editable": "no",
-                                "format": "",
-                                "formatType": "text",
-                                "label": "Tipo de Documento",
-                                "value": "tipo_documento",
-                                "width": ""
-                            },
-                            {
-                                "editable": "no",
-                                "format": "",
-                                "formatType": "html",
-                                "label": "Abrir Documento",
-                                "value": "doc_path",
-                                "width": ""
-                            },
-                            {
-                                "editable": "no",
-                                "format": "",
-                                "formatType": "text",
-                                "label": "Nome do ficheiro",
-                                "value": "nome_ficheiro",
-                                "width": ""
-                            }
-                        ],
-                        "pageSize": "20",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "requestParams": [],
-                        "showRowNumber": "",
-                        "sortField": "sort",
-                        "storeBinder": {
-                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
-                            "properties": {
-                                "foreignKey": "id_processo",
-                                "formDefId": "documento"
-                            }
-                        },
-                        "submit-label-normal": "Submeter",
-                        "submit-label-readonly": "",
-                        "uniqueKey": "",
-                        "validateMaxRow": "",
-                        "validateMinRow": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "width": "900"
-                    }
-                },
-                {
-                    "className": "org.joget.plugin.enterprise.FormGrid",
-                    "properties": {
-                        "abortRelatedRunningProcesses": "",
-                        "deleteFiles": "",
-                        "deleteGridData": "",
-                        "deleteMessage": "Delete row?",
-                        "deleteSubformData": "",
                         "disabledAdd": "",
                         "disabledDelete": "",
                         "enableSorting": "",
@@ -168,7 +29,7 @@
                         "formDefId": "documento",
                         "height": "500",
                         "id": "field6",
-                        "label": "Form Grid",
+                        "label": "Listagem de Documentos",
                         "loadBinder": {
                             "className": "org.joget.plugin.enterprise.MultirowFormBinder",
                             "properties": {
@@ -220,24 +81,6 @@
                             "properties": {}
                         },
                         "width": "900"
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.CustomHTML",
-                    "properties": {
-                        "autoPopulate": "",
-                        "id": "field3",
-                        "label": "",
-                        "value": "<script> \nvar url;\n    $(document).ready(function(){\n        //processId = $(':hidden#multiPaged_10_comunicacoes_id_processo').val();\n        url1=  \"http://192.168.0.104:8080/jw/web/userview/workflowPL/UV_PL_Geral/_/inserirDocumento?fk_id_processo=#process.recordId#&fk_id_doc=#form.processos.docs#&id_atividade=#assignment.activityId#\";\n        });   \n    \n    \n    //\n<\/script>\n<button type=\"button\" onclick=\"location.replace(url1)\" >Inserir Documento<\/button>"
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.CustomHTML",
-                    "properties": {
-                        "autoPopulate": "",
-                        "id": "field3",
-                        "label": "",
-                        "value": "<script> \nvar url;\n    $(document).ready(function(){\n        //processId = $(':hidden#multiPaged_10_comunicacoes_id_processo').val();\n        url=  \"http://192.168.0.104:8080/jw/web/userview/workflowPL/UV_PL_Geral/_/filaTrabalho?activityId=#assignment.activityId#&_action=submit&_mode=assignment#\";\n        });   \n    \n    \n    //\n<\/script>\n<button type=\"button\" onclick=\"location.replace(url)\" >Inserir Documento<\/button>"
                     }
                 },
                 {
