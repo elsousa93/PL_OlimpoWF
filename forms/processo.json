@@ -98,6 +98,7 @@
                             },
                             "onlyAllowSubmitOnLastPage": "",
                             "partiallyStore": "true",
+                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
                             "prevButtonlabel": "ANTERIOR",
                             "storeMainFormOnPartiallyStore": "true"
                         }
@@ -108,6 +109,7 @@
                             "autoPopulate": "",
                             "id": "edicao_botoes_default",
                             "label": "",
+                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
                             "value": "<script type=\"text/javascript\">\r\n$(function(){\r\n    var flagUltimaAtividade='#variable.flag_ultima_atividade#';\r\n    console.log(flagUltimaAtividade);\r\n    if(flagUltimaAtividade == 1){\r\n        $(\"#assignmentComplete\").val(\"PROXIMA OPERATIVA\");\r\n        $(\"#saveAsDraft\").val(\"GUARDAR\");\r\n        $(\"#cancel\").text(\"CANCELAR\"); \r\n\r\n    }else{\r\n        $(\"#assignmentComplete\").val(\"PROXIMA ATIVIDADE\");\r\n        $(\"#saveAsDraft\").val(\"GUARDAR\");~~\r\n        $(\"#cancel\").text(\"CANCELAR\"); \r\n    }\r\n\r\n \r\n});\r\n<\/script>"
                         }
                     }
@@ -128,6 +130,7 @@
                     "properties": {}
                 },
                 "permissionReadonly": "",
+                "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
                 "readonly": "",
                 "readonlyLabel": "",
                 "regex": "",
@@ -151,6 +154,7 @@
                         "id": "robot",
                         "label": "Robot",
                         "maxlength": "",
+                        "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
                         "placeholder": "",
                         "readonly": "",
                         "readonlyLabel": "",
@@ -180,7 +184,9 @@
                     "className": "",
                     "properties": {}
                 },
+                "permissionHidden": "true",
                 "permissionReadonly": "",
+                "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
                 "readonly": "",
                 "readonlyLabel": "",
                 "regex": "",
@@ -207,6 +213,17 @@
             "className": "",
             "properties": {}
         },
+        "permission_rules": [{
+            "permission": {
+                "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                "properties": {
+                    "allowedDeptIds": "PL_INT_PRD_GEN_RPA_CRH",
+                    "orgId": "PL"
+                }
+            },
+            "permission_key": "c0d6089f-5c41-67ce-3c8d-c24ca172207e",
+            "permission_name": "Robots"
+        }],
         "postProcessor": {
             "className": "org.joget.apps.app.lib.BeanShellTool",
             "properties": {"script": "import org.joget.apps.form.model.Element;\r\nimport org.joget.workflow.model.service.*;\r\nimport org.joget.commons.util.LogUtil;\r\nimport java.util.Arrays;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport java.util.Map;\r\nimport javax.servlet.http.HttpServletRequest;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport org.joget.apps.app.service.AppPluginUtil;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.plugin.base.ApplicationPlugin;\r\nimport org.joget.plugin.base.Plugin;\r\nimport org.joget.plugin.base.PluginManager;\r\nimport org.joget.plugin.property.model.PropertyEditable;\r\n\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport org.joget.commons.util.UuidGenerator;\r\nimport java.time.LocalDate;\r\n  \r\n\r\npublic Object execute(AppDefinition appDef, HttpServletRequest request) {\r\n\r\n    String ProcessID = workflowAssignment.getProcessId();\r\n    String Username = \"#currentUser.username#\";\r\n    String Performer = \"#process.activityInst.{assignment.activityDefId}.performer#\";\r\n    String LaneUser = \"user_\" + Performer;\r\n    String EstadoContratacao = \"#form.detalhe_processo.estado_contratacao[{form.processos.detalhe_processo}]#\";\r\n    String EstadoContratacaoEval = \"\";\r\n    String DetalheProcesso = \"#form.processos.detalhe_processo#\";\r\n    int SlaToApplyMin = 0;\r\n    WorkflowManager wm = (WorkflowManager) pluginManager.getBean(\"workflowManager\");\r\n    //Set workflow variables- \r\n    //Last Lane user for reasignment purposes\r\n    wm.processVariable(ProcessID, LaneUser , Username);\r\n    LogUtil.info(\"BeanShell set WF Var\", \"Detalhe do Processo: \" + DetalheProcesso);\r\n    LogUtil.info(\"BeanShell set WF Var\", \"Estado de Contratacao: \" + EstadoContratacao);\r\n   // wm.processVariable(ProcessID, \"estado\" , EstadoContratacao);\r\n    // - State - \"estado\"\r\n    \r\n    /*    EstadoContratacaoEval = AppUtil.processHashVariable(EstadoContratacao,null,null,null);\r\n    LogUtil.info(\"BeanShell set WF Var\", \"Estado de Contratacao EVAL: \" + EstadoContratacaoEval);\r\n    EstadoContratacao = \"#form.detalhe_processo.estado_contratacao#\";\r\n    LogUtil.info(\"BeanShell set WF Var\", \"Estado de Contratacao: \" + EstadoContratacao);*/\r\n    \r\n    \r\n    //SlaToApplyMin = 5;\r\n    \r\n    \r\n    \r\n    ////////////////////////////SLA//////////////////////////////\r\n    \r\n    /***************    É EXECUTADO SOMENTE QUANDO O UTILIZADOR PASSA A ATIVIDADE  ********************/\r\n    \r\n    String proximaoperativa = \"#variable.proxima_operativa#\";\r\n    Connection con = null;\r\n    PreparedStatement stmt = null;\r\n    ResultSet rs = null;\r\n    try{\r\n            DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n            con = ds.getConnection();\r\n            \r\n            if(!con.isClosed()){\r\n               \r\n               //Caso a operativa seja contratação   (Em caso de não dar para utilizar criar variável que indica a operativa atual)\r\n               if(proximaoperativa.trim() == \"contratacao\" || proximaoperativa.trim() = \"\"){\r\n                \r\n                   if(EstadoContratação != \"PND\")\r\n                      \r\n                      \r\n                      \r\n                      \r\n                   }\r\n               }\r\n               \r\n            }\r\n            \r\n        }catch(Exception e){\r\n            LogUtil.error(appDef.toString(), e, \"Error getting info from DB\");\r\n        }finally{\r\n            try{\r\n                if(rs != null){\r\n                rs.close();\r\n                }\r\n                if(stmt != null){\r\n                    stmt.close();\r\n                }\r\n                if(con != null && !con.isClosed()) {\r\n                    con.close();\r\n                }\r\n            }catch(Exception e){\r\n                LogUtil.error(appDef.toString(), e, \"Error closing DB connection\");\r\n            }\r\n            \r\n        }\r\n    \r\n    \r\n    return null;\r\n    \r\n}\r\n\r\nreturn execute(appDef, request);\r\n        \r\n\r\n"}
