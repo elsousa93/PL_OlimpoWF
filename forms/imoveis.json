@@ -4,137 +4,16 @@
         "className": "org.joget.apps.form.model.Section",
         "elements": [{
             "className": "org.joget.apps.form.model.Column",
-            "elements": [
-                {
-                    "className": "org.joget.apps.form.lib.HiddenField",
-                    "properties": {
-                        "id": "id_processo",
-                        "permission_rules": {"63979d93-e2e7-3bfd-2b12-486990df460d": {}},
-                        "useDefaultWhenEmpty": "",
-                        "value": "",
-                        "workflowVariable": ""
-                    }
-                },
-                {
-                    "className": "org.joget.plugin.enterprise.FormGrid",
-                    "properties": {
-                        "abortRelatedRunningProcesses": "",
-                        "deleteFiles": "",
-                        "deleteGridData": "",
-                        "deleteMessage": "Delete row?",
-                        "deleteSubformData": "",
-                        "disabledAdd": "",
-                        "disabledDelete": "",
-                        "enableSorting": "",
-                        "errorMessage": "Invalid number of rows",
-                        "formDefId": "imovel",
-                        "height": "500",
-                        "id": "lista_imoveis",
-                        "label": "Imóveis",
-                        "loadBinder": {
-                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
-                            "properties": {
-                                "foreignKey": "id_processo",
-                                "formDefId": "imovel"
-                            }
-                        },
-                        "options": [
-                            {
-                                "format": "",
-                                "formatType": "text",
-                                "label": "Descrição Predial",
-                                "value": "descricao_predial",
-                                "width": ""
-                            },
-                            {
-                                "format": "",
-                                "formatType": "text",
-                                "label": "Conservatória",
-                                "value": "conservatoria",
-                                "width": ""
-                            },
-                            {
-                                "format": "",
-                                "formatType": "text",
-                                "label": "Local",
-                                "value": "local",
-                                "width": ""
-                            },
-                            {
-                                "format": "",
-                                "formatType": "text",
-                                "label": "Freguesia",
-                                "value": "freguesia",
-                                "width": ""
-                            },
-                            {
-                                "format": "",
-                                "formatType": "text",
-                                "label": "Fração",
-                                "value": "fracao",
-                                "width": ""
-                            },
-                            {
-                                "format": "",
-                                "formatType": "text",
-                                "label": "Valor de Compra e Venda",
-                                "value": "valor_cv",
-                                "width": ""
-                            },
-                            {
-                                "format": "",
-                                "formatType": "text",
-                                "label": "Imóvel_Banco",
-                                "value": "imovel_banco",
-                                "width": ""
-                            }
-                        ],
-                        "pageSize": "20",
-                        "permission_rules": {"63979d93-e2e7-3bfd-2b12-486990df460d": {
-                            "permissionHidden": "",
-                            "readonly": "true"
-                        }},
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "showRowNumber": "true",
-                        "storeBinder": {
-                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
-                            "properties": {
-                                "foreignKey": "id_processo",
-                                "formDefId": "imovel"
-                            }
-                        },
-                        "submit-label-normal": "",
-                        "submit-label-readonly": "",
-                        "uniqueKey": "",
-                        "validateMaxRow": "",
-                        "validateMinRow": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "width": "900"
-                    }
-                },
-                {
-                    "className": "org.joget.marketplace.FormRecordLockingField",
-                    "properties": {
-                        "displayNameFormat": "firstLast",
-                        "formDefId": "imoveis",
-                        "id": "record_lock",
-                        "label": "Formulário bloqueado para edição por:",
-                        "lockDuration": "5",
-                        "permission_rules": {"63979d93-e2e7-3bfd-2b12-486990df460d": {}},
-                        "validator": {
-                            "className": "org.joget.marketplace.FormRecordLockingValidator",
-                            "properties": {
-                                "errorMessage": "O formulário está bloqueado.",
-                                "formDefId": "imoveis"
-                            }
-                        }
-                    }
+            "elements": [{
+                "className": "org.joget.apps.form.lib.HiddenField",
+                "properties": {
+                    "id": "id_processo",
+                    "permission_rules": {"63979d93-e2e7-3bfd-2b12-486990df460d": {}},
+                    "useDefaultWhenEmpty": "",
+                    "value": "",
+                    "workflowVariable": ""
                 }
-            ],
+            }],
             "properties": {"width": "100%"}
         }],
         "properties": {
@@ -167,8 +46,16 @@
     "properties": {
         "description": "",
         "id": "imoveis",
-        "loadBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
         "name": "Imóveis",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
         "permission_rules": [{
             "permission": {
                 "className": "org.joget.apps.userview.lib.DepartmentPermission",
@@ -180,7 +67,15 @@
             "permission_key": "63979d93-e2e7-3bfd-2b12-486990df460d",
             "permission_name": "Validação"
         }],
-        "storeBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
         "tableName": "imoveis"
     }
 }
