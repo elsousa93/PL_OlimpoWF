@@ -98,8 +98,14 @@
         "description": "",
         "id": "alertas",
         "loadBinder": {
-            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
-            "properties": {}
+            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+            "properties": {
+                "autoHandleFiles": "",
+                "autoHandleWorkflowVariable": "true",
+                "cacheInterval": "",
+                "script": "import org.joget.apps.form.model.*;\r\n \r\nFormRowSet f = new FormRowSet();\r\nFormRow r1 = new FormRow();\r\nr1.put(\"teste\", \"hello world\");\r\nf.add(r1);\r\n \r\nreturn f;",
+                "useAjax": ""
+            }
         },
         "name": "Alertas",
         "noPermissionMessage": "",
