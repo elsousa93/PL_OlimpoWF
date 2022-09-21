@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT * FROM app_form_data_audit_trail WHERE action = \"saveOrUpdate\""
+            "sql": "SELECT * FROM app_audit_log"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -15,66 +15,62 @@
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_1",
-            "label": "tableName",
-            "name": "tableName",
+            "id": "column_3",
+            "label": "process_id",
+            "name": "process_id",
             "sortable": "false"
         },
         {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
             "filterable": true,
-            "format": {
-                "className": "org.joget.plugin.enterprise.BeanShellFormatter",
-                "properties": {"script": "import org.json.JSONArray;\r\nimport org.json.JSONObject;  \r\n\r\n\r\nJSONArray array = new JSONArray(value);  \r\nJSONObject object = array.getJSONObject(0);  \r\n\r\n\r\nreturn object.getString(\"createdByName\");"}
-            },
-            "headerAlignment": "",
             "hidden": "false",
-            "id": "column_0",
-            "label": "CreatedByName",
-            "name": "data",
-            "sortable": "false",
-            "style": "",
-            "width": ""
+            "id": "column_4",
+            "label": "campo",
+            "name": "campo",
+            "sortable": "false"
         },
         {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
             "filterable": true,
-            "format": {
-                "className": "org.joget.plugin.enterprise.BeanShellFormatter",
-                "properties": {"script": "return value;"}
-            },
-            "headerAlignment": "",
             "hidden": "false",
-            "id": "column_2",
-            "label": "data",
-            "name": "data",
-            "sortable": "false",
-            "style": "",
-            "width": ""
+            "id": "column_5",
+            "label": "novo_valor",
+            "name": "novo_valor",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_6",
+            "label": "data_alteracao",
+            "name": "data_alteracao",
+            "sortable": "false"
         }
     ],
     "considerFilterWhenGetTotal": "",
     "description": "",
+    "disableResponsive": "",
     "filters": [],
+    "hidePageSize": "",
     "id": "list_logs",
     "name": "List - Logs",
     "order": "",
     "orderBy": "",
     "pageSize": "0",
     "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "responsiveView": [
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Mobile"
+        },
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Tablet"
+        }
+    ],
     "rowActions": [],
+    "searchPopup": "",
+    "showDataWhenFilterSet": "",
     "showPageSizeSelector": "true",
-    "useSession": "false"
+    "useSession": ""
 }
