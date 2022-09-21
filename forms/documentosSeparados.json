@@ -7,10 +7,22 @@
                 "className": "org.joget.apps.form.model.Column",
                 "elements": [
                     {
-                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "className": "org.joget.apps.form.lib.TextField",
                         "properties": {
+                            "encryption": "",
                             "id": "doc_id",
-                            "useDefaultWhenEmpty": "",
+                            "label": "Doc ID",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
                             "value": "",
                             "workflowVariable": ""
                         }
@@ -404,7 +416,7 @@
                                 "className": "org.joget.apps.form.lib.BeanShellFormBinder",
                                 "properties": {
                                     "cacheInterval": "",
-                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.defaultHashVariablePlugin;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\nimport java.util.ArrayList;\r\n\r\n \r\npublic FormRowSet load(Element element, String primaryKey, FormData formData) {\r\n    //LogUtil.info(\"Element ----->\", element.toString());\r\n    FormRowSet rows = new FormRowSet();\r\n    \r\n        //Configure field to validate - UPDATE HERE\r\n        String fieldId = \"doc_id\";\r\n        \r\n        //Get element value\r\n        Form form = FormUtil.findRootForm(element);\r\n        Element field = FormUtil.findElement(fieldId, form, formData);\r\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n\r\n        LogUtil.info(\"fieldValue: \", fieldValue);\r\n        \r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(element, primaryKey, formData);",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.defaultHashVariablePlugin;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\nimport java.util.ArrayList;\r\n\r\n \r\npublic FormRowSet load(Element element, String primaryKey, FormData formData) {\r\n    //LogUtil.info(\"Element ----->\", element.toString());\r\n    FormRowSet rows = new FormRowSet();\r\n    \r\n    //Configure field to validate - UPDATE HERE\r\n    String fieldId = \"doc_id\";\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n\r\n    LogUtil.info(\"fieldValue: \", fieldValue);\r\n        \r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(element, primaryKey, formData);",
                                     "useAjax": ""
                                 }
                             },
