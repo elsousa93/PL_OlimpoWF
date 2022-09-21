@@ -7,22 +7,15 @@
                 "className": "org.joget.apps.form.model.Column",
                 "elements": [
                     {
-                        "className": "org.joget.apps.form.lib.TextField",
+                        "className": "org.joget.apps.form.lib.HiddenField",
                         "properties": {
-                            "encryption": "",
                             "id": "doc_id",
-                            "label": "Doc_id",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "storeNumeric": "",
-                            "style": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
+                            "permission_rules": {
+                                "082f6cb3-cac2-1bf6-5989-b26f6f4b9a4e": {},
+                                "d96d762a-b058-5230-e799-d495c35bf3a0": {},
+                                "fe0d7425-484a-188c-1faa-1fa76ef5d212": {}
                             },
+                            "useDefaultWhenEmpty": "",
                             "value": "",
                             "workflowVariable": ""
                         }
@@ -31,6 +24,11 @@
                         "className": "org.joget.apps.form.lib.HiddenField",
                         "properties": {
                             "id": "id_processo",
+                            "permission_rules": {
+                                "082f6cb3-cac2-1bf6-5989-b26f6f4b9a4e": {},
+                                "d96d762a-b058-5230-e799-d495c35bf3a0": {},
+                                "fe0d7425-484a-188c-1faa-1fa76ef5d212": {}
+                            },
                             "useDefaultWhenEmpty": "",
                             "value": "",
                             "workflowVariable": ""
@@ -279,6 +277,11 @@
                             "id": "field16",
                             "label": "Text Field",
                             "maxlength": "",
+                            "permission_rules": {
+                                "082f6cb3-cac2-1bf6-5989-b26f6f4b9a4e": {},
+                                "d96d762a-b058-5230-e799-d495c35bf3a0": {},
+                                "fe0d7425-484a-188c-1faa-1fa76ef5d212": {}
+                            },
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -299,13 +302,24 @@
                             "autoPopulate": "",
                             "id": "edicao_botoes_default",
                             "label": "",
+                            "permissionHidden": "true",
                             "permission_rules": {
-                                "082f6cb3-cac2-1bf6-5989-b26f6f4b9a4e": {},
+                                "082f6cb3-cac2-1bf6-5989-b26f6f4b9a4e": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
                                 "811e4ed1-6d9d-7eda-2409-c08f50ec07fd": {},
                                 "8d987560-ac7b-9ce4-6d2b-b54a4c1d804e": {},
-                                "d96d762a-b058-5230-e799-d495c35bf3a0": {},
-                                "fe0d7425-484a-188c-1faa-1fa76ef5d212": {}
+                                "d96d762a-b058-5230-e799-d495c35bf3a0": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "fe0d7425-484a-188c-1faa-1fa76ef5d212": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                }
                             },
+                            "readonly": "",
                             "value": "<script type=\"text/javascript\">\r\n$(function(){\r\n    $(\"#submit\").val(\"Submeter\");\r\n});\r\n<\/script>"
                         }
                     },
@@ -314,7 +328,23 @@
                         "properties": {
                             "autoPopulate": "",
                             "id": "field16",
-                            "label": "",
+                            "label": "session_store_processId",
+                            "permissionHidden": "true",
+                            "permission_rules": {
+                                "082f6cb3-cac2-1bf6-5989-b26f6f4b9a4e": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "d96d762a-b058-5230-e799-d495c35bf3a0": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "fe0d7425-484a-188c-1faa-1fa76ef5d212": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                }
+                            },
+                            "readonly": "",
                             "value": "<script type=\"text/javascript\">\r\n    $(document).change(function(){\r\n        let id_processo = sessionStorage.getItem('id_processo');\r\n        \r\n        var field = FormUtil.getField(\"id_processo\");\r\n        $(field).val(id_processo); //set value\r\n        \r\n        //sessionStorage.removeItem('id_processo');\r\n        \r\n        //console.log(id_processo);\r\n\r\n    });\r\n<\/script>"
                         }
                     }
@@ -363,8 +393,8 @@
                         "className": "org.joget.apps.form.lib.SelectBox",
                         "properties": {
                             "controlField": "id_processo",
-                            "id": "imovel_documento2",
-                            "label": "Imóvel 2",
+                            "id": "imovel_documento",
+                            "label": "Imóvel",
                             "multiple": "",
                             "options": [],
                             "optionsBinder": {
@@ -381,35 +411,10 @@
                                     "useAjax": "true"
                                 }
                             },
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.SelectBox",
-                        "properties": {
-                            "controlField": "",
-                            "id": "imovel_documento3",
-                            "label": "Imóvel 3",
-                            "multiple": "",
-                            "options": [],
-                            "optionsBinder": {
-                                "className": "org.joget.plugin.enterprise.JdbcOptionsBinder",
-                                "properties": {
-                                    "addEmpty": "true",
-                                    "cacheInterval": "",
-                                    "emptyLabel": "",
-                                    "jdbcDatasource": "default",
-                                    "sql": "select distinct(imo.c_descricao_predial), imo.c_descricao_predial \nfrom app_fd_processos p\nleft join app_fd_imoveis imo on p.c_imoveis = imo.c_id_processo\nleft join app_fd_docs_processo doc on p.c_docs = doc.c_id_processo\nleft join app_fd_documento_processo det on doc.id = det.c_doc_id\nWhere imo.c_descricao_predial is not null \nand imo.c_descricao_predial <> '';",
-                                    "useAjax": "true"
-                                }
+                            "permission_rules": {
+                                "082f6cb3-cac2-1bf6-5989-b26f6f4b9a4e": {},
+                                "d96d762a-b058-5230-e799-d495c35bf3a0": {},
+                                "fe0d7425-484a-188c-1faa-1fa76ef5d212": {}
                             },
                             "readonly": "",
                             "readonlyLabel": "",
@@ -450,6 +455,11 @@
                                 "className": "",
                                 "properties": {}
                             },
+                            "permission_rules": {
+                                "082f6cb3-cac2-1bf6-5989-b26f6f4b9a4e": {},
+                                "d96d762a-b058-5230-e799-d495c35bf3a0": {},
+                                "fe0d7425-484a-188c-1faa-1fa76ef5d212": {}
+                            },
                             "readonly": "",
                             "readonlyLabel": "",
                             "size": "",
@@ -478,6 +488,11 @@
                     "properties": {}
                 },
                 "permissionReadonly": "",
+                "permission_rules": {
+                    "082f6cb3-cac2-1bf6-5989-b26f6f4b9a4e": {},
+                    "d96d762a-b058-5230-e799-d495c35bf3a0": {},
+                    "fe0d7425-484a-188c-1faa-1fa76ef5d212": {}
+                },
                 "readonly": "",
                 "readonlyLabel": "",
                 "regex": ";",
@@ -501,6 +516,11 @@
                         "id": "fracao_imovel",
                         "label": "Fração",
                         "maxlength": "",
+                        "permission_rules": {
+                            "082f6cb3-cac2-1bf6-5989-b26f6f4b9a4e": {},
+                            "d96d762a-b058-5230-e799-d495c35bf3a0": {},
+                            "fe0d7425-484a-188c-1faa-1fa76ef5d212": {}
+                        },
                         "placeholder": "",
                         "readonly": "",
                         "readonlyLabel": "",
@@ -531,6 +551,11 @@
                     "properties": {}
                 },
                 "permissionReadonly": "",
+                "permission_rules": {
+                    "082f6cb3-cac2-1bf6-5989-b26f6f4b9a4e": {},
+                    "d96d762a-b058-5230-e799-d495c35bf3a0": {},
+                    "fe0d7425-484a-188c-1faa-1fa76ef5d212": {}
+                },
                 "readonly": "",
                 "readonlyLabel": "",
                 "regex": "",
