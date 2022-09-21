@@ -10,6 +10,27 @@
                         "className": "org.joget.apps.form.lib.TextField",
                         "properties": {
                             "encryption": "",
+                            "id": "id_processo",
+                            "label": "Id processo",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
                             "id": "doc_id",
                             "label": "Doc ID",
                             "maxlength": "",
@@ -278,6 +299,15 @@
                             },
                             "value": "<script type=\"text/javascript\">\r\n$(function(){\r\n    $(\"#submit\").val(\"Submeter\");\r\n});\r\n<\/script>"
                         }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field16",
+                            "label": "",
+                            "value": "<script type=\"text/javascript\">\r\n    $(document).ready(function(){\r\n        let id_processo = sessionStorage.getItem(\"id_processo\");\r\n        \r\n        //store the value to a field\r\n        $('[name='+\"id_processo\"+']:enabled').val(id_processo);\r\n\r\n    });\r\n<\/script>"
+                        }
                     }
                 ],
                 "properties": {"width": "100%"}
@@ -321,30 +351,9 @@
                 "className": "org.joget.apps.form.model.Column",
                 "elements": [
                     {
-                        "className": "org.joget.apps.form.lib.TextField",
-                        "properties": {
-                            "encryption": "",
-                            "id": "field15",
-                            "label": "Text Field",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "storeNumeric": "",
-                            "style": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "#form.documento_processo.doc_id#",
-                            "workflowVariable": ""
-                        }
-                    },
-                    {
                         "className": "org.joget.apps.form.lib.SelectBox",
                         "properties": {
-                            "controlField": "",
+                            "controlField": "id_processo",
                             "id": "imovel_documento2",
                             "label": "Imóvel 2",
                             "multiple": "",
@@ -355,12 +364,12 @@
                                     "addEmptyOption": "true",
                                     "cacheInterval": "",
                                     "emptyLabel": "",
-                                    "extraCondition": "c_id_processo =  '#form.processos.docs[{form.docs_processo.id_doc[{form.documento_processo.doc_id}]}]#'",
+                                    "extraCondition": "",
                                     "formDefId": "imovel",
-                                    "groupingColumn": "",
+                                    "groupingColumn": "id_processo",
                                     "idColumn": "id",
                                     "labelColumn": "descricao_predial",
-                                    "useAjax": ""
+                                    "useAjax": "true"
                                 }
                             },
                             "readonly": "",
@@ -416,7 +425,7 @@
                                 "className": "org.joget.apps.form.lib.BeanShellFormBinder",
                                 "properties": {
                                     "cacheInterval": "",
-                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.defaultHashVariablePlugin;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\nimport java.util.ArrayList;\r\n\r\n \r\npublic FormRowSet load(String[] values) {\r\n    //LogUtil.info(\"Element ----->\", element.toString());\r\n    FormRowSet rows = new FormRowSet();\r\n    \r\n    String doc_id = \"\";\r\n    if (values != null && values.length > 0) {\r\n        doc_id = values[0];\r\n    }\r\n    \r\n\r\n    LogUtil.info(\"fieldValue: \", doc_id);\r\n        \r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(element, primaryKey, formData);",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.defaultHashVariablePlugin;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\nimport java.util.ArrayList;\r\n\r\n \r\npublic FormRowSet load(String[] values) {\r\n    //LogUtil.info(\"Element ----->\", element.toString());\r\n    FormRowSet rows = new FormRowSet();\r\n    \r\n    String doc_id = \"\";\r\n    if (values != null && values.length > 0) {\r\n        id_processo = values[0];\r\n    }\r\n    LogUtil.info(\"fieldValue: \", id_processo);\r\n    \r\n    FormRow option = new FormRow();\r\n            option.setProperty(FormUtil.PROPERTY_VALUE, cUserDepID[i]);\r\n        \r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(element, primaryKey, formData);",
                                     "useAjax": "true"
                                 }
                             },
