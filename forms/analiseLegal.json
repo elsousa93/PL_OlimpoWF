@@ -5,6 +5,61 @@
             "className": "org.joget.apps.form.model.Section",
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
+                "elements": [{
+                    "className": "org.joget.marketplace.FormRecordLockingField",
+                    "properties": {
+                        "displayNameFormat": "firstLast",
+                        "formDefId": "analiseLegal",
+                        "id": "record_lock",
+                        "label": "Formulário bloqueado para edição por:",
+                        "lockDuration": "5",
+                        "permission_rules": {
+                            "0784be0d-cf94-c67c-a91e-b939722d1cf2": {},
+                            "308de489-d5c4-4e1c-83dd-88359733df2c": {},
+                            "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                            "f1cfd4c6-da96-0380-4224-42d1e280e57d": {}
+                        },
+                        "validator": {
+                            "className": "org.joget.marketplace.FormRecordLockingValidator",
+                            "properties": {
+                                "errorMessage": "O formulário está bloqueado.",
+                                "formDefId": "analiseLegal"
+                            }
+                        }
+                    }
+                }],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section6",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
                 "elements": [
                     {
                         "className": "org.joget.apps.form.lib.HiddenField",
@@ -64,7 +119,7 @@
                 "comment": "",
                 "id": "section1",
                 "join": "",
-                "label": "",
+                "label": "Geral",
                 "loadBinder": {
                     "className": "",
                     "properties": {}
@@ -1054,29 +1109,6 @@
                                 "f1cfd4c6-da96-0380-4224-42d1e280e57d": {}
                             },
                             "value": "<script type=\"text/javascript\">\r\n\r\n    $(document).ready(function(){\r\n\r\n        var f1 = FormUtil.getField(\"valor_imovel_2\");\r\n        var number = FormUtil.getValue(\"valor_imovel_2\");\r\n        \r\n        number = number.replaceAll('.', \"\");\r\n        number = number.replaceAll('\u20ac', \"\");\r\n        number = number.replaceAll('Eur', \"\");\r\n        number = number.replaceAll(',', '.');\r\n        \r\n        let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(number);\r\n    \r\n        num = num.replace(/\\s/g, '.');\r\n        num = num.replaceAll('.\u20ac', ' EUR');\r\n        \r\n        $(f1).val(num);\r\n\r\n    });\r\n<\/script> "
-                        }
-                    },
-                    {
-                        "className": "org.joget.marketplace.FormRecordLockingField",
-                        "properties": {
-                            "displayNameFormat": "firstLast",
-                            "formDefId": "analiseLegal",
-                            "id": "record_lock",
-                            "label": "Formulário bloqueado para edição por:",
-                            "lockDuration": "5",
-                            "permission_rules": {
-                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {},
-                                "308de489-d5c4-4e1c-83dd-88359733df2c": {},
-                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
-                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {}
-                            },
-                            "validator": {
-                                "className": "org.joget.marketplace.FormRecordLockingValidator",
-                                "properties": {
-                                    "errorMessage": "O formulário está bloqueado.",
-                                    "formDefId": "analiseLegal"
-                                }
-                            }
                         }
                     }
                 ],
