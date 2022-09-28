@@ -2356,6 +2356,25 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1696.9921875,209.765625"/>
                     </ExtendedAttributes>
                 </Activity>
+                <Activity Id="subConclusao" Name="Conclusões">
+                    <Implementation>
+                        <SubFlow Execution="SYNCHR" Id="CHConclusoes">
+                            <ActualParameters>
+                                <ActualParameter>status</ActualParameter>
+                            </ActualParameters>
+                        </SubFlow>
+                    </Implementation>
+                    <Performer>participant3</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1846,351"/>
+                    </ExtendedAttributes>
+                </Activity>
             </Activities>
             <Transitions>
                 <Transition From="route1" Id="transition12" To="subflow2">
@@ -2577,12 +2596,21 @@
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;contratacao&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
+                <Transition From="route6" Id="transition43" To="subConclusao">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route11" Id="transition45" To="subConclusao">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
             </Transitions>
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="process3_participant2;participant3;participant2_1"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant3,CONNECTING_ACTIVITY_ID=route6,X_OFFSET=1850,Y_OFFSET=254,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process3_participant2,CONNECTING_ACTIVITY_ID=route1,X_OFFSET=81,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant2_1,CONNECTING_ACTIVITY_ID=route11,X_OFFSET=1871,Y_OFFSET=216,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant3,CONNECTING_ACTIVITY_ID=subConclusao,X_OFFSET=1985,Y_OFFSET=360,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="diligencias" Name="Diligências">
@@ -4454,8 +4482,15 @@
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process14_participant7,CONNECTING_ACTIVITY_ID=ConfigurarProcsso,X_OFFSET=56,Y_OFFSET=53,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
-        <WorkflowProcess Id="CHConclusoes" Name="Conclusões">
+        <WorkflowProcess Id="CHConclusoes" Name="CH-Conclusões">
             <ProcessHeader DurationUnit="h"/>
+            <FormalParameters>
+                <FormalParameter Id="status" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+            </FormalParameters>
             <DataFields>
                 <DataField Id="status" IsArray="FALSE">
                     <DataType>
