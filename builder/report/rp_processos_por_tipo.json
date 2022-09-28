@@ -16,18 +16,35 @@
                         "formDefId": "detalheProcesso",
                         "functionColumns": [],
                         "groupBy": "tipo_processo",
-                        "having": [],
+                        "having": [
+                            {
+                                "field": "tipo_processo",
+                                "function": "AFD_COUNT_",
+                                "join": "AND",
+                                "operator": "<>",
+                                "value": "0"
+                            },
+                            {
+                                "field": "tipo_processo",
+                                "function": "AFD_COUNT_",
+                                "join": "AND",
+                                "operator": "<>",
+                                "value": ""
+                            }
+                        ],
                         "joins": []
                     }
                 },
                 "categoryAxisLabel": "Category",
                 "chartHeight": "3000",
-                "chartType": "bar",
+                "chartType": "donut",
                 "chartWidth": "2000",
                 "colors": "",
                 "halign": "left",
                 "id": "5F5BF2A9-9FCF-4066-A41A-BB8AA0EB7305",
                 "mapping_dateformat": "",
+                "mapping_legend": "tipo_processo",
+                "mapping_value": "AFD_COUNT_tipo_processo",
                 "mapping_x": "tipo_processo",
                 "mapping_ys": [{
                     "legend": "TIpo de Processo",
@@ -35,10 +52,11 @@
                 }],
                 "marginBottom": "10px",
                 "selectorClass": "",
-                "showLegend": "true",
+                "showLegend": "",
+                "showValue": "true",
                 "showValueLabel": "",
                 "sortingOrder": "ASC",
-                "sortingOrderByColumn": "",
+                "sortingOrderByColumn": "tipo_processo",
                 "stack": "",
                 "title": "",
                 "valueAxisLabel": "Value",
