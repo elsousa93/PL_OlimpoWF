@@ -1,10 +1,28 @@
 {
     "actions": [],
     "binder": {
-        "className": "org.joget.apps.datalist.lib.FormRowDataListBinder",
+        "className": "org.joget.plugin.enterprise.AdvancedFormRowDataListBinder",
         "properties": {
+            "customSelectionValue": "",
             "extraCondition": "",
-            "formDefId": "detalheProcesso"
+            "filters": [
+                {
+                    "field": "tipo_processo",
+                    "join": "AND",
+                    "operator": "IS NOT NULL",
+                    "value": ""
+                },
+                {
+                    "field": "tipo_processo",
+                    "join": "AND",
+                    "operator": "<>",
+                    "value": ""
+                }
+            ],
+            "formDefId": "detalheProcesso",
+            "functionColumns": [],
+            "groupBy": "",
+            "joins": []
         }
     },
     "buttonPosition": "bottomLeft",
@@ -21,9 +39,9 @@
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_3",
-            "label": "Nome do Banco",
-            "name": "nome_banco",
+            "id": "column_4",
+            "label": "Número Processo PL",
+            "name": "n_wf_pl",
             "sortable": "false"
         },
         {
@@ -38,6 +56,14 @@
             "filterable": true,
             "hidden": "false",
             "id": "column_2",
+            "label": "Nome do Banco",
+            "name": "nome_banco",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_3",
             "label": "Tipo de Processo",
             "name": "tipo_processo",
             "sortable": "false"
