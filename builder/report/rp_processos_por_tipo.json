@@ -4,10 +4,20 @@
             "className": "org.joget.rbuilder.lib.ChartReportElement",
             "properties": {
                 "binder": {
-                    "className": "org.joget.apps.datalist.lib.FormRowDataListBinder",
+                    "className": "org.joget.plugin.enterprise.AdvancedFormRowDataListBinder",
                     "properties": {
+                        "aggregateField": [{
+                            "field": "tipo_processo",
+                            "function": "AFD_COUNT_"
+                        }],
+                        "customSelectionValue": "",
                         "extraCondition": "",
-                        "formDefId": "detalheProcesso"
+                        "filters": [],
+                        "formDefId": "detalheProcesso",
+                        "functionColumns": [],
+                        "groupBy": "tipo_processo",
+                        "having": [],
+                        "joins": []
                     }
                 },
                 "categoryAxisLabel": "Category",
@@ -21,7 +31,7 @@
                 "mapping_x": "tipo_processo",
                 "mapping_ys": [{
                     "legend": "TIpo de Processo",
-                    "y": "n_wf_pl"
+                    "y": "AFD_COUNT_tipo_processo"
                 }],
                 "marginBottom": "10px",
                 "selectorClass": "",
@@ -30,7 +40,7 @@
                 "sortingOrderByColumn": "tipo_processo",
                 "title": "",
                 "valueAxisLabel": "Value",
-                "xAxisDisplayAS": "",
+                "xAxisDisplayAS": "number",
                 "yaxisPrefix": ""
             }
         },
