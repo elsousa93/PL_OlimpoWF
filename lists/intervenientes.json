@@ -1,304 +1,323 @@
 {
     "actions": [],
     "binder": {
-        "className": "org.joget.apps.datalist.lib.FormRowDataListBinder",
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
         "properties": {
-            "extraCondition": "",
-            "formDefId": "interveniente"
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "id",
+            "sql": "SELECT ip.id as id, ip.c_nome, ip.c_cc, ip.c_nif, ip.c_estado_civil, ip.c_regime_casamento, ip.c_conjuge, ip.c_validade, ip.c_naturalidade, ip.c_morada, ip.c_codigo_interveniente, ip.c_segundo_papel, ip.c_segundo_papel_interveniente, lv.c_label as 'LabelInterveniente1', lv2.c_label as 'LabelInterveniente2' FROM app_fd_intervenientes_proc ip\r\nLEFT JOIN app_fd_listas_de_valores lv ON ip.c_codigo_interveniente = lv.c_value\r\nLEFT JOIN app_fd_listas_de_valores lv2 ON ip.c_segundo_papel_interveniente = lv2.c_value"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
     "columns": [
         {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
             "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
             "hidden": "false",
             "id": "column_0",
             "label": "Nome",
-            "name": "nome",
-            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
-            "sortable": "false"
+            "name": "c_nome",
+            "sortable": "false",
+            "style": "",
+            "width": ""
         },
         {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
             "filterable": true,
-            "hidden": "false",
-            "id": "column_2",
-            "label": "Nº Doc. ID",
-            "name": "cc",
-            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
             "hidden": "false",
             "id": "column_1",
-            "label": "NIF",
-            "name": "nif",
-            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
-            "sortable": "false"
+            "label": "Nº Doc. ID",
+            "name": "c_cc",
+            "sortable": "false",
+            "style": "",
+            "width": ""
         },
         {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
             "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_2",
+            "label": "NIF",
+            "name": "c_nif",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
             "hidden": "false",
             "id": "column_3",
             "label": "Estado Civil",
-            "name": "estado_civil",
-            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
-            "sortable": "false"
+            "name": "c_estado_civil",
+            "sortable": "false",
+            "style": "",
+            "width": ""
         },
         {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
             "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
             "hidden": "false",
             "id": "column_4",
             "label": "Regime Casamento",
-            "name": "regime_casamento",
-            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
+            "name": "c_regime_casamento",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_5",
+            "label": "Cônjuge",
+            "name": "c_conjuge",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_6",
+            "label": "Validade",
+            "name": "c_validade",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_7",
+            "label": "Naturalidade",
+            "name": "c_naturalidade",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_10",
+            "label": "Morada",
+            "name": "c_morada",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_11",
+            "label": "ID",
+            "name": "id",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_12",
+            "label": "Código do Interveniente",
+            "name": "c_codigo_interveniente",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_14",
+            "label": "Segundo Interveniente",
+            "name": "c_segundo_papel_interveniente",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_13",
+            "label": "Desempenha outra função?",
+            "name": "c_segundo_papel",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_15",
+            "label": "LabelInterveniente1",
+            "name": "LabelInterveniente1",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_5",
-            "label": "Cônjuge",
-            "name": "conjuge",
-            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
-            "sortable": "false"
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "true",
-            "id": "column_7",
-            "include_export": "true",
-            "label": "Número do Documento de Identificação",
-            "name": "cc",
-            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "true",
-            "id": "column_6",
-            "include_export": "true",
-            "label": "Nome Completo",
-            "name": "nome",
-            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "true",
-            "id": "column_8",
-            "include_export": "true",
-            "label": "Validade do Documento de Identificação",
-            "name": "validade",
-            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "true",
-            "id": "column_9",
-            "include_export": "true",
-            "label": "Naturalidade",
-            "name": "naturalidade",
-            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "true",
-            "id": "column_10",
-            "include_export": "true",
-            "label": "Estado Civil",
-            "name": "estado_civil",
-            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "true",
-            "id": "column_11",
-            "include_export": "true",
-            "label": "Regime Casamento",
-            "name": "regime_casamento",
-            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "true",
-            "id": "column_12",
-            "include_export": "true",
-            "label": "Morada",
-            "name": "morada",
-            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "true",
-            "id": "column_13",
-            "include_export": "true",
-            "label": "ID",
-            "name": "id",
-            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "exclude_export": "",
-            "filterable": true,
-            "hidden": "true",
-            "id": "column_14",
-            "include_export": "true",
-            "label": "Código do Interveniente",
-            "name": "codigo_interveniente",
-            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
-            "sortable": "false"
-        },
-        {
-            "exclude_export": "",
-            "filterable": true,
-            "hidden": "true",
-            "id": "column_15",
-            "include_export": "true",
-            "label": "Desempenha outra função ?",
-            "name": "segundo_papel",
-            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
-            "sortable": "false"
-        },
-        {
-            "exclude_export": "",
-            "filterable": true,
-            "hidden": "true",
             "id": "column_16",
-            "include_export": "true",
-            "label": "Interveniente",
-            "name": "segundo_papel_interveniente",
-            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
+            "label": "LabelInterveniente2",
+            "name": "LabelInterveniente2",
             "sortable": "false"
         }
     ],
     "considerFilterWhenGetTotal": "",
     "description": "",
-    "filters": [{
-        "datalist_type": "filter",
-        "filterParamName": "d-5393809-fn_id_intervenientes",
-        "hidden": "true",
-        "id": "filter_0",
-        "label": "id_intervenientes",
-        "name": "id_intervenientes",
-        "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
-        "type": {
-            "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
-            "properties": {"defaultValue": ""}
-        }
-    }],
+    "filters": [],
     "id": "intervenientes",
     "name": "Intervenientes",
     "order": "",
