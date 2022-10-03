@@ -1552,7 +1552,7 @@
                             "autoPopulate": "",
                             "id": "apresentacao_campos",
                             "label": "",
-                            "value": "<script>\n    $(document).change(function(){\n        \n        var origem_processo =  \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\n        \n        console.log(\"ORIGEM \" + origem_processo);\n        \n        if(!(origem_processo === \"ACE\" || origem_processo === \"TRD\" || origem_processo === \"PRE\")){\n            \n            $(\"div[id*=colaborador_pl]\").parent().remove();\n            $(\"select[id*=tipo_colaborador_pl]\").parent().remove(); \n            \n        }\n        \n        \n    }).trigger(\"change\");\n    \n    \n    \n<\/script>"
+                            "value": "<script>\n    $(document).change(function(){\n        \n        var origem_processo =  $(\"select[id*=origem_processo]\").find(\":selected\").text();\n        \n        console.log(\"ORIGEM \" + origem_processo);\n        \n        if(!(origem_processo === \"ACE\" || origem_processo === \"TRD\" || origem_processo === \"PRE\")){\n            \n            $(\"div[id*=colaborador_pl]\").parent().remove();\n            $(\"select[id*=tipo_colaborador_pl]\").parent().remove(); \n            \n        }\n        \n        \n    }).trigger(\"change\");\n    \n    \n    \n<\/script>"
                         }
                     }
                 ],
