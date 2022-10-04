@@ -336,7 +336,7 @@
                             "autoPopulate": "",
                             "id": "apresentacao_campos",
                             "label": "",
-                            "value": "<script>\n   $(document).change(function(){\n        var tipoProcesso = \"#form.detalhe_processo.tipo_processo[{form.processos.detalhe_processo}]#\";\n        \n        \n         \n          /**Falta corrigir valor do tipo de processo CVMHFiança Judicial no if**/\n    \n        if(!(tipoProcesso === \"CV\" ||  tipoProcesso === \"CV12\" || tipoProcesso === \"CVD12I\" || tipoProcesso === \"CVD12IE\" \n        || tipoProcesso === \"CVMH\" || tipoProcesso === \"CVMHIE\" || tipoProcesso === \"CVMH12\" || tipoProcesso === \"CVMHJ\" || tipoProcesso === \"CVMHF\" \n        || tipoProcesso === \"CVMHFIE\" || tipoProcesso === \"CVMHF12\" || tipoProcesso === \"CVMHJ\")){\n           $(\"#sociedade\").remove();\n        }\n        \n        if(!(tipoProcesso === \"MH\" || tipoProcesso === \"MHC\" || tipoProcesso === \"MHO\" || tipoProcesso === \"MHF\"  || tipoProcesso === \"MHFC\" \n        || tipoProcesso === \"MHFO\" ||  tipoProcesso === \"ACHC\" || tipoProcesso === \"ACHO\" || tipoProcesso === \"ACHFC\" || tipoProcesso === \"ACHFO\")){\n           $(\"#hipotecantes\").remove();\n        }\n        \n        \n        var origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\n    \n    \n        if(!(origem_processo === \"ACE\" || origem_processo === \"PRE\" || origem_processo === \"TRD\")){\n           \n           $(\"select[id^=codigo_interveniente]\").parent().remove();\n           //$(\"select[id^=tipo_documento]\").parent().remove();\n           \n           \n        }\n            \n        });\n    \n    \n    \n    \n    \n    \n    \n    \n<\/script>"
+                            "value": "<script>\n   $(document).change(function(){\n        var tipoProcesso = \"#form.detalhe_processo.tipo_processo[{form.processos.detalhe_processo}]#\";\n        \n        \n         \n          /**Falta corrigir valor do tipo de processo CVMHFiança Judicial no if**/\n    \n        if(!(tipoProcesso === \"CV\" ||  tipoProcesso === \"CV12\" || tipoProcesso === \"CVD12I\" || tipoProcesso === \"CVD12IE\" \n        || tipoProcesso === \"CVMH\" || tipoProcesso === \"CVMHIE\" || tipoProcesso === \"CVMH12\" || tipoProcesso === \"CVMHJ\" || tipoProcesso === \"CVMHF\" \n        || tipoProcesso === \"CVMHFIE\" || tipoProcesso === \"CVMHF12\" || tipoProcesso === \"CVMHJ\")){\n           $(\"#sociedade\").remove();\n        }\n        \n        if(!(tipoProcesso === \"MH\" || tipoProcesso === \"MHC\" || tipoProcesso === \"MHO\" || tipoProcesso === \"MHF\"  || tipoProcesso === \"MHFC\" \n        || tipoProcesso === \"MHFO\" ||  tipoProcesso === \"ACHC\" || tipoProcesso === \"ACHO\" || tipoProcesso === \"ACHFC\" || tipoProcesso === \"ACHFO\")){\n           $(\"#hipotecantes\").remove();\n        }\n        \n        \n        var origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\n    \n    \n        if(!(origem_processo === \"ACE\" || origem_processo === \"PRE\" || origem_processo === \"TRD\")){\n           \n           $(\"select[id^=codigo_interveniente]\").parent().remove();\n           $(\"select[id^=tipo_documento]\").parent().remove();\n           \n           \n        }\n            \n        });\n    \n    \n    \n    \n    \n    \n    \n    \n<\/script>"
                         }
                     }
                 ],
@@ -1200,10 +1200,11 @@
                         "storeNumeric": "",
                         "style": "",
                         "validator": {
-                            "className": "org.joget.apps.form.lib.BeanShellValidator",
+                            "className": "org.joget.apps.form.lib.DefaultValidator",
                             "properties": {
-                                "decoration": "*",
-                                "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    boolean result = true;\r\n    String fieldId = \"numero_cc\";\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    //If element is not filled give error message\r\n    if (fieldValue == null || fieldValue.equals(\"\")){\r\n        String id = FormUtil.getElementParameterName(element);\r\n        formData.addFormError(id, \"Campo obrigatório\");\r\n        result = false;\r\n    }\r\n    LogUtil.info(\"CC ANTES\" , \"\" + result);\r\n    var origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo == \"ACE\" || origem_processo == \"PRE\" || origem_processo == \"TRD\")){\r\n       result = true;\r\n       LogUtil.info(\"CC\" , \"\" + result);\r\n    }\r\n    \r\n\r\n    \r\n    \r\n    return result;\r\n    \r\n}\r\nreturn validate(element, formData, values);"
+                                "mandatory": "true",
+                                "message": "#i18n.mandatorymsg#",
+                                "type": ""
                             }
                         },
                         "value": "",
@@ -1278,10 +1279,11 @@
                         "storeNumeric": "",
                         "style": "",
                         "validator": {
-                            "className": "org.joget.apps.form.lib.BeanShellValidator",
+                            "className": "org.joget.apps.form.lib.DefaultValidator",
                             "properties": {
-                                "decoration": "*",
-                                "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    boolean result = true;\r\n    String fieldId = \"num_identificacao_pessoal\";\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    //If element is not filled give error message\r\n    if (fieldValue == null || fieldValue.equals(\"\")){\r\n        String id = FormUtil.getElementParameterName(element);\r\n        formData.addFormError(id, \"Campo obrigatório\");\r\n        result = false;\r\n    }\r\n    \r\n    var origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo == \"ACE\" || origem_processo == \"PRE\" || origem_processo == \"TRD\")){\r\n       result = true;\r\n       LogUtil.info(\"IDENT\" , \"\" + result);\r\n    }\r\n    \r\n    \r\n    return result;\r\n    \r\n}\r\nreturn validate(element, formData, values);"
+                                "mandatory": "true",
+                                "message": "#i18n.mandatorymsg#",
+                                "type": ""
                             }
                         },
                         "value": "",
@@ -1358,10 +1360,11 @@
                         "readonlyLabel": "",
                         "startDateFieldId": "",
                         "validator": {
-                            "className": "org.joget.apps.form.lib.BeanShellValidator",
+                            "className": "org.joget.apps.form.lib.DefaultValidator",
                             "properties": {
-                                "decoration": "*",
-                                "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    boolean result = true;\r\n    String fieldId = \"validade\";\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    //If element is not filled give error message\r\n    if (fieldValue == null || fieldValue.equals(\"\")){\r\n        String id = FormUtil.getElementParameterName(element);\r\n        formData.addFormError(id, \"Campo obrigatório\");\r\n        result = false;\r\n    }\r\n    \r\n    var origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo == \"ACE\" || origem_processo == \"PRE\" || origem_processo == \"TRD\")){\r\n       result = true;\r\n       LogUtil.info(\"VALIDADE\" , \"\" + result);\r\n    }\r\n    \r\n    \r\n    return result;\r\n    \r\n}\r\nreturn validate(element, formData, values);"
+                                "mandatory": "true",
+                                "message": "#i18n.mandatorymsg#",
+                                "type": ""
                             }
                         },
                         "value": "",
