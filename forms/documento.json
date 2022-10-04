@@ -156,11 +156,10 @@
                             "readonlyLabel": "",
                             "startDateFieldId": "",
                             "validator": {
-                                "className": "org.joget.apps.form.lib.DefaultValidator",
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
                                 "properties": {
-                                    "mandatory": "true",
-                                    "message": "",
-                                    "type": ""
+                                    "decoration": "*",
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    boolean result = true;\r\n    String fieldId = \"data_validade_documento\";\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    //If element is not filled give error message\r\n    if (fieldValue == null || fieldValue.equals(\"\")){\r\n        String id = FormUtil.getElementParameterName(element);\r\n        result = false;\r\n    }\r\n    \r\n    var origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo == \"ACE\" || origem_processo == \"PRE\" || origem_processo == \"TRD\")){\r\n       result = true;\r\n    }\r\n    \r\n    if(!result){\r\n        formData.addFormError(id, \"Campo obrigatório\");\r\n    }\r\n    \r\n    \r\n    \r\n    return result;\r\n    \r\n}\r\nreturn validate(element, formData, values);"
                                 }
                             },
                             "value": "#date.yyyy-MM-dd#",
@@ -243,6 +242,15 @@
                                 "bb3e96c1-d61f-4c1c-f075-93ca3b6103dc": {}
                             },
                             "value": "<script type=\"text/javascript\">\r\n    $(document).change(function(){\r\n        var ficheiroId = \"nome_ficheiro\";\r\n        var docUploaId = \"documento\";\r\n        var docFieldId = \"id\"\r\n  \r\n        //get values\r\n        \r\n        var doc = $(\"div.form-fileupload ul.form-fileupload-value li span\").text();\r\n        //console.log(doc.toString());\r\n        //var docId = $('[name='+docFieldId+']:enabled').val();\r\n        \r\n        //var docPath = \"<a href='http://192.168.0.104:8080/jw/web/client/app/workflowPL/1/form/download/documento/\" + docId + \"/\" + doc + \".?attachment=false'>\" + doc + \"<\/a>\";\r\n          \r\n        //store the value to a field\r\n        $('[name='+ficheiroId+']:enabled').val(doc);\r\n    });\r\n<\/script>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "apresentacao_campos",
+                            "label": "",
+                            "value": "<script>\n\n\n    $(document).ready(function(){\n        var tipoProcesso = \"#form.detalhe_processo.tipo_processo[{form.processos.detalhe_processo}]#\";\n        \n        if(!(origem_processo === \"ACE\" || origem_processo === \"PRE\" || origem_processo === \"TRD\")){\n         \n         $(\"input[id^=data_validade_documento]\").parent().remove();\n         \n         \n         \n         \n            \n        }\n        \n    });\n    \n    \n    \n<\/script>"
                         }
                     }
                 ],
