@@ -1,0 +1,95 @@
+{
+    "actions": [{
+        "className": "org.joget.apps.datalist.lib.FormRowDeleteDataListAction",
+        "id": "action_0",
+        "label": "Delete",
+        "name": "Form Row Delete Action",
+        "properties": {
+            "abortRelatedRunningProcesses": "",
+            "confirmation": "Are you sure?",
+            "deleteGridData": "",
+            "deleteSubformData": "",
+            "formDefId": "listener",
+            "label": "Delete"
+        },
+        "type": "text"
+    }],
+    "binder": {
+        "className": "org.joget.plugin.enterprise.AdvancedFormRowDataListBinder",
+        "properties": {
+            "extraCondition": "",
+            "filters": [
+                {
+                    "field": "starter",
+                    "join": "AND",
+                    "operator": "=",
+                    "value": "#currentUser.username#"
+                },
+                {
+                    "field": "status",
+                    "join": "AND",
+                    "operator": "=",
+                    "value": "Terminated"
+                }
+            ],
+            "formDefId": "listener"
+        }
+    },
+    "columns": [
+        {
+            "displayLabel": "ID",
+            "id": "column_0",
+            "label": "ID",
+            "name": "uid"
+        },
+        {
+            "displayLabel": "Email (Username)",
+            "id": "column_1",
+            "label": "Email (Username)",
+            "name": "email"
+        },
+        {
+            "displayLabel": "Description",
+            "id": "column_2",
+            "label": "Description",
+            "name": "desc"
+        },
+        {
+            "displayLabel": "Started By",
+            "id": "column_3",
+            "label": "Started By",
+            "name": "starter"
+        },
+        {
+            "displayLabel": "Date Created",
+            "id": "column_4",
+            "label": "Date Created",
+            "name": "dateCreated"
+        }
+    ],
+    "description": "",
+    "filters": [],
+    "hidePageSize": "",
+    "id": "terminate_listener",
+    "name": "Email Listener-Terminated",
+    "order": "",
+    "orderBy": "",
+    "pageSize": "0",
+    "rowActions": [{
+        "className": "org.joget.apps.datalist.lib.HyperlinkDataListAction",
+        "id": "rowAction_0",
+        "label": "Hyperlink",
+        "name": "Data List Hyperlink Action",
+        "properties": {
+            "confirmation": "",
+            "href": "create_listerner",
+            "hrefColumn": "id",
+            "hrefParam": "recordId",
+            "label": "Restart",
+            "rules": [],
+            "target": "_self",
+            "visible": ""
+        },
+        "type": "text"
+    }]
+}
