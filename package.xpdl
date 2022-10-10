@@ -97,6 +97,12 @@
         <Participant Id="conclusoes" Name="Conclusões">
             <ParticipantType Type="ROLE"/>
         </Participant>
+        <Participant Id="starter" Name="Starter">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
+        <Participant Id="system" Name="System">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
     </Participants>
     <Applications>
         <Application Id="default_application"/>
@@ -4605,6 +4611,72 @@
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="conclusoes"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=conclusoes,CONNECTING_ACTIVITY_ID=concluirProcesso,X_OFFSET=664,Y_OFFSET=97,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=conclusoes,CONNECTING_ACTIVITY_ID=ultimaAtividadeConc,X_OFFSET=58,Y_OFFSET=95,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+            </ExtendedAttributes>
+        </WorkflowProcess>
+        <WorkflowProcess Id="poll_email" Name="Poll Emails">
+            <ProcessHeader DurationUnit="h"/>
+            <Activities>
+                <Activity Id="route1">
+                    <Route/>
+                    <Performer>starter</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="starter"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="195,31"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="check_emails" Name="Check Emails">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>system</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="system"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="410,41"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="terminate" Name="Terminate Listener">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>starter</Performer>
+                    <Deadline Execution="SYNCHR">
+                        <DeadlineCondition>var s=new java.util.Date(); s.setTime(ACTIVITY_ACTIVATED_TIME.getTime()+(#form.email_listener.interval#*1000)); s;</DeadlineCondition>
+                        <ExceptionName>check_emails</ExceptionName>
+                    </Deadline>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="starter"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="313,27"/>
+                    </ExtendedAttributes>
+                </Activity>
+            </Activities>
+            <Transitions>
+                <Transition From="route1" Id="transition2" To="terminate">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="terminate" Id="transition4" To="check_emails">
+                    <Condition Type="EXCEPTION">check_emails</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="check_emails" Id="transition5" To="terminate">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+            </Transitions>
+            <ExtendedAttributes>
+                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="starter;system"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=starter,CONNECTING_ACTIVITY_ID=route1,X_OFFSET=75,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=starter,CONNECTING_ACTIVITY_ID=terminate,X_OFFSET=711,Y_OFFSET=31,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
     </WorkflowProcesses>
