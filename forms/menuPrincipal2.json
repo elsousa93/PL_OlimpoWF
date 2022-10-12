@@ -204,6 +204,39 @@
                         }
                     },
                     {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "nif_cliente",
+                            "label": "NIF do Cliente",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "extraCondition": "c_id_processo = '#process.recordId#' ORDER BY dateCreated ASC",
+                                    "formDefId": "interveniente",
+                                    "groupingColumn": "",
+                                    "idColumn": "id",
+                                    "labelColumn": "nif",
+                                    "useAjax": ""
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
                         "className": "org.joget.apps.form.lib.TextField",
                         "properties": {
                             "encryption": "",
@@ -1083,7 +1116,7 @@
                             "autoPopulate": "",
                             "id": "apresentacao_campos",
                             "label": "",
-                            "value": "<script>\n         $(document).ready(function(){\n         \n        var faseProcesso = \"#process.processId#\";\n        console.log(faseProcesso);\n        if(faseProcesso.includes(\"Contratacao\")){\n            $(\"select[name*=fase_processo]\").val('CNT');\n       }else if(faseProcesso.includes(\"Filtro\")){\n            $(\"select[name*=fase_processo]\").val('FLT');\n       }else if(faseProcesso.includes(\"Producao\")){\n            $(\"select[name*=fase_processo]\").val('PRD');\n       }else if(faseProcesso.includes(\"Validacao\")){\n            $(\"select[name*=fase_processo]\").val('VAL');\n       }\n       \n       //Nome do cliente - READONLY\n       $(\"select[name=multiPaged_1_menuPrincipal2_nome_cliente]\").prop('disabled', true);\n     });\n\n    \n<\/script>"
+                            "value": "<script>\n         $(document).ready(function(){\n         \n        var faseProcesso = \"#process.processId#\";\n        console.log(faseProcesso);\n        if(faseProcesso.includes(\"Contratacao\")){\n            $(\"select[name*=fase_processo]\").val('CNT');\n       }else if(faseProcesso.includes(\"Filtro\")){\n            $(\"select[name*=fase_processo]\").val('FLT');\n       }else if(faseProcesso.includes(\"Producao\")){\n            $(\"select[name*=fase_processo]\").val('PRD');\n       }else if(faseProcesso.includes(\"Validacao\")){\n            $(\"select[name*=fase_processo]\").val('VAL');\n       }\n       \n       //Nome do cliente e nif - READONLY\n       $(\"select[name=multiPaged_1_menuPrincipal2_nome_cliente]\").prop('disabled', true);\n       $(\"select[name=multiPaged_1_menuPrincipal2_nif_cliente]\").prop('disabled', true);\n     });\n\n    \n<\/script>"
                         }
                     }
                 ],
