@@ -70,29 +70,25 @@
                         "className": "org.joget.apps.form.lib.DatePicker",
                         "properties": {
                             "allowManual": "",
-                            "currentDateAs": "",
-                            "dataFormat": "",
-                            "datePickerType": "dateTime",
+                            "datePickerType": "utcdateTime",
                             "endDateFieldId": "",
-                            "format": "",
                             "format24hr": "true",
                             "id": "data_entrada",
                             "label": "Data de Entrada",
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
+                            "showUserTimeZone": "",
                             "startDateFieldId": "",
                             "validator": {
-                                "className": "org.joget.apps.form.lib.DefaultValidator",
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
                                 "properties": {
-                                    "mandatory": "true",
-                                    "message": "#i18n.mandatorymsg#",
-                                    "type": ""
+                                    "decoration": "",
+                                    "script": "import java.util.Arrays;\nimport org.joget.apps.form.model.Element;\nimport org.joget.apps.form.model.FormData;\nimport org.joget.apps.form.service.FormUtil;\n\nString id = FormUtil.getElementParameterName(element);\nString number = \"\";\nif(values.length > 0){\n    number = values[0];\n}\n\nLogUtil.info(\"validacao data ----->\", \"data\" + number);\n\nreturn false;"
                                 }
                             },
                             "value": "",
-                            "workflowVariable": "",
-                            "yearRange": "c-10:c+10"
+                            "workflowVariable": ""
                         }
                     },
                     {
