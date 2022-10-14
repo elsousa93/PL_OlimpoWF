@@ -4,24 +4,35 @@
         "className": "org.joget.apps.form.model.Section",
         "elements": [{
             "className": "org.joget.apps.form.model.Column",
-            "elements": [{
-                "className": "org.joget.plugin.enterprise.RichTextEditorField",
-                "properties": {
-                    "editor": "",
-                    "height": "",
-                    "id": "mensagem",
-                    "label": "Mensagem",
-                    "mode": "",
-                    "permissionType": "",
-                    "placeholder": "",
-                    "readonly": "",
-                    "validator": {
-                        "className": "",
-                        "properties": {}
-                    },
-                    "value": "<div><\/div>"
+            "elements": [
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field2",
+                        "label": "",
+                        "value": "<script>\n    \n     $(document).change(function() {\n        if($('select[id^=template]').val() !== ''){\n            htmlContent = $(\"div[name=mensagem] iframe\").contents().find('html:first').find('body:first').html();\n            console.log(\"TEMPLATE\");\n        }else{\n            htmlContent = $(\"div[name=mensagem] textarea[id*=mensagem]\").text();\n        }\n     }).trigger('change');\n    \n<\/script>"
+                    }
+                },
+                {
+                    "className": "org.joget.plugin.enterprise.RichTextEditorField",
+                    "properties": {
+                        "editor": "",
+                        "height": "",
+                        "id": "mensagem",
+                        "label": "Mensagem",
+                        "mode": "",
+                        "permissionType": "",
+                        "placeholder": "",
+                        "readonly": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "<div><\/div>"
+                    }
                 }
-            }],
+            ],
             "properties": {"width": "100%"}
         }],
         "properties": {
