@@ -1,0 +1,1252 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section6",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field27",
+                            "label": "",
+                            "value": "<div class=\"col text-start\">\r\n    <span class=\"material-symbols-rounded md-40\"> info <\/span> \r\n\t<div class = \"subform-section-title\">\r\n\t\t<span>INFORMAÇÃO GERAL<\/span>\r\n\t<\/div> \r\n<\/div>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "id_processo",
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {},
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {},
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {}
+                            },
+                            "useDefaultWhenEmpty": "",
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "declaracao_condominio",
+                            "label": "Declaração de Condomínio",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                }
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "apresentacao_campos",
+                            "label": "",
+                            "value": "<script>\n    $(document).ready(function(){\n        var tipoProcesso = \"#form.detalhe_processo.tipo_processo[{form.processos.detalhe_processo}]#\";\n        \n        /**Falta corrigir valor do tipo de processo CVMHFiança Judicial no if**/\n        if(!(tipoProcesso === \"CV\" ||  tipoProcesso === \"CV12\" || tipoProcesso === \"CVD12I\" || tipoProcesso === \"CVD12IE\" \n        || tipoProcesso === \"CVMH\" || tipoProcesso === \"CVMHIE\" || tipoProcesso === \"CVMH12\" || tipoProcesso === \"CVMHJ\" || tipoProcesso === \"CVMHF\" \n        || tipoProcesso === \"CVMHFIE\" || tipoProcesso === \"CVMHF12\" || tipoProcesso === \"CVMHJ\")){\n            \n            $(\"input[id*=declaracao_condominio]\").parent().remove();\n            $(\"input[id*=numero_compras]\").parent().remove();\n            $(\"div.compra_venda_label\").parent().remove();\n    \n            \n            \n            \n            \n        }\n        \n        if(!(tipoProcesso === \"ACHC\" || tipoProcesso === \"ACHO\" || tipoProcesso === \"ACHFC\" || tipoProcesso === \"ACHFO\" \n                || tipoProcesso === \"CVMH\" || tipoProcesso === \"CVMHIE\" || tipoProcesso === \"CVMH12\" || tipoProcesso === \"CVMHJ\" \n                || tipoProcesso === \"CVMHF\" || tipoProcesso === \"CVMHFIE\" || tipoProcesso === \"CVMHF12\"|| tipoProcesso === \"CVMHJ\"\n                || tipoProcesso === \"MH\" || tipoProcesso === \"MHC\" || tipoProcesso === \"MHO\"|| tipoProcesso === \"MHF\"\n                || tipoProcesso === \"MHFC\" || tipoProcesso === \"MHFO\"\n                || tipoProcesso === \"TOIC\" || tipoProcesso === \"TOICF\")){\n    \n                $(\"input[id*=numero_hipotecas]\").parent().remove();\n        }\n        \n        var origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\n        if(!(origem_processo === \"ACE\" || origem_processo === \"PRE\" || origem_processo === \"TRD\")){\n         \n            $(\"input[id*=analiseLegal_pagamento_sinal]\").parent().parent().remove();\n            $(\"input[id*=valor_global_cv]\").parent().remove();\n            \n            $(\"select[name*=modo_pagamento]\").parent().remove();\n            $(\"input[id*=valor_predio_transmitir]\").parent().remove();\n            $(\"input[id*=analiseLegal_destino]\").parent().remove();\n            $(\"input[id*=predio_direito]\").parent().remove();\n            $(\"div.partilha_label\").parent().remove();\n            $(\"div.permuta_label\").parent().remove();\n            \n            \n            \n        }\n        \n    \n         \n    });\n    \n<\/script>"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section1",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "0784be0d-cf94-c67c-a91e-b939722d1cf2": {},
+                    "308de489-d5c4-4e1c-83dd-88359733df2c": {},
+                    "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                    "f1cfd4c6-da96-0380-4224-42d1e280e57d": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field28",
+                            "label": "",
+                            "value": "<div class=\"col text-start\">\r\n    <span class=\"material-symbols-rounded md-40\"> real_estate_agent <\/span> \r\n\t<div class = \"subform-section-title\">\r\n\t\t<span>HIPOTECAS<\/span>\r\n\t<\/div> \r\n<\/div>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "ap_onus",
+                            "label": "AP do Ónus",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "acao_onus",
+                            "label": "Ação do Ónus",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "true",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "extraCondition": "c_nome_campo = 'acao_onus'",
+                                    "formDefId": "adicionarOpcaoLV",
+                                    "groupingColumn": "",
+                                    "idColumn": "value",
+                                    "labelColumn": "label",
+                                    "useAjax": ""
+                                }
+                            },
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "numero_hipotecas",
+                            "label": "Número de Hipotecas",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                }
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.DefaultValidator",
+                                "properties": {
+                                    "mandatory": "",
+                                    "message": "Campo Numérico",
+                                    "type": "numeric"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "numero_compras",
+                            "label": "Número de Compras",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                }
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.DefaultValidator",
+                                "properties": {
+                                    "mandatory": "",
+                                    "message": "Campo Numérico",
+                                    "type": "numeric"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "hipotecas",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "0784be0d-cf94-c67c-a91e-b939722d1cf2": {},
+                    "308de489-d5c4-4e1c-83dd-88359733df2c": {},
+                    "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                    "f1cfd4c6-da96-0380-4224-42d1e280e57d": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "compra_venda_label",
+                            "label": "",
+                            "value": "<div class=\"col text-start\">\r\n    <span class=\"material-symbols-rounded md-40\"> sell <\/span> \r\n\t<div class = \"subform-section-title\">\r\n\t\t<span>COMPRA E VENDA<\/span>\r\n\t<\/div> \r\n<\/div>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.Radio",
+                        "properties": {
+                            "controlField": "",
+                            "id": "confirmacao_valor_cv",
+                            "label": "Temos Confirmação do Valor de Compra e Venda ?",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Sim",
+                                    "value": "sim"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Não",
+                                    "value": "nao"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.Radio",
+                        "properties": {
+                            "controlField": "",
+                            "id": "pagamento_sinal",
+                            "label": "Houve Pagamento de Sinal?",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Sim",
+                                    "value": "sim"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Não",
+                                    "value": "nao"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "valor_global_cv",
+                            "label": "Valor Global da Compra e Venda",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                }
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "modo_pagamento",
+                            "label": "Modo Pagamento",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "true",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "extraCondition": "c_nome_campo = 'modo_pagamento'",
+                                    "formDefId": "adicionarOpcaoLV",
+                                    "groupingColumn": "",
+                                    "idColumn": "value",
+                                    "labelColumn": "label",
+                                    "useAjax": ""
+                                }
+                            },
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "valor_predio_transmitir",
+                            "label": "Valor por prédio/direito a transmitir",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                }
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "destino",
+                            "label": "Destino (LV)",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                }
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "predio_direito",
+                            "label": "Prédio/Direito",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                }
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "compra_venda",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "0784be0d-cf94-c67c-a91e-b939722d1cf2": {},
+                    "308de489-d5c4-4e1c-83dd-88359733df2c": {},
+                    "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                    "f1cfd4c6-da96-0380-4224-42d1e280e57d": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "partilha_label",
+                            "label": "",
+                            "value": "<div class=\"col text-start\">\r\n    <span class=\"material-symbols-rounded md-40\"> diversity_3 <\/span> \r\n\t<div class = \"subform-section-title\">\r\n\t\t<span>PARTILHA<\/span>\r\n\t<\/div> \r\n<\/div>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.Radio",
+                        "properties": {
+                            "controlField": "",
+                            "id": "partilha_divorcio",
+                            "label": "Partilha por divórcio, temos ata do divórcio, assentos com averbamento do divórcio?",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Sim",
+                                    "value": "sim"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Não",
+                                    "value": "nao"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.Radio",
+                        "properties": {
+                            "controlField": "",
+                            "id": "partilha_divorcio",
+                            "label": "Partilha por óbito, temos habilitação de herdeiros, imposto de selo, assentos?",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Sim",
+                                    "value": "sim"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Não",
+                                    "value": "nao"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "tipo_partilha",
+                            "label": "Tipo de Partilha (LV)",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "valor_atribuido_imovel",
+                            "label": "Valor Atribuido ao Imóvel",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                }
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "valor_tornas",
+                            "label": "Valor das Tornas",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                }
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "valor_emprestimo_verdadeiro",
+                            "label": "",
+                            "permissionHidden": "",
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {},
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {},
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {}
+                            },
+                            "value": "<script type=\"text/javascript\">\r\n\r\n    $(document).ready(function(){\r\n\r\n        var f1 = FormUtil.getField(\"valor_atribuido_imovel\");\r\n        var number = FormUtil.getValue(\"valor_atribuido_imovel\");\r\n        \r\n        number = number.replaceAll('.', \"\");\r\n        number = number.replaceAll('\u20ac', \"\");\r\n        number = number.replaceAll('Eur', \"\");\r\n        number = number.replaceAll(',', '.');\r\n        \r\n        let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(number);\r\n    \r\n        num = num.replace(/\\s/g, '.');\r\n        num = num.replaceAll('.\u20ac', ' EUR');\r\n        \r\n        $(f1).val(num);\r\n\r\n    });\r\n<\/script> "
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "valor_emprestimo_verdadeiro",
+                            "label": "",
+                            "permissionHidden": "",
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {},
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {},
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {}
+                            },
+                            "value": "<script type=\"text/javascript\">\r\n\r\n    $(document).ready(function(){\r\n\r\n        var f1 = FormUtil.getField(\"valor_tornas\");\r\n        var number = FormUtil.getValue(\"valor_tornas\");\r\n        \r\n        number = number.replaceAll('.', \"\");\r\n        number = number.replaceAll('\u20ac', \"\");\r\n        number = number.replaceAll('Eur', \"\");\r\n        number = number.replaceAll(',', '.');\r\n        \r\n        let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(number);\r\n    \r\n        num = num.replace(/\\s/g, '.');\r\n        num = num.replaceAll('.\u20ac', ' EUR');\r\n        \r\n        $(f1).val(num);\r\n\r\n    });\r\n<\/script> "
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "partilha",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "0784be0d-cf94-c67c-a91e-b939722d1cf2": {},
+                    "308de489-d5c4-4e1c-83dd-88359733df2c": {},
+                    "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                    "f1cfd4c6-da96-0380-4224-42d1e280e57d": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "permuta_label",
+                            "label": "",
+                            "value": "<div class=\"col text-start\">\r\n    <span class=\"material-symbols-rounded md-40\"> cached <\/span> \r\n\t<div class = \"subform-section-title\">\r\n\t\t<span>PERMUTA<\/span>\r\n\t<\/div> \r\n<\/div>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.Radio",
+                        "properties": {
+                            "controlField": "",
+                            "id": "valor_atribuido_imoveis",
+                            "label": "Temos o Valor Atribuído a cada um dos Imóveis?",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Sim",
+                                    "value": "sim"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Não",
+                                    "value": "nao"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "valor_imovel_1",
+                            "label": "Valor Atribuido ao Imóvel a dar de Permuta",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                }
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "valor_imovel_2",
+                            "label": "Valor Atribuido ao Imóvel a permutar",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                }
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "valor_emprestimo_verdadeiro",
+                            "label": "",
+                            "permissionHidden": "",
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {},
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {},
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {}
+                            },
+                            "value": "<script type=\"text/javascript\">\r\n\r\n    $(document).ready(function(){\r\n\r\n        var f1 = FormUtil.getField(\"valor_imovel_1\");\r\n        var number = FormUtil.getValue(\"valor_imovel_1\");\r\n        \r\n        number = number.replaceAll('.', \"\");\r\n        number = number.replaceAll('\u20ac', \"\");\r\n        number = number.replaceAll('Eur', \"\");\r\n        number = number.replaceAll(',', '.');\r\n        \r\n        let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(number);\r\n    \r\n        num = num.replace(/\\s/g, '.');\r\n        num = num.replaceAll('.\u20ac', ' EUR');\r\n        \r\n        $(f1).val(num);\r\n\r\n    });\r\n<\/script> "
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "valor_emprestimo_verdadeiro",
+                            "label": "",
+                            "permissionHidden": "",
+                            "permission_rules": {
+                                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {},
+                                "308de489-d5c4-4e1c-83dd-88359733df2c": {},
+                                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {}
+                            },
+                            "value": "<script type=\"text/javascript\">\r\n\r\n    $(document).ready(function(){\r\n\r\n        var f1 = FormUtil.getField(\"valor_imovel_2\");\r\n        var number = FormUtil.getValue(\"valor_imovel_2\");\r\n        \r\n        number = number.replaceAll('.', \"\");\r\n        number = number.replaceAll('\u20ac', \"\");\r\n        number = number.replaceAll('Eur', \"\");\r\n        number = number.replaceAll(',', '.');\r\n        \r\n        let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(number);\r\n    \r\n        num = num.replace(/\\s/g, '.');\r\n        num = num.replaceAll('.\u20ac', ' EUR');\r\n        \r\n        $(f1).val(num);\r\n\r\n    });\r\n<\/script> "
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "permuta",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "0784be0d-cf94-c67c-a91e-b939722d1cf2": {},
+                    "308de489-d5c4-4e1c-83dd-88359733df2c": {},
+                    "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                    "f1cfd4c6-da96-0380-4224-42d1e280e57d": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        }
+    ],
+    "properties": {
+        "description": "",
+        "id": "analiseLegal",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "Análise Legal",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "permission_rules": [
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_VAL_BCP_COM_CRH;PL_INT_VAL_BCP_NOR_CRH;PL_INT_VAL_BNI_COM_CRH;PL_INT_VAL_BNI_NOR_CRH;PL_INT_VAL_BST_COM_CRH;PL_INT_VAL_BST_NOR_CRH;PL_INT_VAL_GEN_COM_CRH;PL_INT_VAL_GEN_NOR_CRH",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "f1cfd4c6-da96-0380-4224-42d1e280e57d",
+                "permission_name": "Validação"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_PRD_GEN_COM_CRH;PL_INT_PRD_GEN_NOR_CRH;PL_INT_PRD_GEN_RPA_CRH",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "308de489-d5c4-4e1c-83dd-88359733df2c",
+                "permission_name": "Produção"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_FLT_GEN_COM_CRH;PL_INT_FLT_GEN_NOR_CRH",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "0784be0d-cf94-c67c-a91e-b939722d1cf2",
+                "permission_name": "Filtro"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_CNT_ABN_COM_CRH;PL_INT_CNT_ABN_NOR_CRH;PL_INT_CNT_BCP_COM_CRH;PL_INT_CNT_BCP_NOR_CRH;PL_INT_CNT_BIC_COM_CRH;PL_INT_CNT_BIC_NOR_CRH;PL_INT_CNT_BST_COM_CRH;PL_INT_CNT_BST_NOR_CRH;PL_INT_CNT_CTT_COM_CRH;PL_INT_CNT_CTT_NOR_CRH;PL_INT_CNT_MTG_COM_CRH;PL_INT_CNT_MTG_NOR_CRH;PL_INT_CNT_NVB_COM_CRH;PL_INT_CNT_NVB_NOR_CRH",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "af7028ee-276d-8bf5-397d-ff434825b605",
+                "permission_name": "Contratação"
+            }
+        ],
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "anal_legal_processo"
+    }
+}

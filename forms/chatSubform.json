@@ -1,0 +1,145 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [{
+        "className": "org.joget.apps.form.model.Section",
+        "elements": [{
+            "className": "org.joget.apps.form.model.Column",
+            "elements": [
+                {
+                    "className": "org.joget.apps.form.lib.Grid",
+                    "properties": {
+                        "errorMessage": "Invalid number of rows",
+                        "id": "painel_mensagem",
+                        "label": "",
+                        "loadBinder": {
+                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                            "properties": {
+                                "foreignKey": "thread_id",
+                                "formDefId": "dataChat"
+                            }
+                        },
+                        "options": [
+                            {
+                                "label": "Username",
+                                "value": "username"
+                            },
+                            {
+                                "label": "Nome Completo",
+                                "value": "nome_completo"
+                            },
+                            {
+                                "label": "Data de Criação",
+                                "value": "dateCreated"
+                            },
+                            {
+                                "label": "Mensagem",
+                                "value": "mensagem"
+                            }
+                        ],
+                        "permissionHidden": "",
+                        "readonly": "true",
+                        "storeBinder": {
+                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                            "properties": {
+                                "foreignKey": "thread_id",
+                                "formDefId": "dataChat"
+                            }
+                        },
+                        "validateMaxRow": "",
+                        "validateMinRow": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        }
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.SubForm",
+                    "properties": {
+                        "formDefId": "dataChat",
+                        "id": "mensagem",
+                        "label": "",
+                        "loadBinder": {
+                            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                            "properties": {
+                                "autoHandleFiles": "",
+                                "autoHandleWorkflowVariable": "",
+                                "cacheInterval": "",
+                                "script": "return null;",
+                                "useAjax": ""
+                            }
+                        },
+                        "noframe": "true",
+                        "parentSubFormId": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "storeBinder": {
+                            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+                            "properties": {}
+                        },
+                        "subFormParentId": "thread_id"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field2",
+                        "label": "",
+                        "value": "<script>\n$(document).ready(function() {\n   decorateTable();\n});\n<\/script>"
+                    }
+                }
+            ],
+            "properties": {"width": "100%"}
+        }],
+        "properties": {
+            "comment": "",
+            "id": "section1",
+            "join": "",
+            "label": "",
+            "loadBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "permission": {
+                "className": "",
+                "properties": {}
+            },
+            "permissionReadonly": "",
+            "readonly": "",
+            "readonlyLabel": "",
+            "regex": "",
+            "reverse": "",
+            "storeBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "visibilityControl": "",
+            "visibilityValue": ""
+        }
+    }],
+    "properties": {
+        "description": "",
+        "id": "chatSubform",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "Chat Subform",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "org.joget.apps.userview.lib.BeanShellPermission",
+            "properties": {"script": "/**System.out.println(\"===============\");\r\nSystem.out.println(\"#currentUser.id#\");\r\nSystem.out.println(\"#requestParam.primaryKey#\");\r\nSystem.out.println(\"#requestParam.id#\");\r\nSystem.out.println((\"#requestParam.primaryKey#\".contains(\"#currentUser.id#\")) || (\"#requestParam.id#\".equals(\"chat_ajax_subform\")) || (\"#requestParam.id#\".equals(\"GLOBAL\")));\r\n**/\r\n\r\nif (\"#requestParam.primaryKey#\".equals(\"#requestParam.id#\")) {\r\n    //this is a post submission\r\n    return true;\r\n} else {\r\n    //this is either fresh load or ajax load\r\n    return (\"#requestParam.id#\".equals(\"chat_ajax_subform\"))\r\n    || (\"#requestParam.primaryKey#\".contains(\"#currentUser.id#\")) \r\n    || (\"#requestParam.id#\".equals(\"chat_ajax_subform\")) \r\n    || (\"#requestParam.primaryKey#\".equals(\"GLOBAL\"));\r\n}"}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "mensagens_chat"
+    }
+}

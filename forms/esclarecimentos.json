@@ -1,0 +1,188 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [{
+        "className": "org.joget.apps.form.model.Section",
+        "elements": [{
+            "className": "org.joget.apps.form.model.Column",
+            "elements": [
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field4",
+                        "label": "",
+                        "value": "<div class=\"col text-start\">\r\n    <span class=\"material-symbols-rounded md-40\"> help <\/span> \r\n\t<div class = \"subform-section-title\">\r\n\t\t<span>DILIGÊNCIAS<\/span>\r\n\t<\/div> \r\n<\/div>"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.HiddenField",
+                    "properties": {
+                        "id": "id_processo",
+                        "useDefaultWhenEmpty": "true",
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field3",
+                        "label": "",
+                        "value": "<button class=\"btn btn-success\" onclick=\" window.open('http://192.168.0.104:8080/jw/web/userview/workflowPL/UV_PL_Geral/_/iniciaDiligencia?fk_id_processo=#process.recordId#&fk_p1_activity_id=#assignment.activityId#&banco=#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#&complexidade=#form.detalhe_processo.complex_processo[{form.processos.detalhe_processo}]#&operativa_remetente=#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#&urgencia=#form.detalhe_processo.urgencia[{form.processos.detalhe_processo}]#'); return false;\"> PEDIDO DE DILIGÊNCIA<\/button>"
+                    }
+                },
+                {
+                    "className": "org.joget.plugin.enterprise.ListGrid",
+                    "properties": {
+                        "abortRelatedRunningProcesses": "",
+                        "buttonLabel": "",
+                        "deleteFiles": "",
+                        "deleteGridData": "",
+                        "deleteMessage": "Delete row?",
+                        "deleteSubformData": "",
+                        "disabledAdd": "true",
+                        "disabledDelete": "true",
+                        "enableSorting": "",
+                        "errorMessage": "Invalid number of rows",
+                        "formDefId": "diligenciaView",
+                        "height": "500",
+                        "id": "lista_diligencias",
+                        "label": "",
+                        "listId": "list_esclarecimentos",
+                        "loadBinder": {
+                            "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
+                            "properties": {
+                                "autoHandleFiles": "",
+                                "autoHandleWorkflowVariable": "true",
+                                "jdbcDatasource": "default",
+                                "sql": "SELECT p.id as id_processo, d.c_assunto, d.dateCreated, d.c_operativa_remetente, d.c_operativa_destinataria, d.c_gestor_remetente, d.c_gestor_destinatario, d.id\nFROM app_fd_info_diligencia d\nJOIN app_fd_processos p ON p.id = d.c_id_processo\nWHERE d.c_id_processo = \"#process.recordId#\";"
+                            }
+                        },
+                        "options": [
+                            {
+                                "editable": "no",
+                                "format": "",
+                                "formatType": "text",
+                                "label": "Assunto",
+                                "value": "assunto",
+                                "width": ""
+                            },
+                            {
+                                "editable": "no",
+                                "format": "infoUser",
+                                "formatType": "options",
+                                "label": "Gestor Remetente",
+                                "value": "gestor_remetente",
+                                "width": ""
+                            },
+                            {
+                                "editable": "no",
+                                "format": "infoUser",
+                                "formatType": "options",
+                                "label": "Operativa Remetente",
+                                "value": "operativa_remetente",
+                                "width": ""
+                            },
+                            {
+                                "editable": "no",
+                                "format": "infoUser",
+                                "formatType": "options",
+                                "label": "Gestor Destinatário",
+                                "value": "gestor_destinatario",
+                                "width": ""
+                            },
+                            {
+                                "editable": "no",
+                                "format": "infoUser",
+                                "formatType": "options",
+                                "label": "Operativa Destinatária",
+                                "value": "operativa_destinataria",
+                                "width": ""
+                            },
+                            {
+                                "editable": "no",
+                                "format": "",
+                                "formatType": "date",
+                                "label": "Data de Criação",
+                                "value": "dateCreated",
+                                "width": ""
+                            }
+                        ],
+                        "pageSize": "20",
+                        "permissionHidden": "",
+                        "readonly": "true",
+                        "readonlyLabel": "",
+                        "requestParams": [],
+                        "showRowNumber": "",
+                        "sortField": "sort",
+                        "storeBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "submit-label-normal": "",
+                        "submit-label-readonly": "FECHAR",
+                        "uniqueKey": "",
+                        "validateMaxRow": "",
+                        "validateMinRow": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "width": "900"
+                    }
+                }
+            ],
+            "properties": {"width": "100%"}
+        }],
+        "properties": {
+            "comment": "Criar variavel de ambiente para url base",
+            "id": "section1",
+            "join": "",
+            "label": "",
+            "loadBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "permission": {
+                "className": "",
+                "properties": {}
+            },
+            "permissionReadonly": "",
+            "readonly": "",
+            "readonlyLabel": "",
+            "regex": "",
+            "reverse": "",
+            "storeBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "visibilityControl": "",
+            "visibilityValue": ""
+        }
+    }],
+    "properties": {
+        "description": "",
+        "id": "esclarecimentos",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "Esclarecimentos",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "esclarecimentos"
+    }
+}
