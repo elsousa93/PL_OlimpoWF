@@ -12,6 +12,7 @@
                             "autoPopulate": "",
                             "id": "field6",
                             "label": "",
+                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
                             "value": "<h1>#assignment.activityName#<\/h1>"
                         }
                     },
@@ -34,6 +35,7 @@
                             "noframe": "",
                             "parentSubFormId": "alertas",
                             "permissionHidden": "",
+                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
                             "readonly": "",
                             "readonlyLabel": "",
                             "storeBinder": {
@@ -51,6 +53,7 @@
                             "id": "record_lock",
                             "label": "Formulário bloqueado para edição por:",
                             "lockDuration": "5",
+                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
                             "validator": {
                                 "className": "org.joget.marketplace.FormRecordLockingValidator",
                                 "properties": {
@@ -170,6 +173,7 @@
                             "autoPopulate": "",
                             "id": "edicao_botoes_default",
                             "label": "",
+                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
                             "value": "<script type=\"text/javascript\">\r\n$(function(){\r\n    \r\n    if($(\"select[name=multiPaged_1_menuPrincipal2_envio_processo] :selected\").val() !== $(\"#enviar_processo_hidden\").val()){\r\n        $(\"select[name=multiPaged_1_menuPrincipal2_envio_processo]\").val($(\"#enviar_processo_hidden\").val() + \"\").change();\r\n    }\r\n    \r\n    if($(\"select[name=multiPaged_1_menuPrincipal2_estado_contratacao]\").val() !== $(\"#enviar_processo_hidden\").val()){\r\n        $(\"select[name=multiPaged_1_menuPrincipal2_estado_contratacao]\").val($(\"#enviar_processo_hidden\").val() + \"\").change();\r\n    }\r\n    \r\n    var assignmentButton;\r\n    \r\n    nomeBotao();\r\n    \r\n    $(\"select[name=multiPaged_1_menuPrincipal2_envio_processo]\").on('change', function() {\r\n        nomeBotao();\r\n    });\r\n    \r\n    $(\"select[name=multiPaged_1_menuPrincipal2_estado_contratacao]\").on('change', function() {\r\n        nomeBotao();\r\n    });\r\n    \r\n    function nomeBotao(){\r\n        var estadoContratacao = $(\"select[name=multiPaged_1_menuPrincipal2_estado_contratacao] :selected\").val();\r\n        var envioProcesso = $(\"select[name=multiPaged_1_menuPrincipal2_envio_processo] :selected\").val();\r\n        var flagUltimaAtividade='#variable.flag_ultima_atividade#';\r\n        \r\n        if(envioProcesso !== undefined || estadoContratacao !== undefined){\r\n            \r\n            \r\n            \r\n            if(estadoContratacao == 'PND'){\r\n                assignmentButton = \"COLOCAR PENDENTE\";\r\n                $(\"#enviar_processo_hidden\").val(\"PND\");\r\n            }\r\n            else if(flagUltimaAtividade == 1){\r\n                assignmentButton = \"ENVIAR \" + envioProcesso.toUpperCase();\r\n                $(\"#enviar_processo_hidden\").val(envioProcesso);\r\n            }else if(flagUltimaAtividade == 2){\r\n                assignmentButton = \"FINALIZAR PROCESSO\";\r\n            }else{\r\n                assignmentButton = \"ENVIAR \" + envioProcesso.toUpperCase();\r\n                $(\"#enviar_processo_hidden\").val(envioProcesso);\r\n            }\r\n            \r\n            $(\"#assignmentComplete\").val(assignmentButton);\r\n            \r\n        } else {\r\n            var novoEnvioProcesso = $(\"#enviar_processo_hidden\").val() + \"\";\r\n            if(novoEnvioProcesso === \"PND\"){\r\n                $(\"#assignmentComplete\").val(\"COLOCAR \" + novoEnvioProcesso.toUpperCase());\r\n            } else{\r\n                $(\"#assignmentComplete\").val(\"ENVIAR \" + novoEnvioProcesso.toUpperCase());\r\n            }\r\n        }\r\n    }\r\n    \r\n    $(\"#saveAsDraft\").val(\"GUARDAR\");\r\n    $(\"#cancel\").text(\"CANCELAR\"); \r\n    \r\n    /*Hide the Reassign button*/\r\n    var listGroups = '#currentUser.groups.name#';\r\n    console.log(listGroups);\r\n    if(listGroups.toLowerCase().includes(\"coordenadores\")){\r\n        console.log(\"show\");\r\n    }else{\r\n        console.log(\"hide\");\r\n        $('#process_reassign').parent().hide()\r\n    }\r\n \r\n});\r\n<\/script>"
                         }
                     },
@@ -180,6 +184,8 @@
                             "id": "enviar_processo_hidden",
                             "label": "enviar_processo_hidden",
                             "maxlength": "",
+                            "permissionHidden": "true",
+                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
