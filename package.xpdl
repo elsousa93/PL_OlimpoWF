@@ -3660,7 +3660,7 @@
                                     <TransitionRef Id="transition67"/>
                                     <TransitionRef Id="transition70"/>
                                     <TransitionRef Id="transition79"/>
-                                    <TransitionRef Id="transition81"/>
+                                    <TransitionRef Id="transition97"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
@@ -4334,7 +4334,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="contratacao_gen_com"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="75,32.5625"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="71,111.5625"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="route21_1">
@@ -4352,7 +4352,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="contratacao_gen_com"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="493,30.5625"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="503,111.5625"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="ultimaAtividadeGENCont" Name="Configurar Ultima Atividade">
@@ -4360,6 +4360,11 @@
                         <Tool Id="default_application"/>
                     </Implementation>
                     <Performer>contratacao_gen_com</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="contratacao_gen_com"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="907,25.5625"/>
@@ -4396,6 +4401,24 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="contratacao_gen_com"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2326,27.5625"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route23_1">
+                    <Route/>
+                    <Performer>contratacao_gen_com</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition81"/>
+                                    <TransitionRef Id="transition98"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="contratacao_gen_com"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="110,19.5625"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -4823,13 +4846,6 @@
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;flag_contratacao&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;1&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="route1" Id="transition81" To="PreenchimentoProcessoGEN">
-                    <Condition Type="OTHERWISE"/>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="PreenchimentoProcessoGEN" Id="transition90" To="route21_1">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
@@ -4845,6 +4861,7 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route21_1" Id="transition92" To="ultimaAtividadeGENCont">
+                    <Condition Type="OTHERWISE"/>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
@@ -4873,6 +4890,26 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route1" Id="transition97" To="route23_1">
+                    <Condition Type="OTHERWISE"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route23_1" Id="transition81" To="PreenchimentoProcessoGEN">
+                    <Condition Type="OTHERWISE"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route23_1" Id="transition98" To="ultimaAtividadeGENCont">
+                    <Condition Type="CONDITION">flag_contratacao === '1'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;flag_contratacao&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;1&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
             </Transitions>
