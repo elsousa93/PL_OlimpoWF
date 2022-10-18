@@ -1307,8 +1307,11 @@
                             "readonlyLabel": "",
                             "size": "",
                             "validator": {
-                                "className": "",
-                                "properties": {}
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "",
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values) {\r\n    boolean result = true;\r\n     \r\n    //get field value\r\n    String field1Id = \"gestor_pl\";\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field1 = FormUtil.findElement(field1Id, form, formData);\r\n    \r\n    if (field1 != null) {\r\n        if(values.length <= 0){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório quando se existe Autorização Superior\");\r\n            result = false;\r\n        }\r\n    }\r\n    \r\n    return result;\r\n}\r\n  \r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                }
                             },
                             "value": "",
                             "workflowVariable": ""
@@ -1414,6 +1417,15 @@
                             "cols": "20",
                             "id": "outras_datas_validade",
                             "label": "Outras Datas de Validade",
+                            "permission_rules": {
+                                "04d94e96-37aa-1e4b-d5fe-5595f325e232": {},
+                                "966fc1ca-d0b8-439f-6ab3-76cf9a599c75": {},
+                                "9f700b46-bde2-cc69-98a7-c562c400ad6d": {},
+                                "aa6ccea8-6e7f-1433-8d14-32132e9bf1e0": {},
+                                "d07f81ea-a80c-4560-01fd-7772c1762b0f": {},
+                                "d6fe0da9-3aa3-9d28-ded2-07a6fb980292": {},
+                                "f6d47cc6-84dc-c359-9ec5-794a6dcbf118": {}
+                            },
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -1465,7 +1477,15 @@
                             "autoPopulate": "",
                             "id": "apresentacao_campos",
                             "label": "",
-                            "permission_rules": {"aa6ccea8-6e7f-1433-8d14-32132e9bf1e0": {}},
+                            "permission_rules": {
+                                "04d94e96-37aa-1e4b-d5fe-5595f325e232": {},
+                                "966fc1ca-d0b8-439f-6ab3-76cf9a599c75": {},
+                                "9f700b46-bde2-cc69-98a7-c562c400ad6d": {},
+                                "aa6ccea8-6e7f-1433-8d14-32132e9bf1e0": {},
+                                "d07f81ea-a80c-4560-01fd-7772c1762b0f": {},
+                                "d6fe0da9-3aa3-9d28-ded2-07a6fb980292": {},
+                                "f6d47cc6-84dc-c359-9ec5-794a6dcbf118": {}
+                            },
                             "value": "<script>\n    $(document).change(function(){\n        \n        var origem_processo =  $(\"select[id*=origem_processo]\").find(\":selected\").val();\n        \n       \n        \n        if(!(origem_processo === \"ACE\" || origem_processo === \"TRD\" || origem_processo === \"PRE\")){\n            \n            $(\"div[id*=colaborador_pl]\").parent().hide();\n            $(\"select[id*=tipo_colaborador_pl]\").parent().hide(); \n           \n        }else{\n            \n            $(\"div[id*=colaborador_pl]\").parent().show();\n            $(\"select[id*=tipo_colaborador_pl]\").parent().show();\n   \n            \n        }\n        \n        if(!(origem_processo === \"PRE\")){\n            $(\"div.premium_label\").parent().hide();\n            \n        }else{\n            $(\"div.premium_label\").parent().show();\n            \n        }\n        \n        \n    }).trigger(\"change\");\n    \n     $(document).ready(function(){\n         \n        var faseProcesso = \"#process.processId#\";\n       \n       if(faseProcesso.includes(\"Contratacao\")){\n            $(\"select[name*=fase_processo]\").val('CNT');\n       }else if(faseProcesso.includes(\"Filtro\")){\n            $(\"select[name*=fase_processo]\").val('FLT');\n       }else if(faseProcesso.includes(\"Producao\")){\n            $(\"select[name*=fase_processo]\").val('PRD');\n       }else if(faseProcesso.includes(\"Validacao\")){\n            $(\"select[name*=fase_processo]\").val('VAL');\n       }\n     });\n    \n<\/script>"
                         }
                     }
