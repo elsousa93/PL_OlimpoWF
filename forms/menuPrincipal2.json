@@ -1205,7 +1205,7 @@
                                 "className": "org.joget.apps.form.lib.BeanShellFormBinder",
                                 "properties": {
                                     "cacheInterval": "",
-                                    "script": "import org.joget.apps.form.model.*;\r\n \r\nFormRowSet f = new FormRowSet();\r\n\r\nLog.Util(\"AAAA\" + \"#currentUser.department.name#\");\r\n\r\nFormRow r1 = new FormRow();\r\nr1.put(\"description\", \"hello world\");\r\nf.add(r1);\r\n \r\nreturn f;",
+                                    "script": "import org.joget.apps.form.model.*;\r\nimport org.joget.commons.util.LogUtil;\r\n\r\nLogUtil.info(appDef.toString(), \"teste :\" + \"#currentUser.department.name#\");\r\n \r\nFormRowSet f = new FormRowSet();\r\n\r\nFormRow option = new FormRow();\r\noption.setProperty(FormUtil.PROPERTY_VALUE, \"\");\r\noption.setProperty(FormUtil.PROPERTY_LABEL, \"\");\r\nrows.add(option);\r\n\r\nFormRow r1 = new FormRow();\r\nr1.put(\"description\", \"hello world\");\r\nf.add(r1);\r\n \r\nreturn f;",
                                     "useAjax": ""
                                 }
                             },
