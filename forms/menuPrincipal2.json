@@ -1202,8 +1202,12 @@
                                 }
                             ],
                             "optionsBinder": {
-                                "className": "",
-                                "properties": {}
+                                "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                                "properties": {
+                                    "cacheInterval": "",
+                                    "script": "import org.joget.apps.form.model.*;\r\n \r\nFormRowSet f = new FormRowSet();\r\n\r\nLog.Util(\"AAAA\" + \"#currentUser.department.name#\");\r\n\r\nFormRow r1 = new FormRow();\r\nr1.put(\"description\", \"hello world\");\r\nf.add(r1);\r\n \r\nreturn f;",
+                                    "useAjax": ""
+                                }
                             },
                             "readonly": "",
                             "readonlyLabel": "",
