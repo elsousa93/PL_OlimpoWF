@@ -309,8 +309,8 @@
                         "className": "org.joget.apps.form.lib.SelectBox",
                         "properties": {
                             "controlField": "",
-                            "id": "tipo_balcao",
-                            "label": "Tipo de Balcão",
+                            "id": "zona_balcao",
+                            "label": "Zona do Balcão",
                             "multiple": "",
                             "options": [],
                             "optionsBinder": {
@@ -323,7 +323,7 @@
                                     "formDefId": "adicionarOpcaoLVB",
                                     "groupingColumn": "",
                                     "idColumn": "",
-                                    "labelColumn": "nivel_3",
+                                    "labelColumn": "nivel_1",
                                     "useAjax": ""
                                 }
                             },
@@ -332,32 +332,20 @@
                                     "permissionHidden": "true",
                                     "readonly": ""
                                 },
-                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {
-                                    "permissionHidden": "true",
-                                    "readonly": ""
-                                },
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
                                 "6345a174-2189-0106-d3df-42d99f971d4e": {
                                     "permissionHidden": "true",
                                     "readonly": ""
                                 },
-                                "796f733b-72db-8dde-b928-99ca71ebd63d": {
-                                    "permissionHidden": "true",
-                                    "readonly": ""
-                                },
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
                                 "91f3a9e7-06fa-1619-f8ea-58214999d664": {
                                     "permissionHidden": "true",
                                     "readonly": ""
                                 },
                                 "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
                                 "cc7ee957-82dd-2431-9fcb-0a20c0305ce4": {},
-                                "cf816f5e-34c1-aa26-b58c-9096dfe15803": {
-                                    "permissionHidden": "true",
-                                    "readonly": ""
-                                },
-                                "ed614f02-8cde-7e73-6465-2a0ebb85ffb0": {
-                                    "permissionHidden": "true",
-                                    "readonly": ""
-                                }
+                                "cf816f5e-34c1-aa26-b58c-9096dfe15803": {},
+                                "ed614f02-8cde-7e73-6465-2a0ebb85ffb0": {}
                             },
                             "readonly": "",
                             "readonlyLabel": "",
@@ -366,7 +354,7 @@
                                 "className": "org.joget.apps.form.lib.BeanShellValidator",
                                 "properties": {
                                     "decoration": "*",
-                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        \r\n        //Configure field to validate - UPDATE HERE\r\n        String fieldId = \"tipo_balcao\";\r\n        \r\n        //Get element value\r\n        Form form = FormUtil.findRootForm(element);\r\n        Element field = FormUtil.findElement(fieldId, form, formData);\r\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n        \r\n        //If element is not filled give error message\r\n        if (fieldValue == null || fieldValue.equals(\"\")){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else{\r\n            result = true;\r\n        }\r\n    }else{\r\n        result = true;\r\n    }\r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        \r\n        //Configure field to validate - UPDATE HERE\r\n        String fieldId = \"zona_balcao\";\r\n        \r\n        //Get element value\r\n        Form form = FormUtil.findRootForm(element);\r\n        Element field = FormUtil.findElement(fieldId, form, formData);\r\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n        \r\n        //If element is not filled give error message\r\n        if (fieldValue == null || fieldValue.equals(\"\")){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else{\r\n            result = true;\r\n        }\r\n    }else{\r\n        result = true;\r\n    }\r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
                                 }
                             },
                             "value": "",
@@ -445,8 +433,8 @@
                         "className": "org.joget.apps.form.lib.SelectBox",
                         "properties": {
                             "controlField": "",
-                            "id": "zona_balcao",
-                            "label": "Zona do Balcão",
+                            "id": "tipo_balcao",
+                            "label": "Tipo de Balcão",
                             "multiple": "",
                             "options": [],
                             "optionsBinder": {
@@ -459,7 +447,7 @@
                                     "formDefId": "adicionarOpcaoLVB",
                                     "groupingColumn": "",
                                     "idColumn": "",
-                                    "labelColumn": "nivel_1",
+                                    "labelColumn": "nivel_3",
                                     "useAjax": ""
                                 }
                             },
@@ -468,20 +456,32 @@
                                     "permissionHidden": "true",
                                     "readonly": ""
                                 },
-                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
                                 "6345a174-2189-0106-d3df-42d99f971d4e": {
                                     "permissionHidden": "true",
                                     "readonly": ""
                                 },
-                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
                                 "91f3a9e7-06fa-1619-f8ea-58214999d664": {
                                     "permissionHidden": "true",
                                     "readonly": ""
                                 },
                                 "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
                                 "cc7ee957-82dd-2431-9fcb-0a20c0305ce4": {},
-                                "cf816f5e-34c1-aa26-b58c-9096dfe15803": {},
-                                "ed614f02-8cde-7e73-6465-2a0ebb85ffb0": {}
+                                "cf816f5e-34c1-aa26-b58c-9096dfe15803": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "ed614f02-8cde-7e73-6465-2a0ebb85ffb0": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                }
                             },
                             "readonly": "",
                             "readonlyLabel": "",
@@ -490,7 +490,7 @@
                                 "className": "org.joget.apps.form.lib.BeanShellValidator",
                                 "properties": {
                                     "decoration": "*",
-                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        \r\n        //Configure field to validate - UPDATE HERE\r\n        String fieldId = \"zona_balcao\";\r\n        \r\n        //Get element value\r\n        Form form = FormUtil.findRootForm(element);\r\n        Element field = FormUtil.findElement(fieldId, form, formData);\r\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n        \r\n        //If element is not filled give error message\r\n        if (fieldValue == null || fieldValue.equals(\"\")){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else{\r\n            result = true;\r\n        }\r\n    }else{\r\n        result = true;\r\n    }\r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        \r\n        //Configure field to validate - UPDATE HERE\r\n        String fieldId = \"tipo_balcao\";\r\n        \r\n        //Get element value\r\n        Form form = FormUtil.findRootForm(element);\r\n        Element field = FormUtil.findElement(fieldId, form, formData);\r\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n        \r\n        //If element is not filled give error message\r\n        if (fieldValue == null || fieldValue.equals(\"\")){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else{\r\n            result = true;\r\n        }\r\n    }else{\r\n        result = true;\r\n    }\r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
                                 }
                             },
                             "value": "",
