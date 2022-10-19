@@ -252,63 +252,6 @@
                         "className": "org.joget.apps.form.lib.SelectBox",
                         "properties": {
                             "controlField": "",
-                            "id": "nome_balcao",
-                            "label": "Nome do Balcão",
-                            "multiple": "",
-                            "options": [
-                                {
-                                    "grouping": "",
-                                    "label": "",
-                                    "value": ""
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Balcão",
-                                    "value": "Balcao"
-                                }
-                            ],
-                            "optionsBinder": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "permission_rules": {
-                                "0113cd59-1c7e-e30a-e3a6-1aa792cd971d": {
-                                    "permissionHidden": "true",
-                                    "readonly": ""
-                                },
-                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
-                                "6345a174-2189-0106-d3df-42d99f971d4e": {
-                                    "permissionHidden": "true",
-                                    "readonly": ""
-                                },
-                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
-                                "91f3a9e7-06fa-1619-f8ea-58214999d664": {
-                                    "permissionHidden": "true",
-                                    "readonly": ""
-                                },
-                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
-                                "cc7ee957-82dd-2431-9fcb-0a20c0305ce4": {},
-                                "cf816f5e-34c1-aa26-b58c-9096dfe15803": {},
-                                "ed614f02-8cde-7e73-6465-2a0ebb85ffb0": {}
-                            },
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "validator": {
-                                "className": "org.joget.apps.form.lib.BeanShellValidator",
-                                "properties": {
-                                    "decoration": "*",
-                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        \r\n        //Configure field to validate - UPDATE HERE\r\n        String fieldId = \"nome_balcao\";\r\n        \r\n        //Get element value\r\n        Form form = FormUtil.findRootForm(element);\r\n        Element field = FormUtil.findElement(fieldId, form, formData);\r\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n        \r\n        //If element is not filled give error message\r\n        if (fieldValue == null || fieldValue.equals(\"\")){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else{\r\n            result = true;\r\n        }\r\n    }else{\r\n        result = true;\r\n    }\r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
-                                }
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.SelectBox",
-                        "properties": {
-                            "controlField": "",
                             "id": "zona_balcao",
                             "label": "Zona do Balcão",
                             "multiple": "",
@@ -438,16 +381,10 @@
                             "multiple": "",
                             "options": [],
                             "optionsBinder": {
-                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "className": "org.joget.apps.form.lib.BeanShellFormBinder",
                                 "properties": {
-                                    "addEmptyOption": "true",
                                     "cacheInterval": "",
-                                    "emptyLabel": "",
-                                    "extraCondition": "",
-                                    "formDefId": "adicionarOpcaoLVB",
-                                    "groupingColumn": "",
-                                    "idColumn": "",
-                                    "labelColumn": "nivel_3",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.defaultHashVariablePlugin;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n\r\n \r\npublic FormRowSet load(Element element, String primaryKey, FormData formData) {\r\n    \r\n    FormRowSet rows = new FormRowSet();\r\n    \r\n    //get value of operativa_remetente through url\r\n    String operativa = \"#requestParam.operativa_remetente#\";\r\n    //LogUtil.info(\"Select equipa ----->\", \"Value:\" + operativa);\r\n    \r\n    //get value of banco through url\r\n    String banco = \"#requestParam.banco#\";\r\n    \r\n    //get value of complexidade through url\r\n    String complexidade = \"#requestParam.complexidade#\";\r\n    \r\n    String equipa = \"\";\r\n    if(operativa != null && !operativa.isEmpty()){\r\n        equipa = equipa + \"_\" + operativa;\r\n    }\r\n    if(banco != null && !banco.isEmpty()){\r\n        equipa = equipa + \"_\" + banco;\r\n    }else{\r\n        equipa = equipa + \"_\" + \"GEN\";\r\n    }\r\n    if(complexidade != null && !complexidade.isEmpty()){\r\n        equipa = equipa + \"_\" + complexidade; \r\n    }\r\n    \r\n    String cUserDepartmentName = \"#currentUser.department.name#\";\r\n    String cUserDepartmentID = \"#currentUser.department.id#\";\r\n    \r\n    String[] cUserDepName = cUserDepartmentName.split(\";\");\r\n    String[] cUserDepID = cUserDepartmentID.split(\";\");\r\n    \r\n    for(int i = 0; i < cUserDepID.length; i++ ){\r\n        if(cUserDepID[i].contains(equipa)){\r\n            //LogUtil.info(\"Select equipa ----->\", \"Entra:\" + equipa);\r\n            FormRow option = new FormRow();\r\n            option.setProperty(FormUtil.PROPERTY_VALUE, cUserDepID[i]);\r\n            option.setProperty(FormUtil.PROPERTY_LABEL, cUserDepName[i]);\r\n            rows.add(option);\r\n        }\r\n        \r\n    }\r\n\r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(element, primaryKey, formData);",
                                     "useAjax": ""
                                 }
                             },
@@ -491,6 +428,63 @@
                                 "properties": {
                                     "decoration": "*",
                                     "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        \r\n        //Configure field to validate - UPDATE HERE\r\n        String fieldId = \"tipo_balcao\";\r\n        \r\n        //Get element value\r\n        Form form = FormUtil.findRootForm(element);\r\n        Element field = FormUtil.findElement(fieldId, form, formData);\r\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n        \r\n        //If element is not filled give error message\r\n        if (fieldValue == null || fieldValue.equals(\"\")){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else{\r\n            result = true;\r\n        }\r\n    }else{\r\n        result = true;\r\n    }\r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "nome_balcao",
+                            "label": "Nome do Balcão",
+                            "multiple": "",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "",
+                                    "value": ""
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Balcão",
+                                    "value": "Balcao"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permission_rules": {
+                                "0113cd59-1c7e-e30a-e3a6-1aa792cd971d": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "6345a174-2189-0106-d3df-42d99f971d4e": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "91f3a9e7-06fa-1619-f8ea-58214999d664": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "cc7ee957-82dd-2431-9fcb-0a20c0305ce4": {},
+                                "cf816f5e-34c1-aa26-b58c-9096dfe15803": {},
+                                "ed614f02-8cde-7e73-6465-2a0ebb85ffb0": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "*",
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        \r\n        //Configure field to validate - UPDATE HERE\r\n        String fieldId = \"nome_balcao\";\r\n        \r\n        //Get element value\r\n        Form form = FormUtil.findRootForm(element);\r\n        Element field = FormUtil.findElement(fieldId, form, formData);\r\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n        \r\n        //If element is not filled give error message\r\n        if (fieldValue == null || fieldValue.equals(\"\")){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else{\r\n            result = true;\r\n        }\r\n    }else{\r\n        result = true;\r\n    }\r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
                                 }
                             },
                             "value": "",
@@ -669,6 +663,36 @@
                             },
                             "value": "",
                             "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "dependencias_bcp",
+                            "label": "Dependências BCP",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "concatena_campos_bcp",
+                            "label": "",
+                            "value": "<script type=\"text/javascript\">\r\n    $(document).change(function(){\r\n        var zonaBalcaoId = \"zona_balcao\";\r\n        var codigoBalcaoId = \"codigo_balcao\";\r\n        var tipoBalcaoId = \"tipo_balcao\";\r\n        var nomeBalcaoId = \"nome_balcao\";\r\n        var emailGestorId = \"n_wf_banco\";\r\n        var telefoneGestorId = \"n_wf_banco\";\r\n        var dependenciasBCPId = \"dependencias_bcp\";\r\n        var dependenciasBCP;\r\n        //get values\r\n \r\n        var zonaBalcao = $('[name='+zonaBalcaoId+']:enabled').val();\r\n        var codigoBalcao = $('[name='+codigoBalcaoId+']:enabled').val();\r\n        var tipoBalcao = $('[name='+tipoBalcaoId+']:enabled').val();\r\n        var nomeBalcao = $('[name='+nomeBalcaoId+']:enabled').val();\r\n        var emailGestor = $('[name='+emailGestorId+']:enabled').val();\r\n        var telefoneGestor = $('[name='+telefoneGestorId+']:enabled').val();\r\n         \r\n        //function to compare\r\n \r\n        dependenciasBCP = zonaBalcao + \"_\" + codigoBalcao + \"_\" + tipoBalcao + \"_\" + nomeBalcao + \"_\" + emailGestor + \"_\" + telefoneGestor;\r\n          \r\n        //store the value to a field\r\n        $('[name='+dependenciasBCPId+']:enabled').val(dependenciasBCP);\r\n    });\r\n<\/script>"
                         }
                     }
                 ],
