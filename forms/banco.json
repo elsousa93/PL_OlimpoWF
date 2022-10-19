@@ -375,14 +375,18 @@
                     {
                         "className": "org.joget.apps.form.lib.SelectBox",
                         "properties": {
-                            "controlField": "",
+                            "controlField": "dependencias_bcp",
                             "id": "tipo_balcao",
                             "label": "Tipo de Balcão",
                             "multiple": "",
                             "options": [],
                             "optionsBinder": {
-                                "className": "",
-                                "properties": {}
+                                "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                                "properties": {
+                                    "cacheInterval": "",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.defaultHashVariablePlugin;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n\r\n \r\npublic FormRowSet load(String[] values) {\r\n\r\n    String dependencias;\r\n\r\n    if (values != null && values.length > 0) {\r\n    dependencias = values[0];\r\n    const myArray = dependencias.split(\"_\");\r\n    String zonaBalcao = myArray[0];\r\n    String codigoBalcao = myArray[1];\r\n    Connection con = null;\r\n    PreparedStatement stmt = null;\r\n    ResultSet rs = null;\r\n        try{\r\n            DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n            con = ds.getConnection();\r\n            \r\n            if(!con.isClosed()){\r\n                \r\n                String query = \"SELECT b.c_tipo_balcao FROM app_fd_banco b  WHERE b.c_zona_balcao = ? AND b.c_codigo_balcao = ?\";\r\n                stmt = con.prepareStatement(query);\r\n                stmt.setObject(1, zonaBalcao);\r\n                stmt.setObject(2, codigoBalcao);\r\n                rs = stmt.executeQuery();\r\n                \r\n                while (rs.next()) {\r\n                    //LogUtil.info(\"Beanshell import ---------\", \"entra\");\r\n                    String opcao = rs.getString(1);\r\n                    LogUtil.info(\"Beanshell import ---------\", \"entra - \" + opcao);\r\n                    FormRow option = new FormRow();\r\n                    option.setProperty(FormUtil.PROPERTY_VALUE, opcao);\r\n                    option.setProperty(FormUtil.PROPERTY_LABEL, opcao);\r\n                    rows.add(option);\r\n                }\r\n            }catch(Exception e){\r\n                LogUtil.error(\"Beanshell document - banco\", e, \"Error getting info from DB\");\r\n            }finally{\r\n                try{\r\n                    if(rs != null){\r\n                    rs.close();\r\n                    }\r\n                    if(stmt != null){\r\n                        stmt.close();\r\n                    }\r\n                    if(con != null && !con.isClosed()) {\r\n                        con.close();\r\n                    }\r\n                }catch(Exception e){\r\n                    LogUtil.error(\"Beanshell document - banco\", e, \"Error closing DB connection\");\r\n                }\r\n            }\r\n        }\r\n    }\r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(element, primaryKey, formData);",
+                                    "useAjax": "true"
+                                }
                             },
                             "permission_rules": {
                                 "0113cd59-1c7e-e30a-e3a6-1aa792cd971d": {
