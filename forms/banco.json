@@ -451,21 +451,20 @@
                             "id": "nome_balcao",
                             "label": "Nome do Balcão",
                             "multiple": "",
-                            "options": [
-                                {
-                                    "grouping": "",
-                                    "label": "",
-                                    "value": ""
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Balcão",
-                                    "value": "Balcao"
-                                }
-                            ],
+                            "options": [],
                             "optionsBinder": {
-                                "className": "",
-                                "properties": {}
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "true",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "extraCondition": "",
+                                    "formDefId": "adicionarOpcaoLVB",
+                                    "groupingColumn": "nivel_2",
+                                    "idColumn": "nivel_4",
+                                    "labelColumn": "nivel_4",
+                                    "useAjax": ""
+                                }
                             },
                             "permission_rules": {
                                 "0113cd59-1c7e-e30a-e3a6-1aa792cd971d": {
@@ -546,50 +545,6 @@
                         }
                     },
                     {
-                        "className": "org.joget.apps.form.lib.TextField",
-                        "properties": {
-                            "encryption": "",
-                            "id": "email_gestor",
-                            "label": "E-mail do Gestor",
-                            "maxlength": "",
-                            "permission_rules": {
-                                "0113cd59-1c7e-e30a-e3a6-1aa792cd971d": {
-                                    "permissionHidden": "true",
-                                    "readonly": ""
-                                },
-                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
-                                "6345a174-2189-0106-d3df-42d99f971d4e": {
-                                    "permissionHidden": "true",
-                                    "readonly": ""
-                                },
-                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
-                                "91f3a9e7-06fa-1619-f8ea-58214999d664": {
-                                    "permissionHidden": "true",
-                                    "readonly": ""
-                                },
-                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
-                                "cc7ee957-82dd-2431-9fcb-0a20c0305ce4": {},
-                                "cf816f5e-34c1-aa26-b58c-9096dfe15803": {},
-                                "ed614f02-8cde-7e73-6465-2a0ebb85ffb0": {}
-                            },
-                            "placeholder": "",
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "storeNumeric": "",
-                            "style": "",
-                            "validator": {
-                                "className": "org.joget.apps.form.lib.BeanShellValidator",
-                                "properties": {
-                                    "decoration": "*",
-                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        \r\n        //Configure field to validate - UPDATE HERE\r\n        String fieldId = \"email_gestor\";\r\n        \r\n        //Get element value\r\n        Form form = FormUtil.findRootForm(element);\r\n        Element field = FormUtil.findElement(fieldId, form, formData);\r\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n        \r\n        //If element is not filled give error message\r\n        if (fieldValue == null || fieldValue.equals(\"\")){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else{\r\n            if (fieldValue.matches(\"^[\\\\w-\\\\.]+@([\\\\w-]+\\\\.)+[\\\\w-]{2,4}$\")){\r\n                result = true;\r\n            }else{\r\n                String id = FormUtil.getElementParameterName(element);\r\n                formData.addFormError(id, \"Formato de email inválido\");\r\n                result = false;\r\n            }\r\n            \r\n        }\r\n    }else{\r\n        result = true;\r\n    }\r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
-                                }
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    },
-                    {
                         "className": "org.joget.apps.form.lib.SelectBox",
                         "properties": {
                             "controlField": "",
@@ -598,8 +553,18 @@
                             "multiple": "",
                             "options": [],
                             "optionsBinder": {
-                                "className": "",
-                                "properties": {}
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "true",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "extraCondition": "",
+                                    "formDefId": "adicionarOpcaoLVB",
+                                    "groupingColumn": "nivel_4",
+                                    "idColumn": "nivel_5",
+                                    "labelColumn": "nivel_5",
+                                    "useAjax": ""
+                                }
                             },
                             "readonly": "",
                             "readonlyLabel": "",
@@ -624,56 +589,22 @@
                             "multiple": "",
                             "options": [],
                             "optionsBinder": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "validator": {
-                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
                                 "properties": {
-                                    "decoration": "*",
-                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        \r\n        //Configure field to validate - UPDATE HERE\r\n        String fieldId = \"telefone_gestor\";\r\n        \r\n        //Get element value\r\n        Form form = FormUtil.findRootForm(element);\r\n        Element field = FormUtil.findElement(fieldId, form, formData);\r\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n        \r\n        //If element is not filled give error message\r\n        if (fieldValue == null || fieldValue.equals(\"\")){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else{\r\n            if (fieldValue.matches(\"^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\\\s\\\\./0-9]*$\")){\r\n                result = true;\r\n            }else{\r\n                String id = FormUtil.getElementParameterName(element);\r\n                formData.addFormError(id, \"Formato de email inválido\");\r\n                result = false;\r\n            }\r\n            \r\n        }\r\n    }else{\r\n        result = true;\r\n    }\r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                    "addEmptyOption": "true",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "extraCondition": "",
+                                    "formDefId": "adicionarOpcaoLVB",
+                                    "groupingColumn": "nivel_4",
+                                    "idColumn": "nivel_6",
+                                    "labelColumn": "nivel_6",
+                                    "useAjax": ""
                                 }
                             },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.TextField",
-                        "properties": {
-                            "encryption": "",
-                            "id": "telefone_gestor",
-                            "label": "Telefone do Gestor",
-                            "maxlength": "",
-                            "permission_rules": {
-                                "0113cd59-1c7e-e30a-e3a6-1aa792cd971d": {
-                                    "permissionHidden": "true",
-                                    "readonly": ""
-                                },
-                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
-                                "6345a174-2189-0106-d3df-42d99f971d4e": {
-                                    "permissionHidden": "true",
-                                    "readonly": ""
-                                },
-                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
-                                "91f3a9e7-06fa-1619-f8ea-58214999d664": {
-                                    "permissionHidden": "true",
-                                    "readonly": ""
-                                },
-                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
-                                "cc7ee957-82dd-2431-9fcb-0a20c0305ce4": {},
-                                "cf816f5e-34c1-aa26-b58c-9096dfe15803": {},
-                                "ed614f02-8cde-7e73-6465-2a0ebb85ffb0": {}
-                            },
-                            "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
                             "size": "",
-                            "storeNumeric": "",
-                            "style": "",
                             "validator": {
                                 "className": "org.joget.apps.form.lib.BeanShellValidator",
                                 "properties": {
