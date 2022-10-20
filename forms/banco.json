@@ -385,10 +385,16 @@
                             "multiple": "",
                             "options": [],
                             "optionsBinder": {
-                                "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
                                 "properties": {
+                                    "addEmptyOption": "",
                                     "cacheInterval": "",
-                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.dao.FormDataDao;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.defaultHashVariablePlugin;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\nimport java.util.*; \r\n\r\n\r\n \r\npublic FormRowSet load(Element element, String primaryKey, FormData formData) {\r\n    FormRowSet rows = new FormRowSet();\r\n    ArrayList resultados = new ArrayList();\r\n    String dependencias = \"#requestParam.dependencias_bcp#\";\r\n    \r\n    LogUtil.info(\"Beanshell import ---------\", dependencias);\r\n\r\n    //if (values != null && values.length > 0) {\r\n        dependencias = \"Centro_Alentejo_undefined___\";\r\n        LogUtil.info(\"Beanshell import ---------\", dependencias);\r\n        \r\n        String [] myArray = dependencias.split(\"_\");\r\n        String zonaBalcao = myArray[0];\r\n        String codigoBalcao = myArray[1];\r\n        \r\n        LogUtil.info(\"Beanshell import ---------\", zonaBalcao + \" \" + codigoBalcao);\r\n        \r\n        Connection con = null;\r\n        PreparedStatement stmt = null;\r\n        ResultSet rs = null;\r\n            try{\r\n                DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n                con = ds.getConnection();\r\n                \r\n                    if(!con.isClosed()){\r\n                        \r\n                        String query = \"SELECT distinct b.c_nivel_3 FROM app_fd_list_of_values_banco b WHERE b.c_nivel_1 LIKE 'Centro' AND b.c_nivel_2 LIKE 'Alentejo'\";\r\n                        stmt = con.prepareStatement(query);\r\n                        //stmt.setObject(1, zonaBalcao);\r\n                        //stmt.setObject(2, codigoBalcao);\r\n                        rs = stmt.executeQuery();\r\n                        \r\n                        LogUtil.info(\"Beanshell import ---------\", stmt.toString());\r\n                        //LogUtil.info(\"Beanshell import ---------\", rs.getObject(1).toString());\r\n                        \r\n                        while (rs.next()) {\r\n                            LogUtil.info(\"Beanshell import ---------\", \"entra\");\r\n                            String opcao = rs.getString(1);\r\n                            FormRow option = new FormRow();\r\n                            option.setProperty(FormUtil.PROPERTY_VALUE, opcao);\r\n                            option.setProperty(FormUtil.PROPERTY_LABEL, opcao);\r\n                            rows.add(option);\r\n                            //LogUtil.info(\"Beanshell import ---------\", resultados.to);\r\n                        }\r\n                            \r\n                    }\r\n                }catch(Exception e){\r\n                    LogUtil.error(\"Beanshell document - banco\", e, \"Error getting info from DB\");\r\n                }finally{\r\n                    try{\r\n                        if(rs != null){\r\n                        rs.close();\r\n                        }\r\n                        if(stmt != null){\r\n                            stmt.close();\r\n                        }\r\n                        if(con != null && !con.isClosed()) {\r\n                            con.close();\r\n                        }\r\n                    }catch(Exception e){\r\n                        LogUtil.error(\"Beanshell document - banco\", e, \"Error closing DB connection\");\r\n                    }\r\n                }\r\n            //}\r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(element, primaryKey,formData);",
+                                    "emptyLabel": "",
+                                    "extraCondition": "e.customProperties.nivel_3 IN (select distinct vb.customProperties.nivel_3 from app_fd_list_of_values_banco vb)",
+                                    "formDefId": "adicionarOpcaoLVB",
+                                    "groupingColumn": "",
+                                    "idColumn": "nivel_3",
+                                    "labelColumn": "nivel_3",
                                     "useAjax": ""
                                 }
                             },
@@ -572,6 +578,58 @@
                             "size": "",
                             "storeNumeric": "",
                             "style": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "*",
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        \r\n        //Configure field to validate - UPDATE HERE\r\n        String fieldId = \"email_gestor\";\r\n        \r\n        //Get element value\r\n        Form form = FormUtil.findRootForm(element);\r\n        Element field = FormUtil.findElement(fieldId, form, formData);\r\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n        \r\n        //If element is not filled give error message\r\n        if (fieldValue == null || fieldValue.equals(\"\")){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else{\r\n            if (fieldValue.matches(\"^[\\\\w-\\\\.]+@([\\\\w-]+\\\\.)+[\\\\w-]{2,4}$\")){\r\n                result = true;\r\n            }else{\r\n                String id = FormUtil.getElementParameterName(element);\r\n                formData.addFormError(id, \"Formato de email inválido\");\r\n                result = false;\r\n            }\r\n            \r\n        }\r\n    }else{\r\n        result = true;\r\n    }\r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "email_gestor",
+                            "label": "E-mail do Gestor",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "*",
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        \r\n        //Configure field to validate - UPDATE HERE\r\n        String fieldId = \"email_gestor\";\r\n        \r\n        //Get element value\r\n        Form form = FormUtil.findRootForm(element);\r\n        Element field = FormUtil.findElement(fieldId, form, formData);\r\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n        \r\n        //If element is not filled give error message\r\n        if (fieldValue == null || fieldValue.equals(\"\")){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else{\r\n            if (fieldValue.matches(\"^[\\\\w-\\\\.]+@([\\\\w-]+\\\\.)+[\\\\w-]{2,4}$\")){\r\n                result = true;\r\n            }else{\r\n                String id = FormUtil.getElementParameterName(element);\r\n                formData.addFormError(id, \"Formato de email inválido\");\r\n                result = false;\r\n            }\r\n            \r\n        }\r\n    }else{\r\n        result = true;\r\n    }\r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "telefone_gestor",
+                            "label": "Telefone do Gestor",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
                             "validator": {
                                 "className": "org.joget.apps.form.lib.BeanShellValidator",
                                 "properties": {
