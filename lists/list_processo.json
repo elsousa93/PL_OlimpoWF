@@ -1,27 +1,273 @@
 {
     "actions": [],
     "binder": {
-        "className": "org.joget.plugin.enterprise.AdvancedFormRowDataListBinder",
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
         "properties": {
-            "customSelectionValue": "",
-            "extraCondition": "",
-            "filters": [],
-            "formDefId": "processo",
-            "functionColumns": [],
-            "groupBy": "",
-            "joins": []
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "IdProcesso",
+            "sql": "             \nWITH CONTRATACAO_BCP AS (SELECT p.id as IdProcesso, dp.* \n\t\t\t\tFROM app_fd_processos p \n\t\t\t\tJOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo \n\t\t\t\tWHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_BCP%') AND dp.c_fase_processo = \"CNT\"),\nCONTRATACAO_NB AS (SELECT p.id as IdProcesso, dp.* \n\t\t\t\tFROM app_fd_processos p \n\t\t\t\tJOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo \n\t\t\t\tWHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_NVB%') AND dp.c_fase_processo = \"CNT\"),\nCONTRATACAO_CTT AS (SELECT p.id as IdProcesso, dp.* \n\t\t\t\tFROM app_fd_processos p \n\t\t\t\tJOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo \n\t\t\t\tWHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_CTT%') AND dp.c_fase_processo = \"CNT\"),\nCONTRATACAO_MG AS (SELECT p.id as IdProcesso, dp.* \n\t\t\t\tFROM app_fd_processos p \n\t\t\t\tJOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo \n\t\t\t\tWHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_MTG%') AND dp.c_fase_processo = \"CNT\"),\nCONTRATACAO_BNI AS (SELECT p.id as IdProcesso, dp.* \n\t\t\t\tFROM app_fd_processos p \n\t\t\t\tJOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo \n\t\t\t\tWHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_BNI%') AND dp.c_fase_processo = \"CNT\"),\nCONTRATACAO_BST AS (SELECT p.id as IdProcesso, dp.* \n\t\t\t\tFROM app_fd_processos p \n\t\t\t\tJOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo \n\t\t\t\tWHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_BST%') AND dp.c_fase_processo = \"CNT\"),\nCONTRATACAO_BIC AS (SELECT p.id as IdProcesso, dp.* \n\t\t\t\tFROM app_fd_processos p \n\t\t\t\tJOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo \n\t\t\t\tWHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_BIC%') AND dp.c_fase_processo = \"CNT\"),\nCONTRATACAO_GEN AS (SELECT p.id as IdProcesso, dp.* \n\t\t\t\tFROM app_fd_processos p \n\t\t\t\tJOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo \n\t\t\t\tWHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_GEN%') AND dp.c_fase_processo = \"CNT\"),\nFILTRO AS (SELECT p.id as IdProcesso, dp.* \n\t\t\t\tFROM app_fd_processos p \n\t\t\t\tJOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo \n\t\t\t\tWHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_FLT%') AND dp.c_fase_processo = \"FLT\"),\nPRODUCAO AS (SELECT p.id as IdProcesso, dp.* \n\t\t\t\tFROM app_fd_processos p \n\t\t\t\tJOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo \n\t\t\t\tWHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_PRD%') AND (dp.c_fase_processo = \"PRD\" OR dp.c_fase_processo = \"VAL\")),\nVALIDACAO AS (SELECT p.id as IdProcesso, dp.* \n\t\t\t\tFROM app_fd_processos p \n\t\t\t\tJOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo \n\t\t\t\tWHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_VAL%') AND dp.c_fase_processo = \"VAL\")\n                \nSELECT DISTINCT * FROM CONTRATACAO_BCP\nUNION\nSELECT DISTINCT * FROM CONTRATACAO_NB\nUNION\nSELECT DISTINCT * FROM CONTRATACAO_MG\nUNION\nSELECT DISTINCT * FROM CONTRATACAO_CTT\nUNION\nSELECT DISTINCT * FROM CONTRATACAO_BNI\nUNION\nSELECT DISTINCT * FROM CONTRATACAO_BST\nUNION\nSELECT DISTINCT * FROM CONTRATACAO_BIC\nUNION\nSELECT DISTINCT * FROM CONTRATACAO_GEN\nUNION\nSELECT DISTINCT * FROM FILTRO\nUNION\nSELECT DISTINCT * FROM PRODUCAO\nUNION\nSELECT DISTINCT * FROM VALIDACAO"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
-    "columns": [{
-        "filterable": true,
-        "hidden": "false",
-        "id": "column_0",
-        "label": "Created By",
-        "name": "createdBy",
-        "sortable": "false"
-    }],
+    "columns": [
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_0",
+            "label": "Nº Workflow Banco",
+            "name": "c_n_wf_banco",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.plugin.enterprise.UserOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "deptId": "",
+                            "emptyLabel": "",
+                            "groupId": "",
+                            "grouping": "",
+                            "optionLabel": "fullname",
+                            "orgId": "PL",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_1",
+            "label": "Gestor Plataforma Legal",
+            "name": "c_gestor_pl",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'nome_banco'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_2",
+            "label": "Nome Banco",
+            "name": "c_nome_banco",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_3",
+            "label": "Nome Cliente",
+            "name": "c_nome_cliente",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'tipo_processo'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_4",
+            "label": "Tipo Processo",
+            "name": "c_tipo_processo",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_5",
+            "label": "Última Alteração",
+            "name": "c_data_ultima_alteracao",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [
+                        {
+                            "label": "Sim",
+                            "value": "SIM"
+                        },
+                        {
+                            "label": "Não",
+                            "value": "NAO"
+                        }
+                    ],
+                    "optionsBinder": {
+                        "className": "",
+                        "properties": {}
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_6",
+            "label": "Urgência",
+            "name": "c_urgencia",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "true",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'fase_processo'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_7",
+            "label": "Fase Processo",
+            "name": "c_fase_processo",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        }
+    ],
     "considerFilterWhenGetTotal": "",
     "description": "",
     "disableResponsive": "",
