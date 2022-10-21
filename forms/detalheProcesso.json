@@ -1659,45 +1659,6 @@
                 "visibilityControl": "",
                 "visibilityValue": ""
             }
-        },
-        {
-            "className": "org.joget.apps.form.model.Section",
-            "elements": [{
-                "className": "org.joget.apps.form.model.Column",
-                "elements": [],
-                "properties": {"width": "100%"}
-            }],
-            "properties": {
-                "comment": "",
-                "id": "section3",
-                "join": "",
-                "label": "",
-                "loadBinder": {
-                    "className": "org.joget.apps.form.lib.BeanShellFormBinder",
-                    "properties": {
-                        "autoHandleFiles": "",
-                        "autoHandleWorkflowVariable": "true",
-                        "cacheInterval": "",
-                        "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.commons.util.LogUtil;\r\n\r\npublic FormRowSet load(Element element, String primaryKey, FormData formData) {\r\n\r\n    LogUtil.info(\"Validações\" ,\"#requestParam._mode#\");\r\n    \r\n    if (\"#requestParam._mode#\".equalsIgnoreCase(\"edit\")) {\r\n        Form form = FormUtil.findRootForm(element);\r\n        removeValidator(form, formData);\r\n    }\r\n\r\n    return null;\r\n}\r\n\r\npublic void removeValidator(Element e, FormData formData) {\r\n    e.setValidator(null);\r\n\r\n    Collection children = e.getChildren(formData);\r\n    if (children != null) {\r\n        for (Element child : children) {\r\n            removeValidator(child, formData);\r\n        }\r\n    }\r\n}\r\n\r\n//call load method with injected variable\r\nreturn load(element, primaryKey, formData);",
-                        "useAjax": ""
-                    }
-                },
-                "permission": {
-                    "className": "",
-                    "properties": {}
-                },
-                "permissionReadonly": "",
-                "readonly": "",
-                "readonlyLabel": "",
-                "regex": "",
-                "reverse": "",
-                "storeBinder": {
-                    "className": "",
-                    "properties": {}
-                },
-                "visibilityControl": "",
-                "visibilityValue": ""
-            }
         }
     ],
     "properties": {
