@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "instanceId",
-            "sql": "\r\nWITH CONTRATACAO_BCP AS (SELECT p.id AS idProc, dp.*,\r\nsp.Id AS processId, \r\nsp.Name AS processName,\r\nsact.Id AS instanceId, \r\nsact.Name AS activityName,\r\nsass.ResourceId AS assignee,\r\ndp.c_n_wf_banco AS NwfBanco\r\nFROM shkprocesses sp\r\nINNER JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\nRIGHT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\nRIGHT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\nINNER JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\nWHERE '%#user.{curreeentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_BCP%') AND dp.c_fase_processo = \"CNT\"\r\n)\r\nSELECT * FROM CONTRATACAO_BCP\r\n\r\n\r\n\r\n\r\n\r\n\r\n"
+            "sql": "\r\nWITH CONTRATACAO_BCP AS (SELECT p.id AS idProc, dp.*,\r\nsp.Id AS processId, \r\nsp.Name AS processName,\r\nsact.Id AS instanceId, \r\nsact.Name AS activityName,\r\nsass.ResourceId AS assignee,\r\ndp.c_n_wf_banco AS NwfBanco\r\nFROM shkprocesses sp\r\nINNER JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\nRIGHT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\nRIGHT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\nINNER JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\nWHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_BCP%') AND dp.c_fase_processo = \"CNT\"\r\n)\r\nSELECT * FROM CONTRATACAO_BCP\r\n\r\n\r\n\r\n\r\n\r\n\r\n"
         }
     },
     "buttonPosition": "bottomLeft",
