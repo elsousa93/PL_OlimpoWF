@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "instanceId",
-            "sql": "SELECT \r\nsp.Id AS processId, \r\nsp.Name AS processName,\r\nsact.Id AS instanceId, \r\nsact.Name AS activityName,\r\nsass.ResourceId AS assignee,\r\np.id AS idProc,\r\ndp.c_n_wf_banco AS NwfBanco\r\nFROM shkprocesses sp\r\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\r\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\r\nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\nRIGHT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\nRIGHT JOIN app_fd_sla_atividade sla ON sla.c_id_processo = sp.Id\r\n\r\n\r\n\r\n\r\n\r\n"
+            "sql": "SELECT \r\nsp.Id AS processId, \r\nsp.Name AS processName,\r\nsact.Id AS instanceId, \r\nsact.Name AS activityName,\r\nsass.ResourceId AS assignee,\r\np.id AS idProc,\r\ndp.c_n_wf_banco AS NwfBanco\r\nFROM shkprocesses sp\r\n RIGHT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\n JOIN shkprocessstates sps ON sps.oid = sp.State\r\n JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\n JOIN SHKActivityStates ssta ON ssta.oid = sact.State\r\n JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\nRIGHT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\n\r\n\r\n\r\n\r\n\r\n"
         }
     },
     "buttonPosition": "bottomLeft",
