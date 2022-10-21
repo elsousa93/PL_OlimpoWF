@@ -22,7 +22,7 @@
                                 "properties": {}
                             },
                             "permissionHidden": "",
-                            "readonly": "true",
+                            "readonly": "",
                             "readonlyLabel": "",
                             "validator": {
                                 "className": "",
@@ -160,9 +160,9 @@
                         "className": "org.joget.apps.form.lib.CustomHTML",
                         "properties": {
                             "autoPopulate": "",
-                            "id": "field13",
+                            "id": "set_manual",
                             "label": "",
-                            "value": "<script type=\"text/javascript\">\r\n    $(document).change(function(){\r\n        var nomeBancoId = \"nome_banco\";\r\n        var nWFBancoId = \"n_wf_banco\";\r\n        var nWFPlId = \"n_wf_pl\";\r\n  \r\n        //get values\r\n \r\n        var nomeBanco = $('[name='+nomeBancoId+']:enabled').val();\r\n        var nWFBanco = $('[name='+nWFBancoId+']:enabled').val();\r\n         \r\n        //function to compare\r\n \r\n        n_wf_pl = nomeBanco + \"DPA\" + nWFBanco;\r\n          \r\n        //store the value to a field\r\n        $('[name='+nWFPlId+']:enabled').val(n_wf_pl);\r\n    });\r\n<\/script>"
+                            "value": "<script type=\"text/javascript\">\r\n    $(document).change(function(){\r\n        var processo_manual_id = \"processo_manual\";\r\n  \r\n        //get values\r\n        var processo_manual = $('[name='+processo_manual_id+']:enabled').val();\r\n\r\n        //verify if it's a manual process creation\r\n        if (processo_manual != null && !processo_manual.equals(\"SIM\")){\r\n            //store the value to a field\r\n            $('[name='+processo_manual_id+']:enabled').val(\"SIM\");\r\n        }\r\n    });\r\n<\/script>"
                         }
                     }
                 ],
