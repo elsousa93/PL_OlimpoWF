@@ -47,27 +47,6 @@
                             "value": "",
                             "workflowVariable": ""
                         }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.TextField",
-                        "properties": {
-                            "encryption": "",
-                            "id": "field3",
-                            "label": "Utilizador atribuido",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "storeNumeric": "",
-                            "style": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "#requestParam.replaceUser#",
-                            "workflowVariable": ""
-                        }
                     }
                 ],
                 "properties": {"width": "100%"}
@@ -78,8 +57,13 @@
                 "join": "",
                 "label": "Processo",
                 "loadBinder": {
-                    "className": "",
-                    "properties": {}
+                    "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
+                    "properties": {
+                        "autoHandleFiles": "",
+                        "autoHandleWorkflowVariable": "true",
+                        "jdbcDatasource": "default",
+                        "sql": "SELECT * FROM app_fd_detalhe_processo WHERE c_id_processo = '#requestParam.procId#'"
+                    }
                 },
                 "permission": {
                     "className": "",
@@ -109,39 +93,62 @@
             "className": "org.joget.apps.form.model.Section",
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
-                "elements": [{
-                    "className": "org.joget.apps.form.lib.SelectBox",
-                    "properties": {
-                        "controlField": "",
-                        "id": "user",
-                        "label": "Realocar para",
-                        "multiple": "",
-                        "options": [],
-                        "optionsBinder": {
-                            "className": "org.joget.plugin.enterprise.UserOptionsBinder",
-                            "properties": {
-                                "addEmptyOption": "",
-                                "cacheInterval": "",
-                                "deptId": "",
-                                "emptyLabel": "",
-                                "groupId": "",
-                                "grouping": "dept",
-                                "optionLabel": "",
-                                "orgId": "PL",
-                                "useAjax": ""
-                            }
-                        },
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "field3",
+                            "label": "Utilizador atribuido",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "#requestParam.replaceUser#",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "user",
+                            "label": "Realocar para",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.plugin.enterprise.UserOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "",
+                                    "cacheInterval": "",
+                                    "deptId": "",
+                                    "emptyLabel": "",
+                                    "groupId": "",
+                                    "grouping": "dept",
+                                    "optionLabel": "",
+                                    "orgId": "PL",
+                                    "useAjax": ""
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
                     }
-                }],
+                ],
                 "properties": {"width": "100%"}
             }],
             "properties": {
@@ -175,13 +182,8 @@
         "description": "",
         "id": "realocar_processo",
         "loadBinder": {
-            "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
-            "properties": {
-                "autoHandleFiles": "",
-                "autoHandleWorkflowVariable": "",
-                "jdbcDatasource": "default",
-                "sql": "SELECT * FROM app_fd_detalhe_processo WHERE c_id_processo = '#requestParam.procId#'"
-            }
+            "className": "",
+            "properties": {}
         },
         "name": "Realocar Processo",
         "noPermissionMessage": "",
@@ -191,7 +193,7 @@
         },
         "postProcessor": {
             "className": "org.joget.apps.app.lib.BeanShellTool",
-            "properties": {"script": "\nimport org.joget.workflow.model.service.WorkflowManager;\nimport org.joget.apps.app.service.AppUtil;\nimport org.joget.workflow.model.service.WorkflowUserManager;\nimport org.joget.apps.app.model.AppDefinition;\nimport javax.servlet.http.HttpServletRequest;\n\npublic Object execute(AppDefinition appDef, HttpServletRequest request) {\n    WorkflowManager wm = (WorkflowManager) AppUtil.getApplicationContext().getBean(\"workflowManager\");\n    WorkflowUserManager wum = (WorkflowUserManager) AppUtil.getApplicationContext().getBean(\"workflowUserManager\");\n    \n    //get the values from the \n    String aid = \"#requestParam.aid#\";\n    String replaceUser = \"#requestParam.replaceUser#\";\n    String username = \"#form.detalhe_processo.user#\";\n\n    LogUtil.info(\"AID\",\"activityId ------>\"+aid);\n    LogUtil.info(\"ReplaceUser\",\"replaceUser ------>\"+replaceUser);\n    LogUtil.info(\"USERNAME\",\"username ------>\"+username);\n    \n    //getCurrentThreadUser() Method used by system to get current thread user\n    String currentUser = wum.getCurrentThreadUser();\n    wum.setCurrentThreadUser(replaceUser);\n    wum.setCurrentThreadUser(currentUser);\n    \n    //Reassigns the assignment from a user (replaceUser) to another user (username)\n    wm.assignmentReassign(\"\", \"\", aid, username, replaceUser);\n    \n    //set workflow variable \"approver\" to the new user as well\n    wm.activityVariable(aid, \"approver\", username);\n\n    \n    return null;\n}\n\n//call execute method with injected variable\nreturn execute(appDef, request);\n\n"}
+            "properties": {"script": "\nimport org.joget.workflow.model.service.WorkflowManager;\nimport org.joget.apps.app.service.AppUtil;\nimport org.joget.workflow.model.service.WorkflowUserManager;\nimport org.joget.apps.app.model.AppDefinition;\nimport javax.servlet.http.HttpServletRequest;\nimport org.joget.commons.util.LogUtil;\n\npublic Object execute(AppDefinition appDef, HttpServletRequest request) {\n    WorkflowManager wm = (WorkflowManager) AppUtil.getApplicationContext().getBean(\"workflowManager\");\n    WorkflowUserManager wum = (WorkflowUserManager) AppUtil.getApplicationContext().getBean(\"workflowUserManager\");\n    \n    //get the values from the \n    String aid = \"#requestParam.aid#\";\n    String replaceUser = \"#requestParam.replaceUser#\";\n    String username = \"#form.detalhe_processo.user#\";\n\n    LogUtil.info(\"AID\",\"activityId ------>\"+aid);\n    LogUtil.info(\"ReplaceUser\",\"replaceUser ------>\"+replaceUser);\n    LogUtil.info(\"USERNAME\",\"username ------>\"+username);\n    \n    //getCurrentThreadUser() Method used by system to get current thread user\n    String currentUser = wum.getCurrentThreadUser();\n    wum.setCurrentThreadUser(replaceUser);\n    wum.setCurrentThreadUser(currentUser);\n    \n    //Reassigns the assignment from a user (replaceUser) to another user (username)\n    wm.assignmentReassign(\"\", \"\", aid, username, replaceUser);\n    \n    //set workflow variable \"approver\" to the new user as well\n    wm.activityVariable(aid, \"approver\", username);\n\n    \n    return null;\n}\n\n//call execute method with injected variable\nreturn execute(appDef, request);\n\n"}
         },
         "postProcessorRunOn": "create",
         "storeBinder": {
