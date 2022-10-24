@@ -5,6 +5,7 @@
         "id": "action_0",
         "label": "Hyperlink",
         "name": "Data List Hyperlink Action",
+        "permission_rules": {"18767e10-88a1-cc52-2527-c2a280698a63": {}},
         "properties": {
             "label": "Hyperlink",
             "target": "_self"
@@ -21,12 +22,14 @@
         {
             "id": "column_2",
             "label": "ID",
-            "name": "id"
+            "name": "id",
+            "permission_rules": {"18767e10-88a1-cc52-2527-c2a280698a63": {}}
         },
         {
             "id": "column_1",
             "label": "File Upload",
-            "name": "documento"
+            "name": "documento",
+            "permission_rules": {"18767e10-88a1-cc52-2527-c2a280698a63": {}}
         },
         {
             "filterable": true,
@@ -34,6 +37,7 @@
             "id": "column_0",
             "label": "Created By",
             "name": "createdBy",
+            "permission_rules": {"18767e10-88a1-cc52-2527-c2a280698a63": {}},
             "sortable": "false"
         },
         {
@@ -42,17 +46,39 @@
             "id": "column_3",
             "label": "Date Created",
             "name": "dateCreated",
+            "permission_rules": {"18767e10-88a1-cc52-2527-c2a280698a63": {}},
             "sortable": "false"
         }
     ],
     "considerFilterWhenGetTotal": "",
-    "filters": [],
+    "filters": [{
+        "hidden": "true",
+        "id": "filter_0",
+        "label": "id_processo",
+        "name": "id_processo",
+        "permission_rules": {"18767e10-88a1-cc52-2527-c2a280698a63": {"hidden": ""}},
+        "type": {
+            "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+            "properties": {}
+        }
+    }],
     "id": "list_documento",
     "name": "List - Documento",
     "order": "",
     "orderBy": "",
     "pageSize": 0,
     "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "permission_rules": [{
+        "permission": {
+            "className": "org.joget.apps.userview.lib.DepartmentPermission",
+            "properties": {
+                "allowedDeptIds": "PL_INT_PRD_GEN_RPA_CRH",
+                "orgId": "PL"
+            }
+        },
+        "permission_key": "18767e10-88a1-cc52-2527-c2a280698a63",
+        "permission_name": "Robot"
+    }],
     "rowActions": [],
     "showPageSizeSelector": "true",
     "useSession": "false"
