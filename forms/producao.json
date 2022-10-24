@@ -86,8 +86,8 @@
                             "validator": {
                                 "className": "org.joget.apps.form.lib.BeanShellValidator",
                                 "properties": {
-                                    "decoration": "*",
-                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    \r\n    String origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo == \"ACE\" || origem_processo == \"PRE\" || origem_processo == \"TRD\")){\r\n        \r\n     return true;   \r\n    }\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        \r\n        //Configure field to validate - UPDATE HERE\r\n        String fieldId = \"data_envio_producao\";\r\n        \r\n        //Get element value\r\n        Form form = FormUtil.findRootForm(element);\r\n        Element field = FormUtil.findElement(fieldId, form, formData);\r\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n        \r\n        //If element is not filled give error message\r\n        if (fieldValue == null || fieldValue.equals(\"\")){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else{\r\n            result = true;\r\n        }\r\n    }else{\r\n        result = true;\r\n    }\r\n    \r\n    \r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                    "decoration": "",
+                                    "script": "/*import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    \r\n    String origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo == \"ACE\" || origem_processo == \"PRE\" || origem_processo == \"TRD\")){\r\n        \r\n     return true;   \r\n    }\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        \r\n        //Configure field to validate - UPDATE HERE\r\n        String fieldId = \"data_envio_producao\";\r\n        \r\n        //Get element value\r\n        Form form = FormUtil.findRootForm(element);\r\n        Element field = FormUtil.findElement(fieldId, form, formData);\r\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n        \r\n        //If element is not filled give error message\r\n        if (fieldValue == null || fieldValue.equals(\"\")){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else{\r\n            result = true;\r\n        }\r\n    }else{\r\n        result = true;\r\n    }\r\n    \r\n    \r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);*/"
                                 }
                             },
                             "value": "",
@@ -299,6 +299,10 @@
                             "autoPopulate": "",
                             "id": "apresentacao_campos",
                             "label": "",
+                            "permission_rules": {
+                                "7978a487-5ff6-b326-3ce8-5c48f37c64c0": {},
+                                "985000be-214d-1b1a-cb5e-5afe66ca5a1e": {}
+                            },
                             "value": "<script>\n    \n    \n     $(document).ready(function(){\n    \n    var origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\n        if(!(origem_processo === \"ACE\" || origem_processo === \"PRE\" || origem_processo === \"TRD\")){\n         \n           \n            \n        }\n    \n     });\n    \n<\/script>"
                         }
                     }
@@ -462,23 +466,23 @@
                 "permission": {
                     "className": "org.joget.apps.userview.lib.DepartmentPermission",
                     "properties": {
-                        "allowedDeptIds": "PL_INT_VAL_BCP_COM_CRH;PL_INT_VAL_BCP_NOR_CRH;PL_INT_VAL_BNI_COM_CRH;PL_INT_VAL_BNI_NOR_CRH;PL_INT_VAL_BST_COM_CRH;PL_INT_VAL_BST_NOR_CRH;PL_INT_VAL_GEN_COM_CRH;PL_INT_VAL_GEN_NOR_CRH",
-                        "orgId": "PL"
-                    }
-                },
-                "permission_key": "7978a487-5ff6-b326-3ce8-5c48f37c64c0",
-                "permission_name": "Validação"
-            },
-            {
-                "permission": {
-                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
-                    "properties": {
                         "allowedDeptIds": "PL_INT_PRD_GEN_COM_CRH;PL_INT_PRD_GEN_NOR_CRH;PL_INT_PRD_GEN_RPA_CRH",
                         "orgId": "PL"
                     }
                 },
                 "permission_key": "985000be-214d-1b1a-cb5e-5afe66ca5a1e",
                 "permission_name": "Produção"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_VAL_BCP_COM_CRH;PL_INT_VAL_BCP_NOR_CRH;PL_INT_VAL_BNI_COM_CRH;PL_INT_VAL_BNI_NOR_CRH;PL_INT_VAL_BST_COM_CRH;PL_INT_VAL_BST_NOR_CRH;PL_INT_VAL_GEN_COM_CRH;PL_INT_VAL_GEN_NOR_CRH",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "7978a487-5ff6-b326-3ce8-5c48f37c64c0",
+                "permission_name": "Validação"
             },
             {
                 "permission": {
