@@ -102,9 +102,30 @@
     "properties": {
         "description": "",
         "id": "realocar_processo",
-        "loadBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "loadBinder": {
+            "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
+            "properties": {
+                "autoHandleFiles": "",
+                "autoHandleWorkflowVariable": "true",
+                "jdbcDatasource": "default",
+                "sql": "SELECT * FROM app_fd_detahe_processo WHERE c_id_processo = \"#requestParam.procId#\""
+            }
+        },
         "name": "Realocar Processo",
-        "storeBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
         "tableName": "detalhe_processo"
     }
 }
