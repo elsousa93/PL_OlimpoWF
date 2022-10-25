@@ -4,7 +4,40 @@
         "className": "org.joget.apps.form.model.Section",
         "elements": [{
             "className": "org.joget.apps.form.model.Column",
-            "elements": [],
+            "elements": [{
+                "className": "org.joget.apps.form.lib.Grid",
+                "properties": {
+                    "errorMessage": "Invalid number of rows",
+                    "id": "realocar_multi_processos",
+                    "label": "Grid",
+                    "loadBinder": {
+                        "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                        "properties": {
+                            "autoHandleFiles": "",
+                            "autoHandleWorkflowVariable": "true",
+                            "cacheInterval": "",
+                            "script": "import java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.text.DecimalFormat;\r\nimport javax.sql.DataSource;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.apps.form.model.*;\r\nimport org.joget.apps.form.service.*;\r\nimport java.sql.*;\r\nimport org.apache.commons.collections.SequencedHashMap;\r\nimport java.util.*;\r\n\r\npublic FormRowSet getgridData() {\r\n    FormRowSet fgrid = new FormRowSet();\r\n    fgrid.setMultiRow(true);\r\n    Connection con = null;\r\n    PreparedStatement stmt = null;\r\n    ResultSet rs = null;\r\n    try{\r\n            DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n            con = ds.getConnection();\r\n            \r\n            if(!con.isClosed()){\r\n                \r\n                String multiActivityIds = \"#requestParam.aid#\";\r\n                String aid[] = multiActivityIds.split(\";\");\r\n                \r\n                LogUtil.info(\"Activities Ids \" , \"AAA \" + multiActivityIds);\r\n                for(int i=0; i<aid.length; i++){\r\n                    \r\n                String queryGetProcessId=\"SELECT processId FROM shkactivities WHERE id=?\";\r\n                stmt = con.prepareStatement(queryGetProcessId);\r\n                stmt.setObject(1, aid[i]);\r\n                rs = stmt.executeQuery();\r\n                \r\n                    if(rs.next()){\r\n                        String processId = rs.getObject(\"processId\").toString();\r\n                        if(processId != null || !processId.isEmpty()){\r\n                            String queryGetProcessDetail = \"SELECT c_n_wf_pl as 'NWFPL', c_n_wf_banco as 'NWFB' FROM app_fd_detalhe_processo WHERE c_id_processo = ?\";\r\n                            stmt = con.prepareStatement(queryGetProcessDetail);\r\n                            stmt.setObject(1, processId);\r\n                            rs = stmt.executeQuery();\r\n                            LogUtil.info(\"*ProcessId \" , \"AAA \" + processId);\r\n                            if(rs.next()){\r\n                                FormRow gr1 = new FormRow();\r\n                                gr1.put(\"gridColumn1\", rs.getString(1));\r\n                                gr1.put(\"gridColumn2\", rs.getString(2));\r\n                                fgrid.add(gr1);\r\n                            }\r\n                            \r\n                        }\r\n                        \r\n                        \r\n                    }\r\n                }\r\n            }\r\n  \r\n    }catch(Exception e){\r\n            LogUtil.error(appDef.toString(), e, \"Error getting info from DB\");\r\n        }finally{\r\n            try{\r\n                if(rs != null){\r\n                rs.close();\r\n                }\r\n                if(stmt != null){\r\n                    stmt.close();\r\n                }\r\n                if(con != null && !con.isClosed()) {\r\n                    con.close();\r\n                }\r\n            }catch(Exception e){\r\n                LogUtil.error(appDef.toString(), e, \"Error closing DB connection\");\r\n            }\r\n            \r\n        }\r\n\r\n\r\n\r\nreturn fgrid;\r\n}\r\nreturn getgridData();",
+                            "useAjax": ""
+                        }
+                    },
+                    "options": [{
+                        "label": "",
+                        "value": ""
+                    }],
+                    "permissionHidden": "",
+                    "readonly": "true",
+                    "storeBinder": {
+                        "className": "",
+                        "properties": {}
+                    },
+                    "validateMaxRow": "",
+                    "validateMinRow": "",
+                    "validator": {
+                        "className": "",
+                        "properties": {}
+                    }
+                }
+            }],
             "properties": {"width": "100%"}
         }],
         "properties": {
