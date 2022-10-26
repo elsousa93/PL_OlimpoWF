@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT ip.id as id, ip.c_nome, ip.c_cc, ip.c_nif, ip.c_estado_civil, ip.c_regime_casamento, ip.c_conjuge, ip.c_validade, ip.c_validade as 'Hoje', ip.c_naturalidade, ip.c_morada, ip.c_codigo_interveniente, ip.c_segundo_papel, ip.c_segundo_papel_interveniente, lv.c_label as 'LabelInterveniente1', lv2.c_label as 'LabelInterveniente2', iproc.id as 'IntervenienteID' FROM app_fd_intervenientes_proc ip\nLEFT JOIN app_fd_listas_de_valores lv ON ip.c_codigo_interveniente = lv.c_value\nLEFT JOIN app_fd_listas_de_valores lv2 ON ip.c_segundo_papel_interveniente = lv2.c_value\nLEFT JOIN app_fd_interv_processo iproc ON ip.c_id_intervenientes = iproc.id\n"
+            "sql": "SELECT ip.id as id, ip.c_nome, ip.c_cc, ip.c_nif, ip.c_estado_civil, ip.c_regime_casamento, ip.c_conjuge, ip.c_validade, CURDATE() as 'Hoje', ip.c_naturalidade, ip.c_morada, ip.c_codigo_interveniente, ip.c_segundo_papel, ip.c_segundo_papel_interveniente, lv.c_label as 'LabelInterveniente1', lv2.c_label as 'LabelInterveniente2', iproc.id as 'IntervenienteID' FROM app_fd_intervenientes_proc ip\nLEFT JOIN app_fd_listas_de_valores lv ON ip.c_codigo_interveniente = lv.c_value\nLEFT JOIN app_fd_listas_de_valores lv2 ON ip.c_segundo_papel_interveniente = lv2.c_value\nLEFT JOIN app_fd_interv_processo iproc ON ip.c_id_intervenientes = iproc.id\n"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -138,6 +138,7 @@
             "width": ""
         },
         {
+            "datalist_type": "column",
             "filterable": true,
             "hidden": "false",
             "id": "column_3",
