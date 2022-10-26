@@ -166,7 +166,65 @@
             "className": "org.joget.apps.form.model.Section",
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
-                "elements": [],
+                "elements": [{
+                    "className": "org.joget.plugin.enterprise.SpreadSheetGrid",
+                    "properties": {
+                        "customSettings": "",
+                        "disabledAdd": "",
+                        "disabledDelete": "",
+                        "errorMessage": "Invalid number of rows",
+                        "fixedColumnsLeft": "0",
+                        "headerSorting": "true",
+                        "id": "checklist",
+                        "label": "",
+                        "loadBinder": {
+                            "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
+                            "properties": {
+                                "autoHandleFiles": "",
+                                "autoHandleWorkflowVariable": "",
+                                "jdbcDatasource": "default",
+                                "sql": "SELECT f.c_tipo_documento, f.c_check_doc\nFROM app_fd_filtro f;"
+                            }
+                        },
+                        "maxHeight": "",
+                        "minSpareRows": "0",
+                        "options": [
+                            {
+                                "format": "",
+                                "formatType": "",
+                                "formula": "",
+                                "label": "Tipo de Documento",
+                                "readonly": "",
+                                "regexValidator": "",
+                                "value": "tipo_documento",
+                                "width": ""
+                            },
+                            {
+                                "format": "",
+                                "formatType": "checkbox",
+                                "formula": "",
+                                "label": "Verificação",
+                                "readonly": "",
+                                "regexValidator": "",
+                                "value": "check_doc",
+                                "width": ""
+                            }
+                        ],
+                        "readonly": "",
+                        "showRowNumber": "",
+                        "sortingField": "",
+                        "storeBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "validateMaxRow": "",
+                        "validateMinRow": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        }
+                    }
+                }],
                 "properties": {"width": "100%"}
             }],
             "properties": {
