@@ -1,0 +1,622 @@
+{
+    "actions": [],
+    "binder": {
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "idProc",
+            "sql": "\r\nWITH CONTRATACAO_BCP AS (SELECT p.id AS idProc, dp.*,\r\n                    sp.Id AS processId, \r\n                    sp.Name AS processName,\r\n                    sact.Id AS instanceId, \r\n                    sact.Name AS activityName,\r\n                    sass.ResourceId AS assignee,\r\n                    dp.c_n_wf_banco AS NwfBanco,\r\n                    ip.c_nome AS cliente\r\n                    FROM shkprocesses sp\r\n                     JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\n                     JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\n                     JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\n                     JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\n                     LEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id\r\n                     AND ip.c_codigo_interveniente LIKE (SELECT i.c_codigo_interveniente \r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tFROM app_fd_intervenientes_proc i \r\n                                                        WHERE i.c_id_processo = p.id\r\n                                                        AND i.c_codigo_interveniente = 'Proponente_1')\r\n                    WHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_BCP%') AND dp.c_fase_processo = \"CNT\" AND dp.c_nome_banco = \"BCP\"\r\n                    GROUP BY p.id),\r\nCONTRATACAO_NB AS (SELECT p.id AS idProc, dp.*,\r\n                    sp.Id AS processId, \r\n                    sp.Name AS processName,\r\n                    sact.Id AS instanceId, \r\n                    sact.Name AS activityName,\r\n                    sass.ResourceId AS assignee,\r\n                    dp.c_n_wf_banco AS NwfBanco,\r\n                    ip.c_nome AS cliente\r\n                    FROM shkprocesses sp\r\n                     JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\n                     JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\n                     JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\n                     JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\n                     LEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id\r\n                     AND ip.c_codigo_interveniente LIKE (SELECT i.c_codigo_interveniente \r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tFROM app_fd_intervenientes_proc i \r\n                                                        WHERE i.c_id_processo = p.id\r\n                                                        AND i.c_codigo_interveniente = 'Proponente_1')\r\n                    WHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_NVB%') AND dp.c_fase_processo = \"CNT\" AND dp.c_nome_banco = \"NVB\"\r\n                    GROUP BY p.id),\r\nCONTRATACAO_CTT AS(SELECT p.id AS idProc, dp.*,\r\n                    sp.Id AS processId, \r\n                    sp.Name AS processName,\r\n                    sact.Id AS instanceId, \r\n                    sact.Name AS activityName,\r\n                    sass.ResourceId AS assignee,\r\n                    dp.c_n_wf_banco AS NwfBanco,\r\n                    ip.c_nome AS cliente\r\n                    FROM shkprocesses sp\r\n                     JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\n                     JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\n                     JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\n                     JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\n                     LEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id\r\n                     AND ip.c_codigo_interveniente LIKE (SELECT i.c_codigo_interveniente \r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tFROM app_fd_intervenientes_proc i \r\n                                                        WHERE i.c_id_processo = p.id\r\n                                                        AND i.c_codigo_interveniente = 'Proponente_1')\r\n                    WHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_CTT%') AND dp.c_fase_processo = \"CNT\" AND dp.c_nome_banco = \"BCTT\"\r\n                    GROUP BY p.id),\r\nCONTRATACAO_MG AS (SELECT p.id AS idProc, dp.*,\r\n                    sp.Id AS processId, \r\n                    sp.Name AS processName,\r\n                    sact.Id AS instanceId, \r\n                    sact.Name AS activityName,\r\n                    sass.ResourceId AS assignee,\r\n                    dp.c_n_wf_banco AS NwfBanco,\r\n                    ip.c_nome AS cliente\r\n                    FROM shkprocesses sp\r\n                     JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\n                     JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\n                     JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\n                     JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\n                     LEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id\r\n                     AND ip.c_codigo_interveniente LIKE (SELECT i.c_codigo_interveniente \r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tFROM app_fd_intervenientes_proc i \r\n                                                        WHERE i.c_id_processo = p.id\r\n                                                        AND i.c_codigo_interveniente = 'Proponente_1')\r\n                    WHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_MTG%') AND dp.c_fase_processo = \"CNT\" AND dp.c_nome_banco = \"MTG\"\r\n                    GROUP BY p.id),\r\nCONTRATACAO_BNI AS (SELECT p.id AS idProc, dp.*,\r\n                    sp.Id AS processId, \r\n                    sp.Name AS processName,\r\n                    sact.Id AS instanceId, \r\n                    sact.Name AS activityName,\r\n                    sass.ResourceId AS assignee,\r\n                    dp.c_n_wf_banco AS NwfBanco,\r\n                    ip.c_nome AS cliente\r\n                    FROM shkprocesses sp\r\n                     JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\n                     JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\n                     JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\n                     JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\n                     LEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id\r\n                     AND ip.c_codigo_interveniente LIKE (SELECT i.c_codigo_interveniente \r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tFROM app_fd_intervenientes_proc i \r\n                                                        WHERE i.c_id_processo = p.id\r\n                                                        AND i.c_codigo_interveniente = 'Proponente_1')\r\n                    WHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_BNI%') AND dp.c_fase_processo = \"CNT\" AND dp.c_nome_banco = \"BNI\"\r\n                    GROUP BY p.id),\r\nCONTRATACAO_BST AS (SELECT p.id AS idProc, dp.*,\r\n                    sp.Id AS processId, \r\n                    sp.Name AS processName,\r\n                    sact.Id AS instanceId, \r\n                    sact.Name AS activityName,\r\n                    sass.ResourceId AS assignee,\r\n                    dp.c_n_wf_banco AS NwfBanco,\r\n                    ip.c_nome AS cliente\r\n                    FROM shkprocesses sp\r\n                     JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\n                     JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\n                     JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\n                     JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\n                     LEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id\r\n                     AND ip.c_codigo_interveniente LIKE (SELECT i.c_codigo_interveniente \r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tFROM app_fd_intervenientes_proc i \r\n                                                        WHERE i.c_id_processo = p.id\r\n                                                        AND i.c_codigo_interveniente = 'Proponente_1')\r\n                    WHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_BST%') AND dp.c_fase_processo = \"CNT\" AND dp.c_nome_banco = \"BST\"\r\n                    GROUP BY p.id),\r\nCONTRATACAO_BIC AS (SELECT p.id AS idProc, dp.*,\r\n                    sp.Id AS processId, \r\n                    sp.Name AS processName,\r\n                    sact.Id AS instanceId, \r\n                    sact.Name AS activityName,\r\n                    sass.ResourceId AS assignee,\r\n                    dp.c_n_wf_banco AS NwfBanco,\r\n                    ip.c_nome AS cliente\r\n                    FROM shkprocesses sp\r\n                     JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\n                     JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\n                     JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\n                     JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\n                     LEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id\r\n                     AND ip.c_codigo_interveniente LIKE (SELECT i.c_codigo_interveniente \r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tFROM app_fd_intervenientes_proc i \r\n                                                        WHERE i.c_id_processo = p.id\r\n                                                        AND i.c_codigo_interveniente = 'Proponente_1')\r\n                    WHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_BIC%') AND dp.c_fase_processo = \"CNT\" AND dp.c_nome_banco = \"BIC\"\r\n                    GROUP BY p.id),\r\nCONTRATACAO_GEN AS (SELECT p.id AS idProc, dp.*,\r\n                    sp.Id AS processId, \r\n                    sp.Name AS processName,\r\n                    sact.Id AS instanceId, \r\n                    sact.Name AS activityName,\r\n                    sass.ResourceId AS assignee,\r\n                    dp.c_n_wf_banco AS NwfBanco,\r\n                    ip.c_nome AS cliente\r\n                    FROM shkprocesses sp\r\n                     JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\n                     JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\n                     JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\n                     JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\n                     LEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id\r\n                     AND ip.c_codigo_interveniente LIKE (SELECT i.c_codigo_interveniente \r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tFROM app_fd_intervenientes_proc i \r\n                                                        WHERE i.c_id_processo = p.id\r\n                                                        AND i.c_codigo_interveniente = 'Proponente_1')\r\n                    WHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_GEN%') AND dp.c_fase_processo = \"CNT\" AND dp.c_nome_banco = \"GEN\"\r\n                    GROUP BY p.id),\r\nCONTRATACAO_ABN AS (SELECT p.id AS idProc, dp.*,\r\n                    sp.Id AS processId, \r\n                    sp.Name AS processName,\r\n                    sact.Id AS instanceId, \r\n                    sact.Name AS activityName,\r\n                    sass.ResourceId AS assignee,\r\n                    dp.c_n_wf_banco AS NwfBanco,\r\n                    ip.c_nome AS cliente\r\n                    FROM shkprocesses sp\r\n                     JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\n                     JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\n                     JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\n                     JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\n                     LEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id\r\n                     AND ip.c_codigo_interveniente LIKE (SELECT i.c_codigo_interveniente \r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tFROM app_fd_intervenientes_proc i \r\n                                                        WHERE i.c_id_processo = p.id\r\n                                                        AND i.c_codigo_interveniente = 'Proponente_1')\r\n                    WHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_ABN%') AND dp.c_fase_processo = \"CNT\" AND dp.c_nome_banco = \"ABN\"\r\n                    GROUP BY p.id),\r\nFILTRO AS (SELECT p.id AS idProc, dp.*,\r\n                    sp.Id AS processId, \r\n                    sp.Name AS processName,\r\n                    sact.Id AS instanceId, \r\n                    sact.Name AS activityName,\r\n                    sass.ResourceId AS assignee,\r\n                    dp.c_n_wf_banco AS NwfBanco,\r\n                    ip.c_nome AS cliente\r\n                    FROM shkprocesses sp\r\n                     JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\n                     JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\n                     JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\n                     JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\n                     LEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id\r\n                     AND ip.c_codigo_interveniente LIKE (SELECT i.c_codigo_interveniente \r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tFROM app_fd_intervenientes_proc i \r\n                                                        WHERE i.c_id_processo = p.id\r\n                                                        AND i.c_codigo_interveniente = 'Proponente_1')\r\n                    WHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_FLT%') AND dp.c_fase_processo = \"FLT\"\r\n                    GROUP BY p.id),\r\nPRODUCAO AS (SELECT p.id AS idProc, dp.*,\r\n                    sp.Id AS processId, \r\n                    sp.Name AS processName,\r\n                    sact.Id AS instanceId, \r\n                    sact.Name AS activityName,\r\n                    sass.ResourceId AS assignee,\r\n                    dp.c_n_wf_banco AS NwfBanco,\r\n                    ip.c_nome AS cliente\r\n                    FROM shkprocesses sp\r\n                     JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\n                     JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\n                     JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\n                     JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\n                     LEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id\r\n                     AND ip.c_codigo_interveniente LIKE (SELECT i.c_codigo_interveniente \r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tFROM app_fd_intervenientes_proc i \r\n                                                        WHERE i.c_id_processo = p.id\r\n                                                        AND i.c_codigo_interveniente = 'Proponente_1')\r\n                    WHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_PRD%') AND (dp.c_fase_processo = \"PRD\" OR dp.c_fase_processo = \"VAL\")\r\n                    GROUP BY p.id),\r\nVALIDACAO AS (SELECT p.id AS idProc, dp.*,\r\n                    sp.Id AS processId, \r\n                    sp.Name AS processName,\r\n                    sact.Id AS instanceId, \r\n                    sact.Name AS activityName,\r\n                    sass.ResourceId AS assignee,\r\n                    dp.c_n_wf_banco AS NwfBanco,\r\n                    ip.c_nome AS cliente\r\n                    FROM shkprocesses sp\r\n                     JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\n                     JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\n                     JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\n                     JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\n                     LEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id\r\n                     AND ip.c_codigo_interveniente LIKE (SELECT i.c_codigo_interveniente \r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tFROM app_fd_intervenientes_proc i \r\n                                                        WHERE i.c_id_processo = p.id\r\n                                                        AND i.c_codigo_interveniente = 'Proponente_1')\r\n                    WHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_VAL%') AND dp.c_fase_processo = \"VAL\"\r\n                    GROUP BY p.id)\r\n\r\nSELECT DISTINCT * FROM CONTRATACAO_BCP\r\nUNION\r\nSELECT DISTINCT * FROM CONTRATACAO_NB\r\nUNION\r\nSELECT DISTINCT * FROM CONTRATACAO_MG\r\nUNION\r\nSELECT DISTINCT * FROM CONTRATACAO_CTT\r\nUNION\r\nSELECT DISTINCT * FROM CONTRATACAO_BNI\r\nUNION\r\nSELECT DISTINCT * FROM CONTRATACAO_BST\r\nUNION\r\nSELECT DISTINCT * FROM CONTRATACAO_BIC\r\nUNION\r\nSELECT DISTINCT * FROM CONTRATACAO_GEN\r\nUNION\r\nSELECT DISTINCT * FROM CONTRATACAO_ABN\r\nUNION\r\nSELECT DISTINCT * FROM FILTRO\r\nUNION\r\nSELECT DISTINCT * FROM PRODUCAO\r\nUNION\r\nSELECT DISTINCT * FROM VALIDACAO"
+        }
+    },
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "true",
+            "id": "column_9",
+            "include_export": "",
+            "label": "instanceId",
+            "name": "instanceId",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_6",
+            "label": "Nº Workflow Banco",
+            "name": "c_n_wf_banco",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.plugin.enterprise.UserOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "deptId": "",
+                            "emptyLabel": "",
+                            "groupId": "",
+                            "grouping": "",
+                            "optionLabel": "fullname",
+                            "orgId": "",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_10",
+            "label": "Gestor Plataforma Legal",
+            "name": "c_gestor_pl",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.plugin.enterprise.UserOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "deptId": "",
+                            "emptyLabel": "",
+                            "groupId": "",
+                            "grouping": "",
+                            "optionLabel": "fullname",
+                            "orgId": "",
+                            "useAjax": "true"
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_0",
+            "label": "Alocado a",
+            "name": "assignee",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'nome_banco'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_2",
+            "label": "Nome Banco",
+            "name": "c_nome_banco",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_1",
+            "label": "Cliente",
+            "name": "cliente",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_4",
+            "label": "Tipo Processo",
+            "name": "c_tipo_processo",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_11",
+            "label": "Data de Registo",
+            "name": "c_data_registo_importacao",
+            "sortable": "true",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_5",
+            "label": "Última Alteração",
+            "name": "c_data_ultima_alteracao",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [
+                        {
+                            "label": "Sim",
+                            "value": "SIM"
+                        },
+                        {
+                            "label": "Não",
+                            "value": "NAO"
+                        }
+                    ],
+                    "optionsBinder": {
+                        "className": "",
+                        "properties": {}
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_7",
+            "label": "Urgência",
+            "name": "c_urgencia",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'fase_processo'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_8",
+            "label": "Fase Processo",
+            "name": "c_fase_processo",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
+    "description": "",
+    "disableResponsive": "",
+    "filters": [
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-2614187-fn_c_n_wf_banco",
+            "hidden": "",
+            "id": "filter_1",
+            "label": "Nº Workflow Banco",
+            "name": "c_n_wf_banco",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {"defaultValue": ""}
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-2614187-fn_c_gestor_pl",
+            "hidden": "",
+            "id": "filter_2",
+            "label": "Gestor PL",
+            "name": "c_gestor_pl",
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "defaultValue": "",
+                    "multiple": "autocomplete",
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.plugin.enterprise.UserOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "deptId": "",
+                            "emptyLabel": "",
+                            "groupId": "",
+                            "grouping": "",
+                            "optionLabel": "",
+                            "orgId": "",
+                            "useAjax": ""
+                        }
+                    },
+                    "size": ""
+                }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-2614187-fn_assignee",
+            "hidden": "",
+            "id": "filter_0",
+            "label": "Alocado a",
+            "name": "assignee",
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "defaultValue": "",
+                    "multiple": "textfield",
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.plugin.enterprise.UserOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "deptId": "",
+                            "emptyLabel": "",
+                            "groupId": "",
+                            "grouping": "",
+                            "optionLabel": "",
+                            "orgId": "",
+                            "useAjax": ""
+                        }
+                    },
+                    "size": ""
+                }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-2614187-fn_c_nome_banco",
+            "hidden": "",
+            "id": "filter_3",
+            "label": "Nome do Banco",
+            "name": "c_nome_banco",
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "controlField": "",
+                    "defaultValue": "",
+                    "multiple": "",
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'nome_banco'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    },
+                    "size": ""
+                }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-2614187-fn_cliente",
+            "hidden": "",
+            "id": "filter_4",
+            "label": "Cliente",
+            "name": "cliente",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {"defaultValue": ""}
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-2614187-fn_c_tipo_processo",
+            "hidden": "",
+            "id": "filter_5",
+            "label": "Tipo de Processo",
+            "name": "c_tipo_processo",
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "controlField": "",
+                    "defaultValue": "",
+                    "multiple": "",
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'tipo_processo'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "label",
+                            "labelColumn": "value",
+                            "useAjax": ""
+                        }
+                    },
+                    "size": ""
+                }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-2614187-fn_c_data_ultima_alteracao",
+            "hidden": "",
+            "id": "filter_6",
+            "label": "Data Última Alteração",
+            "name": "c_data_ultima_alteracao",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {"defaultValue": ""}
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-2614187-fn_c_urgencia",
+            "hidden": "",
+            "id": "filter_7",
+            "label": "Urgência",
+            "name": "c_urgencia",
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "controlField": "",
+                    "defaultValue": "",
+                    "multiple": "",
+                    "options": [
+                        {
+                            "grouping": "",
+                            "label": "Sim",
+                            "value": "SIM"
+                        },
+                        {
+                            "grouping": "",
+                            "label": "Não",
+                            "value": "NAO"
+                        }
+                    ],
+                    "optionsBinder": {
+                        "className": "",
+                        "properties": {}
+                    },
+                    "size": ""
+                }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-2614187-fn_c_fase_processo",
+            "hidden": "",
+            "id": "filter_9",
+            "label": "Fase do Processo",
+            "name": "c_fase_processo",
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "controlField": "",
+                    "defaultValue": "",
+                    "multiple": "",
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'fase_processo'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    },
+                    "size": ""
+                }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-2614187-fn_c_complex_processo",
+            "hidden": "",
+            "id": "filter_8",
+            "label": "Complexidade do Processo",
+            "name": "c_complex_processo",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {"defaultValue": ""}
+            }
+        }
+    ],
+    "hidePageSize": "",
+    "id": "erm_teste2",
+    "name": "erm_teste2",
+    "order": "1",
+    "orderBy": "c_data_registo_importacao",
+    "pageSize": "0",
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "responsiveView": [
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Mobile"
+        },
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Tablet"
+        }
+    ],
+    "rowActions": [{
+        "className": "org.joget.apps.datalist.lib.HyperlinkDataListAction",
+        "icon": "<i class=\"fas fa-link\"><\/i>",
+        "id": "rowAction_0",
+        "label": "Hyperlink",
+        "name": "Data List Hyperlink Action",
+        "properties": {
+            "confirmation": "",
+            "datalist_type": "row_action",
+            "href": "realocar_proc",
+            "hrefColumn": "instanceId;assignee;c_id_processo",
+            "hrefParam": "aid;replaceUser;procId",
+            "label": "Realocar",
+            "rules": [],
+            "target": "_self"
+        },
+        "type": "text"
+    }],
+    "searchPopup": "",
+    "showDataWhenFilterSet": "",
+    "showPageSizeSelector": "true",
+    "useSession": ""
+}
