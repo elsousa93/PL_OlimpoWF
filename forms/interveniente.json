@@ -7,6 +7,15 @@
                 "className": "org.joget.apps.form.model.Column",
                 "elements": [
                     {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "cliente_principal",
+                            "label": "",
+                            "value": "<script>\n    $(document).ready(function(){\n        var cliente_principal = \"#form.detalhe_processo.tipo_processo[{form.processos.detalhe_processo}]#\";\n    });\n   $(document).change(function(){\n        var tipoProcesso = \"#form.detalhe_processo.tipo_processo[{form.processos.detalhe_processo}]#\";\n        \n        \n         \n         \n    \n        \n        $(\"[name = 'codigo_interveniente']\").parent().hide();\n        $(\"[name = 'ultimo_codigo_interveniente']\").parent().hide();\n        $(\"[name = 'ultimo_autorizante_interveniente']\").parent().hide();\n        $(\"[name = 'ultimo_procurador_interveniente']\").parent().hide();\n        $(\"[name = 'ultimo_segundo_papel_interveniente']\").parent().hide();\n            \n        });\n    \n    \n    \n    \n    \n    \n    \n    \n<\/script>"
+                        }
+                    },
+                    {
                         "className": "org.joget.apps.form.lib.HiddenField",
                         "properties": {
                             "id": "id_processo",
@@ -55,6 +64,15 @@
                         }
                     },
                     {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "cliente_principal_count",
+                            "useDefaultWhenEmpty": "",
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
                         "className": "org.joget.apps.form.lib.CheckBox",
                         "properties": {
                             "controlField": "",
@@ -72,8 +90,11 @@
                             "readonly": "",
                             "readonlyLabel": "",
                             "validator": {
-                                "className": "",
-                                "properties": {}
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "",
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\n \r\npublic boolean validate(Element element, FormData formData, String[] values) {\r\n    boolean result = true;\r\n \r\n    //get field 1 value from form data object\r\n    String field1Id = \"cliente_principal_count\";\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field1 = FormUtil.findElement(field1Id, form, formData);\r\n \r\n    if (field1 != null) {\r\n        //get value of field 1\r\n        String[] compareValues = FormUtil.getElementPropertyValues(field1, formData);\r\n \r\n        //compare the value of field 2 and field 1 are equals\r\n        if (compareValues.length != 0 && !compareValues[0].isEmpty()) {\r\n            if(compareValues[0].equals(\"0\") && (values == null || values[0].isEmpty) ){\r\n                String id = FormUtil.getElementParameterName(element);\r\n                formData.addFormError(id, \"É necessário existir sempre um cliente principal\");\r\n                result = false;\r\n            }\r\n        }\r\n    } else {\r\n        //ignore if the field 1 not exist\r\n    }\r\n \r\n    return result;\r\n}\r\n \r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                }
                             },
                             "value": "",
                             "workflowVariable": ""
@@ -291,7 +312,7 @@
                                     "readonly": ""
                                 }
                             },
-                            "value": "<script type=\"text/javascript\">\r\n    $(document).change(function(){\r\n        var id_processo = sessionStorage.getItem(\"id_processo\");\r\n        \r\n        var field = FormUtil.getField(\"id_processo\");\r\n        $(field).val(id_processo); //set value\r\n        \r\n        var tipo_interveniente = FormUtil.getValue(\"tipo_interveniente\");\r\n        \r\n        var lista_intervenientes_criada_2 = sessionStorage.getItem(\"lista_intervenientes_criada_2\");\r\n        \r\n        var field = FormUtil.getField(\"lista_intervenientes_criada_2\");\r\n        $(field).val(lista_intervenientes_criada_2  + \",\" + tipo_interveniente);\r\n        //sessionStorage.removeItem('id_processo' + \"ola\");\r\n        \r\n        //console.log(id_processo + \"ola\");\r\n\r\n    }).trigger('change');\r\n<\/script>"
+                            "value": "<script type=\"text/javascript\">\r\n    $(document).change(function(){\r\n        var id_processo = sessionStorage.getItem(\"id_processo\");\r\n        \r\n        var field = FormUtil.getField(\"id_processo\");\r\n        $(field).val(id_processo); //set value\r\n        \r\n        var tipo_interveniente = FormUtil.getValue(\"tipo_interveniente\");\r\n        \r\n        var lista_intervenientes_criada_2 = sessionStorage.getItem(\"lista_intervenientes_criada_2\");\r\n        var cliente_principal_count = sessionStorage.getItem(\"cliente_principal_count\");\r\n        \r\n        var field = FormUtil.getField(\"lista_intervenientes_criada_2\");\r\n        $(field).val(lista_intervenientes_criada_2  + \",\" + tipo_interveniente);\r\n        \r\n        var field2 = FormUtil.getField(\"cliente_principal_count\");\r\n        $(field).val(cliente_principal_count);\r\n        //sessionStorage.removeItem('id_processo' + \"ola\");\r\n        \r\n        //console.log(id_processo + \"ola\");\r\n\r\n    }).trigger('change');\r\n<\/script>"
                         }
                     },
                     {
@@ -309,7 +330,7 @@
                             "autoPopulate": "",
                             "id": "apresentacao_campos",
                             "label": "",
-                            "value": "<script>\n   $(document).change(function(){\n        var tipoProcesso = \"#form.detalhe_processo.tipo_processo[{form.processos.detalhe_processo}]#\";\n        \n        \n         \n          /**Falta corrigir valor do tipo de processo CVMHFiança Judicial no if**/\n    \n        if(!(tipoProcesso === \"CV\" ||  tipoProcesso === \"CV12\" || tipoProcesso === \"CVD12I\" || tipoProcesso === \"CVD12IE\" \n        || tipoProcesso === \"CVMH\" || tipoProcesso === \"CVMHIE\" || tipoProcesso === \"CVMH12\" || tipoProcesso === \"CVMHJ\" || tipoProcesso === \"CVMHF\" \n        || tipoProcesso === \"CVMHFIE\" || tipoProcesso === \"CVMHF12\" || tipoProcesso === \"CVMHFJ\")){\n           $(\"#sociedade\").remove();\n        }\n        \n        if(!(tipoProcesso === \"MH\" || tipoProcesso === \"MHC\" || tipoProcesso === \"MHO\" || tipoProcesso === \"MHF\"  || tipoProcesso === \"MHFC\" \n        || tipoProcesso === \"MHFO\" ||  tipoProcesso === \"ACHC\" || tipoProcesso === \"ACHO\" || tipoProcesso === \"ACHFC\" || tipoProcesso === \"ACHFO\")){\n           $(\"#hipotecantes\").remove();\n        }\n        \n        \n        var origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\n        \n        if(!(origem_processo === \"ACE\" || origem_processo === \"PRE\" || origem_processo === \"TRD\")){\n           \n            $(\"select[id^=codigo_interveniente]\").parent().remove();\n            $(\"select[id^=tipo_documento]\").parent().remove();\n            $(\"input#nif\").parent().remove();\n            $(\"input#naturalidade\").parent().remove();\n            $(\"input#telefone\").parent().remove();\n            $(\"input#email\").parent().remove();\n            $(\"textarea#morada\").parent().remove();\n            \n            $(\"div[id^=segundo_papel]\").parent().remove();\n            $(\"select[id^=segundo_papel]\").parent().remove();\n            \n            $(\"div#particulares\").remove();\n            \n            $(\"div#sociedade\").remove();\n            \n            $(\"select#interprete_do\").parent().parent().remove();\n            \n            $(\"select[id^=procurador_interveniente]\").parent().remove();\n           \n            $(\"div#procurador\").remove();\n           \n           \n        }\n        $(\"[name = 'codigo_interveniente']\").parent().hide();\n        $(\"[name = 'ultimo_codigo_interveniente']\").parent().hide();\n        $(\"[name = 'ultimo_autorizante_interveniente']\").parent().hide();\n        $(\"[name = 'ultimo_procurador_interveniente']\").parent().hide();\n        $(\"[name = 'ultimo_segundo_papel_interveniente']\").parent().hide();\n            \n        });\n    \n    \n    \n    \n    \n    \n    \n    \n<\/script>"
+                            "value": "<script>\n   $(document).change(function(){\n        var tipoProcesso = \"#form.detalhe_processo.tipo_processo[{form.processos.detalhe_processo}]#\";\n        \n        \n         \n          /**Falta corrigir valor do tipo de processo CVMHFiança Judicial no if**/\n    \n        if(!(tipoProcesso === \"CV\" ||  tipoProcesso === \"CV12\" || tipoProcesso === \"CVD12I\" || tipoProcesso === \"CVD12IE\" \n        || tipoProcesso === \"CVMH\" || tipoProcesso === \"CVMHIE\" || tipoProcesso === \"CVMH12\" || tipoProcesso === \"CVMHJ\" || tipoProcesso === \"CVMHF\" \n        || tipoProcesso === \"CVMHFIE\" || tipoProcesso === \"CVMHF12\" || tipoProcesso === \"CVMHFJ\")){\n           $(\"#sociedade\").remove();\n        }\n        \n        if(!(tipoProcesso === \"MH\" || tipoProcesso === \"MHC\" || tipoProcesso === \"MHO\" || tipoProcesso === \"MHF\"  || tipoProcesso === \"MHFC\" \n        || tipoProcesso === \"MHFO\" ||  tipoProcesso === \"ACHC\" || tipoProcesso === \"ACHO\" || tipoProcesso === \"ACHFC\" || tipoProcesso === \"ACHFO\")){\n           $(\"#hipotecantes\").remove();\n        }\n        \n        \n        var origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\n        \n        if(!(origem_processo === \"ACE\" || origem_processo === \"PRE\" || origem_processo === \"TRD\")){\n           \n            $(\"select[id^=codigo_interveniente]\").parent().remove();\n            $(\"select[id^=tipo_documento]\").parent().remove();\n            $(\"input#nif\").parent().remove();\n            $(\"input#naturalidade\").parent().remove();\n            $(\"input#telefone\").parent().remove();\n            $(\"input#email\").parent().remove();\n            $(\"textarea#morada\").parent().remove();\n            \n            $(\"div[id^=segundo_papel]\").parent().remove();\n            $(\"select[id^=segundo_papel]\").parent().remove();\n            \n            $(\"div#particulares\").remove();\n            \n            $(\"div#sociedade\").remove();\n            \n            $(\"select#interprete_do\").parent().parent().remove();\n            \n            $(\"select[id^=procurador_interveniente]\").parent().remove();\n           \n            $(\"div#procurador\").remove();\n           \n           \n        }\n        $(\"[name = 'codigo_interveniente']\").parent().hide();\n        $(\"[name = 'ultimo_codigo_interveniente']\").parent().hide();\n        $(\"[name = 'ultimo_autorizante_interveniente']\").parent().hide();\n        $(\"[name = 'ultimo_procurador_interveniente']\").parent().hide();\n        $(\"[name = 'ultimo_segundo_papel_interveniente']\").parent().hide();\n        \n        var count = parseInt(FormUtil.getValue(\"cliente_principal_count\"));\n        if (count > 1){\n            $(\"input#cliente_principal\").parent().remove();\n        }\n        \n        });\n    \n    \n    \n    \n    \n    \n    \n    \n<\/script>"
                         }
                     }
                 ],
