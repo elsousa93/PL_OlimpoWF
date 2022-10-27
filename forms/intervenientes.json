@@ -100,6 +100,15 @@
                         }
                     },
                     {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "cliente_principal_list",
+                            "useDefaultWhenEmpty": "",
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
                         "className": "org.joget.plugin.enterprise.FormGrid",
                         "properties": {
                             "abortRelatedRunningProcesses": "",
@@ -214,11 +223,8 @@
                             "validateMaxRow": "",
                             "validateMinRow": "",
                             "validator": {
-                                "className": "org.joget.apps.form.lib.BeanShellMultiRowValidator",
-                                "properties": {
-                                    "decoration": "",
-                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.service.FormUtil;\r\n  \r\npublic boolean validate(Element element, FormRowSet rows, FormData formData) {\r\n    boolean result = true;\r\n    if (rows != null && !rows.isEmpty()) {\r\n        int count = 0;\r\n         \r\n        //verify how many cliente_principal exists\r\n        for (FormRow row : rows) {\r\n            try {\r\n                String isPrincipal = row.getProperty(\"cliente_principal\"));\r\n                if (isPrincipal.equals(CHECK)){\r\n                    count += 1;\r\n                }\r\n            } catch (Exception e) {}\r\n        }\r\n         \r\n        if (count == 0) {\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Deve selecionar um cliente principal\");\r\n            result = false;\r\n        }else if (count > 1){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Selecionou mais do que um Cliente Principal, apenas pode selecionar um\");\r\n            result = false;\r\n        }else{\r\n            //Don't throw error\r\n        }\r\n    }\r\n  \r\n    return result;\r\n}\r\n  \r\n//call validate method with injected variable\r\nreturn validate(element, rows, formData);"
-                                }
+                                "className": "",
+                                "properties": {}
                             },
                             "width": "900"
                         }
@@ -240,7 +246,7 @@
                                 "b30c3291-9376-6a3b-a9dd-37d7b0e17f25": {},
                                 "f88c8048-04f7-1389-3bd3-a597abd6714a": {}
                             },
-                            "value": "<script type=\"text/javascript\">\r\n    \r\n    \r\n    $(document).ready(function(){\r\n        \r\n        //get value from field that controls if the WF number is automatically generated or not\r\n        var tipo_interveniente = FormUtil.getValues(\"lista_intervenientes.tipo_interveniente\");\r\n\r\n        \r\n        var field = FormUtil.getField(\"lista_intervenientes_criada_2\");\r\n        $(field).val(tipo_interveniente.toString()); //set value\r\n        \r\n        \r\n        //Passar a informação para o form de dentro\r\n        var value_lista_intervenientes = FormUtil.getValue(\"lista_intervenientes_criada_2\");\r\n        //console.log(\"Valor lista: \" + value_lista_intervenientes.toString());\r\n        sessionStorage.setItem(\"lista_intervenientes_criada_2\", value_lista_intervenientes.toString());\r\n        //console.log(value);\r\n        \r\n        \r\n\r\n    });\r\n    \r\n    $(document).change(function(){\r\n        \r\n        //get value from field that controls if the WF number is automatically generated or not\r\n        var tipo_interveniente = FormUtil.getValues(\"lista_intervenientes.tipo_interveniente\");\r\n\r\n        \r\n        var field = FormUtil.getField(\"lista_intervenientes_criada_2\");\r\n        $(field).val(tipo_interveniente.toString()); //set value\r\n        \r\n        \r\n        //Passar a informação para o form de dentro\r\n        var value_lista_intervenientes = FormUtil.getValue(\"lista_intervenientes_criada_2\");\r\n        //console.log(\"Valor lista: \" + value_lista_intervenientes.toString());\r\n        sessionStorage.setItem(\"lista_intervenientes_criada_2\", value_lista_intervenientes.toString());\r\n        //console.log(value);\r\n\r\n\r\n    }).trigger('change');\r\n<\/script>"
+                            "value": "<script type=\"text/javascript\">\r\n    \r\n    \r\n    $(document).ready(function(){\r\n        \r\n        //get value from field that controls if the WF number is automatically generated or not\r\n        var tipo_interveniente = FormUtil.getValues(\"lista_intervenientes.tipo_interveniente\");\r\n        var cliente_principal = FormUtil.getValues(\"lista_intervenientes.cliente_principal\");\r\n\r\n        \r\n        var field = FormUtil.getField(\"lista_intervenientes_criada_2\");\r\n        $(field).val(tipo_interveniente.toString()); //set value\r\n        \r\n        var field_cliente = FormUtil.getField(\"cliente_principal_list\");\r\n        $(field_cliente).val(cliente_principal.toString()); //set value\r\n        \r\n        \r\n        //Passar a informação para o form de dentro\r\n        var value_lista_intervenientes = FormUtil.getValue(\"lista_intervenientes_criada_2\");\r\n        //console.log(\"Valor lista: \" + value_lista_intervenientes.toString());\r\n        sessionStorage.setItem(\"lista_intervenientes_criada_2\", value_lista_intervenientes.toString());\r\n        //console.log(value);\r\n        \r\n        //Passar a informação para o form de dentro\r\n        sessionStorage.setItem(\"cliente_principal_list\", cliente_principal.toString());\r\n\r\n        \r\n\r\n    });\r\n    \r\n    $(document).change(function(){\r\n        \r\n        //get value from field that controls if the WF number is automatically generated or not\r\n        var tipo_interveniente = FormUtil.getValues(\"lista_intervenientes.tipo_interveniente\");\r\n        var cliente_principal = FormUtil.getValues(\"lista_intervenientes.cliente_principal\");\r\n        \r\n        var field = FormUtil.getField(\"lista_intervenientes_criada_2\");\r\n        $(field).val(tipo_interveniente.toString()); //set value\r\n        \r\n        var field_cliente = FormUtil.getField(\"cliente_principal_list\");\r\n        $(field_cliente).val(cliente_principal.toString()); //set value\r\n        \r\n        \r\n        //Passar a informação para o form de dentro\r\n        var value_lista_intervenientes = FormUtil.getValue(\"lista_intervenientes_criada_2\");\r\n        //console.log(\"Valor lista: \" + value_lista_intervenientes.toString());\r\n        sessionStorage.setItem(\"lista_intervenientes_criada_2\", value_lista_intervenientes.toString());\r\n        //console.log(value);\r\n        \r\n        //Passar a informação para o form de dentro\r\n        sessionStorage.setItem(\"cliente_principal_list\", cliente_principal.toString());\r\n\r\n\r\n    }).trigger('change');\r\n<\/script>"
                         }
                     },
                     {
@@ -300,45 +306,6 @@
                     "b30c3291-9376-6a3b-a9dd-37d7b0e17f25": {},
                     "f88c8048-04f7-1389-3bd3-a597abd6714a": {}
                 },
-                "readonly": "",
-                "readonlyLabel": "",
-                "regex": "",
-                "reverse": "",
-                "storeBinder": {
-                    "className": "",
-                    "properties": {}
-                },
-                "visibilityControl": "",
-                "visibilityValue": ""
-            }
-        },
-        {
-            "className": "org.joget.apps.form.model.Section",
-            "elements": [{
-                "className": "org.joget.apps.form.model.Column",
-                "elements": [],
-                "properties": {"width": "100%"}
-            }],
-            "properties": {
-                "comment": "",
-                "id": "section3",
-                "join": "",
-                "label": "",
-                "loadBinder": {
-                    "className": "org.joget.apps.form.lib.BeanShellFormBinder",
-                    "properties": {
-                        "autoHandleFiles": "",
-                        "autoHandleWorkflowVariable": "true",
-                        "cacheInterval": "",
-                        "script": "import org.joget.apps.form.lib.SubmitButton;\r\nimport org.joget.apps.form.lib.CustomHTML;\r\nimport org.joget.apps.form.model.Column;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormAction;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.Section;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport java.util.ArrayList;\r\nimport java.util.Collection;\r\n \r\nCollection formActions = new ArrayList();\r\nString saveButtonLabel = \"Validar intervenientes\";\r\nElement saveButton = new SubmitButton();\r\nsaveButton.setProperty(FormUtil.PROPERTY_ID, \"customSaveAsDraft\");\r\nsaveButton.setProperty(\"label\", saveButtonLabel);\r\nformActions.add(saveButton);\r\n \r\n \r\nSection section = element;\r\nArrayList columns = (ArrayList) section.getChildren();\r\n \r\n \r\nColumn column = columns.get(0);\r\ncolumn.setProperty(\"horizontal\", \"true\");\r\ncolumn.setChildren(formActions);\r\n \r\n \r\n//add a custom html to fix the layout issue\r\nElement html = new CustomHTML();\r\nString script = \"<script>$(document).ready(function(){\";\r\nscript += \"$(\\\"#\"+section.getPropertyString(\"id\")+\"\\\").find(\\\".form-cell\\\").prependTo(\\\"#section-actions .form-column\\\");\";\r\nscript += \"$(\\\"#\"+section.getPropertyString(\"id\")+\"\\\").remove();\";\r\nscript += \"});<\/script>\";\r\nhtml.setProperty(\"id\", \"button_layout_fixes\");\r\nhtml.setProperty(\"label\", \"\");\r\nhtml.setProperty(\"value\", script);\r\nformActions.add(html);\r\n \r\n \r\nreturn null;",
-                        "useAjax": ""
-                    }
-                },
-                "permission": {
-                    "className": "",
-                    "properties": {}
-                },
-                "permissionReadonly": "",
                 "readonly": "",
                 "readonlyLabel": "",
                 "regex": "",
