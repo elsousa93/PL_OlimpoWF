@@ -171,6 +171,13 @@
                                     "label": "Cônjuge",
                                     "value": "conjuge",
                                     "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Cliente Principal",
+                                    "value": "cliente_principal",
+                                    "width": ""
                                 }
                             ],
                             "pageSize": "20",
@@ -207,10 +214,34 @@
                             "validateMaxRow": "",
                             "validateMinRow": "",
                             "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellMultiRowValidator",
+                                "properties": {
+                                    "decoration": "",
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.service.FormUtil;\r\n  \r\npublic boolean validate(Element element, FormRowSet rows, FormData formData) {\r\n    boolean result = true;\r\n    if (rows != null && !rows.isEmpty()) {\r\n        int count = 0;\r\n         \r\n        //verify how many cliente_principal exists\r\n        for (FormRow row : rows) {\r\n            try {\r\n                String isPrincipal = row.getProperty(\"cliente_principal\"));\r\n                if (isPrincipal.equals(CHECK)){\r\n                    count += 1;\r\n                }\r\n            } catch (Exception e) {}\r\n        }\r\n         \r\n        if (count == 0) {\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Deve selecionar um cliente principal\");\r\n            result = false;\r\n        }else if (count > 1){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Selecionou mais do que um Cliente Principal, apenas pode selecionar um\");\r\n            result = false;\r\n        }else{\r\n            //Don't throw error\r\n        }\r\n    }\r\n  \r\n    return result;\r\n}\r\n  \r\n//call validate method with injected variable\r\nreturn validate(element, rows, formData);"
+                                }
+                            },
+                            "width": "900"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "cliente_principal",
+                            "label": "Cliente Principal",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
                                 "className": "",
                                 "properties": {}
                             },
-                            "width": "900"
+                            "value": "",
+                            "workflowVariable": ""
                         }
                     },
                     {
@@ -438,7 +469,7 @@
                             "autoPopulate": "",
                             "id": "apresentacao_campos",
                             "label": "",
-                            "value": "<script>\n\n$(document).ready(function(){\n    var origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\n    \n    \n    if(!(origem_processo === \"ACE\" || origem_processo === \"PRE\" || origem_processo === \"TRD\")){\n        \n        $(\"div[id*=compreendem_portugues]\").parent().remove();\n        $(\"div[id*=intervenientes_acidentais]\").parent().remove();\n        $(\"textarea[id*=observacoes_intervenientes]\").parent().remove();\n        \n        $(\"th[id*=codigo_interveniente]\").remove();\n        $(\"span[id*=codigo_interveniente]\").parent().remove();\n        \n        $(\"th[id*=numero_cc]\").remove();\n        $(\"span[id*=numero_cc]\").parent().remove();\n        \n        $(\"th[id*=intervenientes_validade]\").remove();\n        $(\"span[id*=intervenientes_validade]\").parent().remove();\n        \n        $(\"th[id*=intervenientes_nif]\").remove();\n        $(\"span[id*=intervenientes_nif]\").parent().remove();\n        \n        $(\"th[id*=intervenientes_naturalidade]\").remove();\n        $(\"span[id*=intervenientes_naturalidade]\").parent().remove();\n        \n        $(\"th[id*=intervenientes_morada]\").remove();\n        $(\"span[id*=intervenientes_morada]\").parent().remove();\n        \n        \n        \n        \n        \n    }\n    \n    \n    \n});\n    \n    \n    \n    \n    \n    \n<\/script>"
+                            "value": "<script>\n\n$(document).ready(function(){\n    var origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\n    \n    $(\"th[id*=intervenientes_cliente_principal]\").hide();\n    $(\"span[id*=intervenientes_cliente_principal]\").parent().hide();\n        \n    if(!(origem_processo === \"ACE\" || origem_processo === \"PRE\" || origem_processo === \"TRD\")){\n        \n        $(\"div[id*=compreendem_portugues]\").parent().remove();\n        $(\"div[id*=intervenientes_acidentais]\").parent().remove();\n        $(\"textarea[id*=observacoes_intervenientes]\").parent().remove();\n        \n        $(\"th[id*=codigo_interveniente]\").remove();\n        $(\"span[id*=codigo_interveniente]\").parent().remove();\n        \n        $(\"th[id*=numero_cc]\").remove();\n        $(\"span[id*=numero_cc]\").parent().remove();\n        \n        $(\"th[id*=intervenientes_validade]\").remove();\n        $(\"span[id*=intervenientes_validade]\").parent().remove();\n        \n        $(\"th[id*=intervenientes_nif]\").remove();\n        $(\"span[id*=intervenientes_nif]\").parent().remove();\n        \n        $(\"th[id*=intervenientes_naturalidade]\").remove();\n        $(\"span[id*=intervenientes_naturalidade]\").parent().remove();\n        \n        $(\"th[id*=intervenientes_morada]\").remove();\n        $(\"span[id*=intervenientes_morada]\").parent().remove();\n        \n    }\n    \n    \n    \n});\n    \n    \n    \n    \n    \n    \n<\/script>"
                         }
                     }
                 ],
