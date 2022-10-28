@@ -6,6 +6,22 @@
             "className": "org.joget.apps.form.model.Column",
             "elements": [
                 {
+                    "className": "org.joget.apps.form.lib.HiddenField",
+                    "properties": {
+                        "id": "id_processo",
+                        "permission_rules": {
+                            "082f6cb3-cac2-1bf6-5989-b26f6f4b9a4e": {},
+                            "811e4ed1-6d9d-7eda-2409-c08f50ec07fd": {},
+                            "8d987560-ac7b-9ce4-6d2b-b54a4c1d804e": {},
+                            "d96d762a-b058-5230-e799-d495c35bf3a0": {},
+                            "fe0d7425-484a-188c-1faa-1fa76ef5d212": {}
+                        },
+                        "useDefaultWhenEmpty": "",
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
                     "className": "org.joget.apps.form.lib.SelectBox",
                     "properties": {
                         "controlField": "id_processo",
@@ -106,6 +122,32 @@
                         },
                         "value": "",
                         "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field16",
+                        "label": "",
+                        "permissionHidden": "",
+                        "permission_rules": {
+                            "082f6cb3-cac2-1bf6-5989-b26f6f4b9a4e": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "811e4ed1-6d9d-7eda-2409-c08f50ec07fd": {},
+                            "8d987560-ac7b-9ce4-6d2b-b54a4c1d804e": {},
+                            "d96d762a-b058-5230-e799-d495c35bf3a0": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "fe0d7425-484a-188c-1faa-1fa76ef5d212": {
+                                "permissionHidden": "",
+                                "readonly": ""
+                            }
+                        },
+                        "value": "<script type=\"text/javascript\">\r\n    $(document).change(function(){\r\n        var id_processo = sessionStorage.getItem(\"id_processo\");\r\n        \r\n        var field = FormUtil.getField(\"id_processo\");\r\n        $(field).val(id_processo); //set value\r\n        \r\n        //sessionStorage.removeItem('id_processo' + \"ola\");\r\n        \r\n        //console.log(id_processo + \"ola\");\r\n\r\n    });\r\n<\/script>"
                     }
                 }
             ],
