@@ -6,12 +6,20 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT c_nome_atividade, DATEDIFF(c_data_fim,c_data_inicio) as 'Dias' , COUNT(id) as 'Tot' FROM app_fd_sla_atividade\nGROUP BY Dias"
+            "sql": "SELECT c_id_processo, c_nome_atividade,c_data_inicio, c_data_fim,  DATEDIFF(c_data_fim,c_data_inicio) as 'Dias' FROM app_fd_sla_atividade\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
     "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_0",
+            "label": "c_id_processo",
+            "name": "c_id_processo",
+            "sortable": "false"
+        },
         {
             "filterable": true,
             "hidden": "false",
@@ -23,17 +31,25 @@
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_5",
-            "label": "Dias",
-            "name": "Dias",
+            "id": "column_1",
+            "label": "c_data_inicio",
+            "name": "c_data_inicio",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_6",
-            "label": "Tot",
-            "name": "Tot",
+            "id": "column_3",
+            "label": "c_data_fim",
+            "name": "c_data_fim",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_5",
+            "label": "Dias",
+            "name": "Dias",
             "sortable": "false"
         }
     ],
@@ -46,7 +62,7 @@
     "name": "erm_teste3",
     "order": "1",
     "orderBy": "",
-    "pageSize": "0",
+    "pageSize": "100",
     "pageSizeSelectorOptions": "10,20,30,40,50,100",
     "responsiveView": [
         {
