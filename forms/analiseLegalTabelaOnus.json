@@ -6,6 +6,40 @@
             "className": "org.joget.apps.form.model.Column",
             "elements": [
                 {
+                    "className": "org.joget.apps.form.lib.SelectBox",
+                    "properties": {
+                        "controlField": "id_processo",
+                        "id": "imovel_documento",
+                        "label": "Imóvel",
+                        "multiple": "",
+                        "options": [],
+                        "optionsBinder": {
+                            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                            "properties": {
+                                "cacheInterval": "",
+                                "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.dao.FormDataDao;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\n\r\npublic FormRowSet load(String[] values) {\r\n    FormRowSet rows = new FormRowSet();\r\n     \r\n    //set based on dependency value\r\n    String id_processo = \"\";\r\n    if (values != null && values.length > 0) {\r\n        id_processo = values[0];\r\n        LogUtil.info(\"Beanshell import ---------\", id_processo);\r\n        Connection con = null;\r\n        PreparedStatement stmt = null;\r\n        ResultSet rs = null;\r\n        try{\r\n            DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n            con = ds.getConnection();\r\n            \r\n            if(!con.isClosed()){\r\n                String query = \"SELECT i.c_descricao_predial, i.c_fracao FROM app_fd_imoveis i  WHERE i.c_id_processo = ? ORDER BY i.c_fracao ASC\";\r\n                stmt = con.prepareStatement(query);\r\n                stmt.setObject(1, id_processo);\r\n                rs = stmt.executeQuery();\r\n                //LogUtil.info(\"Beanshell import ---------\", \"1\");\r\n                FormRow option = new FormRow();\r\n                option.setProperty(FormUtil.PROPERTY_VALUE, \"\");\r\n                option.setProperty(FormUtil.PROPERTY_LABEL, \"\");\r\n                rows.add(option);\r\n                while (rs.next()) {\r\n                    LogUtil.info(\"Beanshell import ---------\", \"entra\");\r\n                    if(rs.getString(1) != null){\r\n                        String opcao = rs.getString(1) + \" - \" + rs.getString(2);\r\n                        LogUtil.info(\"Beanshell import ---------\", \"entra - \" + opcao);\r\n                        //LogUtil.info(\"Beanshell documentos imoveis ---------\", opcao);\r\n                        FormRow option = new FormRow();\r\n                        option.setProperty(FormUtil.PROPERTY_VALUE, opcao);\r\n                        option.setProperty(FormUtil.PROPERTY_LABEL, opcao);\r\n                        rows.add(option);\r\n                    }\r\n                    \r\n                    //LogUtil.info(\"Beanshell import ---------\", existe.toString());\r\n                }\r\n            }\r\n            }catch(Exception e){\r\n                LogUtil.error(\"Beanshell document - imovel\", e, \"Error getting info from DB\");\r\n            }finally{\r\n                try{\r\n                    if(rs != null){\r\n                    rs.close();\r\n                    }\r\n                    if(stmt != null){\r\n                        stmt.close();\r\n                    }\r\n                    if(con != null && !con.isClosed()) {\r\n                        con.close();\r\n                    }\r\n                }catch(Exception e){\r\n                    LogUtil.error(\"Beanshell document - imovel\", e, \"Error closing DB connection\");\r\n                }\r\n                \r\n            }\r\n        \r\n        //LogUtil.info(\"Beanshell documento imoveis ---------\", rows.toString());\r\n    }\r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(values);\r\n",
+                                "useAjax": "true"
+                            }
+                        },
+                        "permission_rules": {
+                            "082f6cb3-cac2-1bf6-5989-b26f6f4b9a4e": {},
+                            "811e4ed1-6d9d-7eda-2409-c08f50ec07fd": {},
+                            "8d987560-ac7b-9ce4-6d2b-b54a4c1d804e": {},
+                            "d96d762a-b058-5230-e799-d495c35bf3a0": {},
+                            "fe0d7425-484a-188c-1faa-1fa76ef5d212": {}
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
                     "className": "org.joget.apps.form.lib.TextField",
                     "properties": {
                         "encryption": "",
