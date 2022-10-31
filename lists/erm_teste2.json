@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT c_nome_atividade, DATEDIFF(c_data_fim,c_data_inicio) as 'Dias' , COUNT(id) as 'Tot' FROM app_fd_sla_atividade\nGROUP BY Dias, c_nome_atividade\nHAVING c_nome_atividade='Crédito Habitação-Contratação Normal' "
+            "sql": "SELECT c_nome_atividade,c_data_inicio, c_data_fim, DATEDIFF(c_data_fim,c_data_inicio) as 'Dias' , COUNT(id) as 'Tot' FROM app_fd_sla_atividade\nGROUP BY Dias, c_nome_atividade\nHAVING c_nome_atividade='Crédito Habitação-Contratação Normal' "
         }
     },
     "buttonPosition": "bottomLeft",
@@ -41,7 +41,29 @@
     "considerFilterWhenGetTotal": "",
     "description": "",
     "disableResponsive": "",
-    "filters": [],
+    "filters": [
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-2479356-fn_c_data_inicio",
+            "hidden": "",
+            "id": "filter_0",
+            "label": "c_data_inicio",
+            "name": "c_data_inicio",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {"defaultValue": ""}
+            }
+        },
+        {
+            "id": "filter_1",
+            "label": "c_data_fim",
+            "name": "c_data_fim",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        }
+    ],
     "hidePageSize": "",
     "id": "erm_teste2",
     "name": "erm_teste2",
