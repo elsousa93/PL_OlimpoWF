@@ -166,73 +166,126 @@
             "className": "org.joget.apps.form.model.Section",
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
-                "elements": [{
-                    "className": "org.joget.plugin.enterprise.SpreadSheetGrid",
-                    "properties": {
-                        "customSettings": "",
-                        "disabledAdd": "",
-                        "disabledDelete": "",
-                        "errorMessage": "Invalid number of rows",
-                        "fixedColumnsLeft": "0",
-                        "headerSorting": "true",
-                        "id": "checklist",
-                        "label": "",
-                        "loadBinder": {
-                            "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
-                            "properties": {
-                                "autoHandleFiles": "",
-                                "autoHandleWorkflowVariable": "",
-                                "jdbcDatasource": "default",
-                                "sql": "SELECT f.c_seccao_docs, f.c_tipo_documento, f.c_check_doc\nFROM app_fd_filtro f"
-                            }
-                        },
-                        "maxHeight": "",
-                        "minSpareRows": "0",
-                        "options": [
-                            {
-                                "format": "",
-                                "formatType": "",
-                                "formula": "",
-                                "label": "Tipo de Documento",
-                                "readonly": "",
-                                "regexValidator": "",
-                                "value": "tipo_documento",
-                                "width": ""
+                "elements": [
+                    {
+                        "className": "org.joget.plugin.enterprise.SpreadSheetGrid",
+                        "properties": {
+                            "customSettings": "",
+                            "disabledAdd": "",
+                            "disabledDelete": "",
+                            "errorMessage": "Invalid number of rows",
+                            "fixedColumnsLeft": "0",
+                            "headerSorting": "true",
+                            "id": "checklist",
+                            "label": "",
+                            "loadBinder": {
+                                "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
+                                "properties": {
+                                    "autoHandleFiles": "",
+                                    "autoHandleWorkflowVariable": "",
+                                    "jdbcDatasource": "default",
+                                    "sql": "SELECT f.c_seccao_docs, f.c_tipo_documento, f.c_check_doc\nFROM app_fd_filtro f"
+                                }
                             },
-                            {
-                                "format": "",
-                                "formatType": "checkbox",
-                                "formula": "",
-                                "label": "Verificação",
-                                "readonly": "",
-                                "regexValidator": "",
-                                "value": "check_doc",
-                                "width": ""
+                            "maxHeight": "",
+                            "minSpareRows": "0",
+                            "options": [
+                                {
+                                    "format": "",
+                                    "formatType": "",
+                                    "formula": "",
+                                    "label": "Tipo de Documento",
+                                    "readonly": "",
+                                    "regexValidator": "",
+                                    "value": "tipo_documento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "checkbox",
+                                    "formula": "",
+                                    "label": "Verificação",
+                                    "readonly": "",
+                                    "regexValidator": "",
+                                    "value": "check_doc",
+                                    "width": ""
+                                }
+                            ],
+                            "readonly": "",
+                            "showRowNumber": "",
+                            "sortingField": "",
+                            "storeBinder": {
+                                "className": "org.joget.plugin.enterprise.JdbcStoreBinder",
+                                "properties": {
+                                    "autoHandleFiles": "",
+                                    "autoHandleWorkflowVariable": "true",
+                                    "check_sql": "SELECT *\r\nFROM   app_fd_filtro \r\nWHERE  id = {id} ",
+                                    "delete_sql": "DELETE FROM app_fd_filtro\r\nWHERE  id = {id} ",
+                                    "insert_sql": "INSERT app_fd_filtro \r\n            (id,\r\n             c_tipo_documento, \r\n             c_check_doc) \r\nVALUES     ( {uuid},\r\n             {tipo_documento}, \r\n             {check_doc} )",
+                                    "jdbcDatasource": "default",
+                                    "update_sql": "UPDATE app_fd_filtro\r\nSET    id = {id},\r\n       c_tipo_documento = {tipo_documento}, \r\n       c_check_doc = {check_doc}\r\nWHERE  id = {id}"
+                                }
+                            },
+                            "validateMaxRow": "",
+                            "validateMinRow": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
                             }
-                        ],
-                        "readonly": "",
-                        "showRowNumber": "",
-                        "sortingField": "",
-                        "storeBinder": {
-                            "className": "org.joget.plugin.enterprise.JdbcStoreBinder",
-                            "properties": {
-                                "autoHandleFiles": "",
-                                "autoHandleWorkflowVariable": "true",
-                                "check_sql": "SELECT *\r\nFROM   app_fd_filtro \r\nWHERE  id = {id} ",
-                                "delete_sql": "DELETE FROM app_fd_filtro\r\nWHERE  id = {id} ",
-                                "insert_sql": "INSERT app_fd_filtro \r\n            (id,\r\n             c_tipo_documento, \r\n             c_check_doc) \r\nVALUES     ( {uuid},\r\n             {tipo_documento}, \r\n             {check_doc} )",
-                                "jdbcDatasource": "default",
-                                "update_sql": "UPDATE app_fd_filtro\r\nSET    id = {id},\r\n       c_tipo_documento = {tipo_documento}, \r\n       c_check_doc = {check_doc}\r\nWHERE  id = {id}"
+                        }
+                    },
+                    {
+                        "className": "org.joget.plugin.enterprise.AdvancedGrid",
+                        "properties": {
+                            "deleteMessage": "Delete row?",
+                            "disabledAdd": "",
+                            "disabledDelete": "",
+                            "errorMessage": "Invalid number of rows",
+                            "formDefId": "tipoDocumentosCheck",
+                            "hint": "Click to edit. Tab to save.",
+                            "id": "field5",
+                            "keyToSave": "9",
+                            "label": "Advanced Grid",
+                            "loadBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "options": [
+                                {
+                                    "formatType": "",
+                                    "label": "Tipo de Documento",
+                                    "readonly": "",
+                                    "value": "tipo_documento",
+                                    "width": ""
+                                },
+                                {
+                                    "formatType": "",
+                                    "label": "Verificação",
+                                    "readonly": "",
+                                    "value": "check_doc",
+                                    "width": ""
+                                }
+                            ],
+                            "pagingOptions": "10,20,50,100",
+                            "readonly": "",
+                            "recordPerPage": "20",
+                            "search": "",
+                            "showRowNumber": "true",
+                            "sortIndx": "",
+                            "storeBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "uniqueKey": "",
+                            "validateMaxRow": "",
+                            "validateMinRow": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
                             }
-                        },
-                        "validateMaxRow": "",
-                        "validateMinRow": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
                         }
                     }
-                }],
+                ],
                 "properties": {"width": "100%"}
             }],
             "properties": {
