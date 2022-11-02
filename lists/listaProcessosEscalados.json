@@ -1,0 +1,212 @@
+{
+    "actions": [],
+    "binder": {
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "IDProcesso",
+            "sql": "WITH ADMINISTRACAO AS (\n    SELECT DISTINCT p.id as IDProcesso, sp.Id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco, dp.c_n_wf_pl as NumeroWFPL, dp.c_tipo_processo as TipoProcesso, dp.c_nome_cliente as NomeCliente, c_estado_contratacao AS EstadoContratacao, sact.Id AS ActivityId, from_unixtime(sact.LimitTime/1000, '%Y-%m-%d %H:%i') as limittime, sla.c_data_inicio as DataInicio,sla.c_data_fim as DataFim\n    FROM shkprocesses sp\n    LEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\n    LEFT JOIN shkprocessstates sps ON sps.oid = sp.State\n    LEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\n    LEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\n    LEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\n    LEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\n    LEFT JOIN app_fd_sla_atividade sla ON sla.c_id_processo = sp.Id\n    WHERE sps.KeyValue LIKE 'open.running'\n    AND (ssta.KeyValue LIKE 'open.not_running.not_started' OR ssta.KeyValue LIKE 'open.running')\n    AND (c_estado_contratacao is null or c_estado_contratacao <> 'PND')\n    AND dp.c_escalar_processo LIKE 'administracao'\n    ORDER BY Urgencia desc, LimitTime desc),\nDIRETORES AS (\n    SELECT DISTINCT p.id as IDProcesso, sp.Id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco, dp.c_n_wf_pl as NumeroWFPL, dp.c_tipo_processo as TipoProcesso, dp.c_nome_cliente as NomeCliente, c_estado_contratacao AS EstadoContratacao, sact.Id AS ActivityId, from_unixtime(sact.LimitTime/1000, '%Y-%m-%d %H:%i') as limittime, sla.c_data_inicio as DataInicio,sla.c_data_fim as DataFim\n    FROM shkprocesses sp\n    LEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\n    LEFT JOIN shkprocessstates sps ON sps.oid = sp.State\n    LEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\n    LEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\n    LEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\n    LEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\n    LEFT JOIN app_fd_sla_atividade sla ON sla.c_id_processo = sp.Id\n    WHERE sps.KeyValue LIKE 'open.running'\n    AND (ssta.KeyValue LIKE 'open.not_running.not_started' OR ssta.KeyValue LIKE 'open.running')\n    AND (c_estado_contratacao is null or c_estado_contratacao <> 'PND')\n    AND dp.c_escalar_processo LIKE 'diretoresCoordenadores'\n    ORDER BY Urgencia desc, LimitTime desc),\nCOORDENACAO AS (\n    SELECT DISTINCT p.id as IDProcesso, sp.Id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco, dp.c_n_wf_pl as NumeroWFPL, dp.c_tipo_processo as TipoProcesso, dp.c_nome_cliente as NomeCliente, c_estado_contratacao AS EstadoContratacao, sact.Id AS ActivityId, from_unixtime(sact.LimitTime/1000, '%Y-%m-%d %H:%i') as limittime, sla.c_data_inicio as DataInicio,sla.c_data_fim as DataFim\n    FROM shkprocesses sp\n    LEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\n    LEFT JOIN shkprocessstates sps ON sps.oid = sp.State\n    LEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\n    LEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\n    LEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\n    LEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\n    LEFT JOIN app_fd_sla_atividade sla ON sla.c_id_processo = sp.Id\n    WHERE sps.KeyValue LIKE 'open.running'\n    AND (ssta.KeyValue LIKE 'open.not_running.not_started' OR ssta.KeyValue LIKE 'open.running')\n    AND (c_estado_contratacao is null or c_estado_contratacao <> 'PND')\n    AND dp.c_escalar_processo LIKE 'coordenador'\n    ORDER BY Urgencia desc, LimitTime desc)\nSELECT * FROM ADMINISTRACAO\nUNION\nSELECT * FROM DIRETORES\nUNION\nSELECT * FROM COORDENACAO\n"
+        }
+    },
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_0",
+            "label": "Número Workflow Banco",
+            "name": "NumeroWFBanco",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_1",
+            "label": "Número Workflow PL",
+            "name": "NumeroWFPL",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_2",
+            "label": "Nome Cliente",
+            "name": "NomeCliente",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_3",
+            "label": "Tipo Processo",
+            "name": "TipoProcesso",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "Atividade",
+            "name": "Atividade",
+            "sortable": "false"
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_5",
+            "label": "Data Criação",
+            "name": "dateCreated",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_6",
+            "label": "Estado",
+            "name": "EstadoContratacao",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_7",
+            "label": "Urgência",
+            "name": "Urgencia",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_8",
+            "label": "Data Limite",
+            "name": "limittime",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
+    "description": "",
+    "filters": [],
+    "id": "listaProcessosEscalados",
+    "name": "List - Processos Escalados",
+    "order": "",
+    "orderBy": "",
+    "pageSize": "0",
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "rowActions": [],
+    "showPageSizeSelector": "true",
+    "useSession": "false"
+}
