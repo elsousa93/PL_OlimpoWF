@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT ip.id as id, ip.c_nome, ip.c_cc, ip.c_nif, ip.c_estado_civil, ip.c_regime_casamento, ip.c_conjuge, ip.c_validade, CURDATE() as 'Hoje', DATEDIFF(ip.c_validade,CURDATE()) as 'Dias', ip.c_naturalidade, ip.c_morada, ip.c_codigo_interveniente, ip.c_segundo_papel, ip.c_segundo_papel_interveniente, lv.c_label as 'LabelInterveniente1', lv2.c_label as 'LabelInterveniente2', iproc.id as 'IntervenienteID' FROM app_fd_intervenientes_proc ip\nLEFT JOIN app_fd_listas_de_valores lv ON ip.c_codigo_interveniente = lv.c_value\nLEFT JOIN app_fd_listas_de_valores lv2 ON ip.c_segundo_papel_interveniente = lv2.c_value\nLEFT JOIN app_fd_interv_processo iproc ON ip.c_id_intervenientes = iproc.id\n"
+            "sql": "SELECT id,c_data_entrada,c_n_wf_pl, c_nome_banco, c_tipo_processo, c_fase_processo, c_estado_contratacao\nFROM app_fd_detalhe_processo\n"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -41,150 +41,34 @@
             "width": ""
         },
         {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_0",
-            "label": "Nome",
-            "name": "c_nome",
-            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_1",
-            "label": "Nº Doc. ID",
-            "name": "c_cc",
-            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_2",
-            "label": "NIF",
-            "name": "c_nif",
-            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "true",
-            "id": "column_6",
-            "include_export": "true",
-            "label": "Validade",
-            "name": "c_validade",
-            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {
-                "exclude_export": "",
-                "hidden": "false",
-                "include_export": ""
-            }},
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "datalist_type": "column",
             "filterable": true,
             "hidden": "false",
-            "id": "column_3",
-            "label": "Hoje",
-            "name": "Hoje",
+            "id": "column_8",
+            "label": "c_data_entrada",
+            "name": "c_data_entrada",
             "sortable": "false"
         },
         {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
             "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
             "hidden": "false",
-            "id": "column_4",
-            "label": "Dias Corridos",
-            "name": "Dias",
-            "sortable": "true",
-            "style": "",
-            "width": ""
+            "id": "column_5",
+            "label": "c_nome_banco",
+            "name": "c_nome_banco",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_9",
+            "label": "c_n_wf_pl",
+            "name": "c_n_wf_pl",
+            "sortable": "false"
         }
     ],
     "considerFilterWhenGetTotal": "",
     "description": "",
     "disableResponsive": "",
-    "filters": [{
-        "datalist_type": "filter",
-        "filterParamName": "d-5393809-fn_IntervenienteID",
-        "hidden": "",
-        "id": "filter_0",
-        "label": "IntervenienteID",
-        "name": "IntervenienteID",
-        "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
-        "type": {
-            "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
-            "properties": {"defaultValue": ""}
-        }
-    }],
+    "filters": [],
     "hidePageSize": "",
     "id": "erm_teste",
     "name": "erm_teste",
