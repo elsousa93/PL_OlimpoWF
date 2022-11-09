@@ -541,11 +541,14 @@
         },
         "permission_rules": [],
         "postProcessor": {
-            "className": "org.joget.tutorial.WorkflowVariableUpdateTool",
-            "properties": {"workflowVarMapping": [{
-                "changeValueTo": "#process.activityInst.resolverDiligencia1.performerUser[{process.processId}]#",
-                "variable": "gestor_destinatario"
-            }]}
+            "className": "org.joget.plugin.enterprise.FormDataUpdateTool",
+            "properties": {
+                "fields": [{
+                    "field": "gestor_destinatario",
+                    "value": "#process.activityInst.resolverDiligencia1.performerUser[{process.processId}]#"
+                }],
+                "formDefId": "pedirEsclarecimento"
+            }
         },
         "postProcessorRunOn": "create",
         "storeBinder": {
