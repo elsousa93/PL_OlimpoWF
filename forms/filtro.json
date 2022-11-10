@@ -180,7 +180,7 @@
                         "customWidth": "",
                         "horizontal": "",
                         "label": "",
-                        "width": "19%"
+                        "width": "32%"
                     }
                 },
                 {
@@ -194,7 +194,7 @@
                             "value": "<h name=\"documento\" style=\"color:green;text-decoration: underline;font-size:15px;\">CONFORMIDADE<\/h> "
                         }
                     }],
-                    "properties": {"width": "19%"}
+                    "properties": {"width": "32%"}
                 },
                 {
                     "className": "org.joget.apps.form.model.Column",
@@ -207,33 +207,7 @@
                             "value": "<h name=\"documento\" style=\"color:green;text-decoration: underline;font-size:15px;\">NÃO APLICÁVEL<\/h> "
                         }
                     }],
-                    "properties": {"width": "19%"}
-                },
-                {
-                    "className": "org.joget.apps.form.model.Column",
-                    "elements": [{
-                        "className": "org.joget.apps.form.lib.CustomHTML",
-                        "properties": {
-                            "autoPopulate": "",
-                            "id": "conformidade",
-                            "label": "",
-                            "value": "<h name=\"documento\" style=\"color:green;text-decoration: underline;font-size:15px;\">CONFORMIDADE<\/h> "
-                        }
-                    }],
-                    "properties": {"width": "19%"}
-                },
-                {
-                    "className": "org.joget.apps.form.model.Column",
-                    "elements": [{
-                        "className": "org.joget.apps.form.lib.CustomHTML",
-                        "properties": {
-                            "autoPopulate": "",
-                            "id": "nao_aplicavel",
-                            "label": "",
-                            "value": "<h name=\"documento\" style=\"color:green;text-decoration: underline;font-size:15px;\">NÃO APLICÁVEL<\/h> "
-                        }
-                    }],
-                    "properties": {"width": "19%"}
+                    "properties": {"width": "32%"}
                 }
             ],
             "properties": {
@@ -264,129 +238,20 @@
         },
         {
             "className": "org.joget.apps.form.model.Section",
-            "elements": [
-                {
-                    "className": "org.joget.apps.form.model.Column",
-                    "elements": [
-                        {
-                            "className": "org.joget.apps.form.lib.CheckBox",
-                            "properties": {
-                                "controlField": "",
-                                "id": "crp",
-                                "label": "CRP",
-                                "options": [],
-                                "optionsBinder": {
-                                    "className": "",
-                                    "properties": {}
-                                },
-                                "readonly": "",
-                                "readonlyLabel": "",
-                                "validator": {
-                                    "className": "org.joget.apps.form.lib.BeanShellValidator",
-                                    "properties": {
-                                        "decoration": "",
-                                        "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    String faseProcesso = \"#process.processId#\";\r\n    if(!faseProcesso.contains(\"Filtro\")){\r\n        return true;\r\n    }\r\n    \r\n    String origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo == \"ACE\" || origem_processo == \"PRE\" || origem_processo == \"TRD\")){\r\n        return true;   \r\n    }\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        //If element is not filled give error message\r\n        if(values == null || values[0].isEmpty()){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }\r\n    }\r\n    \r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
-                                    }
-                                },
-                                "value": "",
-                                "workflowVariable": ""
-                            }
-                        },
-                        {
-                            "className": "org.joget.apps.form.lib.CheckBox",
-                            "properties": {
-                                "controlField": "",
-                                "id": "cpu",
-                                "label": "CPU",
-                                "options": [],
-                                "optionsBinder": {
-                                    "className": "",
-                                    "properties": {}
-                                },
-                                "readonly": "",
-                                "readonlyLabel": "",
-                                "validator": {
-                                    "className": "org.joget.apps.form.lib.BeanShellValidator",
-                                    "properties": {
-                                        "decoration": "",
-                                        "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    String faseProcesso = \"#process.processId#\";\r\n    if(!faseProcesso.contains(\"Filtro\")){\r\n        return true;\r\n    }\r\n    \r\n    /*String origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo == \"ACE\" || origem_processo == \"PRE\" || origem_processo == \"TRD\")){\r\n        \r\n     return true;   \r\n    }*/\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        //If element is not filled give error message\r\n        if(values == null || values[0].isEmpty()){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }\r\n    }\r\n    \r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
-                                    }
-                                },
-                                "value": "",
-                                "workflowVariable": ""
-                            }
-                        },
-                        {
-                            "className": "org.joget.apps.form.lib.CheckBox",
-                            "properties": {
-                                "controlField": "",
-                                "id": "docs_identificacao",
-                                "label": "Documentos de Identificação",
-                                "options": [],
-                                "optionsBinder": {
-                                    "className": "",
-                                    "properties": {}
-                                },
-                                "readonly": "",
-                                "readonlyLabel": "",
-                                "validator": {
-                                    "className": "org.joget.apps.form.lib.BeanShellValidator",
-                                    "properties": {
-                                        "decoration": "",
-                                        "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    String faseProcesso = \"#process.processId#\";\r\n    if(!faseProcesso.contains(\"Filtro\")){\r\n        return true;\r\n    }\r\n    \r\n    /*String origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo == \"ACE\" || origem_processo == \"PRE\" || origem_processo == \"TRD\")){\r\n        \r\n     return true;   \r\n    }*/\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        //If element is not filled give error message\r\n        if(values == null || values[0].isEmpty()){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }\r\n    }\r\n    \r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
-                                    }
-                                },
-                                "value": "",
-                                "workflowVariable": ""
-                            }
-                        },
-                        {
-                            "className": "org.joget.apps.form.lib.CheckBox",
-                            "properties": {
-                                "controlField": "",
-                                "id": "folha_banco",
-                                "label": "Folha Banco",
-                                "options": [],
-                                "optionsBinder": {
-                                    "className": "",
-                                    "properties": {}
-                                },
-                                "readonly": "",
-                                "readonlyLabel": "",
-                                "validator": {
-                                    "className": "org.joget.apps.form.lib.BeanShellValidator",
-                                    "properties": {
-                                        "decoration": "",
-                                        "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    String faseProcesso = \"#process.processId#\";\r\n    if(!faseProcesso.contains(\"Filtro\")){\r\n        return true;\r\n    }\r\n    \r\n    /*String origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo == \"ACE\" || origem_processo == \"PRE\" || origem_processo == \"TRD\")){\r\n        \r\n     return true;   \r\n    }*/\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        //If element is not filled give error message\r\n        if(values == null || values[0].isEmpty()){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }\r\n    }\r\n    \r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
-                                    }
-                                },
-                                "value": "",
-                                "workflowVariable": ""
-                            }
-                        }
-                    ],
-                    "properties": {"width": "32%"}
-                },
-                {
-                    "className": "org.joget.apps.form.model.Column",
-                    "elements": [{
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
                         "className": "org.joget.apps.form.lib.CheckBox",
                         "properties": {
                             "controlField": "",
-                            "id": "crp_c",
-                            "label": "",
-                            "options": [
-                                {
-                                    "grouping": "",
-                                    "label": "",
-                                    "value": "CHECK"
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "",
-                                    "value": "SIM"
-                                }
-                            ],
+                            "id": "crp",
+                            "label": "CRP",
+                            "options": [{
+                                "grouping": "",
+                                "label": "",
+                                "value": "CHECK"
+                            }],
                             "optionsBinder": {
                                 "className": "",
                                 "properties": {}
@@ -394,38 +259,24 @@
                             "readonly": "",
                             "readonlyLabel": "",
                             "validator": {
-                                "className": "org.joget.apps.form.lib.BeanShellValidator",
-                                "properties": {
-                                    "decoration": "",
-                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    String faseProcesso = \"#process.processId#\";\r\n    if(!faseProcesso.contains(\"Filtro\")){\r\n        return true;\r\n    }\r\n    \r\n    String origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo == \"ACE\" || origem_processo == \"PRE\" || origem_processo == \"TRD\")){\r\n        return true;   \r\n    }\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        //If element is not filled give error message\r\n        if(values == null || values[0].isEmpty()){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }\r\n    }\r\n    \r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
-                                }
+                                "className": "",
+                                "properties": {}
                             },
                             "value": "",
                             "workflowVariable": ""
                         }
-                    }],
-                    "properties": {"width": "32%"}
-                },
-                {
-                    "className": "org.joget.apps.form.model.Column",
-                    "elements": [{
+                    },
+                    {
                         "className": "org.joget.apps.form.lib.CheckBox",
                         "properties": {
                             "controlField": "",
-                            "id": "crp_f",
-                            "label": "",
-                            "options": [
-                                {
-                                    "grouping": "",
-                                    "label": "",
-                                    "value": "CHECK"
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "",
-                                    "value": "SIM"
-                                }
-                            ],
+                            "id": "cpu",
+                            "label": "CPU",
+                            "options": [{
+                                "grouping": "",
+                                "label": "",
+                                "value": "CHECK"
+                            }],
                             "optionsBinder": {
                                 "className": "",
                                 "properties": {}
@@ -433,19 +284,66 @@
                             "readonly": "",
                             "readonlyLabel": "",
                             "validator": {
-                                "className": "org.joget.apps.form.lib.BeanShellValidator",
-                                "properties": {
-                                    "decoration": "",
-                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    String faseProcesso = \"#process.processId#\";\r\n    if(!faseProcesso.contains(\"Filtro\")){\r\n        return true;\r\n    }\r\n    \r\n    String origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo == \"ACE\" || origem_processo == \"PRE\" || origem_processo == \"TRD\")){\r\n        return true;   \r\n    }\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        //If element is not filled give error message\r\n        if(values == null || values[0].isEmpty()){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }\r\n    }\r\n    \r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
-                                }
+                                "className": "",
+                                "properties": {}
                             },
                             "value": "",
                             "workflowVariable": ""
                         }
-                    }],
-                    "properties": {"width": "32%"}
-                }
-            ],
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CheckBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "docs_identificacao",
+                            "label": "Documentos de Identificação",
+                            "options": [{
+                                "grouping": "",
+                                "label": "",
+                                "value": "CHECK"
+                            }],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CheckBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "folha_banco",
+                            "label": "Folha Banco",
+                            "options": [{
+                                "grouping": "",
+                                "label": "",
+                                "value": "CHECK"
+                            }],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
             "properties": {
                 "comment": "",
                 "id": "section3",
@@ -480,124 +378,117 @@
         },
         {
             "className": "org.joget.apps.form.model.Section",
-            "elements": [
-                {
-                    "className": "org.joget.apps.form.model.Column",
-                    "elements": [
-                        {
-                            "className": "org.joget.apps.form.lib.CheckBox",
-                            "properties": {
-                                "controlField": "",
-                                "id": "habilitacao_herdeiros",
-                                "label": "Habilitação de Herdeiros",
-                                "options": [
-                                    {
-                                        "grouping": "",
-                                        "label": "",
-                                        "value": "CONF"
-                                    },
-                                    {
-                                        "grouping": "",
-                                        "label": "",
-                                        "value": "NA"
-                                    }
-                                ],
-                                "optionsBinder": {
-                                    "className": "",
-                                    "properties": {}
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.CheckBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "habilitacao_herdeiros",
+                            "label": "Habilitação de Herdeiros",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "",
+                                    "value": "CONF"
                                 },
-                                "readonly": "",
-                                "readonlyLabel": "",
-                                "validator": {
-                                    "className": "org.joget.apps.form.lib.BeanShellValidator",
-                                    "properties": {
-                                        "decoration": "",
-                                        "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    String faseProcesso = \"#process.processId#\";\r\n    if(!faseProcesso.contains(\"Filtro\")){\r\n        return true;\r\n    }\r\n    \r\n    String origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo == \"ACE\" || origem_processo == \"PRE\" || origem_processo == \"TRD\")){\r\n        return true;   \r\n    }\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        //If element is not filled give error message\r\n        if(values == null || values[0].isEmpty()){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else if (values.length == 2){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Apenas uma opção pode estar selecionada\");\r\n            result = false;\r\n        }else{\r\n            //do nothing\r\n        }\r\n    }\r\n    \r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
-                                    }
-                                },
-                                "value": "",
-                                "workflowVariable": ""
-                            }
-                        },
-                        {
-                            "className": "org.joget.apps.form.lib.CheckBox",
-                            "properties": {
-                                "controlField": "",
-                                "id": "imposto_selo",
-                                "label": "Imposto Selo",
-                                "options": [
-                                    {
-                                        "grouping": "",
-                                        "label": "",
-                                        "value": "CONF"
-                                    },
-                                    {
-                                        "grouping": "",
-                                        "label": "",
-                                        "value": "NA"
-                                    }
-                                ],
-                                "optionsBinder": {
-                                    "className": "",
-                                    "properties": {}
-                                },
-                                "readonly": "",
-                                "readonlyLabel": "",
-                                "validator": {
-                                    "className": "org.joget.apps.form.lib.BeanShellValidator",
-                                    "properties": {
-                                        "decoration": "",
-                                        "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    String faseProcesso = \"#process.processId#\";\r\n    if(!faseProcesso.contains(\"Filtro\")){\r\n        return true;\r\n    }\r\n    \r\n    String origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo == \"ACE\" || origem_processo == \"PRE\" || origem_processo == \"TRD\")){\r\n        return true;   \r\n    }\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        //If element is not filled give error message\r\n        if(values == null || values[0].isEmpty()){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else if (values.length == 2){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Apenas uma opção pode estar selecionada\");\r\n            result = false;\r\n        }else{\r\n            //do nothing\r\n        }\r\n    }\r\n    \r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
-                                    }
-                                },
-                                "value": "",
-                                "workflowVariable": ""
-                            }
-                        },
-                        {
-                            "className": "org.joget.apps.form.lib.CheckBox",
-                            "properties": {
-                                "controlField": "",
-                                "id": "testamento_rh_cqh",
-                                "label": "Testamento / Repudio Herança / Cessão Quinhão Hereditário",
-                                "options": [
-                                    {
-                                        "grouping": "",
-                                        "label": "",
-                                        "value": "CONF"
-                                    },
-                                    {
-                                        "grouping": "",
-                                        "label": "",
-                                        "value": "NA"
-                                    }
-                                ],
-                                "optionsBinder": {
-                                    "className": "",
-                                    "properties": {}
-                                },
-                                "readonly": "",
-                                "readonlyLabel": "",
-                                "validator": {
-                                    "className": "org.joget.apps.form.lib.BeanShellValidator",
-                                    "properties": {
-                                        "decoration": "",
-                                        "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    String faseProcesso = \"#process.processId#\";\r\n    if(!faseProcesso.contains(\"Filtro\")){\r\n        return true;\r\n    }\r\n    \r\n    String origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo == \"ACE\" || origem_processo == \"PRE\" || origem_processo == \"TRD\")){\r\n        return true;   \r\n    }\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        //If element is not filled give error message\r\n        if(values == null || values[0].isEmpty()){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else if (values.length == 2){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Apenas uma opção pode estar selecionada\");\r\n            result = false;\r\n        }else{\r\n            //do nothing\r\n        }\r\n    }\r\n    \r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
-                                    }
-                                },
-                                "value": "",
-                                "workflowVariable": ""
-                            }
+                                {
+                                    "grouping": "",
+                                    "label": "",
+                                    "value": "NA"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "",
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    String faseProcesso = \"#process.processId#\";\r\n    if(!faseProcesso.contains(\"Filtro\")){\r\n        return true;\r\n    }\r\n    \r\n    String origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo == \"ACE\" || origem_processo == \"PRE\" || origem_processo == \"TRD\")){\r\n        return true;   \r\n    }\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        //If element is not filled give error message\r\n        if(values == null || values[0].isEmpty()){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else if (values.length == 2){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Apenas uma opção pode estar selecionada\");\r\n            result = false;\r\n        }else{\r\n            //do nothing\r\n        }\r\n    }\r\n    \r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
                         }
-                    ],
-                    "properties": {"width": "49%"}
-                },
-                {
-                    "className": "org.joget.apps.form.model.Column",
-                    "elements": [],
-                    "properties": {"width": "49%"}
-                }
-            ],
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CheckBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "imposto_selo",
+                            "label": "Imposto Selo",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "",
+                                    "value": "CONF"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "",
+                                    "value": "NA"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "",
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    String faseProcesso = \"#process.processId#\";\r\n    if(!faseProcesso.contains(\"Filtro\")){\r\n        return true;\r\n    }\r\n    \r\n    String origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo == \"ACE\" || origem_processo == \"PRE\" || origem_processo == \"TRD\")){\r\n        return true;   \r\n    }\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        //If element is not filled give error message\r\n        if(values == null || values[0].isEmpty()){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else if (values.length == 2){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Apenas uma opção pode estar selecionada\");\r\n            result = false;\r\n        }else{\r\n            //do nothing\r\n        }\r\n    }\r\n    \r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CheckBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "testamento_rh_cqh",
+                            "label": "Testamento / Repudio Herança / Cessão Quinhão Hereditário",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "",
+                                    "value": "CONF"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "",
+                                    "value": "NA"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "",
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    String faseProcesso = \"#process.processId#\";\r\n    if(!faseProcesso.contains(\"Filtro\")){\r\n        return true;\r\n    }\r\n    \r\n    String origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo == \"ACE\" || origem_processo == \"PRE\" || origem_processo == \"TRD\")){\r\n        return true;   \r\n    }\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        //If element is not filled give error message\r\n        if(values == null || values[0].isEmpty()){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else if (values.length == 2){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Apenas uma opção pode estar selecionada\");\r\n            result = false;\r\n        }else{\r\n            //do nothing\r\n        }\r\n    }\r\n    \r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
             "properties": {
                 "comment": "Tratos sucessivos / Partilhas morte",
                 "id": "section5",
