@@ -24,27 +24,6 @@
                     }
                 },
                 {
-                    "className": "org.joget.apps.form.lib.TextField",
-                    "properties": {
-                        "encryption": "",
-                        "id": "field5",
-                        "label": "Text Field",
-                        "maxlength": "",
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "storeNumeric": "",
-                        "style": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "#form.esclarecimentos.id_processo[{form.processos.esclarecimentos}]#",
-                        "workflowVariable": ""
-                    }
-                },
-                {
                     "className": "org.joget.apps.form.lib.CustomHTML",
                     "properties": {
                         "autoPopulate": "",
@@ -77,7 +56,7 @@
                                 "autoHandleFiles": "",
                                 "autoHandleWorkflowVariable": "true",
                                 "jdbcDatasource": "default",
-                                "sql": "SELECT p.id as id_processo, d.c_assunto, d.dateCreated, d.c_operativa_remetente, d.c_operativa_destinataria, d.c_gestor_remetente, d.c_gestor_destinatario, d.id\nFROM app_fd_info_diligencia d\nJOIN app_fd_processos p ON p.id = d.c_id_processo\nWHERE d.c_id_processo = ;"
+                                "sql": "SELECT p.id as id_processo, d.c_assunto, d.dateCreated, d.c_operativa_remetente, d.c_operativa_destinataria, d.c_gestor_remetente, d.c_gestor_destinatario, d.id\nFROM app_fd_info_diligencia d\nJOIN app_fd_processos p ON p.id = d.c_id_processo\nWHERE d.c_id_processo = \"#form.esclarecimentos.id_processo[{form.processos.esclarecimentos}]#\";"
                             }
                         },
                         "options": [
