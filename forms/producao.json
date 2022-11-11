@@ -96,83 +96,45 @@
                         }
                     },
                     {
-                        "className": "org.joget.apps.form.lib.DatePicker",
+                        "className": "org.joget.apps.form.lib.TextField",
                         "properties": {
-                            "allowManual": "",
-                            "currentDateAs": "",
-                            "dataFormat": "yyyy-MM-dd hh:mm:ss",
-                            "datePickerType": "dateTime",
-                            "endDateFieldId": "",
-                            "format": "dd/mm/yy hh:mm:ss",
-                            "format24hr": "true",
+                            "encryption": "",
                             "id": "data_inicio_processamento",
                             "label": "Data de Início de Processamento",
-                            "permission_rules": {
-                                "2f0ba282-dff7-c485-6c92-a33146d89b3f": {
-                                    "permissionHidden": "",
-                                    "readonly": "true"
-                                },
-                                "78ba5dc6-ab7a-b286-2b6c-3449d8d47c31": {},
-                                "7978a487-5ff6-b326-3ce8-5c48f37c64c0": {
-                                    "permissionHidden": "",
-                                    "readonly": "true"
-                                },
-                                "985000be-214d-1b1a-cb5e-5afe66ca5a1e": {}
-                            },
+                            "maxlength": "",
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
-                            "startDateFieldId": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
                             "validator": {
-                                "className": "org.joget.apps.form.lib.BeanShellValidator",
-                                "properties": {
-                                    "decoration": "",
-                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    String faseProcesso = \"#process.processId#\";\r\n    if(!faseProcesso.contains(\"Producao\")){\r\n        return true;\r\n        \r\n    }\r\n    \r\n    String origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo == \"ACE\" || origem_processo == \"PRE\" || origem_processo == \"TRD\")){\r\n        return true;   \r\n    }\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        //If element is not filled give error message\r\n        if (values == null || values[0].isEmpty()){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }\r\n    }\r\n    \r\n    \r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
-                                }
+                                "className": "",
+                                "properties": {}
                             },
                             "value": "",
-                            "workflowVariable": "",
-                            "yearRange": "c-10:c+10"
+                            "workflowVariable": ""
                         }
                     },
                     {
-                        "className": "org.joget.apps.form.lib.DatePicker",
+                        "className": "org.joget.apps.form.lib.TextField",
                         "properties": {
-                            "allowManual": "",
-                            "currentDateAs": "",
-                            "dataFormat": "yyyy-MM-dd hh:mm:SS",
-                            "datePickerType": "dateTime",
-                            "endDateFieldId": "",
-                            "format": "",
-                            "format24hr": "",
+                            "encryption": "",
                             "id": "data_fim_processamento",
                             "label": "Data de Fim de Processamento",
-                            "permission_rules": {
-                                "2f0ba282-dff7-c485-6c92-a33146d89b3f": {
-                                    "permissionHidden": "",
-                                    "readonly": "true"
-                                },
-                                "78ba5dc6-ab7a-b286-2b6c-3449d8d47c31": {},
-                                "7978a487-5ff6-b326-3ce8-5c48f37c64c0": {
-                                    "permissionHidden": "",
-                                    "readonly": "true"
-                                },
-                                "985000be-214d-1b1a-cb5e-5afe66ca5a1e": {}
-                            },
+                            "maxlength": "",
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
-                            "startDateFieldId": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
                             "validator": {
-                                "className": "org.joget.apps.form.lib.BeanShellValidator",
-                                "properties": {
-                                    "decoration": "",
-                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    String faseProcesso = \"#process.processId#\";\r\n    if(!faseProcesso.contains(\"Producao\")){\r\n        return true;\r\n        \r\n    }\r\n    \r\n    String origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo == \"ACE\" || origem_processo == \"PRE\" || origem_processo == \"TRD\")){\r\n        return true;   \r\n    }\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        //If element is not filled give error message\r\n        if (values == null || values[0].isEmpty()){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }\r\n    }\r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
-                                }
+                                "className": "",
+                                "properties": {}
                             },
                             "value": "",
-                            "workflowVariable": "",
-                            "yearRange": "c-10:c+10"
+                            "workflowVariable": ""
                         }
                     },
                     {
