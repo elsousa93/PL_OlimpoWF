@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT id, numero_proce_pl, process_id, campo, novo_valor, data_alteracao FROM app_audit_log\r\nWHERE campo='estado_contratacao'\r\nORDER BY data_alteracao DESC"
+            "sql": "SELECT id, numero_proce_pl, process_id, campo, novo_valor, data_alteracao , COUNT (id) As 'Total' FROM app_audit_log\r\nGROUP BY campo"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -78,6 +78,14 @@
             "id": "column_4",
             "label": "novo_valor",
             "name": "novo_valor",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_2",
+            "label": "Total",
+            "name": "Total",
             "sortable": "false"
         }
     ],
