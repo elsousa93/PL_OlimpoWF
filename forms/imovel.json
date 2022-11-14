@@ -544,6 +544,56 @@
                 "visibilityControl": "imovel_arrendado",
                 "visibilityValue": "SIM"
             }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [{
+                    "className": "org.joget.plugin.enterprise.SpreadSheetGrid",
+                    "properties": {
+                        "customSettings": "",
+                        "disabledAdd": "",
+                        "disabledDelete": "",
+                        "errorMessage": "Invalid number of rows",
+                        "fixedColumnsLeft": "0",
+                        "headerSorting": "true",
+                        "id": "field15",
+                        "label": "Spreadsheet",
+                        "loadBinder": {
+                            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                            "properties": {
+                                "autoHandleFiles": "",
+                                "autoHandleWorkflowVariable": "true",
+                                "cacheInterval": "",
+                                "script": "import org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.plugin.base.PluginManager;\r\nimport org.joget.apps.form.model.FormLoadBinder;\r\n \r\npublic FormRowSet load(Element element, String primaryKey, FormData formData) {\r\n    String defaultFormDefId = \"default_grid_entry\"; //change this to the form id used to store default grid data\r\n    String formDefId = \"grid_entry\";  //change this to the form id used to store grid data\r\n    String foreignKey = \"fk\"; //change this to the foreign key\r\n     \r\n    FormRowSet f = new FormRowSet();\r\n    f.setMultiRow(true);\r\n \r\n    // Reuse Multi Row Binder to load data\r\n    PluginManager pluginManager = (PluginManager) FormUtil.getApplicationContext().getBean(\"pluginManager\");\r\n    FormLoadBinder binder = (FormLoadBinder) pluginManager.getPlugin(\"org.joget.plugin.enterprise.MultirowFormBinder\");\r\n     \r\n    //Load from the grid table\r\n    binder.setProperty(\"formDefId\", formDefId);\r\n    binder.setProperty(\"foreignKey\", foreignKey);\r\n    f = binder.load(element, primaryKey, formData);\r\n     \r\n    //if no grid data is retrieved, get from default table\r\n    if (f == null || f.isEmpty()) {\r\n        binder.setProperty(\"formDefId\", defaultFormDefId);\r\n         \r\n        //set the foreign key value to empty\r\n        f = binder.load(element, \"\", formData);\r\n    }\r\n    return f;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(element, primaryKey, formData);",
+                                "useAjax": ""
+                            }
+                        },
+                        "maxHeight": "",
+                        "minSpareRows": "1",
+                        "options": [],
+                        "readonly": "",
+                        "showRowNumber": "true",
+                        "sortingField": "",
+                        "storeBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "validateMaxRow": "",
+                        "validateMinRow": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        }
+                    }
+                }],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "id": "section3",
+                "label": "Section"
+            }
         }
     ],
     "properties": {
