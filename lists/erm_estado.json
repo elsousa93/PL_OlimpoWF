@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT id, numero_proce_pl, process_id, campo, novo_valor, data_alteracao , COUNT (id) As 'Total' FROM app_audit_log\r\nGROUP BY campo\r\nHAVING campo=\"estado_contratacao\""
+            "sql": "SELECT id, numero_proce_pl, process_id, campo, novo_valor, data_alteracao, Count(id) as 'Total' FROM app_audit_log\r\nWHERE campo='estado_contratacao'\r\nGROUP BY campo, novo_valor"
         }
     },
     "buttonPosition": "bottomLeft",
