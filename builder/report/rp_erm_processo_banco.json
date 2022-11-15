@@ -1,57 +1,97 @@
 {
-    "body": {"elements": [{
-        "className": "org.joget.rbuilder.lib.ChartReportElement",
-        "properties": {
-            "binder": {
-                "className": "org.joget.plugin.enterprise.AdvancedFormRowDataListBinder",
-                "properties": {
-                    "aggregateField": [{
-                        "field": "nome_banco",
-                        "function": "AFD_COUNT_"
-                    }],
-                    "customSelectionValue": "",
-                    "extraCondition": "",
-                    "filters": [
-                        {
+    "body": {"elements": [
+        {
+            "className": "org.joget.rbuilder.lib.ChartReportElement",
+            "properties": {
+                "binder": {
+                    "className": "org.joget.plugin.enterprise.AdvancedFormRowDataListBinder",
+                    "properties": {
+                        "aggregateField": [{
                             "field": "nome_banco",
-                            "join": "AND",
-                            "operator": "IS NOT NULL",
-                            "value": ""
-                        },
-                        {
-                            "field": "nome_banco",
-                            "join": "AND",
-                            "operator": "<>",
-                            "value": ""
-                        }
-                    ],
-                    "formDefId": "detalheProcesso",
-                    "functionColumns": [],
-                    "groupBy": "nome_banco",
-                    "having": [],
-                    "joins": []
-                }
-            },
-            "categoryAxisLabel": "Category",
-            "chartHeight": "480",
-            "chartType": "donut",
-            "chartWidth": "640",
-            "colors": "",
-            "halign": "left",
-            "id": "3516504E-B2B2-4955-AD5E-98D04956C1D5",
-            "mapping_legend": "nome_banco",
-            "mapping_value": "AFD_COUNT_nome_banco",
-            "marginBottom": "10px",
-            "selectorClass": "",
-            "showLegend": "true",
-            "showValue": "true",
-            "sortingOrder": "ASC",
-            "sortingOrderByColumn": "AFD_COUNT_nome_banco",
-            "title": "",
-            "valueAxisLabel": "Value",
-            "xAxisDisplayAS": ""
+                            "function": "AFD_COUNT_"
+                        }],
+                        "customSelectionValue": "",
+                        "extraCondition": "",
+                        "filters": [
+                            {
+                                "field": "nome_banco",
+                                "join": "AND",
+                                "operator": "IS NOT NULL",
+                                "value": ""
+                            },
+                            {
+                                "field": "nome_banco",
+                                "join": "AND",
+                                "operator": "<>",
+                                "value": ""
+                            }
+                        ],
+                        "formDefId": "detalheProcesso",
+                        "functionColumns": [],
+                        "groupBy": "nome_banco",
+                        "having": [],
+                        "joins": []
+                    }
+                },
+                "categoryAxisLabel": "Category",
+                "chartHeight": "480",
+                "chartType": "donut",
+                "chartWidth": "640",
+                "colors": "",
+                "halign": "left",
+                "id": "3516504E-B2B2-4955-AD5E-98D04956C1D5",
+                "mapping_legend": "nome_banco",
+                "mapping_value": "AFD_COUNT_nome_banco",
+                "marginBottom": "10px",
+                "selectorClass": "",
+                "showLegend": "true",
+                "showValue": "true",
+                "sortingOrder": "ASC",
+                "sortingOrderByColumn": "AFD_COUNT_nome_banco",
+                "title": "Processos por banco",
+                "valueAxisLabel": "Value",
+                "xAxisDisplayAS": ""
+            }
+        },
+        {
+            "className": "org.joget.rbuilder.lib.ChartReportElement",
+            "properties": {
+                "binder": {
+                    "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+                    "properties": {
+                        "jdbcDatasource": "default",
+                        "optimisePaging": "",
+                        "primaryKey": "id",
+                        "sql": "SELECT  c_estado_contratacao, COUNT(id) AS 'Total'\r\nFROM app_fd_detalhe_processo\r\nGROUP BY c_estado_contratacao"
+                    }
+                },
+                "categoryAxisLabel": "Estado",
+                "chartHeight": "480",
+                "chartType": "bar",
+                "chartWidth": "640",
+                "colors": "",
+                "halign": "left",
+                "id": "42EEBCFA-48B5-417F-AD66-E3CB19AC1D68",
+                "mapping_dateformat": "",
+                "mapping_x": "c_estado_contratacao",
+                "mapping_ys": [{
+                    "legend": "Estado",
+                    "y": "Total"
+                }],
+                "marginBottom": "10px",
+                "selectorClass": "",
+                "showLegend": "",
+                "showValueLabel": "true",
+                "sortingOrder": "ASC",
+                "sortingOrderByColumn": "",
+                "stack": "",
+                "title": "Estado dos Processos",
+                "valueAxisLabel": "Total",
+                "xAxisDisplayAS": "",
+                "yaxisPrefix": ""
+            }
         }
-    }]},
+    ]},
     "footer": {"elements": []},
     "header": {"elements": []},
     "properties": {
