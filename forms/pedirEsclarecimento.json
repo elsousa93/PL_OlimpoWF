@@ -169,12 +169,42 @@
                         }
                     },
                     {
-                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "className": "org.joget.apps.form.lib.SelectBox",
                         "properties": {
-                            "autoPopulate": "",
-                            "id": "field16",
-                            "label": "",
-                            "value": "<script>\n    /*\n    $(document).ready(function(){\n        $(\"select[name=complexidade]\").prop('force_save', true);\n        $(\"select[name=banco]\").prop('force_save', true);\n        $(\"select[name=complexidade]\").prop('force_save', true);\n    });*/\n<\/script>"
+                            "controlField": "",
+                            "id": "tipo_diligencia",
+                            "label": "Tipo de Diligênca",
+                            "multiple": "",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "",
+                                    "value": ""
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Normal",
+                                    "value": "NORMAL"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Documentos em falta",
+                                    "value": "FALTA_DOCS"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
                         }
                     }
                 ],
@@ -477,25 +507,36 @@
             "className": "org.joget.apps.form.model.Section",
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
-                "elements": [{
-                    "className": "org.joget.apps.form.lib.TextArea",
-                    "properties": {
-                        "cols": "20",
-                        "id": "diligencia",
-                        "label": "",
-                        "permission_rules": {},
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "rows": "5",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.TextArea",
+                        "properties": {
+                            "cols": "20",
+                            "id": "diligencia",
+                            "label": "",
+                            "permission_rules": {},
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "rows": "5",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field16",
+                            "label": "",
+                            "value": "<script>\n    \n    $(document).ready(function(){\n\n        var tipo_diligencia = FormUtil.getValue(\"tipo_diligencia\");\n        if( tipo_diligencia === \"FALTA_DOCS\" ){\n            var field = FormUtil.getField(\"diligencia\");\n            $(field).val(\"Documentos obrigatórios em falta. Avançar com processo independentemente?\"); //set value\n        }\n\n    });\n\n    \n<\/script>"
+                        }
                     }
-                }],
+                ],
                 "properties": {"width": "100%"}
             }],
             "properties": {
