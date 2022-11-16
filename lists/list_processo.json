@@ -635,7 +635,12 @@
             "hrefColumn": "instanceId;assignee;c_id_processo",
             "hrefParam": "aid;replaceUser;procId",
             "label": "Realocar",
-            "rules": [],
+            "rules": [{
+                "field": "#currentUser.groups.id#",
+                "join": "AND",
+                "operator": "REGEX",
+                "value": "Coordenador"
+            }],
             "target": "_self"
         },
         "type": "text"
