@@ -145,7 +145,7 @@
                             "autoPopulate": "",
                             "id": "set_manual",
                             "label": "",
-                            "value": "<script type=\"text/javascript\">\r\n    $(document).change(function(){\r\n        var processo_manual_id = \"processo_manual\";\r\n  \r\n        //get values\r\n        //var processo_manual = $('[name='+processo_manual_id+']:enabled').val();\r\n        var processo_manual = FormUtil.getValue(\"processo_manual_id\");\r\n        \r\n        //verify if it's a manual process creation\r\n        if (processo_manual != null && processo_manual !== \"SIM\"){\r\n            //store the value to a field\r\n            //$('[name='+processo_manual_id+']:enabled').val(\"SIM\");\r\n            console.log(\"Entra\" + processo_manual);\r\n            processo_manual = \"SIM\";\r\n            var field = FormUtil.getField(processo_manual_id);\r\n            $(field).val(processo_manual); //set value\r\n        }\r\n        console.log(\"Não\" + processo_manual);\r\n    });\r\n<\/script>"
+                            "value": "<script type=\"text/javascript\">\r\n    $(document).change(function(){\r\n        var processo_manual_id = \"processo_manual\";\r\n  \r\n        //get values\r\n        //var processo_manual = $('[name='+processo_manual_id+']:enabled').val();\r\n        var processo_manual = FormUtil.getValue(\"processo_manual_id\");\r\n        \r\n        //verify if it's a manual process creation\r\n        if (processo_manual != null && processo_manual !== \"SIM\"){\r\n            //store the value to a field\r\n            //$('[name='+processo_manual_id+']:enabled').val(\"SIM\");\r\n            processo_manual = \"SIM\";\r\n            var field = FormUtil.getField(processo_manual_id);\r\n            $(field).val(processo_manual); //set value\r\n        }\r\n        //console.log(\"Não\" + processo_manual);\r\n    });\r\n<\/script>"
                         }
                     }
                 ],
@@ -230,7 +230,7 @@
                             "autoPopulate": "",
                             "id": "set_banco",
                             "label": "",
-                            "value": "<script type=\"text/javascript\">\r\n    $(document).change(function(){\r\n        //var nome_banco = \"nome_banco\";\r\n  \r\n        //get values\r\n        //var processo_manual = FormUtil.getValue(\"processo_manual_id\");\r\n        var lenght = $(\"[name = 'nome_banco']\").parent().find(\"select\").length;\r\n        if($(\"[name = 'nome_banco']\").parent().find(\"select\").length <= 2){\r\n            $('[name = \"nome_banco\"]').find('option').get(0).remove();\r\n        }\r\n    }\r\n        console.log(\"Length: \" + lenght);\r\n    });\r\n<\/script>"
+                            "value": "<script type=\"text/javascript\">\r\n    $(document).ready(function(){\r\n        //var nome_banco = \"nome_banco\";\r\n  \r\n        //get values\r\n        var nomes_banco = FormUtil.getValues(\"nome_banco\");\r\n        \r\n        if(nomes_banco.length <= 2){\r\n            $('[name = \"nome_banco\"]').find('option').get(0).remove();\r\n        }\r\n        console.log(\"Length: \" + lenght);\r\n    });\r\n<\/script>"
                         }
                     }
                 ],
