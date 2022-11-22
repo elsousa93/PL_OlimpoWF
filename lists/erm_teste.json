@@ -6,54 +6,50 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "select * from app_fd_agendamento"
+            "sql": "SELECT pro.c_detalhe_processo, pro.c_agendamento, det.id as detID, det.c_forma_outorga, det.c_n_wf_pl, det.c_n_wf_banco, det.c_nome_cliente, ag.id AS agID, ag.c_data_agendamento, ag.c_estado_agendamento\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nWHERE pro.c_detalhe_processo='60604906-1032-4b12-ac63-a3179011cbed'"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
     "columns": [
         {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "true",
-            "id": "column_11",
-            "include_export": "true",
-            "label": "ID",
-            "name": "id",
-            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {
-                "exclude_export": "",
-                "hidden": "false",
-                "include_export": ""
-            }},
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
             "filterable": true,
             "hidden": "false",
-            "id": "column_6",
-            "label": "c_agendamento",
-            "name": "c_agendamento",
+            "id": "column_21",
+            "label": "c_data_agendamento",
+            "name": "c_data_agendamento",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_7",
-            "label": "c_data_agendamento",
-            "name": "c_data_agendamento",
+            "id": "column_24",
+            "label": "c_forma_outorga",
+            "name": "c_forma_outorga",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_25",
+            "label": "c_n_wf_banco",
+            "name": "c_n_wf_banco",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_26",
+            "label": "c_nome_cliente",
+            "name": "c_nome_cliente",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_23",
+            "label": "c_estado_agendamento",
+            "name": "c_estado_agendamento",
             "sortable": "false"
         }
     ],
