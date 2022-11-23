@@ -147,40 +147,51 @@
                 },
                 {
                     "className": "org.joget.apps.form.model.Column",
-                    "elements": [{
-                        "className": "org.joget.apps.form.lib.SelectBox",
-                        "properties": {
-                            "controlField": "",
-                            "id": "operativa2",
-                            "label": "Operativa 2",
-                            "multiple": "",
-                            "options": [],
-                            "optionsBinder": {
-                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
-                                "properties": {
-                                    "addEmptyOption": "true",
-                                    "cacheInterval": "",
-                                    "emptyLabel": "",
-                                    "extraCondition": "c_nome_campo = 'fase_processo'",
-                                    "formDefId": "adicionarOpcaoLV",
-                                    "groupingColumn": "",
-                                    "idColumn": "value",
-                                    "labelColumn": "label",
-                                    "useAjax": ""
-                                }
-                            },
-                            "permission_rules": {},
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "#form.conversas_processo.operativa2[{form.processos.geral.id_processo}]#",
-                            "workflowVariable": ""
+                    "elements": [
+                        {
+                            "className": "org.joget.apps.form.lib.SelectBox",
+                            "properties": {
+                                "controlField": "",
+                                "id": "operativa2",
+                                "label": "Operativa 2",
+                                "multiple": "",
+                                "options": [],
+                                "optionsBinder": {
+                                    "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                    "properties": {
+                                        "addEmptyOption": "true",
+                                        "cacheInterval": "",
+                                        "emptyLabel": "",
+                                        "extraCondition": "c_nome_campo = 'fase_processo'",
+                                        "formDefId": "adicionarOpcaoLV",
+                                        "groupingColumn": "",
+                                        "idColumn": "value",
+                                        "labelColumn": "label",
+                                        "useAjax": ""
+                                    }
+                                },
+                                "permission_rules": {},
+                                "readonly": "",
+                                "readonlyLabel": "",
+                                "size": "",
+                                "validator": {
+                                    "className": "",
+                                    "properties": {}
+                                },
+                                "value": "#form.conversas_processo.operativa2[{form.processos.geral.id_processo}]#",
+                                "workflowVariable": ""
+                            }
+                        },
+                        {
+                            "className": "org.joget.apps.form.lib.HiddenField",
+                            "properties": {
+                                "id": "operativa2",
+                                "useDefaultWhenEmpty": "true",
+                                "value": "",
+                                "workflowVariable": ""
+                            }
                         }
-                    }],
+                    ],
                     "properties": {"width": "49%"}
                 }
             ],
@@ -298,7 +309,7 @@
                             "autoPopulate": "",
                             "id": "field9",
                             "label": "",
-                            "value": "<script>\n    $(document).ready(function(){\n        var dateCreated = FormUtil.getValue(\"dateCreated\");\n        //console.log(\"Imprime: \" + dateCreated);\n        \n        if(dateCreated !== null && dateCreated !== \"\"){\n            $(\"input[name=assunto]\").prop('disabled', true);\n            //$(\"select[name=operativa1]\").prop('disabled', true);\n            $('select[name=operativa2] option').not(':selected').remove();\n            $(\"select[name=operativa2]\").prop('readonly', true);\n            //$(\"select[name=operativa2] option\").prop('disabled', true);\n        }\n    });\n<\/script>"
+                            "value": "<script>\n    $(document).ready(function(){\n        var dateCreated = FormUtil.getValue(\"dateCreated\");\n        //console.log(\"Imprime: \" + dateCreated);\n        \n        if(dateCreated !== null && dateCreated !== \"\"){\n            $(\"input[name=assunto]\").prop('disabled', true);\n            $('select[name=operativa2] option').not(':selected').remove();\n            $(\"select[name=operativa2]\").prop('readonly', true);\n            //$(\"select[name=operativa2] option\").prop('disabled', true);\n        }\n    });\n<\/script>"
                         }
                     }
                 ],
