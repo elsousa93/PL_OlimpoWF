@@ -150,7 +150,16 @@
                             "autoPopulate": "",
                             "id": "field5",
                             "label": "",
-                            "value": "<script>\n    //$(document).ready(function(){\n        //$(\"input[type=submit]\").remove();\n    //});\n<\/script>\n"
+                            "value": "<script>\n    $(document).ready(function(){\n        var dateCreated = FormUtil.getValue(\"dateCreated\");\n        //console.log(\"Imprime: \" + dateCreated);\n        \n        if(dateCreated !== null && dateCreated !== \"\"){\n            $(\"select[name=mensagem]\").prop('disabled', true);\n            $(\"select[name=operativa1]\").prop('disabled', true);\n            $(\"select[name=gestor_atual]\").prop('disabled', true);\n            $(\"select[name=anexos]\").prop('disabled', true);\n            //$(\"input[type=submit]\").remove();\n        }\n    });\n<\/script>\n"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field7",
+                            "label": "",
+                            "value": "<script>\n    $(\"div[class='dz-message needsclick']\").text(\"Arraste os documentos que deseja carregar ou clique aqui\");\n<\/script>"
                         }
                     }
                 ],
