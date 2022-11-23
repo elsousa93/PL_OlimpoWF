@@ -6,12 +6,20 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT pro.c_detalhe_processo, pro.c_agendamento, det.id as detID, det.c_forma_outorga, det.c_n_wf_pl, det.c_n_wf_banco, det.c_nome_cliente, ag.id AS agID, ag.c_data_agendamento, ag.c_estado_agendamento\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nWHERE pro.c_detalhe_processo='60604906-1032-4b12-ac63-a3179011cbed'"
+            "sql": "SELECT pro.c_detalhe_processo, pro.c_agendamento, det.id as detID, det.c_data_entrada, det.c_forma_outorga, det.c_n_wf_pl, det.c_n_wf_banco, det.c_nome_cliente, ag.id AS agID, ag.c_data_agendamento, ag.c_estado_agendamento\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nWHERE pro.c_detalhe_processo='60604906-1032-4b12-ac63-a3179011cbed'"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
     "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_2",
+            "label": "c_data_entrada",
+            "name": "c_data_entrada",
+            "sortable": "false"
+        },
         {
             "filterable": true,
             "hidden": "false",
