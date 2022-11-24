@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT pro.c_detalhe_processo, pro.c_agendamento, det.id as detID, det.c_data_entrada as 'Data de entrada', det.c_tipo_processo AS 'Tipo de processo',det.c_forma_outorga as 'Forma de outorga', det.c_n_wf_pl as 'WF PL', det.c_n_wf_banco as 'WF Banco',\n det.c_nome_cliente AS 'Nome do Cliente', ag.id AS agID, ag.c_data_agendamento AS 'Data de agendamento' , ag.c_estado_agendamento AS 'Estado do agendamento'\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nWHERE pro.c_detalhe_processo='60604906-1032-4b12-ac63-a3179011cbed'"
+            "sql": "SELECT pro.c_detalhe_processo, pro.c_agendamento, det.id as detID, det.c_data_entrada as 'Data de entrada', det.c_tipo_processo AS 'Tipo de processo',det.c_urgencia AS 'Urgente',det.c_forma_outorga as 'Forma de outorga', \ndet.c_n_wf_pl as 'WF PL', det.c_n_wf_banco as 'WF Banco', det.c_nome_cliente AS 'Nome do Cliente', det.c_nif_cliente AS 'NIF do Cliente' ,ag.id AS agID, ag.c_data_agendamento AS 'Data de agendamento', ag.c_estado_agendamento AS 'Estado do agendamento'\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nWHERE pro.c_detalhe_processo='60604906-1032-4b12-ac63-a3179011cbed'"
         }
     },
     "buttonPosition": "bottomLeft",
