@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT *\r\nFROM app_fd_detalhe_processo"
+            "sql": "SELECT pro.c_detalhe_processo, pro.c_agendamento, det.id as detID, det.c_data_entrada as 'Data de entrada',det.c_nome_banco AS 'Banco', det.c_tipo_processo AS 'Tipo de processo',det.c_urgencia AS 'Urgente',det.c_forma_outorga as 'Forma de outorga', \ndet.c_n_wf_pl as 'WF PL', det.c_n_wf_banco as 'WF Banco', det.c_nome_cliente AS 'Nome do Cliente', det.c_nif_cliente AS 'NIF do Cliente', det.c_origem_processo AS 'Origem', det.c_complex_processo AS 'Complexidade',\ndet.c_estado_contratacao AS 'Estado da contratação', det.c_fase_processo AS 'Fase', ag.id AS agID, ag.c_data_agendamento AS 'Data de agendamento', ag.c_estado_agendamento AS 'Estado do agendamento',\nag.c_desmarcacao AS 'Desmarcação de agendamento', ag.c_urgencia_agendamento AS 'Urgencia de agendamento', ag.c_reagendamento AS 'Data de reagendamento'\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nWHERE det.c_data_entrada != ''"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -15,148 +15,23 @@
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_3",
-            "label": "c_data_entrada",
-            "name": "c_data_entrada",
+            "id": "column_1",
+            "label": "Data de entrada",
+            "name": "Data de entrada",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_13",
-            "label": "c_nome_banco",
-            "name": "c_nome_banco",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_10",
-            "label": "c_n_wf_pl",
-            "name": "c_n_wf_pl",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_21",
-            "label": "c_tipo_processo",
-            "name": "c_tipo_processo",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_27",
-            "label": "c_urgencia",
-            "name": "c_urgencia",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_14",
-            "label": "c_nome_cliente",
-            "name": "c_nome_cliente",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_15",
-            "label": "c_nif_cliente",
-            "name": "c_nif_cliente",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_16",
-            "label": "c_origem_processo",
-            "name": "c_origem_processo",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_9",
-            "label": "c_n_wf_banco",
-            "name": "c_n_wf_banco",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_8",
-            "label": "c_forma_outorga",
-            "name": "c_forma_outorga",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_0",
-            "label": "c_complex_processo",
-            "name": "c_complex_processo",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_4",
-            "label": "c_data_ultima_alteracao",
-            "name": "c_data_ultima_alteracao",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_5",
-            "label": "c_envio_processo",
-            "name": "c_envio_processo",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_6",
-            "label": "c_estado_contratacao",
-            "name": "c_estado_contratacao",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_7",
-            "label": "c_fase_processo",
-            "name": "c_fase_processo",
+            "id": "column_2",
+            "label": "Banco",
+            "name": "Banco",
             "sortable": "false"
         }
     ],
     "considerFilterWhenGetTotal": "",
     "description": "",
-    "filters": [{
-        "datalist_type": "filter",
-        "filterParamName": "d-6286245-fn_c_data_entrada",
-        "hidden": "",
-        "id": "filter_0",
-        "label": "Data de entrada",
-        "name": "c_data_entrada",
-        "type": {
-            "className": "org.joget.plugin.enterprise.DateRangeDataListFilterType",
-            "properties": {
-                "dateStoreInUTC": "",
-                "format": "yy/mm/dd",
-                "formatJava": "yyyy/MM/dd",
-                "fromDefaultValue": "",
-                "fromLabel": "de",
-                "showFieldLabel": "true",
-                "toDefaultValue": "",
-                "toLabel": "até",
-                "yearRange": "c-10:c+10"
-            }
-        }
-    }],
+    "filters": [],
     "id": "erm_processos_bruto",
     "name": "erm_processos_bruto",
     "order": "",
