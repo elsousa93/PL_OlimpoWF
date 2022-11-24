@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT pro.c_detalhe_processo, pro.c_agendamento, det.id as detID, det.c_data_entrada as 'Data de entrada',det.c_nome_banco AS 'Banco', det.c_tipo_processo AS 'Tipo de processo',det.c_urgencia AS 'Urgente',det.c_forma_outorga as 'Forma de outorga', \ndet.c_n_wf_pl as 'WF PL', det.c_n_wf_banco as 'WF Banco', det.c_nome_cliente AS 'Nome do Cliente', det.c_nif_cliente AS 'NIF do Cliente', det.c_origem_processo AS 'Origem', det.c_complex_processo AS 'Complexidade',\ndet.c_estado_contratacao AS 'Estado da contratação', det.c_fase_processo AS 'Fase', ag.id AS agID, ag.c_data_agendamento AS 'Data de agendamento', ag.c_estado_agendamento AS 'Estado do agendamento',\nag.c_desmarcacao AS 'Desmarcação de agendamento', ag.c_urgencia_agendamento AS 'Urgencia de agendamento', ag.c_reagendamento AS 'Data de reagendamento'\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nWHERE det.c_data_entrada != ''"
+            "sql": "SELECT pro.c_detalhe_processo, pro.c_agendamento, det.id as detID, det.c_data_entrada as 'Data de entrada',det.c_nome_banco AS 'Banco', det.c_tipo_processo AS 'Tipo de processo',det.c_urgencia AS 'Urgente',det.c_forma_outorga as 'Forma de outorga', \ndet.c_n_wf_pl as 'WF PL', det.c_n_wf_banco as 'WF Banco', det.c_nome_cliente AS 'Nome do Cliente', det.c_nif_cliente AS 'NIF do Cliente', det.c_origem_processo AS 'Origem', det.c_complex_processo AS 'Complexidade',\ndet.c_estado_contratacao AS 'Estado da contratação', det.c_fase_processo AS 'Fase', ag.id AS agID, ag.c_data_agendamento AS 'Data de agendamento', ag.c_estado_agendamento AS 'Estado do agendamento',\nag.c_urgencia_agendamento AS 'Urgencia de agendamento', ag.c_reagendamento AS 'Reagendamento'\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nWHERE det.c_data_entrada != ''"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -177,56 +177,12 @@
             "sortable": "false"
         },
         {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
             "filterable": true,
-            "format": {
-                "className": "org.joget.plugin.enterprise.DateFormatter",
-                "properties": {
-                    "dataFormat": "yyyy-MM-dd",
-                    "dateStoreInUTC": "",
-                    "displayFormat": "dd/MM/yyyy"
-                }
-            },
-            "headerAlignment": "",
             "hidden": "false",
-            "id": "column_16",
-            "label": "Data de reagendamento",
-            "name": "Data de reagendamento",
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "org.joget.plugin.enterprise.DateFormatter",
-                "properties": {
-                    "dataFormat": "yyyy-MM-dd",
-                    "dateStoreInUTC": "",
-                    "displayFormat": "dd/MM/yyyy"
-                }
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_15",
-            "label": "Desmarcação de agendamento",
-            "name": "Desmarcação de agendamento",
-            "sortable": "false",
-            "style": "",
-            "width": ""
+            "id": "column_18",
+            "label": "Reagendamento",
+            "name": "Reagendamento",
+            "sortable": "false"
         }
     ],
     "considerFilterWhenGetTotal": "",
