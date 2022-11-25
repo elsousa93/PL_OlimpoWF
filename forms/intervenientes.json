@@ -296,7 +296,7 @@
                             "autoPopulate": "",
                             "id": "testePreencherCampo",
                             "label": "",
-                            "value": "<script>\r\n\r\n<\/script>"
+                            "value": "<script>\r\n    $(document).ready(function(){\r\n        \r\n        function updateCell(fieldid, cellid, value, rowNo) {\r\n            var element = FormUtil.getField(fieldid);\r\n            var row = $(element).find(\"tr.grid-row:eq(\"+(rowNo-1)+\")\"); //0-based\r\n            var data = $(row).find(\"textarea\").val();\r\n            data = eval(\"[\"+data+\"]\")[0];\r\n\r\n            data[cellid] = value;\r\n            $(element).enterpriseformgrid(\"fillValue\", element, row, JSON.stringify(data));\r\n        }\r\n        updateCell(\"lista_intervenientes\", \"nome\", \"Tomás\", 2); //row 2\r\n        \r\n    });\r\n<\/script>"
                         }
                     }
                 ],
