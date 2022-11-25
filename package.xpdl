@@ -5237,22 +5237,12 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="182,33"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="verificarAlertasValidacao" Name="Verificar Alertas Validação">
-                    <Implementation>
-                        <Tool Id="default_application"/>
-                    </Implementation>
-                    <Performer>sistema</Performer>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="sistema"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="457,73"/>
-                    </ExtendedAttributes>
-                </Activity>
                 <Activity Id="terminateCheck" Name="Terminate Check">
                     <Implementation>
                         <No/>
                     </Implementation>
                     <Performer>alertaStarter</Performer>
-                    <Deadline Execution="ASYNCHR">
+                    <Deadline Execution="SYNCHR">
                         <DeadlineCondition>var m=new java.util.Date(); m.setTime(ACTIVITY_ACTIVATED_TIME.getTime()+(1*60000)); m;</DeadlineCondition>
                         <ExceptionName>check_alertas</ExceptionName>
                     </Deadline>
@@ -5266,6 +5256,16 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="389,30"/>
                     </ExtendedAttributes>
                 </Activity>
+                <Activity Id="check_alertas" Name="Verificar Alertas Validação">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>sistema</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="sistema"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="456,72"/>
+                    </ExtendedAttributes>
+                </Activity>
             </Activities>
             <Transitions>
                 <Transition From="route1" Id="transition0" To="terminateCheck">
@@ -5273,14 +5273,14 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="terminateCheck" Id="transition2" To="verificarAlertasValidacao">
+                <Transition From="terminateCheck" Id="transition2" To="check_alertas">
                     <Condition Type="EXCEPTION">check_alertas</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="verificarAlertasValidacao" Id="transition3" To="terminateCheck">
+                <Transition From="check_alertas" Id="transition3" To="terminateCheck">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
