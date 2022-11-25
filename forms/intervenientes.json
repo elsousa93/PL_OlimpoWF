@@ -296,7 +296,7 @@
                             "autoPopulate": "",
                             "id": "testePreencherCampo",
                             "label": "",
-                            "value": "<script>\r\n    $(document).change(function(){\r\n        var grid = FormUtil.getGridCellValues(\"lista_intervenientes\");\r\n        \r\n        var values = FormUtil.getGridCellValues(\"lista_intervenientes.tipo_interveniente\");\r\n        var casamento = FormUtil.getGridCellValues(\"lista_intervenientes.estado_civil\");\r\n        var nome = values[values.length-1];\r\n        var index;\r\n    \r\n        $(values).each(function(index) {\r\n            if(values[index] === \"PRP\"){\r\n                console.log(\"Valor: \"+ values[index] + \" encontrado \" + index);\r\n                encontrado = index;\r\n            }\r\n        });\r\n        \r\n        //grid[index] = '{\"estado_civil\":\"CAS\"}';\r\n       \r\n       console.log(\"tipo: \" + grid[index]);\r\n        \r\n    });\r\n<\/script>"
+                            "value": "<script>\r\n    $(document).change(function(){\r\n        \r\n    var field = FormUtil.getField(\"intervenientes\");\r\n    var functionName = window[field.attr(\"id\") + \"_add\"];\r\n\r\n    if(typeof functionName === 'function') {\r\n        var args = new Object();\r\n        args['result'] = '{\"tipo_interveniente\":\"PRP\",\"nome\":\"Manuel\",\"validade\":\"\",\"nif\":\"123456789\",\"estado_civil\":\"\",\"regime_casamento\":\"\",\"conjuge\":\"\",\"cliente_principal\":\"\"}';\r\n        functionName(args);\r\n    }\r\n        \r\n    });\r\n<\/script>"
                         }
                     }
                 ],
