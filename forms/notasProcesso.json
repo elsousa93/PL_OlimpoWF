@@ -141,9 +141,18 @@
                         "className": "org.joget.apps.form.lib.CustomHTML",
                         "properties": {
                             "autoPopulate": "",
+                            "id": "hide_data",
+                            "label": "",
+                            "value": "<script>\n    $(document).ready(function(){\n        var dateCreated = FormUtil.getValue(\"dateCreated\");\n        //console.log(\"Imprime: \" + dateCreated);\n        \n        if(dateCreated !== null && dateCreated !== \"\"){\n            $(\"input[name=dateCreated]\").prop('hidden', true);\n        }\n    });\n<\/script>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
                             "id": "set_operativa",
                             "label": "",
-                            "value": "<script type=\"text/javascript\">\r\n    $(document).ready(function(){\r\n        //get values\r\n        var operativas = FormUtil.getValues(\"operativa\");\r\n        var length = $('select[name= \"operativa\"] option').length;\r\n        \r\n        //remove empty option if user only belongs to 1 operativa\r\n        if(length === 2){\r\n            $('[name = \"operativa\"]').find('option').get(0).remove();\r\n        }\r\n        //console.log(\"Length: \" + length);\r\n    });\r\n<\/script>"
+                            "value": "<script type=\"text/javascript\">\r\n    $(document).ready(function(){\r\n        //get values\r\n        var operativas = FormUtil.getValues(\"operativa\");\r\n        var length = $('select[name= \"operativa\"] option').length;\r\n        \r\n        //remove empty option if user only belongs to 1 operativa\r\n        if(length === 2){\r\n            $('[name = \"operativa\"]').find('option').get(0).remove();\r\n        }\r\n    });\r\n<\/script>"
                         }
                     }
                 ],
