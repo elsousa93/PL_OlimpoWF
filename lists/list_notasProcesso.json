@@ -8,9 +8,29 @@
     "checkboxPosition": "left",
     "columns": [
         {
-            "id": "column_0",
-            "label": "Anotação",
-            "name": "anotacao"
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "true",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "e.customProperties.nome_campo = 'fase_processo' and locate(cast(e.customProperties.value as string), '#currentUser.department.id#') > 0",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "id": "column_3",
+            "label": "Operativa",
+            "name": "operativa"
         },
         {
             "id": "column_1",
@@ -46,31 +66,6 @@
             "format": {
                 "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
                 "properties": {
-                    "options": [],
-                    "optionsBinder": {
-                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
-                        "properties": {
-                            "addEmptyOption": "true",
-                            "cacheInterval": "",
-                            "emptyLabel": "",
-                            "extraCondition": "e.customProperties.nome_campo = 'fase_processo' and locate(cast(e.customProperties.value as string), '#currentUser.department.id#') > 0",
-                            "formDefId": "adicionarOpcaoLV",
-                            "groupingColumn": "",
-                            "idColumn": "value",
-                            "labelColumn": "label",
-                            "useAjax": ""
-                        }
-                    }
-                }
-            },
-            "id": "column_3",
-            "label": "Operativa",
-            "name": "operativa"
-        },
-        {
-            "format": {
-                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
-                "properties": {
                     "options": [
                         {
                             "grouping": "",
@@ -97,8 +92,14 @@
             "id": "column_4",
             "label": "Tipo de Anotação",
             "name": "tipo_anotacao"
+        },
+        {
+            "id": "column_0",
+            "label": "Anotação",
+            "name": "anotacao"
         }
     ],
+    "considerFilterWhenGetTotal": "",
     "filters": [
         {
             "id": "filter_0",
