@@ -148,99 +148,110 @@
             "className": "org.joget.apps.form.model.Section",
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
-                "elements": [{
-                    "className": "org.joget.plugin.enterprise.ListGrid",
-                    "properties": {
-                        "abortRelatedRunningProcesses": "",
-                        "buttonLabel": "",
-                        "deleteFiles": "",
-                        "deleteGridData": "",
-                        "deleteMessage": "Delete row?",
-                        "deleteSubformData": "",
-                        "disabledAdd": "",
-                        "disabledDelete": "true",
-                        "enableSorting": "",
-                        "errorMessage": "Invalid number of rows",
-                        "formDefId": "notasProcesso",
-                        "height": "500",
-                        "id": "lista_notas",
-                        "label": "",
-                        "listId": "list_notasProcesso",
-                        "loadBinder": {
-                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
-                            "properties": {
-                                "foreignKey": "lista_notas_id",
-                                "formDefId": "notasProcesso"
-                            }
-                        },
-                        "options": [
-                            {
-                                "editable": "yes",
-                                "format": "opcoesDisplayGrid",
-                                "formatType": "options",
-                                "label": "Operativa",
-                                "value": "operativa",
-                                "width": ""
+                "elements": [
+                    {
+                        "className": "org.joget.plugin.enterprise.ListGrid",
+                        "properties": {
+                            "abortRelatedRunningProcesses": "",
+                            "buttonLabel": "",
+                            "deleteFiles": "",
+                            "deleteGridData": "",
+                            "deleteMessage": "Delete row?",
+                            "deleteSubformData": "",
+                            "disabledAdd": "",
+                            "disabledDelete": "true",
+                            "enableSorting": "",
+                            "errorMessage": "Invalid number of rows",
+                            "formDefId": "notasProcesso",
+                            "height": "500",
+                            "id": "lista_notas",
+                            "label": "",
+                            "listId": "list_notasProcesso",
+                            "loadBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "lista_notas_id",
+                                    "formDefId": "notasProcesso"
+                                }
                             },
-                            {
-                                "editable": "yes",
-                                "format": "yyyy-MM-dd HH:mm:ss.0|dd/MM/yyyy HH:mm:ss",
-                                "formatType": "date",
-                                "label": "Data",
-                                "value": "dateCreated",
-                                "width": ""
+                            "options": [
+                                {
+                                    "editable": "no",
+                                    "format": "opcoesDisplayGrid",
+                                    "formatType": "options",
+                                    "label": "Operativa",
+                                    "value": "operativa",
+                                    "width": ""
+                                },
+                                {
+                                    "editable": "no",
+                                    "format": "yyyy-MM-dd HH:mm:ss.0|dd/MM/yyyy HH:mm:ss",
+                                    "formatType": "date",
+                                    "label": "Data",
+                                    "value": "dateCreated",
+                                    "width": ""
+                                },
+                                {
+                                    "editable": "no",
+                                    "format": "opcoesDisplayGrid",
+                                    "formatType": "options",
+                                    "label": "Nome",
+                                    "value": "nome",
+                                    "width": ""
+                                },
+                                {
+                                    "editable": "no",
+                                    "format": "opcoesDisplayGrid",
+                                    "formatType": "options",
+                                    "label": "Tipo de Anotação",
+                                    "value": "tipo_anotacao",
+                                    "width": ""
+                                },
+                                {
+                                    "editable": "no",
+                                    "format": "",
+                                    "formatType": "nl2br",
+                                    "label": "Anotação",
+                                    "value": "anotacao",
+                                    "width": ""
+                                }
+                            ],
+                            "pageSize": "20",
+                            "permissionHidden": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "requestParams": [],
+                            "showRowNumber": "",
+                            "sortField": "sort",
+                            "storeBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "lista_notas_id",
+                                    "formDefId": "notasProcesso"
+                                }
                             },
-                            {
-                                "editable": "no",
-                                "format": "opcoesDisplayGrid",
-                                "formatType": "options",
-                                "label": "Nome",
-                                "value": "nome",
-                                "width": ""
+                            "submit-label-normal": "",
+                            "submit-label-readonly": "",
+                            "uniqueKey": "",
+                            "validateMaxRow": "",
+                            "validateMinRow": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
                             },
-                            {
-                                "editable": "no",
-                                "format": "opcoesDisplayGrid",
-                                "formatType": "options",
-                                "label": "Tipo de Anotação",
-                                "value": "tipo_anotacao",
-                                "width": ""
-                            },
-                            {
-                                "editable": "no",
-                                "format": "",
-                                "formatType": "nl2br",
-                                "label": "Anotação",
-                                "value": "anotacao",
-                                "width": ""
-                            }
-                        ],
-                        "pageSize": "20",
-                        "permissionHidden": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "requestParams": [],
-                        "showRowNumber": "",
-                        "sortField": "sort",
-                        "storeBinder": {
-                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
-                            "properties": {
-                                "foreignKey": "lista_notas_id",
-                                "formDefId": "notasProcesso"
-                            }
-                        },
-                        "submit-label-normal": "",
-                        "submit-label-readonly": "",
-                        "uniqueKey": "",
-                        "validateMaxRow": "",
-                        "validateMinRow": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "width": "900"
+                            "width": "900"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field13",
+                            "label": "",
+                            "value": "<script>\n    $(document).ready(function(){\n        $(\"div[name=multiPaged_12_geral_lista_notas] td.grid-action-cell\").hide();\n    });\n<\/script>"
+                        }
                     }
-                }],
+                ],
                 "properties": {"width": "100%"}
             }],
             "properties": {
