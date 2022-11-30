@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT ip.id as id, ip.c_nome, ip.c_cc, ip.c_nif, ip.c_estado_civil, ip.c_regime_casamento, ip.c_conjuge, ip.c_validade, ip.c_naturalidade, ip.c_morada, ip.c_codigo_interveniente, ip.c_segundo_papel, ip.c_segundo_papel_interveniente, lv.c_label as 'LabelInterveniente1', lv2.c_label as 'LabelInterveniente2', iproc.id as 'IntervenienteID' FROM app_fd_intervenientes_proc ip\nLEFT JOIN app_fd_listas_de_valores lv ON ip.c_codigo_interveniente = lv.c_value\nLEFT JOIN app_fd_listas_de_valores lv2 ON ip.c_segundo_papel_interveniente = lv2.c_value\nLEFT JOIN app_fd_interv_processo iproc ON ip.c_id_intervenientes = iproc.id"
+            "sql": "SELECT ip.id as id, ip.c_nome, ip.c_numero_cc, ip.c_nif, ip.c_estado_civil, ip.c_regime_casamento, ip.c_conjuge, ip.c_validade, ip.c_naturalidade, ip.c_morada, ip.c_codigo_interveniente, ip.c_segundo_papel, ip.c_segundo_papel_interveniente, ip.c_procurador_interveniente, ip.c_autorizante_interveniente, ip.c_interprete_do,iproc.id as 'IntervenienteID' FROM app_fd_intervenientes_proc ip\r\nLEFT JOIN app_fd_interv_processo iproc ON ip.c_id_intervenientes = iproc.id"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -50,9 +50,9 @@
             },
             "headerAlignment": "",
             "hidden": "false",
-            "id": "column_1",
-            "label": "Nº Doc. ID",
-            "name": "c_cc",
+            "id": "column_2",
+            "label": "NIF",
+            "name": "c_nif",
             "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
             "sortable": "false",
             "style": "",
@@ -73,9 +73,9 @@
             },
             "headerAlignment": "",
             "hidden": "false",
-            "id": "column_2",
-            "label": "NIF",
-            "name": "c_nif",
+            "id": "column_8",
+            "label": "CC",
+            "name": "c_numero_cc",
             "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
             "sortable": "false",
             "style": "",
@@ -347,31 +347,76 @@
             "width": ""
         },
         {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
             "datalist_type": "column",
             "exclude_export": "",
             "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
             "hidden": "true",
-            "id": "column_15",
+            "id": "column_9",
             "include_export": "true",
-            "label": "LabelInterveniente1",
-            "name": "LabelInterveniente1",
-            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {
-                "exclude_export": "",
-                "hidden": "false",
-                "include_export": ""
-            }},
-            "sortable": "false"
+            "label": "Intérprete Do",
+            "name": "c_interprete_do",
+            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
         },
         {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
             "exclude_export": "",
             "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
             "hidden": "true",
-            "id": "column_16",
+            "id": "column_17",
             "include_export": "true",
-            "label": "LabelInterveniente2",
-            "name": "LabelInterveniente2",
+            "label": "Procurador do Interveniente",
+            "name": "c_procurador_interveniente",
             "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
-            "sortable": "false"
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "true",
+            "id": "column_18",
+            "include_export": "true",
+            "label": "Autorizante do Interveniente",
+            "name": "c_autorizante_interveniente",
+            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
         }
     ],
     "considerFilterWhenGetTotal": "",
@@ -383,6 +428,7 @@
         "id": "filter_0",
         "label": "IntervenienteID",
         "name": "IntervenienteID",
+        "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
         "type": {
             "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
             "properties": {"defaultValue": ""}
