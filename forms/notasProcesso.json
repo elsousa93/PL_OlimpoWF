@@ -76,7 +76,7 @@
                             "optionsBinder": {
                                 "className": "org.joget.apps.form.lib.FormOptionsBinder",
                                 "properties": {
-                                    "addEmptyOption": "",
+                                    "addEmptyOption": "true",
                                     "cacheInterval": "",
                                     "emptyLabel": "",
                                     "extraCondition": "e.customProperties.nome_campo = 'fase_processo' and locate(cast(e.customProperties.value as string), '#currentUser.department.id#') > 0",
@@ -135,6 +135,15 @@
                             },
                             "value": "",
                             "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "set_operativa",
+                            "label": "",
+                            "value": "<script type=\"text/javascript\">\r\n    $(document).ready(function(){\r\n        //get values\r\n        var operativas = FormUtil.getValues(\"operativa\");\r\n        var length = $('select[name= \"operativa\"] option').length;\r\n        \r\n        if(length === 2){\r\n            $('[name = \"operativa\"]').find('option').get(0).remove();\r\n        }\r\n        //console.log(\"Length: \" + length);\r\n    });\r\n<\/script>"
                         }
                     }
                 ],
