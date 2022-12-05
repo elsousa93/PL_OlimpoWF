@@ -6,62 +6,66 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT id,c_data_entrada,c_n_wf_pl, c_nome_banco, c_tipo_processo, c_fase_processo, c_estado_contratacao, COUNT(id) AS 'Total'\r\nFROM app_fd_detalhe_processo\r\nGROUP BY c_nome_banco, c_estado_contratacao\r\nHAVING c_nome_banco != '' And c_tipo_processo != ''"
+            "sql": "SELECT lg.c_process_id,lg.c_campo, lg.c_data_alteracao, lg.c_novo_valor, det.c_n_wf_pl AS 'WF PL', det.c_nome_banco AS 'Banco', det.c_tipo_processo AS 'Tipo de processo'\nFROM app_fd_audit_log lg\nLEFT JOIN app_fd_detalhe_processo det ON det.c_id_processo= lg.c_process_id"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
     "columns": [
         {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
             "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
             "hidden": "false",
-            "id": "column_5",
+            "id": "column_9",
+            "label": "c_process_id",
+            "name": "c_process_id",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "WF PL",
+            "name": "WF PL",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_2",
             "label": "Banco",
-            "name": "c_nome_banco",
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_0",
-            "label": "Estado",
-            "name": "c_estado_contratacao",
-            "sortable": "false",
-            "style": "",
-            "width": ""
+            "name": "Banco",
+            "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_1",
-            "label": "Total",
-            "name": "Total",
+            "id": "column_3",
+            "label": "Tipo de processo",
+            "name": "Tipo de processo",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_6",
+            "label": "c_campo",
+            "name": "c_campo",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_8",
+            "label": "c_novo_valor",
+            "name": "c_novo_valor",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_7",
+            "label": "c_data_alteracao",
+            "name": "c_data_alteracao",
             "sortable": "false"
         }
     ],
@@ -70,18 +74,27 @@
     "disableResponsive": "",
     "filters": [
         {
+            "id": "filter_2",
+            "label": "Banco",
+            "name": "Banco",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        },
+        {
             "datalist_type": "filter",
-            "filterParamName": "d-444799-fn_c_data_entrada",
+            "filterParamName": "d-444799-fn_c_data_alteracao",
             "hidden": "",
-            "id": "filter_1",
-            "label": "Entrada",
-            "name": "c_data_entrada",
+            "id": "filter_3",
+            "label": "Data de alteração",
+            "name": "c_data_alteracao",
             "type": {
                 "className": "org.joget.plugin.enterprise.DateRangeDataListFilterType",
                 "properties": {
                     "dateStoreInUTC": "",
-                    "format": "yy/mm/dd",
-                    "formatJava": "yyyy-MM-dd",
+                    "format": "dd/yy/mm",
+                    "formatJava": "yyyy/MM/dd",
                     "fromDefaultValue": "",
                     "fromLabel": "De",
                     "showFieldLabel": "true",
@@ -89,18 +102,6 @@
                     "toLabel": "Até",
                     "yearRange": "c-10:c+10"
                 }
-            }
-        },
-        {
-            "datalist_type": "filter",
-            "filterParamName": "d-444799-fn_c_nome_banco",
-            "hidden": "",
-            "id": "filter_0",
-            "label": "Banco",
-            "name": "c_nome_banco",
-            "type": {
-                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
-                "properties": {"defaultValue": ""}
             }
         }
     ],
