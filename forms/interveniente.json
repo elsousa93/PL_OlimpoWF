@@ -389,7 +389,7 @@
                             "autoPopulate": "",
                             "id": "removerOpcoesSelectBox",
                             "label": "",
-                            "value": "<script>\n    $(document).change(function(){\n        var valoresColunaConjugue = sessionStorage.getItem(\"valoresConjugue_variavel\");\n        console.log(\"Array:\" + valoresColunaConjugue);\n        \n        valoresColunaConjugue.forEach(removerOpcao);\n            \n        function removerOpcao(item, index, arr){\n            if(item !== \"\"){\n                if($(\"select[name = 'conjugue']\").parent().find(\"select\").length !== 0){\n                    $(\"select[name = 'conjugue']\").parent().find('[value=\"'+item+'\"]').remove();\n                }\n            }\n        }\n        \n        \n    });\n<\/script>"
+                            "value": "<script>\n    $(document).change(function(){\n        var valoresColunaConjugue = sessionStorage.getItem(\"valoresConjugue_variavel\");\n        console.log(\"Array:\" + valoresColunaConjugue);\n        \n        valoresColunaConjugue.each(removerOpcao);\n            \n        function removerOpcao(item, index, arr){\n            if(item !== \"\"){\n                if($(\"select[name = 'conjugue']\").parent().find(\"select\").length !== 0){\n                    $(\"select[name = 'conjugue']\").parent().find('[value=\"'+item+'\"]').remove();\n                }\n            }\n        }\n        \n        \n    });\n<\/script>"
                         }
                     },
                     {
