@@ -395,6 +395,15 @@
                         "className": "org.joget.apps.form.lib.CustomHTML",
                         "properties": {
                             "autoPopulate": "",
+                            "id": "incrementarVariavelSession",
+                            "label": "",
+                            "value": "<script>\r\n\r\n   $(window).on('load', function() {\r\n        //Incrementar variavel\r\n        var valor = sessionStorage.getItem(\"valor_variavel\");\r\n        \r\n        var field = FormUtil.getField(\"variavel\");\r\n        \r\n        var inteiro;\r\n        inteiro = parseInt(valor, inteiro);\r\n        inteiro++;\r\n            \r\n        $(field).val(inteiro.toString()); //set value\r\n        \r\n        sessionStorage.setItem(\"valor_variavel\", inteiro.toString());\r\n        \r\n        \r\n        //Forçar valor ultimo_conjugue a tomar o valor da select box\r\n        var valor_ultimo_conjugue_preenchido = FormUtil.getValue(\"valor_ultimo_conjugue\");\r\n        var campo_ultimo_conjugue = FormUtil.getField(\"ultimo_conjugue\");\r\n        campo_ultimo_conjugue.val(valor_ultimo_conjugue_preenchido);\r\n        \r\n        //console.log(\"Valor campo ultimo conjugue \" + campo_ultimo_conjugue.val());\r\n    });\r\n    \r\n<\/script>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
                             "id": "logica_intervenientes",
                             "label": "",
                             "permission_rules": {
@@ -415,15 +424,6 @@
                                 "973de9e9-e890-860f-035e-b234371b728e": {}
                             },
                             "value": "<script>\n   $(document).change(function(){\n        var tipoProcesso = \"#form.detalhe_processo.tipo_processo[{form.processos.detalhe_processo}]#\";\n        tipoProcesso = \"+\" + tipoProcesso + \"+\";\n         \n          /**Falta corrigir valor do tipo de processo CVMHFiança Judicial no if**/\n    \n        if(!(tipoProcesso.includes(\"+CV+\") ||  tipoProcesso.includes(\"+CV12+\") || tipoProcesso.includes(\"+CVD12I+\") || tipoProcesso.includes(\"+CVD12IE+\") \n        || tipoProcesso.includes(\"+CVMH+\") || tipoProcesso.includes(\"+CVMHIE+\") || tipoProcesso.includes(\"+CVMH12+\") || tipoProcesso.includes(\"+CVMHJ+\") || tipoProcesso.includes(\"+CVMHF+\") \n        || tipoProcesso.includes(\"+CVMHFIE+\") || tipoProcesso.includes(\"+CVMHF12+\") || tipoProcesso.includes(\"+CVMHFJ+\"))){\n           $(\"#sociedade\").remove();\n        }\n        \n        if(!(tipoProcesso.includes(\"+MH+\") || tipoProcesso.includes(\"+MHC+\") || tipoProcesso.includes(\"+MHO+\") || tipoProcesso.includes(\"+MHF+\")  || tipoProcesso.includes(\"+MHFC+\") \n        || tipoProcesso.includes(\"+MHFO+\") ||  tipoProcesso.includes(\"+ACHC+\") || tipoProcesso.includes(\"+ACHO+\") || tipoProcesso.includes(\"+ACHFC+\") || tipoProcesso.includes(\"+ACHFO+\"))){\n           $(\"#hipotecantes\").remove();\n        }\n        \n        \n        var origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\n        \n        if(!(origem_processo === \"ACE\" || origem_processo === \"PRE\" || origem_processo === \"TRD\")){\n           \n            $(\"select[id^=codigo_interveniente]\").parent().remove();\n            $(\"select[id^=tipo_documento]\").parent().remove();\n            $(\"input#nif\").parent().remove();\n            $(\"input#naturalidade\").parent().remove();\n            $(\"input#telefone\").parent().remove();\n            $(\"input#email\").parent().remove();\n            $(\"textarea#morada\").parent().remove();\n            \n            $(\"div[id^=segundo_papel]\").parent().remove();\n            $(\"select[id^=segundo_papel]\").parent().remove();\n            \n            $(\"div#particulares\").remove();\n            \n            $(\"div#sociedade\").remove();\n            \n            $(\"select#interprete_do\").parent().parent().remove();\n            \n            $(\"select[id^=procurador_interveniente]\").parent().remove();\n           \n            $(\"div#procurador\").remove();\n           \n           \n        }\n        $(\"[name = 'codigo_interveniente']\").parent().hide();\n        $(\"[name = 'ultimo_codigo_interveniente']\").parent().hide();\n        $(\"[name = 'ultimo_autorizante_interveniente']\").parent().hide();\n        $(\"[name = 'ultimo_procurador_interveniente']\").parent().hide();\n        $(\"[name = 'ultimo_segundo_papel_interveniente']\").parent().hide();\n        $(\"[name = 'ultimo_conjugue']\").parent().hide();\n        \n        \n    });\n    \n    \n    \n    \n    \n    \n    \n    \n<\/script>"
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.CustomHTML",
-                        "properties": {
-                            "autoPopulate": "",
-                            "id": "incrementarVariavelSession",
-                            "label": "",
-                            "value": "<script>\r\n\r\n   $(window).on('load', function() {\r\n        //Incrementar variavel\r\n        var valor = sessionStorage.getItem(\"valor_variavel\");\r\n        \r\n        var field = FormUtil.getField(\"variavel\");\r\n        \r\n        var inteiro;\r\n        inteiro = parseInt(valor, inteiro);\r\n        inteiro++;\r\n            \r\n        $(field).val(inteiro.toString()); //set value\r\n        \r\n        sessionStorage.setItem(\"valor_variavel\", inteiro.toString());\r\n        \r\n        \r\n        //Forçar valor ultimo_conjugue a tomar o valor da select box\r\n        var valor_ultimo_conjugue_preenchido = FormUtil.getValue(\"valor_ultimo_conjugue\");\r\n        var campo_ultimo_conjugue = FormUtil.getField(\"ultimo_conjugue\");\r\n        campo_ultimo_conjugue.val(valor_ultimo_conjugue_preenchido);\r\n        \r\n        //console.log(\"Valor campo ultimo conjugue \" + campo_ultimo_conjugue.val());\r\n    });\r\n    \r\n<\/script>"
                         }
                     }
                 ],
