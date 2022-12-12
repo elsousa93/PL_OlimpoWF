@@ -808,7 +808,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="contratacao_bst"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2279.8828125,34.5234375"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2258.875,34.515625"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="ultimaAtividadeBCPCont" Name="Configurar Ultima Atividade">
@@ -1105,9 +1105,98 @@
                         <No/>
                     </Implementation>
                     <Performer>contratacao_aba</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="contratacao_aba"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="175,41.5625"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="178,166.5625"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route24_1">
+                    <Route/>
+                    <Performer>contratacao_aba</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition100"/>
+                                    <TransitionRef Id="transition104"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="contratacao_aba"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="211,39.5625"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route25_1">
+                    <Route/>
+                    <Performer>contratacao_aba</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition102"/>
+                                    <TransitionRef Id="transition103"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="contratacao_aba"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="447,172.5625"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="validacaoBancariaLegalABA" Name="Validação Bancária e Legal">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>contratacao_aba</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="contratacao_aba"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1202,42.5625"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="ultimaAtividadeABACont" Name="Configurar Ultima Atividade">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>contratacao_aba</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="contratacao_aba"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="707,44.5625"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route26">
+                    <Route/>
+                    <Performer>contratacao_aba</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition107"/>
+                                    <TransitionRef Id="transition108"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="contratacao_aba"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2294,52.5625"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -1465,6 +1554,7 @@
                     <Condition Type="OTHERWISE"/>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route18" Id="transition84" To="ultimaAtividadeBSTCont">
@@ -1601,7 +1691,7 @@
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;flag_contratacao&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;1&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="route1" Id="transition99" To="PreenchimentoProcessoABA">
+                <Transition From="route1" Id="transition99" To="route24_1">
                     <Condition Type="CONDITION">sub_banco === 'ABA'</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
@@ -1609,9 +1699,63 @@
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;sub_banco&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;ABA&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="PreenchimentoProcessoABA" Id="transition100" To="finalizarContratacao">
+                <Transition From="route24_1" Id="transition100" To="PreenchimentoProcessoABA">
+                    <Condition Type="OTHERWISE"/>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="PreenchimentoProcessoABA" Id="transition101" To="route25_1">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route25_1" Id="transition102" To="PreenchimentoProcessoABA">
+                    <Condition Type="CONDITION">estado === 'PND' || estado === 'DEF'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;estado&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;PND&quot;},{&quot;join&quot;:&quot;||&quot;,&quot;variable&quot;:&quot;estado&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;DEF&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route25_1" Id="transition103" To="ultimaAtividadeABACont">
+                    <Condition Type="OTHERWISE"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route24_1" Id="transition104" To="ultimaAtividadeABACont">
+                    <Condition Type="CONDITION">flag_contratacao === '1'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;flag_contratacao&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;1&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="ultimaAtividadeABACont" Id="transition105" To="validacaoBancariaLegalABA">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="validacaoBancariaLegalABA" Id="transition106" To="route26">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route26" Id="transition107" To="validacaoBancariaLegalABA">
+                    <Condition Type="CONDITION">estado === 'PND' || estado === 'DEF'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;estado&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;PND&quot;},{&quot;join&quot;:&quot;||&quot;,&quot;variable&quot;:&quot;estado&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;DEF&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route26" Id="transition108" To="finalizarContratacao">
+                    <Condition Type="OTHERWISE"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
             </Transitions>
