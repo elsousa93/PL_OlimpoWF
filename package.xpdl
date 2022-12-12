@@ -338,6 +338,7 @@
                                     <TransitionRef Id="transition70"/>
                                     <TransitionRef Id="transition79"/>
                                     <TransitionRef Id="transition97"/>
+                                    <TransitionRef Id="transition99"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
@@ -1099,6 +1100,16 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="139,7.5625"/>
                     </ExtendedAttributes>
                 </Activity>
+                <Activity Id="PreenchimentoProcessoABA" Name="Preenchimento do Processo">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>contratacao_aba</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="contratacao_aba"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="175,41.5625"/>
+                    </ExtendedAttributes>
+                </Activity>
             </Activities>
             <Transitions>
                 <Transition From="ConfigurarProcesso" Id="transition16" To="route1">
@@ -1588,6 +1599,19 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;flag_contratacao&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;1&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route1" Id="transition99" To="PreenchimentoProcessoABA">
+                    <Condition Type="CONDITION">sub_banco === 'ABA'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;sub_banco&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;ABA&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="PreenchimentoProcessoABA" Id="transition100" To="finalizarContratacao">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
             </Transitions>
