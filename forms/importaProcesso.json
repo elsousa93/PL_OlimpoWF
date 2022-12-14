@@ -7,6 +7,86 @@
                 "className": "org.joget.apps.form.model.Column",
                 "elements": [
                     {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "nome_banco",
+                            "label": "Nome do Banco",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "true",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "extraCondition": "e.customProperties.nome_campo = 'nome_banco' and locate(cast(e.customProperties.value as string), '#currentUser.department.id#') > 0",
+                                    "formDefId": "adicionarOpcaoLV",
+                                    "groupingColumn": "",
+                                    "idColumn": "value",
+                                    "labelColumn": "label",
+                                    "useAjax": ""
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.DefaultValidator",
+                                "properties": {
+                                    "mandatory": "true",
+                                    "message": "#i18n.mandatorymsg#",
+                                    "type": ""
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "set_banco",
+                            "label": "",
+                            "value": "<script type=\"text/javascript\">\r\n    $(document).ready(function(){\r\n        //var nome_banco = \"nome_banco\";\r\n  \r\n        //get values\r\n        var nomes_banco = FormUtil.getValues(\"nome_banco\");\r\n        var length = $('select[name= \"nome_banco\"] option').length;\r\n        \r\n        if(length === 2){\r\n            $('[name = \"nome_banco\"]').find('option').get(0).remove();\r\n        }\r\n        //console.log(\"Length: \" + length);\r\n    });\r\n<\/script>"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "TODO:\n- Adicionar campos em falta (código da agencia)",
+                "id": "section3",
+                "join": "",
+                "label": "Banco",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "true",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "gerar_numero",
+                "visibilityValue": "sim"
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
                         "className": "org.joget.apps.form.lib.HiddenField",
                         "properties": {
                             "id": "processo_manual",
@@ -180,86 +260,6 @@
                 },
                 "visibilityControl": "",
                 "visibilityValue": ""
-            }
-        },
-        {
-            "className": "org.joget.apps.form.model.Section",
-            "elements": [{
-                "className": "org.joget.apps.form.model.Column",
-                "elements": [
-                    {
-                        "className": "org.joget.apps.form.lib.SelectBox",
-                        "properties": {
-                            "controlField": "",
-                            "id": "nome_banco",
-                            "label": "Nome do Banco",
-                            "multiple": "",
-                            "options": [],
-                            "optionsBinder": {
-                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
-                                "properties": {
-                                    "addEmptyOption": "true",
-                                    "cacheInterval": "",
-                                    "emptyLabel": "",
-                                    "extraCondition": "e.customProperties.nome_campo = 'nome_banco' and locate(cast(e.customProperties.value as string), '#currentUser.department.id#') > 0",
-                                    "formDefId": "adicionarOpcaoLV",
-                                    "groupingColumn": "",
-                                    "idColumn": "value",
-                                    "labelColumn": "label",
-                                    "useAjax": ""
-                                }
-                            },
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "validator": {
-                                "className": "org.joget.apps.form.lib.DefaultValidator",
-                                "properties": {
-                                    "mandatory": "true",
-                                    "message": "#i18n.mandatorymsg#",
-                                    "type": ""
-                                }
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.CustomHTML",
-                        "properties": {
-                            "autoPopulate": "",
-                            "id": "set_banco",
-                            "label": "",
-                            "value": "<script type=\"text/javascript\">\r\n    $(document).ready(function(){\r\n        //var nome_banco = \"nome_banco\";\r\n  \r\n        //get values\r\n        var nomes_banco = FormUtil.getValues(\"nome_banco\");\r\n        var length = $('select[name= \"nome_banco\"] option').length;\r\n        \r\n        if(length === 2){\r\n            $('[name = \"nome_banco\"]').find('option').get(0).remove();\r\n        }\r\n        //console.log(\"Length: \" + length);\r\n    });\r\n<\/script>"
-                        }
-                    }
-                ],
-                "properties": {"width": "100%"}
-            }],
-            "properties": {
-                "comment": "TODO:\n- Adicionar campos em falta (código da agencia)",
-                "id": "section3",
-                "join": "",
-                "label": "Banco",
-                "loadBinder": {
-                    "className": "",
-                    "properties": {}
-                },
-                "permission": {
-                    "className": "",
-                    "properties": {}
-                },
-                "permissionReadonly": "",
-                "readonly": "",
-                "readonlyLabel": "",
-                "regex": "",
-                "reverse": "true",
-                "storeBinder": {
-                    "className": "",
-                    "properties": {}
-                },
-                "visibilityControl": "gerar_numero",
-                "visibilityValue": "sim"
             }
         },
         {
