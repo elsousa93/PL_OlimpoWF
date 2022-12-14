@@ -3376,6 +3376,16 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1103,36"/>
                     </ExtendedAttributes>
                 </Activity>
+                <Activity Id="tool1" Name="Atualizar variáveis de Alerta">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>remetente</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="remetente"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="963,35"/>
+                    </ExtendedAttributes>
+                </Activity>
             </Activities>
             <Transitions>
                 <Transition From="confirmarDiligencia" Id="transition2" To="fecha">
@@ -3403,7 +3413,12 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="fecha" Id="transition7" To="route3">
+                <Transition From="fecha" Id="transition7" To="tool1">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="tool1" Id="transition8" To="route3">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
