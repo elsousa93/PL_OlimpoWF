@@ -6,104 +6,97 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT id, c_data_entrada,c_nome_banco, c_tipo_processo, COUNT(id) AS 'Total'\r\nFROM app_fd_detalhe_processo\r\nGROUP BY c_nome_banco, c_tipo_processo\r\nHAVING c_nome_banco NOT LIKE ''AND c_tipo_processo NOT LIKE ''"
+            "sql": "SELECT det.c_nome_banco AS 'Banco', det.c_tipo_processo AS 'Tipo de processo',det.c_n_wf_pl as 'WF PL', det.c_nome_cliente AS 'Nome do Cliente',\nsla.c_data_inicio as 'Inicio', sla.c_data_fim as 'Fim' , sla.c_data_conclusao as 'Conclusão',sla.c_nome_atividade as 'Atividade', sla.c_estado_atividade as 'Estado', sla.c_duracao as 'Duração'\nFROM app_fd_sla_atividade sla\nLEFT JOIN app_fd_detalhe_processo det ON det.c_id_processo = sla.c_id_processo\nWHERE sla.c_nome_atividade IS NOT NULL"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
     "columns": [
         {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
             "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
             "hidden": "false",
-            "id": "column_0",
+            "id": "column_3",
             "label": "Banco",
-            "name": "c_nome_banco",
-            "sortable": "false",
-            "style": "",
-            "width": ""
+            "name": "Banco",
+            "sortable": "false"
         },
         {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
             "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
             "hidden": "false",
-            "id": "column_1",
+            "id": "column_5",
             "label": "Tipo de processo",
-            "name": "c_tipo_processo",
-            "sortable": "false",
-            "style": "",
-            "width": ""
+            "name": "Tipo de processo",
+            "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_2",
-            "label": "Total",
-            "name": "Total",
+            "id": "column_4",
+            "label": "Nome do Cliente",
+            "name": "Nome do Cliente",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_6",
+            "label": "WF PL",
+            "name": "WF PL",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_7",
+            "label": "Atividade",
+            "name": "Atividade",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_12",
+            "label": "Estado",
+            "name": "Estado",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_8",
+            "label": "Inicio",
+            "name": "Inicio",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_9",
+            "label": "Fim",
+            "name": "Fim",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_10",
+            "label": "Conclusão",
+            "name": "Conclusão",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_11",
+            "label": "Duração",
+            "name": "Duração",
             "sortable": "false"
         }
     ],
     "considerFilterWhenGetTotal": "",
     "description": "",
     "disableResponsive": "",
-    "filters": [
-        {
-            "datalist_type": "filter",
-            "filterParamName": "d-444817-fn_c_data_entrada",
-            "hidden": "",
-            "id": "filter_0",
-            "label": "Data entrada",
-            "name": "c_data_entrada",
-            "type": {
-                "className": "org.joget.plugin.enterprise.DateRangeDataListFilterType",
-                "properties": {
-                    "dateStoreInUTC": "",
-                    "format": "yy/mm/dd",
-                    "formatJava": "yyyy/MM/dd",
-                    "fromDefaultValue": "",
-                    "fromLabel": "De",
-                    "showFieldLabel": "true",
-                    "toDefaultValue": "",
-                    "toLabel": "Até",
-                    "yearRange": "c-10:c+10"
-                }
-            }
-        },
-        {
-            "datalist_type": "filter",
-            "filterParamName": "d-444817-fn_c_nome_banco",
-            "hidden": "",
-            "id": "filter_1",
-            "label": "Banco",
-            "name": "c_nome_banco",
-            "type": {
-                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
-                "properties": {"defaultValue": ""}
-            }
-        }
-    ],
+    "filters": [],
     "hidePageSize": "",
     "id": "erm_tp",
     "name": "erm_tp",
