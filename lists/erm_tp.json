@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT det.c_nome_banco AS 'Banco', det.c_tipo_processo AS 'Tipo de processo',det.c_n_wf_pl as 'WF PL', det.c_nome_cliente AS 'Nome do Cliente',\nsla.c_data_inicio as 'Inicio', sla.c_data_fim as 'Fim' , sla.c_data_conclusao as 'Conclusão',sla.c_nome_atividade as 'Atividade', sla.c_estado_atividade as 'Estado', sla.c_duracao as 'Duração'\nFROM app_fd_sla_atividade sla\nLEFT JOIN app_fd_detalhe_processo det ON det.c_id_processo = sla.c_id_processo\n\n"
+            "sql": "SELECT sp.Id as id, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_pl as NumeroWFPL, dp.c_tipo_processo as TipoProcesso, dp.c_nome_cliente as NomeCliente,\nsla.c_data_inicio as DataInicio,sla.c_data_fim as DataFim, sla.c_data_conclusao, sla.c_nome_atividade, sla.c_estado_atividade,sla.c_duracao\nFROM app_fd_sla_atividade sla\nLEFT JOIN shkprocesses sp ON sla.c_id_processo = sp.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\n"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -15,88 +15,96 @@
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_3",
-            "label": "Banco",
-            "name": "Banco",
+            "id": "column_23",
+            "label": "NomeBanco",
+            "name": "NomeBanco",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_5",
-            "label": "Tipo de processo",
-            "name": "Tipo de processo",
+            "id": "column_24",
+            "label": "NomeCliente",
+            "name": "NomeCliente",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_4",
-            "label": "Nome do Cliente",
-            "name": "Nome do Cliente",
+            "id": "column_25",
+            "label": "TipoProcesso",
+            "name": "TipoProcesso",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_6",
-            "label": "WF PL",
-            "name": "WF PL",
+            "id": "column_22",
+            "label": "NumeroWFPL",
+            "name": "NumeroWFPL",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_7",
-            "label": "Atividade",
-            "name": "Atividade",
+            "id": "column_20",
+            "label": "c_data_conclusao",
+            "name": "c_data_conclusao",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_12",
-            "label": "Estado",
-            "name": "Estado",
+            "id": "column_18",
+            "label": "c_nome_atividade",
+            "name": "c_nome_atividade",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_8",
-            "label": "Inicio",
-            "name": "Inicio",
+            "id": "column_19",
+            "label": "c_estado_atividade",
+            "name": "c_estado_atividade",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_9",
-            "label": "Fim",
-            "name": "Fim",
+            "id": "column_26",
+            "label": "DataInicio",
+            "name": "DataInicio",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_10",
-            "label": "Conclusão",
-            "name": "Conclusão",
+            "id": "column_27",
+            "label": "DataFim",
+            "name": "DataFim",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_11",
-            "label": "Duração",
-            "name": "Duração",
+            "id": "column_21",
+            "label": "c_duracao",
+            "name": "c_duracao",
             "sortable": "false"
         }
     ],
     "considerFilterWhenGetTotal": "",
     "description": "",
     "disableResponsive": "",
-    "filters": [],
+    "filters": [{
+        "id": "filter_0",
+        "label": "NumeroWFPL",
+        "name": "NumeroWFPL",
+        "type": {
+            "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+            "properties": {}
+        }
+    }],
     "hidePageSize": "",
     "id": "erm_tp",
     "name": "erm_tp",
