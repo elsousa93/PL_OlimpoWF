@@ -1535,6 +1535,106 @@
                         }
                     },
                     {
+                        "className": "org.joget.apps.form.lib.DatePicker",
+                        "properties": {
+                            "allowManual": "",
+                            "currentDateAs": "",
+                            "dataFormat": "yyyy-MM-dd",
+                            "datePickerType": "",
+                            "endDateFieldId": "",
+                            "format": "dd/mm/yy",
+                            "id": "data_emissao_fine",
+                            "label": "Data de Emissão da FINE",
+                            "permission_rules": {
+                                "04d94e96-37aa-1e4b-d5fe-5595f325e232": {},
+                                "1fb8f1eb-7717-2af5-ccf1-03a73c560f16": {},
+                                "966fc1ca-d0b8-439f-6ab3-76cf9a599c75": {},
+                                "9f700b46-bde2-cc69-98a7-c562c400ad6d": {},
+                                "aa6ccea8-6e7f-1433-8d14-32132e9bf1e0": {},
+                                "d07f81ea-a80c-4560-01fd-7772c1762b0f": {},
+                                "d6fe0da9-3aa3-9d28-ded2-07a6fb980292": {},
+                                "f6d47cc6-84dc-c359-9ec5-794a6dcbf118": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "startDateFieldId": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": "",
+                            "yearRange": "c:c+10"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.DatePicker",
+                        "properties": {
+                            "allowManual": "true",
+                            "currentDateAs": "",
+                            "dataFormat": "yyyy-MM-dd",
+                            "datePickerType": "",
+                            "endDateFieldId": "",
+                            "format": "dd/mm/yy",
+                            "id": "validade_proposta",
+                            "label": "Validade da Proposta",
+                            "permission_rules": {
+                                "04d94e96-37aa-1e4b-d5fe-5595f325e232": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "1fb8f1eb-7717-2af5-ccf1-03a73c560f16": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "6c9a9c6d-bd10-4f4a-0682-541bcbb1222b": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "966fc1ca-d0b8-439f-6ab3-76cf9a599c75": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "9f700b46-bde2-cc69-98a7-c562c400ad6d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "9fb8a08a-3747-1f8e-48ac-fff77f61d611": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "aa6ccea8-6e7f-1433-8d14-32132e9bf1e0": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "d07f81ea-a80c-4560-01fd-7772c1762b0f": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "d6fe0da9-3aa3-9d28-ded2-07a6fb980292": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "f6d47cc6-84dc-c359-9ec5-794a6dcbf118": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                }
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "startDateFieldId": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": "",
+                            "yearRange": "c-10:c+10"
+                        }
+                    },
+                    {
                         "className": "org.joget.apps.form.lib.CustomHTML",
                         "properties": {
                             "autoPopulate": "",
@@ -1551,7 +1651,7 @@
                                 "d3ad26eb-c6f2-0304-3fb3-c3b3875470a2": {},
                                 "e65f7ec0-8c54-5c64-f115-db763624cf5f": {}
                             },
-                            "value": "<script>\n    $(document).ready(function(){\n        var tipoProcesso = \"#form.detalhe_processo.tipo_processo[{form.processos.detalhe_processo}]#\";\n        tipoProcesso = \"+\" + tipoProcesso + \"+\";\n        \n        if(!(tipoProcesso.includes(\"+ACH+\") || tipoProcesso.includes(\"+ACHC+\") || tipoProcesso.includes(\"+ACHO+\") || tipoProcesso.includes(\"+ACHFC+\") || tipoProcesso.includes(\"+ACHFO+\") \n                || tipoProcesso.includes(\"+CVMH+\") || tipoProcesso.includes(\"+CVMHIE+\") || tipoProcesso.includes(\"+CVMH12+\") || tipoProcesso.includes(\"+CVMHJ+\") \n                || tipoProcesso.includes(\"+CVMHF+\") || tipoProcesso.includes(\"+CVMHFIE+\") || tipoProcesso.includes(\"+CVMHF12+\")|| tipoProcesso.includes(\"+CVMHJ+\")\n                || tipoProcesso.includes(\"+MH+\") || tipoProcesso.includes(\"+MHC+\") || tipoProcesso.includes(\"+MHO+\")|| tipoProcesso.includes(\"+MHF+\")\n                || tipoProcesso.includes(\"+MHFC+\") || tipoProcesso.includes(\"+MHFO+\")\n                || tipoProcesso.includes(\"+TOIC+\") || tipoProcesso.includes(\"+TOICF+\"))){\n            \n        \n        $(\"input[id*=valor_emprestimo]\").parent().remove();\n        $(\"select[id*=tipo_emprestimo]\").parent().remove();\n        $(\"select[id*=tipo_regime]\").parent().remove();\n        $(\"select[id*=tipo_produto]\").parent().remove();\n        \n        }\n        \n        if(!(tipoProcesso.includes(\"+ACHC+\") || tipoProcesso.includes(\"+ACHO+\") || tipoProcesso.includes(\"+ACHFC+\") || tipoProcesso.includes(\"+ACHFO+\"))){\n            $(\"div[id*=analiseBancaria_obras]\").remove();\n            \n        }\n        \n        var origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\n        if(!(origem_processo === \"ACE\" || origem_processo === \"PRE\" || origem_processo === \"TRD\")){\n         \n            $(\"select[id*=balcao_levantamento_cheque]\").parent().remove();\n            \n        }\n        \n        /*Mostrar e esconder campos de Valor do emprestimo*/\n        var auxValor =\"#form.detalhe_processo.tipo_processo[{form.processos.detalhe_processo}]#\"; //$(\"[name = multiPaged_2_detalheProcesso_tipo_processo]\").val(); Substituido por DP não é preciso o hidden Field\n        auxValor = '+' + auxValor.replaceAll('+', '++') + '+';\n        //console.log(auxValor);\n        var camposAMostrar = auxValor.match(/(\\+ACH\\+)|(\\+ACHC\\+)|(\\+ACHO\\+)|(\\+ACHF\\+)|(\\+ACHFC\\+)|(\\+ACHFO\\+)|(\\+CVMH\\+)|(\\+CVMHIE\\+)|(\\+CVMH12\\+)|(\\+CVMHJ\\+)|(\\+CVMHF\\+)|(\\+CVMHFIE\\+)|(\\+CVMHF12\\+)|(\\+CVMHFJ\\+)|(\\+MH\\+)|(\\+MHC\\+)|(\\+MHO\\+)|(\\+MHF\\+)|(\\+MHFC\\+)|(\\+MHFO\\+)|(\\+PAR\\+)|(\\+PER\\+)|(\\+TOIC\\+)|(\\+TOICF\\+)|(\\+SUC\\+)|(\\+SUCF\\+)|(\\+TOICF\\+)/g);\n        if(camposAMostrar!= null){\n        var numCamposAMostrar = camposAMostrar.length;\n        //console.log(numCamposAMostrar);\n        \n            if (numCamposAMostrar < 2){\n                $(\"[name = multiPaged_7_analiseBancaria_valor_emprestimo_2]\").parent().hide();\n                $(\"[name = multiPaged_7_analiseBancaria_tipo_regime_2]\").parent().hide();\n            }else{\n                $(\"[name = multiPaged_7_analiseBancaria_valor_emprestimo_2]\").parent().show();\n                $(\"[name = multiPaged_7_analiseBancaria_tipo_regime_2]\").parent().show();\n            }\n            \n            if (numCamposAMostrar < 3){\n                $(\"[name = multiPaged_7_analiseBancaria_valor_emprestimo_3]\").parent().hide();\n                $(\"[name = multiPaged_7_analiseBancaria_tipo_regime_3]\").parent().hide();\n            }else{\n                $(\"[name = multiPaged_7_analiseBancaria_valor_emprestimo_3]\").parent().show();\n                $(\"[name = multiPaged_7_analiseBancaria_tipo_regime_3]\").parent().show();\n            }\n            \n            if (numCamposAMostrar < 4){\n                $(\"[name = multiPaged_7_analiseBancaria_valor_emprestimo_4]\").parent().hide();\n                $(\"[name = multiPaged_7_analiseBancaria_tipo_regime_4]\").parent().hide();\n            }else{\n                $(\"[name = multiPaged_7_analiseBancaria_valor_emprestimo_4]\").parent().show();\n                $(\"[name = multiPaged_7_analiseBancaria_tipo_regime_4]\").parent().show();\n            }\n            \n            if (numCamposAMostrar < 5){\n                $(\"[name = multiPaged_7_analiseBancaria_valor_emprestimo_5]\").parent().hide();\n                $(\"[name = multiPaged_7_analiseBancaria_tipo_regime_5]\").parent().hide();\n            }else{\n                $(\"[name = multiPaged_7_analiseBancaria_valor_emprestimo_5]\").parent().show();\n                $(\"[name = multiPaged_7_analiseBancaria_tipo_regime_5]\").parent().show();\n            }\n        }\n        \n\n    });\n    \n    $(window).load(function(){\n        $(\"form#processo :input\").change(function(){\n            $(\"input#flag_alteracoes\").attr(\"value\",\"SIM\");    \n        });\n    });\n    \n<\/script>"
+                            "value": "<script>\n    $(document).ready(function(){\n        var tipoProcesso = \"#form.detalhe_processo.tipo_processo[{form.processos.detalhe_processo}]#\";\n        tipoProcesso = \"+\" + tipoProcesso + \"+\";\n        \n        if(!(tipoProcesso.includes(\"+ACH+\") || tipoProcesso.includes(\"+ACHC+\") || tipoProcesso.includes(\"+ACHO+\") || tipoProcesso.includes(\"+ACHFC+\") || tipoProcesso.includes(\"+ACHFO+\") \n                || tipoProcesso.includes(\"+CVMH+\") || tipoProcesso.includes(\"+CVMHIE+\") || tipoProcesso.includes(\"+CVMH12+\") || tipoProcesso.includes(\"+CVMHJ+\") \n                || tipoProcesso.includes(\"+CVMHF+\") || tipoProcesso.includes(\"+CVMHFIE+\") || tipoProcesso.includes(\"+CVMHF12+\")|| tipoProcesso.includes(\"+CVMHJ+\")\n                || tipoProcesso.includes(\"+MH+\") || tipoProcesso.includes(\"+MHC+\") || tipoProcesso.includes(\"+MHO+\")|| tipoProcesso.includes(\"+MHF+\")\n                || tipoProcesso.includes(\"+MHFC+\") || tipoProcesso.includes(\"+MHFO+\")\n                || tipoProcesso.includes(\"+TOIC+\") || tipoProcesso.includes(\"+TOICF+\"))){\n            \n        \n        $(\"input[id*=valor_emprestimo]\").parent().remove();\n        $(\"select[id*=tipo_emprestimo]\").parent().remove();\n        $(\"select[id*=tipo_regime]\").parent().remove();\n        $(\"select[id*=tipo_produto]\").parent().remove();\n        \n        }\n        \n        if(!(tipoProcesso.includes(\"+ACHC+\") || tipoProcesso.includes(\"+ACHO+\") || tipoProcesso.includes(\"+ACHFC+\") || tipoProcesso.includes(\"+ACHFO+\"))){\n            $(\"div[id*=analiseBancaria_obras]\").remove();\n            \n        }\n        \n        var origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\n        if(!(origem_processo === \"ACE\" || origem_processo === \"PRE\" || origem_processo === \"TRD\")){\n         \n            $(\"select[id*=balcao_levantamento_cheque]\").parent().remove();\n            \n        }\n        \n        /*Mostrar e esconder campos de Valor do emprestimo*/\n        var auxValor =\"#form.detalhe_processo.tipo_processo[{form.processos.detalhe_processo}]#\"; //$(\"[name = multiPaged_2_detalheProcesso_tipo_processo]\").val(); Substituido por DP não é preciso o hidden Field\n        auxValor = '+' + auxValor.replaceAll('+', '++') + '+';\n        //console.log(auxValor);\n        var camposAMostrar = auxValor.match(/(\\+ACH\\+)|(\\+ACHC\\+)|(\\+ACHO\\+)|(\\+ACHF\\+)|(\\+ACHFC\\+)|(\\+ACHFO\\+)|(\\+CVMH\\+)|(\\+CVMHIE\\+)|(\\+CVMH12\\+)|(\\+CVMHJ\\+)|(\\+CVMHF\\+)|(\\+CVMHFIE\\+)|(\\+CVMHF12\\+)|(\\+CVMHFJ\\+)|(\\+MH\\+)|(\\+MHC\\+)|(\\+MHO\\+)|(\\+MHF\\+)|(\\+MHFC\\+)|(\\+MHFO\\+)|(\\+PAR\\+)|(\\+PER\\+)|(\\+TOIC\\+)|(\\+TOICF\\+)|(\\+SUC\\+)|(\\+SUCF\\+)|(\\+TOICF\\+)/g);\n        if(camposAMostrar!= null){\n        var numCamposAMostrar = camposAMostrar.length;\n        //console.log(numCamposAMostrar);\n        \n            if (numCamposAMostrar < 2){\n                $(\"[name = multiPaged_7_analiseBancaria_valor_emprestimo_2]\").parent().hide();\n                $(\"[name = multiPaged_7_analiseBancaria_tipo_regime_2]\").parent().hide();\n            }else{\n                $(\"[name = multiPaged_7_analiseBancaria_valor_emprestimo_2]\").parent().show();\n                $(\"[name = multiPaged_7_analiseBancaria_tipo_regime_2]\").parent().show();\n            }\n            \n            if (numCamposAMostrar < 3){\n                $(\"[name = multiPaged_7_analiseBancaria_valor_emprestimo_3]\").parent().hide();\n                $(\"[name = multiPaged_7_analiseBancaria_tipo_regime_3]\").parent().hide();\n            }else{\n                $(\"[name = multiPaged_7_analiseBancaria_valor_emprestimo_3]\").parent().show();\n                $(\"[name = multiPaged_7_analiseBancaria_tipo_regime_3]\").parent().show();\n            }\n            \n            if (numCamposAMostrar < 4){\n                $(\"[name = multiPaged_7_analiseBancaria_valor_emprestimo_4]\").parent().hide();\n                $(\"[name = multiPaged_7_analiseBancaria_tipo_regime_4]\").parent().hide();\n            }else{\n                $(\"[name = multiPaged_7_analiseBancaria_valor_emprestimo_4]\").parent().show();\n                $(\"[name = multiPaged_7_analiseBancaria_tipo_regime_4]\").parent().show();\n            }\n            \n            if (numCamposAMostrar < 5){\n                $(\"[name = multiPaged_7_analiseBancaria_valor_emprestimo_5]\").parent().hide();\n                $(\"[name = multiPaged_7_analiseBancaria_tipo_regime_5]\").parent().hide();\n            }else{\n                $(\"[name = multiPaged_7_analiseBancaria_valor_emprestimo_5]\").parent().show();\n                $(\"[name = multiPaged_7_analiseBancaria_tipo_regime_5]\").parent().show();\n            }\n        }\n        \n        \n        \n        //Calculate field \"Validade da proposta\"  \n        $(\"input[id*=data_despacho]\").change(function(){\n            if($(\"input[id*=validade_proposta]\").datepicker('getDate') == null){\n                var dataDespacho = new Date ($(\"input[id*=data_despacho]\").datepicker('getDate'));\n                if(dataDespacho != null){\n                    dataDespacho.setDate(dataDespacho.getDate() + 120);\n                    var day = dataDespacho.getDate();\n                    var month = dataDespacho.getMonth() + 1; //Javascript months start at 0\n                    if(day<10){\n                        day=\"0\" + day;\n                    }\n                    if(month<10){\n                        month = \"0\" + month;\n                    }\n                    var validade = day + \"/\" + month + \"/\" + dataDespacho.getFullYear();\n                    $(\"input[id*=validade_proposta]\").datepicker('setDate', validade);\n                    \n                }\n            }\n        });\n\n    });\n    \n    \n    \n    \n    \n    \n    $(window).load(function(){\n        $(\"form#processo :input\").change(function(){\n            $(\"input#flag_alteracoes\").attr(\"value\",\"SIM\");    \n        });\n    });\n    \n<\/script>"
                         }
                     }
                 ],
