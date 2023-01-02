@@ -224,6 +224,36 @@
                             },
                             "width": "85%"
                         }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "valor_total_imoveis",
+                            "label": "Valor Total Imoveis",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "soma_valor_total",
+                            "label": "",
+                            "value": "<script type=\"text/javascript\">\r\n    \r\n    $(window).on('load', function(){\r\n        $(document).ready(function(){\r\n        \r\n            var valor_total = 0;\r\n            \r\n            $(\"tr[id*=lista_imoveis] td span.tablesaw-cell-content span[id*=multiPaged_4_imoveis_lista_imoveis_valor_cv]\").each(function(){\r\n                var valor_imovel = parseInt($(this).innerText);\r\n                console.log(\"Valor imóvel:\" + valor_imovel);\r\n                \r\n                valor_total += valor_imovel;\r\n                \r\n            });\r\n            \r\n            console.log(valor_total);\r\n        });\r\n    });\r\n\r\n\r\n    $(document).change(function(){\r\n        \r\n    });\r\n    \r\n<\/script>"
+                        }
                     }
                 ],
                 "properties": {"width": "100%"}
