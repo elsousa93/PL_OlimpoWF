@@ -2150,10 +2150,10 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="producaoManualRobot" Id="transition6" Name="Produção Manual" To="ConfigurarProcesso">
-                    <Condition Type="CONDITION">proxima_operativa === 'producao_manual'</Condition>
+                    <Condition Type="CONDITION">proxima_operativa === 'producao_manual' || proxima_operativa === ''</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;producao_manual&quot;}]"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;producao_manual&quot;},{&quot;join&quot;:&quot;||&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="ConfigurarProcesso" Id="transition4" To="ultimaAtividadeProd">
