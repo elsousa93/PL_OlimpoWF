@@ -2649,7 +2649,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant2_1"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="737.9688034057617,145.8159529882812"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="807.96875,149.8125"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="subflow7" Name="Produção Complexo">
@@ -2834,14 +2834,14 @@
                             <Split Type="XOR">
                                 <TransitionRefs>
                                     <TransitionRef Id="transition14"/>
-                                    <TransitionRef Id="transition15"/>
+                                    <TransitionRef Id="transition57"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="734.96875,99.078125"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="730.96875,110.078125"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="contratacaoOuProducao" Name="Contratação Ou Produção?">
@@ -3097,18 +3097,11 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route2" Id="transition14" To="sub_filtro_normal_crh">
-                    <Condition Type="CONDITION">proxima_operativa === 'filtro'</Condition>
+                    <Condition Type="CONDITION">proxima_operativa === 'filtro' &amp;&amp; proxima_operativa === ''</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;filtro&quot;}]"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="route2" Id="transition15" To="sub_filtro_producao_crh">
-                    <Condition Type="OTHERWISE"/>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;filtro&quot;},{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="contratacaoOuProducao" Id="transition16" To="sub_contratacao_normal_crh">
@@ -3182,11 +3175,11 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route7" Id="transition29" To="subflow6">
-                    <Condition Type="CONDITION">proxima_operativa === 'filtro'</Condition>
+                    <Condition Type="CONDITION">proxima_operativa === 'filtro' &amp;&amp; proxima_operativa === ''</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;filtro&quot;}]"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;filtro&quot;},{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="subflow6" Id="transition30" To="route8">
@@ -3347,6 +3340,13 @@
                 <Transition From="tool2" Id="transition56" To="route10">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route2" Id="transition57" To="sub_filtro_producao_crh">
+                    <Condition Type="OTHERWISE"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
             </Transitions>
