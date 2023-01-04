@@ -271,6 +271,28 @@
             "exclude_export": "",
             "filterable": true,
             "format": {
+                "className": "org.joget.plugin.enterprise.BeanShellFormatter",
+                "properties": {"script": "import org.joget.apps.datalist.service.DataListService;\nimport org.joget.apps.app.service.AppUtil;\nimport java.time.LocalDateTime; \nimport java.time.format.DateTimeFormatter;\nimport java.time.temporal.ChronoUnit;\nimport org.joget.commons.util.LogUtil;\nimport java.lang.Math;\n\nDataListService dataListService = (DataListService) AppUtil.getApplicationContext().getBean(\"dataListService\");\nString dataInicio = dataListService.evaluateColumnValueFromRow(row, \"dataInicio\");\nDateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"dd/MM/yyyy HH:mm\");\n\nString result = \"\";\nif(value !=  null && value.trim() != \"\"){\n    \n\n    LocalDateTime dateInit = LocalDateTime.parse(value, formatter);\n    LocalDateTime dateNow = LocalDateTime.parse(\"#date.dd/MM/yyyy HH:mm#\",formatter);\n    \n    long days = ChronoUnit.DAYS.between(dateInit, dateNow);\n    int initHours = dateInit.getHours();\n    int nowHous = dateNow.getHours();\n    \n    \n    if(initHours > 12 && nowHours <= 12){\n        days-=1;    \n    }\n    \n    result =\"D\";\n    if(days!=0){\n        result += \"+\"+days;\n    }\n    \n}else {\n    result = \"-\";\n}\n\n\nreturn result;"}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_13",
+            "label": "SLA(DIAS)NOVO",
+            "name": "DataInicio",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
                 "className": "",
                 "properties": {}
             },
