@@ -1,0 +1,114 @@
+{
+    "actions": [],
+    "binder": {
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "id",
+            "sql": "SELECT d.*, dp.id AS docID, dp.c_documento, dp.c_doc_path\nFROM app_fd_documento_processo d\nJOIN app_fd_docs_processo dp ON dp.id = d.c_doc_id\n"
+        }
+    },
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_3",
+            "label": "id",
+            "name": "id",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "c_tipo_documento",
+            "name": "c_tipo_documento",
+            "sortable": "false"
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.BeanShellFormatter",
+                "properties": {"script": "import org.joget.apps.datalist.service.DataListService;\r\nimport org.joget.apps.datalist.model.DataList;\r\nimport org.joget.apps.datalist.model.DataListColumn;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport org.joget.apps.app.model.FormDefinition;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.commons.util.StringUtil;\r\nimport org.joget.workflow.util.WorkflowUtil;\r\nimport javax.servlet.http.HttpServletRequest;\r\nimport java.io.UnsupportedEncodingException;\r\nimport java.net.URLEncoder;\r\n\r\n\r\npublic String format(DataList dataList, DataListColumn column, Object row, Object value) {\r\n        String result = (String) value;\r\n        \r\n        /*LogUtil.info(\"Beanshell Datalist\", \"datalist: \" + datalist.toString());\r\n        LogUtil.info(\"Beanshell Datalist\", \"column: \" + column.toString());\r\n        LogUtil.info(\"Beanshell Datalist\", \"row: \" + row.toString());\r\n        LogUtil.info(\"Beanshell Datalist\", \"value: \" + value.toString());*/\r\n  \r\n        if (result != null && !result.isEmpty()) {\r\n            try {\r\n                String formDefId = \"documento\";\r\n                //FormDefinition formDef = formDefinitionDao.loadById(formId, appDef);\r\n                //String formDefId = getPropertyString(\"formDefId\");\r\n                AppDefinition appDef = AppUtil.getCurrentAppDefinition();\r\n                result = \"\";\r\n  \r\n                String attachment = \"?attachment=false\";\r\n                /*if (\"true\".equals(getPropertyString(\"attachment\"))) {\r\n                    attachment = \"?attachment=true\";\r\n                }*/\r\n  \r\n                //get the id of this record\r\n                String primaryKeyValue = (String) DataListService.evaluateColumnValueFromRow(row, \"c_doc_id\");\r\n                 \r\n                HttpServletRequest request = WorkflowUtil.getHttpServletRequest();\r\n  \r\n                //suport for multi values\r\n                for (String v : value.toString().split(\";\")) {\r\n                    if (!v.isEmpty()) {\r\n                        // determine actual path for the file uploads\r\n                        String fileName = v;\r\n                        String encodedFileName = fileName;\r\n  \r\n                        try {\r\n                            encodedFileName = URLEncoder.encode(fileName, \"UTF8\").replaceAll(\"\\\\+\", \"%20\");\r\n                        } catch (UnsupportedEncodingException ex) {\r\n                            // ignore\r\n                        }\r\n  \r\n                        String filePath = request.getContextPath() + \"/web/client/app/\" + appDef.getAppId() + \"/\" + appDef.getVersion().toString() + \"/form/download/\" + formDefId + \"/\" + primaryKeyValue + \"/\" + encodedFileName + \".\" + attachment;\r\n  \r\n                        if (!result.isEmpty()) {\r\n                            result += \", \";\r\n                        }\r\n                        result += \"<a href=\\\"\"+filePath+\"\\\" target=\\\"_blank\\\">\"+StringUtil.stripAllHtmlTag(fileName)+\"<\/a>\";\r\n                    }\r\n                }\r\n            } catch (Exception e) {\r\n                LogUtil.error(getClassName(), e, \"\");\r\n            }\r\n        }\r\n        //String result = \"<a href='http://192.168.0.104:8080/jw/web/client/app/workflowPL/1/form/download/documento/de6307ba-cf8d-4dbe-8797-87e6f8bf2c11/Joget_Best-Practices.docx.?attachment=true'>Joget<\/a>\";\r\n        return result;\r\n}\r\n\r\nreturn format(datalist, column, row, value);\r\n    "}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_0",
+            "label": "Ficheiro",
+            "name": "c_documento",
+            "renderHtml": "true",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_5",
+            "label": "c_doc_id",
+            "name": "c_doc_id",
+            "sortable": "false"
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_1",
+            "label": "c_doc_path",
+            "name": "c_doc_path",
+            "renderHtml": "true",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
+    "description": "",
+    "disableResponsive": "",
+    "filters": [],
+    "hidePageSize": "",
+    "id": "listaDocumentos",
+    "name": "Lista - Documentos",
+    "order": "",
+    "orderBy": "",
+    "pageSize": "0",
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "responsiveView": [
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Mobile"
+        },
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Tablet"
+        }
+    ],
+    "rowActions": [],
+    "searchPopup": "",
+    "showDataWhenFilterSet": "",
+    "showPageSizeSelector": "true",
+    "useSession": ""
+}

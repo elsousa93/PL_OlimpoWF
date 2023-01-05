@@ -1,0 +1,88 @@
+{
+    "actions": [],
+    "binder": {
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "id",
+            "sql": "SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco, c_estado_contratacao AS EstadoContratacao\nFROM shkprocesses sp\nLEFT JOIN app_fd_processos p ON p.id = sp.Id\nJOIN shkprocessstates sps ON sps.oid = sp.State\nJOIN SHKActivities sact ON sact.ProcessId = sp.Id\nJOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.KeyValue LIKE 'open.not_running.not_started' OR ssta.KeyValue LIKE 'open.running')\nAND  c_estado_contratacao = 'PND'"
+        }
+    },
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_0",
+            "label": "id",
+            "name": "id",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "Atividade",
+            "name": "Atividade",
+            "sortable": "false"
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_2",
+            "label": "Data de Criação",
+            "name": "dateCreated",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_3",
+            "label": "Estado da Contratação",
+            "name": "EstadoContratacao",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
+    "description": "",
+    "filters": [],
+    "id": "listTarefasPendentes",
+    "name": "List - Tarefas Pendentes",
+    "order": "",
+    "orderBy": "",
+    "pageSize": "0",
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "rowActions": [],
+    "showPageSizeSelector": "true",
+    "useSession": "false"
+}

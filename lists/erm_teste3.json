@@ -1,0 +1,68 @@
+{
+    "actions": [],
+    "binder": {
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "id",
+            "sql": "SELECT  pro.c_detalhe_processo, pro.dateCreated, det.id as detID, det.c_data_entrada as 'Data de entrada',imo.c_imoveis_id AS 'imoID', \ndet.c_n_wf_pl as 'WF PL', det.c_n_wf_banco as 'WF Banco', det.c_nome_cliente AS 'Nome do Cliente', imo.c_descricao_predial, SUM (IF(imo.c_imovel_banco='Sim',1,0)) AS 'Imovel Banco'\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_imoveis imo ON pro.c_imoveis = imo.c_imoveis_id\nWHERE pro.dateCreated >'2022/11/29'\nGROUP BY pro.c_detalhe_processo"
+        }
+    },
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_0",
+            "label": "c_detalhe_processo",
+            "name": "c_detalhe_processo",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "WF PL",
+            "name": "WF PL",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_20",
+            "label": "Imovel Banco",
+            "name": "Imovel Banco",
+            "sortable": "false"
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
+    "description": "",
+    "disableResponsive": "",
+    "filters": [],
+    "hidePageSize": "",
+    "id": "erm_teste3",
+    "name": "erm_teste3",
+    "order": "1",
+    "orderBy": "",
+    "pageSize": "100",
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "responsiveView": [
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Mobile"
+        },
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Tablet"
+        }
+    ],
+    "rowActions": [],
+    "searchPopup": "",
+    "showDataWhenFilterSet": "",
+    "showPageSizeSelector": "true",
+    "useSession": ""
+}

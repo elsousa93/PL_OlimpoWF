@@ -1,0 +1,111 @@
+{
+    "actions": [],
+    "binder": {
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "id",
+            "sql": "SELECT lg.c_process_id,lg.c_campo AS 'Campo', lg.c_data_alteracao as 'Data alteração', lg.c_novo_valor as 'Novo Valor', det.c_n_wf_pl AS 'WF PL', det.c_nome_banco AS 'Banco', det.c_tipo_processo AS 'Tipo de processo'\nFROM app_fd_audit_log lg\nLEFT JOIN app_fd_detalhe_processo det ON det.c_id_processo= lg.c_process_id"
+        }
+    },
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "WF PL",
+            "name": "WF PL",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_2",
+            "label": "Banco",
+            "name": "Banco",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_3",
+            "label": "Tipo de processo",
+            "name": "Tipo de processo",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_5",
+            "label": "Campo",
+            "name": "Campo",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "Novo Valor",
+            "name": "Novo Valor",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_0",
+            "label": "Data alteração",
+            "name": "Data alteração",
+            "sortable": "false"
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
+    "description": "",
+    "disableResponsive": "",
+    "filters": [{
+        "id": "filter_2",
+        "label": "Banco",
+        "name": "Banco",
+        "type": {
+            "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+            "properties": {}
+        }
+    }],
+    "hidePageSize": "",
+    "id": "erm_np",
+    "name": "erm_np",
+    "order": "",
+    "orderBy": "",
+    "pageSize": "0",
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "permission_rules": [{
+        "permission": {
+            "className": "org.joget.apps.userview.lib.DepartmentPermission",
+            "properties": {
+                "allowedDeptIds": "PL_INT_PRD_GEN_RPA_CRH",
+                "orgId": "PL"
+            }
+        },
+        "permission_key": "3dcb3509-7a33-867b-6811-d4713161d7e5",
+        "permission_name": "Robot"
+    }],
+    "responsiveView": [
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Mobile"
+        },
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Tablet"
+        }
+    ],
+    "rowActions": [],
+    "searchPopup": "",
+    "showDataWhenFilterSet": "",
+    "showPageSizeSelector": "true",
+    "useSession": ""
+}

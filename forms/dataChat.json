@@ -1,0 +1,96 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [{
+        "className": "org.joget.apps.form.model.Section",
+        "elements": [{
+            "className": "org.joget.apps.form.model.Column",
+            "elements": [
+                {
+                    "className": "org.joget.apps.form.lib.IdGeneratorField",
+                    "properties": {
+                        "envVariable": "counter",
+                        "format": "ID-??????",
+                        "hidden": "true",
+                        "id": "id",
+                        "label": "IDGeneratorField",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.HiddenField",
+                    "properties": {
+                        "id": "thread_id",
+                        "useDefaultWhenEmpty": "",
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.HiddenField",
+                    "properties": {
+                        "id": "nome_completo",
+                        "useDefaultWhenEmpty": "",
+                        "value": "#currentUser.firstName# #currentUser.lastName#",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.HiddenField",
+                    "properties": {
+                        "id": "username",
+                        "useDefaultWhenEmpty": "",
+                        "value": "#currentUser.username#",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.HiddenField",
+                    "properties": {
+                        "id": "mensagem",
+                        "useDefaultWhenEmpty": "",
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.HiddenField",
+                    "properties": {
+                        "id": "lida",
+                        "useDefaultWhenEmpty": "",
+                        "value": "não",
+                        "workflowVariable": ""
+                    }
+                }
+            ],
+            "properties": {"width": "100%"}
+        }],
+        "properties": {
+            "id": "section1",
+            "label": "Section"
+        }
+    }],
+    "properties": {
+        "description": "",
+        "id": "dataChat",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "Chat Data",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "data_chat"
+    }
+}

@@ -1,0 +1,199 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "id_processo",
+                            "useDefaultWhenEmpty": "",
+                            "value": "#form.info_diligencia.id_processo#",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SubForm",
+                        "properties": {
+                            "formDefId": "cabecalhoDiligencias",
+                            "id": "info_diligencia",
+                            "label": "",
+                            "loadBinder": {
+                                "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+                                "properties": {}
+                            },
+                            "noframe": "",
+                            "parentSubFormId": "",
+                            "permissionHidden": "",
+                            "readonly": "true",
+                            "readonlyLabel": "",
+                            "storeBinder": {
+                                "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                                "properties": {
+                                    "autoHandleFiles": "",
+                                    "autoHandleWorkflowVariable": "true",
+                                    "cacheInterval": "",
+                                    "script": "return null;",
+                                    "useAjax": ""
+                                }
+                            },
+                            "subFormParentId": ""
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section1",
+                "join": "",
+                "label": "Confirmar Resolução da Diligência",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [{
+                    "className": "org.joget.plugin.enterprise.FormGrid",
+                    "properties": {
+                        "abortRelatedRunningProcesses": "",
+                        "deleteFiles": "",
+                        "deleteGridData": "",
+                        "deleteMessage": "",
+                        "deleteSubformData": "",
+                        "disabledAdd": "true",
+                        "disabledDelete": "true",
+                        "enableSorting": "",
+                        "errorMessage": "Invalid number of rows",
+                        "formDefId": "observacaoDiligencia",
+                        "height": "500",
+                        "id": "historico_observacoes",
+                        "label": "",
+                        "loadBinder": {
+                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                            "properties": {
+                                "foreignKey": "id_diligencia",
+                                "formDefId": "observacaoDiligencia"
+                            }
+                        },
+                        "options": [
+                            {
+                                "format": "infoUser",
+                                "formatType": "options",
+                                "label": "Nome",
+                                "value": "gestor_atual",
+                                "width": ""
+                            },
+                            {
+                                "format": "",
+                                "formatType": "date",
+                                "label": "Data",
+                                "value": "dateCreated",
+                                "width": ""
+                            },
+                            {
+                                "format": "",
+                                "formatType": "nl2br",
+                                "label": "Observação",
+                                "value": "observacao_diligencia",
+                                "width": ""
+                            }
+                        ],
+                        "pageSize": "20",
+                        "permissionHidden": "",
+                        "readonly": "true",
+                        "readonlyLabel": "",
+                        "showRowNumber": "",
+                        "storeBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "submit-label-normal": "",
+                        "submit-label-readonly": "",
+                        "uniqueKey": "",
+                        "validateMaxRow": "",
+                        "validateMinRow": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "width": "900"
+                    }
+                }],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section2",
+                "join": "",
+                "label": "Histórico de Observações",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        }
+    ],
+    "properties": {
+        "description": "",
+        "id": "diligenciaView",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "Diligência (ReadOnly)",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "info_diligencia"
+    }
+}
