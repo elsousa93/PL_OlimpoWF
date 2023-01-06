@@ -6,61 +6,19 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT 'estado_processo'AS 'Campo', dateCreated as 'Data alteração', 'NOV' as 'Novo Valor', c_n_wf_pl AS 'WF PL', c_nome_banco AS 'Banco', c_tipo_processo AS 'Tipo de processo'\nFROM app_fd_detalhe_processo\n"
+            "sql": "SELECT det.c_id_processo as IDProc, 'estado_processo' AS 'Campo', det.dateCreated AS 'Data alteração', 'NOV' AS 'Novo Valor', det.c_n_wf_pl AS 'WF PL', det.c_nome_banco AS 'Banco', det.c_tipo_processo AS 'Tipo de processo'\nFROM app_fd_detalhe_processo det\nUNION\nSELECT lg.c_process_id AS IDProc,lg.c_campo AS 'Campo', lg.c_data_alteracao as 'Data alteração', lg.c_novo_valor as 'Novo Valor', det.c_n_wf_pl AS 'WF PL', det.c_nome_banco AS 'Banco', det.c_tipo_processo AS 'Tipo de processo'\nFROM app_fd_audit_log lg\nLEFT JOIN app_fd_detalhe_processo det ON det.c_id_processo= lg.c_process_id\n"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
-    "columns": [
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_2",
-            "label": "WF PL",
-            "name": "WF PL",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_0",
-            "label": "Banco",
-            "name": "Banco",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_1",
-            "label": "Tipo de processo",
-            "name": "Tipo de processo",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_3",
-            "label": "Campo",
-            "name": "Campo",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_4",
-            "label": "Novo Valor",
-            "name": "Novo Valor",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_5",
-            "label": "Data alteração",
-            "name": "Data alteração",
-            "sortable": "false"
-        }
-    ],
+    "columns": [{
+        "filterable": true,
+        "hidden": "false",
+        "id": "column_7",
+        "label": "Banco",
+        "name": "Banco",
+        "sortable": "false"
+    }],
     "considerFilterWhenGetTotal": "",
     "description": "",
     "disableResponsive": "",
