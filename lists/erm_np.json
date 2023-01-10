@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT lg.c_process_id,lg.c_campo AS 'Campo', lg.c_data_alteracao as 'Data alteração', lg.c_novo_valor as 'Novo Valor', det.c_n_wf_pl AS 'WF PL', det.c_nome_banco AS 'Banco', det.c_tipo_processo AS 'Tipo de processo'\nFROM app_fd_audit_log lg\nLEFT JOIN app_fd_detalhe_processo det ON det.c_id_processo= lg.c_process_id"
+            "sql": "SELECT det.c_id_processo as IDProc, 'estado_contratacao' AS 'Campo', det.dateCreated AS 'Data alteração', 'NOV' AS 'Novo Valor', det.c_n_wf_pl AS 'WF PL', det.c_nome_banco AS 'Banco', det.c_tipo_processo AS 'Tipo de processo'\nFROM app_fd_detalhe_processo det\nUNION\nSELECT lg.c_process_id AS IDProc,lg.c_campo AS 'Campo', lg.c_data_alteracao as 'Data alteração', lg.c_novo_valor as 'Novo Valor', det.c_n_wf_pl AS 'WF PL', det.c_nome_banco AS 'Banco', det.c_tipo_processo AS 'Tipo de processo'\nFROM app_fd_audit_log lg\nLEFT JOIN app_fd_detalhe_processo det ON det.c_id_processo= lg.c_process_id"
         }
     },
     "buttonPosition": "bottomLeft",
