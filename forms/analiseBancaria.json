@@ -656,7 +656,11 @@
                             "id": "esconder_opcao_abn",
                             "label": "",
                             "permission_rules": {
+                                "3d413454-11f8-a8ab-ce78-cac0bce6f59b": {},
+                                "607861ec-6ead-d50c-842c-2aa73dec24a0": {},
+                                "73aa20c7-f9ca-9da7-089b-9008a5f9acab": {},
                                 "be0ae92d-a00d-83ce-2c77-453e6972fdd9": {},
+                                "d3ad26eb-c6f2-0304-3fb3-c3b3875470a2": {},
                                 "e65f7ec0-8c54-5c64-f115-db763624cf5f": {}
                             },
                             "value": "<script>\n    $(document).ready(function(){\n        var banco = $(\"#multiPaged_7_analiseBancaria_banco\").val();\n        if (banco === \"BIC\"){\n            var tipo_processo = $(\"#multiPaged_7_analiseBancaria_var_tipo_processo\").val();\n            //console.log(tipo_processo);\n            const tipos = tipo_processo.split('+');\n            //console.log(tipos);\n            $(\"[name=multiPaged_7_analiseBancaria_tipo_regime] option[value='ACT']\").remove();\n            $(\"[name=multiPaged_7_analiseBancaria_tipo_regime] option[value='DEF']\").remove();\n            \n            for(i=1; i<tipos.length; i++){\n                var selector_ACT = \"[name=multiPaged_7_analiseBancaria_tipo_regime_\" + (i+1) + \"] option[value='ACT']\";\n                var selector_DEF = \"[name=multiPaged_7_analiseBancaria_tipo_regime_\" + (i+1) + \"] option[value='DEF']\";\n                $(selector_ACT).remove();\n                $(selector_DEF).remove();\n            }\n        }\n    });\n<\/script>"
@@ -1571,11 +1575,15 @@
                             "permission_rules": {
                                 "04d94e96-37aa-1e4b-d5fe-5595f325e232": {},
                                 "1fb8f1eb-7717-2af5-ccf1-03a73c560f16": {},
+                                "3d413454-11f8-a8ab-ce78-cac0bce6f59b": {},
+                                "607861ec-6ead-d50c-842c-2aa73dec24a0": {},
+                                "73aa20c7-f9ca-9da7-089b-9008a5f9acab": {},
                                 "966fc1ca-d0b8-439f-6ab3-76cf9a599c75": {},
                                 "9f700b46-bde2-cc69-98a7-c562c400ad6d": {},
                                 "aa6ccea8-6e7f-1433-8d14-32132e9bf1e0": {},
                                 "be0ae92d-a00d-83ce-2c77-453e6972fdd9": {},
                                 "d07f81ea-a80c-4560-01fd-7772c1762b0f": {},
+                                "d3ad26eb-c6f2-0304-3fb3-c3b3875470a2": {},
                                 "d6fe0da9-3aa3-9d28-ded2-07a6fb980292": {},
                                 "e65f7ec0-8c54-5c64-f115-db763624cf5f": {},
                                 "f6d47cc6-84dc-c359-9ec5-794a6dcbf118": {}
@@ -1613,10 +1621,13 @@
                                     "permissionHidden": "",
                                     "readonly": ""
                                 },
+                                "3d413454-11f8-a8ab-ce78-cac0bce6f59b": {},
+                                "607861ec-6ead-d50c-842c-2aa73dec24a0": {},
                                 "6c9a9c6d-bd10-4f4a-0682-541bcbb1222b": {
                                     "permissionHidden": "",
                                     "readonly": "true"
                                 },
+                                "73aa20c7-f9ca-9da7-089b-9008a5f9acab": {},
                                 "966fc1ca-d0b8-439f-6ab3-76cf9a599c75": {
                                     "permissionHidden": "",
                                     "readonly": ""
@@ -1638,6 +1649,7 @@
                                     "permissionHidden": "",
                                     "readonly": ""
                                 },
+                                "d3ad26eb-c6f2-0304-3fb3-c3b3875470a2": {},
                                 "d6fe0da9-3aa3-9d28-ded2-07a6fb980292": {
                                     "permissionHidden": "",
                                     "readonly": ""
@@ -1677,7 +1689,11 @@
                                 "properties": {}
                             },
                             "permission_rules": {
+                                "3d413454-11f8-a8ab-ce78-cac0bce6f59b": {},
+                                "607861ec-6ead-d50c-842c-2aa73dec24a0": {},
+                                "73aa20c7-f9ca-9da7-089b-9008a5f9acab": {},
                                 "be0ae92d-a00d-83ce-2c77-453e6972fdd9": {},
+                                "d3ad26eb-c6f2-0304-3fb3-c3b3875470a2": {},
                                 "e65f7ec0-8c54-5c64-f115-db763624cf5f": {}
                             },
                             "readonly": "",
@@ -2535,7 +2551,7 @@
                                 "d3ad26eb-c6f2-0304-3fb3-c3b3875470a2": {},
                                 "e65f7ec0-8c54-5c64-f115-db763624cf5f": {}
                             },
-                            "value": "<script type=\"text/javascript\">\r\n\r\n    $(document).ready(function(){\r\n\r\n        var f1 = FormUtil.getField(\"valor_imovel\");\r\n        var number = FormUtil.getValue(\"valor_imovel\");\r\n        \r\n       if(number != null && number !== \"\"){\r\n            number = number.replaceAll('NaN', \"0\");\r\n            number = number.replaceAll('.', \"\");\r\n            number = number.replaceAll('\u20ac', \"\");\r\n            number = number.replaceAll('Eur', \"\");\r\n            number = number.replaceAll('EUR', \"\");\r\n            number = number.replaceAll(',', '.');\r\n            \r\n            let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(number);\r\n        \r\n            num = num.replace(/\\s/g, '.');\r\n            num = num.replaceAll('.\u20ac', ' EUR');\r\n            \r\n            $(f1).val(num);\r\n        }else{\r\n            //do nothing\r\n        }\r\n        \r\n        var banco = \"#form.banco.nome_banco[{form.processos.banco}]#\"; \r\n \r\n        //Calcular Data de Validade do Relatório de Avaliação\r\n        $(\"input[id*=data_relatorio_avaliacao]\").change(function(){\r\n            var dataRelatorioAvaliacao = $(\"input[id*=data_relatorio_avaliacao]\").datepicker('getDate');\r\n            \r\n            if($(\"input[id*=validade_relatorio_avaliacao]\").datepicker('getDate') == null && dataRelatorioAvaliacao!= null){\r\n                var date = new Date(dataRelatorioAvaliacao);\r\n                if(banco === \"BCP\"){\r\n                    //FALTA VER SE TEMOS INDICAÇÃO DOS PRAZOS\r\n    \r\n    \r\n                }else if (banco ===\"MTG\" || banco === \"NVB\"){\r\n                    date.setDate(date.getDate() + 120);\r\n                }else if(banco === \"BIC\" ){\r\n                    date.setDate(date.getDate() + 1200);\r\n                    var dataEmissaoFINE = $(\"input[id*=data_emissao_fine]\").datepicker('getDate');\r\n                    if(dataEmissaoFINE != null){\r\n                        var dateEmissaoFine = new Date(dataEmissaoFINE);\r\n                        dateEmissaoFine.setDate(dateEmissaoFine + 30);\r\n                        if(dateEmissaoFine > date){\r\n                            date.setDate(dateEmissaoFine.getDate());\r\n                        }\r\n                          \r\n                    }\r\n                }\r\n                    \r\n            }\r\n                var day = date.getDate();\r\n                var month = date.getMonth() + 1;\r\n                var year = date.getFullYear();\r\n                \r\n              \r\n                if(day<10){\r\n                   day=\"0\" + day;\r\n                }\r\n                if(month<10){\r\n                   month = \"0\" + month;\r\n                }\r\n                \r\n                var data = day + \"/\" + month + \"/\" + year;\r\n                $(\"input[id*=validade_relatorio_avaliacao]\").datepicker('setDate',data);\r\n                \r\n            }\r\n        \r\n        \r\n        });\r\n    \r\n    $(\"input[id*=data_emissao_fine]\").change(function(){\r\n        var dataEmissaoFINE = $(\"input[id*=data_emissao_fine]\").datepicker('getDate');\r\n        if($(\"input[id*=validade_relatorio_avaliacao]\").datepicker('getDate') == null && dataEmissaoFINE != null){\r\n            var date = new Date(dataEmissaoFINE);\r\n            if(banco === \"ABN\"){\r\n                date.setDate(dataEmissaoFINE.getDate() + 45);\r\n            }\r\n            \r\n            var day = date.getDate();\r\n            var month = date.getMonth() + 1;\r\n            var year = date.getFullYear();\r\n            \r\n          \r\n            if(day<10){\r\n               day=\"0\" + day;\r\n            }\r\n            if(month<10){\r\n               month = \"0\" + month;\r\n            }\r\n            \r\n            var data = day + \"/\" + month + \"/\" + year;\r\n            $(\"input[id*=validade_relatorio_avaliacao]\").datepicker('setDate',data);\r\n        }\r\n    });\r\n        \r\n        \r\n        \r\n    });\r\n    \r\n\r\n    \r\n<\/script> "
+                            "value": "<script type=\"text/javascript\">\r\n\r\n    $(document).ready(function(){\r\n\r\n        var f1 = FormUtil.getField(\"valor_imovel\");\r\n        var number = FormUtil.getValue(\"valor_imovel\");\r\n        \r\n       if(number != null && number !== \"\"){\r\n            number = number.replaceAll('NaN', \"0\");\r\n            number = number.replaceAll('.', \"\");\r\n            number = number.replaceAll('\u20ac', \"\");\r\n            number = number.replaceAll('Eur', \"\");\r\n            number = number.replaceAll('EUR', \"\");\r\n            number = number.replaceAll(',', '.');\r\n            \r\n            let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(number);\r\n        \r\n            num = num.replace(/\\s/g, '.');\r\n            num = num.replaceAll('.\u20ac', ' EUR');\r\n            \r\n            $(f1).val(num);\r\n        }else{\r\n            //do nothing\r\n        }\r\n        \r\n        var banco = \"#form.banco.nome_banco[{form.processos.banco}]#\"; \r\n \r\n        //Calcular Data de Validade do Relatório de Avaliação\r\n        $(\"input[id*=data_relatorio_avaliacao]\").change(function(){\r\n            var dataRelatorioAvaliacao = $(\"input[id*=data_relatorio_avaliacao]\").datepicker('getDate');\r\n            \r\n            if($(\"input[id*=validade_relatorio_avaliacao]\").datepicker('getDate') == null && dataRelatorioAvaliacao!= null){\r\n                var date = new Date(dataRelatorioAvaliacao);\r\n                if(banco === \"BCP\"){\r\n                    date.setDate(date.getDate() + 60);\r\n                }else if (banco ===\"MTG\" || banco === \"NVB\"){\r\n                    date.setDate(date.getDate() + 120);\r\n                }else if(banco === \"BIC\" ){\r\n                    date.setDate(date.getDate() + 120);\r\n                    var dataEmissaoFINE = $(\"input[id*=data_emissao_fine]\").datepicker('getDate');\r\n                    if(dataEmissaoFINE != null){\r\n                        var dateEmissaoFine = new Date(dataEmissaoFINE);\r\n                        dateEmissaoFine.setDate(dateEmissaoFine + 30);\r\n                        if(dateEmissaoFine > date){\r\n                            date.setDate(dateEmissaoFine.getDate());\r\n                        }\r\n                          \r\n                    }\r\n                }\r\n                    \r\n            }\r\n                var day = date.getDate();\r\n                var month = date.getMonth() + 1;\r\n                var year = date.getFullYear();\r\n                \r\n              \r\n                if(day<10){\r\n                   day=\"0\" + day;\r\n                }\r\n                if(month<10){\r\n                   month = \"0\" + month;\r\n                }\r\n                \r\n                var data = day + \"/\" + month + \"/\" + year;\r\n                $(\"input[id*=validade_relatorio_avaliacao]\").datepicker('setDate',data);\r\n                \r\n            }\r\n        \r\n        \r\n        });\r\n    \r\n    $(\"input[id*=data_emissao_fine]\").change(function(){\r\n        var dataEmissaoFINE = $(\"input[id*=data_emissao_fine]\").datepicker('getDate');\r\n        if($(\"input[id*=validade_relatorio_avaliacao]\").datepicker('getDate') == null && dataEmissaoFINE != null){\r\n            var date = new Date(dataEmissaoFINE);\r\n            if(banco === \"ABN\"){\r\n                date.setDate(dataEmissaoFINE.getDate() + 45);\r\n            }\r\n            \r\n            var day = date.getDate();\r\n            var month = date.getMonth() + 1;\r\n            var year = date.getFullYear();\r\n            \r\n          \r\n            if(day<10){\r\n               day=\"0\" + day;\r\n            }\r\n            if(month<10){\r\n               month = \"0\" + month;\r\n            }\r\n            \r\n            var data = day + \"/\" + month + \"/\" + year;\r\n            $(\"input[id*=validade_relatorio_avaliacao]\").datepicker('setDate',data);\r\n        }\r\n    });\r\n        \r\n        \r\n        \r\n    });\r\n    \r\n\r\n    \r\n<\/script> "
                         }
                     }
                 ],
@@ -2948,7 +2964,7 @@
                                 },
                                 "d3ad26eb-c6f2-0304-3fb3-c3b3875470a2": {},
                                 "e65f7ec0-8c54-5c64-f115-db763624cf5f": {
-                                    "permissionHidden": "true",
+                                    "permissionHidden": "",
                                     "readonly": ""
                                 }
                             },
@@ -2998,7 +3014,7 @@
                                 },
                                 "d3ad26eb-c6f2-0304-3fb3-c3b3875470a2": {},
                                 "e65f7ec0-8c54-5c64-f115-db763624cf5f": {
-                                    "permissionHidden": "true",
+                                    "permissionHidden": "",
                                     "readonly": ""
                                 }
                             },
@@ -3242,7 +3258,9 @@
                 "permission_rules": {
                     "3d413454-11f8-a8ab-ce78-cac0bce6f59b": {},
                     "607861ec-6ead-d50c-842c-2aa73dec24a0": {},
+                    "73aa20c7-f9ca-9da7-089b-9008a5f9acab": {},
                     "be0ae92d-a00d-83ce-2c77-453e6972fdd9": {},
+                    "d3ad26eb-c6f2-0304-3fb3-c3b3875470a2": {},
                     "e65f7ec0-8c54-5c64-f115-db763624cf5f": {}
                 },
                 "readonly": "",
