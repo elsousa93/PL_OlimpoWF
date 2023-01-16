@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT * \nFROM app_fd_imoveis\nWHERE c_id_processo='8009_workflowPL_CreditoHabitacao'"
+            "sql": "SELECT det.c_data_entrada as 'Data de entrada', det.c_n_wf_pl as 'WF PL'\nFROM app_fd_detalhe_processo det\nLEFT JOIN app_fd_imoveis imo ON imo.c_id_processo=det.c_id_processo\nWHERE det.c_n_wf_pl LIKE '%1212%'"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -15,17 +15,17 @@
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_0",
-            "label": "c_id_processo",
-            "name": "c_id_processo",
+            "id": "column_5",
+            "label": "Data de entrada",
+            "name": "Data de entrada",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_4",
-            "label": "c_imovel_banco",
-            "name": "c_imovel_banco",
+            "id": "column_6",
+            "label": "WF PL",
+            "name": "WF PL",
             "sortable": "false"
         }
     ],
