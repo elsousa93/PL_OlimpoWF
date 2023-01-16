@@ -6,19 +6,37 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT det.c_id_processo as IDProc, 'estado_processo' AS 'Campo', det.dateCreated AS 'Data alteração', 'NOV' AS 'Novo Valor', det.c_n_wf_pl AS 'WF PL', det.c_nome_banco AS 'Banco', det.c_tipo_processo AS 'Tipo de processo'\nFROM app_fd_detalhe_processo det\nUNION\nSELECT lg.c_process_id AS IDProc,lg.c_campo AS 'Campo', lg.c_data_alteracao as 'Data alteração', lg.c_novo_valor as 'Novo Valor', det.c_n_wf_pl AS 'WF PL', det.c_nome_banco AS 'Banco', det.c_tipo_processo AS 'Tipo de processo'\nFROM app_fd_audit_log lg\nLEFT JOIN app_fd_detalhe_processo det ON det.c_id_processo= lg.c_process_id\n"
+            "sql": "SELECT pro.c_detalhe_processo, pro.c_agendamento, det.id as detID, det.c_data_entrada as 'Data de entrada',det.c_nome_banco AS 'Banco', det.c_tipo_processo AS 'Tipo de processo',det.c_urgencia AS 'Urgente',\ndet.c_forma_outorga as 'Forma de outorga', det.c_n_wf_pl as 'WF PL', det.c_n_wf_banco as 'WF Banco', det.c_nome_cliente AS 'Nome do Cliente', det.c_nif_cliente AS 'NIF do Cliente',\ndet.c_origem_processo AS 'Origem', det.c_complex_processo AS 'Complexidade', det.c_estado_contratacao AS 'Estado da contratação', det.c_fase_processo AS 'Fase', ag.id AS agID,\nag.c_data_agendamento AS 'Data de agendamento', ag.c_estado_agendamento AS 'Estado do agendamento', ag.c_urgencia_agendamento AS 'Urgencia de agendamento', ag.c_reagendamento AS 'Reagendamento',\nSUM (IF(imo.c_imovel_banco='Sim',1,0)) AS 'Imovel Banco'\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nLEFT JOIN app_fd_imoveis imo ON pro.c_imoveis = imo.c_imoveis_id\nWHERE det.c_data_entrada != ''\nGROUP BY pro.c_detalhe_processo, pro.c_agendamento\nORDER BY det.c_data_entrada DESC\n"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
-    "columns": [{
-        "filterable": true,
-        "hidden": "false",
-        "id": "column_7",
-        "label": "Banco",
-        "name": "Banco",
-        "sortable": "false"
-    }],
+    "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_2",
+            "label": "Data de entrada",
+            "name": "Data de entrada",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "WF PL",
+            "name": "WF PL",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_3",
+            "label": "Imovel Banco",
+            "name": "Imovel Banco",
+            "sortable": "false"
+        }
+    ],
     "considerFilterWhenGetTotal": "",
     "description": "",
     "disableResponsive": "",
