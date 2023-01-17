@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT lg.c_process_id AS IDProc,lg.c_campo AS 'Campo', lg.c_data_alteracao as 'Data alteração', lg.c_novo_valor as 'Novo Valor', det.c_n_wf_pl AS 'WF PL', det.c_nome_banco AS 'Banco',\ndet.c_tipo_processo AS 'Tipo de processo',  SUM (IF(imo.c_imovel_banco='Sim',1,0)) AS 'Imovel Banco'\nFROM app_fd_audit_log lg\nLEFT JOIN app_fd_detalhe_processo det ON det.c_id_processo= lg.c_process_id\nLEFT JOIN app_fd_imoveis imo ON det.c_id_processo = imo.c_id_processo\nGROUP BY IDProc, Campo, 'Data alteração', 'Novo Valor'\n\n\n\n\n\n"
+            "sql": "SELECT lg.c_process_id AS IDProc,lg.c_campo AS 'Campo', lg.c_data_alteracao as 'Data alteração', lg.c_novo_valor as 'Novo Valor', det.c_n_wf_pl AS 'WF PL', det.c_nome_banco AS 'Banco',\ndet.c_tipo_processo AS 'Tipo de processo',  SUM (IF(imo.c_imovel_banco='Sim',1,0)) AS 'Imovel Banco'\nFROM app_fd_audit_log lg\nLEFT JOIN app_fd_detalhe_processo det ON det.c_id_processo= lg.c_process_id\nLEFT JOIN app_fd_imoveis imo ON det.c_id_processo = imo.c_id_processo\nWHERE det.c_n_wf_pl LIKE '%BST1212%'\nGROUP BY IDProc, Campo, 'Data alteração', 'Novo Valor'\n\n\n\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
