@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT det.c_id_processo as IDProc, 'estado_contratacao' AS 'Campo', det.dateCreated AS 'Data alteração', 'NOV' AS 'Novo Valor', det.c_n_wf_pl AS 'WF PL', det.c_nome_banco AS 'Banco', \ndet.c_tipo_processo AS 'Tipo de processo', imo.c_imovel_banco\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_imoveis imo ON pro.c_imoveis = imo.c_imoveis_id\nORDER BY det.dateCreated DESC\n\n"
+            "sql": "SELECT det.c_id_processo as IDProc, 'estado_contratacao' AS 'Campo', det.dateCreated AS 'Data alteração', 'NOV' AS 'Novo Valor', det.c_n_wf_pl AS 'WF PL', det.c_nome_banco AS 'Banco',\ndet.c_tipo_processo AS 'Tipo de processo', SUM (IF(imo.c_imovel_banco='Sim',1,0)) AS 'Imovel Banco'\nFROM app_fd_detalhe_processo det\nLEFT JOIN app_fd_imoveis imo ON det.c_id_processo = imo.c_id_processo\nWHERE det.c_n_wf_pl LIKE '%BST1212%'\nGROUP BY det.c_id_processo, Campo, det.dateCreated, 'Novo Valor'\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -71,9 +71,9 @@
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_8",
-            "label": "c_imovel_banco",
-            "name": "c_imovel_banco",
+            "id": "column_5",
+            "label": "Imovel Banco",
+            "name": "Imovel Banco",
             "sortable": "false"
         }
     ],
