@@ -6,20 +6,12 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT det.c_data_entrada as 'Data de entrada', det.c_n_wf_pl as 'WF PL', SUM (IF(imo.c_imovel_banco='Sim',1,0)) AS 'Imovel Banco'\nFROM app_fd_detalhe_processo det\nLEFT JOIN app_fd_imoveis imo ON det.c_id_processo=imo.c_id_processo\nGROUP BY det.c_n_wf_pl"
+            "sql": "SELECT lg.c_process_id AS IDProc,lg.c_campo AS 'Campo', lg.c_data_alteracao as 'Data alteração', lg.c_novo_valor as 'Novo Valor', det.c_n_wf_pl AS 'WF PL', det.c_nome_banco AS 'Banco',\ndet.c_tipo_processo AS 'Tipo de processo',  SUM (IF(imo.c_imovel_banco='Sim',1,0)) AS 'Imovel Banco'\nFROM app_fd_audit_log lg\nLEFT JOIN app_fd_detalhe_processo det ON det.c_id_processo= lg.c_process_id\nLEFT JOIN app_fd_imoveis imo ON det.c_id_processo = imo.c_id_processo\nGROUP BY IDProc, Campo, 'Data alteração', 'Novo Valor'\n\n\n\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
     "columns": [
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_5",
-            "label": "Data de entrada",
-            "name": "Data de entrada",
-            "sortable": "false"
-        },
         {
             "filterable": true,
             "hidden": "false",
@@ -31,7 +23,31 @@
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_1",
+            "id": "column_2",
+            "label": "Campo",
+            "name": "Campo",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_3",
+            "label": "Novo Valor",
+            "name": "Novo Valor",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "Data alteração",
+            "name": "Data alteração",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_0",
             "label": "Imovel Banco",
             "name": "Imovel Banco",
             "sortable": "false"
