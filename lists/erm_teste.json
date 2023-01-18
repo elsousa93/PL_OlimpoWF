@@ -6,53 +6,19 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT lg.c_process_id AS IDProc,lg.c_campo AS 'Campo', lg.c_data_alteracao as 'Data alteração', lg.c_novo_valor as 'Novo Valor', det.c_n_wf_pl AS 'WF PL', det.c_nome_banco AS 'Banco',\ndet.c_tipo_processo AS 'Tipo de processo',  SUM (IF(imo.c_imovel_banco='Sim',1,0)) AS 'Imovel Banco'\nFROM app_fd_audit_log lg\nLEFT JOIN app_fd_detalhe_processo det ON det.c_id_processo= lg.c_process_id\nLEFT JOIN app_fd_imoveis imo ON det.c_id_processo = imo.c_id_processo\nGROUP BY det.c_id_processo, Campo, lg.c_data_alteracao, lg.c_novo_valor\n\n\n\n\n\n"
+            "sql": "SELECT count(det.c_id_processo) as 'Total'\nFROM app_fd_detalhe_processo det\nGROUP BY 'Total'\n\n\n\n\n\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
-    "columns": [
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_6",
-            "label": "WF PL",
-            "name": "WF PL",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_2",
-            "label": "Campo",
-            "name": "Campo",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_3",
-            "label": "Novo Valor",
-            "name": "Novo Valor",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_4",
-            "label": "Data alteração",
-            "name": "Data alteração",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_0",
-            "label": "Imovel Banco",
-            "name": "Imovel Banco",
-            "sortable": "false"
-        }
-    ],
+    "columns": [{
+        "filterable": true,
+        "hidden": "false",
+        "id": "column_10",
+        "label": "Total",
+        "name": "Total",
+        "sortable": "false"
+    }],
     "considerFilterWhenGetTotal": "",
     "description": "",
     "disableResponsive": "",
