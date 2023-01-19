@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT det.c_id_processo as 'IDProc', count(det.c_id_processo) as 'Total'\nFROM app_fd_detalhe_processo det\nGROUP BY 'IDProc'\n\n\n\n\n\n\n\n\n"
+            "sql": "SELECT det.c_id_processo as IDProc, det.dateCreated AS Data_alteracao, count(det.c_id_processo) as Total\nFROM app_fd_detalhe_processo det\nGROUP BY IDProc\n\n\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -23,7 +23,15 @@
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_1",
+            "id": "column_2",
+            "label": "Data_alteracao",
+            "name": "Data_alteracao",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_5",
             "label": "Total",
             "name": "Total",
             "sortable": "false"
