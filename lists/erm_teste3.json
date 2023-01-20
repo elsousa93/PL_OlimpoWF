@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT det.c_id_processo AS IDProc, det.c_data_entrada as Data_entrada, det.c_nome_banco AS 'Banco', det.c_tipo_processo AS 'Tipo de processo',det.c_urgencia AS 'Urgente',\ndet.c_forma_outorga as 'Forma de outorga', det.c_n_wf_pl as 'WF PL', det.c_n_wf_banco as 'WF Banco', det.c_nome_cliente AS 'Nome do Cliente', det.c_nif_cliente AS 'NIF do Cliente',\ndet.c_origem_processo AS 'Origem', det.c_complex_processo AS 'Complexidade', det.c_estado_contratacao AS 'Estado da contratação', det.c_fase_processo AS 'Fase', ag.id AS agID,\nag.c_data_agendamento AS 'Data de agendamento', ag.c_estado_agendamento AS 'Estado do agendamento', ag.c_urgencia_agendamento AS 'Urgencia de agendamento', ag.c_reagendamento AS 'Reagendamento',\nSUM (IF(imo.c_imovel_banco='Sim',1,0)) AS 'Imovel Banco'\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nLEFT JOIN app_fd_imoveis imo ON det.c_id_processo = imo.c_id_processo\nWHERE det.c_data_entrada != ''\nGROUP BY IDProc"
+            "sql": "SELECT det.c_id_processo AS IDProc, det.c_data_entrada as Data_entrada, det.c_nome_banco AS Banco, det.c_tipo_processo AS Tipo_processo, det.c_urgencia AS Urgente,\ndet.c_forma_outorga as Forma_outorga, det.c_n_wf_pl as WF_PL, det.c_nome_cliente AS Nome_cliente,\ndet.c_origem_processo AS Origem, det.c_complex_processo AS Complexidade, det.c_estado_contratacao AS Estado_contratacao, det.c_fase_processo AS Fase,\nag.c_data_agendamento AS Data_agendamento, ag.c_estado_agendamento AS Estado_agendamento, ag.c_urgencia_agendamento AS Urgencia_agendamento, ag.c_reagendamento AS Reagendamento,\nSUM(IF(imo.c_imovel_banco='Sim',1,0)) AS Imovel_banco\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nLEFT JOIN app_fd_imoveis imo ON det.c_id_processo = imo.c_id_processo\nWHERE det.c_data_entrada != ''\nGROUP BY IDProc"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -23,33 +23,9 @@
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_1",
-            "label": "WF PL",
-            "name": "WF PL",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
             "id": "column_3",
             "label": "Banco",
             "name": "Banco",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_2",
-            "label": "Tipo de processo",
-            "name": "Tipo de processo",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_5",
-            "label": "Imovel Banco",
-            "name": "Imovel Banco",
             "sortable": "false"
         }
     ],
