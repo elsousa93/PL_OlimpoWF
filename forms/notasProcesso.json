@@ -252,7 +252,7 @@
                             "autoPopulate": "",
                             "id": "setTextAreaValue",
                             "label": "",
-                            "value": "<script type=\"text/javascript\">\n    $(document).change(function(){\n        console.log(\"Print\");\n        $(\"textarea#anotacao\").val($(\".ql-editor\")[0].innerText);\n        \n    });\n<\/script>"
+                            "value": "<script type=\"text/javascript\">\n    $(document).ready(function() {\n        $(\".ql-editor\").on('input', function() {\n            console.log($(\".ql-editor\")[0].innerText);\n            $(\"textarea#anotacao\").val($(\".ql-editor\")[0].innerText)\n    });\n});\n<\/script>"
                         }
                     }
                 ],
