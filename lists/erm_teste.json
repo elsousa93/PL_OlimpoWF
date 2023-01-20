@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT det.c_id_processo AS IDProc, det.c_data_entrada as Data_entrada, det.c_nome_banco AS Banco, det.c_n_wf_pl as WF_PL, det.c_gestor_pl AS Gestor_PL,\ndet.c_estado_contratacao AS Estado_contratacao, det.c_fase_processo AS Fase\nFROM app_fd_detalhe_processo det\n"
+            "sql": "SELECT det.c_nome_banco AS Banco, det.c_gestor_pl AS Gestor_PL, det.c_estado_contratacao AS Estado_contratacao, Count(det.c_estado_contratacao) as Total\nFROM app_fd_detalhe_processo det\nWHERE det.c_gestor_pl != ''\nGroup BY Banco, Gestor_PL, Estado_Contratacao\nORDER BY Gestor_PL\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -15,9 +15,9 @@
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_0",
-            "label": "IDProc",
-            "name": "IDProc",
+            "id": "column_5",
+            "label": "Banco",
+            "name": "Banco",
             "sortable": "false"
         },
         {
@@ -39,9 +39,9 @@
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_4",
-            "label": "Fase",
-            "name": "Fase",
+            "id": "column_1",
+            "label": "Total",
+            "name": "Total",
             "sortable": "false"
         }
     ],
