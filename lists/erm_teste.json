@@ -6,37 +6,19 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT det.c_id_processo as IDProc, det.dateCreated AS Data_alteracao, count(det.c_id_processo) as Total\nFROM app_fd_detalhe_processo det\nGROUP BY IDProc\n\n\n\n\n"
+            "sql": "SELECT det.c_id_processo as IDProc, 'estado_contratacao' AS Campo, det.dateCreated AS Data_alteracao, 'NOV' AS Novo_valor, det.c_n_wf_pl AS WF_PL, det.c_nome_banco AS Banco,\ndet.c_tipo_processo AS Tipo_processo, SUM(IF(imo.c_imovel_banco='Sim',1,0)) AS Imovel_banco\nFROM app_fd_detalhe_processo det\nLEFT JOIN app_fd_imoveis imo ON det.c_id_processo = imo.c_id_processo\nGROUP BY IDProc, Campo, Data_alteracao, Novo_valor\n\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
-    "columns": [
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_0",
-            "label": "IDProc",
-            "name": "IDProc",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_2",
-            "label": "Data_alteracao",
-            "name": "Data_alteracao",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_5",
-            "label": "Total",
-            "name": "Total",
-            "sortable": "false"
-        }
-    ],
+    "columns": [{
+        "filterable": true,
+        "hidden": "false",
+        "id": "column_0",
+        "label": "IDProc",
+        "name": "IDProc",
+        "sortable": "false"
+    }],
     "considerFilterWhenGetTotal": "",
     "description": "",
     "disableResponsive": "",
