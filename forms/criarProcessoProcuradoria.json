@@ -121,9 +121,31 @@
     "properties": {
         "description": "",
         "id": "criarProcessoProcuradoria",
-        "loadBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
         "name": "Procuradoria - Criar/Importar Processo",
-        "storeBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+            "properties": {
+                "autoHandleFiles": "",
+                "autoHandleWorkflowVariable": "true",
+                "cacheInterval": "",
+                "script": "\n\n\npublic FormRowSet storeData(Element element, FormRowSet rows, FormData formData) {\n    \n    \n    AppService appService = (AppService) AppUtil.getApplicationContext().getBean(\"appService\");\n    WorkflowManager workflowManager = (WorkflowManager) AppUtil.getApplicationContext().getBean(\"workflowManager\");\n    AppDefinition appDef = AppUtil.getCurrentAppDefinition();\n        \n    try{\n        //get process\n        WorkflowProcess process = appService.getWorkflowProcessForApp(appDef.getAppId(), appDef.getVersion().toString(), \"CreditoHabitacao\");\n        //start process\n        WorkflowProcessResult result = workflowManager.processStart(process.getId(), variables);\n        //get process id\n        processId = result.getProcess().getInstanceId();\n        \n        \n        \n        \n        \n        \n        \n        \n        \n        \n        \n        \n        \n        \n        \n    }catch(Exception e){\n        LogUtil.error(appDef.toString(), e, \"Error creating process\");\n    }\n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            \n            ",
+                "useAjax": ""
+            }
+        },
         "tableName": "processos_temp"
     }
 }
