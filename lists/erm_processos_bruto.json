@@ -6,37 +6,19 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT det.c_id_processo AS IDProc, det.c_data_entrada as 'Data de entrada',det.c_nome_banco AS 'Banco', det.c_tipo_processo AS 'Tipo de processo',det.c_urgencia AS 'Urgente',\ndet.c_forma_outorga as 'Forma de outorga', det.c_n_wf_pl as 'WF PL', det.c_n_wf_banco as 'WF Banco', det.c_nome_cliente AS 'Nome do Cliente', det.c_nif_cliente AS 'NIF do Cliente',\ndet.c_origem_processo AS 'Origem', det.c_complex_processo AS 'Complexidade', det.c_estado_contratacao AS 'Estado da contratação', det.c_fase_processo AS 'Fase', ag.id AS agID,\nag.c_data_agendamento AS 'Data de agendamento', ag.c_estado_agendamento AS 'Estado do agendamento', ag.c_urgencia_agendamento AS 'Urgencia de agendamento', ag.c_reagendamento AS 'Reagendamento',\nSUM (IF(imo.c_imovel_banco='Sim',1,0)) AS 'Imovel Banco'\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nLEFT JOIN app_fd_imoveis imo ON det.c_id_processo = imo.c_id_processo\nWHERE det.c_data_entrada != ''\nGROUP BY IDProc\n"
+            "sql": "SELECT det.c_id_processo AS IDProc, det.c_data_entrada as Data_entrada, det.c_nome_banco AS 'Banco', det.c_tipo_processo AS 'Tipo de processo',det.c_urgencia AS 'Urgente',\ndet.c_forma_outorga as 'Forma de outorga', det.c_n_wf_pl as 'WF PL', det.c_n_wf_banco as 'WF Banco', det.c_nome_cliente AS 'Nome do Cliente', det.c_nif_cliente AS 'NIF do Cliente',\ndet.c_origem_processo AS 'Origem', det.c_complex_processo AS 'Complexidade', det.c_estado_contratacao AS 'Estado da contratação', det.c_fase_processo AS 'Fase', ag.id AS agID,\nag.c_data_agendamento AS 'Data de agendamento', ag.c_estado_agendamento AS 'Estado do agendamento', ag.c_urgencia_agendamento AS 'Urgencia de agendamento', ag.c_reagendamento AS 'Reagendamento',\nSUM (IF(imo.c_imovel_banco='Sim',1,0)) AS 'Imovel Banco'\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nLEFT JOIN app_fd_imoveis imo ON det.c_id_processo = imo.c_id_processo\nWHERE det.c_data_entrada != ''\nGROUP BY IDProc\n"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
     "columns": [
         {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
             "filterable": true,
-            "format": {
-                "className": "org.joget.plugin.enterprise.DateFormatter",
-                "properties": {
-                    "dataFormat": "yyyy-MM-dd",
-                    "dateStoreInUTC": "",
-                    "displayFormat": "dd/MM/yyyy"
-                }
-            },
-            "headerAlignment": "",
             "hidden": "false",
-            "id": "column_1",
-            "label": "Data de entrada",
-            "name": "Data de entrada",
-            "sortable": "false",
-            "style": "",
-            "width": ""
+            "id": "column_16",
+            "label": "Data_entrada",
+            "name": "Data_entrada",
+            "sortable": "false"
         },
         {
             "filterable": true,
@@ -213,28 +195,6 @@
             "type": {
                 "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
                 "properties": {}
-            }
-        },
-        {
-            "datalist_type": "filter",
-            "filterParamName": "d-3484587-fn_Data de entrada",
-            "hidden": "",
-            "id": "filter_1",
-            "label": "Data de entrada",
-            "name": "Data de entrada",
-            "type": {
-                "className": "org.joget.plugin.enterprise.DateRangeDataListFilterType",
-                "properties": {
-                    "dateStoreInUTC": "",
-                    "format": "yy/mm/dd",
-                    "formatJava": "yyyy/MM/dd",
-                    "fromDefaultValue": "",
-                    "fromLabel": "De",
-                    "showFieldLabel": "true",
-                    "toDefaultValue": "",
-                    "toLabel": "Até",
-                    "yearRange": "c-10:c+10"
-                }
             }
         }
     ],
