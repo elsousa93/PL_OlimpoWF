@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT lg.c_process_id AS IDProc,lg.c_campo AS Campo, lg.c_data_alteracao as Data_alteracao, lg.c_novo_valor as Novo_valor, det.c_n_wf_pl AS WF_PL, det.c_nome_banco AS Banco,\ndet.c_tipo_processo AS Tipo_processo,  SUM(IF(imo.c_imovel_banco='Sim',1,0)) AS Imovel_banco\nFROM app_fd_audit_log lg\nLEFT JOIN app_fd_detalhe_processo det ON det.c_id_processo= lg.c_process_id\nLEFT JOIN app_fd_imoveis imo ON det.c_id_processo = imo.c_id_processo\nGROUP BY IDProc, Campo, Data_alteracao, Novo_valor\n\n\n\n\n"
+            "sql": "SELECT det.c_id_processo AS IDProc, det.c_data_entrada as Data_entrada, det.c_nome_banco AS Banco, det.c_tipo_processo AS Tipo_processo, det.c_urgencia AS Urgente,\ndet.c_forma_outorga as Forma_outorga, det.c_n_wf_pl as WF_PL, det.c_nome_cliente AS Nome_cliente,\ndet.c_origem_processo AS Origem, det.c_complex_processo AS Complexidade, det.c_estado_contratacao AS Estado_contratacao, det.c_fase_processo AS Fase\nFROM app_fd_detalhe_processo det\n"
         }
     },
     "buttonPosition": "bottomLeft",
