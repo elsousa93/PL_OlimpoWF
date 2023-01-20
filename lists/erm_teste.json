@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT det.c_id_processo as IDProc, 'estado_contratacao' AS Campo, det.dateCreated AS Data_alteracao, 'NOV' AS Novo_valor, det.c_n_wf_pl AS WF_PL, det.c_nome_banco AS Banco,\ndet.c_tipo_processo AS Tipo_processo, SUM(IF(imo.c_imovel_banco='Sim',1,0)) AS Imovel_banco\nFROM app_fd_detalhe_processo det\nLEFT JOIN app_fd_imoveis imo ON det.c_id_processo = imo.c_id_processo\nGROUP BY IDProc, Campo, Data_alteracao, Novo_valor\n\n\n\n"
+            "sql": "SELECT det.c_id_processo as IDProc, 'estado_contratacao' AS Campo, det.dateCreated AS Data_alteracao, 'NOV' AS Novo_valor, \ndet.c_n_wf_pl AS WF_PL, det.c_nome_banco AS Banco, det.c_tipo_processo AS Tipo_processo, SUM(IF(imo.c_imovel_banco='Sim',1,0)) AS Imovel_banco\nFROM app_fd_detalhe_processo det\nLEFT JOIN app_fd_imoveis imo ON det.c_id_processo = imo.c_id_processo\nGROUP BY IDProc, Campo, Data_alteracao, Novo_valor\n\n\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
