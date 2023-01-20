@@ -6,12 +6,20 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "p.id",
-            "sql": "SELECT p.id, dp.c_tipo_processo, dp.c_nome_banco, ab.c_valor_emprestimo, al.c_numero_compras, al.c_numero_hipotecas, al.c_valor_global_cv, ab.c_tipo_emprestimo FROM app_fd_processos p \nJOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nJOIN app_fd_anal_legal_processo al ON al.id = p.c_anal_legal\nJOIN app_fd_anal_banc_processo ab ON ab.id = p.c_anal_banc"
+            "sql": "SELECT p.id, dp.c_tipo_processo, dp.c_nome_banco, dp.c_n_wf_pl, ab.c_valor_emprestimo, al.c_numero_compras, al.c_numero_hipotecas, al.c_valor_global_cv, ab.c_tipo_emprestimo FROM app_fd_processos p \nJOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nJOIN app_fd_anal_legal_processo al ON al.id = p.c_anal_legal\nJOIN app_fd_anal_banc_processo ab ON ab.id = p.c_anal_banc"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
     "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_7",
+            "label": "c_n_wf_pl",
+            "name": "c_n_wf_pl",
+            "sortable": "false"
+        },
         {
             "filterable": true,
             "hidden": "false",
