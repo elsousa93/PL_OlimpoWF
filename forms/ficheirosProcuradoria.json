@@ -5,29 +5,59 @@
         "elements": [{
             "className": "org.joget.apps.form.model.Column",
             "elements": [{
-                "className": "org.joget.apps.form.lib.FileUpload",
+                "className": "org.joget.plugin.enterprise.FormGrid",
                 "properties": {
-                    "attachment": "",
-                    "fileType": "",
-                    "fileTypeMsg": "Invalid file type",
+                    "abortRelatedRunningProcesses": "",
+                    "deleteFiles": "",
+                    "deleteGridData": "",
+                    "deleteMessage": "Delete row?",
+                    "deleteSubformData": "",
+                    "disabledAdd": "",
+                    "disabledDelete": "",
+                    "enableSorting": "",
+                    "errorMessage": "Invalid number of rows",
+                    "formDefId": "ficheiroProcuradoria",
+                    "height": "500",
                     "id": "field1",
-                    "label": "Upload de Ficheiros",
-                    "maxSize": "",
-                    "maxSizeMsg": "File size limit exceeded",
-                    "multiple": "",
-                    "padding": "",
-                    "permissionType": "",
+                    "label": "Lista Ficheiros",
+                    "loadBinder": {
+                        "className": "",
+                        "properties": {}
+                    },
+                    "options": [
+                        {
+                            "format": "",
+                            "formatType": "text",
+                            "label": "ID",
+                            "value": "id",
+                            "width": ""
+                        },
+                        {
+                            "format": "",
+                            "formatType": "date",
+                            "label": "Data de Inserção",
+                            "value": "dateCreated",
+                            "width": ""
+                        }
+                    ],
+                    "pageSize": "20",
                     "readonly": "",
-                    "removeFile": "",
-                    "resizeHeight": "",
-                    "resizeMethod": "",
-                    "resizeQuality": "0.8",
-                    "resizeWidth": "",
-                    "size": "",
+                    "readonlyLabel": "",
+                    "showRowNumber": "",
+                    "storeBinder": {
+                        "className": "",
+                        "properties": {}
+                    },
+                    "submit-label-normal": "",
+                    "submit-label-readonly": "",
+                    "uniqueKey": "",
+                    "validateMaxRow": "",
+                    "validateMinRow": "",
                     "validator": {
                         "className": "",
                         "properties": {}
-                    }
+                    },
+                    "width": "900"
                 }
             }],
             "properties": {"width": "100%"}
@@ -61,9 +91,25 @@
     "properties": {
         "description": "",
         "id": "ficheirosProcuradoria",
-        "loadBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
         "name": "Procuradoria - Ficheiros",
-        "storeBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
         "tableName": "ficheiros_procu"
     }
 }
