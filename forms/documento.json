@@ -315,7 +315,7 @@
                         "properties": {
                             "controlField": "",
                             "id": "multi_tipos_documentos",
-                            "label": "Documento com várias tipologias?",
+                            "label": "Ficheiro com várias tipologias?",
                             "options": [
                                 {
                                     "grouping": "",
@@ -444,6 +444,27 @@
                         }
                     },
                     {
+                        "className": "org.joget.apps.form.lib.SubForm",
+                        "properties": {
+                            "formDefId": "documentosSeparados",
+                            "id": "field22",
+                            "label": "",
+                            "loadBinder": {
+                                "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+                                "properties": {}
+                            },
+                            "noframe": "",
+                            "parentSubFormId": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "storeBinder": {
+                                "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+                                "properties": {}
+                            },
+                            "subFormParentId": "doc_id"
+                        }
+                    },
+                    {
                         "className": "org.joget.apps.form.lib.HiddenField",
                         "properties": {
                             "id": "estado_ficheiro",
@@ -458,7 +479,7 @@
                             "autoPopulate": "",
                             "id": "add_estado",
                             "label": "",
-                            "value": "<script type=\"text/javascript\">\r\n    \r\n    \r\n    $(document).ready(function(){\r\n        \r\n        \r\n        console.log(\"AAAAAA\");\r\n        //if(){\r\n            \r\n        //get value from field that controls if the WF number is automatically generated or not\r\n        var estados = FormUtil.getValues(\"field11.documento_valido\");\r\n        var count = 0;\r\n\r\n        if(estados != null && estados.length > 0){\r\n            for (var i = 0; i < estados.length; i++) {\r\n                if(estados[i] === \"NAO\"){\r\n                    count++;\r\n                }\r\n            }\r\n        }\r\n        var estado_ficheiro = FormUtil.getField(\"estado_ficheiro\");\r\n        \r\n        if(count > 0){\r\n            $(estado_ficheiro).val(\"NAO\"); //set value\r\n        }else{\r\n            $(estado_ficheiro).val(\"SIM\"); //set value\r\n        }\r\n        \r\n            \r\n            \r\n        //}\r\n        \r\n\r\n    });\r\n    \r\n    $(document).change(function(){\r\n        \r\n        //get value from field that controls if the WF number is automatically generated or not\r\n        var estados = FormUtil.getValues(\"field11.documento_valido\");\r\n        var count = 0;\r\n        \r\n        if(estados != null && estados.length > 0){\r\n            for (var i = 0; i < estados.length; i++) {\r\n                if(estados[i] === \"NAO\"){\r\n                    count++;\r\n                }\r\n            }\r\n        }\r\n        var estado_ficheiro = FormUtil.getField(\"estado_ficheiro\");\r\n        \r\n        if(count > 0){\r\n            $(estado_ficheiro).val(\"NAO\"); //set value\r\n        }else{\r\n            $(estado_ficheiro).val(\"SIM\"); //set value\r\n        }\r\n    });\r\n    \r\n<\/script>"
+                            "value": "<script type=\"text/javascript\">\r\n    \r\n    \r\n    $(document).ready(function(){\r\n        \r\n        if(!$(\"div[id*=multi_tipos_documentos] input\").eq(1).is(\":checked\")){\r\n            \r\n            \r\n            $(\"div[id*=field11]\").show();\r\n            //get value from field that controls if the WF number is automatically generated or not\r\n            var estados = FormUtil.getValues(\"field11.documento_valido\");\r\n            var count = 0;\r\n    \r\n            if(estados != null && estados.length > 0){\r\n                for (var i = 0; i < estados.length; i++) {\r\n                    if(estados[i] === \"NAO\"){\r\n                        count++;\r\n                    }\r\n                }\r\n            }\r\n            var estado_ficheiro = FormUtil.getField(\"estado_ficheiro\");\r\n            \r\n            if(count > 0){\r\n                $(estado_ficheiro).val(\"NAO\"); //set value\r\n            }else{\r\n                $(estado_ficheiro).val(\"SIM\"); //set value\r\n            }\r\n            \r\n        }else{\r\n            $(\"div[id*=field11]\").hide();\r\n            \r\n        }\r\n        \r\n\r\n    });\r\n    \r\n    $(document).change(function(){\r\n        \r\n        if(!$(\"div[id*=multi_tipos_documentos] input\").eq(1).is(\":checked\")){\r\n            $(\"div[id*=field11]\").show();\r\n            //get value from field that controls if the WF number is automatically generated or not\r\n            var estados = FormUtil.getValues(\"field11.documento_valido\");\r\n            var count = 0;\r\n            \r\n            if(estados != null && estados.length > 0){\r\n                for (var i = 0; i < estados.length; i++) {\r\n                    if(estados[i] === \"NAO\"){\r\n                        count++;\r\n                    }\r\n                }\r\n            }\r\n            var estado_ficheiro = FormUtil.getField(\"estado_ficheiro\");\r\n            \r\n            if(count > 0){\r\n                $(estado_ficheiro).val(\"NAO\"); //set value\r\n            }else{\r\n                $(estado_ficheiro).val(\"SIM\"); //set value\r\n            }\r\n        }else{\r\n            $(\"div[id*=field11]\").hide();\r\n            \r\n        }\r\n    });\r\n    \r\n<\/script>"
                         }
                     }
                 ],
