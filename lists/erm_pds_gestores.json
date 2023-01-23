@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT det.c_nome_banco AS Banco, det.c_gestor_pl AS Gestor_PL, det.c_estado_contratacao AS Estado_contratacao, Count(det.c_estado_contratacao) as Processos\nFROM app_fd_detalhe_processo det\nWHERE det.c_gestor_pl != ''\nGroup BY Banco, Gestor_PL, Estado_Contratacao\nORDER BY Gestor_PL\n\n\n"
+            "sql": "SELECT det.c_nome_banco AS Banco, det.c_gestor_pl AS Gestor_PL, det.c_fase_processo AS Fase, det.c_estado_contratacao AS Estado_contratacao, Count(det.c_estado_contratacao) as Processos\nFROM app_fd_detalhe_processo det\nWHERE det.c_gestor_pl != ''\nGroup BY Banco, Gestor_PL, Fase, Estado_Contratacao\nORDER BY Gestor_PL\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -89,6 +89,14 @@
             "width": ""
         },
         {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "Fase",
+            "name": "Fase",
+            "sortable": "false"
+        },
+        {
             "action": {
                 "className": "",
                 "properties": {}
@@ -169,6 +177,15 @@
                     },
                     "size": ""
                 }
+            }
+        },
+        {
+            "id": "filter_3",
+            "label": "Fase",
+            "name": "Fase",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
             }
         },
         {
