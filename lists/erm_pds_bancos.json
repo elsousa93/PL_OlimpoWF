@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT det.c_nome_banco AS Banco, det.c_gestor_pl AS Gestor_PL, det.c_fase_processo AS Fase, det.c_estado_contratacao AS Estado_contratacao, Count(det.c_estado_contratacao) as Processos\nFROM app_fd_detalhe_processo det\nWHERE det.c_gestor_pl != ''\nGroup BY Banco, Gestor_PL, Fase, Estado_Contratacao\nORDER BY Gestor_PL\n\n\n"
+            "sql": "SELECT det.c_nome_banco AS Banco, det.c_fase_processo AS Fase, det.c_estado_contratacao AS Estado_contratacao, Count(det.c_id_processo) as Processos\nFROM app_fd_detalhe_processo det\nWHERE det.c_nome_banco != ''\nGroup BY Banco, Fase, Estado_Contratacao\nORDER BY Banco\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -46,44 +46,6 @@
             "id": "column_3",
             "label": "Banco",
             "name": "Banco",
-            "sortable": "true",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
-                "properties": {
-                    "options": [],
-                    "optionsBinder": {
-                        "className": "org.joget.plugin.enterprise.UserOptionsBinder",
-                        "properties": {
-                            "addEmptyOption": "",
-                            "cacheInterval": "",
-                            "deptId": "",
-                            "emptyLabel": "",
-                            "groupId": "",
-                            "grouping": "",
-                            "optionLabel": "fullname",
-                            "orgId": "PL",
-                            "useAjax": ""
-                        }
-                    }
-                }
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_16",
-            "label": "Gestor PL",
-            "name": "Gestor_PL",
             "sortable": "true",
             "style": "",
             "width": ""
@@ -234,38 +196,6 @@
                             "groupingColumn": "",
                             "idColumn": "value",
                             "labelColumn": "label",
-                            "useAjax": ""
-                        }
-                    },
-                    "size": ""
-                }
-            }
-        },
-        {
-            "datalist_type": "filter",
-            "filterParamName": "d-3077721-fn_Gestor_PL",
-            "hidden": "",
-            "id": "filter_1",
-            "label": "Gestor",
-            "name": "Gestor_PL",
-            "type": {
-                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
-                "properties": {
-                    "controlField": "",
-                    "defaultValue": "",
-                    "multiple": "",
-                    "options": [],
-                    "optionsBinder": {
-                        "className": "org.joget.plugin.enterprise.UserOptionsBinder",
-                        "properties": {
-                            "addEmptyOption": "",
-                            "cacheInterval": "",
-                            "deptId": "",
-                            "emptyLabel": "",
-                            "groupId": "",
-                            "grouping": "",
-                            "optionLabel": "fullname",
-                            "orgId": "PL",
                             "useAjax": ""
                         }
                     },
