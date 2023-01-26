@@ -1343,6 +1343,14 @@
                                     "useAjax": ""
                                 }
                             },
+                            "permission_rules": {
+                                "1c456b84-44fa-3759-6fc2-5e584209abb6": {},
+                                "26400434-6e65-a54c-c9ae-c1ae4296b0cd": {},
+                                "3b4737b8-9f04-a406-1394-9be597a75957": {},
+                                "a7689113-02f4-f24c-af6c-a96ca83cf9f2": {},
+                                "d998bffe-5e58-69ca-1448-f87f2bc701fa": {},
+                                "e3cb2d81-9e35-320f-919f-479474176350": {}
+                            },
                             "readonly": "",
                             "readonlyLabel": "",
                             "size": "",
@@ -1366,9 +1374,17 @@
                                 "className": "org.joget.apps.form.lib.BeanShellFormBinder",
                                 "properties": {
                                     "cacheInterval": "",
-                                    "script": "return \"SIM\";",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\nimport org.joget.apps.form.model.Element;\nimport org.joget.apps.form.model.FormData;\nimport org.joget.apps.form.model.FormRow;\nimport org.joget.apps.form.model.FormRowSet;\nimport org.joget.apps.form.model.FormStoreBinder;\nimport java.sql.Connection;\nimport java.sql.PreparedStatement;\nimport java.sql.ResultSet;\nimport java.sql.SQLException;\nimport javax.sql.DataSource;\nimport org.joget.apps.form.service.FormUtil;\nimport org.joget.apps.app.model.AppDefinition;\nimport org.joget.commons.util.LogUtil;\n\n\npublic FormRowSet getUserAssigned() {\n    Connection con = null;\n    PreparedStatement stmt = null;\n    ResultSet rs = null;\n    String gestorPL = \"\";\n    \n    AppDefinition appDef = AppUtil.getCurrentAppDefinition();\n    \n    \n    try{\n            DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\n            con = ds.getConnection();\n            \n            String label = \"Não\";\n            String value = \"NAO\";\n            if(!con.isClosed()){\n                //Obter o id do ficheiro\n                String idProcesso = \"#form.processos.id#\";\n                String queryGetIdDocsProce = \"SELECT * FROM app_fd_docs_processo WHERE c_id_processo = ? order by dateCreated desc;\";\n                stmt = con.prepareStatement(queryGetIdDocsProce);\n                stmt.setObject(1, idProcesso);\n                rs = stmt.executeQuery();\n                \n                if(rs.next()){\n                    idDocProce = rs.getObject(\"id\");\n                    //Obter os documentos\n                    String queyGetDates = \"SELECT c_tipo_documento FROM app_fd_documento_processo WHERE c_doc_id = ? AND c_tipo_documento='CMP' AND c_documento_valido='SIM' \";\n                    stmt = con.prepareStatement(queyGetDates);\n                    stmt.setObject(1, idDocProce);\n                    rs2 = stmt.executeQuery();\n                    \n                    if(rs2.next()){\n                        label=\"Sim\";\n                        value=\"SIM\";\n                        \n                    }\n    \n                }\n       \n            }\n            \n    }catch(Exception e){\n        LogUtil.error(appDef.toString(), e, \"Error getting info from DB\");\n    }finally{\n        try{\n            if(rs != null){\n            rs.close();\n            }\n            if(stmt != null){\n                stmt.close();\n            }\n            if(con != null && !con.isClosed()) {\n                con.close();\n            }\n        }catch(Exception e){\n            LogUtil.error(appDef.toString(), e, \"Error closing DB connection\");\n        }\n        \n    }\n    FormRowSet f = new FormRowSet();\n    FormRow r1 = new FormRow();\n    r1.put(FormUtil.PROPERTY_VALUE, value);\n    r1.put(FormUtil.PROPERTY_LABEL, label);\n    f.add(r1);\n    return f;\n}\n \nreturn getUserAssigned();\n        ",
                                     "useAjax": ""
                                 }
+                            },
+                            "permission_rules": {
+                                "1c456b84-44fa-3759-6fc2-5e584209abb6": {},
+                                "26400434-6e65-a54c-c9ae-c1ae4296b0cd": {},
+                                "3b4737b8-9f04-a406-1394-9be597a75957": {},
+                                "a7689113-02f4-f24c-af6c-a96ca83cf9f2": {},
+                                "d998bffe-5e58-69ca-1448-f87f2bc701fa": {},
+                                "e3cb2d81-9e35-320f-919f-479474176350": {}
                             },
                             "readonly": "",
                             "readonlyLabel": "",
@@ -1501,6 +1517,14 @@
                             }
                         },
                         "permissionHidden": "",
+                        "permission_rules": {
+                            "1c456b84-44fa-3759-6fc2-5e584209abb6": {},
+                            "26400434-6e65-a54c-c9ae-c1ae4296b0cd": {},
+                            "3b4737b8-9f04-a406-1394-9be597a75957": {},
+                            "a7689113-02f4-f24c-af6c-a96ca83cf9f2": {},
+                            "d998bffe-5e58-69ca-1448-f87f2bc701fa": {},
+                            "e3cb2d81-9e35-320f-919f-479474176350": {}
+                        },
                         "readonly": "",
                         "readonlyLabel": "",
                         "size": "",
@@ -1528,6 +1552,14 @@
                     "properties": {}
                 },
                 "permissionReadonly": "",
+                "permission_rules": {
+                    "1c456b84-44fa-3759-6fc2-5e584209abb6": {},
+                    "26400434-6e65-a54c-c9ae-c1ae4296b0cd": {},
+                    "3b4737b8-9f04-a406-1394-9be597a75957": {},
+                    "a7689113-02f4-f24c-af6c-a96ca83cf9f2": {},
+                    "d998bffe-5e58-69ca-1448-f87f2bc701fa": {},
+                    "e3cb2d81-9e35-320f-919f-479474176350": {}
+                },
                 "readonly": "",
                 "readonlyLabel": "",
                 "regex": "",
