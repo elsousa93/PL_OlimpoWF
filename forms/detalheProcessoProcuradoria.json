@@ -10,6 +10,7 @@
                         "className": "org.joget.apps.form.lib.HiddenField",
                         "properties": {
                             "id": "id_processo",
+                            "permission_rules": {},
                             "useDefaultWhenEmpty": "",
                             "validator": {
                                 "className": "",
@@ -26,6 +27,7 @@
                             "id": "n_processo",
                             "label": "Número do Processo",
                             "maxlength": "",
+                            "permission_rules": {},
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -47,6 +49,7 @@
                             "id": "numero_entradas",
                             "label": "Número de Entradas",
                             "maxlength": "",
+                            "permission_rules": {},
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -72,6 +75,7 @@
                             "format": "",
                             "id": "data_entrada",
                             "label": "Data de Entrada",
+                            "permission_rules": {},
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -96,6 +100,7 @@
                             "format": "",
                             "id": "data_rececao_originais",
                             "label": "Data de Receção Originais",
+                            "permission_rules": {},
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -110,18 +115,63 @@
                         }
                     },
                     {
-                        "className": "org.joget.apps.form.lib.TextField",
+                        "className": "org.joget.apps.form.lib.SelectBox",
                         "properties": {
-                            "encryption": "",
-                            "id": "tipo_processo",
-                            "label": "Tipo do Processo",
-                            "maxlength": "",
-                            "placeholder": "",
+                            "controlField": "",
+                            "id": "banco_fundo",
+                            "label": "Banco/Fundo",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "true",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "extraCondition": "c_nome_campo = 'nome_banco' AND e.customProperties.servico LIKE '%PROCU%'",
+                                    "formDefId": "adicionarOpcaoLV",
+                                    "groupingColumn": "",
+                                    "idColumn": "value",
+                                    "labelColumn": "label",
+                                    "useAjax": ""
+                                }
+                            },
+                            "permission_rules": {},
                             "readonly": "",
                             "readonlyLabel": "",
                             "size": "",
-                            "storeNumeric": "",
-                            "style": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.DefaultValidator",
+                                "properties": {
+                                    "mandatory": "true",
+                                    "message": "#i18n.mandatorymsg#",
+                                    "type": ""
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "banco_fundo",
+                            "id": "tipo_processo",
+                            "label": "Tipo de processo",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                                "properties": {
+                                    "cacheInterval": "",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.FormStoreBinder;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport org.joget.commons.util.LogUtil;\r\n\r\n \r\npublic FormRowSet load(String[] values) {\r\n    LogUtil.info(\"LOADBINDER\", \"AAAAAAa\" + values);\r\n    \r\n    FormRowSet rows = new FormRowSet();\r\n    \r\n    FormRow option = new FormRow();\r\n    option.setProperty(FormUtil.PROPERTY_VALUE, \"\");\r\n    option.setProperty(FormUtil.PROPERTY_LABEL, \"\");\r\n    rows.add(option);\r\n    \r\n    String banco = null;\r\n    if (values != null && values.length > 0) {\r\n        banco = \"%\" + values[0] + \"%\";\r\n    \r\n        Connection con = null;\r\n        PreparedStatement stmt = null;\r\n        ResultSet rs = null;\r\n        String origem_value = \"\";\r\n        String origem_label = \"\";\r\n        \r\n        AppDefinition appDef = AppUtil.getCurrentAppDefinition();\r\n        \r\n        try{\r\n                DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n                con = ds.getConnection();\r\n                \r\n                \r\n                if(!con.isClosed()){\r\n                    String idDetalhe_processo = \"#form.processos.detalhe_processo#\";\r\n                    //Verificar o utilizador atribuido e atualizar caso esteja errado\r\n                    String query=\"SELECT c_value, c_label FROM app_fd_listas_de_valores WHERE c_nome_campo = ? AND c_banco LIKE ?;\";\r\n                    stmt = con.prepareStatement(query);\r\n                    stmt.setObject(1, \"tipo_processo_procu\");\r\n                    stmt.setObject(2, banco);\r\n                    rs = stmt.executeQuery();\r\n                    \r\n                    while(rs.next()){\r\n                        origem_value = rs.getString(1);\r\n                        origem_label = rs.getString(2);\r\n                        \r\n                        FormRow option = new FormRow();\r\n                        option.setProperty(FormUtil.PROPERTY_VALUE, origem_value);\r\n                        option.setProperty(FormUtil.PROPERTY_LABEL, origem_label);\r\n                        \r\n                        rows.add(option);\r\n                        \r\n                    }\r\n                }\r\n                \r\n        }catch(Exception e){\r\n            LogUtil.error(\"Importa processo - origem de processo\", e, \"Error getting info from DB\");\r\n        }finally{\r\n            try{\r\n                if(rs != null){\r\n                rs.close();\r\n                }\r\n                if(stmt != null){\r\n                    stmt.close();\r\n                }\r\n                if(con != null && !con.isClosed()) {\r\n                    con.close();\r\n                }\r\n            }catch(Exception e){\r\n                LogUtil.error(\"Importa processo - origem de processo\", e, \"Error closing DB connection\");\r\n            }\r\n            \r\n        }\r\n        \r\n    }\r\n\r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(values);",
+                                    "useAjax": "true"
+                                }
+                            },
+                            "permission_rules": {},
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
                             "validator": {
                                 "className": "",
                                 "properties": {}
@@ -131,18 +181,25 @@
                         }
                     },
                     {
-                        "className": "org.joget.apps.form.lib.TextField",
+                        "className": "org.joget.apps.form.lib.SelectBox",
                         "properties": {
-                            "encryption": "",
+                            "controlField": "",
                             "id": "sociedade_representada",
                             "label": "Sociedade Representada",
-                            "maxlength": "",
-                            "placeholder": "",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                                "properties": {
+                                    "cacheInterval": "",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.FormStoreBinder;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport org.joget.commons.util.LogUtil;\r\n\r\n \r\npublic FormRowSet load(String[] values) {\r\n    LogUtil.info(\"LOADBINDER\", \"AAAAAAa\" + values);\r\n    \r\n    FormRowSet rows = new FormRowSet();\r\n    \r\n    FormRow option = new FormRow();\r\n    option.setProperty(FormUtil.PROPERTY_VALUE, \"\");\r\n    option.setProperty(FormUtil.PROPERTY_LABEL, \"\");\r\n    rows.add(option);\r\n    \r\n    String banco = null;\r\n    if (values != null && values.length > 0) {\r\n        banco = \"%\" + values[0] + \"%\";\r\n    \r\n        Connection con = null;\r\n        PreparedStatement stmt = null;\r\n        ResultSet rs = null;\r\n        String origem_value = \"\";\r\n        String origem_label = \"\";\r\n        \r\n        AppDefinition appDef = AppUtil.getCurrentAppDefinition();\r\n        \r\n        try{\r\n                DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n                con = ds.getConnection();\r\n                \r\n                \r\n                if(!con.isClosed()){\r\n                    String idDetalhe_processo = \"#form.processos.detalhe_processo#\";\r\n                    //Verificar o utilizador atribuido e atualizar caso esteja errado\r\n                    String query=\"SELECT c_value, c_label FROM app_fd_listas_de_valores WHERE c_nome_campo = ? AND c_banco LIKE ?;\";\r\n                    stmt = con.prepareStatement(query);\r\n                    stmt.setObject(1, \"sociedade_representada_procu\");\r\n                    stmt.setObject(2, banco);\r\n                    rs = stmt.executeQuery();\r\n                    \r\n                    while(rs.next()){\r\n                        origem_value = rs.getString(1);\r\n                        origem_label = rs.getString(2);\r\n                        \r\n                        FormRow option = new FormRow();\r\n                        option.setProperty(FormUtil.PROPERTY_VALUE, origem_value);\r\n                        option.setProperty(FormUtil.PROPERTY_LABEL, origem_label);\r\n                        \r\n                        rows.add(option);\r\n                        \r\n                    }\r\n                }\r\n                \r\n        }catch(Exception e){\r\n            LogUtil.error(\"Importa processo - origem de processo\", e, \"Error getting info from DB\");\r\n        }finally{\r\n            try{\r\n                if(rs != null){\r\n                rs.close();\r\n                }\r\n                if(stmt != null){\r\n                    stmt.close();\r\n                }\r\n                if(con != null && !con.isClosed()) {\r\n                    con.close();\r\n                }\r\n            }catch(Exception e){\r\n                LogUtil.error(\"Importa processo - origem de processo\", e, \"Error closing DB connection\");\r\n            }\r\n            \r\n        }\r\n        \r\n    }\r\n\r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(values);",
+                                    "useAjax": ""
+                                }
+                            },
+                            "permission_rules": {},
                             "readonly": "",
                             "readonlyLabel": "",
                             "size": "",
-                            "storeNumeric": "",
-                            "style": "",
                             "validator": {
                                 "className": "",
                                 "properties": {}
@@ -158,6 +215,7 @@
                             "id": "localizacao_imovel",
                             "label": "Localização do Imóvel",
                             "maxlength": "",
+                            "permission_rules": {},
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -179,6 +237,7 @@
                             "id": "estado",
                             "label": "Estado",
                             "maxlength": "",
+                            "permission_rules": {},
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -204,6 +263,7 @@
                             "format": "",
                             "id": "data_conclusao",
                             "label": "Data de Conclusão",
+                            "permission_rules": {},
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -218,32 +278,12 @@
                         }
                     },
                     {
-                        "className": "org.joget.apps.form.lib.TextField",
-                        "properties": {
-                            "encryption": "",
-                            "id": "banco_fundo",
-                            "label": "Banco/Fundo",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "storeNumeric": "",
-                            "style": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    },
-                    {
                         "className": "org.joget.apps.form.lib.TextArea",
                         "properties": {
                             "cols": "20",
                             "id": "observacoes",
                             "label": "Observações",
+                            "permission_rules": {},
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -273,6 +313,7 @@
                     "properties": {}
                 },
                 "permissionReadonly": "",
+                "permission_rules": {},
                 "readonly": "",
                 "readonlyLabel": "",
                 "regex": "",
@@ -297,6 +338,7 @@
                             "id": "procurador",
                             "label": "Procurador",
                             "maxlength": "",
+                            "permission_rules": {},
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -322,6 +364,7 @@
                             "format": "",
                             "id": "data_envio_originais",
                             "label": "Data de Envio de Originais para Procurador",
+                            "permission_rules": {},
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -352,6 +395,7 @@
                     "properties": {}
                 },
                 "permissionReadonly": "",
+                "permission_rules": {},
                 "readonly": "",
                 "readonlyLabel": "",
                 "regex": "",
@@ -378,6 +422,7 @@
             "className": "",
             "properties": {}
         },
+        "permission_rules": [],
         "postProcessor": {
             "className": "",
             "properties": {}
