@@ -1546,27 +1546,18 @@
                                 "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
                                 "properties": {
                                     "autoHandleFiles": "",
-                                    "autoHandleWorkflowVariable": "true",
+                                    "autoHandleWorkflowVariable": "",
                                     "jdbcDatasource": "default",
-                                    "sql": "SELECT p.id as PID, dp.observacoes as OBS FROM app_fd_processos p\nLEFT JOIN app_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nWHERE p.id = '#form.processos.id#'"
+                                    "sql": "SELECT dp.* FROM app_fd_processos p\nLEFT JOIN app_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nWHERE p.id = ?"
                                 }
                             },
-                            "options": [
-                                {
-                                    "format": "",
-                                    "formatType": "text",
-                                    "label": "PIB",
-                                    "value": "PID",
-                                    "width": ""
-                                },
-                                {
-                                    "format": "",
-                                    "formatType": "text",
-                                    "label": "Observacoes",
-                                    "value": "OBS",
-                                    "width": ""
-                                }
-                            ],
+                            "options": [{
+                                "format": "",
+                                "formatType": "text",
+                                "label": "PIB",
+                                "value": "dp.id",
+                                "width": ""
+                            }],
                             "pageSize": "20",
                             "permissionHidden": "",
                             "readonly": "true",
