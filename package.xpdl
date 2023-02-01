@@ -2860,7 +2860,7 @@
                     <Performer>participant3</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1525.0000801086426,31.093739243164066"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1627.986198425293,43.26387474121094"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="route2" Name="Deve ir a filtro?">
@@ -2906,9 +2906,9 @@
                         <TransitionRestriction>
                             <Split Type="XOR">
                                 <TransitionRefs>
-                                    <TransitionRef Id="transition20"/>
                                     <TransitionRef Id="transition21"/>
                                     <TransitionRef Id="transition44"/>
+                                    <TransitionRef Id="transition58"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
@@ -3116,6 +3116,16 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1515,247"/>
                     </ExtendedAttributes>
                 </Activity>
+                <Activity Id="envioDiligenciaContratacao" Name="Enviar Diligência para Contratação">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>participant3</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1471.9619064331055,32.86458274902344"/>
+                    </ExtendedAttributes>
+                </Activity>
             </Activities>
             <Transitions>
                 <Transition From="route1" Id="transition12" To="subflow2">
@@ -3165,12 +3175,6 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="validacaoFiltroContratacao" Id="transition20" To="sub_validacao_producao_crh">
-                    <Condition Type="OTHERWISE"/>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="validacaoFiltroContratacao" Id="transition21" To="sub_filtro_normal_crh">
@@ -3384,6 +3388,17 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="validacaoFiltroContratacao" Id="transition58" To="envioDiligenciaContratacao">
+                    <Condition Type="OTHERWISE"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="envioDiligenciaContratacao" Id="transition59" To="sub_validacao_producao_crh">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
             </Transitions>
