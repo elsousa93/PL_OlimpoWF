@@ -6,38 +6,12 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT det.c_data_entrada AS Data_entrada, det.c_nome_banco AS Banco, det.c_estado_contratacao AS Estado_contratacao\nFROM app_fd_detalhe_processo det\nWHERE det.c_nome_banco != ''  AND det.c_estado_contratacao != '' AND det.c_data_entrada != ''\n\n\n\n"
+            "sql": "SELECT det.c_nome_banco AS Banco, det.c_estado_contratacao AS Estado_contratacao, Count(det.c_id_processo) as Processos\nFROM app_fd_detalhe_processo det\nWHERE det.c_nome_banco != ''\nGroup BY Banco, Estado_Contratacao\nORDER BY Banco\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
     "columns": [
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "org.joget.plugin.enterprise.DateFormatter",
-                "properties": {
-                    "dataFormat": "yyyy-MM-dd",
-                    "dateStoreInUTC": "",
-                    "displayFormat": "dd/MM/yyyy"
-                }
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_0",
-            "label": "Data_entrada",
-            "name": "Data_entrada",
-            "sortable": "true",
-            "style": "",
-            "width": ""
-        },
         {
             "filterable": true,
             "hidden": "false",
@@ -53,33 +27,20 @@
             "label": "Estado_contratacao",
             "name": "Estado_contratacao",
             "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "Processos",
+            "name": "Processos",
+            "sortable": "false"
         }
     ],
     "considerFilterWhenGetTotal": "",
     "description": "",
     "disableResponsive": "",
-    "filters": [{
-        "datalist_type": "filter",
-        "filterParamName": "d-3622638-fn_Data_entrada",
-        "hidden": "",
-        "id": "filter_0",
-        "label": "Data_entrada",
-        "name": "Data_entrada",
-        "type": {
-            "className": "org.joget.plugin.enterprise.DateRangeDataListFilterType",
-            "properties": {
-                "dateStoreInUTC": "",
-                "format": "dd/mm/yy",
-                "formatJava": "yyyy/MM/dd",
-                "fromDefaultValue": "",
-                "fromLabel": "De",
-                "showFieldLabel": "true",
-                "toDefaultValue": "",
-                "toLabel": "Até",
-                "yearRange": "c-10:c+10"
-            }
-        }
-    }],
+    "filters": [],
     "hidePageSize": "",
     "id": "erm_teste",
     "name": "erm_teste",
