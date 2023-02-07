@@ -129,7 +129,7 @@
                             "autoPopulate": "",
                             "id": "field7",
                             "label": "",
-                            "value": "<input type=\"button\" value=\"PEDIR AGENDAMENTO\">"
+                            "value": "<script>\n    $(document).ready(function(){\n        $(\"input#agendar\").click(function(){\n            $.ajax({\n                beforeSend: function(request){\n                    request.setRequestHeader(\"api_key\",\"#envVariable.apiKeyComunicacaoMediaView#\");\n                    request.setRequestHeader(\"api_id\",\"envVariable.apiKeyComunicacaoMediaView\");\n                },\n                type:\"POST\",\n                data: {\"id\": \"string\",\n                        \"id_processo\": \"string\",\n                        \"procurador\": \"TESTEPROCURADOR\",\n                        \"dataOutorga\": \"07/02/2023\",\n                        \"horaOutorga\": \"12:00\",\n                        \"localOutorga\": \"TESTELOCAL\",\n                        \"status\": \"TESTEESTADO\"},\n                url: \"/form/atosAgendamento\",\n                success: function(data){\n                \n                }\n            });\n            \n            \n        });\n    });\n    \n<\/script>\n<input id=\"agendar\" type=\"button\" value=\"PEDIR AGENDAMENTO\">"
                         }
                     }
                 ],
