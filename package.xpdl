@@ -6111,11 +6111,20 @@
                         <BasicType Type="STRING"/>
                     </DataType>
                 </DataField>
+                <DataField Id="user_procuradoria" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
             </DataFields>
             <Activities>
                 <Activity Id="sub_processo_procuradoria" Name="Procuradoria">
                     <Implementation>
-                        <SubFlow Execution="SYNCHR" Id="PCDProcuradoria"/>
+                        <SubFlow Execution="SYNCHR" Id="PCDProcuradoria">
+                            <ActualParameters>
+                                <ActualParameter>user_procuradoria</ActualParameter>
+                            </ActualParameters>
+                        </SubFlow>
                     </Implementation>
                     <Performer>procuradoria</Performer>
                     <ExtendedAttributes>
@@ -6132,8 +6141,20 @@
         </WorkflowProcess>
         <WorkflowProcess Id="PCDProcuradoria" Name="PCD - Procuradoria">
             <ProcessHeader DurationUnit="h"/>
+            <FormalParameters>
+                <FormalParameter Id="user_procuradoria" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+            </FormalParameters>
             <DataFields>
                 <DataField Id="status" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="user_procuradoria" IsArray="FALSE">
                     <DataType>
                         <BasicType Type="STRING"/>
                     </DataType>
