@@ -182,8 +182,11 @@
                         "id": "field6",
                         "label": "Atos",
                         "loadBinder": {
-                            "className": "",
-                            "properties": {}
+                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                            "properties": {
+                                "foreignKey": "id_processo",
+                                "formDefId": "atosAgendamento"
+                            }
                         },
                         "options": [
                             {
@@ -221,8 +224,11 @@
                         "readonlyLabel": "",
                         "showRowNumber": "",
                         "storeBinder": {
-                            "className": "",
-                            "properties": {}
+                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                            "properties": {
+                                "foreignKey": "id_processo",
+                                "formDefId": "atosAgendamento"
+                            }
                         },
                         "submit-label-normal": "",
                         "submit-label-readonly": "",
@@ -268,9 +274,25 @@
     "properties": {
         "description": "",
         "id": "agendamentoProcuradoria",
-        "loadBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
         "name": "Procuradoria - Agendamento",
-        "storeBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
         "tableName": "agendamento_procu"
     }
 }
