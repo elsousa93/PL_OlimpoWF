@@ -6,26 +6,27 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT det.c_nome_banco AS Banco, det.c_estado_contratacao AS Estado_contratacao, Count(det.c_id_processo) as Processos\nFROM app_fd_detalhe_processo det\nWHERE det.c_nome_banco != '' AND det.c_estado_contratacao !=''\nGroup BY Banco, Estado_Contratacao\nORDER BY Banco\n\n"
+            "sql": "SELECT det.c_data_entrada AS Data_entrada, det.c_nome_banco AS Banco, det.c_id_processo AS Processos\nFROM app_fd_detalhe_processo det\nWHERE det.c_nome_banco ='BIC' AND det.c_data_entrada > '2023-02-01'\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
     "columns": [
         {
+            "datalist_type": "column",
             "filterable": true,
             "hidden": "false",
-            "id": "column_5",
-            "label": "Banco",
-            "name": "Banco",
+            "id": "column_0",
+            "label": "Data_entrada",
+            "name": "Data_entrada",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_3",
-            "label": "Estado_contratacao",
-            "name": "Estado_contratacao",
+            "id": "column_5",
+            "label": "Banco",
+            "name": "Banco",
             "sortable": "false"
         },
         {
@@ -40,15 +41,28 @@
     "considerFilterWhenGetTotal": "",
     "description": "",
     "disableResponsive": "",
-    "filters": [{
-        "id": "filter_0",
-        "label": "Banco",
-        "name": "Banco",
-        "type": {
-            "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
-            "properties": {}
+    "filters": [
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-3622638-fn_Data_entrada",
+            "id": "filter_1",
+            "label": "Data_entrada",
+            "name": "Data_entrada",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        },
+        {
+            "id": "filter_0",
+            "label": "Banco",
+            "name": "Banco",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
         }
-    }],
+    ],
     "hidePageSize": "",
     "id": "erm_teste",
     "name": "erm_teste",
