@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT Count(sp.Id) as Processos, dp.c_nome_banco AS Banco,\nYEAR(sla.c_data_inicio) as Ano, MONTH(sla.c_data_inicio) as Mes, sla.c_nome_atividade as Atividade,\nsla.c_estado_atividade as Estado,sla.c_duracao as Duracao\nFROM app_fd_sla_atividade sla\nLEFT JOIN shkprocesses sp ON sla.c_id_processo = sp.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nGROUP BY Ano, Mes, Atividade, Estado, Duracao"
+            "sql": "SELECT Count(sp.Id) as Processos, dp.c_nome_banco AS Banco,\nYEAR(sla.c_data_inicio) as Ano, MONTH(sla.c_data_inicio) as Mes, sla.c_nome_atividade as Atividade,\nsla.c_estado_atividade as Estado,sla.c_duracao as Duracao\nFROM app_fd_sla_atividade sla\nLEFT JOIN shkprocesses sp ON sla.c_id_processo = sp.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nGROUP BY Banco, Ano, Mes, Atividade, Estado, Duracao"
         }
     },
     "buttonPosition": "bottomLeft",
