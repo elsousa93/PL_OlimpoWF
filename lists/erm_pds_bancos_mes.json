@@ -6,12 +6,28 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT MAX(det.c_data_entrada) AS Data_entrada, det.c_nome_banco AS Banco, Count(det.c_id_processo) as Processos\nFROM app_fd_detalhe_processo det\nWHERE det.c_nome_banco != ''\nGroup BY Banco\nORDER BY Banco\n\n\n"
+            "sql": "SELECT YEAR(det.c_data_entrada) AS Ano, MONTH(det.c_data_entrada) AS Mes, det.c_nome_banco AS Banco, Count(det.c_id_processo) as Processos\nFROM app_fd_detalhe_processo det\nWHERE det.c_nome_banco != ''\nGroup BY Banco, Ano, Mes\nORDER BY Banco, Ano, Mes\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
     "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_2",
+            "label": "Ano",
+            "name": "Ano",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "Mes",
+            "name": "Mes",
+            "sortable": "false"
+        },
         {
             "action": {
                 "className": "",
@@ -64,6 +80,24 @@
     "disableResponsive": "",
     "filters": [
         {
+            "id": "filter_2",
+            "label": "Ano",
+            "name": "Ano",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        },
+        {
+            "id": "filter_3",
+            "label": "Mes",
+            "name": "Mes",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        },
+        {
             "datalist_type": "filter",
             "filterParamName": "d-3077721-fn_Banco",
             "hidden": "",
@@ -92,28 +126,6 @@
                         }
                     },
                     "size": ""
-                }
-            }
-        },
-        {
-            "datalist_type": "filter",
-            "filterParamName": "d-7796637-fn_Data_entrada",
-            "hidden": "",
-            "id": "filter_1",
-            "label": "Data de entrada",
-            "name": "Data_entrada",
-            "type": {
-                "className": "org.joget.plugin.enterprise.DateRangeDataListFilterType",
-                "properties": {
-                    "dateStoreInUTC": "",
-                    "format": "dd/mm/yy",
-                    "formatJava": "yyyy/MM/dd",
-                    "fromDefaultValue": "",
-                    "fromLabel": "De",
-                    "showFieldLabel": "true",
-                    "toDefaultValue": "",
-                    "toLabel": "Até",
-                    "yearRange": "c-10:c+10"
                 }
             }
         }
