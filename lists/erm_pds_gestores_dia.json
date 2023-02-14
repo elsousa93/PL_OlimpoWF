@@ -6,12 +6,34 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT MAX(det.c_data_entrada) AS Data_entrada, det.c_nome_banco AS Banco, det.c_gestor_pl AS Gestor_PL, det.c_fase_processo AS Fase, det.c_estado_contratacao AS Estado_contratacao, Count(det.c_id_processo) as Processos\nFROM app_fd_detalhe_processo det\nWHERE det.c_nome_banco != ''\nGroup BY Banco, Gestor_PL, Fase, Estado_Contratacao\nORDER BY Gestor_PL\n\n\n"
+            "sql": "SELECT det.c_data_entrada AS Data_entrada, det.c_nome_banco AS Banco, det.c_gestor_pl AS Gestor_PL, det.c_fase_processo AS Fase, det.c_estado_contratacao AS Estado_contratacao, Count(det.c_id_processo) as Processos\nFROM app_fd_detalhe_processo det\nWHERE det.c_nome_banco != ''\nGroup BY Banco, Gestor_PL, Fase, Estado_Contratacao, Data_entrada\nORDER BY Gestor_PL\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
     "columns": [
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_2",
+            "label": "Data de entrada",
+            "name": "Data_entrada",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
         {
             "action": {
                 "className": "",
