@@ -6103,6 +6103,16 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="413,89"/>
                     </ExtendedAttributes>
                 </Activity>
+                <Activity Id="check_alertas_alteracoes" Name="Verificar Alertas de Alterações">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>workflowSystem</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="workflowSystem"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="601.9791793823242,63.628468247070316"/>
+                    </ExtendedAttributes>
+                </Activity>
             </Activities>
             <Transitions>
                 <Transition From="route1" Id="transition0" To="terminateCheck">
@@ -6117,7 +6127,12 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="check_alertas" Id="transition3" To="terminateCheck">
+                <Transition From="check_alertas" Id="transition3" To="check_alertas_alteracoes">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="check_alertas_alteracoes" Id="transition4" To="terminateCheck">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
