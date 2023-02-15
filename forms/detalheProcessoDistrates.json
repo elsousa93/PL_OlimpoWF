@@ -74,7 +74,7 @@
                                     "addEmptyOption": "",
                                     "cacheInterval": "",
                                     "emptyLabel": "",
-                                    "extraCondition": "c_nome_campo = 'tipo_distrate' AND e.customProperties.servico LIKE '%DIST%'",
+                                    "extraCondition": "c_nome_campo = 'tipo_distrate' AND e.customProperties.servico LIKE '%DIST%' AND e.customProperties.banco LIKE '%#form.detalhe_proce_dist.nome_banco[{form.processos.detalhe_proce_dist}]#%'",
                                     "formDefId": "adicionarOpcaoLV",
                                     "groupingColumn": "",
                                     "idColumn": "value",
@@ -227,9 +227,25 @@
     "properties": {
         "description": "",
         "id": "detalheProcessoDistrates",
-        "loadBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
         "name": "Distrates - Detalhe Processo",
-        "storeBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
         "tableName": "detalhe_proce_dist"
     }
 }
