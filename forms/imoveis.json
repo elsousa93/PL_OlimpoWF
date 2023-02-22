@@ -106,6 +106,10 @@
                                 "0d6bd36c-8423-b830-526f-d71499d72a55": {},
                                 "1405d883-3f63-bc1e-7949-1ce7e4457892": {},
                                 "276487d8-0482-7519-09fd-807e28473a83": {},
+                                "63979d93-e2e7-3bfd-2b12-486990df460d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
                                 "740d9ecd-911b-7df4-474a-0d7f0cf81147": {},
                                 "79f8c35b-a7ad-ec7e-b9d8-f656d6176fa7": {},
                                 "7cb0a003-f9de-cb30-4a9f-c17080392739": {
@@ -114,8 +118,13 @@
                                 },
                                 "7f975a7f-0e81-1fe8-a41b-b5ae7202b9be": {},
                                 "8ed12735-d92c-74bd-444f-888db20bd46a": {},
+                                "938bf617-2531-b6a0-be1b-acdc2407b563": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
                                 "a612e6c5-4cd0-d548-0179-0522483fca04": {},
-                                "aea23972-1f73-2c75-befa-3c2288f6d5bb": {}
+                                "aea23972-1f73-2c75-befa-3c2288f6d5bb": {},
+                                "d0a23008-b45a-3d4d-5158-c0b1c92f3dc8": {}
                             },
                             "readonly": "",
                             "readonlyLabel": "",
@@ -233,7 +242,12 @@
                             "id": "valor_total_imoveis",
                             "label": "Valor Total Imoveis",
                             "maxlength": "",
-                            "permission_rules": {"a612e6c5-4cd0-d548-0179-0522483fca04": {}},
+                            "permission_rules": {
+                                "63979d93-e2e7-3bfd-2b12-486990df460d": {},
+                                "938bf617-2531-b6a0-be1b-acdc2407b563": {},
+                                "a612e6c5-4cd0-d548-0179-0522483fca04": {},
+                                "d0a23008-b45a-3d4d-5158-c0b1c92f3dc8": {}
+                            },
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -255,6 +269,12 @@
                             "id": "numero_hipotecas",
                             "label": "Número de Hipotecas",
                             "maxlength": "",
+                            "permission_rules": {
+                                "63979d93-e2e7-3bfd-2b12-486990df460d": {},
+                                "938bf617-2531-b6a0-be1b-acdc2407b563": {},
+                                "a612e6c5-4cd0-d548-0179-0522483fca04": {},
+                                "d0a23008-b45a-3d4d-5158-c0b1c92f3dc8": {}
+                            },
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -276,6 +296,12 @@
                             "id": "numero_compras",
                             "label": "Ñúmero de compras",
                             "maxlength": "",
+                            "permission_rules": {
+                                "63979d93-e2e7-3bfd-2b12-486990df460d": {},
+                                "938bf617-2531-b6a0-be1b-acdc2407b563": {},
+                                "a612e6c5-4cd0-d548-0179-0522483fca04": {},
+                                "d0a23008-b45a-3d4d-5158-c0b1c92f3dc8": {}
+                            },
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -296,7 +322,12 @@
                             "autoPopulate": "",
                             "id": "soma_valor_total",
                             "label": "",
-                            "permission_rules": {"a612e6c5-4cd0-d548-0179-0522483fca04": {}},
+                            "permission_rules": {
+                                "63979d93-e2e7-3bfd-2b12-486990df460d": {},
+                                "938bf617-2531-b6a0-be1b-acdc2407b563": {},
+                                "a612e6c5-4cd0-d548-0179-0522483fca04": {},
+                                "d0a23008-b45a-3d4d-5158-c0b1c92f3dc8": {}
+                            },
                             "value": "<script type=\"text/javascript\">\r\n    \r\n    $(window).on('load', function(){\r\n        $(document).ready(function(){\r\n        \r\n            //Somar os valores de todas as linhas da coluna compra e venda\r\n            var valor_total = 0.0;\r\n            var linha = 0;\r\n            var imoveis_com_valor = 0;\r\n            \r\n            $(\"tr[id*=lista_imoveis] td span.tablesaw-cell-content span[id*=multiPaged_4_imoveis_lista_imoveis_valor_cv]\").each(function(){\r\n                var valor_imovel = $(\"tr[id*=lista_imoveis] td span.tablesaw-cell-content span[id*=multiPaged_4_imoveis_lista_imoveis_valor_cv]\")[linha].innerText;\r\n                \r\n                //Formatar string para permitir a soma correta\r\n                valor_imovel = valor_imovel.replaceAll('NaN', \"0\");\r\n                valor_imovel = valor_imovel.replaceAll('.', \"\");\r\n                valor_imovel = valor_imovel.replaceAll('\u20ac', \"\");\r\n                valor_imovel = valor_imovel.replaceAll('Eur', \"\");\r\n                valor_imovel = valor_imovel.replaceAll('EUR', \"\");\r\n                valor_imovel = valor_imovel.replaceAll(',', '.');\r\n                \r\n                valor_imovel = parseFloat(valor_imovel);\r\n                //console.log(valor_imovel);\r\n                \r\n                if(!isNaN(valor_imovel)){\r\n                  valor_total += valor_imovel;\r\n                  imoveis_com_valor = 1;\r\n                }\r\n                \r\n                linha++;\r\n                \r\n            });\r\n            \r\n            let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(valor_total);\r\n            num = num.replace(/\\s/g, '.');\r\n            num = num.replaceAll('.\u20ac', ' EUR');\r\n            \r\n            if(imoveis_com_valor == 0){\r\n                num = \"\";\r\n            }\r\n            \r\n            //console.log(num);\r\n            \r\n            //Colocar o valor no textField respetivo\r\n            var campo_valor_total = FormUtil.getField(\"valor_total_imoveis\");\r\n            campo_valor_total.val(num);\r\n            \r\n            campo_valor_total.parent().hide();\r\n        });\r\n    });\r\n\r\n\r\n    $(document).change(function(){\r\n        \r\n       //Somar os valores de todas as linhas da coluna compra e venda\r\n        var valor_total = 0.0;\r\n        var linha = 0;\r\n        var imoveis_com_valor = 0;\r\n        \r\n         $(\"tr[id*=lista_imoveis] td span.tablesaw-cell-content span[id*=multiPaged_4_imoveis_lista_imoveis_valor_cv]\").each(function(){\r\n            var valor_imovel = $(\"tr[id*=lista_imoveis] td span.tablesaw-cell-content span[id*=multiPaged_4_imoveis_lista_imoveis_valor_cv]\")[linha].innerText;\r\n            \r\n            //Formatar string para permitir a soma correta\r\n            valor_imovel = valor_imovel.replaceAll('NaN', \"0\");\r\n            valor_imovel = valor_imovel.replaceAll('.', \"\");\r\n            valor_imovel = valor_imovel.replaceAll('\u20ac', \"\");\r\n            valor_imovel = valor_imovel.replaceAll('Eur', \"\");\r\n            valor_imovel = valor_imovel.replaceAll('EUR', \"\");\r\n            valor_imovel = valor_imovel.replaceAll(',', '.');\r\n            \r\n            valor_imovel = parseFloat(valor_imovel);\r\n            //console.log(valor_imovel);\r\n            \r\n            if(!isNaN(valor_imovel)){\r\n              valor_total += valor_imovel;\r\n              imoveis_com_valor = 1;\r\n            }\r\n            \r\n            linha++;\r\n            \r\n        });\r\n        \r\n        let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(valor_total);\r\n        num = num.replace(/\\s/g, '.');\r\n        num = num.replaceAll('.\u20ac', ' EUR');\r\n        \r\n        if(imoveis_com_valor == 0){\r\n            num = \"\";\r\n        }\r\n        \r\n        //console.log(num);\r\n        \r\n        //Colocar o valor no textField respetivo\r\n        var campo_valor_total = FormUtil.getField(\"valor_total_imoveis\");\r\n        campo_valor_total.val(num);\r\n        \r\n        campo_valor_total.parent().hide();\r\n    });\r\n    \r\n    \r\n    \r\n<\/script>"
                         }
                     },
@@ -306,6 +337,12 @@
                             "autoPopulate": "",
                             "id": "soma_hipotecas_compras",
                             "label": "",
+                            "permission_rules": {
+                                "63979d93-e2e7-3bfd-2b12-486990df460d": {},
+                                "938bf617-2531-b6a0-be1b-acdc2407b563": {},
+                                "a612e6c5-4cd0-d548-0179-0522483fca04": {},
+                                "d0a23008-b45a-3d4d-5158-c0b1c92f3dc8": {}
+                            },
                             "value": "<script type=\"text/javascript\">\r\n    \r\n    $(window).on('load', function(){\r\n        $(document).change(function(){\r\n    \r\n            var linha = 0;\r\n            var numero_hipotecas = 0;\r\n            var numero_compras = 0;\r\n            \r\n            $(\"tr[id*=lista_imoveis] td span.tablesaw-cell-content span[id*=multiPaged_4_imoveis_lista_imoveis_imovel_comprar_hipotecar]\").each(function(){\r\n                var valor_campo = $(\"tr[id*=lista_imoveis] td span.tablesaw-cell-content span[id*=multiPaged_4_imoveis_lista_imoveis_imovel_comprar_hipotecar]\")[linha].innerText;\r\n    \r\n                if(valor_campo === \"Hipotecar\"){\r\n                    numero_hipotecas++;\r\n                } else if(valor_campo === \"Transmitir\") {\r\n                    numero_compras++;\r\n                } else if(valor_campo === \"Transmitir e Hipotecar\") {\r\n                    numero_hipotecas++;\r\n                    numero_compras++;\r\n                }\r\n                \r\n                linha++; \r\n            });\r\n            \r\n            \r\n            //Colocar o valor no textField respetivo\r\n            var campo_numero_hipotecas = FormUtil.getField(\"numero_hipotecas\");\r\n            campo_numero_hipotecas.val(numero_hipotecas);\r\n            \r\n            var campo_numero_compras = FormUtil.getField(\"numero_compras\");\r\n            campo_numero_compras.val(numero_compras);\r\n            \r\n            \r\n            //Esconder os campos\r\n            //campo_numero_hipotecas.parent().hide();\r\n            //campo_numero_compras.parent().hide();\r\n        });\r\n    });\r\n    \r\n<\/script>"
                         }
                     }
