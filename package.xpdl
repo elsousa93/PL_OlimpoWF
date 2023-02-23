@@ -2177,6 +2177,16 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="660.989616394043,37.7256819921875"/>
                     </ExtendedAttributes>
                 </Activity>
+                <Activity Id="tool4" Name="Extrair ProcessId">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>ProdSistema</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="ProdSistema"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="143,23"/>
+                    </ExtendedAttributes>
+                </Activity>
             </Activities>
             <Transitions>
                 <Transition From="producaoManualRobot" Id="transition3" Name="Produção Robot" To="processamentoRobotMinuta">
@@ -2207,12 +2217,17 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
+                <Transition From="tool4" Id="transition8" To="producaoManualRobot">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
             </Transitions>
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="ProdSistema;producao;ProdRobot"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=producao,CONNECTING_ACTIVITY_ID=processamentoManualMinuta,X_OFFSET=1234,Y_OFFSET=33,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=ProdSistema,CONNECTING_ACTIVITY_ID=producaoManualRobot,X_OFFSET=52,Y_OFFSET=40,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=ProdRobot,CONNECTING_ACTIVITY_ID=AtualizarVariavelRobot,X_OFFSET=933,Y_OFFSET=47,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=ProdSistema,CONNECTING_ACTIVITY_ID=tool4,X_OFFSET=52,Y_OFFSET=40,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="CHValidacaoNormal" Name="CH-Validação-Normal">
