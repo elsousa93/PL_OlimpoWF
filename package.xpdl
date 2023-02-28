@@ -133,6 +133,12 @@
         <Participant Id="process16_participant3" Name="Normal">
             <ParticipantType Type="ROLE"/>
         </Participant>
+        <Participant Id="registos" Name="Registos">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
+        <Participant Id="resgistos_qualidade" Name="Qualidade">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
     </Participants>
     <Applications>
         <Application Id="default_application"/>
@@ -2850,6 +2856,12 @@
                     <TransitionRestrictions>
                         <TransitionRestriction>
                             <Join Type="XOR"/>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition43"/>
+                                    <TransitionRef Id="transition28"/>
+                                </TransitionRefs>
+                            </Split>
                         </TransitionRestriction>
                     </TransitionRestrictions>
                     <ExtendedAttributes>
@@ -2923,6 +2935,7 @@
                     <Performer>participant3</Performer>
                     <TransitionRestrictions>
                         <TransitionRestriction>
+                            <Join Type="XOR"/>
                             <Split Type="XOR">
                                 <TransitionRefs>
                                     <TransitionRef Id="transition62"/>
@@ -2942,6 +2955,20 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2125,356"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="sub_registos" Name="Registos">
+                    <Implementation>
+                        <SubFlow Execution="SYNCHR" Id="REGRegistos">
+                            <ActualParameters>
+                                <ActualParameter>proxima_operativa</ActualParameter>
+                            </ActualParameters>
+                        </SubFlow>
+                    </Implementation>
+                    <Performer>participant3</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1822.7999877929688,172.80002136230468"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -3034,6 +3061,7 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route6" Id="transition43" To="subConclusao">
+                    <Condition Type="OTHERWISE"/>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
@@ -3101,6 +3129,18 @@
                 </Transition>
                 <Transition From="route14" Id="transition60" To="route15">
                     <Condition Type="OTHERWISE"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route6" Id="transition28" To="sub_registos">
+                    <Condition Type="CONDITION">proxima_operativa === 'registos'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;registos&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="sub_registos" Id="transition29" To="route14">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
@@ -6890,6 +6930,60 @@
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="process16_process3_participant2;process16_participant3;process16_participant2_1"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process16_process3_participant2,CONNECTING_ACTIVITY_ID=route1,X_OFFSET=81,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process16_participant3,CONNECTING_ACTIVITY_ID=route15,X_OFFSET=2258,Y_OFFSET=365,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+            </ExtendedAttributes>
+        </WorkflowProcess>
+        <WorkflowProcess Id="REGRegistos" Name="REG - Registos">
+            <ProcessHeader DurationUnit="h"/>
+            <FormalParameters>
+                <FormalParameter Id="proxima_operativa" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+            </FormalParameters>
+            <DataFields>
+                <DataField Id="estado" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="proxima_operativa" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+            </DataFields>
+            <Activities>
+                <Activity Id="route1">
+                    <Route/>
+                    <Performer>registos</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="registos"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="378,34.000003051757815"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="registo" Name="Registo">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>registos</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="registos"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="156,29.986110999999994"/>
+                    </ExtendedAttributes>
+                </Activity>
+            </Activities>
+            <Transitions>
+                <Transition From="registo" Id="transition0" To="route1">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+            </Transitions>
+            <ExtendedAttributes>
+                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="registos;resgistos_qualidade"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=registos,CONNECTING_ACTIVITY_ID=registo,X_OFFSET=75,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=registos,CONNECTING_ACTIVITY_ID=route1,X_OFFSET=562,Y_OFFSET=42,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
     </WorkflowProcesses>
