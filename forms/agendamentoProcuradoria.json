@@ -1,0 +1,420 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "flag_agendado",
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "id_processo",
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.Radio",
+                        "properties": {
+                            "controlField": "",
+                            "id": "urgencia",
+                            "label": "Urgência",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Sim",
+                                    "value": "SIM"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Não",
+                                    "value": "NAO"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.DatePicker",
+                        "properties": {
+                            "allowManual": "true",
+                            "currentDateAs": "",
+                            "dataFormat": "yyyy-MM-dd",
+                            "datePickerType": "",
+                            "endDateFieldId": "",
+                            "format": "",
+                            "id": "data_solicitada",
+                            "label": "Data Solicitada",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "startDateFieldId": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": "",
+                            "yearRange": "c-10:c+10"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.DatePicker",
+                        "properties": {
+                            "allowManual": "",
+                            "datePickerType": "timeOnly",
+                            "endDateFieldId": "",
+                            "format24hr": "true",
+                            "id": "hora_solicitada",
+                            "label": "Hora Solicitada",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "startDateFieldId": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "distrito",
+                            "label": "Distrito",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "true",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "extraCondition": "",
+                                    "formDefId": "distritosConcelhos",
+                                    "groupingColumn": "",
+                                    "idColumn": "distrito",
+                                    "labelColumn": "distrito",
+                                    "useAjax": ""
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "distrito",
+                            "id": "concelho",
+                            "label": "Concelho",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "true",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "extraCondition": "",
+                                    "formDefId": "distritosConcelhos",
+                                    "groupingColumn": "distrito",
+                                    "idColumn": "concelho",
+                                    "labelColumn": "concelho",
+                                    "useAjax": "true"
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextArea",
+                        "properties": {
+                            "cols": "20",
+                            "id": "observacoes_agendamento",
+                            "label": "Observações do Agendamento",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "rows": "5",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field7",
+                            "label": "",
+                            "value": "<script>\n    $(document).ready(function(){\n        \n        var mode = \"#requestParam._mode#\";\n        //Caso o seja modo de consulta remover o botão de \"Pedir Agendamento\"\n        if(mode!=='assignment'){\n            $(\"input#agendar\").parent().hide();\n        }\n        \n        \n        if($(\"input[id*=flag_agendado]\").val() === '1'){\n            $(\"div[id*=agendamentoProcuradoria_agendamento]\").hide();\n        }\n        \n        \n        $(\"input#agendar\").click(function(){\n            var urgencia = $(\"div[id*=urgencia] input:checked\").val();\n            var dataSolicitada=$(\"input[id*=data_solicitada]\").val();\n            var horaSolicitada=$(\"input[id*=hora_solicitada]\").val();\n            var observacoes=$(\"textarea[id*=observacoes_agendamento]\").val();\n            $.ajax({\n                type:\"POST\",\n                url: \"/jw/api/form/atosAgendamento\",\n                headers:{\n                    \"api_id\": \"#envVariable.apiIdComunicacaoMediaView#\",\n                    \"api_key\": \"#envVariable.apiKeyComunicacaoMediaView#\",\n                    \"Accept\":\"application/json\",\n                    \"Content-Type\": \"application/json\"\n                },\n                data: JSON.stringify({\n                                \"id_processo\": \"#form.processos_procu.id#\",\n                                \"id_agendamento\": \"#form.processos_procu.agendamento#\",\n                                \"urgencia\": 'SIM',\n                                \"data_solicitada\":dataSolicitada,\n                                \"hora_solicitada\":horaSolicitada,\n                                \"observacoes_agendamento\":observacoes,\n                                \"procurador\": \"ProcuradorExemplo\",\n                                \"dataOutorga\": \"2023-02-15\",\n                                \"horaOutorga\": \"15:00\",\n                                \"localOutorga\": \"LocalExemplo\",\n                                \"status\": \"AGN\"\n                            }),\n                success: function(response){\n                    //Falta chamar API MediaView\n                    var id = response.id;\n                    updateEstadoAgendamento();\n                }\n            });\n        });\n        \n        \n    });\n    \n    $(document).change(function(){\n        \n        var status = FormUtil.getValues(\"atos.status\");\n        var flagAGN = false;\n        var flagDesmarcado = false;\n        \n        \n        if(status.length>0){\n            //Se existir atos Desmarcados\n            if(status[status.length-1].indexOf('DES') !== -1){\n                flagDesmarcado = true;\n            }\n        }\n        \n            \n            //Caso não existam atos desmarcados ou não haja nenhum pedido de agendamento\n            if(!flagDesmarcado || $(\"input[id*=flag_agendado]\").val() === '0'){\n                $(\"div[id*=mensagemAgendamento]\").hide();\n            }else{\n                $(\"div[id*=mensagemAgendamento]\").show();\n            }\n        \n        \n    });\n    \n\n    \n    \nfunction updateEstadoAgendamento(){\n        $.ajax({\n                type:\"POST\",\n                url: \"/jw/api/form/agendamentoProcuradoria/saveOrUpdate\",\n                headers:{\n                    \"api_id\": \"#envVariable.apiIdComunicacaoMediaView#\",\n                    \"api_key\": \"#envVariable.apiKeyComunicacaoMediaView#\",\n                    \"accept\":\"application/json\",\n                    \"Content-Type\": \"application/json\"\n                },\n                data: JSON.stringify({\n                                \"id\": \"#form.processos_procu.agendamento#\",\n                                \"flag_agendado\": \"1\"\n                            }),\n                success: function(data){\n                    location.reload();\n                }\n            });\n    }\n \n    \n<\/script>\n<input id=\"agendar\" type=\"button\" value=\"PEDIR AGENDAMENTO\">"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "agendamento",
+                "join": "",
+                "label": "Pedido de Agendamento",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field8",
+                            "label": "",
+                            "value": "<div>\n    \n<\/div>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field8",
+                            "label": "",
+                            "value": "<script>\n$(document).ready(function(){\n    \n    $(\"input#novoagendamento\").click(function(){\n        resetEstadoAgendamento();\n    });\n    \n    \n});\n\nfunction resetEstadoAgendamento(){\n            $.ajax({\n                type:\"POST\",\n                url: \"/jw/api/form/agendamentoProcuradoria/saveOrUpdate\",\n                headers:{\n                    \"api_id\": \"#envVariable.apiIdComunicacaoMediaView#\",\n                    \"api_key\": \"#envVariable.apiKeyComunicacaoMediaView#\",\n                    \"accept\":\"application/json\",\n                    \"Content-Type\": \"application/json\"\n                },\n                data: JSON.stringify({\n                                \"id\": \"#form.processos_procu.agendamento#\",\n                                \"flag_agendado\": \"0\"\n                            }),\n                success: function(data){\n                    var idAtos = FormUtil.getValues(\"atos.id\");\n                    if(idAtos.length>0){\n                        var dataEnvio = FormUtil.getValues(\"atos.data_envio_originais\");\n                        var status = FormUtil.getValues(\"atos.status\");\n                        \n                        for(i=0; i<idAtos.length; i++){\n                            \n                            updateAto(idAtos[i],dataEnvio[i], status[i]);\n                            console.log(idAtos[i] + \"AAAAAAAAAA\");\n                        }\n                    }\n                    location.reload();\n                }\n            });\n}\n\nfunction updateAto(id, dataEnvio, status){\n    \n    $.ajax({\n        type:\"POST\",\n        url: \"/jw/api/form/atosAgendamento/saveOrUpdate\",\n        headers:{\n            \"api_id\": \"#envVariable.apiIdComunicacaoMediaView#\",\n            \"api_key\": \"#envVariable.apiKeyComunicacaoMediaView#\",\n            \"Accept\":\"application/json\",\n            \"Content-Type\": \"application/json\"\n        },\n        data: JSON.stringify({\n                        \"id\": id,\n                        \"status\": status,\n                        \"data_envio_originais\":dataEnvio\n                    }),\n        success: function(response){\n            \n        }\n    });\n    \n    \n    \n    \n}\n    \n<\/script>\n<input id=\"novoagendamento\" type=\"button\" value=\"PEDIR NOVO AGENDAMENTO\">"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "mensagemAgendamento",
+                "join": "",
+                "label": "Agendamento",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [{
+                    "className": "org.joget.plugin.enterprise.FormGrid",
+                    "properties": {
+                        "abortRelatedRunningProcesses": "",
+                        "deleteFiles": "",
+                        "deleteGridData": "",
+                        "deleteMessage": "Delete row?",
+                        "deleteSubformData": "",
+                        "disabledAdd": "true",
+                        "disabledDelete": "",
+                        "enableSorting": "",
+                        "errorMessage": "Invalid number of rows",
+                        "formDefId": "atosAgendamento",
+                        "height": "85%",
+                        "id": "atos",
+                        "label": "Atos",
+                        "loadBinder": {
+                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                            "properties": {
+                                "foreignKey": "id_agendamento",
+                                "formDefId": "atosAgendamento"
+                            }
+                        },
+                        "options": [
+                            {
+                                "format": "opcoesDisplayGrid",
+                                "formatType": "options",
+                                "label": "Status",
+                                "value": "status",
+                                "width": ""
+                            },
+                            {
+                                "format": "",
+                                "formatType": "text",
+                                "label": "Data Outorga",
+                                "value": "dataOutorga",
+                                "width": ""
+                            },
+                            {
+                                "format": "",
+                                "formatType": "text",
+                                "label": "Hora Outorga",
+                                "value": "horaOutorga",
+                                "width": ""
+                            },
+                            {
+                                "format": "",
+                                "formatType": "text",
+                                "label": "Procurador",
+                                "value": "procurador",
+                                "width": ""
+                            }
+                        ],
+                        "pageSize": "20",
+                        "permissionHidden": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "showRowNumber": "",
+                        "storeBinder": {
+                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                            "properties": {
+                                "foreignKey": "id_agendamento",
+                                "formDefId": "atosAgendamento"
+                            }
+                        },
+                        "submit-label-normal": "",
+                        "submit-label-readonly": "",
+                        "uniqueKey": "",
+                        "validateMaxRow": "",
+                        "validateMinRow": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "width": "85%"
+                    }
+                }],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section2",
+                "join": "",
+                "label": "Atos",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        }
+    ],
+    "properties": {
+        "description": "",
+        "id": "agendamentoProcuradoria",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "Procuradoria - Agendamento",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "agendamento_procu"
+    }
+}

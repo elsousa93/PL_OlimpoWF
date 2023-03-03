@@ -1,0 +1,102 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [{
+        "className": "org.joget.apps.form.model.Section",
+        "elements": [{
+            "className": "org.joget.apps.form.model.Column",
+            "elements": [{
+                "className": "org.joget.apps.form.lib.Grid",
+                "properties": {
+                    "errorMessage": "Invalid number of rows",
+                    "id": "painel_conversas",
+                    "label": "",
+                    "loadBinder": {
+                        "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
+                        "properties": {
+                            "autoHandleFiles": "",
+                            "autoHandleWorkflowVariable": "true",
+                            "jdbcDatasource": "default",
+                            "sql": "SELECT mc.id, mc.dateModified, sum(case dc.c_lida when 'não' then 1 else 0 end) as nao_lida FROM app_fd_mensagens_chat mc  \nJOIN app_fd_data_chat dc ON dc.c_thread_id = mc.id \nWHERE mc.id like '%#currentUser.id#%' AND dc.createdby not like '#currentUser.id#'\ngroup by mc.id\nORDER BY mc.dateModified desc"
+                        }
+                    },
+                    "options": [
+                        {
+                            "label": "Id",
+                            "value": "id"
+                        },
+                        {
+                            "label": "Data de Modificação",
+                            "value": "dateModified"
+                        },
+                        {
+                            "label": "Count Não Lida",
+                            "value": "nao_lida"
+                        }
+                    ],
+                    "permissionHidden": "",
+                    "readonly": "true",
+                    "storeBinder": {
+                        "className": "",
+                        "properties": {}
+                    },
+                    "validateMaxRow": "",
+                    "validateMinRow": "",
+                    "validator": {
+                        "className": "",
+                        "properties": {}
+                    }
+                }
+            }],
+            "properties": {"width": "100%"}
+        }],
+        "properties": {
+            "comment": "",
+            "id": "section1",
+            "join": "",
+            "label": "",
+            "loadBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "permission": {
+                "className": "",
+                "properties": {}
+            },
+            "permissionReadonly": "",
+            "readonly": "",
+            "readonlyLabel": "",
+            "regex": "",
+            "reverse": "",
+            "storeBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "visibilityControl": "",
+            "visibilityValue": ""
+        }
+    }],
+    "properties": {
+        "description": "",
+        "id": "chatConversasSubform",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "Chat Conversas Subform",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "mensagens_chat"
+    }
+}

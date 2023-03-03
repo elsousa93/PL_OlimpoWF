@@ -1,0 +1,230 @@
+{
+    "actions": [],
+    "binder": {
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "id",
+            "sql": "SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco, c_estado_contratacao AS EstadoContratacao, sact.Id AS ActivityId, from_unixtime(sact.LimitTime/1000, '%Y-%m-%d %H:%i') as limittime, sp.ActivityRequesterProcessId as ProcessId, p.c_robot as Robot, dp.c_data_swift as 'DataSwift', dp.id as 'IDDetalheProcesso'\nFROM shkprocesses sp\nLEFT JOIN app_fd_processos p ON p.id = sp.ActivityRequesterProcessId\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.KeyValue LIKE 'open.not_running.not_started' OR ssta.KeyValue LIKE 'open.running')\nAND (c_estado_contratacao is null or c_estado_contratacao <> 'PND')"
+        }
+    },
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "id",
+            "name": "id",
+            "permission_rules": {"9be3afd1-7ea7-0132-fb07-0dab15f4ada2": {}},
+            "sortable": "false"
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_0",
+            "label": "Data de Criação",
+            "name": "dateCreated",
+            "permission_rules": {"9be3afd1-7ea7-0132-fb07-0dab15f4ada2": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_2",
+            "label": "Estado de Contratacao",
+            "name": "EstadoContratacao",
+            "permission_rules": {"9be3afd1-7ea7-0132-fb07-0dab15f4ada2": {}},
+            "sortable": "true",
+            "style": "",
+            "width": ""
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_7",
+            "label": "Urgencia",
+            "name": "Urgencia",
+            "permission_rules": {"9be3afd1-7ea7-0132-fb07-0dab15f4ada2": {}},
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_5",
+            "label": "limittime",
+            "name": "limittime",
+            "permission_rules": {"9be3afd1-7ea7-0132-fb07-0dab15f4ada2": {}},
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "Atividade",
+            "name": "Atividade",
+            "permission_rules": {"9be3afd1-7ea7-0132-fb07-0dab15f4ada2": {}},
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_3",
+            "label": "ActivityId",
+            "name": "ActivityId",
+            "permission_rules": {"9be3afd1-7ea7-0132-fb07-0dab15f4ada2": {}},
+            "sortable": "false"
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "true",
+            "id": "column_6",
+            "include_export": "true",
+            "label": "ProcessId",
+            "name": "ProcessId",
+            "permission_rules": {"9be3afd1-7ea7-0132-fb07-0dab15f4ada2": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "exclude_export": "",
+            "filterable": true,
+            "hidden": "true",
+            "id": "column_8",
+            "include_export": "true",
+            "label": "Robot",
+            "name": "Robot",
+            "permission_rules": {"9be3afd1-7ea7-0132-fb07-0dab15f4ada2": {}},
+            "sortable": "false"
+        },
+        {
+            "exclude_export": "",
+            "filterable": true,
+            "hidden": "true",
+            "id": "column_9",
+            "include_export": "true",
+            "label": "DataSwift",
+            "name": "DataSwift",
+            "permission_rules": {"9be3afd1-7ea7-0132-fb07-0dab15f4ada2": {}},
+            "sortable": "false"
+        },
+        {
+            "exclude_export": "",
+            "filterable": true,
+            "hidden": "true",
+            "id": "column_10",
+            "include_export": "true",
+            "label": "IDDetalheProcesso",
+            "name": "IDDetalheProcesso",
+            "permission_rules": {"9be3afd1-7ea7-0132-fb07-0dab15f4ada2": {}},
+            "sortable": "false"
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
+    "description": "",
+    "disableResponsive": "",
+    "filters": [
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-7291937-fn_Atividade",
+            "hidden": "true",
+            "id": "filter_1",
+            "label": "Atividade",
+            "name": "Atividade",
+            "permission_rules": {"9be3afd1-7ea7-0132-fb07-0dab15f4ada2": {}},
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {"defaultValue": ""}
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-7291937-fn_resourceId",
+            "hidden": "true",
+            "id": "filter_0",
+            "label": "resourceId",
+            "name": "resourceId",
+            "permission_rules": {"9be3afd1-7ea7-0132-fb07-0dab15f4ada2": {}},
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        }
+    ],
+    "hidePageSize": "",
+    "id": "tarefasGeral",
+    "name": "List - Tarefas",
+    "order": "1",
+    "orderBy": "Urgencia",
+    "pageSize": "0",
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "permission_rules": [{
+        "permission": {
+            "className": "org.joget.apps.userview.lib.DepartmentPermission",
+            "properties": {
+                "allowedDeptIds": "PL_INT_PRD_GEN_RPA_CRH",
+                "orgId": "PL"
+            }
+        },
+        "permission_key": "9be3afd1-7ea7-0132-fb07-0dab15f4ada2",
+        "permission_name": "Robot"
+    }],
+    "responsiveView": [
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Mobile"
+        },
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Tablet"
+        }
+    ],
+    "rowActions": [],
+    "searchPopup": "",
+    "showDataWhenFilterSet": "",
+    "showPageSizeSelector": "true",
+    "useSession": ""
+}

@@ -1,0 +1,754 @@
+{
+    "actions": [],
+    "binder": {
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "id",
+            "sql": "SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_origem_processo as OrigemProcesso, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco, dp.c_n_wf_pl as NumeroWFPL, dp.c_tipo_processo as TipoProcesso, dp.c_nome_cliente as NomeCliente, c_estado_contratacao AS EstadoContratacao, sact.Id AS ActivityId, from_unixtime(sact.LimitTime/1000, '%Y-%m-%d %H:%i') as limittime, sla.c_data_inicio as DataInicio,sla.c_data_fim as DataFim, ip.c_nome AS Cliente, ag.c_data_agendamento AS DataAgendamento, sla.c_duracao as SLADuracao, interp.c_intervencao_juridica, interp.c_intervencao_juridica_novo, p.c_servico as Servico\nFROM shkprocesses sp\nJOIN app_fd_info_diligencia d on sp.Id = d.id\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\nLEFT JOIN app_fd_processos p ON p.id = d.c_id_processo\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN app_fd_interv_processo interp ON interp.c_id_processo = p.id\nLEFT JOIN app_fd_sla_atividade sla ON sla.c_id_processo LIKE (SELECT sp2.Id\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tFROM shkprocesses sp2\n                                                                WHERE sp2.ActivityRequesterProcessId = p.id ORDER BY Created DESC LIMIT 1)\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id\n    AND ip.c_cliente_principal LIKE (SELECT i.c_cliente_principal \n\t\t\t\t\t\t\t\t\t\tFROM app_fd_intervenientes_proc i \n                                        WHERE i.c_id_processo = p.id\n                                        AND i.c_cliente_principal = 'CHECK')\nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.KeyValue LIKE 'open.not_running.not_started' OR ssta.KeyValue LIKE 'open.running')\nAND sass.resourceid LIKE '%#currentUser.username#%'\nUNION\nSELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_origem_processo as OrigemProcesso, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco, dp.c_n_wf_pl as NumeroWFPL, dp.c_tipo_processo as TipoProcesso, dp.c_nome_cliente as NomeCliente, c_estado_contratacao AS EstadoContratacao, sact.Id AS ActivityId, from_unixtime(sact.LimitTime/1000, '%Y-%m-%d %H:%i') as limittime, sla.c_data_inicio as DataInicio,sla.c_data_fim as DataFim, ip.c_nome AS Cliente, ag.c_data_agendamento AS DataAgendamento, sla.c_duracao as SLADuracao, interp.c_intervencao_juridica, interp.c_intervencao_juridica_novo, p.c_servico as Servico\nFROM shkprocesses sp\nJOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN app_fd_interv_processo interp ON interp.c_id_processo = p.id\nLEFT JOIN app_fd_sla_atividade sla ON sla.c_id_processo = sp.Id\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id\n    AND ip.c_cliente_principal LIKE (SELECT i.c_cliente_principal \n\t\t\t\t\t\t\t\t\t\tFROM app_fd_intervenientes_proc i \n                                        WHERE i.c_id_processo = p.id\n                                        AND i.c_cliente_principal = 'CHECK')\nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.KeyValue LIKE 'open.not_running.not_started' OR ssta.KeyValue LIKE 'open.running')\nAND (c_estado_contratacao is null or (c_estado_contratacao <> 'PND' AND c_estado_contratacao <> 'PNDEQ'))\nAND (sla.c_estado_atividade is null or sla.c_estado_atividade = 'Em curso')\nAND sass.resourceid LIKE '%#currentUser.username#%'\nUNION\nSELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, null AS Urgencia, null as OrigemProcesso, null AS NomeBanco, dp.c_n_processo AS NumeroWFBanco, null as NumeroWFPL, dp.c_tipo_processo as TipoProcesso, null as NomeCliente, dp.c_estado AS EstadoContratacao, sact.Id AS ActivityId, from_unixtime(sact.LimitTime/1000, '%Y-%m-%d %H:%i') as limittime, null as DataInicio, null as DataFim, null AS Cliente, null AS DataAgendamento, null as SLADuracao, null, null, p.c_servico as Servico\nFROM shkprocesses sp\nJOIN app_fd_processos_procu p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_proce_procu dp ON p.c_detalhe_processo = dp.id\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\nWHERE sass.resourceid LIKE '%#currentUser.username#%'\nORDER BY Urgencia DESC, DataFim\n"
+        }
+    },
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.DateFormatter",
+                "properties": {
+                    "dataFormat": "yyyy-MM-dd",
+                    "dateStoreInUTC": "",
+                    "displayFormat": "dd/MM/yyyy HH:mm"
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "true",
+            "id": "column_1",
+            "include_export": "",
+            "label": "Data Agend.",
+            "name": "DataAgendamento",
+            "permission_rules": {"14f53242-dec2-47ec-1415-4dab2b396111": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "org.joget.apps.datalist.lib.HyperlinkDataListAction",
+                "properties": {
+                    "confirmation": "",
+                    "href": "#request.scheme#://#request.serverName#:#request.serverPort##request.contextPath#/web/userview/workflowPL/UV_PL_Geral/_/filaPendentes?&_mode=assignment",
+                    "hrefColumn": "ActivityId",
+                    "hrefParam": "activityId",
+                    "label": "Hyperlink",
+                    "target": "_blank"
+                }
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_0",
+            "label": "Nº Workflow Banco",
+            "name": "NumeroWFBanco",
+            "permission_rules": {"14f53242-dec2-47ec-1415-4dab2b396111": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_6",
+            "label": "Nº Workflow PL",
+            "name": "NumeroWFPL",
+            "permission_rules": {"14f53242-dec2-47ec-1415-4dab2b396111": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "datalist_type": "column",
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_8",
+            "label": "Cliente",
+            "name": "Cliente",
+            "permission_rules": {"14f53242-dec2-47ec-1415-4dab2b396111": {}},
+            "sortable": "false"
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'tipo_processo'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_7",
+            "label": "Tipo Processo",
+            "name": "TipoProcesso",
+            "permission_rules": {"14f53242-dec2-47ec-1415-4dab2b396111": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'origem_processo'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_11",
+            "label": "Origem do Processo",
+            "name": "OrigemProcesso",
+            "permission_rules": {"14f53242-dec2-47ec-1415-4dab2b396111": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "datalist_type": "column",
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_5",
+            "label": "Atividade",
+            "name": "Atividade",
+            "permission_rules": {"14f53242-dec2-47ec-1415-4dab2b396111": {}},
+            "sortable": "false"
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.BeanShellFormatter",
+                "properties": {"script": "import org.joget.apps.datalist.service.DataListService;\nimport org.joget.apps.app.service.AppUtil;\nimport java.time.LocalDateTime; \nimport java.time.format.DateTimeFormatter;\nimport java.time.temporal.ChronoUnit;\nimport org.joget.commons.util.LogUtil;\nimport java.lang.Math;\n\nDataListService dataListService = (DataListService) AppUtil.getApplicationContext().getBean(\"dataListService\");\nDateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"dd/MM/yyyy HH:mm\");\n\nString result = \"\";\n//if value date format is not \"dd/MM/yyyy HH:mm\"\nif(value !=  null && !value.isEmpty()){\n    ////////LogUtil.info(\"Data de criação\", value);\n    if(value.charAt(2) != '/'){\n    //if value date format is of the format \"yyyy-MM-dd HH:mm\"\n        if(value.charAt(4) == '-' && value.charAt(10) == ' ' && value.charAt(13) == ':'){\n            result =  value.substring(8,10) + \"/\" + value.substring(5,7) + \"/\" + value.substring(0,4) + \" \" + value.substring(11,16);\n            //LogUtil.info(\"Beanshell formatter - value 2 - \", value);\n        }\n    }else{\n        result = value;\n    }\n}else{\n    result = \"-\";\n}\n\nreturn result;"}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_10",
+            "label": "Data de Criação",
+            "name": "DataInicio",
+            "permission_rules": {"14f53242-dec2-47ec-1415-4dab2b396111": {}},
+            "sortable": "true",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'estado_contratacao'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_2",
+            "label": "Estado",
+            "name": "EstadoContratacao",
+            "permission_rules": {"14f53242-dec2-47ec-1415-4dab2b396111": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [
+                        {
+                            "label": "Não",
+                            "value": "NAO"
+                        },
+                        {
+                            "label": "Sim",
+                            "value": "SIM"
+                        }
+                    ],
+                    "optionsBinder": {
+                        "className": "",
+                        "properties": {}
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_3",
+            "label": "Urgência",
+            "name": "Urgencia",
+            "permission_rules": {"14f53242-dec2-47ec-1415-4dab2b396111": {}},
+            "sortable": "true",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.BeanShellFormatter",
+                "properties": {"script": "import org.joget.apps.datalist.service.DataListService;\nimport org.joget.apps.app.service.AppUtil;\nimport java.time.LocalDateTime; \nimport java.time.format.DateTimeFormatter;\nimport java.time.temporal.ChronoUnit;\nimport org.joget.commons.util.LogUtil;\nimport java.lang.Math;\n\nString result = \"\";\n\n//if value date format is not \"dd/MM/yyyy HH:mm\"\nif(value !=  null && !value.isEmpty()){\n    ////////LogUtil.info(\"Data Limite\", value);\n    if(value.charAt(2) != '/'){\n    //if value date format is of the format \"yyyy-MM-dd HH:mm\"\n        if(value.charAt(4) == '-' && value.charAt(10) == ' ' && value.charAt(13) == ':'){\n            result =  value.substring(8,10) + \"/\" + value.substring(5,7) + \"/\" + value.substring(0,4) + \" \" + value.substring(11,16);\n            //LogUtil.info(\"Beanshell formatter - value 2 - \", value);\n        }\n    }else{\n        result = value;\n    }\n}else{\n    result = \"-\";\n}\n\nreturn result;"}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_9",
+            "label": "Data Limite",
+            "name": "DataFim",
+            "permission_rules": {"14f53242-dec2-47ec-1415-4dab2b396111": {}},
+            "sortable": "true",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.BeanShellFormatter",
+                "properties": {"script": "import org.joget.apps.datalist.service.DataListService;\nimport org.joget.apps.app.service.AppUtil;\nimport java.time.LocalDateTime; \nimport java.time.format.DateTimeFormatter;\nimport java.time.temporal.ChronoUnit;\nimport org.joget.commons.util.LogUtil;\nimport java.lang.Math;\n\nDataListService dataListService = (DataListService) AppUtil.getApplicationContext().getBean(\"dataListService\");\nString dataInicio = dataListService.evaluateColumnValueFromRow(row, \"dataInicio\");\nDateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"dd/MM/yyyy HH:mm\");\n\nString result = \"\";\nif(dataInicio !=  null && dataInicio.trim() != \"\" && value !=  null && !value.isEmpty()){\n    ////////LogUtil.info(\"SLA %\", value);\n    //if dataInicio date format is not \"dd/MM/yyyy HH:mm\"\n    if(dataInicio.charAt(2) != '/'){\n        //if dataInicio date format is of the format \"yyyy-MM-dd HH:mm\"\n        if(dataInicio.charAt(4) == '-' && dataInicio.charAt(10) == ' ' && dataInicio.charAt(13) == ':'){\n            dataInicio =  dataInicio.substring(8,10) + \"/\" + dataInicio.substring(5,7) + \"/\" + dataInicio.substring(0,4) + \" \" + dataInicio.substring(11,16);\n        }\n    }\n    //if value date format is not \"dd/MM/yyyy HH:mm\"\n    if(value.charAt(2) != '/'){\n        //if value date format is of the format \"yyyy-MM-dd HH:mm\"\n        if(value.charAt(4) == '-' && value.charAt(10) == ' ' && value.charAt(13) == ':'){\n            value =  value.substring(8,10) + \"/\" + value.substring(5,7) + \"/\" + value.substring(0,4) + \" \" + value.substring(11,16);\n        }\n    }\n    \n    LocalDateTime dateInit = LocalDateTime.parse(dataInicio, formatter);\n    LocalDateTime dateEnd = LocalDateTime.parse(value, formatter);\n    LocalDateTime dateNow = LocalDateTime.parse(\"#date.dd/MM/yyyy HH:mm#\",formatter);\n\n    double totalMinutes = ChronoUnit.MINUTES.between(dateInit, dateEnd);\n    double passedMinutes = ChronoUnit.MINUTES.between(dateInit, dateNow);\n    int percentage = (Integer)Math.round((passedMinutes * 100)/totalMinutes);\n        \n    result = percentage + \"%\";\n}else {\n    result = \"-\";\n}\n\n\nreturn result;"}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_4",
+            "label": "SLA (%)",
+            "name": "DataFim",
+            "permission_rules": {"14f53242-dec2-47ec-1415-4dab2b396111": {}},
+            "sortable": "true",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.BeanShellFormatter",
+                "properties": {"script": "import org.joget.apps.datalist.service.DataListService;\nimport org.joget.apps.app.service.AppUtil;\nimport java.time.LocalDateTime; \nimport java.time.format.DateTimeFormatter;\nimport java.time.temporal.ChronoUnit;\nimport org.joget.commons.util.LogUtil;\nimport java.lang.Math;\n\nDataListService dataListService = (DataListService) AppUtil.getApplicationContext().getBean(\"dataListService\");\nDateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"dd/MM/yyyy HH:mm\");\n\nString result = \"\";\n\nif(value !=  null && !value.isEmpty()){\n    ////////LogUtil.info(\"SLA DIAS\", value);\n    //if value date format is not \"dd/MM/yyyy HH:mm\"\n    if(value.charAt(2) != '/'){\n        //if value date format is of the format \"yyyy-MM-dd HH:mm\"\n        if(value.charAt(4) == '-' && value.charAt(10) == ' ' && value.charAt(13) == ':'){\n            value =  value.substring(8,10) + \"/\" + value.substring(5,7) + \"/\" + value.substring(0,4) + \" \" + value.substring(11,16);\n    \n        }\n    }\n   \n\n    LocalDateTime dateInit = LocalDateTime.parse(value, formatter);\n    LocalDateTime dateNow = LocalDateTime.parse(\"#date.dd/MM/yyyy HH:mm#\",formatter);\n    \n    long days = ChronoUnit.DAYS.between(dateInit, dateNow);\n    int initHours = dateInit.getHour();\n    int nowHours = dateNow.getHour();\n\n    if(initHours > 12 && nowHours <= 12){\n        days= days - 1;    \n    }\n    \n    result = \"D\";\n    if(days>0){\n        result =result + \"+\" + days;\n    }\n    \n}else {\n    result = \"-\";\n}\n \n\nreturn result;"}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_13",
+            "label": "SLA (DIAS)",
+            "name": "DataInicio",
+            "permission_rules": {"14f53242-dec2-47ec-1415-4dab2b396111": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
+    "description": "",
+    "disableResponsive": "",
+    "filters": [
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-824243-fn_Servico",
+            "hidden": "",
+            "id": "filter_12",
+            "label": "Servico",
+            "name": "Servico",
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "controlField": "",
+                    "defaultValue": "",
+                    "multiple": "",
+                    "options": [
+                        {
+                            "grouping": "",
+                            "label": "Crédito Habitação",
+                            "value": "CH"
+                        },
+                        {
+                            "grouping": "",
+                            "label": "Procuradoria",
+                            "value": "PROCU"
+                        }
+                    ],
+                    "optionsBinder": {
+                        "className": "",
+                        "properties": {}
+                    },
+                    "size": ""
+                }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-824243-fn_c_intervencao_juridica",
+            "hidden": "",
+            "id": "filter_9",
+            "label": "Intervencao Jurídica",
+            "name": "c_intervencao_juridica",
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "controlField": "",
+                    "defaultValue": "",
+                    "multiple": "",
+                    "options": [
+                        {
+                            "grouping": "",
+                            "label": "Sim",
+                            "value": "SIM"
+                        },
+                        {
+                            "grouping": "",
+                            "label": "Não",
+                            "value": "NAO"
+                        },
+                        {
+                            "grouping": "",
+                            "label": "Por Validar",
+                            "value": "PAP"
+                        }
+                    ],
+                    "optionsBinder": {
+                        "className": "",
+                        "properties": {}
+                    },
+                    "size": ""
+                }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-824243-fn_c_intervencao_juridica_novo",
+            "hidden": "",
+            "id": "filter_11",
+            "label": "Intervenção Jurídica Novo Processo",
+            "name": "c_intervencao_juridica_novo",
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "controlField": "",
+                    "defaultValue": "",
+                    "multiple": "",
+                    "options": [
+                        {
+                            "grouping": "",
+                            "label": "Sim",
+                            "value": "SIM"
+                        },
+                        {
+                            "grouping": "",
+                            "label": "Não",
+                            "value": "NAO"
+                        },
+                        {
+                            "grouping": "",
+                            "label": "Por Validar",
+                            "value": "PAP"
+                        }
+                    ],
+                    "optionsBinder": {
+                        "className": "",
+                        "properties": {}
+                    },
+                    "size": ""
+                }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-824243-fn_NumeroWFPL",
+            "hidden": "",
+            "id": "filter_2",
+            "label": "NumeroWFPL",
+            "name": "NumeroWFPL",
+            "permission_rules": {"14f53242-dec2-47ec-1415-4dab2b396111": {}},
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {"defaultValue": ""}
+            }
+        },
+        {
+            "id": "filter_5",
+            "label": "Cliente",
+            "name": "Cliente",
+            "permission_rules": {"14f53242-dec2-47ec-1415-4dab2b396111": {}},
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-824243-fn_TipoProcesso",
+            "hidden": "",
+            "id": "filter_6",
+            "label": "Tipo de Processo",
+            "name": "TipoProcesso",
+            "permission_rules": {"14f53242-dec2-47ec-1415-4dab2b396111": {}},
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "controlField": "",
+                    "defaultValue": "",
+                    "multiple": "",
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'tipo_processo'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    },
+                    "size": ""
+                }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-824243-fn_OrigemProcesso",
+            "hidden": "",
+            "id": "filter_10",
+            "label": "Origem do Processo",
+            "name": "OrigemProcesso",
+            "permission_rules": {"14f53242-dec2-47ec-1415-4dab2b396111": {}},
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "controlField": "",
+                    "defaultValue": "",
+                    "multiple": "",
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'origem_processo'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    },
+                    "size": ""
+                }
+            }
+        },
+        {
+            "id": "filter_0",
+            "label": "Atividade",
+            "name": "Atividade",
+            "permission_rules": {"14f53242-dec2-47ec-1415-4dab2b396111": {}},
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-824243-fn_dateCreated",
+            "hidden": "",
+            "id": "filter_1",
+            "label": "Data de Criação",
+            "name": "dateCreated",
+            "permission_rules": {"14f53242-dec2-47ec-1415-4dab2b396111": {}},
+            "type": {
+                "className": "org.joget.plugin.enterprise.DateDataListFilterType",
+                "properties": {
+                    "defaultValue": "",
+                    "format": "mm/dd/yy",
+                    "formatJava": "MM/dd/yyyy",
+                    "yearRange": "c-10:c+10"
+                }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-824243-fn_EstadoContratacao",
+            "hidden": "",
+            "id": "filter_7",
+            "label": "Estado",
+            "name": "EstadoContratacao",
+            "permission_rules": {"14f53242-dec2-47ec-1415-4dab2b396111": {}},
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "controlField": "",
+                    "defaultValue": "",
+                    "multiple": "",
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'estado_contratacao'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    },
+                    "size": ""
+                }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-824243-fn_Urgencia",
+            "hidden": "",
+            "id": "filter_3",
+            "label": "Urgencia",
+            "name": "Urgencia",
+            "permission_rules": {"14f53242-dec2-47ec-1415-4dab2b396111": {}},
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "controlField": "",
+                    "defaultValue": "",
+                    "multiple": "",
+                    "options": [
+                        {
+                            "grouping": "",
+                            "label": "Sim",
+                            "value": "SIM"
+                        },
+                        {
+                            "grouping": "",
+                            "label": "Não",
+                            "value": "NAO"
+                        }
+                    ],
+                    "optionsBinder": {
+                        "className": "",
+                        "properties": {}
+                    },
+                    "size": ""
+                }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-824243-fn_DataFim",
+            "hidden": "",
+            "id": "filter_4",
+            "label": "Data Limite",
+            "name": "DataFim",
+            "permission_rules": {"14f53242-dec2-47ec-1415-4dab2b396111": {}},
+            "type": {
+                "className": "org.joget.plugin.enterprise.DateDataListFilterType",
+                "properties": {
+                    "defaultValue": "",
+                    "format": "mm/dd/yy",
+                    "formatJava": "MM/dd/yyyy",
+                    "yearRange": "c-10:c+10"
+                }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-824243-fn_DataAgendamento",
+            "hidden": "true",
+            "id": "filter_8",
+            "label": "Data Agendamento",
+            "name": "DataAgendamento",
+            "permission_rules": {"14f53242-dec2-47ec-1415-4dab2b396111": {}},
+            "type": {
+                "className": "org.joget.plugin.enterprise.DateDataListFilterType",
+                "properties": {
+                    "defaultValue": "",
+                    "format": "mm/dd/yy",
+                    "formatJava": "MM/dd/yyyy",
+                    "yearRange": "c-10:c+10"
+                }
+            }
+        }
+    ],
+    "hidePageSize": "",
+    "id": "tarefasGeralVisivel",
+    "name": "List - Tarefas por Utilizador",
+    "order": "",
+    "orderBy": "",
+    "pageSize": "0",
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "permission_rules": [{
+        "permission": {
+            "className": "org.joget.apps.userview.lib.DepartmentPermission",
+            "properties": {
+                "allowedDeptIds": "PL_INT_VAL_BCP_COM_CRH;PL_INT_VAL_BCP_NOR_CRH;PL_INT_VAL_BNI_COM_CRH;PL_INT_VAL_BNI_NOR_CRH;PL_INT_VAL_BST_COM_CRH;PL_INT_VAL_BST_NOR_CRH;PL_INT_VAL_GEN_COM_CRH;PL_INT_VAL_GEN_NOR_CRH",
+                "orgId": "PL"
+            }
+        },
+        "permission_key": "14f53242-dec2-47ec-1415-4dab2b396111",
+        "permission_name": "Validacao"
+    }],
+    "responsiveView": [
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Mobile"
+        },
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Tablet"
+        }
+    ],
+    "rowActions": [{
+        "className": "org.joget.apps.datalist.lib.HyperlinkDataListAction",
+        "icon": "<i class=\"fas fa-link\"><\/i>",
+        "id": "rowAction_0",
+        "label": "Hyperlink",
+        "name": "Data List Hyperlink Action",
+        "permission_rules": {
+            "14f53242-dec2-47ec-1415-4dab2b396111": {},
+            "a92e3236-969b-8a03-f44f-47541139ddb9": {}
+        },
+        "properties": {
+            "confirmation": "",
+            "datalist_type": "row_action",
+            "href": "#request.scheme#://#request.serverName#:#request.serverPort##request.contextPath#/web/userview/workflowPL/UV_PL_Geral/_/filaTrabalho?&_mode=assignment",
+            "hrefColumn": "ActivityId",
+            "hrefParam": "activityId",
+            "label": "EDITAR",
+            "rules": [],
+            "target": "_blank"
+        },
+        "type": "text"
+    }],
+    "searchPopup": "",
+    "showDataWhenFilterSet": "",
+    "showPageSizeSelector": "true",
+    "useSession": ""
+}

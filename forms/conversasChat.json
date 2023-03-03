@@ -1,0 +1,104 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [{
+        "className": "org.joget.apps.form.model.Section",
+        "elements": [{
+            "className": "org.joget.apps.form.model.Column",
+            "elements": [
+                {
+                    "className": "org.joget.plugin.enterprise.AjaxSubForm",
+                    "properties": {
+                        "ajax": "true",
+                        "collapsible": "",
+                        "collapsibleExpanded": "true",
+                        "collapsibleLabelCollapsed": "View Details",
+                        "collapsibleLabelExpanded": "Hide Details",
+                        "formDefId": "chatConversasSubform",
+                        "hideEmpty": "",
+                        "id": "conversas_ajax_subform",
+                        "label": "",
+                        "noLoad": "",
+                        "noframe": "true",
+                        "parentSubFormId": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "storeBinder": {
+                            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+                            "properties": {}
+                        },
+                        "subFormParentId": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field1",
+                        "label": "",
+                        "value": "<div id=conversas >\n    \n    \n<\/div>\n\n<script>\n    $(document).ready(function() {\n        loadConversations();\n   //     $(\"#submit\").prop(\"disabled\", true);\n     //   $(\"#submit\").remove();\n     \n     /*if('#requestParam._action#' == \"submit\" ){\n            window.location.href=\"http://192.168.0.104:8080/jw/web/userview/workflowPL/UV_PL_Geral/_/chat?para=admin-a_dpardal\";       \n     }*/\n        \n        \n        \n    });\n    function loadConversations(){\n        $(\"#conversas_ajax_subform_chatConversasSubform_painel_conversas\").find('tr').each(function(){\n            var content=\"\";\n            var id = $(this).find(\"td:nth-child(1)\").text().trim();\n            var destUser=\"\";\n            var dateModified = $(this).find(\"td:nth-child(2)\").text().trim();\n            var countNaoLida = $(this).find(\"td:nth-child(3)\").text().trim();\n            \n            if(id.trim()){\n                if(id.search('#currentUser.id#-')!=-1){\n                    destUser = id.replace('#currentUser.id#-',\"\");\n                }else if(id.search('-#currentUser.id#')!=-1){\n                    destUser = id.replace('-#currentUser.id#',\"\");\n                }\n                content='<div class=\"\" style=\"border: 1px solid black\"><a onclick=\"updateReadMessage()\"><div class=\"\" style=\"margin: 10px\"><span> ' + destUser + ' <\/span><span> -------------' + dateModified + ' <\/span><span>      Mensagens não lidas:' + countNaoLida+ '<\/span><\/div><\/a><\/div>'\n                $('#conversas').append(content);\n            }\n            \n            \n            \n        });\n        \n    }\n    \n    function updateReadMessage(action){\n        $(\"#conversasChat\").attr(\"action\", \"http://192.168.0.104:8080/jw/web/userview/workflowPL/UV_PL_Geral/_/chat_conversas?_action=submit&para=admin-a_dpardal\");\n        $(\"#submit\").click();\n    }\n<\/script>\n"
+                    }
+                }
+            ],
+            "properties": {"width": "100%"}
+        }],
+        "properties": {
+            "comment": "",
+            "id": "section1",
+            "join": "",
+            "label": "Conversas",
+            "loadBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "permission": {
+                "className": "",
+                "properties": {}
+            },
+            "permissionHidden": "",
+            "permissionReadonly": "",
+            "readonly": "true",
+            "readonlyLabel": "",
+            "regex": "",
+            "reverse": "",
+            "storeBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "visibilityControl": "",
+            "visibilityValue": ""
+        }
+    }],
+    "properties": {
+        "description": "",
+        "id": "conversasChat",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "Chat Conversas",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "org.joget.apps.app.lib.DatabaseUpdateTool",
+            "properties": {
+                "jdbcDatasource": "default",
+                "query": "UPDATE app_fd_data_chat dc SET c_lida=\"sim\" WHERE c_thread_id=\"#requestParam.para#\" AND createdby not like \"#currentUser.id#\";"
+            }
+        },
+        "postProcessorRunOn": "both",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+            "properties": {
+                "autoHandleFiles": "",
+                "autoHandleWorkflowVariable": "true",
+                "cacheInterval": "",
+                "script": "return null;",
+                "useAjax": ""
+            }
+        },
+        "tableName": "mensagens_chat"
+    }
+}

@@ -1,0 +1,148 @@
+{
+    "body": {"elements": [
+        {
+            "className": "org.joget.rbuilder.lib.LabelValueTableReportElement",
+            "properties": {
+                "borderColor": "#000000",
+                "borderSize": "1px",
+                "borderStyle": "solid",
+                "header_align": "left",
+                "id": "241D7EA9-7343-4B89-4CAC-D5D248224FD5",
+                "label_align": "left",
+                "label_width": "50%",
+                "marginBottom": "10px",
+                "padding": "2px",
+                "type": "static",
+                "value_align": "left",
+                "value_width": "50%"
+            }
+        },
+        {
+            "className": "org.joget.rbuilder.lib.ListReportElement",
+            "properties": {
+                "automatedNum": "",
+                "datalistId": "erm_pds_bancos",
+                "filterParams": [{
+                    "param": "Banco",
+                    "value": "BCP"
+                }],
+                "footer": [],
+                "footerRowlabel": "",
+                "formulaColumns": [],
+                "headerColor": "",
+                "headerTextColor": "",
+                "id": "64614485-5942-4215-B713-4F77CDB6A902",
+                "selectorClass": ""
+            }
+        },
+        {
+            "className": "org.joget.rbuilder.lib.ListReportElement",
+            "properties": {"id": "D1EF8BCA-B4E4-4781-7637-6FFF1B9F2CB1"}
+        },
+        {
+            "className": "org.joget.rbuilder.lib.ChartReportElement",
+            "properties": {
+                "binder": {
+                    "className": "org.joget.plugin.enterprise.AdvancedFormRowDataListBinder",
+                    "properties": {
+                        "aggregateField": [{
+                            "field": "nome_banco",
+                            "function": "AFD_COUNT_"
+                        }],
+                        "customSelectionValue": "",
+                        "extraCondition": "",
+                        "filters": [
+                            {
+                                "field": "nome_banco",
+                                "join": "AND",
+                                "operator": "IS NOT NULL",
+                                "value": ""
+                            },
+                            {
+                                "field": "nome_banco",
+                                "join": "AND",
+                                "operator": "<>",
+                                "value": ""
+                            }
+                        ],
+                        "formDefId": "detalheProcesso",
+                        "functionColumns": [],
+                        "groupBy": "nome_banco",
+                        "having": [],
+                        "joins": []
+                    }
+                },
+                "categoryAxisLabel": "Category",
+                "chartHeight": "480",
+                "chartType": "donut",
+                "chartWidth": "640",
+                "colors": "",
+                "halign": "left",
+                "id": "3516504E-B2B2-4955-AD5E-98D04956C1D5",
+                "mapping_legend": "nome_banco",
+                "mapping_value": "AFD_COUNT_nome_banco",
+                "marginBottom": "10px",
+                "selectorClass": "",
+                "showLegend": "true",
+                "showValue": "true",
+                "sortingOrder": "ASC",
+                "sortingOrderByColumn": "AFD_COUNT_nome_banco",
+                "title": "Processos por banco",
+                "valueAxisLabel": "Value",
+                "xAxisDisplayAS": ""
+            }
+        },
+        {
+            "className": "org.joget.rbuilder.lib.ChartReportElement",
+            "properties": {
+                "binder": {
+                    "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+                    "properties": {
+                        "jdbcDatasource": "default",
+                        "optimisePaging": "",
+                        "primaryKey": "id",
+                        "sql": "SELECT  c_estado_contratacao, COUNT(id) AS 'Total'\r\nFROM app_fd_detalhe_processo\r\nGROUP BY c_estado_contratacao\r\n"
+                    }
+                },
+                "categoryAxisLabel": "Estado",
+                "chartHeight": "480",
+                "chartType": "bar",
+                "chartWidth": "640",
+                "colors": "",
+                "halign": "left",
+                "id": "42EEBCFA-48B5-417F-AD66-E3CB19AC1D68",
+                "mapping_dateformat": "",
+                "mapping_x": "c_estado_contratacao",
+                "mapping_ys": [{
+                    "legend": "Estado",
+                    "y": "Total"
+                }],
+                "marginBottom": "10px",
+                "selectorClass": "",
+                "showLegend": "",
+                "showValueLabel": "true",
+                "sortingOrder": "ASC",
+                "sortingOrderByColumn": "",
+                "stack": "",
+                "title": "Estado dos Processos",
+                "valueAxisLabel": "Total",
+                "xAxisDisplayAS": "",
+                "yaxisPrefix": ""
+            }
+        }
+    ]},
+    "footer": {"elements": []},
+    "header": {"elements": []},
+    "properties": {
+        "background_color": "",
+        "background_image": "",
+        "background_type": "cover",
+        "description": "",
+        "id": "rp_erm_processo_banco",
+        "margins": "normal",
+        "name": "erm_processo_banco",
+        "orientation": "portrait",
+        "paperSize": "a4",
+        "reportParams": []
+    }
+}

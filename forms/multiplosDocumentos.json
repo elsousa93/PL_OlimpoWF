@@ -1,0 +1,180 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [{
+        "className": "org.joget.apps.form.model.Section",
+        "elements": [{
+            "className": "org.joget.apps.form.model.Column",
+            "elements": [
+                {
+                    "className": "org.joget.apps.form.lib.HiddenField",
+                    "properties": {
+                        "id": "id_processo",
+                        "useDefaultWhenEmpty": "true",
+                        "value": "#form.docs_processo.id_processo[{form.processos.docs}]#",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.HiddenField",
+                    "properties": {
+                        "id": "id_doc",
+                        "useDefaultWhenEmpty": "",
+                        "value": "#form.processos.docs#",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.FileUpload",
+                    "properties": {
+                        "attachment": "",
+                        "fileType": "",
+                        "fileTypeMsg": "Invalid file type",
+                        "id": "documento",
+                        "label": "Upload Ficheiros",
+                        "maxSize": "",
+                        "maxSizeMsg": "File size limit exceeded",
+                        "multiple": "true",
+                        "padding": "",
+                        "permissionType": "",
+                        "readonly": "",
+                        "removeFile": "",
+                        "resizeHeight": "",
+                        "resizeMethod": "",
+                        "resizeQuality": "0.8",
+                        "resizeWidth": "",
+                        "size": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        }
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "traduzirMensagemUpload",
+                        "label": "",
+                        "value": "<script>\n    $(document).ready(function(){\n        $('div.dz-message').text(\"Solte os ficheiros aqui ou clique para fazer upload.\");\n    });  \n<\/script>"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.DatePicker",
+                    "properties": {
+                        "allowManual": "",
+                        "currentDateAs": "",
+                        "dataFormat": "yyyy-MM-dd",
+                        "datePickerType": "",
+                        "endDateFieldId": "",
+                        "format": "yy-mm-dd",
+                        "id": "data_validade_documento",
+                        "label": "Data de Inserção dos Ficheiros",
+                        "permissionHidden": "",
+                        "permission_rules": {
+                            "2d5b66a5-a9cb-5ffa-bfae-908ff7c801cf": {},
+                            "4eadf25e-a6ae-5c28-23ee-74fa93baba69": {},
+                            "52e1b920-6773-f986-e477-c378d0553021": {},
+                            "6d298317-99a8-54fd-e8ad-1873aee58f16": {},
+                            "718d5349-6f95-b82b-51b6-2c8e3f3cae78": {},
+                            "905528b0-444a-645b-77f3-a7aa12612611": {},
+                            "9de7f6a8-1d7c-13d5-e7fc-b76eb2395504": {},
+                            "aaffb350-ce47-00c4-ce5b-6458ca217e7b": {},
+                            "bb3e96c1-d61f-4c1c-f075-93ca3b6103dc": {}
+                        },
+                        "placeholder": "",
+                        "readonly": "true",
+                        "readonlyLabel": "",
+                        "startDateFieldId": "",
+                        "validator": {
+                            "className": "org.joget.apps.form.lib.BeanShellValidator",
+                            "properties": {
+                                "decoration": "*",
+                                "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    boolean result = true;\r\n    String fieldId = \"data_validade_documento\";\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    //If element is not filled give error message\r\n    if (fieldValue == null || fieldValue.equals(\"\")){\r\n        String id = FormUtil.getElementParameterName(element);\r\n        result = false;\r\n    }\r\n    \r\n    var origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo == \"ACE\" || origem_processo == \"PRE\" || origem_processo == \"TRD\")){\r\n       result = true;\r\n    }\r\n    \r\n    if(!result){\r\n        formData.addFormError(id, \"Campo Obrigatório\");\r\n    }\r\n    \r\n    \r\n    \r\n    return result;\r\n    \r\n}\r\nreturn validate(element, formData, values);"
+                            }
+                        },
+                        "value": "#date.yyyy-MM-dd#",
+                        "workflowVariable": "",
+                        "yearRange": "c-10:c+10"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.SelectBox",
+                    "properties": {
+                        "controlField": "",
+                        "id": "gestor",
+                        "label": "Gestor",
+                        "multiple": "",
+                        "options": [],
+                        "optionsBinder": {
+                            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                            "properties": {
+                                "cacheInterval": "",
+                                "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.defaultHashVariablePlugin;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n\r\n \r\npublic FormRowSet load(Element element, String primaryKey, FormData formData) {\r\n    \r\n    FormRowSet rows = new FormRowSet();\r\n    \r\n    String gestor = \"#form.docs_processo.gestor#\";\r\n    \r\n    if (gestor == null || gestor.equals(\"\") || gestor.contains(\"form.docs_processo.gestor\")) {\r\n        String cUser = \"#currentUser.username#\";\r\n        String cUserName = \"#currentUser.fullName#\";\r\n        \r\n        FormRow option = new FormRow();\r\n        option.setProperty(FormUtil.PROPERTY_VALUE, cUser);\r\n        option.setProperty(FormUtil.PROPERTY_LABEL, cUserName);\r\n        rows.add(option);\r\n    }else{\r\n        String gestorName = \"#user.\" + gestor + \".fullName#\";\r\n        gestorName = AppUtil.processHashVariable(gestorName, null, null, null, null);\r\n        \r\n        FormRow option = new FormRow();\r\n        option.setProperty(FormUtil.PROPERTY_VALUE, gestor);\r\n        option.setProperty(FormUtil.PROPERTY_LABEL, gestorName);\r\n        rows.add(option);\r\n    }\r\n        \r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(element, primaryKey, formData);",
+                                "useAjax": ""
+                            }
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                }
+            ],
+            "properties": {"width": "100%"}
+        }],
+        "properties": {
+            "comment": "",
+            "id": "section1",
+            "join": "",
+            "label": "",
+            "loadBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "permission": {
+                "className": "",
+                "properties": {}
+            },
+            "permissionReadonly": "",
+            "readonly": "",
+            "readonlyLabel": "",
+            "regex": "",
+            "reverse": "",
+            "storeBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "visibilityControl": "",
+            "visibilityValue": ""
+        }
+    }],
+    "properties": {
+        "description": "",
+        "id": "multiplosDocumentos",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "Múltiplos Documentos",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "docs_processo"
+    }
+}
