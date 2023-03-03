@@ -6978,14 +6978,14 @@
                             <Split Type="XOR">
                                 <TransitionRefs>
                                     <TransitionRef Id="transition2"/>
-                                    <TransitionRef Id="transition3"/>
+                                    <TransitionRef Id="transition10"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="registos"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="589,28.800006103515628"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="592,38.60000915527344"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="registo" Name="Registo">
@@ -7000,7 +7000,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="registos"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="303,35.16250915527344"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="381,34.750003051757815"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="route2">
@@ -7023,7 +7023,7 @@
                     <Performer>resgistos_qualidade</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="resgistos_qualidade"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="563,41.13749999999999"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="565,97.93748779296874"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="route3">
@@ -7041,17 +7041,27 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="resgistos_qualidade"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="580,172.58751220703124"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="580,220.3875"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="tool1" Name="Tool 1">
+                <Activity Id="ConfigurarProcessoRegistos" Name="Configurar Processo Registos">
                     <Implementation>
                         <Tool Id="default_application"/>
                     </Implementation>
                     <Performer>registos</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="registos"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="146,35.39999694824219"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="147,36.187503051757815"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="ultimaAtividadeRegisto" Name="Configurar Ultima Atividade">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>resgistos_qualidade</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="resgistos_qualidade"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="556,16.0000030517578"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -7066,12 +7076,6 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;pos-contratacao&quot;},{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;estado&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;notOk&quot;}]"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="route1" Id="transition3" To="qualidade">
-                    <Condition Type="OTHERWISE"/>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="qualidade" Id="transition4" To="route3">
@@ -7092,7 +7096,18 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="tool1" Id="transition8" To="registo">
+                <Transition From="ConfigurarProcessoRegistos" Id="transition8" To="registo">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="ultimaAtividadeRegisto" Id="transition9" To="qualidade">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route1" Id="transition10" To="ultimaAtividadeRegisto">
+                    <Condition Type="OTHERWISE"/>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
@@ -7101,7 +7116,7 @@
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="registos;resgistos_qualidade"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=registos,CONNECTING_ACTIVITY_ID=route2,X_OFFSET=1271,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=registos,CONNECTING_ACTIVITY_ID=tool1,X_OFFSET=70,Y_OFFSET=51,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=registos,CONNECTING_ACTIVITY_ID=ConfigurarProcessoRegistos,X_OFFSET=70,Y_OFFSET=51,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
     </WorkflowProcesses>
