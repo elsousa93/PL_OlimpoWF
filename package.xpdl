@@ -6959,7 +6959,7 @@
                 </FormalParameter>
             </FormalParameters>
             <DataFields>
-                <DataField Id="estado" IsArray="FALSE">
+                <DataField Id="correcoes" IsArray="FALSE">
                     <DataType>
                         <BasicType Type="STRING"/>
                     </DataType>
@@ -7083,10 +7083,10 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route1" Id="transition2" To="route2">
-                    <Condition Type="CONDITION">proxima_operativa === 'pos-contratacao' &amp;&amp; estado === 'notOk'</Condition>
+                    <Condition Type="CONDITION">proxima_operativa === 'pos-contratacao' &amp;&amp; correcoes === 'SIM'</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;pos-contratacao&quot;},{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;estado&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;notOk&quot;}]"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;pos-contratacao&quot;},{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;correcoes&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;SIM&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="qualidade" Id="transition4" To="route3">
@@ -7095,10 +7095,10 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route3" Id="transition5" To="route2">
-                    <Condition Type="CONDITION">estado === 'notOk' &amp;&amp; proxima_operativa === 'pos-contratacao' || estado === 'ok' &amp;&amp; proxima_operativa === 'modelo11'</Condition>
+                    <Condition Type="CONDITION">correcoes === 'SIM' &amp;&amp; proxima_operativa === 'pos-contratacao' || correcoes === 'NAO' &amp;&amp; proxima_operativa === 'modelo11'</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;estado&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;notOk&quot;},{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;pos-contratacao&quot;},{&quot;join&quot;:&quot;||&quot;,&quot;variable&quot;:&quot;estado&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;ok&quot;},{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;modelo11&quot;}]"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;correcoes&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;SIM&quot;},{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;pos-contratacao&quot;},{&quot;join&quot;:&quot;||&quot;,&quot;variable&quot;:&quot;correcoes&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;NAO&quot;},{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;modelo11&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route3" Id="transition7" To="registo">
