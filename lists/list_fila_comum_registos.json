@@ -1,17 +1,92 @@
 {
     "actions": [],
     "binder": {
-        "className": "",
-        "name": "",
-        "properties": {}
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "idReg",
+            "sql": "SELECT p.id as idReg, dp.c_n_wf_banco as N_WF, dp.c_n_wf_pl as N_WF_PL, dp.c_nome_cliente as NomeCliente, dp.c_tipo_processo as TipoProcesso, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee, p.dateCreated\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nWHERE sps.KeyValue LIKE 'open.running'\nAND p.id is not null\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id like '%REGRegistos%'\nAND sass.ResourceId LIKE \"%registos_geral%\"\n"
+        }
     },
-    "columns": [],
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_0",
+            "label": "N_WF",
+            "name": "N_WF",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "N_WF_PL",
+            "name": "N_WF_PL",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_2",
+            "label": "NomeCliente",
+            "name": "NomeCliente",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_3",
+            "label": "TipoProcesso",
+            "name": "TipoProcesso",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "activityName",
+            "name": "activityName",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_5",
+            "label": "dateCreated",
+            "name": "dateCreated",
+            "sortable": "false"
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
     "description": "",
+    "disableResponsive": "",
     "filters": [],
+    "hidePageSize": "",
     "id": "list_fila_comum_registos",
     "name": "Registos - Fila Comum",
     "order": "",
     "orderBy": "",
     "pageSize": "0",
-    "rowActions": []
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "responsiveView": [
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Mobile"
+        },
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Tablet"
+        }
+    ],
+    "rowActions": [],
+    "searchPopup": "",
+    "showDataWhenFilterSet": "",
+    "showPageSizeSelector": "true",
+    "useSession": ""
 }
