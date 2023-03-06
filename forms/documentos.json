@@ -22,6 +22,7 @@
                     "properties": {}
                 },
                 "permissionReadonly": "",
+                "permission_rules": {"0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {}},
                 "readonly": "",
                 "readonlyLabel": "",
                 "regex": "",
@@ -45,6 +46,7 @@
                         "id": "numero_registo",
                         "label": "Número de Registo",
                         "maxlength": "",
+                        "permission_rules": {"0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {}},
                         "placeholder": "",
                         "readonly": "",
                         "readonlyLabel": "",
@@ -74,7 +76,9 @@
                     "className": "",
                     "properties": {}
                 },
+                "permissionHidden": "true",
                 "permissionReadonly": "",
+                "permission_rules": {"0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {}},
                 "readonly": "",
                 "readonlyLabel": "",
                 "regex": "",
@@ -98,6 +102,7 @@
                             "autoPopulate": "",
                             "id": "field6",
                             "label": "",
+                            "permission_rules": {"0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {}},
                             "value": "<div class=\"col text-start\">\r\n    <span class=\"material-symbols-rounded md-40\"> folder <\/span> \r\n\t<div class = \"subform-section-title\">\r\n\t\t<span>DOCUMENTOS<\/span>\r\n\t<\/div> \r\n<\/div>"
                         }
                     },
@@ -105,6 +110,7 @@
                         "className": "org.joget.apps.form.lib.HiddenField",
                         "properties": {
                             "id": "id_processo",
+                            "permission_rules": {"0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {}},
                             "useDefaultWhenEmpty": "true",
                             "value": "",
                             "workflowVariable": ""
@@ -164,6 +170,7 @@
                                 }
                             ],
                             "pageSize": "20",
+                            "permission_rules": {"0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {}},
                             "readonly": "",
                             "readonlyLabel": "",
                             "showRowNumber": "",
@@ -198,6 +205,7 @@
                             "autoPopulate": "",
                             "id": "field5",
                             "label": "",
+                            "permission_rules": {"0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {}},
                             "value": "<script type=\"text/javascript\">\r\n    $(document).ready(function(){\r\n        //get value from field that controls if the WF number is automatically generated or not\r\n        var value = FormUtil.getValue(\"id_processo\");\r\n        \r\n        sessionStorage.setItem(\"id_processo\", value);\r\n    });\r\n    \r\n    $(window).load(function(){\r\n    var flag_validacao = '#variable.flag_validacao#';\r\n    if(flag_validacao === '1' || flag_validacao.startsWith(\"#variable.flag_validacao\")){\r\n       $(\"div[id*=documentos_field6_]\").change(function(){\r\n            $(\"input#flag_alteracoes\").attr(\"value\",\"SIM\");    \r\n        });\r\n  \r\n    }\r\n});\r\n   \r\n    \r\n    \r\n<\/script>\r\n"
                         }
                     },
@@ -207,6 +215,7 @@
                             "autoPopulate": "",
                             "id": "field4",
                             "label": "",
+                            "permission_rules": {"0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {}},
                             "value": "<script type=\"text/javascript\">\r\n$(function(){\r\n     $('.grid-action-add').html(\"<br> <b>ADICIONAR FICHEIRO ÚNICO<\/b>\"); \r\n     $('.grid-action-add').css(\"display\", \"inline\"); \r\n     $('.grid-action-add').css(\"vertical-align\", \"text-bottom\"); \r\n});\r\n<\/script>"
                         }
                     },
@@ -216,6 +225,7 @@
                             "autoPopulate": "",
                             "id": "visualizarPDF",
                             "label": "",
+                            "permission_rules": {"0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {}},
                             "value": "<div id=\"pdfPreview\" style=\"display:none;\">\r\n    <object\r\n      data=\"pdfFilePath\" width=\"100%\" height=\"100%\">\r\n      <iframe src=\"pdfFilePath\" width=\"100%\" height=\"100%\" style=\"border: none;\">\r\n        <p>Your browser does not support PDFs. <a href=\"pdfFilePath\">Download the PDF<\/a>.<\/p>\r\n      <\/iframe>\r\n    <\/object>\r\n<\/div>\r\n\r\n<script type=\"text/javascript\">\r\n\r\n $(document).change(function(){\r\n        var fileChange = sessionStorage.getItem(\"fileChange\");\r\n        \r\n        if(fileChange === \"SIM\"){\r\n            $(\"#multiPaged_5_documentos_field6_documento > a\").attr(\"href\",\"#\");\r\n            $(\"#multiPaged_5_documentos_field6_documento > a\").unbind(\"click\").bind(\"click\", function(e){\r\n                e.preventDefault();\r\n                alert(\"É necessário gravar o formulário antes de visualizar os ficheiros\");\r\n            });\r\n            \r\n        }\r\n });     \r\n \r\n /*\r\n //Função que faz a alteração do link dos documentos de modo a abri-los numa janela popup\r\n$(function(){\r\n    $(\"#multiPaged_5_documentos_field6_documento > a\").click(function(e){\r\n    url = $(this).attr(\"href\");\r\n    var found = url.match(/[0-9a-fA-F]{8}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{12}_[0-9]+\\//gi);\r\n    console.log(found);\r\n    if(found!=null){\r\n        found=found[0].slice(0,-3);\r\n        \r\n        url=url.replace(/[0-9a-fA-F]{8}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{12}_[0-9]+/gi, found);\r\n    }\r\n    var novoUrl = url.replace(/attachment=true/g,\"__a_=workflowPL&__u_=UV_PL_Geral\");\r\n    console.log(novoUrl);\r\n    \r\n    $(this).attr(\"href\",novoUrl);\r\n    if($(\"novoUrl:contains(.pdf.)\")){\r\n        e.preventDefault();\r\n        showPopupActionDialog(novoUrl);\r\n    }\r\n        \r\n    });\r\n});*/\r\n\r\nfunction saveFilesWarning(){\r\n    alert(\"É necessário guardar o formulário para aceder aos ficheiros\");\r\n}\r\n\r\n/*\r\n//Função que faz abrir a janela de popup para visualizar o ficheiro\r\nfunction showPopupActionDialog(url){\r\n    var wWidth = $(window).width();\r\n    var dWidth = wWidth * 0.9;\r\n    var wHeight = $(window).height();\r\n    var dHeight = wHeight * 0.9;\r\n    \r\n  \r\n        var previewObj = $( \"#pdfPreview\" ).clone().html(function(index,html){\r\n            return html.replace(/pdfFilePath/g, url);\r\n        });\r\n        \r\n        var inputDialog = $(previewObj).dialog({\r\n            autoOpen: true,\r\n            height: dHeight,\r\n            width: dWidth,\r\n            modal: true,\r\n            buttons: [\r\n                {\r\n                text: \"Fechar\",\r\n                  click: function() {\r\n                    inputDialog.dialog( \"close\" );\r\n                  }\r\n                }\r\n            ]\r\n        });\r\n}*/\r\n\r\n<\/script>"
                         }
                     },
@@ -225,6 +235,7 @@
                             "autoPopulate": "",
                             "id": "field60",
                             "label": "",
+                            "permission_rules": {"0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {}},
                             "value": "<script>\n    $(document).ready(function(){\n        \n        $(\"div[id*=multiDocs]\").hide();\n        $(\"button#singleDocument\").hide();\n        \n        $(\"button#multipleDocuments\").click(function(e){\n            e.preventDefault();\n            $(\"a[class=grid-action-add]\").hide();\n            $(\"div[id*=multiDocs]\").show();\n            $(\"button#singleDocument\").show();\n            $(\"button#multipleDocuments\").hide();\n            \n        });\n        \n        $(\"button#singleDocument\").click(function(e){\n            e.preventDefault();\n            $(\"a[class=grid-action-add]\").show();\n            $(\"div[id*=multiDocs]\").hide();\n            $(\"button#multipleDocuments\").show();\n            $(\"button#singleDocument\").hide();\n            $(\"ul[class=form-fileupload-value]\").children().remove();\n        });\n        \n    });\n    \n<\/script>"
                         }
                     },
@@ -234,6 +245,7 @@
                             "autoPopulate": "",
                             "id": "field62",
                             "label": "",
+                            "permission_rules": {"0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {}},
                             "value": "<div>\r\n    <button id=\"multipleDocuments\">ADICIONAR VÁRIOS FICHEIROS<\/button>\r\n    <button id=\"singleDocument\">ADICIONAR APENAS UM FICHEIRO<\/button>\r\n<\/div>"
                         }
                     }
@@ -254,6 +266,7 @@
                     "properties": {}
                 },
                 "permissionReadonly": "",
+                "permission_rules": {"0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {}},
                 "readonly": "",
                 "readonlyLabel": "",
                 "regex": "",
@@ -277,6 +290,7 @@
                             "autoPopulate": "",
                             "id": "field63",
                             "label": "",
+                            "permission_rules": {"0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {}},
                             "value": "<div class=\"col text-start\">\r\n\t<div class = \"subform-section-title\">\r\n\t\t<span>MÚLTIPLOS DOCUMENTOS<\/span>\r\n\t\t \r\n\t<\/div> \r\n<\/div>"
                         }
                     },
@@ -292,6 +306,7 @@
                             },
                             "noframe": "",
                             "parentSubFormId": "",
+                            "permission_rules": {"0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {}},
                             "readonly": "",
                             "readonlyLabel": "",
                             "storeBinder": {
@@ -324,6 +339,7 @@
                     "properties": {}
                 },
                 "permissionReadonly": "",
+                "permission_rules": {"0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {}},
                 "readonly": "",
                 "readonlyLabel": "",
                 "regex": "",
@@ -350,6 +366,17 @@
             "className": "",
             "properties": {}
         },
+        "permission_rules": [{
+            "permission": {
+                "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                "properties": {
+                    "allowedDeptIds": "PL_INT_REG;PL_INT_REG_QUAL",
+                    "orgId": "PL"
+                }
+            },
+            "permission_key": "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7",
+            "permission_name": "Registos"
+        }],
         "postProcessor": {
             "className": "",
             "properties": {}
