@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT sp.Id as id, dp.c_nome_banco AS Banco, dp.c_n_wf_pl as 'Numero WF PL', dp.c_tipo_processo as 'Tipo Processo', dp.c_nome_cliente as Cliente,\nsla.c_data_inicio as Inicio,sla.c_data_fim as Fim, sla.c_data_conclusao as Conclusão, sla.c_nome_atividade as Atividade,\nsla.c_estado_atividade as Estado,sla.c_duracao as Duração\nFROM app_fd_sla_atividade sla\nLEFT JOIN shkprocesses sp ON sla.c_id_processo = sp.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\n"
+            "sql": "SELECT sp.Id as id, dp.c_nome_banco AS Banco, dp.c_n_wf_pl as 'Numero WF PL', dp.c_tipo_processo as 'Tipo Processo',dp.c_forma_outorga as Forma_outorga, \nsla.c_data_inicio as Inicio,sla.c_data_fim as Fim, sla.c_data_conclusao as Conclusão, sla.c_nome_atividade as Atividade,\nsla.c_estado_atividade as Estado,sla.c_duracao as Duração\nFROM app_fd_sla_atividade sla\nLEFT JOIN shkprocesses sp ON sla.c_id_processo = sp.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\n"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -69,7 +69,7 @@
                             "addEmptyOption": "",
                             "cacheInterval": "",
                             "emptyLabel": "",
-                            "extraCondition": "c_nome_campo = 'tipo_processo'",
+                            "extraCondition": "c_nome_campo = 'forma_outorga'",
                             "formDefId": "adicionarOpcaoLV",
                             "groupingColumn": "",
                             "idColumn": "value",
@@ -81,9 +81,9 @@
             },
             "headerAlignment": "",
             "hidden": "false",
-            "id": "column_4",
-            "label": "Tipo Processo",
-            "name": "Tipo Processo",
+            "id": "column_9",
+            "label": "Forma outorga",
+            "name": "Forma_outorga",
             "sortable": "false",
             "style": "",
             "width": ""
@@ -170,6 +170,38 @@
                             "cacheInterval": "",
                             "emptyLabel": "",
                             "extraCondition": "c_nome_campo = 'nome_banco'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    },
+                    "size": ""
+                }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-444817-fn_Forma_outorga",
+            "hidden": "",
+            "id": "filter_2",
+            "label": "Forma outorga",
+            "name": "Forma_outorga",
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "controlField": "",
+                    "defaultValue": "",
+                    "multiple": "",
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'forma_outorga'",
                             "formDefId": "adicionarOpcaoLV",
                             "groupingColumn": "",
                             "idColumn": "value",
