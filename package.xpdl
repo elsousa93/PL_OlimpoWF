@@ -2658,6 +2658,11 @@
                         <BasicType Type="STRING"/>
                     </DataType>
                 </DataField>
+                <DataField Id="user_ao" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
             </DataFields>
             <Activities>
                 <Activity Id="route1">
@@ -2873,7 +2878,7 @@
                             <Split Type="XOR">
                                 <TransitionRefs>
                                     <TransitionRef Id="transition43"/>
-                                    <TransitionRef Id="transition28"/>
+                                    <TransitionRef Id="transition30"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
@@ -2983,7 +2988,22 @@
                     <Performer>participant3</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1822.7999877929688,172.80002136230468"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1986.796875,248.796875"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="sub_acompanhamento_outorgas" Name="Acompanhamento Outorgas">
+                    <Implementation>
+                        <SubFlow Execution="SYNCHR" Id="CHAcompanhamentoOutorgas">
+                            <ActualParameters>
+                                <ActualParameter>proxima_operativa</ActualParameter>
+                                <ActualParameter>user_ao</ActualParameter>
+                            </ActualParameters>
+                        </SubFlow>
+                    </Implementation>
+                    <Performer>participant3</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1856,114"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -3148,16 +3168,23 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="route6" Id="transition28" To="sub_registos">
+                <Transition From="sub_registos" Id="transition29" To="route14">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="sub_acompanhamento_outorgas" Id="transition28" To="sub_registos">
                     <Condition Type="CONDITION">proxima_operativa === 'registos'</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;registos&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="sub_registos" Id="transition29" To="route14">
+                <Transition From="route6" Id="transition30" To="sub_acompanhamento_outorgas">
+                    <Condition Type="CONDITION">proxima_operativa === 'acompanhamento_outorgas'</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;acompanhamento_outorgas&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
             </Transitions>
