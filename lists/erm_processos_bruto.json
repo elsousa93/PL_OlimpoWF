@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT det.c_id_processo AS IDProc, det.c_data_entrada as Data_entrada, det.c_nome_banco AS Banco, det.c_tipo_processo AS Tipo_processo, det.c_urgencia AS Urgente,\ndet.c_forma_outorga as Forma_outorga, det.c_n_wf_pl as WF_PL, det.c_nome_cliente AS Nome_cliente,\ndet.c_origem_processo AS Origem, det.c_complex_processo AS Complexidade, det.c_estado_contratacao AS Estado_contratacao, det.c_fase_processo AS Fase,\nag.c_data_agendamento AS Data_agendamento, ag.c_estado_agendamento AS Estado_agendamento, ag.c_urgencia_agendamento AS Urgencia_agendamento, ag.c_reagendamento AS Reagendamento,\nSUM(IF(imo.c_imovel_banco='Sim',1,0)) AS Imovel_banco, IF(DAY(abanc.c_data_5_emissao_fine)>0,5,IF(DAY(abanc.c_data_4_emissao_fine)>0,4,IF(DAY(abanc.c_data_3_emissao_fine)>0,3,IF(DAY(abanc.c_data_2_emissao_fine)>0,2,IF(DAY(abanc.c_data_emissao_fine)>0,1,0))))) AS FINEs\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nLEFT JOIN app_fd_imoveis imo ON det.c_id_processo = imo.c_id_processo\nLEFT JOIN app_fd_anal_banc_processo abanc ON det.c_id_processo = abanc.c_id_processo\nWHERE det.c_data_entrada != ''\nGROUP BY IDProc, Data_entrada, Banco, Tipo_processo, Urgente, Forma_outorga, WF_PL, Nome_cliente, Origem, Complexidade, Estado_contratacao, Fase,\nData_agendamento, Estado_agendamento, Urgencia_agendamento, Reagendamento, FINES\n\n\n\n\n\n"
+            "sql": "SELECT det.c_id_processo AS IDProc, det.c_data_entrada as Data_entrada, det.c_nome_banco AS Banco, det.c_tipo_processo AS Tipo_processo, det.c_urgencia AS Urgente,\ndet.c_forma_outorga as Forma_outorga, det.c_n_wf_pl as WF_PL, det.c_nome_cliente AS Nome_cliente,\ndet.c_origem_processo AS Origem, det.c_complex_processo AS Complexidade, det.c_estado_contratacao AS Estado_contratacao, det.c_fase_processo AS Fase, ger.c_urgencia_analise AS UrgenteAnalise,\nag.c_data_agendamento AS Data_agendamento, ag.c_estado_agendamento AS Estado_agendamento, ag.c_urgencia_agendamento AS Urgencia_agendamento, ag.c_reagendamento AS Reagendamento,\nSUM(IF(imo.c_imovel_banco='Sim',1,0)) AS Imovel_banco, IF(DAY(abanc.c_data_5_emissao_fine)>0,5,IF(DAY(abanc.c_data_4_emissao_fine)>0,4,IF(DAY(abanc.c_data_3_emissao_fine)>0,3,IF(DAY(abanc.c_data_2_emissao_fine)>0,2,IF(DAY(abanc.c_data_emissao_fine)>0,1,0))))) AS FINEs\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nLEFT JOIN app_fd_imoveis imo ON det.c_id_processo = imo.c_id_processo\nLEFT JOIN app_fd_anal_banc_processo abanc ON det.c_id_processo = abanc.c_id_processo\nLEFT JOIN app_fd_geral ger ON det.c_id_processo = ger.c_id_processo\nGROUP BY IDProc, Data_entrada, Banco, Tipo_processo, Urgente, Forma_outorga, WF_PL, Nome_cliente, Origem, Complexidade, Estado_contratacao, Fase,\nData_agendamento, Estado_agendamento, Urgencia_agendamento, Reagendamento, FINES, UrgenteAnalise\n\n\n\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -293,6 +293,28 @@
             "id": "column_8",
             "label": "Fase",
             "name": "Fase",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_1",
+            "label": "Urgente Analise",
+            "name": "UrgenteAnalise",
             "sortable": "false",
             "style": "",
             "width": ""
