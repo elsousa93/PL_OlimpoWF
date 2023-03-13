@@ -7384,7 +7384,7 @@
                     <Performer>participant2</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant2"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="848.9236373901367,63.43753501953125"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="844.9132614135742,109.53122398437495"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="route2">
@@ -7465,10 +7465,10 @@
                     <Performer>participant48</Performer>
                     <TransitionRestrictions>
                         <TransitionRestriction>
-                            <Split Type="AND">
+                            <Split Type="XOR">
                                 <TransitionRefs>
                                     <TransitionRef Id="transition12"/>
-                                    <TransitionRef Id="transition13"/>
+                                    <TransitionRef Id="transition20"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
@@ -7478,14 +7478,35 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="875.972282409668,339.20139"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="tool2" Name="Tool 2">
-                    <Implementation>
-                        <Tool Id="default_application"/>
-                    </Implementation>
+                <Activity Id="route6">
+                    <Route/>
                     <Performer>participant2</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="AND">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition13"/>
+                                    <TransitionRef Id="transition15"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant2"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="625.989616394043,64.44443199218745"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="644.9826583862305,119.53122398437495"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route7">
+                    <Route/>
+                    <Performer>participant2</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant2"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="265.98958587646484,64.4097029882812"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -7541,19 +7562,31 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="route5_1" Id="transition13" Name="precisa_filtro2" To="route3">
+                <Transition From="subflowAssync" Id="transition10" To="route6">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="subflowAssync" Id="transition10" To="tool2">
+                <Transition From="route6" Id="transition13" To="route4">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="tool2" Id="transition15" To="route4">
+                <Transition From="route6" Id="transition15" To="route7">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route7" Id="transition19" To="route3">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route5_1" Id="transition20" Name="precisa_filtro2" To="route7">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
             </Transitions>
