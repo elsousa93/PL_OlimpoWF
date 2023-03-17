@@ -1,5 +1,30 @@
 {
-    "actions": [],
+    "actions": [{
+        "className": "org.joget.apps.datalist.lib.HyperlinkDataListAction",
+        "hidden": "true",
+        "icon": "<i class=\"fas fa-link\"><\/i>",
+        "id": "action_0",
+        "label": "Hyperlink",
+        "name": "Data List Hyperlink Action",
+        "permission_rules": {
+            "1081155f-1700-be08-9c6f-364a49cf8d0b": {"hidden": ""},
+            "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
+            "5ef76f30-3a46-461b-e85b-26e07d368c1e": {"hidden": "true"},
+            "7acc8ca8-49d2-41f4-f9fe-98060e5c2333": {},
+            "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {"hidden": "true"}
+        },
+        "properties": {
+            "confirmation": "",
+            "datalist_type": "action",
+            "href": "realocar_multi_proc",
+            "hrefColumn": "instanceId",
+            "hrefParam": "aid",
+            "label": "Realocar",
+            "target": "_self",
+            "visible": ""
+        },
+        "type": "text"
+    }],
     "binder": {
         "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
         "properties": {
@@ -294,14 +319,127 @@
     ],
     "considerFilterWhenGetTotal": "",
     "description": "",
-    "filters": [],
+    "filters": [
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-4094034-fn_NwfBanco",
+            "hidden": "",
+            "id": "filter_0",
+            "label": "Nº Workflow Banco",
+            "name": "NwfBanco",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {"defaultValue": ""}
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-4094034-fn_assignee",
+            "hidden": "",
+            "id": "filter_1",
+            "label": "Alocado a",
+            "name": "assignee",
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "defaultValue": "",
+                    "multiple": "textfield",
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.plugin.enterprise.UserOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "deptId": "",
+                            "emptyLabel": "",
+                            "groupId": "",
+                            "grouping": "",
+                            "optionLabel": "",
+                            "orgId": "",
+                            "useAjax": ""
+                        }
+                    },
+                    "size": ""
+                }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-2614187-fn_cliente",
+            "hidden": "",
+            "id": "filter_3",
+            "label": "Cliente",
+            "name": "cliente",
+            "permission_rules": {
+                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
+                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
+            },
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {"defaultValue": ""}
+            }
+        }
+    ],
     "id": "list_consultar_processo_reg",
     "name": "Registos - Consultar Processos",
     "order": "",
     "orderBy": "",
     "pageSize": "0",
     "pageSizeSelectorOptions": "10,20,30,40,50,100",
-    "rowActions": [],
+    "rowActions": [
+        {
+            "className": "org.joget.apps.datalist.lib.HyperlinkDataListAction",
+            "hidden": "true",
+            "icon": "<i class=\"fas fa-link\"><\/i>",
+            "id": "rowAction_0",
+            "label": "Hyperlink",
+            "name": "Data List Hyperlink Action",
+            "permission_rules": {
+                "1081155f-1700-be08-9c6f-364a49cf8d0b": {"hidden": ""},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
+                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {"hidden": "true"},
+                "7acc8ca8-49d2-41f4-f9fe-98060e5c2333": {},
+                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {"hidden": "true"}
+            },
+            "properties": {
+                "confirmation": "",
+                "datalist_type": "row_action",
+                "href": "realocar_proc",
+                "hrefColumn": "instanceId;assignee;c_id_processo",
+                "hrefParam": "aid;replaceUser;procId",
+                "label": "Realocar",
+                "rules": [],
+                "target": "_self"
+            },
+            "type": "text"
+        },
+        {
+            "className": "org.joget.apps.datalist.lib.HyperlinkDataListAction",
+            "icon": "<i class=\"fas fa-link\"><\/i>",
+            "id": "rowAction_1",
+            "label": "Hyperlink",
+            "name": "Data List Hyperlink Action",
+            "permission_rules": {
+                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
+                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
+                "7acc8ca8-49d2-41f4-f9fe-98060e5c2333": {},
+                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
+            },
+            "properties": {
+                "confirmation": "",
+                "datalist_type": "row_action",
+                "href": "processoStatus",
+                "hrefColumn": "processId",
+                "hrefParam": "id",
+                "label": "Ver histórico",
+                "rules": [],
+                "target": "_self"
+            },
+            "type": "text"
+        }
+    ],
     "showPageSizeSelector": "true",
     "useSession": "false"
 }
