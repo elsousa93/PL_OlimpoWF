@@ -8,6 +8,7 @@
         "name": "Data List Hyperlink Action",
         "permission_rules": {
             "1081155f-1700-be08-9c6f-364a49cf8d0b": {"hidden": ""},
+            "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
             "5ef76f30-3a46-461b-e85b-26e07d368c1e": {"hidden": "true"},
             "7acc8ca8-49d2-41f4-f9fe-98060e5c2333": {},
             "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {"hidden": "true"}
@@ -30,7 +31,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "idProc",
-            "sql": "SELECT p.id AS idProc, dp.*, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName,\n        sass.ResourceId AS assignee, dp.c_n_wf_banco AS NwfBanco, ip.c_nome AS cliente, ag.c_data_agendamento AS DataAgendamento, \n        dp.c_inicializacao_gestor AS InicializacaoGestor\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id \n    AND ip.c_cliente_principal LIKE (SELECT i.c_cliente_principal \n                                    FROM app_fd_intervenientes_proc i \n                                    WHERE i.c_id_processo = p.id\n                                    AND i.c_cliente_principal = 'CHECK')\nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id not like '%Credito%'\nAND (Select count(ID) from shkprocesses \n    where ActivityRequesterProcessId = sp2.id\n    AND (If( '#currentUser.department.id#' like '%_CNT_%', ID like '%Contratacao%', '')\n    OR If( '#currentUser.department.id#' like '%_FLT_%', ID like '%Filtro%', '')\n    OR If( '#currentUser.department.id#' like '%_PRD_%', ID like '%Producao%', '')\n    OR If( '#currentUser.department.id#' like '%_VAL_%', ID like '%Validacao%', '')\n    OR If( '#currentUser.department.id#' like '%_AO%', ID like '%AcompanhamentoOutorgas%', '')\n    OR If( '#currentUser.department.id#' like '%_REG%', ID like '%Registos%', '')\n    OR If( '#currentUser.department.id#' like '%_CON%', ID like '%Conclusoes%', '')\n    )\n) > 0"
+            "sql": "SELECT p.id AS idProc, dp.*, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName,\n        sass.ResourceId AS assignee, dp.c_n_wf_banco AS NwfBanco, ip.c_nome AS cliente, ag.c_data_agendamento AS DataAgendamento, \n        dp.c_inicializacao_gestor AS InicializacaoGestor, d.c_necessarias_correcoes AS CorrecoesRegistos, d.c_observacoes_correcao AS ObservacoesRegistos\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id \n    AND ip.c_cliente_principal LIKE (SELECT i.c_cliente_principal \n                                    FROM app_fd_intervenientes_proc i \n                                    WHERE i.c_id_processo = p.id\n                                    AND i.c_cliente_principal = 'CHECK')\nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nLEFT JOIN app_fd_docs_processo d ON  d.id = p.c_docs\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id not like '%Credito%'\nAND (Select count(ID) from shkprocesses \n    where ActivityRequesterProcessId = sp2.id\n    AND (If( '#currentUser.department.id#' like '%_CNT_%', ID like '%Contratacao%', '')\n    OR If( '#currentUser.department.id#' like '%_FLT_%', ID like '%Filtro%', '')\n    OR If( '#currentUser.department.id#' like '%_PRD_%', ID like '%Producao%', '')\n    OR If( '#currentUser.department.id#' like '%_VAL_%', ID like '%Validacao%', '')\n    OR If( '#currentUser.department.id#' like '%_AO%', ID like '%AcompanhamentoOutorgas%', '')\n    OR If( '#currentUser.department.id#' like '%_REG%', ID like '%Registos%', '')\n    OR If( '#currentUser.department.id#' like '%_CON%', ID like '%Conclusoes%', '')\n    )\n) > 0"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -65,6 +66,11 @@
                     "hidden": "false",
                     "include_export": ""
                 },
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {
                     "exclude_export": "",
                     "hidden": "true",
@@ -96,6 +102,11 @@
             "name": "instanceId",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {
                     "exclude_export": "",
                     "hidden": "true",
                     "include_export": "true"
@@ -135,6 +146,7 @@
             "name": "c_n_wf_banco",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
             },
@@ -178,6 +190,7 @@
             "name": "assignee",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
             },
@@ -221,6 +234,7 @@
             "name": "c_nome_banco",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
             },
@@ -248,6 +262,7 @@
             "name": "cliente",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
             },
@@ -291,6 +306,7 @@
             "name": "c_tipo_processo",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
             },
@@ -334,6 +350,7 @@
             "name": "c_origem_processo",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
             },
@@ -365,6 +382,7 @@
             "name": "dateCreated",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {
                     "exclude_export": "",
@@ -400,6 +418,7 @@
             "name": "dateModified",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {
                     "exclude_export": "",
@@ -446,6 +465,7 @@
             "name": "c_urgencia",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
             },
@@ -489,6 +509,7 @@
             "name": "c_fase_processo",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {
                     "exclude_export": "",
@@ -539,6 +560,11 @@
                     "hidden": "false",
                     "include_export": ""
                 },
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {
                     "exclude_export": "",
                     "hidden": "true",
@@ -549,6 +575,58 @@
             "sortable": "false",
             "style": "",
             "width": ""
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_12",
+            "label": "CorrecoesRegistos",
+            "name": "CorrecoesRegistos",
+            "permission_rules": {
+                "1081155f-1700-be08-9c6f-364a49cf8d0b": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
+                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
+                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                }
+            },
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_14",
+            "label": "ObservacoesRegistos",
+            "name": "ObservacoesRegistos",
+            "permission_rules": {
+                "1081155f-1700-be08-9c6f-364a49cf8d0b": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
+                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
+                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                }
+            },
+            "sortable": "false"
         }
     ],
     "considerFilterWhenGetTotal": "",
@@ -564,6 +642,7 @@
             "name": "c_n_wf_banco",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
             },
@@ -581,6 +660,7 @@
             "name": "c_gestor_pl",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
             },
@@ -617,6 +697,7 @@
             "name": "assignee",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
             },
@@ -653,6 +734,7 @@
             "name": "c_nome_banco",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
             },
@@ -690,6 +772,7 @@
             "name": "cliente",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
             },
@@ -707,6 +790,7 @@
             "name": "c_tipo_processo",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
             },
@@ -744,6 +828,7 @@
             "name": "c_origem_processo",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
             },
@@ -781,6 +866,7 @@
             "name": "dateModified",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
             },
@@ -798,6 +884,7 @@
             "name": "c_urgencia",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
             },
@@ -836,6 +923,7 @@
             "name": "c_fase_processo",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
             },
@@ -873,6 +961,7 @@
             "name": "c_complex_processo",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {"hidden": "true"},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
             },
@@ -890,6 +979,7 @@
             "name": "DataAgendamento",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {"hidden": "true"},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {"hidden": "true"},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
             },
@@ -912,6 +1002,7 @@
             "name": "c_inicializacao_gestor",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {"hidden": ""},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {"hidden": "true"},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {"hidden": "true"},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
             },
@@ -950,6 +1041,17 @@
     "pageSize": "0",
     "pageSizeSelectorOptions": "5,10,20,30,40,50,100",
     "permission_rules": [
+        {
+            "permission": {
+                "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                "properties": {
+                    "allowedDeptIds": "PL_INT_REG;PL_INT_REG_QUAL",
+                    "orgId": "PL"
+                }
+            },
+            "permission_key": "33c0d158-664d-9c5c-a4f5-47ef2f503b6b",
+            "permission_name": "Registos"
+        },
         {
             "permission": {
                 "className": "org.joget.apps.userview.lib.GroupPermission",
@@ -1006,6 +1108,7 @@
             "name": "Data List Hyperlink Action",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {"hidden": ""},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {"hidden": "true"},
                 "7acc8ca8-49d2-41f4-f9fe-98060e5c2333": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {"hidden": "true"}
@@ -1030,6 +1133,7 @@
             "name": "Data List Hyperlink Action",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "7acc8ca8-49d2-41f4-f9fe-98060e5c2333": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
