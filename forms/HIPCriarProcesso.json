@@ -216,10 +216,11 @@
                             "readonlyLabel": "",
                             "startDateFieldId": "",
                             "validator": {
-                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "className": "org.joget.apps.form.lib.DefaultValidator",
                                 "properties": {
-                                    "decoration": "*",
-                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values){\r\n    \r\n    boolean result = true;\r\n\r\n    //Set fieldId of the field to compare - UPDATE HERE\r\n    String fieldId = \"processo_manual\";\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    \r\n    //If element is not filled give error message\r\n    if (!fieldValue.isEmpty() && (values == null || values[0].isEmpty()) ){\r\n        String id = FormUtil.getElementParameterName(element);\r\n        formData.addFormError(id, \"Campo obrigatório\");\r\n        result = false;\r\n    }\r\n    \r\n    \r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                    "mandatory": "true",
+                                    "message": "",
+                                    "type": ""
                                 }
                             },
                             "value": "",
