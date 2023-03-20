@@ -317,7 +317,7 @@
                                 "aaffb350-ce47-00c4-ce5b-6458ca217e7b": {},
                                 "ac361275-02b8-99df-5b74-6bf70778aa79": {}
                             },
-                            "value": "<script>\n\n\n    $(document).ready(function(){\n        var origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\n        if( servico.includes(\"CreditoHabitacao\") ){\n            sessionStorage.setItem(\"origemProcesso\", origem_processo);\n            if(!(origem_processo === \"ACE\" || origem_processo === \"PRE\" || origem_processo === \"TRD\")){\n                $(\"div#procuraçao\").remove();\n            }\n        }\n        \n        $(\"select[name=gestor]\").prop('disabled', true);\n        \n    });\n    \n    \n<\/script>"
+                            "value": "<script>\n\n\n    $(document).ready(function(){\n        var origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\n        if( servico.includes(\"CreditoHabitacao\") ){\n            sessionStorage.setItem(\"origemProcesso\", origem_processo);\n            if(!(origem_processo === \"ACE\" || origem_processo === \"PRE\" || origem_processo === \"TRD\")){\n                $(\"div#procuraçao\").remove();\n            }\n        }else if( servico.includes(\"Hipotecas\") ){\n            $(\"input[id*=proc_chave_mao]\").remove();\n        }\n        \n        $(\"select[name=gestor]\").prop('disabled', true);\n        \n    });\n    \n    \n<\/script>"
                         }
                     },
                     {
