@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT det.c_id_processo AS IDProc, det.c_nome_banco AS Banco, \ndet.c_forma_outorga as Forma_outorga, det.c_n_wf_pl as WF_PL,\nabanc.c_data_emissao_fine AS EmissaoFINE, abanc.c_origem_fine AS OrigemFINE\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_anal_banc_processo abanc ON det.c_id_processo = abanc.c_id_processo\nWHERE abanc.c_data_emissao_fine > 0\nUNION\nSELECT det.c_id_processo AS IDProc, det.c_nome_banco AS Banco, \ndet.c_forma_outorga as Forma_outorga, det.c_n_wf_pl as WF_PL,\nabanc.c_data_2_emissao_fine AS EmissaoFINE, abanc.c_origem_fine_2 AS OrigemFINE\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_anal_banc_processo abanc ON det.c_id_processo = abanc.c_id_processo\nWHERE abanc.c_data_2_emissao_fine > 0\nUNION\nSELECT det.c_id_processo AS IDProc, det.c_nome_banco AS Banco, \ndet.c_forma_outorga as Forma_outorga, det.c_n_wf_pl as WF_PL,\nabanc.c_data_3_emissao_fine AS EmissaoFINE, abanc.c_origem_fine_3 AS OrigemFINE\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_anal_banc_processo abanc ON det.c_id_processo = abanc.c_id_processo\nWHERE abanc.c_data_3_emissao_fine > 0\nUNION\nSELECT det.c_id_processo AS IDProc, det.c_nome_banco AS Banco, \ndet.c_forma_outorga as Forma_outorga, det.c_n_wf_pl as WF_PL,\nabanc.c_data_4_emissao_fine AS EmissaoFINE, abanc.c_origem_fine_4 AS OrigemFINE\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_anal_banc_processo abanc ON det.c_id_processo = abanc.c_id_processo\nWHERE abanc.c_data_4_emissao_fine > 0\nUNION\nSELECT det.c_id_processo AS IDProc, det.c_nome_banco AS Banco, \ndet.c_forma_outorga as Forma_outorga, det.c_n_wf_pl as WF_PL,\nabanc.c_data_5_emissao_fine AS EmissaoFINE, abanc.c_origem_fine_5 AS OrigemFINE\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_anal_banc_processo abanc ON det.c_id_processo = abanc.c_id_processo\nWHERE abanc.c_data_5_emissao_fine > 0\n\n\n\n\n\n\n\n"
+            "sql": "SELECT det.c_id_processo AS IDProc, det.c_nome_banco AS Banco, \ndet.c_forma_outorga as Forma_outorga, det.c_n_wf_pl as WF_PL,\nabanc.c_data_emissao_fine AS EmissaoFINE, abanc.c_origem_fine AS OrigemFINE, abanc.c_estado_processo_fine AS Estado\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_anal_banc_processo abanc ON det.c_id_processo = abanc.c_id_processo\nWHERE abanc.c_data_emissao_fine > 0\nUNION\nSELECT det.c_id_processo AS IDProc, det.c_nome_banco AS Banco, \ndet.c_forma_outorga as Forma_outorga, det.c_n_wf_pl as WF_PL,\nabanc.c_data_2_emissao_fine AS EmissaoFINE, abanc.c_origem_fine_2 AS OrigemFINE, 'Not Ok' AS Estado\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_anal_banc_processo abanc ON det.c_id_processo = abanc.c_id_processo\nWHERE abanc.c_data_2_emissao_fine > 0\nUNION\nSELECT det.c_id_processo AS IDProc, det.c_nome_banco AS Banco, \ndet.c_forma_outorga as Forma_outorga, det.c_n_wf_pl as WF_PL,\nabanc.c_data_3_emissao_fine AS EmissaoFINE, abanc.c_origem_fine_3 AS OrigemFINE, 'Not Ok' AS Estado\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_anal_banc_processo abanc ON det.c_id_processo = abanc.c_id_processo\nWHERE abanc.c_data_3_emissao_fine > 0\nUNION\nSELECT det.c_id_processo AS IDProc, det.c_nome_banco AS Banco, \ndet.c_forma_outorga as Forma_outorga, det.c_n_wf_pl as WF_PL,\nabanc.c_data_4_emissao_fine AS EmissaoFINE, abanc.c_origem_fine_4 AS OrigemFINE, 'Not Ok' AS Estado\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_anal_banc_processo abanc ON det.c_id_processo = abanc.c_id_processo\nWHERE abanc.c_data_4_emissao_fine > 0\nUNION\nSELECT det.c_id_processo AS IDProc, det.c_nome_banco AS Banco, \ndet.c_forma_outorga as Forma_outorga, det.c_n_wf_pl as WF_PL,\nabanc.c_data_5_emissao_fine AS EmissaoFINE, abanc.c_origem_fine_5 AS OrigemFINE, 'Not Ok' AS Estado\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_anal_banc_processo abanc ON det.c_id_processo = abanc.c_id_processo\nWHERE abanc.c_data_5_emissao_fine > 0\n\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -136,6 +136,44 @@
             "id": "column_4",
             "label": "Origem FINE",
             "name": "OrigemFINE",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'estado_processo_fine'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_5",
+            "label": "Estado",
+            "name": "Estado",
             "sortable": "false",
             "style": "",
             "width": ""
