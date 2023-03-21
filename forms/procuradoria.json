@@ -78,7 +78,7 @@
                         "autoPopulate": "",
                         "id": "field2",
                         "label": "",
-                        "value": "<script>\n\n//Alterar labels de botões\n$(document).ready(function(){\n    $(\"input#assignmentComplete\").val(\"CONCLUIR\");\n    $(\"input#saveAsDraft\").val(\"GUARDAR\");\n    $(\"button#cancel\").html(\"CANCELAR\");\n});\n\n<\/script>\n"
+                        "value": "<script>\n\n//Alterar labels de botões\n$(document).ready(function(){\n    $(\"input#assignmentComplete\").val(\"CONCLUIR\");\n    $(\"input#saveAsDraft\").val(\"GUARDAR\");\n    $(\"button#cancel\").html(\"CANCELAR\");\n});\n\n\n$(\"form\").submit(function() {\n        var btnVal = $(document.activeElement).val();\n        \n        if(btnVal === 'GUARDAR'){\n            window.sessionStorage.setItem(\"button\", \"guardar\");\n        }else if(btnVal.includes(\"ENVIAR PARA\")){\n            window.sessionStorage.setItem(\"button\", \"null\");\n        }else{\n            window.sessionStorage.setItem(\"button\", \"tabChange\");\n        }\n    });\n\n\n\n<\/script>\n"
                     }
                 }
             ],
