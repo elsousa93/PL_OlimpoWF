@@ -4,20 +4,150 @@
         "className": "org.joget.apps.form.model.Section",
         "elements": [{
             "className": "org.joget.apps.form.model.Column",
-            "elements": [],
+            "elements": [
+                {
+                    "className": "org.joget.plugin.enterprise.SpreadSheetGrid",
+                    "properties": {
+                        "customSettings": "",
+                        "disabledAdd": "",
+                        "disabledDelete": "",
+                        "errorMessage": "Invalid number of rows",
+                        "fixedColumnsLeft": "0",
+                        "headerSorting": "",
+                        "id": "checklist",
+                        "label": "",
+                        "loadBinder": {
+                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                            "properties": {
+                                "foreignKey": "fk",
+                                "formDefId": "op_acompanhamento_outorgas_init"
+                            }
+                        },
+                        "maxHeight": "",
+                        "minSpareRows": "1",
+                        "options": [
+                            {
+                                "format": "",
+                                "formatType": "",
+                                "formula": "",
+                                "label": "Tipo de Documento",
+                                "readonly": "",
+                                "regexValidator": "",
+                                "value": "tipo_documento",
+                                "width": ""
+                            },
+                            {
+                                "format": "checkDocsImovel",
+                                "formatType": "dropdown",
+                                "formula": "",
+                                "label": "Validação",
+                                "readonly": "",
+                                "regexValidator": "",
+                                "value": "validacao",
+                                "width": ""
+                            }
+                        ],
+                        "permission_rules": {
+                            "1300a907-31a2-48ed-bf4c-1a7567ccad20": {},
+                            "973de9e9-e890-860f-035e-b234371b728e": {},
+                            "c6f523f5-c981-dd70-ca03-ea8e9a69f2f1": {}
+                        },
+                        "readonly": "",
+                        "showRowNumber": "",
+                        "sortingField": "",
+                        "storeBinder": {
+                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                            "properties": {
+                                "foreignKey": "fk",
+                                "formDefId": "op_acompanhamento_outorgas_init"
+                            }
+                        },
+                        "validateMaxRow": "",
+                        "validateMinRow": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        }
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.HiddenField",
+                    "properties": {
+                        "id": "resultado_checklist",
+                        "useDefaultWhenEmpty": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field20",
+                        "label": "",
+                        "value": "<script type=\"text/javascript\">\r\n    \r\n    $(\"div[name=checklist]\").change(function(){\r\n        \r\n        //get value from field that controls if the WF number is automatically generated or not\r\n        var values = FormUtil.getValues(\"checklist.filtro\");\r\n        var count = 0;\r\n        var i = 0;\r\n\r\n        if(values != null && values.length > 0){\r\n            while (count == 0 && i < values.length) {\r\n                if(values[i] === \"\"){\r\n                    count++;\r\n                }\r\n                i++;\r\n            }\r\n        }\r\n        \r\n        var field = FormUtil.getField(\"resultado_checklist\");\r\n        if(count != 0){\r\n            $(field).val(\"NOK\"); //set value\r\n        }else{\r\n            $(field).val(\"OK\"); //set value\r\n        }\r\n    });\r\n    \r\n<\/script>"
+                    }
+                }
+            ],
             "properties": {"width": "100%"}
         }],
         "properties": {
-            "id": "section1",
-            "label": "Section"
+            "comment": "",
+            "id": "section18",
+            "join": "",
+            "label": "Checklist de Documentos",
+            "loadBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "permission": {
+                "className": "",
+                "properties": {}
+            },
+            "permissionReadonly": "",
+            "permission_rules": {
+                "1300a907-31a2-48ed-bf4c-1a7567ccad20": {},
+                "973de9e9-e890-860f-035e-b234371b728e": {},
+                "c6f523f5-c981-dd70-ca03-ea8e9a69f2f1": {}
+            },
+            "readonly": "",
+            "readonlyLabel": "",
+            "regex": "",
+            "reverse": "",
+            "storeBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "visibilityControl": "",
+            "visibilityValue": ""
         }
     }],
     "properties": {
         "description": "",
         "id": "ao_op_valid_init",
-        "loadBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
         "name": "Acompanhamento de Outorgas - Operativas - Validação Inicial",
-        "storeBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
         "tableName": "check_op_ao_init"
     }
 }
