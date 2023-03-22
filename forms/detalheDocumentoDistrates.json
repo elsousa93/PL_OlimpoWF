@@ -250,6 +250,27 @@
                         },
                         "value": "<script type=\"text/javascript\">\r\n$(function(){\r\n    $(\"#submit\").val(\"SUBMETER\");\r\n});\r\n<\/script>"
                     }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field13",
+                        "label": "",
+                        "permission_rules": {
+                            "2d5b66a5-a9cb-5ffa-bfae-908ff7c801cf": {},
+                            "4eadf25e-a6ae-5c28-23ee-74fa93baba69": {},
+                            "52e1b920-6773-f986-e477-c378d0553021": {},
+                            "6d298317-99a8-54fd-e8ad-1873aee58f16": {},
+                            "718d5349-6f95-b82b-51b6-2c8e3f3cae78": {},
+                            "905528b0-444a-645b-77f3-a7aa12612611": {},
+                            "9de7f6a8-1d7c-13d5-e7fc-b76eb2395504": {},
+                            "aaffb350-ce47-00c4-ce5b-6458ca217e7b": {},
+                            "ac361275-02b8-99df-5b74-6bf70778aa79": {},
+                            "bb3e96c1-d61f-4c1c-f075-93ca3b6103dc": {}
+                        },
+                        "value": "<script type=\"text/javascript\">\r\n    $(document).change(function(){\r\n        var ficheiroId = \"nome_ficheiro\";\r\n\r\n        //get values\r\n        var doc = $(\"div.form-fileupload ul.form-fileupload-value li span\").text();\r\n          \r\n        //store the value to a field\r\n        $('[name='+ficheiroId+']:enabled').val(doc);\r\n    });\r\n<\/script>"
+                    }
                 }
             ],
             "properties": {"width": "100%"}
@@ -283,9 +304,25 @@
     "properties": {
         "description": "",
         "id": "detalheDocumentoDistrates",
-        "loadBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
         "name": "Distrates - Documento",
-        "storeBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
         "tableName": "documentos_dist"
     }
 }
