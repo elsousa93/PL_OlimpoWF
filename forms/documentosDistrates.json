@@ -23,10 +23,10 @@
                         "className": "org.joget.plugin.enterprise.FormGrid",
                         "properties": {
                             "abortRelatedRunningProcesses": "",
-                            "deleteFiles": "",
-                            "deleteGridData": "",
+                            "deleteFiles": "true",
+                            "deleteGridData": "true",
                             "deleteMessage": "Delete row?",
-                            "deleteSubformData": "",
+                            "deleteSubformData": "true",
                             "disabledAdd": "",
                             "disabledDelete": "",
                             "enableSorting": "",
@@ -36,8 +36,11 @@
                             "id": "field1",
                             "label": "LISTA DE DOCUMENTOS",
                             "loadBinder": {
-                                "className": "",
-                                "properties": {}
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "id_doc",
+                                    "formDefId": "detalheDocumentoDistrates"
+                                }
                             },
                             "options": [
                                 {
@@ -67,8 +70,11 @@
                             "readonlyLabel": "",
                             "showRowNumber": "",
                             "storeBinder": {
-                                "className": "",
-                                "properties": {}
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "id_doc",
+                                    "formDefId": "detalheDocumentoDistrates"
+                                }
                             },
                             "submit-label-normal": "",
                             "submit-label-readonly": "",
@@ -76,8 +82,13 @@
                             "validateMaxRow": "",
                             "validateMinRow": "",
                             "validator": {
-                                "className": "",
-                                "properties": {}
+                                "className": "org.joget.plugin.enterprise.MultirowBasicValidator",
+                                "properties": {"validationrules": [{
+                                    "fieldId": "tipo_documento",
+                                    "mandatory": "true",
+                                    "message": "",
+                                    "validationType": ""
+                                }]}
                             },
                             "width": "900"
                         }
