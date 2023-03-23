@@ -646,7 +646,10 @@
                             "maxlength": "",
                             "permission_rules": {
                                 "1804038d-e85d-3ea4-4ef3-4c4143e5145b": {},
-                                "40b85e69-a77b-cdfa-05ef-6bd9811e4410": {},
+                                "40b85e69-a77b-cdfa-05ef-6bd9811e4410": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
                                 "467e0936-e8fb-e23b-f48d-e5c28c5ab7ed": {},
                                 "47d9dac4-bb53-53f7-2c45-a2b2e20e7f54": {},
                                 "504595d7-fa4b-d219-d8a6-65d1a4da0728": {},
@@ -736,6 +739,10 @@
                             "autoPopulate": "",
                             "id": "field24",
                             "label": "",
+                            "permission_rules": {
+                                "40b85e69-a77b-cdfa-05ef-6bd9811e4410": {},
+                                "dccd1818-864d-54e3-09c2-6e246cfcf5fe": {}
+                            },
                             "value": "<script>\n    $(document).ready(function(){\n        atualizarVisibilidadeBCP();\n        \n        $(\"select[id*=banco_fundo]\").change(function(){\n            atualizarVisibilidadeBCP();\n        });\n        \n        $(\"select[id*=tipo_processo]\").change(function(){\n            atualizarVisibilidadeBCP();\n        });\n            \n    });\n    \n    \n    function atualizarVisibilidadeBCP(){\n        var tipoProcesso = $(\"select[id*=tipo_processo]\").val();\n        var banco_fundo = $(\"select[id*=banco_fundo]\").val();\n        if(banco_fundo==='BCP'){\n            if (tipoProcesso === 'DIST' || tipoProcesso === 'MUT' || tipoProcesso === 'LEAS'){\n                $(\"select[id*=sociedade_representada]\").parent().hide();\n            }else{\n                $(\"select[id*=sociedade_representada]\").parent().show();\n            }\n            \n            if(tipoProcesso === 'MUT' || tipoProcesso === 'LEAS' || tipoProcesso === 'ISV' || tipoProcesso === 'CVJ'){\n                $(\"div[id*=originais]\").parent().hide();\n            }else{\n                $(\"div[id*=originais]\").parent().show();\n            }\n            \n            if(tipoProcesso === 'LEAS' || tipoProcesso === 'ISV' || tipoProcesso === 'CVJ'){\n                $(\"input[id*=local_envio_originais]\").parent().hide();\n            }else{\n                $(\"input[id*=local_envio_originais]\").parent().show();\n            }\n        }\n    }\n    \n    \n<\/script>"
                         }
                     }
@@ -789,6 +796,10 @@
                             "id": "conta",
                             "label": "Conta",
                             "maxlength": "",
+                            "permission_rules": {
+                                "40b85e69-a77b-cdfa-05ef-6bd9811e4410": {},
+                                "dccd1818-864d-54e3-09c2-6e246cfcf5fe": {}
+                            },
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -810,6 +821,10 @@
                             "id": "valor_liquidacao_receber",
                             "label": "Valor de Liquidação / a receber",
                             "maxlength": "",
+                            "permission_rules": {
+                                "40b85e69-a77b-cdfa-05ef-6bd9811e4410": {},
+                                "dccd1818-864d-54e3-09c2-6e246cfcf5fe": {}
+                            },
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -831,6 +846,10 @@
                             "id": "centro_custo_balcao",
                             "label": "Centro de Custo Balcão",
                             "maxlength": "",
+                            "permission_rules": {
+                                "40b85e69-a77b-cdfa-05ef-6bd9811e4410": {},
+                                "dccd1818-864d-54e3-09c2-6e246cfcf5fe": {}
+                            },
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -852,6 +871,10 @@
                             "id": "codigo_certidao_predial",
                             "label": "Código de Certidão Perdial",
                             "maxlength": "",
+                            "permission_rules": {
+                                "40b85e69-a77b-cdfa-05ef-6bd9811e4410": {},
+                                "dccd1818-864d-54e3-09c2-6e246cfcf5fe": {}
+                            },
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -877,6 +900,10 @@
                             "format": "",
                             "id": "validade_certidao",
                             "label": "Validade da Certidão",
+                            "permission_rules": {
+                                "40b85e69-a77b-cdfa-05ef-6bd9811e4410": {},
+                                "dccd1818-864d-54e3-09c2-6e246cfcf5fe": {}
+                            },
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -896,6 +923,10 @@
                             "autoPopulate": "",
                             "id": "field20",
                             "label": "",
+                            "permission_rules": {
+                                "40b85e69-a77b-cdfa-05ef-6bd9811e4410": {},
+                                "dccd1818-864d-54e3-09c2-6e246cfcf5fe": {}
+                            },
                             "value": "<script type=\"text/javascript\">\r\n\r\n    $(document).ready(function(){\r\n\r\n        var f1 = FormUtil.getField(\"valor_liquidacao_receber\");\r\n        var number = FormUtil.getValue(\"valor_liquidacao_receber\");\r\n        \r\n        if(number != null && number !== \"\"){\r\n            number = number.replaceAll('NaN', \"0\");\r\n            number = number.replaceAll('.', \"\");\r\n            number = number.replaceAll('\u20ac', \"\");\r\n            number = number.replaceAll('Eur', \"\");\r\n            number = number.replaceAll('EUR', \"\");\r\n            number = number.replaceAll(',', '.');\r\n            \r\n            let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(number);\r\n        \r\n            num = num.replace(/\\s/g, '.');\r\n            num = num.replaceAll('.\u20ac', ' EUR');\r\n            \r\n            $(f1).val(num);\r\n        }else{\r\n            //do nothing\r\n        }\r\n    });\r\n<\/script> "
                         }
                     }
@@ -916,6 +947,10 @@
                     "properties": {}
                 },
                 "permissionReadonly": "",
+                "permission_rules": {
+                    "40b85e69-a77b-cdfa-05ef-6bd9811e4410": {},
+                    "dccd1818-864d-54e3-09c2-6e246cfcf5fe": {}
+                },
                 "readonly": "",
                 "readonlyLabel": "",
                 "regex": "",
@@ -975,6 +1010,10 @@
                     "properties": {}
                 },
                 "permissionReadonly": "",
+                "permission_rules": {
+                    "40b85e69-a77b-cdfa-05ef-6bd9811e4410": {},
+                    "dccd1818-864d-54e3-09c2-6e246cfcf5fe": {}
+                },
                 "readonly": "",
                 "readonlyLabel": "",
                 "regex": "",
