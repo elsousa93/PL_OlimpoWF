@@ -173,25 +173,27 @@
                     }
                 },
                 {
-                    "className": "org.joget.apps.form.lib.TextField",
+                    "className": "org.joget.apps.form.lib.DatePicker",
                     "properties": {
-                        "encryption": "",
+                        "allowManual": "",
+                        "currentDateAs": "",
+                        "dataFormat": "yyyy-MM-dd",
+                        "datePickerType": "",
+                        "endDateFieldId": "",
+                        "format": "",
                         "id": "data_conclusao",
-                        "label": "Data de Conclusão",
-                        "maxlength": "",
-                        "permissionHidden": "",
+                        "label": "Date Picker",
                         "placeholder": "",
                         "readonly": "",
                         "readonlyLabel": "",
-                        "size": "",
-                        "storeNumeric": "",
-                        "style": "",
+                        "startDateFieldId": "",
                         "validator": {
                             "className": "",
                             "properties": {}
                         },
-                        "value": "#form.conclusao_procu.data_conclusao[{form.processos_procu.conclusao}]#",
-                        "workflowVariable": ""
+                        "value": "",
+                        "workflowVariable": "",
+                        "yearRange": "c-10:c+10"
                     }
                 },
                 {
@@ -200,7 +202,7 @@
                         "autoPopulate": "",
                         "id": "field8",
                         "label": "",
-                        "value": "<script>\n    $(document).ready(function(){\n        var dataConclusao = \"#form.conclusao_procu.data_conclusao[{form.processos_procu.conclusao}]#\";\n        $(\"input[id*=data_conclusao]\").attr('readonly', true);\n        $(\"input[id*=data_conclusao]\").val(dataConclusao);\n    });\n    \n    \n<\/script>"
+                        "value": "<script>\n    $(document).ready(function(){\n        var dataConclusao = \"#form.conclusao_procu.data_conclusao[{form.processos_procu.conclusao}]#\";\n        $(\"input[id*=data_conclusao]\").attr('readonly', true);\n        $(\"input[id*=data_conclusao]\").datepicker(\"setDate\", new Date(dataConclusao) );\n        //$(\"input[id*=data_conclusao]\").val(dataConclusao);\n    });\n    \n    \n<\/script>"
                     }
                 }
             ],
