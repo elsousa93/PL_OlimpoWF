@@ -181,6 +181,9 @@
         <Participant Id="participant58" Name="Participant 58">
             <ParticipantType Type="ROLE"/>
         </Participant>
+        <Participant Id="participant59" Name="Participant 59">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
     </Participants>
     <Applications>
         <Application Id="default_application"/>
@@ -2180,7 +2183,7 @@
                     <Performer>ProdRobot</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="ProdRobot"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="478.984375,37.75390625"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="477.97503662109375,38.537493896484364"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="producaoManualRobot" Name="Produção Manual ou por Robot?">
@@ -2686,12 +2689,17 @@
                         <BasicType Type="STRING"/>
                     </DataType>
                 </DataField>
+                <DataField Id="user_ao" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
                 <DataField Id="user_registos" IsArray="FALSE">
                     <DataType>
                         <BasicType Type="STRING"/>
                     </DataType>
                 </DataField>
-                <DataField Id="user_ao" IsArray="FALSE">
+                <DataField Id="user_modelo11" IsArray="FALSE">
                     <DataType>
                         <BasicType Type="STRING"/>
                     </DataType>
@@ -3021,7 +3029,7 @@
                     <Performer>participant3</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1986.796875,248.796875"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2181.7875366210938,123.38749999999999"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="sub_acompanhamento_outorgas" Name="Acompanhamento Outorgas">
@@ -3037,6 +3045,21 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1856,114"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="sub_modelo11" Name="Modelo 11">
+                    <Implementation>
+                        <SubFlow Execution="SYNCHR" Id="CHModelo11">
+                            <ActualParameters>
+                                <ActualParameter>proxima_operativa</ActualParameter>
+                                <ActualParameter>user_modelo11</ActualParameter>
+                            </ActualParameters>
+                        </SubFlow>
+                    </Implementation>
+                    <Performer>participant3</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2029.6000366210938,250.40001220703124"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -3201,11 +3224,6 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="sub_registos" Id="transition29" To="route14">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="sub_acompanhamento_outorgas" Id="transition28" To="sub_registos">
                     <Condition Type="CONDITION">proxima_operativa === 'registos'</Condition>
                     <ExtendedAttributes>
@@ -3218,6 +3236,18 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;acompanhamento_outorgas&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="sub_registos" Id="transition29" To="sub_modelo11">
+                    <Condition Type="CONDITION">proxima_operativa === 'modelo11'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;modelo11&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="sub_modelo11" Id="transition31" To="route14">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
             </Transitions>
@@ -7810,6 +7840,67 @@
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="registos;resgistos_qualidade"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=resgistos_qualidade,CONNECTING_ACTIVITY_ID=route2,X_OFFSET=1057,Y_OFFSET=220,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=registos,CONNECTING_ACTIVITY_ID=ConfigurarProcessoRegistos,X_OFFSET=70,Y_OFFSET=51,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+            </ExtendedAttributes>
+        </WorkflowProcess>
+        <WorkflowProcess Id="CHModelo11" Name="CH - Modelo 11">
+            <ProcessHeader DurationUnit="h"/>
+            <FormalParameters>
+                <FormalParameter Id="proxima_operativa" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="user_modelo11" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+            </FormalParameters>
+            <DataFields>
+                <DataField Id="proxima_operativa" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="user_modelo11" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+            </DataFields>
+            <Activities>
+                <Activity Id="ConfigurarProcessoModelo11" Name="Configurar Processo Modelo 11">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>participant59</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant59"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="152,30.000003051757815"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="processamentoRobotModelo" Name="Processamento do Modelo 11 pelo Robot">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>participant59</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant59"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="328,28.800006103515628"/>
+                    </ExtendedAttributes>
+                </Activity>
+            </Activities>
+            <Transitions>
+                <Transition From="ConfigurarProcessoModelo11" Id="transition2" To="processamentoRobotModelo">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+            </Transitions>
+            <ExtendedAttributes>
+                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="participant59"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant59,CONNECTING_ACTIVITY_ID=ConfigurarProcessoModelo11,X_OFFSET=75,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant59,CONNECTING_ACTIVITY_ID=processamentoRobotModelo,X_OFFSET=526,Y_OFFSET=40,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
     </WorkflowProcesses>
