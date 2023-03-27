@@ -2018,6 +2018,16 @@
                             "label": "",
                             "value": "\n<img id = \"imagemBancoBCP\" class = \"imagemBanco\">\n<script type=\"text/javascript\">\n    $(window).on('load', function() {\n        var banco = '#form.banco.nome_banco[{form.processos.banco}]#';\n        \n        //console.log(\"banco: \" + banco);\n        if(banco == \"BCP\"){\n            $('.imagemBanco').attr('src', \"#appResource.bcp_cores_lateral.png#\");\n        }else if(banco == \"BCTT\"){\n            $('.imagemBanco').attr('src', \"#appResource.bctt_cores_lateral.png#\");\n        }else if(banco == \"BIC\"){\n            $('.imagemBanco').attr('src', \"#appResource.eurobic_cores_lateral.png#\");\n        }else if(banco == \"BNI\"){\n            $('.imagemBanco').attr('src', \"#appResource.bni_cores_lateral.jpg#\");\n        }else if(banco == \"BST\"){\n            $('.imagemBanco').attr('src', \"#appResource.bst_cores_lateral.jpg#\");\n        }else if(banco == \"MTG\"){\n            $('.imagemBanco').attr('src', \"#appResource.mtg_cores_lateral.jpg#\");\n        }else if(banco == \"NVB\"){\n            $('.imagemBanco').attr('src', \"#appResource.nb_cores_lateral.png#\");\n        }else if(banco == \"ABN\"){\n            $('.imagemBanco').attr('src', \"#appResource.abanca_cores_lateral.png#\");\n        }else{\n            \n        }\n    });\n<\/script>"
                         }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field6",
+                            "label": "",
+                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
+                            "value": "<script>\n    $(document).ready(function(){\n        var text = \"Versão do Formulário \" + #appDef.version# + \" | Versão atual \" + $(\"select[id*=versaoRecente]\").val();\n        $(\"h2#versaoRecenteText\").text(text);\n        $(\"select[id*=versaoRecente\").parent().hide();\n        //<h2>#appDef.published#<\/h2>\n    });\n    \n<\/script>\n<h1 class=\"headertext\">#form.detalhe_processo.n_wf_pl[{form.processos.detalhe_processo}]#<\/h1>\n<h1 class=\"headertextfase\">#form.detalhe_processo.subfase_processo[{form.processos.detalhe_processo}]#<\/h1>\n<h2 id=\"versaoRecenteText\"><\/h2>\n"
+                        }
                     }
                 ],
                 "properties": {"width": "100%"}
