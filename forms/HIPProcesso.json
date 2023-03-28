@@ -7,16 +7,32 @@
                 "className": "org.joget.apps.form.model.Column",
                 "elements": [
                     {
-                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "className": "org.joget.apps.form.lib.SubForm",
                         "properties": {
-                            "id": "servico",
-                            "useDefaultWhenEmpty": "",
-                            "validator": {
-                                "className": "",
+                            "formDefId": "alertas",
+                            "id": "alertas",
+                            "label": "",
+                            "loadBinder": {
+                                "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                                "properties": {
+                                    "autoHandleFiles": "",
+                                    "autoHandleWorkflowVariable": "true",
+                                    "cacheInterval": "",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.*;\r\nimport org.joget.commons.util.LogUtil;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport java.time.format.DateTimeFormatter;\r\nimport java.time.LocalDateTime; \r\nimport java.time.LocalDate;\r\nimport org.joget.apps.app.model.AppDefinition;\r\n\r\n\r\n\r\n\r\npublic boolean validateDate(String date){\r\n    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"yyyy-MM-dd\");\r\n    LocalDate dateLimit = LocalDate.parse(date, formatter);\r\n    LocalDate today = LocalDate.now();\r\n    \r\n    boolean result= true;\r\n\r\n    if(dateLimit.isBefore(today)){\r\n        result = false;\r\n    }\r\n    \r\n    return result;\r\n}\r\n\r\n\r\npublic boolean isWeekend(LocalDateTime dt) {\r\n    String dayOfWeek = dt.getDayOfWeek().toString();\r\n    switch(dayOfWeek) {\r\n        case \"SATURDAY\":{\r\n            return true;\r\n        }\r\n        case \"SUNDAY\":{\r\n            return true;\r\n        }\r\n        default:{\r\n            return false;\r\n        }\r\n    }\r\n}\r\n\r\npublic boolean validateDataFINE(String dataAgendamento, String dataFINE){\r\n    boolean result = true;\r\n    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"yyyy-MM-dd HH:mm\");\r\n    DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern(\"yyyy-MM-dd\");\r\n    LocalDateTime dateAgendamento = LocalDate.parse(dataAgendamento, formatter).atTime(0,0);\r\n    LocalDateTime dateFINE = LocalDate.parse(dataFINE, formatterDate).atTime(0, 0);\r\n    dateFINE = dateFINE.plusDays(1);\r\n    if(dateFINE.isAfter(dateAgendamento)){\r\n        result = false;\r\n    }\r\n\r\n    return result;\r\n}\r\n\r\n\r\n\r\n \r\nString ProcessID = \"#process.processId#\";\r\nString idDetalheProcesso = \"#form.detalhe_processo.id[{form.processos.detalhe_processo}]#\";\r\nString idProcesso = \"#form.processos.id#\";\r\n//String htmlAlertas = \"<div class=\\\"container text-start\\\"><div class=\\\"row justify-content-start text-start\\\"><div class=\\\"col text-start\\\"><b><small class=\\\"text-muted m-align\\\"> | <span class=\\\"material-symbols-rounded\\\"> warning <\/span> | ALERTA: AVISO PROCESSO 200245 | <\/span> | AVISO REVISÃO TXPT <\/b><\/small><\/div><div class=\\\"col text-start\\\"><b><small class=\\\"text-muted m-align\\\"> | <span class=\\\"material-symbols-rounded\\\"> warning <\/span> | AVISO REVISÃO TXPT | <\/span> |  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel dapibus eros <\/b><\/small><\/div><div class=\\\"col text-start\\\"><b><small class=\\\"text-muted m-align\\\"> | <span class=\\\"material-symbols-rounded\\\"> warning <\/span> | ALERTA: AVISO ALERTA 2 | <\/span> | INFORMAÇÂO DE ALERTA XPTOXPTO <\/b><\/small><\/div><\/div><\/div>\";\r\n\r\nString htmlAlertas = \"\";\r\n\r\n\r\n//LogUtil.info(\"processID: \",  ProcessID);\r\n//LogUtil.info(\"idDetalheProcesso: \",  idDetalheProcesso);\r\n//LogUtil.info(\"idProcesso: \",  idProcesso);\r\n\r\n\r\n\r\n\r\n    AppDefinition appDef = AppUtil.getCurrentAppDefinition();\r\n    Connection con = null;\r\n    PreparedStatement stmt = null;\r\n    ResultSet rs = null;\r\n    ResultSet rs2 = null;\r\n    try{\r\n            DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n            con = ds.getConnection();\r\n            \r\n            if(!con.isClosed()){\r\n                    String queryGetIdDocsProce = \"SELECT * FROM app_fd_docs_processo WHERE c_id_processo = ? order by dateCreated desc;\";\r\n                    stmt = con.prepareStatement(queryGetIdDocsProce);\r\n                    stmt.setObject(1, idProcesso);\r\n                    rs = stmt.executeQuery();\r\n                    \r\n                    String idDocProce = \"\";\r\n                    htmlAlertas += \"<div class=\\\"container text-start\\\"><div class=\\\"row justify-content-start text-start\\\"><div class=\\\"col text-start\\\"><b><small class=\\\"text-muted m-align\\\"> | <span class=\\\"material-symbols-rounded\\\"> warning <\/span><span> | ALERTA: DOCUMENTOS EXPIRADOS || \";\r\n                    boolean fileHasDocExp = false;\r\n                    boolean existsAlert = false;\r\n                    while(rs.next()){\r\n                        \r\n                        idDocProce = rs.getObject(\"id\");\r\n                        \r\n                        String queyGetDates = \"SELECT c_tipo_documento, c_data_validade_documento FROM app_fd_documento_processo WHERE c_doc_id = ? AND c_documento_valido = 'sim'\";\r\n                        stmt = con.prepareStatement(queyGetDates);\r\n                        stmt.setObject(1, idDocProce);\r\n                        rs2 = stmt.executeQuery();\r\n                         \r\n\r\n                        if(rs2.next() != false){\r\n                            fileHasDocExp= false;\r\n                            rs2.previous();\r\n                            String htmlFicheiroAlerta =  rs.getObject(\"c_nome_ficheiro\") + \" -\" ;\r\n                            \r\n                            while(rs2.next()){\r\n\r\n                                if(!rs2.getObject(\"c_data_validade_documento\").toString().equals(\"\") && !validateDate(rs2.getObject(\"c_data_validade_documento\").toString())){\r\n                                    fileHasDocExp = true;\r\n                                    existsAlert= true;\r\n                                    htmlFicheiroAlerta += \" \" + rs2.getObject(\"c_tipo_documento\") + \",\";\r\n                                    \r\n                                }\r\n                                \r\n                            }\r\n                            \r\n                            \r\n                            if(fileHasDocExp){\r\n                                htmlAlertas += htmlFicheiroAlerta.substring(0, htmlFicheiroAlerta.length() -1) + \" | \";\r\n                            }\r\n                       }\r\n                    }\r\n                        htmlAlertas += \"<\/span><\/small><\/b><\/div><\/div><\/div>\";\r\n                    \r\n                    \r\n                    if(!existsAlert){\r\n                        htmlAlertas = \"\";\r\n                    }\r\n                    \r\n                    \r\n                    \r\n                    \r\n                    //Alertas para datas\r\n                    String dataAgendamento = \"#form.agendamento.data_agendamento[{form.processos.agendamento}]#\";\r\n                    String dataSwift = \"#form.anal_banc_processo.data_swift[{form.processos.anal_banc}]#\";\r\n                    String dataPedidoSwift = \"#form.anal_banc_processo.data_pedido_swift[{form.processos.anal_banc}]#\";\r\n                    String dataFINEAgendamento = \"#form.anal_banc_processo.data_fine_agendamento[{form.processos.anal_banc}]#\";\r\n                    String htmlAlertaDatas= \"<div class=\\\"container text-start\\\"><div class=\\\"row justify-content-start text-start\\\"><div class=\\\"col text-start\\\"><b><small class=\\\"text-muted m-align\\\"> | <span class=\\\"material-symbols-rounded\\\"> warning <\/span><span> | ALERTA: DATAS || \";\r\n                    boolean alertaDatas = false;\r\n                    if(!dataAgendamento.isEmpty() && !dataAgendamento.startsWith(\"#form.agendamento.data_agendamento[{form.processos.agendamento}]\")){\r\n                        \r\n                        if(!dataSwift.isEmpty() && !dataSwift.startsWith(\"#form.anal_banc_processo.data_swift[{form.processos.anal_banc}]\")){\r\n                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"yyyy-MM-dd HH:mm\");\r\n                            DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern(\"yyyy-MM-dd\");\r\n                            LocalDateTime dateAgendamento = LocalDate.parse(dataAgendamento, formatter).atTime(0,0);\r\n                            LocalDateTime dateSwift = LocalDate.parse(dataSwift, formatterDate).atTime(0, 0);\r\n                            if(!dateAgendamento.equals(dateSwift)){\r\n                                alertaDatas = true;\r\n                                htmlAlertaDatas += \" Data de Agendamento diferente de Data do SWIFT/Declaração De Dívida |\";\r\n                            }\r\n                        }\r\n                        \r\n                        if(!dataFINEAgendamento.isEmpty() && !dataFINEAgendamento.startsWith(\"#form.detalhe_processo.data_fine_agendamento[{form.processos.detalhe_processo}]\")){\r\n                            if(!validateDataFINE(dataAgendamento, dataFINEAgendamento)){\r\n                                alertaDatas = true;\r\n                                htmlAlertaDatas += \" Data de agendamento não cumpre período de reflexão da FINE |\";\r\n                                \r\n                            }\r\n                        }\r\n                    }\r\n                    \r\n                     //Alerta Data de Relatório de Avaliação\r\n                    String dataDeValidade = \"#form.anal_banc_processo.validade_relatorio_avaliacao[{form.processos.anal_banc}]#\";\r\n                    if(!dataDeValidade.isEmpty() && !dataDeValidade.startsWith(\"#form.anal_banc_processo.validade_relatorio_avaliacao[{form.processos.anal_banc}]\")){\r\n                        if(!validateDate(dataDeValidade)){\r\n                            alertaDatas = true;\r\n                            htmlAlertaDatas += \" Data de validade do Relatório de Avaliação expirou |\";\r\n                        }\r\n                    }\r\n                    \r\n                    \r\n                    htmlAlertaDatas = htmlAlertaDatas.substring(0, htmlAlertaDatas.length() -1);\r\n                    htmlAlertaDatas += \"<\/span><\/small><\/b><\/div><\/div><\/div>\";\r\n                    \r\n                    if(alertaDatas){\r\n                        htmlAlertas += htmlAlertaDatas;\r\n                    }\r\n                    \r\n                   \r\n                    \r\n                    \r\n                    \r\n               \r\n            }\r\n    }catch(Exception e){\r\n        LogUtil.error(appDef.toString(), e, \"Error getting info from DB\");\r\n    }finally{\r\n        try{\r\n            if(rs != null){\r\n            rs.close();\r\n            }\r\n            if(stmt != null){\r\n                stmt.close();\r\n            }\r\n            if(con != null && !con.isClosed()) {\r\n                con.close();\r\n            }\r\n        }catch(Exception e){\r\n            LogUtil.error(appDef.toString(), e, \"Error closing DB connection\");\r\n        }\r\n        \r\n    }\r\n\r\n\r\n \r\nFormRowSet f = new FormRowSet();\r\nFormRow r1 = new FormRow();\r\n//r1.put(\"alertas\", \"Alertas\");\r\n\r\nr1.put(\"tb_alertas\", htmlAlertas);\r\n\r\n\r\n\r\n\r\n\r\n\r\nf.add(r1);\r\n \r\nreturn f;",
+                                    "useAjax": ""
+                                }
+                            },
+                            "noframe": "",
+                            "parentSubFormId": "alertas",
+                            "permissionHidden": "",
+                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "storeBinder": {
+                                "className": "org.joget.apps.form.lib.WorkflowFormBinder",
                                 "properties": {}
                             },
-                            "value": "",
-                            "workflowVariable": ""
+                            "subFormParentId": ""
                         }
                     },
                     {
@@ -35,6 +51,223 @@
                                     "formDefId": "HIPProcesso"
                                 }
                             }
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field6",
+                            "label": "",
+                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
+                            "value": "<script>\n    $(document).ready(function(){\n        var text = \"Versão do Formulário \" + #appDef.version# + \" | Versão atual \" + $(\"select[id*=versaoRecente]\").val();\n        $(\"h2#versaoRecenteText\").text(text);\n        $(\"select[id*=versaoRecente\").parent().hide();\n        //<h2>#appDef.published#<\/h2>\n    });\n    \n<\/script>\n<h1 class=\"headertext\">#form.detalhe_proce_hip.n_wf_pl[{form.processos_hip.detalhe_processo}]#<\/h1>\n<h1 class=\"headertextfase\">#form.detalhe_proce_hip.subfase_processo[{form.processos_hip.detalhe_processo}]#<\/h1>\n<h2 id=\"versaoRecenteText\"><\/h2>\n"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "flag_alerta_alteracoes",
+                            "useDefaultWhenEmpty": "true",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "flag_alteracoes",
+                            "useDefaultWhenEmpty": "true",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "servico",
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "user_validacao",
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": "user_validacao"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "flag_validacao",
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": "flag_validacao"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "versaoRecente",
+                            "label": "",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.plugin.enterprise.JdbcOptionsBinder",
+                                "properties": {
+                                    "addEmpty": "",
+                                    "cacheInterval": "",
+                                    "jdbcDatasource": "default",
+                                    "sql": "SELECT appVersion, appVersion FROM app_app WHERE appId = 'workflowPL' ORDER BY appVersion DESC LIMIT 1;",
+                                    "useAjax": ""
+                                }
+                            },
+                            "permissionHidden": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "imagemBanco",
+                            "label": "",
+                            "value": "\n<img id = \"imagemBancoBCP\" class = \"imagemBanco\">\n<script type=\"text/javascript\">\n    $(window).on('load', function() {\n        var banco = '#form.banco_hip.nome_banco[{form.processos_hip.banco}]#';\n        \n        //console.log(\"banco: \" + banco);\n        if(banco == \"BCP\"){\n            $('.imagemBanco').attr('src', \"#appResource.bcp_cores_lateral.png#\");\n        }else if(banco == \"BIC\"){\n            $('.imagemBanco').attr('src', \"#appResource.eurobic_cores_lateral.png#\");\n        }else if(banco == \"MTG\"){\n            $('.imagemBanco').attr('src', \"#appResource.mtg_cores_lateral.jpg#\");\n        }else{\n            \n        }\n    });\n<\/script>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "validacaoErrosCoordenador",
+                            "label": "",
+                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
+                            "value": "<script type=\"text/javascript\">\n    $(document).ready(function(){\n        \n        $(\"button[name=cancel]\").click(function() {\n            window.sessionStorage.setItem(\"button\", \"null\");\n            window.sessionStorage.setItem(\"previousPage\", \"processo\");\n        });\n        $( \"form\" ).submit(function() {\n            var btnVal = $(document.activeElement).val();\n            \n            if(btnVal === 'GUARDAR'){\n                window.sessionStorage.setItem(\"button\", \"guardar\");\n            }else if( btnVal === \"PROXIMA ATIVIDADE\"){\n                 window.sessionStorage.setItem(\"button\", \"proximaAtividade\");\n                 var assignmentProcessId = \"#assignment.processId#\";\n                 window.sessionStorage.setItem(\"assignmentProcessId\", assignmentProcessId);\n                 var banco = \"#variable.banco#\";\n                 //Flag para redirecionar para o Processo\n                 //Caso a atividade atual seja \"Emissão da Carta\" não redireciona para o processo\n                 var flagRedirect = 0;\n                 var activityId = \"#assignment.activityId#\";\n                 if(subBanco !== \"MTG\" || !activityId.includes(\"emissaoCarta\")){\n                     flagRedirect = 1;\n                 }\n                 window.sessionStorage.setItem(\"redirect\", flagRedirect);\n                 \n            }else if(btnVal === \"REALOCAR\"  || btnVal.includes(\"ENVIAR PARA\") || btnVal === \"COLOCAR PENDENTE\"){\n                window.sessionStorage.setItem(\"button\", \"null\");\n            }else {\n                window.sessionStorage.setItem(\"button\", \"tabChange\");\n            }\n        });\n        \n        \n        \n        \n        //console.log(\"#process.activityInst.{assignment.activityDefId}.performer#\");\n        \n\n    });\n    \n    $(window).load(function(){\n        \n        var flag_alerta_alteracoes = \"#form.processos_hip.flag_alerta_alteracoes#\";\n        if(flag_alerta_alteracoes === \"1\"){\n            $(\"input#flag_alerta_alteracoes\").attr(\"value\",\"1\");\n        }\n        var flag_alteracoes = \"#form.processos_hip.flag_alteracoes#\";\n        if(flag_alteracoes === \"NAO\"){\n            $(\"input#flag_alteracoes\").attr(\"value\",\"NAO\");\n        }\n        \n        \n        \n    });\n    \n    \n    window.onload = (event) => {\n        if($(\".form-errors\").text() === \"EXISTEM ERROS DE VALIDAÇÃO\"){\n            if(\"#currentUser.groups.name#\".split(\";\").includes(\"Coordenadores\")){\n                var currentFase = \"#form.detalhe_proce_hip.fase_processo[{form.processos_hip.detalhe_processo}]#\";\n                var proximaFase = \"\";\n                if(currentFase===\"CNT\"){\n                    proximaFase= \"Filtro\";\n                }else if(currentFase===\"FLT\"){\n                    proximaFase = \"Produção Manual\";\n                }else if(currentFase===\"PRD\"){\n                    proximaFase = \"Validação\";\n                }else if(currentFase===\"VAL\"){\n                    proximaFase = \"Conclusões\";\n                }\n                $(\"#filaTrabalho\").append('<table name=\"modalVerificarAlteracoes\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" class=\"boxy-wrapper fixed\" style=\"z-index: 1339; visibility: visible; left: 556.5px; top: 66.012px; opacity: 1;\"><tbody><tr><td class=\"top-left\"><\/td><td class=\"top\"><\/td><td class=\"top-right\"><\/td><\/tr><tr><td class=\"left\"><\/td><td class=\"boxy-inner\"><div class=\"title-bar\"><h2>&nbsp;<\/h2><a href=\"#\" class=\"close\"><i class=\"fa fas fa-times\"><\/i><\/a><\/div><div style=\"width: 650px;height: 450px;\"><span class=\"material-symbols-rounded icone_alerta2\">warning<\/span><div class=\"textValidation\" style=\"width: 100%;height: 450px;text-align: center;vertical-align: middle;line-height: 20px;padding: 180px 0px 0px 0px;font-family: \"Ubuntu\", sans-serif !important;font-size: 18px;\">Existem alguns erros de validação, tem a certeza que pretende continuar?<\/div><div style=\"width: 100%;height: 100px;text-align: center;vertical-align: middle;line-height: 20px;bottom: 0;position: absolute;\"><i class=\"waves-button-input waves-input-wrapper waves-effect btn waves-button waves-float\" style=\"color:rgb(33, 33, 33);background:rgba(0, 0, 0, 0);width: 15%;margin-right: 25%;\"><input id=\"confirmarAlteracoesCoordenador\" name=\"confirmarAlteracoesCoordenador\" class=\"waves-button-input\" type=\"submit\" value=\"SIM\" style=\"background-color:rgba(0,0,0,0);\"><\/i><i class=\"waves-button-input waves-input-wrapper waves-effect btn waves-button waves-float\" style=\"color:rgb(33, 33, 33);background:rgba(0, 0, 0, 0);width: 15%;\"><input id=\"cancelarAlteracoesCoordenador\" name=\"cancelarAlteracoesCoordenador\" class=\"waves-button-input\" type=\"submit\" value=\"NAO\" style=\"background-color:rgba(0,0,0,0);\"><\/i><\/div><\/div><\/td><td class=\"right\"><\/td><\/tr><tr><td class=\"bottom-left\"><\/td><td class=\"bottom\"><\/td><td class=\"bottom-right\"><\/td><\/tr><\/tbody><\/table>');\n                $(\"#filaTrabalho\").append('<div name=\"blackoutEcra\" class=\"boxy-modal-blackout\" style=\"z-index: 1338; opacity: 0.7; width: 100%; height: 100%; position:fixed; top:0px; left:0px;\"><\/div>');\n                var proximaOperativa = $(\"select[id*=envio_processo] option:selected\").val();\n                    //console.log(proximaOperativa);\n                    if(proximaOperativa === ''){\n                        $(\"div.textValidation\").html(\"Existem alguns erros de validação, tem a certeza que pretende continuar?<br>O processo irá avançar para \" + proximaFase);\n                    }\n                $(\"#confirmarAlteracoesCoordenador\").on('click', function() {\n                    var processId = \"#form.processos_hip.id#\";\n                    var subProcessId = \"#process.processId#\";\n                    var activityInstance = \"#process.activityInst.{assignment.activityDefId}.instanceId#\";\n                    var estado = $(\"select[name*=etalheProcesso_estado_contratacao]\").val();\n                    \n                    if(estado === undefined){\n                        estado = '#form.detalhe_proce_hip.estado_contratacao[{form.processos_hip.detalhe_processo}]#';\n                    }\n                    \n                    var performer = \"#process.activityInst.{assignment.activityDefId}.performer#\";\n                    var laneUser = \"user_\" + performer;\n                    \n                    \n                    var apiKey = \"#envVariable.apiKeyAssignments#\";\n                    var apiId = \"#envVariable.apiIdAssignments#\";\n                    \n                    $.ajax({\n                        beforeSend: function(request){\n                            request.setRequestHeader(\"api_key\", apiKey);\n                            request.setRequestHeader(\"api_id\", apiId);\n                        },\n                        type: \"POST\",\n                        dataType: \"json\",\n                        url: \"/jw/api/process/Hipotecas/setActivityVariables/\" + processId + \"/\" + activityInstance + \"?estado=\" + estado + \"&\" + laneUser + \"=#currentUser.username#&proxima_operativa=\" + proximaOperativa, \n                        success: function(data){\n                            $.ajax({\n                                beforeSend: function(request){\n                                    request.setRequestHeader(\"api_key\", apiKey);\n                                    request.setRequestHeader(\"api_id\", apiId);\n                                },\n                                type: \"POST\",\n                                dataType: \"json\",\n                                url: \"/jw/api/process/Hipotecas/completeActivity/\" + subProcessId + \"/\" + activityInstance,\n                                success: function(data){\n                                    window.location = \"#request.scheme#://#request.serverName#:#request.serverPort##request.contextPath#/web/userview/workflowPL/UV_PL_Geral/_/ListaFilaTrabalho\";\n                                }\n                            });\n                        }\n                    });\n                });\n                $(\"#cancelarAlteracoesCoordenador\").on('click', function() {\n                    $(\"table[name=modalVerificarAlteracoes]\").remove();\n                    $(\"div[name=blackoutEcra]\").remove();\n                });\n            }\n        }\n    };\n<\/script>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "edicao_botoes_default",
+                            "label": "",
+                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
+                            "value": "<script type=\"text/javascript\">\r\n\r\n\r\n$(function(){\r\n\r\n    $(\"label[field-tooltip=enviar_processo_hidden]\").css(\"display\",\"none\");\r\n    $(\"input[name=enviar_processo_hidden]\").css(\"display\",\"none\");\r\n    \r\n    if($(\"select[name*=envio_processo] :selected\").val() !== $(\"#enviar_processo_hidden\").val()){\r\n        $(\"select[name*=envio_processo]\").val($(\"#enviar_processo_hidden\").val() + \"\").change();\r\n    }\r\n    \r\n    /*\r\n    if($(\"select[name=multiPaged_2_detalheProcesso_estado_contratacao]\").val() !== $(\"#enviar_processo_hidden\").val()){\r\n        $(\"select[name=multiPaged_2_detalheProcesso_estado_contratacao]\").val($(\"#enviar_processo_hidden\").val() + \"\").change();\r\n    }*/\r\n    \r\n    var assignmentButton;\r\n    \r\n    nomeBotao();\r\n    \r\n    $(\"select[name*=envio_processo]\").on('change', function() {\r\n        nomeBotao();\r\n    });\r\n    \r\n    $(\"select[name*=etalheProcesso_estado_contratacao]\").on('change', function() {\r\n        nomeBotao();\r\n    });\r\n    \r\n    $(window).on('load', function() {\r\n        nomeBotao();\r\n    });\r\n    \r\n    function nomeBotao(){\r\n        var estadoContratacao = $(\"select[name*=etalheProcesso_estado_contratacao] :selected\").val();\r\n        var envioProcesso = $(\"select[name*=envio_processo] :selected\").val();\r\n        var flagUltimaAtividade='#variable.flag_ultima_atividade#';\r\n        \r\n        if(estadoContratacao === undefined){\r\n            estadoContratacao = \"#form.detalhe_proce_hip.estado_contratacao[{form.processos_hip.detalhe_processo}]#\";\r\n        }\r\n        \r\n        if(envioProcesso === undefined){\r\n            envioProcesso = \"#form.detalhe_proce_hip.envio_processo[{form.processos_hip.detalhe_processo}]#\";\r\n        }\r\n        \r\n        /*Botão Assignment Complete*/\r\n        if(estadoContratacao == 'PND' || estadoContratacao =='PNDEQ'){\r\n            //assignmentButton = \"COLOCAR PENDENTE\";\r\n            $(\"#assignmentComplete\").hide();\r\n            //$(\"#enviar_processo_hidden\").val(\"PND\");\r\n        }else{\r\n            $(\"#assignmentComplete\").show();\r\n            if(flagUltimaAtividade == 1){\r\n                assignmentButton = \"ENVIAR PARA \";\r\n                if(envioProcesso === \"producao_manual\"){\r\n                    assignmentButton += \"PRODUÇÃO MANUAL\";\r\n                } else if(envioProcesso === \"producao_robot\"){\r\n                    assignmentButton += \"PRODUÇÃO ROBOT\";\r\n                } else{\r\n                    assignmentButton += envioProcesso.toUpperCase();\r\n                }\r\n                \r\n                $(\"#enviar_processo_hidden\").val(envioProcesso);\r\n                \r\n            }else if(flagUltimaAtividade == 2){\r\n                if(envioProcesso === \"contratacao\"){\r\n                    assignmentButton = \"ENVIAR PARA CONTRATAÇÃO\";\r\n                } else{\r\n                    assignmentButton = \"FINALIZAR PROCESSO\";\r\n                }\r\n            }else{\r\n                    assignmentButton = \"PROXIMA ATIVIDADE\";\r\n            }\r\n            $(\"#assignmentComplete\").val(assignmentButton);\r\n        }\r\n        \r\n        /*Botão Guardar*/\r\n        if(estadoContratacao == 'PND' || estadoContratacao == 'PNDEQ'){\r\n            $(\"#saveAsDraft\").val(\"COLOCAR PENDENTE\");\r\n        }else{\r\n            $(\"#saveAsDraft\").val(\"GUARDAR\");\r\n        }\r\n            \r\n        \r\n        \r\n        /*\r\n        if(envioProcesso !== undefined || estadoContratacao !== undefined){\r\n            \r\n            \r\n            \r\n        } else {\r\n            var novoEnvioProcesso = $(\"#enviar_processo_hidden\").val() + \"\";\r\n            if(novoEnvioProcesso === \"PND\"){\r\n                $(\"#assignmentComplete\").val(\"COLOCAR PENDENTE\");\r\n            } else{\r\n                $(\"#assignmentComplete\").val(\"ENVIAR PARA \" + novoEnvioProcesso.toUpperCase());\r\n            }\r\n        }*/\r\n    }\r\n    \r\n    \r\n    $(\"#cancel\").text(\"CANCELAR\"); \r\n    \r\n    /*Hide the Reassign button*/\r\n    var listGroups = '#currentUser.groups.name#';\r\n    if(listGroups.toLowerCase().includes(\"coordenadores\")){\r\n\r\n    }else{\r\n\r\n        $('#process_reassign').parent().hide()\r\n    }\r\n \r\n});\r\n<\/script>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "enviar_processo_hidden",
+                            "label": "enviar_processo_hidden",
+                            "maxlength": "",
+                            "permissionHidden": "",
+                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {
+                                "permissionHidden": "",
+                                "readonly": ""
+                            }},
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "saveAsDraftId",
+                            "useDefaultWhenEmpty": "",
+                            "value": "#requestParam.recordId#",
+                            "workflowVariable": ""
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section1_1",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "servico",
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
                         }
                     },
                     {
@@ -167,239 +400,6 @@
                     "properties": {}
                 },
                 "permissionReadonly": "",
-                "readonly": "",
-                "readonlyLabel": "",
-                "regex": "",
-                "reverse": "",
-                "storeBinder": {
-                    "className": "",
-                    "properties": {}
-                },
-                "visibilityControl": "",
-                "visibilityValue": ""
-            }
-        },
-        {
-            "className": "org.joget.apps.form.model.Section",
-            "elements": [{
-                "className": "org.joget.apps.form.model.Column",
-                "elements": [
-                    {
-                        "className": "org.joget.apps.form.lib.SubForm",
-                        "properties": {
-                            "formDefId": "alertas",
-                            "id": "alertas",
-                            "label": "",
-                            "loadBinder": {
-                                "className": "org.joget.apps.form.lib.BeanShellFormBinder",
-                                "properties": {
-                                    "autoHandleFiles": "",
-                                    "autoHandleWorkflowVariable": "true",
-                                    "cacheInterval": "",
-                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.*;\r\nimport org.joget.commons.util.LogUtil;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport java.time.format.DateTimeFormatter;\r\nimport java.time.LocalDateTime; \r\nimport java.time.LocalDate;\r\nimport org.joget.apps.app.model.AppDefinition;\r\n\r\n\r\n\r\n\r\npublic boolean validateDate(String date){\r\n    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"yyyy-MM-dd\");\r\n    LocalDate dateLimit = LocalDate.parse(date, formatter);\r\n    LocalDate today = LocalDate.now();\r\n    \r\n    boolean result= true;\r\n\r\n    if(dateLimit.isBefore(today)){\r\n        result = false;\r\n    }\r\n    \r\n    return result;\r\n}\r\n\r\n\r\npublic boolean isWeekend(LocalDateTime dt) {\r\n    String dayOfWeek = dt.getDayOfWeek().toString();\r\n    switch(dayOfWeek) {\r\n        case \"SATURDAY\":{\r\n            return true;\r\n        }\r\n        case \"SUNDAY\":{\r\n            return true;\r\n        }\r\n        default:{\r\n            return false;\r\n        }\r\n    }\r\n}\r\n\r\npublic boolean validateDataFINE(String dataAgendamento, String dataFINE){\r\n    boolean result = true;\r\n    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"yyyy-MM-dd HH:mm\");\r\n    DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern(\"yyyy-MM-dd\");\r\n    LocalDateTime dateAgendamento = LocalDate.parse(dataAgendamento, formatter).atTime(0,0);\r\n    LocalDateTime dateFINE = LocalDate.parse(dataFINE, formatterDate).atTime(0, 0);\r\n    dateFINE = dateFINE.plusDays(1);\r\n    if(dateFINE.isAfter(dateAgendamento)){\r\n        result = false;\r\n    }\r\n\r\n    return result;\r\n}\r\n\r\n\r\n\r\n \r\nString ProcessID = \"#process.processId#\";\r\nString idDetalheProcesso = \"#form.detalhe_processo.id[{form.processos.detalhe_processo}]#\";\r\nString idProcesso = \"#form.processos.id#\";\r\n//String htmlAlertas = \"<div class=\\\"container text-start\\\"><div class=\\\"row justify-content-start text-start\\\"><div class=\\\"col text-start\\\"><b><small class=\\\"text-muted m-align\\\"> | <span class=\\\"material-symbols-rounded\\\"> warning <\/span> | ALERTA: AVISO PROCESSO 200245 | <\/span> | AVISO REVISÃO TXPT <\/b><\/small><\/div><div class=\\\"col text-start\\\"><b><small class=\\\"text-muted m-align\\\"> | <span class=\\\"material-symbols-rounded\\\"> warning <\/span> | AVISO REVISÃO TXPT | <\/span> |  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel dapibus eros <\/b><\/small><\/div><div class=\\\"col text-start\\\"><b><small class=\\\"text-muted m-align\\\"> | <span class=\\\"material-symbols-rounded\\\"> warning <\/span> | ALERTA: AVISO ALERTA 2 | <\/span> | INFORMAÇÂO DE ALERTA XPTOXPTO <\/b><\/small><\/div><\/div><\/div>\";\r\n\r\nString htmlAlertas = \"\";\r\n\r\n\r\n//LogUtil.info(\"processID: \",  ProcessID);\r\n//LogUtil.info(\"idDetalheProcesso: \",  idDetalheProcesso);\r\n//LogUtil.info(\"idProcesso: \",  idProcesso);\r\n\r\n\r\n\r\n\r\n    AppDefinition appDef = AppUtil.getCurrentAppDefinition();\r\n    Connection con = null;\r\n    PreparedStatement stmt = null;\r\n    ResultSet rs = null;\r\n    ResultSet rs2 = null;\r\n    try{\r\n            DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n            con = ds.getConnection();\r\n            \r\n            if(!con.isClosed()){\r\n                    String queryGetIdDocsProce = \"SELECT * FROM app_fd_docs_processo WHERE c_id_processo = ? order by dateCreated desc;\";\r\n                    stmt = con.prepareStatement(queryGetIdDocsProce);\r\n                    stmt.setObject(1, idProcesso);\r\n                    rs = stmt.executeQuery();\r\n                    \r\n                    String idDocProce = \"\";\r\n                    htmlAlertas += \"<div class=\\\"container text-start\\\"><div class=\\\"row justify-content-start text-start\\\"><div class=\\\"col text-start\\\"><b><small class=\\\"text-muted m-align\\\"> | <span class=\\\"material-symbols-rounded\\\"> warning <\/span><span> | ALERTA: DOCUMENTOS EXPIRADOS || \";\r\n                    boolean fileHasDocExp = false;\r\n                    boolean existsAlert = false;\r\n                    while(rs.next()){\r\n                        \r\n                        idDocProce = rs.getObject(\"id\");\r\n                        \r\n                        String queyGetDates = \"SELECT c_tipo_documento, c_data_validade_documento FROM app_fd_documento_processo WHERE c_doc_id = ? AND c_documento_valido = 'sim'\";\r\n                        stmt = con.prepareStatement(queyGetDates);\r\n                        stmt.setObject(1, idDocProce);\r\n                        rs2 = stmt.executeQuery();\r\n                         \r\n\r\n                        if(rs2.next() != false){\r\n                            fileHasDocExp= false;\r\n                            rs2.previous();\r\n                            String htmlFicheiroAlerta =  rs.getObject(\"c_nome_ficheiro\") + \" -\" ;\r\n                            \r\n                            while(rs2.next()){\r\n\r\n                                if(!rs2.getObject(\"c_data_validade_documento\").toString().equals(\"\") && !validateDate(rs2.getObject(\"c_data_validade_documento\").toString())){\r\n                                    fileHasDocExp = true;\r\n                                    existsAlert= true;\r\n                                    htmlFicheiroAlerta += \" \" + rs2.getObject(\"c_tipo_documento\") + \",\";\r\n                                    \r\n                                }\r\n                                \r\n                            }\r\n                            \r\n                            \r\n                            if(fileHasDocExp){\r\n                                htmlAlertas += htmlFicheiroAlerta.substring(0, htmlFicheiroAlerta.length() -1) + \" | \";\r\n                            }\r\n                       }\r\n                    }\r\n                        htmlAlertas += \"<\/span><\/small><\/b><\/div><\/div><\/div>\";\r\n                    \r\n                    \r\n                    if(!existsAlert){\r\n                        htmlAlertas = \"\";\r\n                    }\r\n                    \r\n                    \r\n                    \r\n                    \r\n                    //Alertas para datas\r\n                    String dataAgendamento = \"#form.agendamento.data_agendamento[{form.processos.agendamento}]#\";\r\n                    String dataSwift = \"#form.anal_banc_processo.data_swift[{form.processos.anal_banc}]#\";\r\n                    String dataPedidoSwift = \"#form.anal_banc_processo.data_pedido_swift[{form.processos.anal_banc}]#\";\r\n                    String dataFINEAgendamento = \"#form.anal_banc_processo.data_fine_agendamento[{form.processos.anal_banc}]#\";\r\n                    String htmlAlertaDatas= \"<div class=\\\"container text-start\\\"><div class=\\\"row justify-content-start text-start\\\"><div class=\\\"col text-start\\\"><b><small class=\\\"text-muted m-align\\\"> | <span class=\\\"material-symbols-rounded\\\"> warning <\/span><span> | ALERTA: DATAS || \";\r\n                    boolean alertaDatas = false;\r\n                    if(!dataAgendamento.isEmpty() && !dataAgendamento.startsWith(\"#form.agendamento.data_agendamento[{form.processos.agendamento}]\")){\r\n                        \r\n                        if(!dataSwift.isEmpty() && !dataSwift.startsWith(\"#form.anal_banc_processo.data_swift[{form.processos.anal_banc}]\")){\r\n                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"yyyy-MM-dd HH:mm\");\r\n                            DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern(\"yyyy-MM-dd\");\r\n                            LocalDateTime dateAgendamento = LocalDate.parse(dataAgendamento, formatter).atTime(0,0);\r\n                            LocalDateTime dateSwift = LocalDate.parse(dataSwift, formatterDate).atTime(0, 0);\r\n                            if(!dateAgendamento.equals(dateSwift)){\r\n                                alertaDatas = true;\r\n                                htmlAlertaDatas += \" Data de Agendamento diferente de Data do SWIFT/Declaração De Dívida |\";\r\n                            }\r\n                        }\r\n                        \r\n                        if(!dataFINEAgendamento.isEmpty() && !dataFINEAgendamento.startsWith(\"#form.detalhe_processo.data_fine_agendamento[{form.processos.detalhe_processo}]\")){\r\n                            if(!validateDataFINE(dataAgendamento, dataFINEAgendamento)){\r\n                                alertaDatas = true;\r\n                                htmlAlertaDatas += \" Data de agendamento não cumpre período de reflexão da FINE |\";\r\n                                \r\n                            }\r\n                        }\r\n                    }\r\n                    \r\n                     //Alerta Data de Relatório de Avaliação\r\n                    String dataDeValidade = \"#form.anal_banc_processo.validade_relatorio_avaliacao[{form.processos.anal_banc}]#\";\r\n                    if(!dataDeValidade.isEmpty() && !dataDeValidade.startsWith(\"#form.anal_banc_processo.validade_relatorio_avaliacao[{form.processos.anal_banc}]\")){\r\n                        if(!validateDate(dataDeValidade)){\r\n                            alertaDatas = true;\r\n                            htmlAlertaDatas += \" Data de validade do Relatório de Avaliação expirou |\";\r\n                        }\r\n                    }\r\n                    \r\n                    \r\n                    htmlAlertaDatas = htmlAlertaDatas.substring(0, htmlAlertaDatas.length() -1);\r\n                    htmlAlertaDatas += \"<\/span><\/small><\/b><\/div><\/div><\/div>\";\r\n                    \r\n                    if(alertaDatas){\r\n                        htmlAlertas += htmlAlertaDatas;\r\n                    }\r\n                    \r\n                   \r\n                    \r\n                    \r\n                    \r\n               \r\n            }\r\n    }catch(Exception e){\r\n        LogUtil.error(appDef.toString(), e, \"Error getting info from DB\");\r\n    }finally{\r\n        try{\r\n            if(rs != null){\r\n            rs.close();\r\n            }\r\n            if(stmt != null){\r\n                stmt.close();\r\n            }\r\n            if(con != null && !con.isClosed()) {\r\n                con.close();\r\n            }\r\n        }catch(Exception e){\r\n            LogUtil.error(appDef.toString(), e, \"Error closing DB connection\");\r\n        }\r\n        \r\n    }\r\n\r\n\r\n \r\nFormRowSet f = new FormRowSet();\r\nFormRow r1 = new FormRow();\r\n//r1.put(\"alertas\", \"Alertas\");\r\n\r\nr1.put(\"tb_alertas\", htmlAlertas);\r\n\r\n\r\n\r\n\r\n\r\n\r\nf.add(r1);\r\n \r\nreturn f;",
-                                    "useAjax": ""
-                                }
-                            },
-                            "noframe": "",
-                            "parentSubFormId": "alertas",
-                            "permissionHidden": "",
-                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "storeBinder": {
-                                "className": "org.joget.apps.form.lib.WorkflowFormBinder",
-                                "properties": {}
-                            },
-                            "subFormParentId": ""
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.CustomHTML",
-                        "properties": {
-                            "autoPopulate": "",
-                            "id": "field6",
-                            "label": "",
-                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
-                            "value": "<script>\n    $(document).ready(function(){\n        var text = \"Versão do Formulário \" + #appDef.version# + \" | Versão atual \" + $(\"select[id*=versaoRecente]\").val();\n        $(\"h2#versaoRecenteText\").text(text);\n        $(\"select[id*=versaoRecente\").parent().hide();\n        //<h2>#appDef.published#<\/h2>\n    });\n    \n<\/script>\n<h1 class=\"headertext\">#form.detalhe_proce_hip.n_wf_pl[{form.processos_hip.detalhe_processo}]#<\/h1>\n<h1 class=\"headertextfase\">#form.detalhe_proce_hip.subfase_processo[{form.processos_hip.detalhe_processo}]#<\/h1>\n<h2 id=\"versaoRecenteText\"><\/h2>\n"
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.HiddenField",
-                        "properties": {
-                            "id": "flag_alerta_alteracoes",
-                            "useDefaultWhenEmpty": "true",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.HiddenField",
-                        "properties": {
-                            "id": "flag_alteracoes",
-                            "useDefaultWhenEmpty": "true",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.HiddenField",
-                        "properties": {
-                            "id": "servico",
-                            "useDefaultWhenEmpty": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.HiddenField",
-                        "properties": {
-                            "id": "user_validacao",
-                            "useDefaultWhenEmpty": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "",
-                            "workflowVariable": "user_validacao"
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.HiddenField",
-                        "properties": {
-                            "id": "flag_validacao",
-                            "useDefaultWhenEmpty": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "",
-                            "workflowVariable": "flag_validacao"
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.SelectBox",
-                        "properties": {
-                            "controlField": "",
-                            "id": "versaoRecente",
-                            "label": "",
-                            "multiple": "",
-                            "options": [],
-                            "optionsBinder": {
-                                "className": "org.joget.plugin.enterprise.JdbcOptionsBinder",
-                                "properties": {
-                                    "addEmpty": "",
-                                    "cacheInterval": "",
-                                    "jdbcDatasource": "default",
-                                    "sql": "SELECT appVersion, appVersion FROM app_app WHERE appId = 'workflowPL' ORDER BY appVersion DESC LIMIT 1;",
-                                    "useAjax": ""
-                                }
-                            },
-                            "permissionHidden": "",
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.CustomHTML",
-                        "properties": {
-                            "autoPopulate": "",
-                            "id": "imagemBanco",
-                            "label": "",
-                            "value": "\n<img id = \"imagemBancoBCP\" class = \"imagemBanco\">\n<script type=\"text/javascript\">\n    $(window).on('load', function() {\n        var banco = '#form.banco.nome_banco[{form.processos.banco}]#';\n        \n        //console.log(\"banco: \" + banco);\n        if(banco == \"BCP\"){\n            $('.imagemBanco').attr('src', \"#appResource.bcp_cores_lateral.png#\");\n        }else if(banco == \"BCTT\"){\n            $('.imagemBanco').attr('src', \"#appResource.bctt_cores_lateral.png#\");\n        }else if(banco == \"BIC\"){\n            $('.imagemBanco').attr('src', \"#appResource.eurobic_cores_lateral.png#\");\n        }else if(banco == \"BNI\"){\n            $('.imagemBanco').attr('src', \"#appResource.bni_cores_lateral.jpg#\");\n        }else if(banco == \"BST\"){\n            $('.imagemBanco').attr('src', \"#appResource.bst_cores_lateral.jpg#\");\n        }else if(banco == \"MTG\"){\n            $('.imagemBanco').attr('src', \"#appResource.mtg_cores_lateral.jpg#\");\n        }else if(banco == \"NVB\"){\n            $('.imagemBanco').attr('src', \"#appResource.nb_cores_lateral.png#\");\n        }else if(banco == \"ABN\"){\n            $('.imagemBanco').attr('src', \"#appResource.abanca_cores_lateral.png#\");\n        }else{\n            \n        }\n    });\n<\/script>"
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.CustomHTML",
-                        "properties": {
-                            "autoPopulate": "",
-                            "id": "validacaoErrosCoordenador",
-                            "label": "",
-                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
-                            "value": "<script type=\"text/javascript\">\n    $(document).ready(function(){\n        \n        $(\"button[name=cancel]\").click(function() {\n            window.sessionStorage.setItem(\"button\", \"null\");\n            window.sessionStorage.setItem(\"previousPage\", \"processo\");\n        });\n        $( \"form\" ).submit(function() {\n            var btnVal = $(document.activeElement).val();\n            \n            if(btnVal === 'GUARDAR'){\n                window.sessionStorage.setItem(\"button\", \"guardar\");\n            }else if( btnVal === \"PROXIMA ATIVIDADE\"){\n                 window.sessionStorage.setItem(\"button\", \"proximaAtividade\");\n                 var assignmentProcessId = \"#assignment.processId#\";\n                 window.sessionStorage.setItem(\"assignmentProcessId\", assignmentProcessId);\n                 var subBanco = \"#variable.sub_banco#\";\n                 //Flag para redirecionar para o Processo\n                 //Caso a atividade atual seja \"Emissão da Carta\" não redireciona para o processo\n                 var flagRedirect = 0;\n                 var activityId = \"#assignment.activityId#\";\n                 if(subBanco !== \"MTG\" || !activityId.includes(\"emissaoCarta\")){\n                     flagRedirect = 1;\n                 }\n                 window.sessionStorage.setItem(\"redirect\", flagRedirect);\n                 \n            }else if(btnVal === \"REALOCAR\"  || btnVal.includes(\"ENVIAR PARA\") || btnVal === \"COLOCAR PENDENTE\"){\n                window.sessionStorage.setItem(\"button\", \"null\");\n            }else {\n                window.sessionStorage.setItem(\"button\", \"tabChange\");\n            }\n        });\n        \n        \n        \n        \n        //console.log(\"#process.activityInst.{assignment.activityDefId}.performer#\");\n        \n\n    });\n    \n    $(window).load(function(){\n        \n        var flag_alerta_alteracoes = \"#form.processos_hip.flag_alerta_alteracoes#\";\n        if(flag_alerta_alteracoes === \"1\"){\n            $(\"input#flag_alerta_alteracoes\").attr(\"value\",\"1\");\n        }\n        var flag_alteracoes = \"#form.processos_hip.flag_alteracoes#\";\n        if(flag_alteracoes === \"NAO\"){\n            $(\"input#flag_alteracoes\").attr(\"value\",\"NAO\");\n        }\n        \n        \n        \n    });\n    \n    \n    window.onload = (event) => {\n        if($(\".form-errors\").text() === \"EXISTEM ERROS DE VALIDAÇÃO\"){\n            if(\"#currentUser.groups.name#\".split(\";\").includes(\"Coordenadores\")){\n                var currentFase = \"#form.detalhe_proce_hip.fase_processo[{form.processos_hip.detalhe_processo}]#\";\n                var proximaFase = \"\";\n                if(currentFase===\"CNT\"){\n                    proximaFase= \"Filtro\";\n                }else if(currentFase===\"FLT\"){\n                    proximaFase = \"Produção Manual\";\n                }else if(currentFase===\"PRD\"){\n                    proximaFase = \"Validação\";\n                }else if(currentFase===\"VAL\"){\n                    proximaFase = \"Conclusões\";\n                }\n                $(\"#filaTrabalho\").append('<table name=\"modalVerificarAlteracoes\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" class=\"boxy-wrapper fixed\" style=\"z-index: 1339; visibility: visible; left: 556.5px; top: 66.012px; opacity: 1;\"><tbody><tr><td class=\"top-left\"><\/td><td class=\"top\"><\/td><td class=\"top-right\"><\/td><\/tr><tr><td class=\"left\"><\/td><td class=\"boxy-inner\"><div class=\"title-bar\"><h2>&nbsp;<\/h2><a href=\"#\" class=\"close\"><i class=\"fa fas fa-times\"><\/i><\/a><\/div><div style=\"width: 650px;height: 450px;\"><span class=\"material-symbols-rounded icone_alerta2\">warning<\/span><div class=\"textValidation\" style=\"width: 100%;height: 450px;text-align: center;vertical-align: middle;line-height: 20px;padding: 180px 0px 0px 0px;font-family: \"Ubuntu\", sans-serif !important;font-size: 18px;\">Existem alguns erros de validação, tem a certeza que pretende continuar?<\/div><div style=\"width: 100%;height: 100px;text-align: center;vertical-align: middle;line-height: 20px;bottom: 0;position: absolute;\"><i class=\"waves-button-input waves-input-wrapper waves-effect btn waves-button waves-float\" style=\"color:rgb(33, 33, 33);background:rgba(0, 0, 0, 0);width: 15%;margin-right: 25%;\"><input id=\"confirmarAlteracoesCoordenador\" name=\"confirmarAlteracoesCoordenador\" class=\"waves-button-input\" type=\"submit\" value=\"SIM\" style=\"background-color:rgba(0,0,0,0);\"><\/i><i class=\"waves-button-input waves-input-wrapper waves-effect btn waves-button waves-float\" style=\"color:rgb(33, 33, 33);background:rgba(0, 0, 0, 0);width: 15%;\"><input id=\"cancelarAlteracoesCoordenador\" name=\"cancelarAlteracoesCoordenador\" class=\"waves-button-input\" type=\"submit\" value=\"NAO\" style=\"background-color:rgba(0,0,0,0);\"><\/i><\/div><\/div><\/td><td class=\"right\"><\/td><\/tr><tr><td class=\"bottom-left\"><\/td><td class=\"bottom\"><\/td><td class=\"bottom-right\"><\/td><\/tr><\/tbody><\/table>');\n                $(\"#filaTrabalho\").append('<div name=\"blackoutEcra\" class=\"boxy-modal-blackout\" style=\"z-index: 1338; opacity: 0.7; width: 100%; height: 100%; position:fixed; top:0px; left:0px;\"><\/div>');\n                var proximaOperativa = $(\"select[id*=envio_processo] option:selected\").val();\n                    //console.log(proximaOperativa);\n                    if(proximaOperativa === ''){\n                        $(\"div.textValidation\").html(\"Existem alguns erros de validação, tem a certeza que pretende continuar?<br>O processo irá avançar para \" + proximaFase);\n                    }\n                $(\"#confirmarAlteracoesCoordenador\").on('click', function() {\n                    var processId = \"#form.processos_hip.id#\";\n                    var subProcessId = \"#process.processId#\";\n                    var activityInstance = \"#process.activityInst.{assignment.activityDefId}.instanceId#\";\n                    var estado = $(\"select[name=multiPaged_2_detalheProcesso_estado_contratacao]\").val();\n                    \n                    if(estado === undefined){\n                        estado = '#form.detalhe_proce_hip.estado_contratacao[{form.processos_hip.detalhe_processo}]#';\n                    }\n                    \n                    var performer = \"#process.activityInst.{assignment.activityDefId}.performer#\";\n                    var laneUser = \"user_\" + performer;\n                    \n                    var complexidade = $(\"select[name=multiPaged_2_detalheProcesso_complex_processo]\").val();\n                    \n                    if(complexidade === undefined){\n                        complexidade = \"#form.detalhe_proce_hip.complex_processo[{form.processos_hip.detalhe_processo}]#\";\n                    }\n                    \n                    if(complexidade === 'COM'){\n                        laneUser += \"_com\";\n                    }\n                    \n                    var apiKey = \"#envVariable.apiKeyAssignments#\";\n                    var apiId = \"#envVariable.apiIdAssignments#\";\n                    \n                    $.ajax({\n                        beforeSend: function(request){\n                            request.setRequestHeader(\"api_key\", apiKey);\n                            request.setRequestHeader(\"api_id\", apiId);\n                        },\n                        type: \"POST\",\n                        dataType: \"json\",\n                        url: \"/jw/api/process/Hipotecas/setActivityVariables/\" + processId + \"/\" + activityInstance + \"?estado=\" + estado + \"&\" + laneUser + \"=#currentUser.username#&proxima_operativa=\" + proximaOperativa, \n                        success: function(data){\n                            $.ajax({\n                                beforeSend: function(request){\n                                    request.setRequestHeader(\"api_key\", apiKey);\n                                    request.setRequestHeader(\"api_id\", apiId);\n                                },\n                                type: \"POST\",\n                                dataType: \"json\",\n                                url: \"/jw/api/process/Hipotecas/completeActivity/\" + subProcessId + \"/\" + activityInstance,\n                                success: function(data){\n                                    window.location = \"#request.scheme#://#request.serverName#:#request.serverPort##request.contextPath#/web/userview/workflowPL/UV_PL_Geral/_/ListaFilaTrabalho\";\n                                }\n                            });\n                        }\n                    });\n                });\n                $(\"#cancelarAlteracoesCoordenador\").on('click', function() {\n                    $(\"table[name=modalVerificarAlteracoes]\").remove();\n                    $(\"div[name=blackoutEcra]\").remove();\n                });\n            }\n        }\n    };\n<\/script>"
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.CustomHTML",
-                        "properties": {
-                            "autoPopulate": "",
-                            "id": "edicao_botoes_default",
-                            "label": "",
-                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
-                            "value": "<script type=\"text/javascript\">\r\n\r\n\r\n$(function(){\r\n\r\n    $(\"label[field-tooltip=enviar_processo_hidden]\").css(\"display\",\"none\");\r\n    $(\"input[name=enviar_processo_hidden]\").css(\"display\",\"none\");\r\n    \r\n    if($(\"select[name*=envio_processo] :selected\").val() !== $(\"#enviar_processo_hidden\").val()){\r\n        $(\"select[name*=envio_processo]\").val($(\"#enviar_processo_hidden\").val() + \"\").change();\r\n    }\r\n    \r\n    /*\r\n    if($(\"select[name=multiPaged_2_detalheProcesso_estado_contratacao]\").val() !== $(\"#enviar_processo_hidden\").val()){\r\n        $(\"select[name=multiPaged_2_detalheProcesso_estado_contratacao]\").val($(\"#enviar_processo_hidden\").val() + \"\").change();\r\n    }*/\r\n    \r\n    var assignmentButton;\r\n    \r\n    nomeBotao();\r\n    \r\n    $(\"select[name*=envio_processo]\").on('change', function() {\r\n        nomeBotao();\r\n    });\r\n    \r\n    $(\"select[name*=detalheProcesso_estado_contratacao]\").on('change', function() {\r\n        nomeBotao();\r\n    });\r\n    \r\n    $(window).on('load', function() {\r\n        nomeBotao();\r\n    });\r\n    \r\n    function nomeBotao(){\r\n        var estadoContratacao = $(\"select[name=multiPaged_2_detalheProcesso_estado_contratacao] :selected\").val();\r\n        var envioProcesso = $(\"select[name*=envio_processo] :selected\").val();\r\n        var flagUltimaAtividade='#variable.flag_ultima_atividade#';\r\n        \r\n        if(estadoContratacao === undefined){\r\n            estadoContratacao = \"#form.detalhe_proce_hip.estado_contratacao[{form.processos_hip.detalhe_processo}]#\";\r\n        }\r\n        \r\n        if(envioProcesso === undefined){\r\n            envioProcesso = \"#form.detalhe_proce_hip.envio_processo[{form.processos_hip.detalhe_processo}]#\";\r\n        }\r\n        \r\n        /*Botão Assignment Complete*/\r\n        if(estadoContratacao == 'PND' || estadoContratacao =='PNDEQ'){\r\n            //assignmentButton = \"COLOCAR PENDENTE\";\r\n            $(\"#assignmentComplete\").hide();\r\n            //$(\"#enviar_processo_hidden\").val(\"PND\");\r\n        }else{\r\n            $(\"#assignmentComplete\").show();\r\n            if(flagUltimaAtividade == 1){\r\n                assignmentButton = \"ENVIAR PARA \";\r\n                if(envioProcesso === \"producao_manual\"){\r\n                    assignmentButton += \"PRODUÇÃO MANUAL\";\r\n                } else if(envioProcesso === \"producao_robot\"){\r\n                    assignmentButton += \"PRODUÇÃO ROBOT\";\r\n                } else{\r\n                    assignmentButton += envioProcesso.toUpperCase();\r\n                }\r\n                \r\n                $(\"#enviar_processo_hidden\").val(envioProcesso);\r\n                \r\n            }else if(flagUltimaAtividade == 2){\r\n                if(envioProcesso === \"contratacao\"){\r\n                    assignmentButton = \"ENVIAR PARA CONTRATAÇÃO\";\r\n                } else{\r\n                    assignmentButton = \"FINALIZAR PROCESSO\";\r\n                }\r\n            }else{\r\n                    assignmentButton = \"PROXIMA ATIVIDADE\";\r\n            }\r\n            $(\"#assignmentComplete\").val(assignmentButton);\r\n        }\r\n        \r\n        /*Botão Guardar*/\r\n        if(estadoContratacao == 'PND' || estadoContratacao == 'PNDEQ'){\r\n            $(\"#saveAsDraft\").val(\"COLOCAR PENDENTE\");\r\n        }else{\r\n            $(\"#saveAsDraft\").val(\"GUARDAR\");\r\n        }\r\n            \r\n        \r\n        \r\n        /*\r\n        if(envioProcesso !== undefined || estadoContratacao !== undefined){\r\n            \r\n            \r\n            \r\n        } else {\r\n            var novoEnvioProcesso = $(\"#enviar_processo_hidden\").val() + \"\";\r\n            if(novoEnvioProcesso === \"PND\"){\r\n                $(\"#assignmentComplete\").val(\"COLOCAR PENDENTE\");\r\n            } else{\r\n                $(\"#assignmentComplete\").val(\"ENVIAR PARA \" + novoEnvioProcesso.toUpperCase());\r\n            }\r\n        }*/\r\n    }\r\n    \r\n    \r\n    $(\"#cancel\").text(\"CANCELAR\"); \r\n    \r\n    /*Hide the Reassign button*/\r\n    var listGroups = '#currentUser.groups.name#';\r\n    if(listGroups.toLowerCase().includes(\"coordenadores\")){\r\n\r\n    }else{\r\n\r\n        $('#process_reassign').parent().hide()\r\n    }\r\n \r\n});\r\n<\/script>"
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.TextField",
-                        "properties": {
-                            "encryption": "",
-                            "id": "enviar_processo_hidden",
-                            "label": "enviar_processo_hidden",
-                            "maxlength": "",
-                            "permissionHidden": "",
-                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {
-                                "permissionHidden": "",
-                                "readonly": ""
-                            }},
-                            "placeholder": "",
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "storeNumeric": "",
-                            "style": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.HiddenField",
-                        "properties": {
-                            "id": "saveAsDraftId",
-                            "useDefaultWhenEmpty": "",
-                            "value": "#requestParam.recordId#",
-                            "workflowVariable": ""
-                        }
-                    }
-                ],
-                "properties": {"width": "100%"}
-            }],
-            "properties": {
-                "comment": "",
-                "id": "section1_1",
-                "join": "",
-                "label": "",
-                "loadBinder": {
-                    "className": "",
-                    "properties": {}
-                },
-                "permission": {
-                    "className": "",
-                    "properties": {}
-                },
-                "permissionReadonly": "",
-                "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
                 "readonly": "",
                 "readonlyLabel": "",
                 "regex": "",
