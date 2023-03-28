@@ -317,7 +317,7 @@
                                 "aaffb350-ce47-00c4-ce5b-6458ca217e7b": {},
                                 "ac361275-02b8-99df-5b74-6bf70778aa79": {}
                             },
-                            "value": "<script>\n\n\n    $(document).ready(function(){\n        var origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\n        if( servico.includes(\"CreditoHabitacao\") ){\n            sessionStorage.setItem(\"origemProcesso\", origem_processo);\n            if(!(origem_processo === \"ACE\" || origem_processo === \"PRE\" || origem_processo === \"TRD\")){\n                $(\"div#procuraçao\").remove();\n            }\n        }else if( servico.includes(\"Hipotecas\") ){\n            $(\"input[id*=proc_chave_mao]\").remove();\n        }\n        \n        $(\"select[name=gestor]\").prop('disabled', true);\n        \n    });\n    \n    \n<\/script>"
+                            "value": "<script>\n\n\n    $(document).ready(function(){\n    \n        $(\"input[id*=proc_chave_mao]\").remove();\n        $(\"select[name=gestor]\").prop('disabled', true);\n        \n    });\n    \n    \n<\/script>"
                         }
                     },
                     {
@@ -379,47 +379,94 @@
             "className": "org.joget.apps.form.model.Section",
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
-                "elements": [
-                    {
-                        "className": "org.joget.apps.form.lib.Radio",
-                        "properties": {
-                            "controlField": "",
-                            "id": "multi_tipos_documentos",
-                            "label": "Ficheiro com várias tipologias?",
-                            "options": [
-                                {
-                                    "grouping": "",
-                                    "label": "Sim",
-                                    "value": "SIM"
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Não",
-                                    "value": "NAO"
-                                }
-                            ],
-                            "optionsBinder": {
-                                "className": "",
-                                "properties": {}
+                "elements": [{
+                    "className": "org.joget.apps.form.lib.Radio",
+                    "properties": {
+                        "controlField": "",
+                        "id": "multi_tipos_documentos",
+                        "label": "Ficheiro com várias tipologias?",
+                        "options": [
+                            {
+                                "grouping": "",
+                                "label": "Sim",
+                                "value": "SIM"
                             },
-                            "permission_rules": {
-                                "905528b0-444a-645b-77f3-a7aa12612611": {},
-                                "9de7f6a8-1d7c-13d5-e7fc-b76eb2395504": {},
-                                "ac361275-02b8-99df-5b74-6bf70778aa79": {
-                                    "permissionHidden": "",
-                                    "readonly": ""
-                                }
-                            },
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "NAO",
-                            "workflowVariable": ""
-                        }
+                            {
+                                "grouping": "",
+                                "label": "Não",
+                                "value": "NAO"
+                            }
+                        ],
+                        "optionsBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "permission_rules": {
+                            "905528b0-444a-645b-77f3-a7aa12612611": {},
+                            "9de7f6a8-1d7c-13d5-e7fc-b76eb2395504": {},
+                            "ac361275-02b8-99df-5b74-6bf70778aa79": {
+                                "permissionHidden": "",
+                                "readonly": ""
+                            }
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "NAO",
+                        "workflowVariable": ""
+                    }
+                }],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section3",
+                "join": "",
+                "label": "Tipos de Documentos",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "2d5b66a5-a9cb-5ffa-bfae-908ff7c801cf": {},
+                    "4eadf25e-a6ae-5c28-23ee-74fa93baba69": {},
+                    "52e1b920-6773-f986-e477-c378d0553021": {},
+                    "6d298317-99a8-54fd-e8ad-1873aee58f16": {},
+                    "718d5349-6f95-b82b-51b6-2c8e3f3cae78": {},
+                    "905528b0-444a-645b-77f3-a7aa12612611": {},
+                    "9de7f6a8-1d7c-13d5-e7fc-b76eb2395504": {},
+                    "aaffb350-ce47-00c4-ce5b-6458ca217e7b": {},
+                    "ac361275-02b8-99df-5b74-6bf70778aa79": {
+                        "permissionHidden": "",
+                        "readonly": ""
                     },
+                    "bb3e96c1-d61f-4c1c-f075-93ca3b6103dc": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
                     {
                         "className": "org.joget.plugin.enterprise.FormGrid",
                         "properties": {
@@ -556,7 +603,7 @@
                                     "readonly": ""
                                 }
                             },
-                            "value": "<script type=\"text/javascript\">\r\n    \r\n    \r\n    $(document).ready(function(){\r\n        \r\n        if(!$(\"div[id*=multi_tipos_documentos] input\").eq(1).is(\":checked\")){\r\n            \r\n            \r\n            $(\"div[id*=field11]\").show();\r\n            $(\"div[id*=field22_documentosSeparados]\").parent().hide();\r\n            //get value from field that controls if the WF number is automatically generated or not\r\n            var estados = FormUtil.getValues(\"field11.documento_valido\");\r\n            var count = 0;\r\n    \r\n            if(estados != null && estados.length > 0){\r\n                for (var i = 0; i < estados.length; i++) {\r\n                    if(estados[i] === \"NAO\"){\r\n                        count++;\r\n                    }\r\n                }\r\n            }\r\n            var estado_ficheiro = FormUtil.getField(\"estado_ficheiro\");\r\n            \r\n            if(count > 0){\r\n                $(estado_ficheiro).val(\"NAO\"); //set value\r\n            }else{\r\n                $(estado_ficheiro).val(\"SIM\"); //set value\r\n            }\r\n            \r\n        }else{\r\n            $(\"div[id*=field11]\").hide();\r\n            $(\"div[id*=field22_documentosSeparados]\").parent().show();\r\n            \r\n            var estado_ficheiro = FormUtil.getField(\"estado_ficheiro\");\r\n            if($(\"div[id*=field22_documentosSeparados_documento_valido] input\").eq(0).is(':checked')){\r\n                $(estado_ficheiro).val(\"SIM\");\r\n            }else if($(\"div[id*=field22_documentosSeparados_documento_valido] input\").eq(1).is(':checked')){\r\n                 $(estado_ficheiro).val(\"NAO\");\r\n            }\r\n            \r\n            $(\"input[id*=field22_documentosSeparados_id_processo]\").val($(\"input#id_processo\").val());\r\n            \r\n            \r\n        }\r\n        \r\n        //Verificar se a tabela tem tipos de documentos, caso tenha bloqueia opção de único tipo de documento\r\n        if($(\"tr[id*=field11]\").length > 0){\r\n            $(\"input[name=multi_tipos_documentos]\").eq(1).attr(\"disabled\",true);\r\n            \r\n        }else{\r\n            $(\"input[name=multi_tipos_documentos]\").eq(1).attr(\"disabled\",false);\r\n        }\r\n        \r\n\r\n    });\r\n    \r\n    $(document).change(function(){\r\n        \r\n        if(!$(\"div[id*=multi_tipos_documentos] input\").eq(1).is(\":checked\")){\r\n            $(\"div[id*=field22_documentosSeparados]\").parent().hide();\r\n            $(\"div[id*=field11]\").show();\r\n            //get value from field that controls if the WF number is automatically generated or not\r\n            var estados = FormUtil.getValues(\"field11.documento_valido\");\r\n            var count = 0;\r\n            \r\n            if(estados != null && estados.length > 0){\r\n                for (var i = 0; i < estados.length; i++) {\r\n                    if(estados[i] === \"NAO\"){\r\n                        count++;\r\n                    }\r\n                }\r\n            }\r\n            var estado_ficheiro = FormUtil.getField(\"estado_ficheiro\");\r\n            \r\n            if(count > 0){\r\n                $(estado_ficheiro).val(\"NAO\"); //set value\r\n            }else{\r\n                $(estado_ficheiro).val(\"SIM\"); //set value\r\n            }\r\n            \r\n            var docTypes = \"\";\r\n            $(\"div[id^=formgrid_field11] tr.grid-row span[id*=tipo_documento]\").each(function(){\r\n                docTypes += $(this).text().trim() + \" | \";\r\n                \r\n            });\r\n            docTypes=docTypes.slice(0, docTypes.length - 1);\r\n            $(\"input#tipo_ficheiros\").attr('value', docTypes);\r\n            \r\n            \r\n        }else{\r\n            $(\"div[id*=field11]\").hide();\r\n            $(\"div[id*=field22_documentosSeparados]\").parent().show();\r\n            \r\n            var estado_ficheiro = FormUtil.getField(\"estado_ficheiro\");\r\n            if($(\"div[id*=field22_documentosSeparados_documento_valido] input\").eq(0).is(':checked')){\r\n                $(estado_ficheiro).val(\"SIM\");\r\n            }else if($(\"div[id*=field22_documentosSeparados_documento_valido] input\").eq(1).is(':checked')){\r\n                 $(estado_ficheiro).val(\"NAO\");\r\n                \r\n            }\r\n            $(\"input[id*=field22_documentosSeparados_id_processo]\").val($(\"input#id_processo\").val());\r\n            \r\n            var docType = $(\"select[id*=documentosSeparados_tipo_documento]\").find(\":selected\").val();\r\n            $(\"input#tipo_ficheiros\").attr('value', docType);\r\n            \r\n        }\r\n        \r\n        \r\n        //Verificar se a tabela tem tipos de documentos, caso tenha bloqueia opção de único tipo de documento\r\n        if($(\"tr[id*=field11]\").length > 0){\r\n            $(\"input[name=multi_tipos_documentos]\").eq(1).attr(\"disabled\",true);\r\n            \r\n        }else{\r\n            $(\"input[name=multi_tipos_documentos]\").eq(1).attr(\"disabled\",false);\r\n        }\r\n    });\r\n    \r\n<\/script>"
+                            "value": "<script type=\"text/javascript\">\r\n    \r\n    \r\n    $(document).ready(function(){\r\n        \r\n        //get value from field that controls if the WF number is automatically generated or not\r\n        var estados = FormUtil.getValues(\"field11.documento_valido\");\r\n        var count = 0;\r\n        \r\n        if(estados != null && estados.length > 0){\r\n            for (var i = 0; i < estados.length; i++) {\r\n                if(estados[i] === \"NAO\"){\r\n                    count++;\r\n                }\r\n            }\r\n        }\r\n        var estado_ficheiro = FormUtil.getField(\"estado_ficheiro\");\r\n        \r\n        if(count > 0){\r\n            $(estado_ficheiro).val(\"NAO\"); //set value\r\n        }else{\r\n            $(estado_ficheiro).val(\"SIM\"); //set value\r\n        }\r\n        \r\n        \r\n        //Verificar se a tabela tem tipos de documentos, caso tenha bloqueia opção de único tipo de documento\r\n        if($(\"tr[id*=field11]\").length > 0){\r\n            $(\"input[name=multi_tipos_documentos]\").eq(1).attr(\"disabled\",true);\r\n            \r\n        }else{\r\n            $(\"input[name=multi_tipos_documentos]\").eq(1).attr(\"disabled\",false);\r\n        }\r\n        \r\n    });\r\n    \r\n    $(document).change(function(){\r\n        \r\n        //get value from field that controls if the WF number is automatically generated or not\r\n        var estados = FormUtil.getValues(\"field11.documento_valido\");\r\n        var count = 0;\r\n        \r\n        if(estados != null && estados.length > 0){\r\n            for (var i = 0; i < estados.length; i++) {\r\n                if(estados[i] === \"NAO\"){\r\n                    count++;\r\n                }\r\n            }\r\n        }\r\n        var estado_ficheiro = FormUtil.getField(\"estado_ficheiro\");\r\n        \r\n        if(count > 0){\r\n            $(estado_ficheiro).val(\"NAO\"); //set value\r\n        }else{\r\n            $(estado_ficheiro).val(\"SIM\"); //set value\r\n        }\r\n        \r\n        var docTypes = \"\";\r\n        $(\"div[id^=formgrid_field11] tr.grid-row span[id*=tipo_documento]\").each(function(){\r\n            docTypes += $(this).text().trim() + \" | \";\r\n            \r\n        });\r\n        \r\n        docTypes=docTypes.slice(0, docTypes.length - 1);\r\n        $(\"input#tipo_ficheiros\").attr('value', docTypes);\r\n        \r\n        \r\n        //Verificar se a tabela tem tipos de documentos, caso tenha bloqueia opção de único tipo de documento\r\n        if($(\"tr[id*=field11]\").length > 0){\r\n            $(\"input[name=multi_tipos_documentos]\").eq(1).attr(\"disabled\",true);\r\n            \r\n        }else{\r\n            $(\"input[name=multi_tipos_documentos]\").eq(1).attr(\"disabled\",false);\r\n        }\r\n    });\r\n    \r\n<\/script>"
                         }
                     }
                 ],
@@ -564,9 +611,9 @@
             }],
             "properties": {
                 "comment": "",
-                "id": "section3",
+                "id": "section5",
                 "join": "",
-                "label": "Tipos de Documentos",
+                "label": "",
                 "loadBinder": {
                     "className": "",
                     "properties": {}
@@ -576,21 +623,6 @@
                     "properties": {}
                 },
                 "permissionReadonly": "",
-                "permission_rules": {
-                    "2d5b66a5-a9cb-5ffa-bfae-908ff7c801cf": {},
-                    "4eadf25e-a6ae-5c28-23ee-74fa93baba69": {},
-                    "52e1b920-6773-f986-e477-c378d0553021": {},
-                    "6d298317-99a8-54fd-e8ad-1873aee58f16": {},
-                    "718d5349-6f95-b82b-51b6-2c8e3f3cae78": {},
-                    "905528b0-444a-645b-77f3-a7aa12612611": {},
-                    "9de7f6a8-1d7c-13d5-e7fc-b76eb2395504": {},
-                    "aaffb350-ce47-00c4-ce5b-6458ca217e7b": {},
-                    "ac361275-02b8-99df-5b74-6bf70778aa79": {
-                        "permissionHidden": "",
-                        "readonly": ""
-                    },
-                    "bb3e96c1-d61f-4c1c-f075-93ca3b6103dc": {}
-                },
                 "readonly": "",
                 "readonlyLabel": "",
                 "regex": "",
@@ -607,32 +639,51 @@
             "className": "org.joget.apps.form.model.Section",
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
-                "elements": [{
-                    "className": "org.joget.apps.form.lib.SubForm",
-                    "properties": {
-                        "formDefId": "HIPDocumentosSeparados",
-                        "id": "field22",
-                        "label": "",
-                        "loadBinder": {
-                            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
-                            "properties": {}
-                        },
-                        "noframe": "",
-                        "parentSubFormId": "",
-                        "permission_rules": {
-                            "905528b0-444a-645b-77f3-a7aa12612611": {},
-                            "9de7f6a8-1d7c-13d5-e7fc-b76eb2395504": {},
-                            "ac361275-02b8-99df-5b74-6bf70778aa79": {}
-                        },
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "storeBinder": {
-                            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
-                            "properties": {}
-                        },
-                        "subFormParentId": "doc_id"
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.SubForm",
+                        "properties": {
+                            "formDefId": "HIPDocumentosSeparados",
+                            "id": "field22",
+                            "label": "",
+                            "loadBinder": {
+                                "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+                                "properties": {}
+                            },
+                            "noframe": "",
+                            "parentSubFormId": "",
+                            "permission_rules": {
+                                "905528b0-444a-645b-77f3-a7aa12612611": {},
+                                "9de7f6a8-1d7c-13d5-e7fc-b76eb2395504": {},
+                                "ac361275-02b8-99df-5b74-6bf70778aa79": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "storeBinder": {
+                                "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+                                "properties": {}
+                            },
+                            "subFormParentId": "doc_id"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "add_estado",
+                            "label": "",
+                            "permission_rules": {
+                                "905528b0-444a-645b-77f3-a7aa12612611": {},
+                                "9de7f6a8-1d7c-13d5-e7fc-b76eb2395504": {},
+                                "ac361275-02b8-99df-5b74-6bf70778aa79": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                }
+                            },
+                            "value": "<script type=\"text/javascript\">\r\n    \r\n    \r\n    $(document).ready(function(){\r\n        \r\n        $(\"div[id*=field11]\").hide();\r\n        $(\"div[id*=field22_documentosSeparados]\").parent().show();\r\n        \r\n        var estado_ficheiro = FormUtil.getField(\"estado_ficheiro\");\r\n        if($(\"div[id*=field22_documentosSeparados_documento_valido] input\").eq(0).is(':checked')){\r\n            $(estado_ficheiro).val(\"SIM\");\r\n        }else if($(\"div[id*=field22_documentosSeparados_documento_valido] input\").eq(1).is(':checked')){\r\n             $(estado_ficheiro).val(\"NAO\");\r\n        }\r\n        \r\n        $(\"input[id*=field22_documentosSeparados_id_processo]\").val($(\"input#id_processo\").val());\r\n        \r\n        \r\n        //Verificar se a tabela tem tipos de documentos, caso tenha bloqueia opção de único tipo de documento\r\n        if($(\"tr[id*=field11]\").length > 0){\r\n            $(\"input[name=multi_tipos_documentos]\").eq(1).attr(\"disabled\",true);\r\n            \r\n        }else{\r\n            $(\"input[name=multi_tipos_documentos]\").eq(1).attr(\"disabled\",false);\r\n        }\r\n        \r\n\r\n    });\r\n    \r\n    $(document).change(function(){\r\n        \r\n        $(\"div[id*=field11]\").hide();\r\n        $(\"div[id*=field22_documentosSeparados]\").parent().show();\r\n        \r\n        var estado_ficheiro = FormUtil.getField(\"estado_ficheiro\");\r\n        if($(\"div[id*=field22_documentosSeparados_documento_valido] input\").eq(0).is(':checked')){\r\n            $(estado_ficheiro).val(\"SIM\");\r\n        }else if($(\"div[id*=field22_documentosSeparados_documento_valido] input\").eq(1).is(':checked')){\r\n             $(estado_ficheiro).val(\"NAO\");\r\n            \r\n        }\r\n        $(\"input[id*=field22_documentosSeparados_id_processo]\").val($(\"input#id_processo\").val());\r\n        \r\n        var docType = $(\"select[id*=documentosSeparados_tipo_documento]\").find(\":selected\").val();\r\n        $(\"input#tipo_ficheiros\").attr('value', docType);\r\n        \r\n        \r\n        //Verificar se a tabela tem tipos de documentos, caso tenha bloqueia opção de único tipo de documento\r\n        if($(\"tr[id*=field11]\").length > 0){\r\n            $(\"input[name=multi_tipos_documentos]\").eq(1).attr(\"disabled\",true);\r\n            \r\n        }else{\r\n            $(\"input[name=multi_tipos_documentos]\").eq(1).attr(\"disabled\",false);\r\n        }\r\n    });\r\n    \r\n<\/script>"
+                        }
                     }
-                }],
+                ],
                 "properties": {"width": "100%"}
             }],
             "properties": {
@@ -671,42 +722,6 @@
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
                 "elements": [
-                    {
-                        "className": "org.joget.apps.form.lib.TextField",
-                        "properties": {
-                            "encryption": "",
-                            "id": "proc_chave_mao",
-                            "label": "Procuração Chave na Mão",
-                            "maxlength": "",
-                            "permission_rules": {
-                                "2d5b66a5-a9cb-5ffa-bfae-908ff7c801cf": {
-                                    "permissionHidden": "true",
-                                    "readonly": ""
-                                },
-                                "4eadf25e-a6ae-5c28-23ee-74fa93baba69": {},
-                                "52e1b920-6773-f986-e477-c378d0553021": {},
-                                "6d298317-99a8-54fd-e8ad-1873aee58f16": {},
-                                "718d5349-6f95-b82b-51b6-2c8e3f3cae78": {},
-                                "905528b0-444a-645b-77f3-a7aa12612611": {},
-                                "9de7f6a8-1d7c-13d5-e7fc-b76eb2395504": {},
-                                "aaffb350-ce47-00c4-ce5b-6458ca217e7b": {},
-                                "ac361275-02b8-99df-5b74-6bf70778aa79": {},
-                                "bb3e96c1-d61f-4c1c-f075-93ca3b6103dc": {}
-                            },
-                            "placeholder": "",
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "storeNumeric": "",
-                            "style": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    },
                     {
                         "className": "org.joget.apps.form.lib.TextField",
                         "properties": {
