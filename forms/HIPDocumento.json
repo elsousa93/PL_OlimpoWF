@@ -379,46 +379,65 @@
             "className": "org.joget.apps.form.model.Section",
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
-                "elements": [{
-                    "className": "org.joget.apps.form.lib.Radio",
-                    "properties": {
-                        "controlField": "",
-                        "id": "multi_tipos_documentos",
-                        "label": "Ficheiro com várias tipologias?",
-                        "options": [
-                            {
-                                "grouping": "",
-                                "label": "Sim",
-                                "value": "SIM"
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.Radio",
+                        "properties": {
+                            "controlField": "",
+                            "id": "multi_tipos_documentos",
+                            "label": "Ficheiro com várias tipologias?",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Sim",
+                                    "value": "SIM"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Não",
+                                    "value": "NAO"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
                             },
-                            {
-                                "grouping": "",
-                                "label": "Não",
-                                "value": "NAO"
-                            }
-                        ],
-                        "optionsBinder": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "permission_rules": {
-                            "905528b0-444a-645b-77f3-a7aa12612611": {},
-                            "9de7f6a8-1d7c-13d5-e7fc-b76eb2395504": {},
-                            "ac361275-02b8-99df-5b74-6bf70778aa79": {
-                                "permissionHidden": "",
-                                "readonly": ""
-                            }
-                        },
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "NAO",
-                        "workflowVariable": ""
+                            "permission_rules": {
+                                "905528b0-444a-645b-77f3-a7aa12612611": {},
+                                "9de7f6a8-1d7c-13d5-e7fc-b76eb2395504": {},
+                                "ac361275-02b8-99df-5b74-6bf70778aa79": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "NAO",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "add_estado",
+                            "label": "",
+                            "permission_rules": {
+                                "905528b0-444a-645b-77f3-a7aa12612611": {},
+                                "9de7f6a8-1d7c-13d5-e7fc-b76eb2395504": {},
+                                "ac361275-02b8-99df-5b74-6bf70778aa79": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                }
+                            },
+                            "value": "<script type=\"text/javascript\">\r\n    \r\n    \r\n    $(document).ready(function(){\r\n        var multiplos_docs = FormUtil.getValue(\"multi_tipos_documentos\");\r\n        var estado_ficheiro = FormUtil.getField(\"estado_ficheiro\");\r\n        \r\n        if(multiplos_docs === 'SIM'){\r\n            //get value from field that controls if the WF number is automatically generated or not\r\n            var estados = FormUtil.getValues(\"field11.documento_valido\");\r\n            var count = 0;\r\n            \r\n            if(estados != null && estados.length > 0){\r\n                for (var i = 0; i < estados.length; i++) {\r\n                    if(estados[i] === \"NAO\"){\r\n                        count++;\r\n                    }\r\n                }\r\n            }\r\n            \r\n            \r\n            if(count > 0){\r\n                $(estado_ficheiro).val(\"NAO\"); //set value\r\n            }else{\r\n                $(estado_ficheiro).val(\"SIM\"); //set value\r\n            }\r\n            \r\n        }else{\r\n            if($(\"div[id*=field22_documentosSeparados_documento_valido] input\").eq(0).is(':checked')){\r\n                $(estado_ficheiro).val(\"SIM\");\r\n            }else if($(\"div[id*=field22_documentosSeparados_documento_valido] input\").eq(1).is(':checked')){\r\n                 $(estado_ficheiro).val(\"NAO\");\r\n            }\r\n            \r\n            //$(\"input[id*=field22_documentosSeparados_id_processo]\").val($(\"input#id_processo\").val());\r\n        }\r\n        \r\n        //Verificar se a tabela tem tipos de documentos, caso tenha bloqueia opção de único tipo de documento\r\n        if($(\"tr[id*=field11]\").length > 0){\r\n            $(\"input[name=multi_tipos_documentos]\").eq(1).attr(\"disabled\",true);\r\n            \r\n        }else{\r\n            $(\"input[name=multi_tipos_documentos]\").eq(1).attr(\"disabled\",false);\r\n        }\r\n        \r\n    });\r\n    \r\n    $(document).change(function(){\r\n        var multiplos_docs = FormUtil.getValue(\"multi_tipos_documentos\");\r\n        var estado_ficheiro = FormUtil.getField(\"estado_ficheiro\");\r\n        var tipoFicheiros = FormUtil.getField(\"tipo_ficheiros\");\r\n        \r\n        if(multiplos_docs === 'SIM'){\r\n            //get value from field that controls if the WF number is automatically generated or not\r\n            var estados = FormUtil.getValues(\"field11.documento_valido\");\r\n            var count = 0;\r\n            \r\n            if(estados != null && estados.length > 0){\r\n                for (var i = 0; i < estados.length; i++) {\r\n                    if(estados[i] === \"NAO\"){\r\n                        count++;\r\n                    }\r\n                }\r\n            }\r\n            \r\n            if(count > 0){\r\n                $(estado_ficheiro).val(\"NAO\"); //set value\r\n            }else{\r\n                $(estado_ficheiro).val(\"SIM\"); //set value\r\n            }\r\n            \r\n            var docTypes = \"\";\r\n            var tipos = FormUtil.getValues(\"field11.tipo_documento\");\r\n            if(tipos != null && tipos.length > 0){\r\n                for (var i = 0; i < tipos.length; i++) {\r\n                    docTypes += tipos[i] + \";\";\r\n                }\r\n            }\r\n            \r\n            docTypes=docTypes.slice(0, docTypes.length - 1);\r\n            \r\n            $(tipoFicheiros).val(docTypes);\r\n        }else{\r\n            if($(\"div[id*=field22_documentosSeparados_documento_valido] input\").eq(0).is(':checked')){\r\n                $(estado_ficheiro).val(\"SIM\");\r\n            }else if($(\"div[id*=field22_documentosSeparados_documento_valido] input\").eq(1).is(':checked')){\r\n                 $(estado_ficheiro).val(\"NAO\");\r\n            }\r\n            //$(\"input[id*=field22_documentosSeparados_id_processo]\").val($(\"input#id_processo\").val());\r\n            \r\n            var docType = FormUtil.getValue(\"tipo_documento\");\r\n            $(tipoFicheiros).val(docType);\r\n        }\r\n        \r\n        //Verificar se a tabela tem tipos de documentos, caso tenha bloqueia opção de único tipo de documento\r\n        if($(\"tr[id*=field11]\").length > 0){\r\n            $(\"input[name=multi_tipos_documentos]\").eq(1).attr(\"disabled\",true);\r\n            \r\n        }else{\r\n            $(\"input[name=multi_tipos_documentos]\").eq(1).attr(\"disabled\",false);\r\n        }\r\n    });\r\n    \r\n<\/script>"
+                        }
                     }
-                }],
+                ],
                 "properties": {"width": "100%"}
             }],
             "properties": {
@@ -587,23 +606,6 @@
                             "useDefaultWhenEmpty": "",
                             "value": "",
                             "workflowVariable": ""
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.CustomHTML",
-                        "properties": {
-                            "autoPopulate": "",
-                            "id": "add_estado",
-                            "label": "",
-                            "permission_rules": {
-                                "905528b0-444a-645b-77f3-a7aa12612611": {},
-                                "9de7f6a8-1d7c-13d5-e7fc-b76eb2395504": {},
-                                "ac361275-02b8-99df-5b74-6bf70778aa79": {
-                                    "permissionHidden": "",
-                                    "readonly": ""
-                                }
-                            },
-                            "value": "<script type=\"text/javascript\">\r\n    \r\n    \r\n    $(document).ready(function(){\r\n        \r\n        //get value from field that controls if the WF number is automatically generated or not\r\n        var estados = FormUtil.getValues(\"field11.documento_valido\");\r\n        var count = 0;\r\n        \r\n        if(estados != null && estados.length > 0){\r\n            for (var i = 0; i < estados.length; i++) {\r\n                if(estados[i] === \"NAO\"){\r\n                    count++;\r\n                }\r\n            }\r\n        }\r\n        var estado_ficheiro = FormUtil.getField(\"estado_ficheiro\");\r\n        \r\n        if(count > 0){\r\n            $(estado_ficheiro).val(\"NAO\"); //set value\r\n        }else{\r\n            $(estado_ficheiro).val(\"SIM\"); //set value\r\n        }\r\n        \r\n        var docTypes = \"\";\r\n        var tipos = FormUtil.getValues(\"field11.tipo_documento\");\r\n        if(tipos != null && tipos.length > 0){\r\n            for (var i = 0; i < tipos.length; i++) {\r\n                docTypes += tipos[i] + \";\";\r\n            }\r\n        }\r\n        \r\n        //docTypes=docTypes.slice(0, docTypes.length - 1);\r\n        var tipoFicheiros = FormUtil.getField(\"tipo_ficheiros\");\r\n        $(tipoFicheiros).val(docTypes);\r\n        \r\n        //Verificar se a tabela tem tipos de documentos, caso tenha bloqueia opção de único tipo de documento\r\n        if($(\"tr[id*=field11]\").length > 0){\r\n            $(\"input[name=multi_tipos_documentos]\").eq(1).attr(\"disabled\",true);\r\n            \r\n        }else{\r\n            $(\"input[name=multi_tipos_documentos]\").eq(1).attr(\"disabled\",false);\r\n        }\r\n        \r\n    });\r\n    \r\n    $(document).change(function(){\r\n        \r\n        //get value from field that controls if the WF number is automatically generated or not\r\n        var estados = FormUtil.getValues(\"field11.documento_valido\");\r\n        var count = 0;\r\n        \r\n        if(estados != null && estados.length > 0){\r\n            for (var i = 0; i < estados.length; i++) {\r\n                if(estados[i] === \"NAO\"){\r\n                    count++;\r\n                }\r\n            }\r\n        }\r\n        var estado_ficheiro = FormUtil.getField(\"estado_ficheiro\");\r\n        \r\n        if(count > 0){\r\n            $(estado_ficheiro).val(\"NAO\"); //set value\r\n        }else{\r\n            $(estado_ficheiro).val(\"SIM\"); //set value\r\n        }\r\n        \r\n        var docTypes = \"\";\r\n        var tipos = FormUtil.getValues(\"field11.tipo_documento\");\r\n        if(tipos != null && tipos.length > 0){\r\n            for (var i = 0; i < tipos.length; i++) {\r\n                docTypes += tipos[i] + \";\";\r\n            }\r\n        }\r\n        \r\n        docTypes=docTypes.slice(0, docTypes.length - 1);\r\n        var tipoFicheiros = FormUtil.getField(\"tipo_ficheiros\");\r\n        $(tipoFicheiros).val(docTypes);\r\n        \r\n        \r\n        //Verificar se a tabela tem tipos de documentos, caso tenha bloqueia opção de único tipo de documento\r\n        if($(\"tr[id*=field11]\").length > 0){\r\n            $(\"input[name=multi_tipos_documentos]\").eq(1).attr(\"disabled\",true);\r\n            \r\n        }else{\r\n            $(\"input[name=multi_tipos_documentos]\").eq(1).attr(\"disabled\",false);\r\n        }\r\n    });\r\n    \r\n<\/script>"
                         }
                     }
                 ],
