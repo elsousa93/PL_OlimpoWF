@@ -187,6 +187,9 @@
         <Participant Id="modelo11" Name="Modelo 11">
             <ParticipantType Type="ROLE"/>
         </Participant>
+        <Participant Id="AO_Sistema" Name="Sistema">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
     </Participants>
     <Applications>
         <Application Id="default_application"/>
@@ -7143,6 +7146,11 @@
                         <BasicType Type="STRING"/>
                     </DataType>
                 </DataField>
+                <DataField Id="id_atividade_acompanhamento" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
             </DataFields>
             <Activities>
                 <Activity Id="acompanhamento" Name="Acompanhamento">
@@ -7150,6 +7158,10 @@
                         <No/>
                     </Implementation>
                     <Performer>acompanhamento_outorgas</Performer>
+                    <Deadline Execution="ASYNCHR">
+                        <DeadlineCondition>var d = new java.text.SimpleDateFormat('yyyy-MM-dd'); d.parse("#date.yyyy-MM-dd#");</DeadlineCondition>
+                        <ExceptionName>notifyEntity</ExceptionName>
+                    </Deadline>
                     <TransitionRestrictions>
                         <TransitionRestriction>
                             <Join Type="XOR"/>
@@ -7157,7 +7169,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="acompanhamento_outorgas"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="580,42.1875"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="352,39.1875"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="ConfigurarProcessoAO" Name="Configurar Processo AO">
@@ -7174,29 +7186,44 @@
                     <Implementation>
                         <Tool Id="default_application"/>
                     </Implementation>
-                    <Performer>acompanhamento_outorgas</Performer>
+                    <Performer>AO_Sistema</Performer>
                     <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="acompanhamento_outorgas"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="393,41"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="AO_Sistema"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="510,58.8125"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route1">
+                    <Route/>
+                    <Performer>AO_Sistema</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="AO_Sistema"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="385,62.203125"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
             <Transitions>
-                <Transition From="ConfigurarProcessoAO" Id="transition2" To="notificarEntidade">
+                <Transition From="ConfigurarProcessoAO" Id="transition4" To="acompanhamento">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="notificarEntidade" Id="transition3" To="acompanhamento">
+                <Transition From="acompanhamento" Id="transition3" To="route1">
+                    <Condition Type="EXCEPTION">notifyEntity</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route1" Id="transition5" To="notificarEntidade">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
             </Transitions>
             <ExtendedAttributes>
-                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="acompanhamento_outorgas"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="acompanhamento_outorgas;AO_Sistema"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=acompanhamento_outorgas,CONNECTING_ACTIVITY_ID=ConfigurarProcessoAO,X_OFFSET=84,Y_OFFSET=56,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=acompanhamento_outorgas,CONNECTING_ACTIVITY_ID=acompanhamento,X_OFFSET=765,Y_OFFSET=58,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=AO_Sistema,CONNECTING_ACTIVITY_ID=notificarEntidade,X_OFFSET=672,Y_OFFSET=71,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=acompanhamento_outorgas,CONNECTING_ACTIVITY_ID=acompanhamento,X_OFFSET=713,Y_OFFSET=48,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="processoTesteAssync" Name="Processo Teste Assync">
