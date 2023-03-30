@@ -7894,6 +7894,11 @@
                         <BasicType Type="STRING"/>
                     </DataType>
                 </DataField>
+                <DataField Id="estado" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
             </DataFields>
             <Activities>
                 <Activity Id="registo" Name="Registo">
@@ -8041,8 +8046,10 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route1" Id="transition5" To="configurarValidacaoEntidades">
+                    <Condition Type="CONDITION">tipo_entidade === 'autonoma'</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;tipo_entidade&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;autonoma&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="configurarValidacaoEntidades" Id="transition6" To="validacaoEntidadesAutonomas">
@@ -8056,18 +8063,22 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route2" Id="transition11" To="ConfigurarAtividadeAO">
+                    <Condition Type="OTHERWISE"/>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route1" Id="transition12" To="ConfigurarAtividadeRegisto">
+                    <Condition Type="OTHERWISE"/>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route2" Id="transition10" To="ConfigurarAtividadeRegisto">
+                    <Condition Type="CONDITION">estado === 'OK'</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;estado&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;OK&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="ConfigurarAtividadeRegisto" Id="transition13" To="registo">
