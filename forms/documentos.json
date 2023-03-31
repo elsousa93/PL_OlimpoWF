@@ -238,19 +238,6 @@
                         "className": "org.joget.apps.form.lib.CustomHTML",
                         "properties": {
                             "autoPopulate": "",
-                            "id": "field4",
-                            "label": "",
-                            "permission_rules": {
-                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
-                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
-                            },
-                            "value": "<script type=\"text/javascript\">\r\n$(function(){\r\n     $('.grid-action-add').html(\"<br> <b>ADICIONAR FICHEIRO ÚNICO<\/b>\"); \r\n     $('.grid-action-add').css(\"display\", \"inline\"); \r\n     $('.grid-action-add').css(\"vertical-align\", \"text-bottom\"); \r\n});\r\n<\/script>"
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.CustomHTML",
-                        "properties": {
-                            "autoPopulate": "",
                             "id": "visualizarPDF",
                             "label": "",
                             "permission_rules": {
@@ -258,6 +245,19 @@
                                 "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
                             },
                             "value": "<div id=\"pdfPreview\" style=\"display:none;\">\r\n    <object\r\n      data=\"pdfFilePath\" width=\"100%\" height=\"100%\">\r\n      <iframe src=\"pdfFilePath\" width=\"100%\" height=\"100%\" style=\"border: none;\">\r\n        <p>Your browser does not support PDFs. <a href=\"pdfFilePath\">Download the PDF<\/a>.<\/p>\r\n      <\/iframe>\r\n    <\/object>\r\n<\/div>\r\n\r\n<script type=\"text/javascript\">\r\n\r\n $(document).change(function(){\r\n        var fileChange = sessionStorage.getItem(\"fileChange\");\r\n        \r\n        if(fileChange === \"SIM\"){\r\n            $(\"#multiPaged_5_documentos_field6_documento > a\").attr(\"href\",\"#\");\r\n            $(\"#multiPaged_5_documentos_field6_documento > a\").unbind(\"click\").bind(\"click\", function(e){\r\n                e.preventDefault();\r\n                alert(\"É necessário gravar o formulário antes de visualizar os ficheiros\");\r\n            });\r\n            \r\n        }\r\n });     \r\n \r\n /*\r\n //Função que faz a alteração do link dos documentos de modo a abri-los numa janela popup\r\n$(function(){\r\n    $(\"#multiPaged_5_documentos_field6_documento > a\").click(function(e){\r\n    url = $(this).attr(\"href\");\r\n    var found = url.match(/[0-9a-fA-F]{8}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{12}_[0-9]+\\//gi);\r\n    console.log(found);\r\n    if(found!=null){\r\n        found=found[0].slice(0,-3);\r\n        \r\n        url=url.replace(/[0-9a-fA-F]{8}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{12}_[0-9]+/gi, found);\r\n    }\r\n    var novoUrl = url.replace(/attachment=true/g,\"__a_=workflowPL&__u_=UV_PL_Geral\");\r\n    console.log(novoUrl);\r\n    \r\n    $(this).attr(\"href\",novoUrl);\r\n    if($(\"novoUrl:contains(.pdf.)\")){\r\n        e.preventDefault();\r\n        showPopupActionDialog(novoUrl);\r\n    }\r\n        \r\n    });\r\n});*/\r\n\r\nfunction saveFilesWarning(){\r\n    alert(\"É necessário guardar o formulário para aceder aos ficheiros\");\r\n}\r\n\r\n/*\r\n//Função que faz abrir a janela de popup para visualizar o ficheiro\r\nfunction showPopupActionDialog(url){\r\n    var wWidth = $(window).width();\r\n    var dWidth = wWidth * 0.9;\r\n    var wHeight = $(window).height();\r\n    var dHeight = wHeight * 0.9;\r\n    \r\n  \r\n        var previewObj = $( \"#pdfPreview\" ).clone().html(function(index,html){\r\n            return html.replace(/pdfFilePath/g, url);\r\n        });\r\n        \r\n        var inputDialog = $(previewObj).dialog({\r\n            autoOpen: true,\r\n            height: dHeight,\r\n            width: dWidth,\r\n            modal: true,\r\n            buttons: [\r\n                {\r\n                text: \"Fechar\",\r\n                  click: function() {\r\n                    inputDialog.dialog( \"close\" );\r\n                  }\r\n                }\r\n            ]\r\n        });\r\n}*/\r\n\r\n<\/script>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field4",
+                            "label": "",
+                            "permission_rules": {
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "value": "<script type=\"text/javascript\">\r\n$(function(){\r\n     $('.grid-action-add').html(\"<br> <b>ADICIONAR FICHEIRO ÚNICO<\/b>\"); \r\n     $('.grid-action-add').css(\"display\", \"inline\"); \r\n     $('.grid-action-add').css(\"vertical-align\", \"text-bottom\"); \r\n});\r\n<\/script>"
                         }
                     },
                     {
@@ -460,7 +460,7 @@
                                 "className": "org.joget.apps.form.lib.BeanShellValidator",
                                 "properties": {
                                     "decoration": "*",
-                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\n\r\npublic boolean faseValidacaoEntidades(Element element, FormData formData){\r\n\r\n    //Configure field to validate - UPDATE HERE\r\n    String fieldId = \"valido_para_registos\";\r\n    String campo = FormUtil.getElementParameterName(element);\r\n    \r\n    String flagUltimaAtividade ='#variable.flag_ultima_atividade#';\r\n    Boolean result = false;\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    LogUtil.info(\"String\", \"Field Value \" + fieldValue);\r\n    LogUtil.info(\"String\", \"flagUltimaAtividade \" + flagUltimaAtividade);\r\n    \r\n    if ((fieldValue == null || fieldValue.equals(\"\")) && flagUltimaAtividade.equals(\"0\")){\r\n        formData.addFormError(campo, \"Campo obrigatório\");\r\n        result = false;\r\n    } else{\r\n        result = false;  \r\n    }\r\n    \r\n    return result;\r\n}\r\n\r\n//call load method with injected variable\r\nreturn faseValidacaoEntidades(element, formData);"
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\n\r\npublic boolean faseValidacaoEntidades(Element element, FormData formData){\r\n\r\n    //Configure field to validate - UPDATE HERE\r\n    String fieldId = \"valido_para_registos\";\r\n    String campo = FormUtil.getElementParameterName(element);\r\n    \r\n    String flagUltimaAtividade = '#variable.flag_ultima_atividade#';\r\n    Boolean result = false;\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    LogUtil.info(\"String\", \"Field Value \" + fieldValue);\r\n    //LogUtil.info(\"String\", \"flagUltimaAtividade \" + flagUltimaAtividade);\r\n    \r\n    if ((fieldValue == null || fieldValue.equals(\"\"))){\r\n        formData.addFormError(campo, \"Campo obrigatório\");\r\n        result = false;\r\n    } else{\r\n        result = false;  \r\n    }\r\n    \r\n    return result;\r\n}\r\n\r\n//call load method with injected variable\r\nreturn faseValidacaoEntidades(element, formData);"
                                 }
                             },
                             "value": "",
