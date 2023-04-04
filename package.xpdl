@@ -190,6 +190,12 @@
         <Participant Id="AO_Sistema" Name="Sistema">
             <ParticipantType Type="ROLE"/>
         </Participant>
+        <Participant Id="dist_distrates_1" Name="DIST_1">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
+        <Participant Id="dist_distrates_2" Name="DIST_2">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
     </Participants>
     <Applications>
         <Application Id="default_application"/>
@@ -7124,7 +7130,7 @@
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=distrates,CONNECTING_ACTIVITY_ID=sub_processo_distrates,X_OFFSET=450,Y_OFFSET=43,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
-        <WorkflowProcess Id="DSTDistrates" Name="DIST - Distrates">
+        <WorkflowProcess Id="DSTDistrates" Name="DST - Distrates">
             <ProcessHeader DurationUnit="h"/>
             <FormalParameters>
                 <FormalParameter Id="user_distrates" Mode="INOUT">
@@ -7146,21 +7152,38 @@
                 </DataField>
             </DataFields>
             <Activities>
-                <Activity Id="processamento" Name="Processamento">
+                <Activity Id="ConfigurarProcessoDIST" Name="Configurar Processo">
                     <Implementation>
-                        <No/>
+                        <Tool Id="default_application"/>
                     </Implementation>
                     <Performer>dist_distrates</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_distrates"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="207,29"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="199,39.187503051757815"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="preenchimentoProcesso" Name="Preenchimento dos Dados do Processo">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>dist_distrates_1</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_distrates_1"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="199,37.57499999999999"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
+            <Transitions>
+                <Transition From="ConfigurarProcessoDIST" Id="transition2" To="preenchimentoProcesso">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+            </Transitions>
             <ExtendedAttributes>
-                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="dist_distrates"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=dist_distrates,CONNECTING_ACTIVITY_ID=processamento,X_OFFSET=75,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=dist_distrates,CONNECTING_ACTIVITY_ID=processamento,X_OFFSET=456,Y_OFFSET=39,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="dist_distrates;dist_distrates_1;dist_distrates_2"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=dist_distrates,CONNECTING_ACTIVITY_ID=ConfigurarProcessoDIST,X_OFFSET=97,Y_OFFSET=55,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=dist_distrates_1,CONNECTING_ACTIVITY_ID=preenchimentoProcesso,X_OFFSET=441,Y_OFFSET=48,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="CHAcompanhamentoOutorgas" Name="CH-Acompanhamento-Outorgas">
