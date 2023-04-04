@@ -1,0 +1,312 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "lista_notas_id",
+                            "useDefaultWhenEmpty": "",
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "operativa",
+                            "label": "Operativa",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "true",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "extraCondition": "e.customProperties.nome_campo = 'fase_processo' and locate(cast(e.customProperties.value as string), '#currentUser.department.id#') > 0",
+                                    "formDefId": "adicionarOpcaoLV",
+                                    "groupingColumn": "",
+                                    "idColumn": "value",
+                                    "labelColumn": "label",
+                                    "useAjax": ""
+                                }
+                            },
+                            "permissionHidden": "",
+                            "permission_rules": {},
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.DatePicker",
+                        "properties": {
+                            "allowManual": "",
+                            "currentDateAs": "",
+                            "dataFormat": "",
+                            "datePickerType": "dateTime",
+                            "endDateFieldId": "",
+                            "format": "",
+                            "format24hr": "true",
+                            "id": "dateCreated",
+                            "label": "Data",
+                            "permissionHidden": "",
+                            "placeholder": "",
+                            "readonly": "true",
+                            "readonlyLabel": "",
+                            "startDateFieldId": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": "",
+                            "yearRange": "c-10:c+10"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "nome",
+                            "label": "Nome",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.plugin.enterprise.UserOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "",
+                                    "cacheInterval": "",
+                                    "deptId": "",
+                                    "emptyLabel": "",
+                                    "groupId": "",
+                                    "grouping": "",
+                                    "optionLabel": "fullname",
+                                    "orgId": "PL",
+                                    "useAjax": ""
+                                }
+                            },
+                            "permissionHidden": "",
+                            "readonly": "true",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "#currentUser.username#",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "tipo_anotacao",
+                            "label": "Tipo de Anotação",
+                            "multiple": "",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "",
+                                    "value": ""
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Informação",
+                                    "value": "informacao"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Cláusula",
+                                    "value": "clausula"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "set_operativa",
+                            "label": "",
+                            "value": "<script type=\"text/javascript\">\r\n    $(document).ready(function(){\r\n        //get values\r\n        var operativas = FormUtil.getValues(\"operativa\");\r\n        var length = $('select[name= \"operativa\"] option').length;\r\n        \r\n        //remove empty option if user only belongs to 1 operativa\r\n        if(length === 2){\r\n            $('[name = \"operativa\"]').find('option').get(0).remove();\r\n        }\r\n    });\r\n<\/script>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "edicao_botoes_default",
+                            "label": "",
+                            "permission_rules": {
+                                "1300a907-31a2-48ed-bf4c-1a7567ccad20": {},
+                                "197a8854-1304-fc77-205b-1d8db4b32f50": {},
+                                "3e334771-7c1d-4882-b298-443c91d6bf3e": {},
+                                "973de9e9-e890-860f-035e-b234371b728e": {},
+                                "c44d872b-cea6-6a40-8ece-c4160cfe0079": {},
+                                "c6f523f5-c981-dd70-ca03-ea8e9a69f2f1": {}
+                            },
+                            "value": "<script type=\"text/javascript\">\r\n$(function(){\r\n    $(\"#submit\").val(\"SUBMETER\");\r\n});\r\n\r\n<\/script>"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "cabecalho_anotacao",
+                "join": "",
+                "label": "Cabeçalho da Anotação",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.TextArea",
+                        "properties": {
+                            "cols": "20",
+                            "id": "anotacao",
+                            "label": "Nota (sem imagens)",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "rows": "5",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.plugin.enterprise.RichTextEditorField",
+                        "properties": {
+                            "editor": "quill",
+                            "height": "",
+                            "id": "notas_imagens",
+                            "label": "Nota (com imagens)",
+                            "permissionType": "",
+                            "placeholder": "",
+                            "qmode": "",
+                            "readonly": "",
+                            "switch": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "setTextAreaValue",
+                            "label": "",
+                            "value": "<script type=\"text/javascript\">\n    $(document).ready(function() {\n        \n        $(\"textarea#anotacao\").parent().hide();\n        \n        $(\".ql-editor\").on('input', function() {\n            //console.log($(\".ql-editor\")[0].innerText);\n            $(\"textarea#anotacao\").val($(\".ql-editor\")[0].innerText)\n    });\n});\n<\/script>"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "anotacao",
+                "join": "",
+                "label": "Anotações",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        }
+    ],
+    "properties": {
+        "description": "",
+        "id": "HIPNotasProcesso",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "HIP - Notas Processo",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "notas_proce_hip"
+    }
+}
