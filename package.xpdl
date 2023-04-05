@@ -7320,22 +7320,32 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="177,39.80000610351563"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="notificarEntidade" Name="Notificar Entidade">
+                <Activity Id="notificarEntidade" Name="Notificar Entidade (Autónoma/Semi-Autónoma)">
                     <Implementation>
                         <Tool Id="default_application"/>
                     </Implementation>
                     <Performer>AO_Sistema</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="AO_Sistema"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="677,60.8125"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="744,12.8125"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="route1">
+                <Activity Id="route1" Name="Tipo de Entidade?">
                     <Route/>
                     <Performer>AO_Sistema</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition5"/>
+                                    <TransitionRef Id="transition7"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="AO_Sistema"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="384,63.203125"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="384,84.203125"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="printActivityId" Name="Print Activity_Id">
@@ -7345,7 +7355,17 @@
                     <Performer>AO_Sistema</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="AO_Sistema"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="505,60.203125"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="544,13.203125"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="notificarEntidade2" Name="Notificar Entidade (Não-Autónoma)">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>AO_Sistema</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="AO_Sistema"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="744,131.203125"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -7364,6 +7384,7 @@
                 <Transition From="route1" Id="transition5" To="printActivityId">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="printActivityId" Id="transition6" To="notificarEntidade">
@@ -7371,12 +7392,19 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
+                <Transition From="route1" Id="transition7" To="notificarEntidade2">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
             </Transitions>
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="acompanhamento_outorgas;AO_Sistema"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=acompanhamento_outorgas,CONNECTING_ACTIVITY_ID=ConfigurarProcessoAO,X_OFFSET=84,Y_OFFSET=56,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=AO_Sistema,CONNECTING_ACTIVITY_ID=notificarEntidade,X_OFFSET=892,Y_OFFSET=73,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=AO_Sistema,CONNECTING_ACTIVITY_ID=notificarEntidade,X_OFFSET=966,Y_OFFSET=26,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=acompanhamento_outorgas,CONNECTING_ACTIVITY_ID=acompanhamento,X_OFFSET=890,Y_OFFSET=47,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=AO_Sistema,CONNECTING_ACTIVITY_ID=notificarEntidade2,X_OFFSET=1004,Y_OFFSET=144,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="processoTesteAssync" Name="Processo Teste Assync">
