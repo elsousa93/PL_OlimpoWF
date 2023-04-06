@@ -163,21 +163,6 @@
         <Participant Id="participant2_1" Name="Participant">
             <ParticipantType Type="ROLE"/>
         </Participant>
-        <Participant Id="sistema" Name="Sistema">
-            <ParticipantType Type="ROLE"/>
-        </Participant>
-        <Participant Id="hip_contratacao_bcp" Name="BCP">
-            <ParticipantType Type="ROLE"/>
-        </Participant>
-        <Participant Id="hip_contratacao_bic" Name="BIC">
-            <ParticipantType Type="ROLE"/>
-        </Participant>
-        <Participant Id="hip_contratacao_mtg" Name="MTG">
-            <ParticipantType Type="ROLE"/>
-        </Participant>
-        <Participant Id="hip_fluxo" Name="Fluxo">
-            <ParticipantType Type="ROLE"/>
-        </Participant>
         <Participant Id="participant58" Name="Participant 58">
             <ParticipantType Type="ROLE"/>
         </Participant>
@@ -194,6 +179,30 @@
             <ParticipantType Type="ROLE"/>
         </Participant>
         <Participant Id="dist_distrates_2" Name="DIST_2">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
+        <Participant Id="process28_process3_participant2" Name="Sistema">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
+        <Participant Id="process28_participant3" Name="Normal">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
+        <Participant Id="process29_producao" Name="Produção Manual">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
+        <Participant Id="process29_ProdSistema" Name="Sistema">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
+        <Participant Id="process29_ProdRobot" Name="Produção Robot">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
+        <Participant Id="process30_validacao" Name="Validação">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
+        <Participant Id="hip_user_filtro" Name="User Filtro">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
+        <Participant Id="hip_user_contratacao" Name="User Contratação">
             <ParticipantType Type="ROLE"/>
         </Participant>
     </Participants>
@@ -2235,7 +2244,7 @@
                     <Performer>ProdRobot</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="ProdRobot"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="477.97503662109375,38.537493896484364"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="462.95140838623047,46.6319319921875"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="producaoManualRobot" Name="Produção Manual ou por Robot?">
@@ -7639,104 +7648,25 @@
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant51,CONNECTING_ACTIVITY_ID=distribuicaoProcessos,X_OFFSET=362,Y_OFFSET=41,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
-        <WorkflowProcess Id="Hipotecas" Name="Hipotecas">
-            <ProcessHeader DurationUnit="h"/>
-            <DataFields>
-                <DataField Id="status" IsArray="FALSE">
-                    <DataType>
-                        <BasicType Type="STRING"/>
-                    </DataType>
-                </DataField>
-                <DataField Id="estado" IsArray="FALSE">
-                    <DataType>
-                        <BasicType Type="STRING"/>
-                    </DataType>
-                </DataField>
-                <DataField Id="banco" IsArray="FALSE">
-                    <DataType>
-                        <BasicType Type="STRING"/>
-                    </DataType>
-                </DataField>
-                <DataField Id="user_contratacao" IsArray="FALSE">
-                    <DataType>
-                        <BasicType Type="STRING"/>
-                    </DataType>
-                </DataField>
-                <DataField Id="flag_contratacao" IsArray="FALSE">
-                    <DataType>
-                        <BasicType Type="STRING"/>
-                    </DataType>
-                </DataField>
-                <DataField Id="user_filtro" IsArray="FALSE">
-                    <DataType>
-                        <BasicType Type="STRING"/>
-                    </DataType>
-                </DataField>
-                <DataField Id="user_validacao" IsArray="FALSE">
-                    <DataType>
-                        <BasicType Type="STRING"/>
-                    </DataType>
-                </DataField>
-                <DataField Id="flag_validacao" IsArray="FALSE">
-                    <DataType>
-                        <BasicType Type="STRING"/>
-                    </DataType>
-                </DataField>
-                <DataField Id="proxima_operativa" IsArray="FALSE">
-                    <DataType>
-                        <BasicType Type="STRING"/>
-                    </DataType>
-                </DataField>
-                <DataField Id="operativa_anterior" IsArray="FALSE">
-                    <DataType>
-                        <BasicType Type="STRING"/>
-                    </DataType>
-                </DataField>
-                <DataField Id="id_processo_anterior" IsArray="FALSE">
-                    <DataType>
-                        <BasicType Type="STRING"/>
-                    </DataType>
-                </DataField>
-            </DataFields>
-            <Activities>
-                <Activity Id="contracao" Name="Contratação">
-                    <Implementation>
-                        <SubFlow Execution="SYNCHR" Id="HIPContratacao">
-                            <ActualParameters>
-                                <ActualParameter>estado</ActualParameter>
-                                <ActualParameter>banco</ActualParameter>
-                                <ActualParameter>user_contratacao</ActualParameter>
-                                <ActualParameter>flag_contratacao</ActualParameter>
-                                <ActualParameter>user_validacao</ActualParameter>
-                                <ActualParameter>flag_validacao</ActualParameter>
-                                <ActualParameter>proxima_operativa</ActualParameter>
-                                <ActualParameter>operativa_anterior</ActualParameter>
-                                <ActualParameter>id_processo_anterior</ActualParameter>
-                            </ActualParameters>
-                        </SubFlow>
-                    </Implementation>
-                    <Performer>hip_fluxo</Performer>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="hip_fluxo"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="232.9861068725586,25.885410996093754"/>
-                    </ExtendedAttributes>
-                </Activity>
-            </Activities>
-            <ExtendedAttributes>
-                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="hip_fluxo"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=hip_fluxo,CONNECTING_ACTIVITY_ID=contracao,X_OFFSET=74,Y_OFFSET=45,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=hip_fluxo,CONNECTING_ACTIVITY_ID=contracao,X_OFFSET=492,Y_OFFSET=41,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
-            </ExtendedAttributes>
-        </WorkflowProcess>
         <WorkflowProcess Id="HIPContratacao" Name="HIP - Contratação">
             <ProcessHeader DurationUnit="h"/>
             <FormalParameters>
-                <FormalParameter Id="estado" Mode="INOUT">
+                <FormalParameter Id="status" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="complexidade" Mode="INOUT">
                     <DataType>
                         <BasicType Type="STRING"/>
                     </DataType>
                 </FormalParameter>
                 <FormalParameter Id="banco" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="departamento" Mode="INOUT">
                     <DataType>
                         <BasicType Type="STRING"/>
                     </DataType>
@@ -7761,6 +7691,16 @@
                         <BasicType Type="STRING"/>
                     </DataType>
                 </FormalParameter>
+                <FormalParameter Id="user_filtro" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="estado" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
                 <FormalParameter Id="proxima_operativa" Mode="INOUT">
                     <DataType>
                         <BasicType Type="STRING"/>
@@ -7776,9 +7716,19 @@
                         <BasicType Type="STRING"/>
                     </DataType>
                 </FormalParameter>
+                <FormalParameter Id="origem" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="id_processo_contratacao" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
             </FormalParameters>
             <DataFields>
-                <DataField Id="sub_status" IsArray="FALSE">
+                <DataField Id="status" IsArray="FALSE">
                     <DataType>
                         <BasicType Type="STRING"/>
                     </DataType>
@@ -7833,65 +7783,118 @@
                         <BasicType Type="STRING"/>
                     </DataType>
                 </DataField>
+                <DataField Id="complexidade" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="departamento" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="user_filtro" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="origem" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="id_processo_contratacao" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
             </DataFields>
             <Activities>
                 <Activity Id="route1">
                     <Route/>
-                    <Performer>sistema</Performer>
-                    <TransitionRestrictions>
-                        <TransitionRestriction>
-                            <Split Type="XOR">
-                                <TransitionRefs>
-                                    <TransitionRef Id="transition2"/>
-                                    <TransitionRef Id="transition3"/>
-                                    <TransitionRef Id="transition6"/>
-                                </TransitionRefs>
-                            </Split>
-                        </TransitionRestriction>
-                    </TransitionRestrictions>
+                    <Performer>hip_user_filtro</Performer>
                     <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="sistema"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="hip_user_filtro"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="293.9930648803711,45.34723350585938"/>
-                    </ExtendedAttributes>
-                </Activity>
-                <Activity Id="preenchimentoProcessoBCP" Name="Preenchimento de Processo">
-                    <Implementation>
-                        <No/>
-                    </Implementation>
-                    <Performer>hip_contratacao_bcp</Performer>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="hip_contratacao_bcp"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="486.94445037841797,29.06250450195313"/>
-                    </ExtendedAttributes>
-                </Activity>
-                <Activity Id="preenchimentoProcessoBIC" Name="Preenchimento de Processo">
-                    <Implementation>
-                        <No/>
-                    </Implementation>
-                    <Performer>hip_contratacao_bic</Performer>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="hip_contratacao_bic"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="490.93749237060547,34.46182701171875"/>
-                    </ExtendedAttributes>
-                </Activity>
-                <Activity Id="preenchimentoProcessoMTG" Name="Preenchimento de Processo">
-                    <Implementation>
-                        <No/>
-                    </Implementation>
-                    <Performer>hip_contratacao_mtg</Performer>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="hip_contratacao_mtg"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="495.9722213745117,105.1041609960937"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="configuraProcesso" Name="Configura Processo">
                     <Implementation>
                         <Tool Id="default_application"/>
                     </Implementation>
-                    <Performer>sistema</Performer>
+                    <Performer>hip_user_filtro</Performer>
                     <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="sistema"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="hip_user_filtro"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="142.95140838623047,41.944447250976566"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route3" Name="Filtro?">
+                    <Route/>
+                    <Performer>hip_user_filtro</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition10"/>
+                                    <TransitionRef Id="transition15"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="hip_user_filtro"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="880.9375457763672,108.54166099609375"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route3_1">
+                    <Route/>
+                    <Performer>hip_user_filtro</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="hip_user_filtro"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="714.9826507568359,109.20139"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route4">
+                    <Route/>
+                    <Performer>hip_user_filtro</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="hip_user_filtro"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1383.941032409668,211.85764"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="HIPFiltro" Name="Filtro">
+                    <Implementation>
+                        <SubFlow Execution="ASYNCHR" Id="diligencias"/>
+                    </Implementation>
+                    <Performer>hip_user_filtro</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="hip_user_filtro"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1075.642448425293,10.503452988281254"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="preenchimentoProcesso" Name="Preenchimento de Processo">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>hip_user_contratacao</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="hip_user_contratacao"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="487.93407440185547,50.17361900390625"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="PedidoAgendamento" Name="Pedido de Agendamento">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>hip_user_contratacao</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="hip_user_contratacao"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1506.979263305664,84.09722587646485"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -7901,19 +7904,36 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="route1" Id="transition2" Name="BCP" To="preenchimentoProcessoBCP">
+                <Transition From="route1" Id="transition2" Name="BCP" To="preenchimentoProcesso">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="route1" Id="transition3" Name="MTG" To="preenchimentoProcessoMTG">
+                <Transition From="preenchimentoProcesso" Id="transition7" To="route3_1">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="route1" Id="transition6" Name="BIC" To="preenchimentoProcessoBIC">
+                <Transition From="route3_1" Id="transition11" To="route3">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route3" Id="transition10" To="route4">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route4" Id="transition12" To="PedidoAgendamento">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route3" Id="transition15" To="HIPFiltro">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
@@ -7921,11 +7941,10 @@
                 </Transition>
             </Transitions>
             <ExtendedAttributes>
-                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="hip_contratacao_bcp;sistema;hip_contratacao_bic;hip_contratacao_mtg"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=hip_contratacao_bcp,CONNECTING_ACTIVITY_ID=preenchimentoProcessoBCP,X_OFFSET=898,Y_OFFSET=40,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=hip_contratacao_bic,CONNECTING_ACTIVITY_ID=preenchimentoProcessoBIC,X_OFFSET=920,Y_OFFSET=42,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=hip_contratacao_mtg,CONNECTING_ACTIVITY_ID=preenchimentoProcessoMTG,X_OFFSET=883,Y_OFFSET=113,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=sistema,CONNECTING_ACTIVITY_ID=configuraProcesso,X_OFFSET=71,Y_OFFSET=59,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="hip_user_contratacao;hip_user_filtro"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=hip_user_filtro,CONNECTING_ACTIVITY_ID=configuraProcesso,X_OFFSET=71,Y_OFFSET=59,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=hip_user_filtro,CONNECTING_ACTIVITY_ID=HIPFiltro,X_OFFSET=1291,Y_OFFSET=27,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=hip_user_contratacao,CONNECTING_ACTIVITY_ID=PedidoAgendamento,X_OFFSET=1713,Y_OFFSET=94,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="DISTdistribuicaoProcessos" Name="DIST - Distribuição de Processos">
@@ -8262,6 +8281,1007 @@
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="robot;modelo11"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=robot,CONNECTING_ACTIVITY_ID=ConfigurarProcessoModelo11,X_OFFSET=75,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=robot,CONNECTING_ACTIVITY_ID=processamentoRobotModelo,X_OFFSET=526,Y_OFFSET=40,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+            </ExtendedAttributes>
+        </WorkflowProcess>
+        <WorkflowProcess Id="hipotecas" Name="Hipotecas">
+            <ProcessHeader DurationUnit="h"/>
+            <DataFields>
+                <DataField Id="status" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="complexidade" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="banco" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="departamento" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="user_contratacao" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="user_filtro" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="user_validacao" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="user_conclusoes" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="proxima_operativa" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="flag_contratacao" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="operativa_anterior" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="id_processo_anterior" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="estado" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="flag_validacao" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="producao_robot" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="user_ao" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="user_registos" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="user_modelo11" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="tipo_entidade" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="id_processo_contratacao" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="origem" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="user_producao" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+            </DataFields>
+            <Activities>
+                <Activity Id="route1">
+                    <Route/>
+                    <Performer>process28_process3_participant2</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process28_process3_participant2"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="215.98958587646484,34.097218247070316"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route5">
+                    <Route/>
+                    <Performer>process28_participant3</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition24"/>
+                                    <TransitionRef Id="transition27"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process28_participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1339.9479370117188,210.88542625488282"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route6">
+                    <Route/>
+                    <Performer>process28_participant3</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition43"/>
+                                    <TransitionRef Id="transition30"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process28_participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1566.9791870117188,59.184010239257816"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="subConclusao" Name="Conclusões">
+                    <Implementation>
+                        <SubFlow Execution="SYNCHR" Id="CHConclusoes">
+                            <ActualParameters>
+                                <ActualParameter>status</ActualParameter>
+                                <ActualParameter>user_conclusoes</ActualParameter>
+                                <ActualParameter>flag_validacao</ActualParameter>
+                                <ActualParameter>proxima_operativa</ActualParameter>
+                                <ActualParameter>user_validacao</ActualParameter>
+                            </ActualParameters>
+                        </SubFlow>
+                    </Implementation>
+                    <Performer>process28_participant3</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process28_participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1822.9341430664062,141.68404075683594"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="tool1" Name="Alterar flag_validacao">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>process28_participant3</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process28_participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1307.951416015625,362.48265525878907"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route14">
+                    <Route/>
+                    <Performer>process28_participant3</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition62"/>
+                                    <TransitionRef Id="transition60"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process28_participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2033.975830078125,0.208332749023441"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route15">
+                    <Route/>
+                    <Performer>process28_participant3</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process28_participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2200.9896850585938,-0.781260756835934"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="sub_registos" Name="Registos">
+                    <Implementation>
+                        <SubFlow Execution="SYNCHR" Id="CHRegistos">
+                            <ActualParameters>
+                                <ActualParameter>proxima_operativa</ActualParameter>
+                                <ActualParameter>user_registos</ActualParameter>
+                                <ActualParameter>tipo_entidade</ActualParameter>
+                                <ActualParameter>operativa_anterior</ActualParameter>
+                            </ActualParameters>
+                        </SubFlow>
+                    </Implementation>
+                    <Performer>process28_participant3</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process28_participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2345.729248046875,529.8784682470703"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="sub_acompanhamento_outorgas" Name="Acompanhamento Outorgas">
+                    <Implementation>
+                        <SubFlow Execution="SYNCHR" Id="CHAcompanhamentoOutorgas">
+                            <ActualParameters>
+                                <ActualParameter>proxima_operativa</ActualParameter>
+                                <ActualParameter>user_ao</ActualParameter>
+                                <ActualParameter>tipo_entidade</ActualParameter>
+                                <ActualParameter>operativa_anterior</ActualParameter>
+                            </ActualParameters>
+                        </SubFlow>
+                    </Implementation>
+                    <Performer>process28_participant3</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process28_participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1889.9306030273438,423.90623924316407"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="sub_modelo11" Name="Modelo 11">
+                    <Implementation>
+                        <SubFlow Execution="SYNCHR" Id="CHModelo11">
+                            <ActualParameters>
+                                <ActualParameter>proxima_operativa</ActualParameter>
+                                <ActualParameter>user_modelo11</ActualParameter>
+                            </ActualParameters>
+                        </SubFlow>
+                    </Implementation>
+                    <Performer>process28_participant3</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process28_participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2182.569580078125,140.69444725097657"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route10">
+                    <Route/>
+                    <Performer>process28_participant3</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition29"/>
+                                    <TransitionRef Id="transition33"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process28_participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2323.5938720703125,290.69444725097657"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="HIPValidacao" Name="Validação">
+                    <Implementation>
+                        <SubFlow Execution="SYNCHR" Id="HIPValidacao">
+                            <ActualParameters>
+                                <ActualParameter>status</ActualParameter>
+                                <ActualParameter>complexidade</ActualParameter>
+                                <ActualParameter>banco</ActualParameter>
+                                <ActualParameter>departamento</ActualParameter>
+                                <ActualParameter>user_validacao</ActualParameter>
+                                <ActualParameter>proxima_operativa</ActualParameter>
+                                <ActualParameter>operativa_anterior</ActualParameter>
+                                <ActualParameter>id_processo_anterior</ActualParameter>
+                                <ActualParameter>estado</ActualParameter>
+                                <ActualParameter>origem</ActualParameter>
+                                <ActualParameter>flag_validacao</ActualParameter>
+                            </ActualParameters>
+                        </SubFlow>
+                    </Implementation>
+                    <Performer>process28_participant3</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process28_participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1318.958366394043,505.1909682470703"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="HIPProducao" Name="Produção">
+                    <Implementation>
+                        <SubFlow Execution="SYNCHR" Id="HIPProducao">
+                            <ActualParameters>
+                                <ActualParameter>status</ActualParameter>
+                                <ActualParameter>complexidade</ActualParameter>
+                                <ActualParameter>banco</ActualParameter>
+                                <ActualParameter>departamento</ActualParameter>
+                                <ActualParameter>user_producao</ActualParameter>
+                                <ActualParameter>proxima_operativa</ActualParameter>
+                                <ActualParameter>operativa_anterior</ActualParameter>
+                                <ActualParameter>id_processo_anterior</ActualParameter>
+                                <ActualParameter>estado</ActualParameter>
+                                <ActualParameter>origem</ActualParameter>
+                                <ActualParameter>flag_validacao</ActualParameter>
+                                <ActualParameter>user_validacao</ActualParameter>
+                                <ActualParameter>producao_robot</ActualParameter>
+                                <ActualParameter>id_processo_contratacao</ActualParameter>
+                            </ActualParameters>
+                        </SubFlow>
+                    </Implementation>
+                    <Performer>process28_participant3</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process28_participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="662.9514312744141,406.71873924316407"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="HIPContratacao" Name="Contratação">
+                    <Implementation>
+                        <SubFlow Execution="SYNCHR" Id="HIPContratacao">
+                            <ActualParameters>
+                                <ActualParameter>status</ActualParameter>
+                                <ActualParameter>complexidade</ActualParameter>
+                                <ActualParameter>banco</ActualParameter>
+                                <ActualParameter>departamento</ActualParameter>
+                                <ActualParameter>user_contratacao</ActualParameter>
+                                <ActualParameter>flag_contratacao</ActualParameter>
+                                <ActualParameter>user_validacao</ActualParameter>
+                                <ActualParameter>flag_validacao</ActualParameter>
+                                <ActualParameter>user_filtro</ActualParameter>
+                                <ActualParameter>proxima_operativa</ActualParameter>
+                                <ActualParameter>operativa_anterior</ActualParameter>
+                                <ActualParameter>id_processo_anterior</ActualParameter>
+                                <ActualParameter>estado</ActualParameter>
+                                <ActualParameter>origem</ActualParameter>
+                                <ActualParameter>id_processo_contratacao</ActualParameter>
+                            </ActualParameters>
+                        </SubFlow>
+                    </Implementation>
+                    <Performer>process28_participant3</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process28_participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="302.95140838623047,46.406239243164066"/>
+                    </ExtendedAttributes>
+                </Activity>
+            </Activities>
+            <Transitions>
+                <Transition From="route1" Id="transition10" To="HIPContratacao">
+                    <Condition Type="CONDITION">complexidade === 'NOR'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;complexidade&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;NOR&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route5" Id="transition24" To="HIPProducao">
+                    <Condition Type="CONDITION">proxima_operativa === 'producao_manual' || proxima_operativa === 'producao_robot'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;producao_manual&quot;},{&quot;join&quot;:&quot;||&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;producao_robot&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route5" Id="transition27" To="route6">
+                    <Condition Type="OTHERWISE"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route6" Id="transition43" To="subConclusao">
+                    <Condition Type="OTHERWISE"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="HIPValidacao" Id="transition53" To="tool1">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="tool1" Id="transition54" To="route5">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route14" Id="transition62" To="HIPContratacao">
+                    <Condition Type="CONDITION">proxima_operativa === 'contratacao'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;contratacao&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="subConclusao" Id="transition61" To="route14">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route14" Id="transition60" To="route15">
+                    <Condition Type="OTHERWISE"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="sub_acompanhamento_outorgas" Id="transition28" To="sub_registos">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;registos&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route6" Id="transition30" To="sub_acompanhamento_outorgas">
+                    <Condition Type="CONDITION">proxima_operativa === 'acompanhamento_outorgas'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;acompanhamento_outorgas&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="sub_modelo11" Id="transition31" To="route14">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="sub_registos" Id="transition32" To="route10">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route10" Id="transition29" To="sub_modelo11">
+                    <Condition Type="OTHERWISE"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route10" Id="transition33" To="sub_acompanhamento_outorgas">
+                    <Condition Type="CONDITION">proxima_operativa === 'acompanhamento_outorgas'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;acompanhamento_outorgas&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="HIPContratacao" Id="transition21" To="HIPProducao">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="HIPProducao" Id="transition17" To="HIPValidacao">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+            </Transitions>
+            <ExtendedAttributes>
+                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="process28_process3_participant2;process28_participant3"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process28_process3_participant2,CONNECTING_ACTIVITY_ID=route1,X_OFFSET=81,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process28_participant3,CONNECTING_ACTIVITY_ID=route15,X_OFFSET=2395,Y_OFFSET=8,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+            </ExtendedAttributes>
+        </WorkflowProcess>
+        <WorkflowProcess Id="HIPProducao" Name="HIP - Produção">
+            <ProcessHeader DurationUnit="h"/>
+            <FormalParameters>
+                <FormalParameter Id="status" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="complexidade" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="banco" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="departamento" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="user_producao" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="proxima_operativa" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="operativa_anterior" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="id_processo_anterior" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="estado" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="origem" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="flag_validacao" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="user_validacao" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="producao_robot" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="id_processo_contratacao" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+            </FormalParameters>
+            <DataFields>
+                <DataField Id="sub_status" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="sub_complexidade" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="sub_banco" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="sub_departamento" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="user_producao" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="proxima_operativa" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="estado" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="flag_ultima_atividade" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="operativa_anterior" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="id_processo_anterior" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="origem" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="flag_validacao" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="user_validacao" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="producao_robot" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="id_processo_contratacao" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+            </DataFields>
+            <Activities>
+                <Activity Id="processamentoManualMinuta" Name="Processamento Manual de Minuta">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>process29_producao</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process29_producao"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="970.9375,24.687498247070323"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="processamentoRobotMinuta" Name="Processamento da Minuta pelo Robot">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>process29_ProdRobot</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process29_ProdRobot"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="462.95140838623047,46.6319319921875"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="producaoManualRobot" Name="Produção Manual ou por Robot?">
+                    <Route/>
+                    <Performer>process29_ProdSistema</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition3"/>
+                                    <TransitionRef Id="transition6"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process29_ProdSistema"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="318.9583435058594,27.895841752929684"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="ultimaAtividadeProd" Name="Configurar Ultima Atividade">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>process29_producao</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process29_producao"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="792,20.562498247070323"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="ConfigurarProcesso" Name="Configurar Processo">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>process29_producao</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process29_producao"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="566,22.312498247070323"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="AtualizarVariavelRobot" Name="Atualizar a Variável do Robot e Estado Contratacao">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>process29_ProdRobot</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process29_ProdRobot"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="660.989616394043,37.7256819921875"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="tool4" Name="Atualizar Fase Processo">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>process29_ProdSistema</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process29_ProdSistema"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="143,23"/>
+                    </ExtendedAttributes>
+                </Activity>
+            </Activities>
+            <Transitions>
+                <Transition From="producaoManualRobot" Id="transition3" Name="Produção Robot" To="processamentoRobotMinuta">
+                    <Condition Type="OTHERWISE"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="ultimaAtividadeProd" Id="transition5" To="processamentoManualMinuta">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="producaoManualRobot" Id="transition6" Name="Produção Manual" To="ConfigurarProcesso">
+                    <Condition Type="CONDITION">proxima_operativa === 'producao_manual' || proxima_operativa === ''</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;producao_manual&quot;},{&quot;join&quot;:&quot;||&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="ConfigurarProcesso" Id="transition4" To="ultimaAtividadeProd">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="processamentoRobotMinuta" Id="transition7" To="AtualizarVariavelRobot">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="tool4" Id="transition8" To="producaoManualRobot">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+            </Transitions>
+            <ExtendedAttributes>
+                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="process29_ProdSistema;process29_producao;process29_ProdRobot"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process29_producao,CONNECTING_ACTIVITY_ID=processamentoManualMinuta,X_OFFSET=1191,Y_OFFSET=35,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process29_ProdSistema,CONNECTING_ACTIVITY_ID=tool4,X_OFFSET=52,Y_OFFSET=40,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process29_ProdRobot,CONNECTING_ACTIVITY_ID=AtualizarVariavelRobot,X_OFFSET=863,Y_OFFSET=49,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+            </ExtendedAttributes>
+        </WorkflowProcess>
+        <WorkflowProcess Id="HIPValidacao" Name="HIP - Validação">
+            <ProcessHeader DurationUnit="h"/>
+            <FormalParameters>
+                <FormalParameter Id="sub_status" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="sub_complexidade" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="sub_banco" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="sub_departamento" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="user_validacao" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="proxima_operativa" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="operativa_anterior" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="id_processo_anterior" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="estado" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="origem" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="flag_validacao" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+            </FormalParameters>
+            <DataFields>
+                <DataField Id="sub_status" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="sub_complexidade" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="sub_banco" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="sub_departamento" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="user_validacao" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="proxima_operativa" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="estado" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="flag_ultima_atividade" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="operativa_anterior" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="id_processo_anterior" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="origem" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="flag_validacao" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+            </DataFields>
+            <Activities>
+                <Activity Id="validacaoContratoDocumentacao" Name="Validação de Contrato e Documentação">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>process30_validacao</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process30_validacao"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1041.96875,54.640625"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="ultimaAtividadeVal" Name="Configurar Ultima Atividade">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>process30_validacao</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process30_validacao"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="393,54.640625"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="ConfigurarProcesso" Name="Configurar Processo">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>process30_validacao</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process30_validacao"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="214,31.645841752929684"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route1">
+                    <Route/>
+                    <Performer>process30_validacao</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process30_validacao"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="747.921875,60.890625"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="tool3" Name="Update User de Validação">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>process30_validacao</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process30_validacao"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="847.984375,58.953125"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="set_user" Name="Atribuir Utilizador">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>process30_validacao</Performer>
+                    <Deadline Execution="ASYNCHR">
+                        <DeadlineCondition>var d = new java.text.SimpleDateFormat('yyyy-MM-dd'); d.parse("#date.yyyy-MM-dd#");</DeadlineCondition>
+                        <ExceptionName>updateUser</ExceptionName>
+                    </Deadline>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process30_validacao"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="555,57"/>
+                    </ExtendedAttributes>
+                </Activity>
+            </Activities>
+            <Transitions>
+                <Transition From="ConfigurarProcesso" Id="transition2" To="ultimaAtividadeVal">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="ultimaAtividadeVal" Id="transition3" To="set_user">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="set_user" Id="transition4" To="route1">
+                    <Condition Type="EXCEPTION">updateUser</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route1" Id="transition5" To="tool3">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="tool3" Id="transition6" To="validacaoContratoDocumentacao">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+            </Transitions>
+            <ExtendedAttributes>
+                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="process30_validacao"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process30_validacao,CONNECTING_ACTIVITY_ID=ConfigurarProcesso,X_OFFSET=75,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process30_validacao,CONNECTING_ACTIVITY_ID=validacaoContratoDocumentacao,X_OFFSET=1349,Y_OFFSET=61,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
     </WorkflowProcesses>
