@@ -7196,13 +7196,20 @@
                         <BasicType Type="STRING"/>
                     </DataType>
                 </DataField>
+                <DataField Id="banco" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
             </DataFields>
             <Activities>
                 <Activity Id="sub_processo_distrates" Name="Distrates">
                     <Implementation>
                         <SubFlow Execution="SYNCHR" Id="DSTDistrates">
                             <ActualParameters>
+                                <ActualParameter>status</ActualParameter>
                                 <ActualParameter>user_distrates</ActualParameter>
+                                <ActualParameter>banco</ActualParameter>
                             </ActualParameters>
                         </SubFlow>
                     </Implementation>
@@ -7222,19 +7229,34 @@
         <WorkflowProcess Id="DSTDistrates" Name="DST - Distrates">
             <ProcessHeader DurationUnit="h"/>
             <FormalParameters>
+                <FormalParameter Id="sub_status" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
                 <FormalParameter Id="user_distrates" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="sub_banco" Mode="INOUT">
                     <DataType>
                         <BasicType Type="STRING"/>
                     </DataType>
                 </FormalParameter>
             </FormalParameters>
             <DataFields>
-                <DataField Id="status" IsArray="FALSE">
+                <DataField Id="sub_status" IsArray="FALSE">
                     <DataType>
                         <BasicType Type="STRING"/>
                     </DataType>
                 </DataField>
                 <DataField Id="user_distrates" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="sub_banco" IsArray="FALSE">
                     <DataType>
                         <BasicType Type="STRING"/>
                     </DataType>
