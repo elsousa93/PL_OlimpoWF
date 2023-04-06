@@ -1241,7 +1241,7 @@
                   <processDefId>diligenciaAut</processDefId>
                   <activityDefId>atualizaEstadoFiltroPai</activityDefId>
                   <pluginName>org.joget.apps.app.lib.BeanShellTool</pluginName>
-                  <pluginProperties>{&quot;script&quot;:&quot;import org.joget.workflow.model.service.*;\r\nimport java.lang.Exception;\r\nimport org.joget.commons.util.LogUtil;\r\n \r\nWorkflowManager wm = (WorkflowManager) pluginManager.getBean(\&quot;workflowManager\&quot;);\r\n \r\nwm.processVariable(\&quot;#variable.id_processo_pai#\&quot;, \&quot;estado_filtro\&quot;, \&quot;#variable.sub_estado_filtro#\&quot;);&quot;}</pluginProperties>
+                  <pluginProperties>{&quot;script&quot;:&quot;import org.joget.workflow.model.service.*;\r\nimport java.lang.Exception;\r\nimport org.joget.commons.util.LogUtil;\r\n\r\nString id_pai = \&quot;#variable.id_processo_pai#\&quot;;\r\nString sub_estado = \&quot;#variable.sub_estado_filtro#\&quot;;\r\n\r\nLogUtil.info(\&quot;Processo TESTE\&quot;, \&quot;id_pai: \&quot; + id_pai + \&quot;, sub_estado: \&quot; + sub_estado);\r\n \r\nWorkflowManager wm = (WorkflowManager) pluginManager.getBean(\&quot;workflowManager\&quot;);\r\nwm.processVariable(id_pai, \&quot;estado_filtro\&quot;, sub_estado);&quot;}</pluginProperties>
                </packageActivityPlugin>
             </entry>
             <entry>
@@ -1859,18 +1859,18 @@
                </packageParticipant>
             </entry>
             <entry>
-               <string>REGdistribuicaoProcessos::processStartWhiteList</string>
+               <string>HIPProducao::processStartWhiteList</string>
                <packageParticipant>
-                  <processDefId>REGdistribuicaoProcessos</processDefId>
+                  <processDefId>HIPProducao</processDefId>
                   <participantId>processStartWhiteList</participantId>
                   <type>role</type>
                   <value>adminUser</value>
                </packageParticipant>
             </entry>
             <entry>
-               <string>HIPProducao::processStartWhiteList</string>
+               <string>REGdistribuicaoProcessos::processStartWhiteList</string>
                <packageParticipant>
-                  <processDefId>HIPProducao</processDefId>
+                  <processDefId>REGdistribuicaoProcessos</processDefId>
                   <participantId>processStartWhiteList</participantId>
                   <type>role</type>
                   <value>adminUser</value>
