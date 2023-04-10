@@ -1271,6 +1271,7 @@
                   <processDefId>diligenciaAut</processDefId>
                   <activityDefId>atualizaEstadoFiltroPai</activityDefId>
                   <pluginName>org.joget.apps.app.lib.DatabaseUpdateTool</pluginName>
+                  <pluginProperties>{&quot;jdbcDatasource&quot;:&quot;default&quot;,&quot;query&quot;:&quot;UPDATE shkprocessdata pd\nINNER JOIN shkprocesses p\n    ON pd.Process = p.oid\n    SET pd.VariableValueVCHAR=&apos;#variable.sub_estado_filtro#&apos; \n    WHERE p.Id LIKE (&apos;#variable.id_processo_pai#&apos; || &apos;_workflowPL_processoTesteAssync&apos;);\n    \nUPDATE shkactivitydata ad\nINNER JOIN shkactivities a\n    ON ad.Process = a.oid  \n    SET ad.VariableValueVCHAR=&apos;#variable.sub_estado_filtro#&apos; \n    WHERE a.Id LIKE (&apos;%_#variable.id_processo_pai#&apos; || &apos;_workflowPL_processoTesteAssync_activity1&apos;)\n    AND a.State = &apos;1000003&apos;;&quot;}</pluginProperties>
                </packageActivityPlugin>
             </entry>
             <entry>
