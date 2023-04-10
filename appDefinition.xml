@@ -822,7 +822,7 @@
                   <processDefId>processoTesteAssync</processDefId>
                   <activityDefId>tool2</activityDefId>
                   <pluginName>org.joget.apps.app.lib.BeanShellTool</pluginName>
-                  <pluginProperties>{&quot;script&quot;:&quot;import org.joget.workflow.model.service.*;\r\nimport org.joget.commons.util.LogUtil;\r\n \r\nWorkflowManager wm = (WorkflowManager) pluginManager.getBean(\&quot;workflowManager\&quot;);\r\nString estadoFiltro = \&quot;#variable.estado_filtro#\&quot;;\r\nLogUtil.info(\&quot;Processo TESTE\&quot;, \&quot;estadoFiltro: \&quot; + estadoFiltro);\r\nwm.activityVariable(workflowAssignment.getActivityId(),\&quot;estado_filtro\&quot;, estadoFiltro);&quot;}</pluginProperties>
+                  <pluginProperties>{&quot;script&quot;:&quot;import org.joget.workflow.model.service.*;\r\nimport org.joget.commons.util.LogUtil;\r\n \r\nWorkflowManager wm = (WorkflowManager) pluginManager.getBean(\&quot;workflowManager\&quot;);\r\nString estadoFiltro = \&quot;#variable.estado_filtro#\&quot;;\r\nLogUtil.info(\&quot;Processo TESTE\&quot;, \&quot;estadoFiltro: \&quot; + estadoFiltro + \&quot;, Activity: \&quot; + workflowAssignment.getActivityId());\r\n\r\nwm.activityVariable(workflowAssignment.getActivityId(),\&quot;estado_filtro\&quot;, estadoFiltro);&quot;}</pluginProperties>
                </packageActivityPlugin>
             </entry>
             <entry>
@@ -2160,6 +2160,16 @@
                </packageParticipant>
             </entry>
             <entry>
+               <string>CHAcompanhamentoOutorgas::validadorFinal</string>
+               <packageParticipant>
+                  <processDefId>CHAcompanhamentoOutorgas</processDefId>
+                  <participantId>validadorFinal</participantId>
+                  <type>plugin</type>
+                  <value>org.joget.apps.app.lib.BeanShellTool</value>
+                  <pluginProperties>{&quot;script&quot;:&quot;import java.util.ArrayList;\r\nimport java.util.Collection;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.directory.model.User;\r\nimport org.joget.directory.model.service.ExtDirectoryManager;\r\nimport org.joget.workflow.model.WorkflowActivity;\r\n \r\npublic Collection getAssignees(WorkflowActivity activity) {\r\n    Collection assignees = new ArrayList();\r\n     \r\n    ExtDirectoryManager directoryManager = (ExtDirectoryManager) pluginManager.getBean(\&quot;directoryManager\&quot;);\r\n     \r\n    \/\/String deptId = \&quot;PL_EXT_ENT_TEST\&quot;;\r\n    String deptId = \&quot;PL_SIS_AO\&quot;;\r\n     \r\n    \/\/Get users using directory manager\r\n    Collection userList = directoryManager.getUserByDepartmentId(deptId);\r\n    for(Object u : userList){\r\n        User user = (User) u;\r\n        assignees.add(user.getUsername());\r\n    }\r\n    \r\n    \r\n    \/*\r\n        If semiautonoma -&gt; Realocar para deptId = PL_INT_AO -&gt; User Geral\r\n        If autonoma || Não-autónoma -&gt; Manter mesmo User da Atividade anterior\r\n    *\/\r\n    \r\n     \r\n    return assignees;\r\n}\r\n \r\n\/\/call getAssignees method with injected variable\r\nreturn getAssignees(workflowActivity);&quot;}</pluginProperties>
+               </packageParticipant>
+            </entry>
+            <entry>
                <string>CHModelo11::modelo11</string>
                <packageParticipant>
                   <processDefId>CHModelo11</processDefId>
@@ -2176,16 +2186,6 @@
                   <participantId>participant48</participantId>
                   <type>user</type>
                   <value>a_aferreira</value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>CHAcompanhamentoOutorgas::validadorFinal</string>
-               <packageParticipant>
-                  <processDefId>CHAcompanhamentoOutorgas</processDefId>
-                  <participantId>validadorFinal</participantId>
-                  <type>plugin</type>
-                  <value>org.joget.apps.app.lib.BeanShellTool</value>
-                  <pluginProperties>{&quot;script&quot;:&quot;import java.util.ArrayList;\r\nimport java.util.Collection;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.directory.model.User;\r\nimport org.joget.directory.model.service.ExtDirectoryManager;\r\nimport org.joget.workflow.model.WorkflowActivity;\r\n \r\npublic Collection getAssignees(WorkflowActivity activity) {\r\n    Collection assignees = new ArrayList();\r\n     \r\n    ExtDirectoryManager directoryManager = (ExtDirectoryManager) pluginManager.getBean(\&quot;directoryManager\&quot;);\r\n     \r\n    \/\/String deptId = \&quot;PL_EXT_ENT_TEST\&quot;;\r\n    String deptId = \&quot;PL_SIS_AO\&quot;;\r\n     \r\n    \/\/Get users using directory manager\r\n    Collection userList = directoryManager.getUserByDepartmentId(deptId);\r\n    for(Object u : userList){\r\n        User user = (User) u;\r\n        assignees.add(user.getUsername());\r\n    }\r\n    \r\n    \r\n    \/*\r\n        If semiautonoma -&gt; Realocar para deptId = PL_INT_AO -&gt; User Geral\r\n        If autonoma || Não-autónoma -&gt; Manter mesmo User da Atividade anterior\r\n    *\/\r\n    \r\n     \r\n    return assignees;\r\n}\r\n \r\n\/\/call getAssignees method with injected variable\r\nreturn getAssignees(workflowActivity);&quot;}</pluginProperties>
                </packageParticipant>
             </entry>
             <entry>
