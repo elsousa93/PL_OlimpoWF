@@ -2478,6 +2478,10 @@
                         <No/>
                     </Implementation>
                     <Performer>validacao</Performer>
+                    <Deadline Execution="ASYNCHR">
+                        <DeadlineCondition>var d = new java.text.SimpleDateFormat('yyyy-MM-dd'); d.parse("#date.yyyy-MM-dd#");</DeadlineCondition>
+                        <ExceptionName>updateUser</ExceptionName>
+                    </Deadline>
                     <TransitionRestrictions>
                         <TransitionRestriction>
                             <Join Type="XOR"/>
@@ -2485,7 +2489,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="validacao"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1041.96875,54.640625"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="593.96875,33.640625"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="ultimaAtividadeVal" Name="Configurar Ultima Atividade">
@@ -2495,7 +2499,7 @@
                     <Performer>validacao</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="validacao"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="393,54.640625"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="408,34.640625"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="ConfigurarProcesso" Name="Configurar Processo">
@@ -2508,14 +2512,6 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="214,31.645841752929684"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="route1">
-                    <Route/>
-                    <Performer>validacao</Performer>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="validacao"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="747.921875,60.890625"/>
-                    </ExtendedAttributes>
-                </Activity>
                 <Activity Id="tool3" Name="Update User de Validação">
                     <Implementation>
                         <Tool Id="default_application"/>
@@ -2523,21 +2519,7 @@
                     <Performer>validacao</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="validacao"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="847.984375,58.953125"/>
-                    </ExtendedAttributes>
-                </Activity>
-                <Activity Id="set_user" Name="Atribuir Utilizador">
-                    <Implementation>
-                        <No/>
-                    </Implementation>
-                    <Performer>validacao</Performer>
-                    <Deadline Execution="ASYNCHR">
-                        <DeadlineCondition>var d = new java.text.SimpleDateFormat('yyyy-MM-dd'); d.parse("#date.yyyy-MM-dd#");</DeadlineCondition>
-                        <ExceptionName>updateUser</ExceptionName>
-                    </Deadline>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="validacao"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="555,57"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="593.984375,163.953125"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -2547,23 +2529,13 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="ultimaAtividadeVal" Id="transition3" To="set_user">
+                <Transition From="ultimaAtividadeVal" Id="transition3" To="validacaoContratoDocumentacao">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="set_user" Id="transition4" To="route1">
+                <Transition From="validacaoContratoDocumentacao" Id="transition4" To="tool3">
                     <Condition Type="EXCEPTION">updateUser</Condition>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="route1" Id="transition5" To="tool3">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="tool3" Id="transition6" To="validacaoContratoDocumentacao">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
@@ -2572,7 +2544,8 @@
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="validacao"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=validacao,CONNECTING_ACTIVITY_ID=ConfigurarProcesso,X_OFFSET=75,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=validacao,CONNECTING_ACTIVITY_ID=validacaoContratoDocumentacao,X_OFFSET=1349,Y_OFFSET=61,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=validacao,CONNECTING_ACTIVITY_ID=validacaoContratoDocumentacao,X_OFFSET=1390,Y_OFFSET=49,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=validacao,CONNECTING_ACTIVITY_ID=tool3,X_OFFSET=1386,Y_OFFSET=173,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="CreditoHabitacao" Name="Crédito Habitação">
