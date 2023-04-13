@@ -3496,34 +3496,6 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="963,35"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="route4">
-                    <Route/>
-                    <Performer>remetente</Performer>
-                    <TransitionRestrictions>
-                        <TransitionRestriction>
-                            <Split Type="XOR">
-                                <TransitionRefs>
-                                    <TransitionRef Id="transition9"/>
-                                    <TransitionRef Id="transition10"/>
-                                </TransitionRefs>
-                            </Split>
-                        </TransitionRestriction>
-                    </TransitionRestrictions>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="remetente"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="159.98265838623047,61.87500450195313"/>
-                    </ExtendedAttributes>
-                </Activity>
-                <Activity Id="resolverDiligenciaAut" Name="Resolver Diligência Filtro">
-                    <Implementation>
-                        <No/>
-                    </Implementation>
-                    <Performer>destinatario</Performer>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="destinatario"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="415.90282440185547,165.15625450195313"/>
-                    </ExtendedAttributes>
-                </Activity>
             </Activities>
             <Transitions>
                 <Transition From="confirmarDiligencia" Id="transition2" To="fecha">
@@ -3562,28 +3534,11 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="route4" Id="transition9" Name="normal" To="resolverDiligencia1">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="route4" Id="transition10" Name="filtro_hip" To="resolverDiligenciaAut">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="resolverDiligenciaAut" Id="transition11" To="route2">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
             </Transitions>
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="remetente;destinatario"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=remetente,CONNECTING_ACTIVITY_ID=route3,X_OFFSET=1362,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=remetente,CONNECTING_ACTIVITY_ID=route4,X_OFFSET=64,Y_OFFSET=33,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=remetente,CONNECTING_ACTIVITY_ID=resolverDiligencia1,X_OFFSET=96,Y_OFFSET=60,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="CHFiltroComplexo" Name="CH-Filtro-Complexo">
