@@ -8717,14 +8717,6 @@
                 </Activity>
             </Activities>
             <Transitions>
-                <Transition From="route1" Id="transition10" To="HIPContratacao">
-                    <Condition Type="CONDITION">complexidade === 'NOR'</Condition>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;complexidade&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;NOR&quot;}]"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="route5" Id="transition24" To="HIPProducao">
                     <Condition Type="CONDITION">proxima_operativa === 'producao_manual' || proxima_operativa === 'producao_robot'</Condition>
                     <ExtendedAttributes>
@@ -8826,6 +8818,12 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="HIPProducao" Id="transition17" To="HIPValidacao">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route1" Id="transition18" To="HIPContratacao">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
