@@ -178,9 +178,6 @@
         <Participant Id="dist_distrates_2" Name="DIST_2">
             <ParticipantType Type="ROLE"/>
         </Participant>
-        <Participant Id="process28_process3_participant2" Name="Sistema">
-            <ParticipantType Type="ROLE"/>
-        </Participant>
         <Participant Id="process28_participant3" Name="Normal">
             <ParticipantType Type="ROLE"/>
         </Participant>
@@ -3351,11 +3348,6 @@
         <WorkflowProcess Id="diligencias" Name="Diligências">
             <ProcessHeader DurationUnit="h"/>
             <FormalParameters>
-                <FormalParameter Id="estado" Mode="INOUT">
-                    <DataType>
-                        <BasicType Type="STRING"/>
-                    </DataType>
-                </FormalParameter>
                 <FormalParameter Id="gestor_remetente" Mode="INOUT">
                     <DataType>
                         <BasicType Type="STRING"/>
@@ -3367,6 +3359,11 @@
                     </DataType>
                 </FormalParameter>
                 <FormalParameter Id="equipa_destinataria" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="id_processo_pai" Mode="INOUT">
                     <DataType>
                         <BasicType Type="STRING"/>
                     </DataType>
@@ -3404,6 +3401,11 @@
                     </DataType>
                 </DataField>
                 <DataField Id="tipo_alerta" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="id_processo_pai" IsArray="FALSE">
                     <DataType>
                         <BasicType Type="STRING"/>
                     </DataType>
@@ -7869,6 +7871,11 @@
                         <BasicType Type="STRING"/>
                     </DataType>
                 </DataField>
+                <DataField Id="precisa_filtro" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
             </DataFields>
             <Activities>
                 <Activity Id="route1">
@@ -7916,10 +7923,10 @@
                     <Implementation>
                         <SubFlow Execution="ASYNCHR" Id="diligencias">
                             <ActualParameters>
-                                <ActualParameter>estado</ActualParameter>
                                 <ActualParameter>user_contratacao</ActualParameter>
                                 <ActualParameter>user_filtro</ActualParameter>
                                 <ActualParameter>filtro_dep</ActualParameter>
+                                <ActualParameter>id_processo_contratacao</ActualParameter>
                             </ActualParameters>
                         </SubFlow>
                     </Implementation>
@@ -8449,14 +8456,6 @@
                 </DataField>
             </DataFields>
             <Activities>
-                <Activity Id="route1">
-                    <Route/>
-                    <Performer>process28_process3_participant2</Performer>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process28_process3_participant2"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="215.98958587646484,34.097218247070316"/>
-                    </ExtendedAttributes>
-                </Activity>
                 <Activity Id="route5">
                     <Route/>
                     <Performer>process28_participant3</Performer>
@@ -8715,6 +8714,14 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="302.95140838623047,46.406239243164066"/>
                     </ExtendedAttributes>
                 </Activity>
+                <Activity Id="route6_1">
+                    <Route/>
+                    <Performer>process28_participant3</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process28_participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="167.9861068725586,41.87500450195313"/>
+                    </ExtendedAttributes>
+                </Activity>
             </Activities>
             <Transitions>
                 <Transition From="route5" Id="transition24" To="HIPProducao">
@@ -8823,17 +8830,16 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="route1" Id="transition18" To="HIPContratacao">
+                <Transition From="route6_1" Id="transition18" To="HIPContratacao">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
             </Transitions>
             <ExtendedAttributes>
-                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="process28_process3_participant2;process28_participant3"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process28_process3_participant2,CONNECTING_ACTIVITY_ID=route1,X_OFFSET=81,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value=";process28_participant3"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process28_participant3,CONNECTING_ACTIVITY_ID=route15,X_OFFSET=2395,Y_OFFSET=8,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process28_participant3,CONNECTING_ACTIVITY_ID=route6_1,X_OFFSET=61,Y_OFFSET=55,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="HIPProducao" Name="HIP - Produção">
