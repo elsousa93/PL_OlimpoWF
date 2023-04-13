@@ -7914,8 +7914,8 @@
                         <TransitionRestriction>
                             <Split Type="XOR">
                                 <TransitionRefs>
-                                    <TransitionRef Id="transition15"/>
                                     <TransitionRef Id="transition6"/>
+                                    <TransitionRef Id="transition5"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
@@ -7967,6 +7967,16 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1239.9653244018555,58.194447250976566"/>
                     </ExtendedAttributes>
                 </Activity>
+                <Activity Id="createInfoDiligencia" Name="Create Info Diligência">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>hip_user_filtro</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="hip_user_filtro"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1007.9514083862305,218.31598350585938"/>
+                    </ExtendedAttributes>
+                </Activity>
             </Activities>
             <Transitions>
                 <Transition From="configuraProcesso" Id="transition1" To="route1">
@@ -7975,12 +7985,6 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route1" Id="transition2" To="preenchimentoProcesso">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="route3" Id="transition15" Name="Com filtro" To="HIPFiltro">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
@@ -8002,6 +8006,16 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route3" Id="transition5" To="createInfoDiligencia">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="createInfoDiligencia" Id="transition9" To="HIPFiltro">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
             </Transitions>
