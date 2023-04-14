@@ -7983,6 +7983,11 @@
                         <No/>
                     </Implementation>
                     <Performer>hip_user_contratacao</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="hip_user_contratacao"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1239.9653244018555,58.194447250976566"/>
@@ -7996,6 +8001,14 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="hip_user_filtro"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1007.9514083862305,218.31598350585938"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route3_1">
+                    <Route/>
+                    <Performer>hip_user_contratacao</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="hip_user_contratacao"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1505.989616394043,58.975697250976566"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -8039,11 +8052,21 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
+                <Transition From="PedidoAgendamento" Id="transition10" To="route3_1">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route3_1" Id="transition11" Name="falta_confirmacao" To="PedidoAgendamento">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
             </Transitions>
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="hip_user_contratacao;hip_user_filtro"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=hip_user_filtro,CONNECTING_ACTIVITY_ID=configuraProcesso,X_OFFSET=71,Y_OFFSET=59,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=hip_user_contratacao,CONNECTING_ACTIVITY_ID=PedidoAgendamento,X_OFFSET=1486,Y_OFFSET=68,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=hip_user_contratacao,CONNECTING_ACTIVITY_ID=route3_1,X_OFFSET=1731,Y_OFFSET=65,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="DISTdistribuicaoProcessos" Name="DIST - Distribuição de Processos">
