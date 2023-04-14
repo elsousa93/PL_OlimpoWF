@@ -8082,22 +8082,22 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="142.95140838623047,41.944447250976566"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="route3" Name="Filtro?">
+                <Activity Id="route3">
                     <Route/>
                     <Performer>hip_user_filtro</Performer>
                     <TransitionRestrictions>
                         <TransitionRestriction>
                             <Split Type="XOR">
                                 <TransitionRefs>
-                                    <TransitionRef Id="transition6"/>
-                                    <TransitionRef Id="transition5"/>
+                                    <TransitionRef Id="transition16"/>
+                                    <TransitionRef Id="transition17"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="hip_user_filtro"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1039.913200378418,87.93402549804688"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1039.895866394043,43.22919151367188"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="HIPFiltro" Name="Filtro">
@@ -8185,6 +8185,24 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1629.9826583862305,56.979176254882816"/>
                     </ExtendedAttributes>
                 </Activity>
+                <Activity Id="filtro" Name="Filtro?">
+                    <Route/>
+                    <Performer>hip_user_contratacao</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition14"/>
+                                    <TransitionRef Id="transition15"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="hip_user_contratacao"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1041.9792404174805,57.98611900390625"/>
+                    </ExtendedAttributes>
+                </Activity>
             </Activities>
             <Transitions>
                 <Transition From="configuraProcesso" Id="transition1" To="route1">
@@ -8204,23 +8222,6 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="preenchimentoProcesso" Id="transition7" To="route3">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="route3" Id="transition6" Name="sem_filtro" To="PedidoAgendamento">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="route3" Id="transition5" Name="com_filtro" To="createInfoDiligencia">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="createInfoDiligencia" Id="transition9" To="HIPFiltro">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
@@ -8237,6 +8238,31 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route3_1" Id="transition12" Name="falta_confirmacao" To="PedidoAgendamento">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="preenchimentoProcesso" Id="transition13" To="filtro">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="filtro" Id="transition14" Name="com_filtro" To="route3">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="filtro" Id="transition15" Name="sem_filtro" To="PedidoAgendamento">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route3" Id="transition16" Name="primeira_vez" To="createInfoDiligencia">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route3" Id="transition17" To="route1">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
