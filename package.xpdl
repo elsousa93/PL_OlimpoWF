@@ -7283,6 +7283,45 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="199,37.57499999999999"/>
                     </ExtendedAttributes>
                 </Activity>
+                <Activity Id="route1">
+                    <Route/>
+                    <Performer>dist_distrates_1</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition3"/>
+                                    <TransitionRef Id="transition5"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_distrates_1"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="404,42.612506103515614"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="validacaoProcesso" Name="Validação do Processo">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>dist_distrates_2</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_distrates_2"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="369,53.224993896484364"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="validacaoProcesso2" Name="Validação do Processo">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>dist_distrates_1</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_distrates_1"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="601,39.21251220703124"/>
+                    </ExtendedAttributes>
+                </Activity>
             </Activities>
             <Transitions>
                 <Transition From="ConfigurarProcessoDIST" Id="transition2" To="preenchimentoProcesso">
@@ -7290,11 +7329,33 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
+                <Transition From="preenchimentoProcesso" Id="transition1" To="route1">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route1" Id="transition3" To="validacaoProcesso">
+                    <Condition Type="OTHERWISE"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;sub_banco&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;BCP&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route1" Id="transition5" To="validacaoProcesso2">
+                    <Condition Type="CONDITION">sub_banco === 'ABN'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;sub_banco&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;ABN&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
             </Transitions>
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="dist_distrates;dist_distrates_1;dist_distrates_2"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=dist_distrates,CONNECTING_ACTIVITY_ID=ConfigurarProcessoDIST,X_OFFSET=97,Y_OFFSET=55,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=dist_distrates_1,CONNECTING_ACTIVITY_ID=preenchimentoProcesso,X_OFFSET=441,Y_OFFSET=48,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=dist_distrates_1,CONNECTING_ACTIVITY_ID=validacaoProcesso2,X_OFFSET=829,Y_OFFSET=49,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=dist_distrates_2,CONNECTING_ACTIVITY_ID=validacaoProcesso,X_OFFSET=601,Y_OFFSET=65,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="CHAcompanhamentoOutorgas" Name="CH-Acompanhamento-Outorgas">
