@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, dp.c_tipo_processo, dp.c_n_wf_pl, dp.c_pid, dp.c_categoria_processo, sact.Name AS Atividade, dp.c_n_wf_banco AS NumeroWFBanco, sact.Id AS ActivityId, sp.ActivityRequesterProcessId as ProcessId\r\nFROM shkprocesses sp\r\nLEFT JOIN app_fd_processos p ON p.id = sp.ActivityRequesterProcessId\r\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\r\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\r\nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\nWHERE sps.KeyValue LIKE 'open.running'\r\nAND (ssta.KeyValue LIKE 'open.not_running.not_started' OR ssta.KeyValue LIKE 'open.running')"
+            "sql": "SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, dp.c_tipo_processo as TipoProcesso, dp.c_n_wf_pl as NumeroWFPL, dp.c_pid as PID, dp.c_categoria_processo as CategoriaProcesso, sact.Name AS Atividade, dp.c_n_wf_banco AS NumeroWFBanco, sact.Id AS ActivityId, sp.ActivityRequesterProcessId as ProcessId\r\nFROM shkprocesses sp\r\nLEFT JOIN app_fd_processos p ON p.id = sp.ActivityRequesterProcessId\r\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\r\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\r\nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\nWHERE sps.KeyValue LIKE 'open.running'\r\nAND (ssta.KeyValue LIKE 'open.not_running.not_started' OR ssta.KeyValue LIKE 'open.running')"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -67,92 +67,36 @@
             "sortable": "false"
         },
         {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
             "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
             "hidden": "false",
-            "id": "column_0",
-            "label": "NúmeroWFPL",
-            "name": "c_n_wf_pl",
-            "sortable": "false",
-            "style": "",
-            "width": ""
+            "id": "column_12",
+            "label": "NumeroWFPL",
+            "name": "NumeroWFPL",
+            "sortable": "false"
         },
         {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
             "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
             "hidden": "false",
-            "id": "column_1",
+            "id": "column_9",
             "label": "PID",
-            "name": "c_pid",
-            "sortable": "false",
-            "style": "",
-            "width": ""
+            "name": "PID",
+            "sortable": "false"
         },
         {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
             "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
             "hidden": "false",
-            "id": "column_2",
+            "id": "column_10",
             "label": "TipoProcesso",
-            "name": "c_tipo_processo",
-            "sortable": "false",
-            "style": "",
-            "width": ""
+            "name": "TipoProcesso",
+            "sortable": "false"
         },
         {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
             "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
             "hidden": "false",
-            "id": "column_3",
+            "id": "column_11",
             "label": "CategoriaProcesso",
-            "name": "c_categoria_processo",
-            "sortable": "false",
-            "style": "",
-            "width": ""
+            "name": "CategoriaProcesso",
+            "sortable": "false"
         }
     ],
     "considerFilterWhenGetTotal": "",
