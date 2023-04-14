@@ -205,7 +205,13 @@
         <Participant Id="validadorFinal" Name="Validador Final">
             <ParticipantType Type="ROLE"/>
         </Participant>
+        <Participant Id="dist_distrates_4" Name="DIST_4">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
         <Participant Id="dist_distrates_3" Name="DIST_3">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
+        <Participant Id="dist_distrates_5" Name="DIST_5">
             <ParticipantType Type="ROLE"/>
         </Participant>
     </Participants>
@@ -7319,19 +7325,29 @@
                     <Implementation>
                         <No/>
                     </Implementation>
-                    <Performer>dist_distrates_3</Performer>
+                    <Performer>dist_distrates_4</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
                     <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_distrates_3"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="573,32.562487792968795"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_distrates_4"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="739,13.337481689453114"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="efetuarDeposito" Name="Efetuar Depósito">
                     <Implementation>
                         <No/>
                     </Implementation>
-                    <Performer>dist_distrates_3</Performer>
+                    <Performer>dist_distrates_4</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
                     <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_distrates_3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_distrates_4"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="938,30.974963378906295"/>
                     </ExtendedAttributes>
                 </Activity>
@@ -7339,29 +7355,29 @@
                     <Implementation>
                         <Tool Id="default_application"/>
                     </Implementation>
-                    <Performer>dist_distrates_2</Performer>
+                    <Performer>dist_distrates_3</Performer>
                     <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_distrates_2"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="566,52.38749999999999"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_distrates_3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="554,45.37498779296874"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="filaComumBCP" Name="Fila Comum BCP">
                     <Implementation>
                         <Tool Id="default_application"/>
                     </Implementation>
-                    <Performer>dist_distrates_3</Performer>
+                    <Performer>dist_distrates_5</Performer>
                     <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_distrates_3"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="756,30.762500000000045"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_distrates_5"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="936,53.562487792968795"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="realizarCobrancas" Name="Realizar Cobranças/Liquidações">
                     <Implementation>
                         <No/>
                     </Implementation>
-                    <Performer>dist_distrates_3</Performer>
+                    <Performer>dist_distrates_4</Performer>
                     <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_distrates_3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_distrates_4"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1118.0000267028809,29.562487792968795"/>
                     </ExtendedAttributes>
                 </Activity>
@@ -7383,6 +7399,42 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_distrates_1"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1116,36.987506103515614"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route2">
+                    <Route/>
+                    <Performer>dist_distrates_2</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition13"/>
+                                    <TransitionRef Id="transition14"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_distrates_2"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="596,57.387507629394534"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route3">
+                    <Route/>
+                    <Performer>dist_distrates_5</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition16"/>
+                                    <TransitionRef Id="transition17"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_distrates_5"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="774,56.187487792968795"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -7413,19 +7465,10 @@
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;sub_banco&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;ABN&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="validacaoProcesso" Id="transition4" To="filaComumMTG">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="filaComumMTG" Id="transition6" To="autenticacao">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="autenticacao" Id="transition8" To="filaComumBCP">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="filaComumBCP" Id="transition9" To="efetuarDeposito">
@@ -7443,9 +7486,46 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
+                <Transition From="validacaoProcesso" Id="transition12" To="route2">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route2" Id="transition13" To="filaComumMTG">
+                    <Condition Type="CONDITION">sub_banco === 'MTG'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;sub_banco&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;MTG&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route2" Id="transition14" To="autenticacao">
+                    <Condition Type="OTHERWISE"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="autenticacao" Id="transition15" To="route3">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route3" Id="transition16" To="filaComumBCP">
+                    <Condition Type="CONDITION">sub_banco === 'BCP'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;sub_banco&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;BCP&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route3" Id="transition17" To="efetuarDeposito">
+                    <Condition Type="OTHERWISE"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
             </Transitions>
             <ExtendedAttributes>
-                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="dist_distrates;dist_distrates_1;dist_distrates_2;dist_distrates_3"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="dist_distrates;dist_distrates_1;dist_distrates_2;dist_distrates_3;dist_distrates_4;dist_distrates_5"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=dist_distrates,CONNECTING_ACTIVITY_ID=ConfigurarProcessoDIST,X_OFFSET=97,Y_OFFSET=55,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=dist_distrates_1,CONNECTING_ACTIVITY_ID=processamentoABN,X_OFFSET=833,Y_OFFSET=52,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=dist_distrates_1,CONNECTING_ACTIVITY_ID=validacaoCobrancas,X_OFFSET=1343,Y_OFFSET=49,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
