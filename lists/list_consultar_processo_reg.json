@@ -32,7 +32,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "procId",
-            "sql": "SELECT p.id as procId, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName,\n sass.ResourceId AS assignee, dp.c_n_wf_banco AS NwfBanco, dp.c_nome_banco AS NomeBanco, dp.dateCreated AS DataCriacao, dp.c_urgencia AS Urgencia, dp.c_tipo_processo as TipoProcesso, dp.dateModified AS DataModificacao,\n dp.c_fase_processo AS FaseProcesso, ip.c_nome AS cliente, d.c_necessarias_correcoes AS CorrecoesRegistos,  \n d.c_observacoes_correcao AS ObservacoesRegistos, p.c_tipo_entidade as Entidade, ag.c_data_agendamento AS DataAgendamento,\n ROW_NUMBER() OVER (ORDER BY DataAgendamento ASC, Urgencia DESC) AS No\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id\n\tAND ip.c_cliente_principal LIKE (SELECT i.c_cliente_principal \n                                    FROM app_fd_intervenientes_proc i \n                                    WHERE i.c_id_processo = p.id\n                                    AND i.c_cliente_principal = 'CHECK')\nLEFT JOIN app_fd_docs_processo d ON  d.id = p.c_docs\nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id not like '%Credito%'\nAND (Select count(ID) from shkprocesses \n    where ActivityRequesterProcessId = sp2.id\n    AND (If( 'REG' like '%REG%', ID like '%Registos%', '')\n    ) \nOR sp.id like '%CHAcompanhamentoOutorgas%'\n) > 0"
+            "sql": "SELECT p.id as procId, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName,\n sass.ResourceId AS assignee, dp.c_n_wf_banco AS NwfBanco, dp.c_nome_banco AS NomeBanco, dp.dateCreated AS DataCriacao, dp.c_urgencia AS Urgencia, dp.c_tipo_processo as TipoProcesso, dp.dateModified AS DataModificacao,\n dp.c_fase_processo AS FaseProcesso, ip.c_nome AS cliente, d.c_necessarias_correcoes AS CorrecoesRegistos,  \n d.c_observacoes_correcao AS ObservacoesRegistos, p.c_tipo_entidade as Entidade, ag.c_data_agendamento AS DataAgendamento, dp.c_categoria_processo as CategoriaProcesso,\n ROW_NUMBER() OVER (ORDER BY DataAgendamento ASC, Urgencia DESC) AS No\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id\n\tAND ip.c_cliente_principal LIKE (SELECT i.c_cliente_principal \n                                    FROM app_fd_intervenientes_proc i \n                                    WHERE i.c_id_processo = p.id\n                                    AND i.c_cliente_principal = 'CHECK')\nLEFT JOIN app_fd_docs_processo d ON  d.id = p.c_docs\nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id not like '%Credito%'\nAND (Select count(ID) from shkprocesses \n    where ActivityRequesterProcessId = sp2.id\n    AND (If( 'REG' like '%REG%', ID like '%Registos%', '')\n    ) \nOR sp.id like '%CHAcompanhamentoOutorgas%'\n) > 0"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -248,6 +248,44 @@
             "id": "column_12",
             "label": "Tipo Processo",
             "name": "TipoProcesso",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'categoria_processo'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_14",
+            "label": "Categoria Processo",
+            "name": "CategoriaProcesso",
             "sortable": "false",
             "style": "",
             "width": ""
