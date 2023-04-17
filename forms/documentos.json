@@ -613,8 +613,11 @@
                         "readonly": "",
                         "readonlyLabel": "",
                         "validator": {
-                            "className": "",
-                            "properties": {}
+                            "className": "org.joget.apps.form.lib.BeanShellValidator",
+                            "properties": {
+                                "decoration": "*",
+                                "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\n\r\npublic boolean faseValidacaoQualidade(Element element, FormData formData){\r\n\r\n    //Configure field to validate - UPDATE HERE\r\n    String fieldId = \"validado_equipa_qualidade\";\r\n    String campo = FormUtil.getElementParameterName(element);\r\n\r\n    Boolean result = false;\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    \r\n    if (fieldValue == null || fieldValue.equals(\"NAO\")){\r\n        formData.addFormError(campo, \"VALIDAÇÃO OBRIGATÓRIA\");\r\n        result = false;\r\n    } else{\r\n        result = true;  \r\n    }\r\n    \r\n    return result;\r\n}\r\n\r\n//call load method with injected variable\r\nreturn faseValidacaoQualidade(element, formData);"
+                            }
                         },
                         "value": "NAO",
                         "workflowVariable": ""
