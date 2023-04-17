@@ -1217,7 +1217,7 @@
                                 },
                                 {
                                     "grouping": "",
-                                    "label": "Tipo de Empréstimo",
+                                    "label": "Tipo de Financiamento",
                                     "value": "TEMP"
                                 }
                             ],
@@ -1228,6 +1228,19 @@
                             "readonly": "",
                             "readonlyLabel": "",
                             "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "grouping_subtipo",
+                            "useDefaultWhenEmpty": "",
                             "validator": {
                                 "className": "",
                                 "properties": {}
@@ -1250,7 +1263,7 @@
                                     "value": ""
                                 },
                                 {
-                                    "grouping": "GRT;PROC",
+                                    "grouping": "GRT",
                                     "label": "Hipoteca Genérica",
                                     "value": "HIPGEN"
                                 },
@@ -1451,6 +1464,33 @@
                                 "properties": {}
                             },
                             "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.plugin.enterprise.MultiSelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "field41",
+                            "label": "Multi Select Box",
+                            "multiple": "true",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                                "properties": {
+                                    "cacheInterval": "",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.FormStoreBinder;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport org.joget.commons.util.LogUtil;\r\n\r\n \r\npublic FormRowSet load(String[] values) {\r\n    \r\n    FormRowSet rows = new FormRowSet();\r\n    \r\n    FormRow option = new FormRow();\r\n    option.setProperty(FormUtil.PROPERTY_VALUE, \"\");\r\n    option.setProperty(FormUtil.PROPERTY_LABEL, \"\");\r\n    rows.add(option);\r\n    \r\n    String banco = null;\r\n    if (values != null && values.length > 0) {\r\n        base_processo = values[0];\r\n    \r\n        Connection con = null;\r\n        PreparedStatement stmt = null;\r\n        ResultSet rs = null;\r\n        String subtipo_value = \"\";\r\n        String subtipo_label = \"\";\r\n        \r\n        AppDefinition appDef = AppUtil.getCurrentAppDefinition();\r\n        \r\n        try{\r\n                DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n                con = ds.getConnection();\r\n                \r\n                if(!con.isClosed()){\r\n                    //Verificar o utilizador atribuido e atualizar caso esteja errado\r\n                    String query=\"SELECT c_value, c_label FROM app_fd_listas_de_valores WHERE c_nome_campo IN (?);\";\r\n                    stmt = con.prepareStatement(query);\r\n                    \r\n                    Array array;\r\n                    if(base_processo.equals(\"PROC\")){\r\n                        array = conn.createArrayOf(\"VARCHAR\", new Object[]{\"garantia\", \"tipo_financiamento\"});\r\n                    }else if(base_processo.equals(\"GRT\")){\r\n                        array = conn.createArrayOf(\"VARCHAR\", new Object[]{\"tipo_financiamento\"});\r\n                    }else{\r\n                        array = conn.createArrayOf(\"VARCHAR\", new Object[]{\"garantia\"});\r\n                    }\r\n                    \r\n                    stmt.setArray(1, array);\r\n                    rs = stmt.executeQuery();\r\n                    \r\n                    while(rs.next()){\r\n                        subtipo_value = rs.getString(1);\r\n                        subtipo_label = rs.getString(2);\r\n                        \r\n                        FormRow option = new FormRow();\r\n                        option.setProperty(FormUtil.PROPERTY_VALUE, subtipo_value);\r\n                        option.setProperty(FormUtil.PROPERTY_LABEL, subtipo_label);\r\n                        rows.add(option);\r\n                        \r\n                    }\r\n                }\r\n                \r\n        }catch(Exception e){\r\n            LogUtil.error(\"HIPOTECAS - Detalhe de  processo - a\", e, \"Error getting info from DB\");\r\n        }finally{\r\n            try{\r\n                if(rs != null){\r\n                rs.close();\r\n                }\r\n                if(stmt != null){\r\n                    stmt.close();\r\n                }\r\n                if(con != null && !con.isClosed()) {\r\n                    con.close();\r\n                }\r\n            }catch(Exception e){\r\n                LogUtil.error(\"Importa processo - forma de outorga\", e, \"Error closing DB connection\");\r\n            }\r\n            \r\n        }\r\n        \r\n    }\r\n\r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(values);",
+                                    "useAjax": "true"
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "width": "40%",
                             "workflowVariable": ""
                         }
                     }
@@ -2018,7 +2058,7 @@
                             "autoPopulate": "",
                             "id": "concatenar_tipo_processo",
                             "label": "",
-                            "value": "<script>\n    $(document).change(function(){\n        \n        /*Tipo de processo*/\n        var tipo_processo_total = '';\n        \n        //get tipo de processo 1\n        var tipo_processo_1 = $(\"select[name$=_tipo_processo_1] option:selected\").text();\n        \n        //get subtipo de processo 1\n        var subtipo_processo_1 = $(\"select[name$=subtipo_processo_1] option:selected\").text();\n        \n        //preenche tipo de processo final com os tipos e subtipos de processo selecionados\n        if ( tipo_processo_1 != undefined && tipo_processo_1 !== '' ){\n            tipo_processo_total = tipo_processo_1;\n            if (subtipo_processo_1 != undefined && subtipo_processo_1 !== '' ){\n                tipo_processo_total += \" com \" + subtipo_processo_1;\n            }\n            \n            //get tipo de processo 2\n            var tipo_processo_2 = $(\"select[name$=_tipo_processo_2] option:selected\").text();\n        \n            //get subtipo de processo 2\n            var subtipo_processo_2 = $(\"select[name$=subtipo_processo_2] option:selected\").text();\n            \n            if ( tipo_processo_2 != undefined && tipo_processo_2 !== '' ){\n                tipo_processo_total += \" + \" + tipo_processo_2;\n                if (subtipo_processo_2 != undefined && subtipo_processo_2 !== '' ){\n                    tipo_processo_total += \" com \" + subtipo_processo_2;\n                }\n            }\n        }\n        $(\"input[id$=tipo_processo]\").val(tipo_processo_total);\n        \n    }).trigger(\"change\");\n    \n    \n    /*\n    \n     $(document).ready(function(){\n         \n        var faseProcesso = \"#process.processId#\";\n       \n       if(faseProcesso.includes(\"Contratacao\")){\n            $(\"select[name*=fase_processo]\").val('CNT');\n       }else if(faseProcesso.includes(\"Filtro\")){\n            $(\"select[name*=fase_processo]\").val('FLT');\n       }else if(faseProcesso.includes(\"Producao\")){\n            $(\"select[name*=fase_processo]\").val('PRD');\n       }else if(faseProcesso.includes(\"Validacao\")){\n            $(\"select[name*=fase_processo]\").val('VAL');\n       }\n       //$(\"input#multiPaged_2_detalheProcesso_tipo_processo\").parent().hide();\n       \n       \n       //Campos de alerta para o gestor\n       $(\"input[id*=alerta_gestor]\").change(function(){\n           \n           //Se o campo tiver checked preenche campos de gestor e data do alerta\n           if($(\"input[id*=alerta_gestor]\").is(\":checked\")){\n               \n               $(\"input[id*=user_alerta]\").val(\"#currentUser.username#\");\n               //Data atual mais 2 dias\n               $(\"input[id*=data_alerta]\").val(\"#date.DAY+2.yyyy-MM-dd#\");\n               \n           }\n       });\n       \n       var estado = \"#form.detalhe_processo.estado_contratacao[{form.processos.detalhe_processo}]#\";\n       $(\"select[id*=estado_contratacao]\").val(estado);\n       \n    });\n       \n      */ \n     \n     $(window).load(function(){\n\n         var flag_validacao = '#variable.flag_validacao#';\n         \n        if(flag_validacao === '1' || flag_validacao.startsWith(\"#variable.flag_validacao\")){\n            $(\"form#processo :input\").change(function(){\n                $(\"input#flag_alteracoes\").attr(\"value\",\"SIM\");    \n            });\n        }\n    });\n    \n    \n    \n<\/script>"
+                            "value": "<script>\n    $(document).change(function(){\n        \n        /*Tipo de processo*/\n        var tipo_processo_total = '';\n        \n        //get tipo de processo 1\n        var tipo_processo_1 = $(\"select[name$=_tipo_processo_1] option:selected\").text();\n        \n        //get subtipo de processo 1\n        var subtipo_processo_1 = $(\"select[name$=subtipo_processo_1] option:selected\").text();\n        \n        //preenche tipo de processo final com os tipos e subtipos de processo selecionados\n        if ( tipo_processo_1 != undefined && tipo_processo_1 !== '' ){\n            tipo_processo_total = tipo_processo_1;\n            if (subtipo_processo_1 != undefined && subtipo_processo_1 !== '' ){\n                tipo_processo_total += \" com \" + subtipo_processo_1;\n            }\n            \n            //get tipo de processo 2\n            var tipo_processo_2 = $(\"select[name$=_tipo_processo_2] option:selected\").text();\n        \n            //get subtipo de processo 2\n            var subtipo_processo_2 = $(\"select[name$=subtipo_processo_2] option:selected\").text();\n            \n            if ( tipo_processo_2 != undefined && tipo_processo_2 !== '' ){\n                tipo_processo_total += \" + \" + tipo_processo_2;\n                if (subtipo_processo_2 != undefined && subtipo_processo_2 !== '' ){\n                    tipo_processo_total += \" com \" + subtipo_processo_2;\n                }\n            }\n        }\n    \n        \n        \n        $(\"input[id$=tipo_processo]\").val(tipo_processo_total);\n        \n    }).trigger(\"change\");\n    \n    /*\n    \n     $(document).ready(function(){\n         \n        var faseProcesso = \"#process.processId#\";\n       \n       if(faseProcesso.includes(\"Contratacao\")){\n            $(\"select[name*=fase_processo]\").val('CNT');\n       }else if(faseProcesso.includes(\"Filtro\")){\n            $(\"select[name*=fase_processo]\").val('FLT');\n       }else if(faseProcesso.includes(\"Producao\")){\n            $(\"select[name*=fase_processo]\").val('PRD');\n       }else if(faseProcesso.includes(\"Validacao\")){\n            $(\"select[name*=fase_processo]\").val('VAL');\n       }\n       //$(\"input#multiPaged_2_detalheProcesso_tipo_processo\").parent().hide();\n       \n       \n       //Campos de alerta para o gestor\n       $(\"input[id*=alerta_gestor]\").change(function(){\n           \n           //Se o campo tiver checked preenche campos de gestor e data do alerta\n           if($(\"input[id*=alerta_gestor]\").is(\":checked\")){\n               \n               $(\"input[id*=user_alerta]\").val(\"#currentUser.username#\");\n               //Data atual mais 2 dias\n               $(\"input[id*=data_alerta]\").val(\"#date.DAY+2.yyyy-MM-dd#\");\n               \n           }\n       });\n       \n       var estado = \"#form.detalhe_processo.estado_contratacao[{form.processos.detalhe_processo}]#\";\n       $(\"select[id*=estado_contratacao]\").val(estado);\n       \n    });\n       \n      */ \n     \n     $(window).load(function(){\n\n         var flag_validacao = '#variable.flag_validacao#';\n         \n        if(flag_validacao === '1' || flag_validacao.startsWith(\"#variable.flag_validacao\")){\n            $(\"form#processo :input\").change(function(){\n                $(\"input#flag_alteracoes\").attr(\"value\",\"SIM\");    \n            });\n        }\n    });\n    \n    \n    \n<\/script>"
                         }
                     }
                 ],
