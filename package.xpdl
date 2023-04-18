@@ -7529,26 +7529,6 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1458.0000305175781,65.3750030517578"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="filaComumMTG" Name="Fila Comum MTG">
-                    <Implementation>
-                        <Tool Id="default_application"/>
-                    </Implementation>
-                    <Performer>dist_mtg_3</Performer>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_mtg_3"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="736,49.750018310546864"/>
-                    </ExtendedAttributes>
-                </Activity>
-                <Activity Id="filaComumBCP" Name="Fila Comum BCP">
-                    <Implementation>
-                        <Tool Id="default_application"/>
-                    </Implementation>
-                    <Performer>dist_bcp_4</Performer>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_bcp_4"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="746,50.13749999999999"/>
-                    </ExtendedAttributes>
-                </Activity>
                 <Activity Id="realizarCobrancas" Name="Realizar Cobranças/Liquidações">
                     <Implementation>
                         <No/>
@@ -7684,20 +7664,28 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="416,58.450000000000045"/>
                     </ExtendedAttributes>
                 </Activity>
+                <Activity Id="filaComumMTG" Name="Fila Comum MTG">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>dist_mtg_3</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_mtg_3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="734,36.23749084472655"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="filaComumBCP" Name="Fila Comum BCP">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>dist_bcp_4</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_bcp_4"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="748,50.325030517578114"/>
+                    </ExtendedAttributes>
+                </Activity>
             </Activities>
             <Transitions>
-                <Transition From="filaComumMTG" Id="transition6" To="autenticacao">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="filaComumBCP" Id="transition9" To="efetuarDeposito">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="ConfigurarProcessoDIST" Id="transition14" To="route5">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
@@ -7723,11 +7711,6 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="validacaoProcesso" Id="transition25" To="filaComumMTG">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="autenticacao" Id="transition21" To="finalizarProcesso">
@@ -7762,11 +7745,6 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="validacaoProcesso2" Id="transition27" To="autenticacao2">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="autenticacao2" Id="transition28" To="filaComumBCP">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
@@ -7806,6 +7784,27 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="validacaoCobrancas" Id="transition31" To="finalizarProcesso">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="validacaoProcesso" Id="transition25" To="filaComumMTG">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="filaComumMTG" Id="transition32" To="autenticacao">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="autenticacao2" Id="transition28" To="filaComumBCP">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="filaComumBCP" Id="transition33" To="efetuarDeposito">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
