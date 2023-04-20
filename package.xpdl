@@ -9702,9 +9702,14 @@
                         <No/>
                     </Implementation>
                     <Performer>process29_producao</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process29_producao"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1394.9826583862305,29.947926254882816"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1394.981185913086,29.137493896484386"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="atualizacao" Name="Atualização de minuta?">
@@ -9733,6 +9738,32 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process29_ProdSistema"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="554.9826583862305,25.885410996093754"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route4" Name="Agendamento ok?">
+                    <Route/>
+                    <Performer>process29_producao</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition18"/>
+                                    <TransitionRef Id="transition19"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process29_producao"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1669.9686126708984,30.056256103515636"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route5">
+                    <Route/>
+                    <Performer>process29_producao</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process29_producao"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1780.012435913086,30.13123779296876"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -9799,12 +9830,28 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
+                <Transition From="validacaoContrato" Id="transition17" To="route4">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route4" Id="transition18" Name="nao" To="validacaoContrato">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route4" Id="transition19" Name="sim" To="route5">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
             </Transitions>
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="process29_ProdSistema;process29_producao;process29_ProdRobot"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process29_ProdSistema,CONNECTING_ACTIVITY_ID=tool4,X_OFFSET=52,Y_OFFSET=40,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process29_producao,CONNECTING_ACTIVITY_ID=validacaoContrato,X_OFFSET=1586,Y_OFFSET=40,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process29_ProdSistema,CONNECTING_ACTIVITY_ID=atualizacao_minuta,X_OFFSET=850,Y_OFFSET=39,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process29_producao,CONNECTING_ACTIVITY_ID=route5,X_OFFSET=1888,Y_OFFSET=36,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="HIPValidacao" Name="HIP-Validação">
