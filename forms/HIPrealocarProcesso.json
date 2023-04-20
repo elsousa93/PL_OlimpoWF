@@ -62,7 +62,7 @@
                         "autoHandleFiles": "",
                         "autoHandleWorkflowVariable": "true",
                         "jdbcDatasource": "default",
-                        "sql": "SELECT * FROM app_fd_detalhe_processo WHERE c_id_processo = '#requestParam.procId#'"
+                        "sql": "SELECT * FROM app_fd_detalhe_proce_hip WHERE c_id_processo = '#requestParam.procId#'"
                     }
                 },
                 "permission": {
@@ -160,9 +160,22 @@
                         }
                     },
                     {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "department",
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "#currentUser.department.id#",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
                         "className": "org.joget.apps.form.lib.SelectBox",
                         "properties": {
-                            "controlField": "",
+                            "controlField": "department",
                             "id": "user",
                             "label": "Realocar para",
                             "multiple": "",
@@ -178,7 +191,7 @@
                                     "grouping": "dept",
                                     "optionLabel": "",
                                     "orgId": "PL",
-                                    "useAjax": ""
+                                    "useAjax": "true"
                                 }
                             },
                             "readonly": "",
