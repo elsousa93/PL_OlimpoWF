@@ -57,13 +57,8 @@
                 "join": "",
                 "label": "Processo",
                 "loadBinder": {
-                    "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
-                    "properties": {
-                        "autoHandleFiles": "",
-                        "autoHandleWorkflowVariable": "true",
-                        "jdbcDatasource": "default",
-                        "sql": "SELECT * FROM app_fd_detalhe_processo WHERE c_id_processo = '#requestParam.procId#'"
-                    }
+                    "className": "",
+                    "properties": {}
                 },
                 "permission": {
                     "className": "",
@@ -76,14 +71,8 @@
                 "regex": "",
                 "reverse": "",
                 "storeBinder": {
-                    "className": "org.joget.apps.form.lib.BeanShellFormBinder",
-                    "properties": {
-                        "autoHandleFiles": "",
-                        "autoHandleWorkflowVariable": "true",
-                        "cacheInterval": "",
-                        "script": "return null;",
-                        "useAjax": ""
-                    }
+                    "className": "",
+                    "properties": {}
                 },
                 "visibilityControl": "",
                 "visibilityValue": ""
@@ -160,9 +149,22 @@
                         }
                     },
                     {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "department",
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "#currentUser.department.id#",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
                         "className": "org.joget.apps.form.lib.SelectBox",
                         "properties": {
-                            "controlField": "",
+                            "controlField": "department",
                             "id": "user",
                             "label": "Realocar para",
                             "multiple": "",
@@ -178,7 +180,7 @@
                                     "grouping": "dept",
                                     "optionLabel": "",
                                     "orgId": "PL",
-                                    "useAjax": ""
+                                    "useAjax": "true"
                                 }
                             },
                             "readonly": "",
