@@ -1851,6 +1851,114 @@
                 "className": "org.joget.apps.form.model.Column",
                 "elements": [
                     {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "tipo_processo",
+                            "label": "Tipo de Processo",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "concatenar_tipo_processo",
+                            "label": "",
+                            "value": "<script>\n    $(document).change(function(){\n        \n        /*Tipo de processo*/\n           var tipo_processo_total = '';\n        \n          //get tipo de processo 1\n           var tipo_processo_1 = $(\"select[name$=_tipo_processo_1] option:selected\").text();\n           console.log(tipo_processo_1);\n                    \n           var  subtipos_processo_1 = []; // = $(\"div[id$=HIPDetalheProcesso_subtipo_processo_1_chosen] ul\").get();\n            \n            $('div[id$=HIPDetalheProcesso_subtipo_processo_1_chosen] ul li.search-choice').each(function(){\n                 subtipos_processo_1.push($(this).text());\n            });\n            //console.log(tipo_processo_1);\n            console.log(subtipos_processo_1);\n            \n                \n            if ( tipo_processo_1 != undefined && tipo_processo_1 != ''){\n                tipo_processo_total += tipo_processo_1;\n                console.log(tipo_processo_total);\n                if (subtipos_processo_1 != undefined && subtipos_processo_1.length > 0){\n                    for (let i = 0; i < subtipos_processo_1.length; i++) {\n                        if(i == 0){\n                            tipo_processo_total += \" com \" + subtipos_processo_1[i];\n                        }else if(i < subtipos_processo_1.length-1){\n                            tipo_processo_total += \", \" + subtipos_processo_1[i];\n                        }else{\n                            tipo_processo_total += \" e \" + subtipos_processo_1[i];\n                        }\n                        console.log(tipo_processo_total);\n                    }\n                }\n            }\n            \n            //get tipo de processo 2\n            var tipo_processo_2 = $(\"select[name$=_tipo_processo_2] option:selected\").text();\n            \n        \n            //get subtipo de processo 2\n            var subtipos_processo_2 = []; // = $(\"div[id$=HIPDetalheProcesso_subtipo_processo_2_chosen] ul\").get();\n            \n            $('div[id$=HIPDetalheProcesso_subtipo_processo_2_chosen] ul li.search-choice').each(function(){\n                subtipos_processo_2.push($(this).text());\n            });\n            \n            console.log(subtipos_processo_2);\n            \n            if ( tipo_processo_2 != undefined && tipo_processo_2 !== '' ){\n                tipo_processo_total += \" + \" + tipo_processo_2;\n                if (subtipos_processo_2 != undefined && subtipos_processo_2.length > 0 ){\n                    for (let i = 0; i < subtipos_processo_2.length; i++) {\n                        if(i == 0){\n                            tipo_processo_total += \" com \" + subtipos_processo_2[i];\n                        }else if(i < subtipos_processo_2.length-1){\n                            tipo_processo_total += \", \" + subtipos_processo_2[i];\n                        }else{\n                            tipo_processo_total += \" e \" + subtipos_processo_2[i];\n                        }\n                        \n                    }\n                    \n                }\n            }\n    \n        \n        \n        $(\"input[id$=tipo_processo]\").val(tipo_processo_total);\n        \n    }).trigger(\"change\");\n    \n    /*\n    \n     $(document).ready(function(){\n         \n        var faseProcesso = \"#process.processId#\";\n       \n       if(faseProcesso.includes(\"Contratacao\")){\n            $(\"select[name*=fase_processo]\").val('CNT');\n       }else if(faseProcesso.includes(\"Filtro\")){\n            $(\"select[name*=fase_processo]\").val('FLT');\n       }else if(faseProcesso.includes(\"Producao\")){\n            $(\"select[name*=fase_processo]\").val('PRD');\n       }else if(faseProcesso.includes(\"Validacao\")){\n            $(\"select[name*=fase_processo]\").val('VAL');\n       }\n       //$(\"input#multiPaged_2_detalheProcesso_tipo_processo\").parent().hide();\n       \n       \n       //Campos de alerta para o gestor\n       $(\"input[id*=alerta_gestor]\").change(function(){\n           \n           //Se o campo tiver checked preenche campos de gestor e data do alerta\n           if($(\"input[id*=alerta_gestor]\").is(\":checked\")){\n               \n               $(\"input[id*=user_alerta]\").val(\"#currentUser.username#\");\n               //Data atual mais 2 dias\n               $(\"input[id*=data_alerta]\").val(\"#date.DAY+2.yyyy-MM-dd#\");\n               \n           }\n       });\n       \n       var estado = \"#form.detalhe_processo.estado_contratacao[{form.processos.detalhe_processo}]#\";\n       $(\"select[id*=estado_contratacao]\").val(estado);\n       \n    });\n       \n      */ \n     \n     $(window).load(function(){\n\n         var flag_validacao = '#variable.flag_validacao#';\n         \n        if(flag_validacao === '1' || flag_validacao.startsWith(\"#variable.flag_validacao\")){\n            $(\"form#processo :input\").change(function(){\n                $(\"input#flag_alteracoes\").attr(\"value\",\"SIM\");    \n            });\n        }\n    });\n    \n    \n    \n<\/script>"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section9",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "base_processo_3",
+                            "label": "Base de processo 3",
+                            "multiple": "",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "",
+                                    "value": ""
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Processo",
+                                    "value": "PROC"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Garantia",
+                                    "value": "GRT"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Tipo de Financiamento",
+                                    "value": "TEMP"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
                         "className": "org.joget.apps.form.lib.SelectBox",
                         "properties": {
                             "controlField": "base_processo_1",
@@ -1965,50 +2073,6 @@
                         }
                     },
                     {
-                        "className": "org.joget.apps.form.lib.SelectBox",
-                        "properties": {
-                            "controlField": "",
-                            "id": "base_processo_3",
-                            "label": "Base de processo 3",
-                            "multiple": "",
-                            "options": [
-                                {
-                                    "grouping": "",
-                                    "label": "",
-                                    "value": ""
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Processo",
-                                    "value": "PROC"
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Garantia",
-                                    "value": "GRT"
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Tipo de Financiamento",
-                                    "value": "TEMP"
-                                }
-                            ],
-                            "optionsBinder": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    },
-                    {
                         "className": "org.joget.plugin.enterprise.MultiSelectBox",
                         "properties": {
                             "controlField": "base_processo_1",
@@ -2060,7 +2124,7 @@
                     "className": "",
                     "properties": {}
                 },
-                "visibilityControl": "tipo_processo_2",
+                "visibilityControl": "tipo_processo_3",
                 "visibilityValue": "OUT"
             }
         },
@@ -2069,6 +2133,50 @@
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
                 "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "base_processo_4",
+                            "label": "Base de processo 4",
+                            "multiple": "",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "",
+                                    "value": ""
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Processo",
+                                    "value": "PROC"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Garantia",
+                                    "value": "GRT"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Tipo de Financiamento",
+                                    "value": "TEMP"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
                     {
                         "className": "org.joget.apps.form.lib.SelectBox",
                         "properties": {
@@ -2184,50 +2292,6 @@
                         }
                     },
                     {
-                        "className": "org.joget.apps.form.lib.SelectBox",
-                        "properties": {
-                            "controlField": "",
-                            "id": "base_processo_4",
-                            "label": "Base de processo 4",
-                            "multiple": "",
-                            "options": [
-                                {
-                                    "grouping": "",
-                                    "label": "",
-                                    "value": ""
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Processo",
-                                    "value": "PROC"
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Garantia",
-                                    "value": "GRT"
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Tipo de Financiamento",
-                                    "value": "TEMP"
-                                }
-                            ],
-                            "optionsBinder": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    },
-                    {
                         "className": "org.joget.plugin.enterprise.MultiSelectBox",
                         "properties": {
                             "controlField": "base_processo_1",
@@ -2279,7 +2343,7 @@
                     "className": "",
                     "properties": {}
                 },
-                "visibilityControl": "tipo_processo_2",
+                "visibilityControl": "tipo_processo_3",
                 "visibilityValue": "OUT"
             }
         },
@@ -2288,6 +2352,50 @@
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
                 "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "base_processo_5",
+                            "label": "Base de processo 5",
+                            "multiple": "",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "",
+                                    "value": ""
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Processo",
+                                    "value": "PROC"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Garantia",
+                                    "value": "GRT"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Tipo de Financiamento",
+                                    "value": "TEMP"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
                     {
                         "className": "org.joget.apps.form.lib.SelectBox",
                         "properties": {
@@ -2403,50 +2511,6 @@
                         }
                     },
                     {
-                        "className": "org.joget.apps.form.lib.SelectBox",
-                        "properties": {
-                            "controlField": "",
-                            "id": "base_processo_5",
-                            "label": "Base de processo 5",
-                            "multiple": "",
-                            "options": [
-                                {
-                                    "grouping": "",
-                                    "label": "",
-                                    "value": ""
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Processo",
-                                    "value": "PROC"
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Garantia",
-                                    "value": "GRT"
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Tipo de Financiamento",
-                                    "value": "TEMP"
-                                }
-                            ],
-                            "optionsBinder": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    },
-                    {
                         "className": "org.joget.plugin.enterprise.MultiSelectBox",
                         "properties": {
                             "controlField": "base_processo_1",
@@ -2500,70 +2564,6 @@
                 },
                 "visibilityControl": "tipo_processo_2",
                 "visibilityValue": "OUT"
-            }
-        },
-        {
-            "className": "org.joget.apps.form.model.Section",
-            "elements": [{
-                "className": "org.joget.apps.form.model.Column",
-                "elements": [
-                    {
-                        "className": "org.joget.apps.form.lib.TextField",
-                        "properties": {
-                            "encryption": "",
-                            "id": "tipo_processo",
-                            "label": "Tipo de Processo",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "storeNumeric": "",
-                            "style": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.CustomHTML",
-                        "properties": {
-                            "autoPopulate": "",
-                            "id": "concatenar_tipo_processo",
-                            "label": "",
-                            "value": "<script>\n    $(document).change(function(){\n        \n        /*Tipo de processo*/\n           var tipo_processo_total = '';\n        \n          //get tipo de processo 1\n           var tipo_processo_1 = $(\"select[name$=_tipo_processo_1] option:selected\").text();\n           console.log(tipo_processo_1);\n                    \n           var  subtipos_processo_1 = []; // = $(\"div[id$=HIPDetalheProcesso_subtipo_processo_1_chosen] ul\").get();\n            \n            $('div[id$=HIPDetalheProcesso_subtipo_processo_1_chosen] ul li.search-choice').each(function(){\n                 subtipos_processo_1.push($(this).text());\n            });\n            //console.log(tipo_processo_1);\n            console.log(subtipos_processo_1);\n            \n                \n            if ( tipo_processo_1 != undefined && tipo_processo_1 != ''){\n                tipo_processo_total += tipo_processo_1;\n                console.log(tipo_processo_total);\n                if (subtipos_processo_1 != undefined && subtipos_processo_1.length > 0){\n                    for (let i = 0; i < subtipos_processo_1.length; i++) {\n                        if(i == 0){\n                            tipo_processo_total += \" com \" + subtipos_processo_1[i];\n                        }else if(i < subtipos_processo_1.length-1){\n                            tipo_processo_total += \", \" + subtipos_processo_1[i];\n                        }else{\n                            tipo_processo_total += \" e \" + subtipos_processo_1[i];\n                        }\n                        console.log(tipo_processo_total);\n                    }\n                }\n            }\n            \n            //get tipo de processo 2\n            var tipo_processo_2 = $(\"select[name$=_tipo_processo_2] option:selected\").text();\n            \n        \n            //get subtipo de processo 2\n            var subtipos_processo_2 = []; // = $(\"div[id$=HIPDetalheProcesso_subtipo_processo_2_chosen] ul\").get();\n            \n            $('div[id$=HIPDetalheProcesso_subtipo_processo_2_chosen] ul li.search-choice').each(function(){\n                subtipos_processo_2.push($(this).text());\n            });\n            \n            console.log(subtipos_processo_2);\n            \n            if ( tipo_processo_2 != undefined && tipo_processo_2 !== '' ){\n                tipo_processo_total += \" + \" + tipo_processo_2;\n                if (subtipos_processo_2 != undefined && subtipos_processo_2.length > 0 ){\n                    for (let i = 0; i < subtipos_processo_2.length; i++) {\n                        if(i == 0){\n                            tipo_processo_total += \" com \" + subtipos_processo_2[i];\n                        }else if(i < subtipos_processo_2.length-1){\n                            tipo_processo_total += \", \" + subtipos_processo_2[i];\n                        }else{\n                            tipo_processo_total += \" e \" + subtipos_processo_2[i];\n                        }\n                        \n                    }\n                    \n                }\n            }\n    \n        \n        \n        $(\"input[id$=tipo_processo]\").val(tipo_processo_total);\n        \n    }).trigger(\"change\");\n    \n    /*\n    \n     $(document).ready(function(){\n         \n        var faseProcesso = \"#process.processId#\";\n       \n       if(faseProcesso.includes(\"Contratacao\")){\n            $(\"select[name*=fase_processo]\").val('CNT');\n       }else if(faseProcesso.includes(\"Filtro\")){\n            $(\"select[name*=fase_processo]\").val('FLT');\n       }else if(faseProcesso.includes(\"Producao\")){\n            $(\"select[name*=fase_processo]\").val('PRD');\n       }else if(faseProcesso.includes(\"Validacao\")){\n            $(\"select[name*=fase_processo]\").val('VAL');\n       }\n       //$(\"input#multiPaged_2_detalheProcesso_tipo_processo\").parent().hide();\n       \n       \n       //Campos de alerta para o gestor\n       $(\"input[id*=alerta_gestor]\").change(function(){\n           \n           //Se o campo tiver checked preenche campos de gestor e data do alerta\n           if($(\"input[id*=alerta_gestor]\").is(\":checked\")){\n               \n               $(\"input[id*=user_alerta]\").val(\"#currentUser.username#\");\n               //Data atual mais 2 dias\n               $(\"input[id*=data_alerta]\").val(\"#date.DAY+2.yyyy-MM-dd#\");\n               \n           }\n       });\n       \n       var estado = \"#form.detalhe_processo.estado_contratacao[{form.processos.detalhe_processo}]#\";\n       $(\"select[id*=estado_contratacao]\").val(estado);\n       \n    });\n       \n      */ \n     \n     $(window).load(function(){\n\n         var flag_validacao = '#variable.flag_validacao#';\n         \n        if(flag_validacao === '1' || flag_validacao.startsWith(\"#variable.flag_validacao\")){\n            $(\"form#processo :input\").change(function(){\n                $(\"input#flag_alteracoes\").attr(\"value\",\"SIM\");    \n            });\n        }\n    });\n    \n    \n    \n<\/script>"
-                        }
-                    }
-                ],
-                "properties": {"width": "100%"}
-            }],
-            "properties": {
-                "comment": "",
-                "id": "section9",
-                "join": "",
-                "label": "",
-                "loadBinder": {
-                    "className": "",
-                    "properties": {}
-                },
-                "permission": {
-                    "className": "",
-                    "properties": {}
-                },
-                "permissionReadonly": "",
-                "readonly": "",
-                "readonlyLabel": "",
-                "regex": "",
-                "reverse": "",
-                "storeBinder": {
-                    "className": "",
-                    "properties": {}
-                },
-                "visibilityControl": "",
-                "visibilityValue": ""
             }
         },
         {
