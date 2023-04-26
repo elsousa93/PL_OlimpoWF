@@ -484,6 +484,10 @@
                             "format24hr": "true",
                             "id": "data_comunicacao_cliente",
                             "label": "Data de Comunicação ao Cliente",
+                            "permission_rules": {
+                                "44639061-b6ba-a2ef-a47c-c5bab888544c": {},
+                                "87e7b01c-e92b-e732-c50f-c2c7020e5482": {}
+                            },
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -599,6 +603,10 @@
                                     "script": "import org.joget.apps.app.service.AppUtil;\nimport org.joget.apps.form.model.Element;\nimport org.joget.apps.form.model.FormData;\nimport org.joget.apps.form.model.FormRow;\nimport org.joget.apps.form.model.FormRowSet;\nimport org.joget.apps.form.model.FormStoreBinder;\nimport java.sql.Connection;\nimport java.sql.PreparedStatement;\nimport java.sql.ResultSet;\nimport java.sql.SQLException;\nimport javax.sql.DataSource;\nimport org.joget.apps.form.service.FormUtil;\nimport org.joget.apps.app.model.AppDefinition;\nimport org.joget.commons.util.LogUtil;\n\n\npublic FormRowSet getDataAgendamento() {\n    Connection con = null;\n    PreparedStatement stmt = null;\n    ResultSet rs = null;\n    String dataOutorga = \"\";\n    String horaOutorga = \"\";\n    String data_hora = \"\";\n    \n    AppDefinition appDef = AppUtil.getCurrentAppDefinition();\n    \n    \n    try{\n            DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\n            con = ds.getConnection();\n            \n            if(!con.isClosed()){\n                \n                String idProcesso = \"#form.processos_procu.id#\";\n                \n                String queryGetLastAto = \"SELECT c_dataOutorga, c_horaOutorga FROM app_fd_atos_procu WHERE c_id_processo = ? ORDER BY dateCreated DESC LIMIT 1\";\n                stmt = con.prepareStatement(queryGetLastAto);\n                stmt.setObject(1, idProcesso);\n                rs = stmt.executeQuery();\n                if(rs.next()){\n                    dataOutorga = rs.getObject(\"c_dataOutorga\");\n                    horaOutorga = rs.getObject(\"c_horaOutorga\");\n                    \n                }\n\n                  data_hora = dataOutorga + \" \" + horaOutorga;  \n            }\n            \n    }catch(Exception e){\n        LogUtil.error(appDef.toString(), e, \"Error getting info from DB\");\n    }finally{\n        try{\n            if(rs != null){\n            rs.close();\n            }\n            if(stmt != null){\n                stmt.close();\n            }\n            if(con != null && !con.isClosed()) {\n                con.close();\n            }\n        }catch(Exception e){\n            LogUtil.error(appDef.toString(), e, \"Error closing DB connection\");\n        }\n        \n    }\n    FormRowSet f = new FormRowSet();\n    FormRow r1 = new FormRow();\n    r1.put(FormUtil.PROPERTY_VALUE, data_hora);\n    r1.put(FormUtil.PROPERTY_LABEL, \"\");\n    f.add(r1);\n    return f;\n}\n \nreturn getDataAgendamento();\n        ",
                                     "useAjax": ""
                                 }
+                            },
+                            "permission_rules": {
+                                "44639061-b6ba-a2ef-a47c-c5bab888544c": {},
+                                "87e7b01c-e92b-e732-c50f-c2c7020e5482": {}
                             },
                             "readonly": "",
                             "readonlyLabel": "",
@@ -883,7 +891,10 @@
                                     "permissionHidden": "true",
                                     "readonly": ""
                                 },
-                                "44639061-b6ba-a2ef-a47c-c5bab888544c": {},
+                                "44639061-b6ba-a2ef-a47c-c5bab888544c": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
                                 "467e0936-e8fb-e23b-f48d-e5c28c5ab7ed": {},
                                 "47d9dac4-bb53-53f7-2c45-a2b2e20e7f54": {},
                                 "504595d7-fa4b-d219-d8a6-65d1a4da0728": {},
