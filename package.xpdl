@@ -235,6 +235,12 @@
         <Participant Id="process29_validacao" Name="Validação">
             <ParticipantType Type="ROLE"/>
         </Participant>
+        <Participant Id="notificacaoStarter" Name="Starter">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
+        <Participant Id="notificacaoSystem" Name="System">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
     </Participants>
     <Applications>
         <Application Id="default_application"/>
@@ -10057,6 +10063,66 @@
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process29_validacao,CONNECTING_ACTIVITY_ID=ConfigurarProcesso,X_OFFSET=75,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process29_validacao,CONNECTING_ACTIVITY_ID=validacaoContratoDocumentacao,X_OFFSET=1390,Y_OFFSET=49,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process29_validacao,CONNECTING_ACTIVITY_ID=tool3,X_OFFSET=1386,Y_OFFSET=173,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+            </ExtendedAttributes>
+        </WorkflowProcess>
+        <WorkflowProcess Id="notificacoes" Name="Notificações">
+            <ProcessHeader DurationUnit="h"/>
+            <Activities>
+                <Activity Id="terminateNotificacao" Name="Terminate Notificação">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>notificacaoStarter</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="notificacaoStarter"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="421,32"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="notificacoesProcu" Name="Notificações Procuradoria">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>notificacaoSystem</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="notificacaoSystem"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="449,80"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route1">
+                    <Route/>
+                    <Performer>notificacaoStarter</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="notificacaoStarter"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="250,37"/>
+                    </ExtendedAttributes>
+                </Activity>
+            </Activities>
+            <Transitions>
+                <Transition From="terminateNotificacao" Id="transition1" To="notificacoesProcu">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="notificacoesProcu" Id="transition3" To="terminateNotificacao">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route1" Id="transition4" To="terminateNotificacao">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+            </Transitions>
+            <ExtendedAttributes>
+                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="notificacaoStarter;notificacaoSystem"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=notificacaoStarter,CONNECTING_ACTIVITY_ID=terminateNotificacao,X_OFFSET=827,Y_OFFSET=37,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=notificacaoStarter,CONNECTING_ACTIVITY_ID=route1,X_OFFSET=88,Y_OFFSET=47,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
     </WorkflowProcesses>
