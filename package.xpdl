@@ -10073,6 +10073,10 @@
                         <No/>
                     </Implementation>
                     <Performer>notificacaoStarter</Performer>
+                    <Deadline Execution="SYNCHR">
+                        <DeadlineCondition>var m=new java.util.Date(); m.setTime(ACTIVITY_ACTIVATED_TIME.getTime()+(3*60000)); m;</DeadlineCondition>
+                        <ExceptionName>check_notificacoes</ExceptionName>
+                    </Deadline>
                     <TransitionRestrictions>
                         <TransitionRestriction>
                             <Join Type="XOR"/>
@@ -10104,6 +10108,7 @@
             </Activities>
             <Transitions>
                 <Transition From="terminateNotificacao" Id="transition1" To="notificacoesProcu">
+                    <Condition Type="EXCEPTION">check_notificacoes</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
