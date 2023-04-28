@@ -7868,6 +7868,11 @@
                         <BasicType Type="STRING"/>
                     </DataType>
                 </DataField>
+                <DataField Id="tipo_entidade" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
             </DataFields>
             <Activities>
                 <Activity Id="ConfigurarProcessoAO" Name="Configurar Processo AO">
@@ -7987,6 +7992,7 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route1" Id="transition5" To="printActivityId">
+                    <Condition Type="OTHERWISE"/>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
@@ -7998,9 +8004,11 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route1" Id="transition7" To="notificarEntidade2">
+                    <Condition Type="CONDITION">tipo_entidade === 'nao-autonoma'</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;tipo_entidade&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;nao-autonoma&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="validacaoInicial" Id="transition8" To="configurarUltimaAtividade">
