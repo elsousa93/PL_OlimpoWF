@@ -1,9 +1,13 @@
 {
     "actions": [],
     "binder": {
-        "className": "",
-        "name": "",
-        "properties": {}
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "dp.id",
+            "sql": "SELECT dp.id, dp.c_tipo_processo_robot, dp.c_nome_banco, dp.c_n_wf_pl, ab.c_valor_emprestimo, al.c_numero_compras, al.c_numero_hipotecas, al.c_valor_total_imoveis, ab.c_tipo_emprestimo FROM app_fd_processos_hip p \nJOIN app_fd_detalhe_proce_hip dp ON dp.id = p.c_detalhe_processo\nJOIN app_fd_anal_legal_proce_hip al ON al.id = p.c_anal_legal\nJOIN app_fd_anal_banc_proce_hip ab ON ab.id = p.c_anal_banc\n\n"
+        }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
