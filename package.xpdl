@@ -7908,7 +7908,7 @@
                             <Split Type="XOR">
                                 <TransitionRefs>
                                     <TransitionRef Id="transition5"/>
-                                    <TransitionRef Id="transition7"/>
+                                    <TransitionRef Id="transition10"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
@@ -7983,6 +7983,16 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="536,38.8125"/>
                     </ExtendedAttributes>
                 </Activity>
+                <Activity Id="printEmail" Name="Print Email_Entidade">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>AO_Sistema</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="AO_Sistema"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="537,151.8125"/>
+                    </ExtendedAttributes>
+                </Activity>
             </Activities>
             <Transitions>
                 <Transition From="ConfigurarProcessoAO" Id="transition4" To="validacaoInicial">
@@ -8008,14 +8018,6 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="route1" Id="transition7" To="notificarEntidade2">
-                    <Condition Type="CONDITION">tipo_entidade === 'nao-autonoma'</Condition>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;tipo_entidade&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;nao-autonoma&quot;}]"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="validacaoInicial" Id="transition8" To="configurarUltimaAtividade">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
@@ -8023,6 +8025,19 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="configurarUltimaAtividade" Id="transition9" To="validacaoFinal">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route1" Id="transition10" To="printEmail">
+                    <Condition Type="CONDITION">tipo_entidade === 'nao-autonoma'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;tipo_entidade&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;nao-autonoma&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="printEmail" Id="transition11" To="notificarEntidade2">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
