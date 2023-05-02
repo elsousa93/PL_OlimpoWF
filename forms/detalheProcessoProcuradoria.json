@@ -36,6 +36,32 @@
                         }
                     },
                     {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "user_alerta",
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "data_alerta",
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
                         "className": "org.joget.apps.form.lib.TextField",
                         "properties": {
                             "encryption": "",
@@ -1229,6 +1255,31 @@
                         }
                     },
                     {
+                        "className": "org.joget.apps.form.lib.CheckBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "alerta_gestor",
+                            "label": "Alerta para Gestor",
+                            "options": [{
+                                "grouping": "",
+                                "label": "Sim",
+                                "value": "SIM"
+                            }],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
                         "className": "org.joget.apps.form.lib.CustomHTML",
                         "properties": {
                             "autoPopulate": "",
@@ -1246,7 +1297,7 @@
                                 "dccd1818-864d-54e3-09c2-6e246cfcf5fe": {},
                                 "f8c01627-bf37-05aa-5732-90fe1b2327b3": {}
                             },
-                            "value": "<script type=\"text/javascript\">\r\n\r\n    $(document).ready(function(){\r\n\r\n        var f1 = FormUtil.getField(\"valor_liquidacao_receber\");\r\n        var numbers = $(\"tr.grid-row span[id*=valor_liquidacao_receber]\");\r\n        \r\n        \r\n        \r\n        var lenght = numbers.length-1;\r\n        while(lenght>=0){\r\n            var number = $(\"tr.grid-row span[id*=valor_liquidacao_receber]\").eq(lenght).text();\r\n            if(numbers != null && number !== \"\"){\r\n                number = number.replaceAll('NaN', \"0\");\r\n                number = number.replaceAll('.', \"\");\r\n                number = number.replaceAll('\u20ac', \"\");\r\n                number = number.replaceAll('Eur', \"\");\r\n                number = number.replaceAll('EUR', \"\");\r\n                number = number.replaceAll(',', '.');\r\n                \r\n                let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(number);\r\n            \r\n                num = num.replace(/\\s/g, '.');\r\n                num = num.replaceAll('.\u20ac', ' EUR');\r\n                \r\n                $(\"tr.grid-row span[id*=valor_liquidacao_receber]\").eq(lenght).text(num);\r\n                lenght -=1 ;\r\n            }        \r\n            \r\n        }\r\n        \r\n    \r\n    });\r\n<\/script> "
+                            "value": "<script type=\"text/javascript\">\r\n\r\n    $(document).ready(function(){\r\n\r\n        //Formatar valor de campos em euros \r\n        var numbers = $(\"tr.grid-row span[id*=valor_liquidacao_receber]\");\r\n        var lenght = numbers.length-1;\r\n        while(lenght>=0){\r\n            var number = $(\"tr.grid-row span[id*=valor_liquidacao_receber]\").eq(lenght).text();\r\n            if(numbers != null && number !== \"\"){\r\n                number = number.replaceAll('NaN', \"0\");\r\n                number = number.replaceAll('.', \"\");\r\n                number = number.replaceAll('\u20ac', \"\");\r\n                number = number.replaceAll('Eur', \"\");\r\n                number = number.replaceAll('EUR', \"\");\r\n                number = number.replaceAll(',', '.');\r\n                \r\n                let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(number);\r\n            \r\n                num = num.replace(/\\s/g, '.');\r\n                num = num.replaceAll('.\u20ac', ' EUR');\r\n                \r\n                $(\"tr.grid-row span[id*=valor_liquidacao_receber]\").eq(lenght).text(num);\r\n                lenght -=1 ;\r\n            }        \r\n        }\r\n        \r\n        \r\n        //Campos de alerta para o gestor\r\n       $(\"input[id*=alerta_gestor]\").change(function(){\r\n           \r\n           //Se o campo tiver checked preenche campos de gestor e data do alerta\r\n           if($(\"input[id*=alerta_gestor]\").is(\":checked\")){\r\n               \r\n               $(\"input[id*=user_alerta]\").val(\"#currentUser.username#\");\r\n               //Data atual mais 2 dias\r\n               $(\"input[id*=data_alerta]\").val(\"#date.DAY+2.yyyy-MM-dd#\");\r\n               \r\n           }\r\n       });\r\n        \r\n    \r\n    });\r\n<\/script> "
                         }
                     },
                     {
