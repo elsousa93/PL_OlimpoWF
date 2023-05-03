@@ -3033,7 +3033,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1839,297"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1972,339"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="route12" Name="Origem Casa Pronta ou Cartório?">
@@ -3090,7 +3090,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2019,357"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2094,460"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="route15">
@@ -3098,7 +3098,7 @@
                     <Performer>participant3</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2125,356"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2209,451"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="sub_registos" Name="Registos">
@@ -3152,7 +3152,7 @@
                     <Performer>participant3</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2029.6000366210938,250.40001220703124"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1970.59375,244.390625"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="route10">
@@ -3162,8 +3162,8 @@
                         <TransitionRestriction>
                             <Split Type="XOR">
                                 <TransitionRefs>
-                                    <TransitionRef Id="transition29"/>
                                     <TransitionRef Id="transition33"/>
+                                    <TransitionRef Id="transition29"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
@@ -3171,6 +3171,24 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2288.60009765625,186.60000915527343"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route11">
+                    <Route/>
+                    <Performer>participant3</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition31"/>
+                                    <TransitionRef Id="transition34"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2220,299"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -3348,19 +3366,7 @@
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;acompanhamento_outorgas&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="sub_modelo11" Id="transition31" To="route14">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="sub_registos" Id="transition32" To="route10">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="route10" Id="transition29" To="sub_modelo11">
-                    <Condition Type="OTHERWISE"/>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
@@ -3374,11 +3380,28 @@
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;acompanhamento_outorgas&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
+                <Transition From="route10" Id="transition29" To="route11">
+                    <Condition Type="OTHERWISE"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route11" Id="transition31" To="sub_modelo11">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route11" Id="transition34" To="subConclusao">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
             </Transitions>
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="process3_participant2;participant3"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process3_participant2,CONNECTING_ACTIVITY_ID=route1,X_OFFSET=81,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant3,CONNECTING_ACTIVITY_ID=route15,X_OFFSET=2258,Y_OFFSET=365,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant3,CONNECTING_ACTIVITY_ID=route15,X_OFFSET=2318,Y_OFFSET=449,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant3,CONNECTING_ACTIVITY_ID=sub_modelo11,X_OFFSET=1863,Y_OFFSET=259,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="diligencias" Name="Diligências">
