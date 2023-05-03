@@ -241,6 +241,9 @@
         <Participant Id="notificacaoSystem" Name="System">
             <ParticipantType Type="ROLE"/>
         </Participant>
+        <Participant Id="arquivo" Name="Arquivo">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
     </Participants>
     <Applications>
         <Application Id="default_application"/>
@@ -2784,6 +2787,11 @@
                         <BasicType Type="STRING"/>
                     </DataType>
                 </DataField>
+                <DataField Id="user_arquivo" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
             </DataFields>
             <Activities>
                 <Activity Id="route1">
@@ -3090,7 +3098,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2094,460"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2087,515"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="route15">
@@ -3098,7 +3106,7 @@
                     <Performer>participant3</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2209,451"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2216,508"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="sub_registos" Name="Registos">
@@ -3187,6 +3195,7 @@
                                 <TransitionRefs>
                                     <TransitionRef Id="transition31"/>
                                     <TransitionRef Id="transition34"/>
+                                    <TransitionRef Id="transition35"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
@@ -3194,6 +3203,20 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2220,299"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="sub_arquivo" Name="Arquivo">
+                    <Implementation>
+                        <SubFlow Execution="SYNCHR" Id="CHArquivo">
+                            <ActualParameters>
+                                <ActualParameter>user_arquivo</ActualParameter>
+                            </ActualParameters>
+                        </SubFlow>
+                    </Implementation>
+                    <Performer>participant3</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1912,421"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -3401,12 +3424,18 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
+                <Transition From="route11" Id="transition35" To="sub_arquivo">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
             </Transitions>
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="process3_participant2;participant3"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process3_participant2,CONNECTING_ACTIVITY_ID=route1,X_OFFSET=81,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant3,CONNECTING_ACTIVITY_ID=route15,X_OFFSET=2318,Y_OFFSET=449,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant3,CONNECTING_ACTIVITY_ID=sub_modelo11,X_OFFSET=1837,Y_OFFSET=350,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant3,CONNECTING_ACTIVITY_ID=route15,X_OFFSET=2357,Y_OFFSET=518,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant3,CONNECTING_ACTIVITY_ID=sub_modelo11,X_OFFSET=1832,Y_OFFSET=354,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant3,CONNECTING_ACTIVITY_ID=sub_arquivo,X_OFFSET=1824,Y_OFFSET=437,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="diligencias" Name="Diligências">
@@ -10189,6 +10218,45 @@
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="notificacaoStarter;notificacaoSystem"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=notificacaoStarter,CONNECTING_ACTIVITY_ID=terminateNotificacao,X_OFFSET=827,Y_OFFSET=37,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=notificacaoStarter,CONNECTING_ACTIVITY_ID=route1,X_OFFSET=88,Y_OFFSET=47,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+            </ExtendedAttributes>
+        </WorkflowProcess>
+        <WorkflowProcess Id="CHArquivo" Name="CH - Arquivo">
+            <ProcessHeader DurationUnit="h"/>
+            <FormalParameters>
+                <FormalParameter Id="user_arquivo" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+            </FormalParameters>
+            <DataFields>
+                <DataField Id="status" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="user_arquivo" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+            </DataFields>
+            <Activities>
+                <Activity Id="arquivo" Name="Arquivo">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>arquivo</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="arquivo"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="196,30"/>
+                    </ExtendedAttributes>
+                </Activity>
+            </Activities>
+            <ExtendedAttributes>
+                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="arquivo"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=arquivo,CONNECTING_ACTIVITY_ID=arquivo,X_OFFSET=75,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=arquivo,CONNECTING_ACTIVITY_ID=arquivo,X_OFFSET=483,Y_OFFSET=54,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
     </WorkflowProcesses>
