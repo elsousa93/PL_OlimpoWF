@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT ip.id as id, ip.c_nome, ip.c_numero_cc, ip.c_nif, ip.c_estado_civil, ip.c_regime_casamento, ip.c_conjugue, ip.c_validade, ip.c_naturalidade, ip.c_morada, ip.c_codigo_interveniente, ip.c_segundo_papel, ip.c_segundo_papel_interveniente, ip.c_procurador_interveniente, ip.c_autorizante_interveniente, ip.c_interprete_do,iproc.id as 'IntervenienteID' FROM app_fd_intervenientes_proc ip\r\nLEFT JOIN app_fd_interv_processo iproc ON ip.c_id_intervenientes = iproc.id"
+            "sql": "SELECT ip.id as id, ip.c_nome, ip.c_numero_cc, ip.c_nif, ip.c_estado_civil, ip.c_regime_casamento, ip.c_conjugue, ip.c_validade, ip.c_naturalidade, ip.c_morada, ip.c_codigo_interveniente, ip.c_segundo_papel, ip.c_segundo_papel_interveniente, ip.c_procurador_interveniente, ip.c_autorizante_interveniente, ip.c_interprete_do,iproc.id as 'IntervenienteID' FROM app_fd_intervenientes_proc ip\r\nLEFT JOIN app_fd_interv_processo iproc ON ip.c_id_intervenientes = iproc.id\r\n\r\nUNION\r\n\r\nSELECT ip.id as id, ip.c_nome, ip.c_numero_cc, ip.c_nif, ip.c_estado_civil, ip.c_regime_casamento, ip.c_conjugue, ip.c_validade, ip.c_naturalidade, ip.c_morada, ip.c_codigo_interveniente, ip.c_segundo_papel, ip.c_segundo_papel_interveniente, ip.c_procurador_interveniente, ip.c_autorizante_interveniente, ip.c_interprete_do,iproc.id as 'IntervenienteID' FROM app_fd_interv_processo_hip ip\r\nLEFT JOIN app_fd_interv_proce_hip iproc ON ip.c_id_intervenientes = iproc.id"
         }
     },
     "buttonPosition": "bottomLeft",
