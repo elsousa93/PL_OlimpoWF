@@ -7559,6 +7559,11 @@
                         <BasicType Type="STRING"/>
                     </DataType>
                 </DataField>
+                <DataField Id="enviado_procuradoria" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
             </DataFields>
             <Activities>
                 <Activity Id="ConfigurarProcessoDIST" Name="Configurar Processo">
@@ -7578,7 +7583,7 @@
                     <Performer>dist_abn_1</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_abn_1"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="403,47.56251068115235"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="404,53.36250610351563"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="validacaoProcesso" Name="Validação do Processo">
@@ -7784,7 +7789,7 @@
                     <Performer>sistema</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="sistema"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="358,80.72499389648436"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="246,153.0874816894531"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="subProcuradoria2" Name="Procuradoria">
@@ -7857,7 +7862,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_abn_1"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="764,53.39999694824219"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="593,57.000003051757815"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="vaiProcuradoria2">
@@ -7930,6 +7935,16 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_bic_1"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="607,56.312503051757815"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="tool3" Name="Atualizar variavél enviado_procuradoria">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>sistema</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="sistema"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="389,156.62501831054686"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -8017,11 +8032,14 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="vaiProcuradoria" Id="transition33" Name="Procuradoria" To="subProcuradoria2">
+                    <Condition Type="CONDITION">enviar_procuradoria === 'SIM' &amp;&amp; enviado_procuradoria !== '1'</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;enviar_procuradoria&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;SIM&quot;},{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;enviado_procuradoria&quot;,&quot;operator&quot;:&quot;!==&quot;,&quot;value&quot;:&quot;1&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="vaiProcuradoria" Id="transition22" To="processamentoABN">
+                    <Condition Type="OTHERWISE"/>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
@@ -8038,8 +8056,10 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="vaiProcuradoria2" Id="transition35" Name="Procuradoria" To="subProcuradoria3">
+                    <Condition Type="CONDITION">enviar_procuradoria === 'SIM' &amp;&amp; enviado_procuradoria !== '1'</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;enviar_procuradoria&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;SIM&quot;},{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;enviado_procuradoria&quot;,&quot;operator&quot;:&quot;!==&quot;,&quot;value&quot;:&quot;1&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="subProcuradoria3" Id="transition36" To="validacaoProcesso">
@@ -8047,12 +8067,8 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="subProcuradoria1" Id="transition38" To="route5">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="vaiProcuradoria2" Id="transition39" To="validacaoProcesso">
+                    <Condition Type="OTHERWISE"/>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
@@ -8064,14 +8080,18 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="vaiProcuradoria3" Id="transition40" Name="Procuradoria" To="subProcuradoria1">
+                    <Condition Type="CONDITION">enviar_procuradoria === 'SIM'</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;enviar_procuradoria&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;SIM&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="vaiProcuradoria3" Id="transition41" To="route5">
+                    <Condition Type="OTHERWISE"/>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;enviar_procuradoria&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;SIM&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="preenchimentoProcesso3" Id="transition42" To="vaiProcuradoria4">
@@ -8080,11 +8100,14 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="vaiProcuradoria4" Id="transition43" Name="Procuradoria" To="subProcuradoria4">
+                    <Condition Type="CONDITION">enviar_procuradoria === 'SIM' &amp;&amp; enviado_procuradoria !== '1'</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;enviar_procuradoria&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;SIM&quot;},{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;enviado_procuradoria&quot;,&quot;operator&quot;:&quot;!==&quot;,&quot;value&quot;:&quot;1&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="vaiProcuradoria4" Id="transition44" To="validacaoProcesso2">
+                    <Condition Type="OTHERWISE"/>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
@@ -8100,11 +8123,14 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="vaiProcuradoria5" Id="transition47" Name="Procuradoria" To="subProcuradoria5">
+                    <Condition Type="CONDITION">enviar_procuradoria === 'SIM' &amp;&amp; enviado_procuradoria !== '1'</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;enviar_procuradoria&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;SIM&quot;},{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;enviado_procuradoria&quot;,&quot;operator&quot;:&quot;!==&quot;,&quot;value&quot;:&quot;1&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="vaiProcuradoria5" Id="transition49" To="aguardaCertificacao">
+                    <Condition Type="OTHERWISE"/>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
@@ -8126,6 +8152,16 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="validacaoProcesso2" Id="transition52" To="autenticacao2">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="subProcuradoria1" Id="transition38" To="tool3">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="tool3" Id="transition53" To="route5">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
