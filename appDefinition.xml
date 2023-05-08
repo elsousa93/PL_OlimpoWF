@@ -1842,15 +1842,6 @@
                </packageActivityPlugin>
             </entry>
             <entry>
-               <string>DISTdistribuicaoProcessos::distribuicaoProcessos</string>
-               <packageActivityPlugin>
-                  <processDefId>DISTdistribuicaoProcessos</processDefId>
-                  <activityDefId>distribuicaoProcessos</activityDefId>
-                  <pluginName>org.joget.apps.app.lib.BeanShellTool</pluginName>
-                  <pluginProperties>{&quot;script&quot;:&quot;import org.joget.workflow.model.service.WorkflowManager;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.workflow.model.service.WorkflowUserManager;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport javax.servlet.http.HttpServletRequest;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.datalist.model.DataListBinderDefaultimport;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\n\r\n\/\/String ProcessID = workflowAssignment.getProcessId();\r\n\/\/String hashVariableNomeBanco = \&quot;#form.detalhe_proce_dist[{form.processos_distrates.detalhe_processo[process.recordId]}].nome_banco#\&quot;;\r\n\/\/String nomeBanco = AppUtil.processHashVariable(hashVariableNomeBanco,null,null,null);\r\nString url_aux = \&quot;#request.header.Referer#\&quot;;\r\nString url = AppUtil.processHashVariable(url_aux,null,null,null);\r\n\r\nLogUtil.info(\&quot;URLLLLLL\&quot;, url);\r\n\r\nString idProcesso=\&quot;\&quot;;\r\nString aid = \&quot;\&quot;;\r\nString resourceId = \&quot;\&quot;;\r\n\r\n    Connection con = null;\r\n    PreparedStatement stmt = null;\r\n    ResultSet rs = null;\r\n    \r\n    PreparedStatement stmt_1 = null;\r\n    ResultSet rs_1 = null;\r\n    \r\n    try{\r\n        DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\&quot;setupDataSource\&quot;);\r\n        con = ds.getConnection();\r\n        \r\n        if(!con.isClosed()){\r\n            if(nomeBanco = \&quot;BCP\&quot;){\r\n                String queryGetAid = \&quot;SELECT p.id as &apos;idDist&apos; FROM shkprocesses sp LEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id LEFT JOIN app_fd_processos_distrates p on sp.ActivityRequesterProcessId = p.id LEFT JOIN shkprocessstates sps ON sps.oid = sp.State LEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id LEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State LEFT JOIN (select ActivityId, group_concat(ResourceId separator &apos;; &apos;) as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId WHERE sps.KeyValue LIKE &apos;open.running&apos; AND p.id is not null AND (ssta.oid = &apos;1000001&apos; OR ssta.oid = &apos;1000003&apos; OR ssta.oid = &apos;1000005&apos;) AND sp.id like &apos;%DSTDistrates%&apos; AND sass.ResourceId LIKE &apos;%distrates_geral_bcp%&apos;\&quot;;\r\n        \t\tstmt = con.prepareStatement(queryGetAid);\r\n        \t\trs = stmt.executeQuery();\r\n    \t\t} else {\r\n    \t\t    if(nomeBanco = \&quot;MTG\&quot;){\r\n                String queryGetAid = \&quot;SELECT p.id as &apos;idDist&apos; FROM shkprocesses sp LEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id LEFT JOIN app_fd_processos_distrates p on sp.ActivityRequesterProcessId = p.id LEFT JOIN shkprocessstates sps ON sps.oid = sp.State LEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id LEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State LEFT JOIN (select ActivityId, group_concat(ResourceId separator &apos;; &apos;) as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId WHERE sps.KeyValue LIKE &apos;open.running&apos; AND p.id is not null AND (ssta.oid = &apos;1000001&apos; OR ssta.oid = &apos;1000003&apos; OR ssta.oid = &apos;1000005&apos;) AND sp.id like &apos;%DSTDistrates%&apos; AND sass.ResourceId LIKE &apos;%distrates_geral_mtg%&apos;\&quot;;\r\n        \t\tstmt = con.prepareStatement(queryGetAid);\r\n        \t\trs = stmt.executeQuery();\r\n    \t\t    }\r\n    \t\t}\r\n    \t\t\r\n    \t\tif(rs.next()){\r\n    \t\t\tidProcesso = rs.getObject(\&quot;IDProcesso\&quot;);\r\n    \t\t}\r\n            \r\n            if(idProcesso != null){\r\n                String queryGetAid_1 = \&quot;SELECT a.id as &apos;Aid&apos;, sass.ResourceId as &apos;ResourceId&apos; FROM shkprocesses p LEFT JOIN shkactivities a ON p.id = ProcessId LEFT JOIN shkprocessstates ps ON ps.oid = p.State LEFT JOIN SHKActivityStates acs ON acs.oid = a.State LEFT JOIN shkassignmentstable sass ON sass.ActivityId = a.id WHERE p.ActivityRequesterProcessId = ? AND ps.KeyValue LIKE &apos;open.running&apos; AND (acs.KeyValue LIKE &apos;open.not_running.not_started&apos; OR acs.KeyValue LIKE &apos;open.running&apos;)\&quot;;\r\n                stmt_1 = con.prepareStatement(queryGetAid_1);\r\n                stmt_1.setObject(1, idProcesso);\r\n                rs_1 = stmt_1.executeQuery();\r\n            \r\n                if(rs_1.next()){\r\n                    aid = rs_1.getObject(\&quot;Aid\&quot;);\r\n                    resourceId = rs_1.getObject(\&quot;ResourceId\&quot;);\r\n                    \r\n                    WorkflowManager wm = (WorkflowManager) AppUtil.getApplicationContext().getBean(\&quot;workflowManager\&quot;);\r\n                    WorkflowUserManager wum = (WorkflowUserManager) AppUtil.getApplicationContext().getBean(\&quot;workflowUserManager\&quot;);\r\n                    \r\n                    \/\/get the values from the \r\n                    String replaceUser = resourceId;\r\n                    String username = \&quot;#currentUser.username#\&quot;;\r\n                \r\n                \r\n                    \/\/getCurrentThreadUser() Method used by system to get current thread user\r\n                    String currentUser = wum.getCurrentThreadUser();\r\n                    wum.setCurrentThreadUser(replaceUser);\r\n                    wum.setCurrentThreadUser(currentUser);\r\n                    \r\n                    \/\/Reassigns the assignment from a user (replaceUser) to another user (username)\r\n                    wm.assignmentReassign(\&quot;\&quot;, \&quot;\&quot;, aid, username, replaceUser);\r\n                    \r\n                }\r\n            }\r\n            \r\n        }\r\n            \r\n    }catch(Exception e){\r\n            LogUtil.error(appDef.toString(), e, \&quot;Error getting info from DB\&quot;);\r\n    }finally{\r\n        try{\r\n            if(rs != null){\r\n            rs.close();\r\n            }\r\n            if(stmt != null){\r\n                stmt.close();\r\n            }\r\n            if(con != null &amp;&amp; !con.isClosed()) {\r\n                con.close();\r\n            }\r\n        }catch(Exception e){\r\n            LogUtil.error(appDef.toString(), e, \&quot;Error closing DB connection\&quot;);\r\n        }\r\n        \r\n    }&quot;}</pluginProperties>
-               </packageActivityPlugin>
-            </entry>
-            <entry>
                <string>CHContratacaoNormal::validacaoBancariaLegalBIC</string>
                <packageActivityPlugin>
                   <processDefId>CHContratacaoNormal</processDefId>
@@ -2433,6 +2424,15 @@
                </packageParticipant>
             </entry>
             <entry>
+               <string>DISTdistribuicaoProcessosABN::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>DISTdistribuicaoProcessosABN</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>adminUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
                <string>poll_email::processStartWhiteList</string>
                <packageParticipant>
                   <processDefId>poll_email</processDefId>
@@ -2528,6 +2528,15 @@
                </packageParticipant>
             </entry>
             <entry>
+               <string>DISTdistribuicaoProcessosBCP::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>DISTdistribuicaoProcessosBCP</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>adminUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
                <string>PCDProcuradoria::procu_procuradoria</string>
                <packageParticipant>
                   <processDefId>PCDProcuradoria</processDefId>
@@ -2594,6 +2603,15 @@
                </packageParticipant>
             </entry>
             <entry>
+               <string>DISTdistribuicaoProcessosMTG2::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>DISTdistribuicaoProcessosMTG2</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>adminUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
                <string>diligencias::remetente</string>
                <packageParticipant>
                   <processDefId>diligencias</processDefId>
@@ -2607,6 +2625,15 @@
                <string>HIPValidacao::processStartWhiteList</string>
                <packageParticipant>
                   <processDefId>HIPValidacao</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>adminUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>DISTdistribuicaoProcessosBCP2::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>DISTdistribuicaoProcessosBCP2</processDefId>
                   <participantId>processStartWhiteList</participantId>
                   <type>role</type>
                   <value>adminUser</value>
@@ -2639,6 +2666,15 @@
                   <type>plugin</type>
                   <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
                   <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_SIS_REG&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%dL3RaLkPaaSjBqkSUhTSzLOiWJclIdtvSNjHwsx71iqeo6wMd98KIQ==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_registos#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;&quot;}</pluginProperties>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>DISTdistribuicaoProcessosMTG::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>DISTdistribuicaoProcessosMTG</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>adminUser</value>
                </packageParticipant>
             </entry>
             <entry>
@@ -2734,6 +2770,15 @@
                </packageParticipant>
             </entry>
             <entry>
+               <string>DISTdistribuicaoProcessosBIC2::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>DISTdistribuicaoProcessosBIC2</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>adminUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
                <string>CHValidacaoComplexo::processStartWhiteList</string>
                <packageParticipant>
                   <processDefId>CHValidacaoComplexo</processDefId>
@@ -2797,15 +2842,6 @@
                   <type>plugin</type>
                   <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
                   <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_FLT_GEN_NOR_CRH&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%fpnnJk0S7Uy6rnr3pwpfe9BxEwMjWg0APrZfg+10PpWwGQ+2hLnCjA==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_filtro#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>DISTdistribuicaoProcessos::processStartWhiteList</string>
-               <packageParticipant>
-                  <processDefId>DISTdistribuicaoProcessos</processDefId>
-                  <participantId>processStartWhiteList</participantId>
-                  <type>role</type>
-                  <value>loggedInUser</value>
                </packageParticipant>
             </entry>
             <entry>
@@ -2928,6 +2964,15 @@
                <string>process16::processStartWhiteList</string>
                <packageParticipant>
                   <processDefId>process16</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>adminUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>DISTdistribuicaoProcessosBIC::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>DISTdistribuicaoProcessosBIC</processDefId>
                   <participantId>processStartWhiteList</participantId>
                   <type>role</type>
                   <value>adminUser</value>
