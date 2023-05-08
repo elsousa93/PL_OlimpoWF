@@ -2401,15 +2401,6 @@
                </packageParticipant>
             </entry>
             <entry>
-               <string>notificacoes::notificacaoStarter</string>
-               <packageParticipant>
-                  <processDefId>notificacoes</processDefId>
-                  <participantId>notificacaoStarter</participantId>
-                  <type>requester</type>
-                  <value></value>
-               </packageParticipant>
-            </entry>
-            <entry>
                <string>CHAcompanhamentoOutorgas::validadorInicial</string>
                <packageParticipant>
                   <processDefId>CHAcompanhamentoOutorgas</processDefId>
@@ -2417,6 +2408,15 @@
                   <type>plugin</type>
                   <value>org.joget.apps.app.lib.BeanShellTool</value>
                   <pluginProperties>{&quot;script&quot;:&quot;import org.joget.workflow.model.service.*;\r\nimport org.joget.workflow.model.WorkflowActivity;\r\nimport org.joget.plugin.base.PluginManager;\r\nimport java.lang.Exception;\r\nimport java.util.ArrayList;\r\nimport java.util.Collection;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport javax.sql.DataSource;\r\nimport org.joget.commons.util.UuidGenerator;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.directory.model.User;\r\nimport org.joget.directory.model.service.ExtDirectoryManager;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.workflow.model.WorkflowProcessResult;\r\nimport org.joget.workflow.model.service.WorkflowManager;\r\n\r\npublic Collection getValidadorInicial(WorkflowActivity activity) {\r\n    \/\/ [TO DO] Obter qual a entidade autenticadora do processo\r\n    \r\n    Collection participantes = new ArrayList();\r\n    ExtDirectoryManager directoryManager = (ExtDirectoryManager) pluginManager.getBean(\&quot;directoryManager\&quot;);\r\n    WorkflowManager wm = (WorkflowManager) AppUtil.getApplicationContext().getBean(\&quot;workflowManager\&quot;);\r\n\r\n    String processId = \&quot;#process.processId#\&quot;;\r\n    String tipoEntidade = \&quot;#variable.tipo_entidade#\&quot;;\r\n    \r\n    if (tipoEntidade.equals(\&quot;AUT\&quot;)) {\r\n        participantes.add(\&quot;a_afonseca\&quot;);\r\n    }\r\n    \r\n    if (tipoEntidade.equals(\&quot;SEMI\&quot;)) {\r\n        participantes.add(\&quot;a_afonseca\&quot;);\r\n    }\r\n    \r\n    if (tipoEntidade.equals(\&quot;NAUT\&quot;)) {\r\n        String deptId = \&quot;PL_SIS_AO\&quot;;\r\n        \r\n        Collection userList = directoryManager.getUserByDepartmentId(deptId);\r\n        for(Object u : userList) {\r\n            User user = (User) u;\r\n            participantes.add(user.getUsername());\r\n        }\r\n        \r\n        \r\n        \/*\r\n            Distribuição Automática:\r\n            \r\n\t\t\tAlocação é feita na tarde do dia anterior (Às 18h)\r\n\t\t\t2 por gestor por hora\r\n\t\t\t    Se não houver disponibilidade serão atribuídos manualmente\r\n\t\t\t    Exceção para NBAOPC e DL -&gt; 1 por gestor por hora\r\n\t\t\t    \r\n\t\t\t------------------------------- \\\\ --------------------------------\r\n\t\t\t\r\n\t\t\tDepartment PL_INT_AO;\r\n\t\t\t\r\n\t\t\tDo:\r\n\t\t\t    Gerar random nº\r\n\t\t\t    \r\n\t\t\tWhile:\r\n\t\t\t    If (Tipo de Processo.equals(NBAOPC ou DL))\r\n\t\t\t        Nº Processos do User (Procurar como ver esse nº) &gt; 1\r\n\t\t\t        \r\n\t\t\t    Else\r\n\t\t\t        Nº de processos do user &gt; 2\r\n\t\t\t        \r\n\t\t\tparticipantes.add(user) -&gt; Que calhou no random\r\n        *\/\r\n    }\r\n    \r\n    return participantes;\r\n}\r\n \r\nreturn getValidadorInicial(workflowActivity);&quot;}</pluginProperties>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>notificacoes::notificacaoStarter</string>
+               <packageParticipant>
+                  <processDefId>notificacoes</processDefId>
+                  <participantId>notificacaoStarter</participantId>
+                  <type>requester</type>
+                  <value></value>
                </packageParticipant>
             </entry>
             <entry>
