@@ -47,6 +47,34 @@
                         "className": "org.joget.apps.form.lib.TextField",
                         "properties": {
                             "encryption": "",
+                            "id": "chave_deposito",
+                            "label": "Chave do Depósito",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "*",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\n\r\npublic boolean faseValidacaoEntidades(Element element, FormData formData){\r\n\r\n    //Configure field to validate - UPDATE HERE\r\n    String fieldId = \"numero_registo\";\r\n    String campo = FormUtil.getElementParameterName(element);\r\n    \r\n    String flagUltimaAtividade = \"#variable.flag_ultima_atividade#\";\r\n    String faseProcesso = '#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#';\r\n    Boolean result = false;\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    if(faseProcesso.equals('REG')){\r\n        if ((fieldValue == null || fieldValue.equals(\"\")) && !flagUltimaAtividade.equals(\"0\") && !flagUltimaAtividade.equals(\"1\") && !flagUltimaAtividade.equals(\"2\")){\r\n            formData.addFormError(campo, \"Campo obrigatório\");\r\n            result = false;\r\n        } else{\r\n            result = true;  \r\n        }\r\n    } else{\r\n       result = true; \r\n    }\r\n\r\n    \r\n    return result;\r\n}\r\n\r\n//call load method with injected variable\r\nreturn faseValidacaoEntidades(element, formData);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
                             "id": "numero_registo",
                             "label": "Número de Registo",
                             "maxlength": "",
@@ -64,32 +92,7 @@
                                 "className": "org.joget.apps.form.lib.BeanShellValidator",
                                 "properties": {
                                     "decoration": "*",
-                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\n\r\npublic boolean faseValidacaoEntidades(Element element, FormData formData){\r\n\r\n    //Configure field to validate - UPDATE HERE\r\n    String fieldId = \"numero_registo\";\r\n    String campo = FormUtil.getElementParameterName(element);\r\n    \r\n    String flagUltimaAtividade = \"#variable.flag_ultima_atividade#\";\r\n    Boolean result = false;\r\n    \r\n    LogUtil.info(\"String\", \"String \" +  flagUltimaAtividade);\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    \r\n    if ((fieldValue == null || fieldValue.equals(\"\")) && !flagUltimaAtividade.equals(\"0\") && !flagUltimaAtividade.equals(\"1\") && !flagUltimaAtividade.equals(\"2\")){\r\n        formData.addFormError(campo, \"Campo obrigatório\");\r\n        result = false;\r\n    } else{\r\n        result = true;  \r\n    }\r\n    \r\n    return result;\r\n}\r\n\r\n//call load method with injected variable\r\nreturn faseValidacaoEntidades(element, formData);"
-                                }
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.TextField",
-                        "properties": {
-                            "encryption": "",
-                            "id": "chave_deposito",
-                            "label": "Chave do Depósito",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "storeNumeric": "",
-                            "style": "",
-                            "validator": {
-                                "className": "org.joget.apps.form.lib.DefaultValidator",
-                                "properties": {
-                                    "mandatory": "true",
-                                    "message": "",
-                                    "type": ""
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\n\r\npublic boolean faseValidacaoEntidades(Element element, FormData formData){\r\n\r\n    //Configure field to validate - UPDATE HERE\r\n    String fieldId = \"numero_registo\";\r\n    String campo = FormUtil.getElementParameterName(element);\r\n    \r\n    String flagUltimaAtividade = \"#variable.flag_ultima_atividade#\";\r\n    String faseProcesso = '#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#';\r\n    Boolean result = false;\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    if(faseProcesso.equals('REG')){\r\n        if ((fieldValue == null || fieldValue.equals(\"\")) && (flagUltimaAtividade.equals(\"5\") || flagUltimaAtividade.equals(\"6\") || !flagUltimaAtividade.equals(\"7\")){\r\n            formData.addFormError(campo, \"Campo obrigatório\");\r\n            result = false;\r\n        } else{\r\n            result = true;  \r\n        }\r\n    } else{\r\n       result = true; \r\n    }\r\n\r\n    \r\n    return result;\r\n}\r\n\r\n//call load method with injected variable\r\nreturn faseValidacaoEntidades(element, formData);"
                                 }
                             },
                             "value": "",
@@ -106,7 +109,7 @@
                                 "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
                                 "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
                             },
-                            "value": "<script type=\"text/javascript\">\r\n\r\n    $(document).ready(function() {\r\n       \r\n        var flagUltimaAtividade ='#variable.flag_ultima_atividade#'; \r\n        var faseProcesso = '#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#';\r\n        \r\n        console.log('Teste ' + faseProcesso);\r\n        \r\n        if(faseProcesso === 'REG'){\r\n            if(!(flagUltimaAtividade == 5 || flagUltimaAtividade == 6 || flagUltimaAtividade == 7)){\r\n                $('input[name=multiPagedRegistos_2_documentos_numero_registo]').parent().hide();\r\n                console.log('Escondeu 1 ' );\r\n            }\r\n            \r\n            if(flagUltimaAtividade == 0 || flagUltimaAtividade == 1 || flagUltimaAtividade == 2){\r\n                $('input[name=multiPagedRegistos_2_documentos_chave_deposito]').parent().hide();\r\n                console.log('Escondeu 2 ' );\r\n            }\r\n        } else {\r\n            $('div[id*=multiPagedRegistos_2_documentos_registos]').hide();\r\n        }\r\n      \r\n    });\r\n\r\n<\/script>"
+                            "value": "<script type=\"text/javascript\">\r\n\r\n    $(document).ready(function() {\r\n       \r\n        var flagUltimaAtividade ='#variable.flag_ultima_atividade#'; \r\n        var faseProcesso = '#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#';\r\n        \r\n        if(faseProcesso === 'REG'){\r\n            if(!(flagUltimaAtividade == 5 || flagUltimaAtividade == 6 || flagUltimaAtividade == 7)){\r\n                $('input[name=multiPagedRegistos_2_documentos_numero_registo]').parent().hide();\r\n            }\r\n            \r\n            if(flagUltimaAtividade == 0 || flagUltimaAtividade == 1 || flagUltimaAtividade == 2){\r\n                $('input[name=multiPagedRegistos_2_documentos_chave_deposito]').parent().hide();\r\n            }\r\n        } else {\r\n            $('div[id*=multiPagedRegistos_2_documentos_registos]').hide();\r\n        }\r\n      \r\n    });\r\n\r\n<\/script>"
                         }
                     }
                 ],
