@@ -8178,7 +8178,7 @@
                     <Performer>validadorInicial</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="validadorInicial"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="174,36.1875"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="182,37.1875"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="notificarEntidade" Name="Notificar Entidade (Autónoma/Semi-Autónoma)">
@@ -8188,7 +8188,7 @@
                     <Performer>AO_Sistema</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="AO_Sistema"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="742,37.8125"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="800,37.8125"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="route1" Name="Tipo de Entidade?">
@@ -8206,7 +8206,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="AO_Sistema"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="388,128.203125"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="429,126.203125"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="printActivityId" Name="Print Activity_Id">
@@ -8216,7 +8216,7 @@
                     <Performer>AO_Sistema</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="AO_Sistema"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="544,40.203125"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="607,41.203125"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="notificarEntidade2" Name="Notificar Entidade (Não-Autónoma)">
@@ -8226,7 +8226,7 @@
                     <Performer>AO_Sistema</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="AO_Sistema"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="746,152.203125"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="805,153.203125"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="validacaoInicial" Name="Validação Inicial">
@@ -8251,7 +8251,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="validadorInicial"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="378,35.1875"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="419,36.1875"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="validacaoFinal" Name="Validação Final">
@@ -8261,7 +8261,7 @@
                     <Performer>validadorFinal</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="validadorFinal"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="743,39"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="819,43"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="configurarUltimaAtividade" Name="Configurar Última Atividade">
@@ -8271,7 +8271,7 @@
                     <Performer>validadorFinal</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="validadorFinal"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="536,38.8125"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="579,43.8125"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="printEmail" Name="Print Email_Entidade">
@@ -8281,7 +8281,21 @@
                     <Performer>AO_Sistema</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="AO_Sistema"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="537,151.8125"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="592,152.8125"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="holdProcesses" Name="Segurar Processos">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>AO_Sistema</Performer>
+                    <Deadline Execution="SYNCHR">
+                        <DeadlineCondition>var h=new java.util.Date(); h.setTime(ACTIVITY_ACTIVATED_TIME.getTime()+(18*3600000)); h;</DeadlineCondition>
+                        <ExceptionName>distribuirProcesso</ExceptionName>
+                    </Deadline>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="AO_Sistema"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="185,102.8125"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -8333,13 +8347,19 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
+                <Transition From="holdProcesses" Id="transition12" To="ConfigurarProcessoAO">
+                    <Condition Type="EXCEPTION">distribuirProcesso</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
             </Transitions>
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="validadorInicial;validadorFinal;AO_Sistema"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=validadorInicial,CONNECTING_ACTIVITY_ID=ConfigurarProcessoAO,X_OFFSET=67,Y_OFFSET=52,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=AO_Sistema,CONNECTING_ACTIVITY_ID=notificarEntidade,X_OFFSET=987,Y_OFFSET=50,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=AO_Sistema,CONNECTING_ACTIVITY_ID=notificarEntidade2,X_OFFSET=990,Y_OFFSET=162,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=validadorFinal,CONNECTING_ACTIVITY_ID=validacaoFinal,X_OFFSET=875,Y_OFFSET=51,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=validadorFinal,CONNECTING_ACTIVITY_ID=validacaoFinal,X_OFFSET=1018,Y_OFFSET=53,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=AO_Sistema,CONNECTING_ACTIVITY_ID=holdProcesses,X_OFFSET=86,Y_OFFSET=119,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="processoTesteAssync" Name="Processo Teste Assync">
