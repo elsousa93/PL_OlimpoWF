@@ -229,29 +229,17 @@
     "pageSize": "0",
     "pageSizeSelectorOptions": "10,20,30,40,50,100",
     "rowActions": [{
-        "className": "org.joget.apps.datalist.lib.HyperlinkDataListAction",
-        "hidden": "",
-        "icon": "<i class=\"fas fa-link\"><\/i>",
-        "id": "rowAction_0",
-        "label": "Hyperlink",
-        "name": "Data List Hyperlink Action",
-        "permission_rules": {
-            "1081155f-1700-be08-9c6f-364a49cf8d0b": {"hidden": ""},
-            "3d8e95c6-1491-19a1-9714-0e895212e2e2": {},
-            "5ef76f30-3a46-461b-e85b-26e07d368c1e": {"hidden": "true"},
-            "7acc8ca8-49d2-41f4-f9fe-98060e5c2333": {},
-            "a3513f27-0dda-f386-ed77-7fda57d6b99f": {},
-            "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {"hidden": "true"}
-        },
+        "className": "org.joget.plugin.enterprise.BeanShellDatalistAction",
+        "icon": "<i class=\"fas fa-code\"><\/i>",
+        "id": "rowAction_1",
+        "label": "Bean Shell",
+        "name": "Bean Shell Datalist Action",
         "properties": {
             "confirmation": "",
             "datalist_type": "row_action",
-            "href": "realocar_proc_reg",
-            "hrefColumn": "instanceId;assignee;procId;N_WF_Banco;N_WF_PL",
-            "hrefParam": "aid;replaceUser;procId;n_wf_banco;n_wf_pl",
             "label": "Realocar",
             "rules": [],
-            "target": "_self"
+            "script": "import org.joget.workflow.model.service.WorkflowManager;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.workflow.model.service.WorkflowUserManager;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport javax.servlet.http.HttpServletRequest;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.datalist.model.DataListBinderDefaultimport;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\n\r\nString idProcesso=\"\";\r\nString aid = \"\";\r\nString resourceId = \"\";\r\nfor (String key : rowKeys) {\r\n    idProcesso = key;\r\n    \r\n}\r\n\r\n    Connection con = null;\r\n    PreparedStatement stmt = null;\r\n    ResultSet rs = null;\r\n    \r\n    try{\r\n        DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n        con = ds.getConnection();\r\n        \r\n        if(!con.isClosed()){\r\n\t\t\tString queryGetAid = \"SELECT a.id as 'Aid', sass.ResourceId as 'ResourceId' FROM shkprocesses p LEFT JOIN shkactivities a ON p.id = ProcessId LEFT JOIN shkprocessstates ps ON ps.oid = p.State LEFT JOIN SHKActivityStates acs ON acs.oid = a.State LEFT JOIN shkassignmentstable sass ON sass.ActivityId = a.id WHERE p.ActivityRequesterProcessId = ? AND ps.KeyValue LIKE 'open.running' AND (acs.KeyValue LIKE 'open.not_running.not_started' OR acs.KeyValue LIKE 'open.running');\";\r\n\t\t\tstmt = con.prepareStatement(queryGetAid);\r\n\t\t\tstmt.setObject(1, idProcesso);\r\n\t\t\trs = stmt.executeQuery();\r\n    \t\t\r\n    \t\tif(rs.next()){\r\n    \t\t\taid = rs.getObject(\"Aid\");\r\n                resourceId = rs.getObject(\"ResourceId\");\r\n\t\t\t\r\n\t\t\t    WorkflowManager wm = (WorkflowManager) AppUtil.getApplicationContext().getBean(\"workflowManager\");\r\n                WorkflowUserManager wum = (WorkflowUserManager) AppUtil.getApplicationContext().getBean(\"workflowUserManager\");\r\n                \r\n                //get the values from the \r\n                String replaceUser = resourceId;\r\n                String username = \"#currentUser.username#\";\r\n            \r\n            \r\n                //getCurrentThreadUser() Method used by system to get current thread user\r\n                String currentUser = wum.getCurrentThreadUser();\r\n                wum.setCurrentThreadUser(replaceUser);\r\n                wum.setCurrentThreadUser(currentUser);\r\n                \r\n                //Reassigns the assignment from a user (replaceUser) to another user (username)\r\n                wm.assignmentReassign(\"\", \"\", aid, username, replaceUser);\r\n    \t\t}\r\n        }\r\n            \r\n    }catch(Exception e){\r\n            LogUtil.error(appDef.toString(), e, \"Error getting info from DB\");\r\n    }finally{\r\n        try{\r\n            if(rs != null){\r\n            rs.close();\r\n            }\r\n            if(stmt != null){\r\n                stmt.close();\r\n            }\r\n            if(con != null && !con.isClosed()) {\r\n                con.close();\r\n            }\r\n        }catch(Exception e){\r\n            LogUtil.error(appDef.toString(), e, \"Error closing DB connection\");\r\n        }\r\n        \r\n    }"
         },
         "type": "text"
     }],
