@@ -2812,6 +2812,11 @@
                         <BasicType Type="STRING"/>
                     </DataType>
                 </DataField>
+                <DataField Id="ja_processado_mod11" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
             </DataFields>
             <Activities>
                 <Activity Id="route1">
@@ -3435,10 +3440,10 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route11" Id="transition31" To="sub_modelo11">
-                    <Condition Type="CONDITION">elegibilidade_processo === 'SIM'</Condition>
+                    <Condition Type="CONDITION">elegibilidade_processo === 'SIM' &amp;&amp; ja_processado_mod11 === 'NAO'</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;elegibilidade_processo&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;SIM&quot;}]"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;elegibilidade_processo&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;SIM&quot;},{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;ja_processado_mod11&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;NAO&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route11" Id="transition34" To="subConclusao">
