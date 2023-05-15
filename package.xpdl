@@ -259,6 +259,9 @@
         <Participant Id="AOGeral" Name="AO Geral">
             <ParticipantType Type="ROLE"/>
         </Participant>
+        <Participant Id="contratacao_bni" Name="BNI">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
     </Participants>
     <Applications>
         <Application Id="default_application"/>
@@ -1003,6 +1006,7 @@
                                 <TransitionRefs>
                                     <TransitionRef Id="transition62"/>
                                     <TransitionRef Id="transition89"/>
+                                    <TransitionRef Id="transition109"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
@@ -1181,7 +1185,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="contratacao_gen"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="105,121.5625"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="54,120.5625"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="route21_1">
@@ -1265,7 +1269,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="contratacao_gen"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="139,7.5625"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="89,8.5625"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="PreenchimentoProcessoABA" Name="Preenchimento do Processo">
@@ -1365,6 +1369,105 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="contratacao_abn"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2294,52.5625"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route27">
+                    <Route/>
+                    <Performer>contratacao_bni</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition110"/>
+                                    <TransitionRef Id="transition115"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="contratacao_bni"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="149,62"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="PreenchimentoProcessoBNI" Name="Preenchimento do Processo">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>contratacao_bni</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="contratacao_bni"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="119,181"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route28">
+                    <Route/>
+                    <Performer>contratacao_bni</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition112"/>
+                                    <TransitionRef Id="transition113"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="contratacao_bni"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="445,181"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="ultimaAtividadeBNICont" Name="Configurar Ultima Atividade">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>contratacao_bni</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="contratacao_bni"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="653,80"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="validacaoBancariaLegalBNI" Name="Validação Bancária e Legal">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>contratacao_bni</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="contratacao_bni"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1192,68"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route29">
+                    <Route/>
+                    <Performer>contratacao_bni</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition117"/>
+                                    <TransitionRef Id="transition118"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="contratacao_bni"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2339,58"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -1926,9 +2029,76 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
+                <Transition From="route21" Id="transition109" To="route27">
+                    <Condition Type="CONDITION">sub_banco === 'BNI'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;sub_banco&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;BNI&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route27" Id="transition110" To="PreenchimentoProcessoBNI">
+                    <Condition Type="OTHERWISE"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route28" Id="transition112" To="PreenchimentoProcessoBNI">
+                    <Condition Type="CONDITION">estado === 'PND' || estado === 'DEF' || estado === 'PNDEQ'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;estado&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;PND&quot;},{&quot;join&quot;:&quot;||&quot;,&quot;variable&quot;:&quot;estado&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;DEF&quot;},{&quot;join&quot;:&quot;||&quot;,&quot;variable&quot;:&quot;estado&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;PNDEQ&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="PreenchimentoProcessoBNI" Id="transition111" To="route28">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route28" Id="transition113" To="ultimaAtividadeBNICont">
+                    <Condition Type="OTHERWISE"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="ultimaAtividadeBNICont" Id="transition114" To="validacaoBancariaLegalBNI">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route27" Id="transition115" To="ultimaAtividadeBNICont">
+                    <Condition Type="CONDITION">flag_contratacao === '1'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;flag_contratacao&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;1&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="validacaoBancariaLegalBNI" Id="transition116" To="route29">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route29" Id="transition117" To="validacaoBancariaLegalBNI">
+                    <Condition Type="CONDITION">estado === 'PND' || estado === 'DEF' || estado === 'PNDEQ'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;estado&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;PND&quot;},{&quot;join&quot;:&quot;||&quot;,&quot;variable&quot;:&quot;estado&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;DEF&quot;},{&quot;join&quot;:&quot;||&quot;,&quot;variable&quot;:&quot;estado&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;PNDEQ&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route29" Id="transition118" To="finalizarContratacao">
+                    <Condition Type="OTHERWISE"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
             </Transitions>
             <ExtendedAttributes>
-                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="contratacao_bcp;contratacao_nvb;participant7;contratacao_bic;contratacao_mtg1;contratacao_mtg2;contratacao_bst;contratacao_abn;contratacao_gen"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="contratacao_bcp;contratacao_nvb;participant7;contratacao_bic;contratacao_mtg1;contratacao_mtg2;contratacao_bst;contratacao_abn;contratacao_bni;contratacao_gen"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant7,CONNECTING_ACTIVITY_ID=finalizarContratacao,X_OFFSET=2463,Y_OFFSET=45,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant7,CONNECTING_ACTIVITY_ID=ConfigurarProcesso,X_OFFSET=56,Y_OFFSET=53,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
             </ExtendedAttributes>
