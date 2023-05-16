@@ -12,6 +12,7 @@
             "5ef76f30-3a46-461b-e85b-26e07d368c1e": {"hidden": "true"},
             "7acc8ca8-49d2-41f4-f9fe-98060e5c2333": {},
             "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+            "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {},
             "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {"hidden": "true"}
         },
         "properties": {
@@ -32,7 +33,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "procId",
-            "sql": "SELECT p.id as procId, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName,\n sass.ResourceId AS assignee, dp.c_n_wf_pl AS NwfPL, dp.c_n_wf_banco AS NwfBanco, dp.c_nome_banco AS NomeBanco, dp.dateCreated AS DataCriacao, dp.c_urgencia AS Urgencia, dp.c_tipo_processo as TipoProcesso, dp.dateModified AS DataModificacao,\n dp.c_fase_processo AS FaseProcesso, ip.c_nome AS cliente, d.c_necessarias_correcoes AS CorrecoesRegistos,  \n d.c_observacoes_correcao AS ObservacoesRegistos, dp.c_tipo_entidade as Entidade, ag.c_data_agendamento AS DataAgendamento, dp.c_categoria_processo as CategoriaProcesso,\n ROW_NUMBER() OVER (ORDER BY ag.c_data_agendamento ASC, dp.c_urgencia DESC) AS No\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK'\nLEFT JOIN app_fd_docs_processo d ON  d.id = p.c_docs\nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id not like '%Credito%'\nAND (Select count(ID) from shkprocesses \n    where ActivityRequesterProcessId = sp2.id\n    AND (If( 'REG' like '%REG%', ID like '%Registos%', '')\n    ) \nOR sp.id like '%CHAcompanhamentoOutorgas%'\n) > 0"
+            "sql": "SELECT p.id as procId, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName,\n sass.ResourceId AS assignee, dp.c_n_wf_pl AS NwfPL, dp.c_n_wf_banco AS NwfBanco, dp.c_nome_banco AS NomeBanco, dp.dateCreated AS DataCriacao, dp.c_urgencia AS Urgencia, dp.c_tipo_processo as TipoProcesso, dp.dateModified AS DataModificacao,\n dp.c_fase_processo AS FaseProcesso, ip.c_nome AS cliente, d.c_necessarias_correcoes AS CorrecoesRegistos,  \n d.c_observacoes_correcao AS ObservacoesRegistos, dp.c_tipo_entidade as Entidade, ag.c_data_agendamento AS DataAgendamento, dp.c_categoria_processo as CategoriaProcesso,\n dp.c_estado_agendamento as EstadoAgendamento, ROW_NUMBER() OVER (ORDER BY ag.c_data_agendamento ASC, dp.c_urgencia DESC) AS No\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK'\nLEFT JOIN app_fd_docs_processo d ON  d.id = p.c_docs\nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id not like '%Credito%'\nAND (Select count(ID) from shkprocesses \n    where ActivityRequesterProcessId = sp2.id\n    AND (If( 'REG' like '%REG%', ID like '%Registos%', '')\n    ) \nOR sp.id like '%CHAcompanhamentoOutorgas%'\n) > 0"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -46,11 +47,14 @@
             "include_export": "",
             "label": "instanceId",
             "name": "instanceId",
-            "permission_rules": {"800fccfb-8f04-e988-d120-94634c25f6d8": {
-                "exclude_export": "true",
-                "hidden": "false",
-                "include_export": ""
-            }},
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {
+                    "exclude_export": "true",
+                    "hidden": "false",
+                    "include_export": ""
+                },
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "sortable": "false"
         },
         {
@@ -71,7 +75,10 @@
             "id": "column_13",
             "label": "Data Agendamento",
             "name": "DataAgendamento",
-            "permission_rules": {"800fccfb-8f04-e988-d120-94634c25f6d8": {}},
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "sortable": "true",
             "style": "",
             "width": ""
@@ -94,7 +101,10 @@
             "id": "column_3",
             "label": "Nº Workflow Banco",
             "name": "NwfBanco",
-            "permission_rules": {"800fccfb-8f04-e988-d120-94634c25f6d8": {}},
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "sortable": "false",
             "style": "",
             "width": ""
@@ -133,7 +143,10 @@
             "id": "column_6",
             "label": "Alocado a",
             "name": "assignee",
-            "permission_rules": {"800fccfb-8f04-e988-d120-94634c25f6d8": {}},
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "sortable": "false",
             "style": "",
             "width": ""
@@ -172,7 +185,10 @@
             "id": "column_2",
             "label": "Nome Banco",
             "name": "NomeBanco",
-            "permission_rules": {"800fccfb-8f04-e988-d120-94634c25f6d8": {}},
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "sortable": "false",
             "style": "",
             "width": ""
@@ -195,7 +211,10 @@
             "id": "column_5",
             "label": "Cliente",
             "name": "cliente",
-            "permission_rules": {"800fccfb-8f04-e988-d120-94634c25f6d8": {}},
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "sortable": "false",
             "style": "",
             "width": ""
@@ -234,7 +253,10 @@
             "id": "column_10",
             "label": "Entidade",
             "name": "Entidade",
-            "permission_rules": {"800fccfb-8f04-e988-d120-94634c25f6d8": {}},
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "sortable": "false",
             "style": "",
             "width": ""
@@ -257,7 +279,10 @@
             "id": "column_12",
             "label": "Tipo Processo",
             "name": "TipoProcesso",
-            "permission_rules": {"800fccfb-8f04-e988-d120-94634c25f6d8": {}},
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "sortable": "false",
             "style": "",
             "width": ""
@@ -296,7 +321,14 @@
             "id": "column_14",
             "label": "Categoria Processo",
             "name": "CategoriaProcesso",
-            "permission_rules": {"800fccfb-8f04-e988-d120-94634c25f6d8": {}},
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "sortable": "false",
             "style": "",
             "width": ""
@@ -334,7 +366,10 @@
             "id": "column_11",
             "label": "Urgência",
             "name": "Urgencia",
-            "permission_rules": {"800fccfb-8f04-e988-d120-94634c25f6d8": {}},
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "sortable": "false",
             "style": "",
             "width": ""
@@ -372,7 +407,10 @@
             "id": "column_1",
             "label": "Correções",
             "name": "CorrecoesRegistos",
-            "permission_rules": {"800fccfb-8f04-e988-d120-94634c25f6d8": {}},
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "sortable": "false",
             "style": "",
             "width": ""
@@ -395,7 +433,10 @@
             "id": "column_0",
             "label": "Observações",
             "name": "ObservacoesRegistos",
-            "permission_rules": {"800fccfb-8f04-e988-d120-94634c25f6d8": {}},
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "sortable": "false",
             "style": "",
             "width": ""
@@ -418,6 +459,40 @@
             "id": "column_15",
             "label": "Atividade",
             "name": "activityName",
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_16",
+            "label": "Estado Agendamento",
+            "name": "EstadoAgendamento",
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "sortable": "false",
             "style": "",
             "width": ""
@@ -456,7 +531,10 @@
             "id": "column_9",
             "label": "Fase Processo",
             "name": "FaseProcesso",
-            "permission_rules": {"800fccfb-8f04-e988-d120-94634c25f6d8": {}},
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "sortable": "false",
             "style": "",
             "width": ""
@@ -483,7 +561,10 @@
             "id": "column_7",
             "label": "Data de Registo",
             "name": "DataCriacao",
-            "permission_rules": {"800fccfb-8f04-e988-d120-94634c25f6d8": {}},
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "sortable": "false",
             "style": "",
             "width": ""
@@ -510,7 +591,10 @@
             "id": "column_8",
             "label": "Última Alteração",
             "name": "DataModificacao",
-            "permission_rules": {"800fccfb-8f04-e988-d120-94634c25f6d8": {}},
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "sortable": "false",
             "style": "",
             "width": ""
@@ -527,7 +611,10 @@
             "id": "filter_4",
             "label": "Data Agendamento",
             "name": "DataAgendamento",
-            "permission_rules": {"800fccfb-8f04-e988-d120-94634c25f6d8": {}},
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "type": {
                 "className": "org.joget.plugin.enterprise.DateDataListFilterType",
                 "properties": {
@@ -545,7 +632,10 @@
             "id": "filter_0",
             "label": "Nº Workflow Banco",
             "name": "NwfBanco",
-            "permission_rules": {"800fccfb-8f04-e988-d120-94634c25f6d8": {}},
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "type": {
                 "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
                 "properties": {"defaultValue": ""}
@@ -562,6 +652,7 @@
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
             },
             "type": {
@@ -576,7 +667,10 @@
             "id": "filter_5",
             "label": "Entidade",
             "name": "Entidade",
-            "permission_rules": {"800fccfb-8f04-e988-d120-94634c25f6d8": {}},
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "type": {
                 "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
                 "properties": {
@@ -609,7 +703,10 @@
             "id": "filter_8",
             "label": "CategoriaProcesso",
             "name": "CategoriaProcesso",
-            "permission_rules": {"800fccfb-8f04-e988-d120-94634c25f6d8": {}},
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {"hidden": "true"},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "type": {
                 "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
                 "properties": {
@@ -642,7 +739,10 @@
             "id": "filter_6",
             "label": "Urgência",
             "name": "Urgencia",
-            "permission_rules": {"800fccfb-8f04-e988-d120-94634c25f6d8": {}},
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "type": {
                 "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
                 "properties": {
@@ -676,7 +776,10 @@
             "id": "filter_2",
             "label": "Correções",
             "name": "CorrecoesRegistos",
-            "permission_rules": {"800fccfb-8f04-e988-d120-94634c25f6d8": {}},
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "type": {
                 "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
                 "properties": {
@@ -710,6 +813,10 @@
             "id": "filter_7",
             "label": "Atividade de Registos",
             "name": "activityName",
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "type": {
                 "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
                 "properties": {
@@ -768,6 +875,10 @@
             "id": "filter_9",
             "label": "Fase Processo",
             "name": "FaseProcesso",
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "type": {
                 "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
                 "properties": {
@@ -800,7 +911,10 @@
             "id": "filter_1",
             "label": "Alocado a",
             "name": "assignee",
-            "permission_rules": {"800fccfb-8f04-e988-d120-94634c25f6d8": {}},
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "type": {
                 "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
                 "properties": {
@@ -833,17 +947,27 @@
     "orderBy": "No",
     "pageSize": "0",
     "pageSizeSelectorOptions": "10,20,30,40,50,100",
-    "permission_rules": [{
-        "permission": {
-            "className": "org.joget.apps.userview.lib.GroupPermission",
-            "properties": {
-                "allowedGroupIds": "Coordenador",
-                "orgId": "PL"
-            }
+    "permission_rules": [
+        {
+            "permission": {
+                "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString grupo = \"#currentUser.groups.id#\";\nString departamento = \"#currentUser.department.id#\";\n\nif(grupo.contains(\"Coordenador\") && departamento.contains(\"PL_INT_REG\")){\n    return true;\n} else{\n    return false;\n}"}
+            },
+            "permission_key": "a0548376-37e7-d6de-e2c4-dd124c7ba5db",
+            "permission_name": "Coordenadores Registo"
         },
-        "permission_key": "800fccfb-8f04-e988-d120-94634c25f6d8",
-        "permission_name": "Coordenadores"
-    }],
+        {
+            "permission": {
+                "className": "org.joget.apps.userview.lib.GroupPermission",
+                "properties": {
+                    "allowedGroupIds": "Coordenador",
+                    "orgId": "PL"
+                }
+            },
+            "permission_key": "800fccfb-8f04-e988-d120-94634c25f6d8",
+            "permission_name": "Coordenadores"
+        }
+    ],
     "responsiveView": [
         {
             "breakpoint": "",
@@ -870,6 +994,7 @@
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {"hidden": "true"},
                 "7acc8ca8-49d2-41f4-f9fe-98060e5c2333": {},
                 "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {"hidden": "true"}
             },
             "properties": {
@@ -897,6 +1022,7 @@
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "7acc8ca8-49d2-41f4-f9fe-98060e5c2333": {},
                 "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
             },
             "properties": {
