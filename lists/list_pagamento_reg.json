@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "procId",
-            "sql": "SELECT p.id as procId, dp.c_n_wf_banco as N_WF_Banco,dp.c_categoria_processo as CategoriaProcesso, dp.c_n_wf_pl as N_WF_PL, dp.c_urgencia_registo AS Urgencia, ip.c_nome as NomeCliente, dp.c_tipo_processo as TipoProcesso, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee, p.dateCreated, dp.c_tipo_entidade as Entidade, dp.c_estado_agendamento as EstadoAgendamento, ag.c_data_agendamento AS DataAgendamento, ROW_NUMBER() OVER (ORDER BY ag.c_data_agendamento ASC, dp.c_urgencia_registo DESC) AS No\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id\n\tAND ip.c_cliente_principal LIKE (SELECT i.c_cliente_principal \n                                    FROM app_fd_intervenientes_proc i \n                                    WHERE i.c_id_processo = p.id\n                                    AND i.c_cliente_principal = 'CHECK')\nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nWHERE sps.KeyValue LIKE 'open.running'\nAND p.id is not null\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND (sact.Id like '%pagamentoRegisto') \nAND sass.ResourceId LIKE \"%registos_geral%\"\nORDER BY DataAgendamento ASC, Urgencia DESC"
+            "sql": "SELECT p.id as procId, dp.c_n_wf_banco as N_WF_Banco,dp.c_categoria_processo as CategoriaProcesso, dp.c_n_wf_pl as N_WF_PL, dp.c_nome_banco AS NomeBanco, dp.c_urgencia_registo AS Urgencia, ip.c_nome as NomeCliente, dp.c_tipo_processo as TipoProcesso, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee, p.dateCreated, dp.c_tipo_entidade as Entidade, dp.c_estado_agendamento as EstadoAgendamento, ag.c_data_agendamento AS DataAgendamento, ROW_NUMBER() OVER (ORDER BY ag.c_data_agendamento ASC, dp.c_urgencia_registo DESC) AS No\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id\n\tAND ip.c_cliente_principal LIKE (SELECT i.c_cliente_principal \n                                    FROM app_fd_intervenientes_proc i \n                                    WHERE i.c_id_processo = p.id\n                                    AND i.c_cliente_principal = 'CHECK')\nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nWHERE sps.KeyValue LIKE 'open.running'\nAND p.id is not null\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND (sact.Id like '%pagamentoRegisto') \nAND sass.ResourceId LIKE \"%registos_geral%\"\nORDER BY DataAgendamento ASC, Urgencia DESC"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -74,6 +74,44 @@
             "id": "column_2",
             "label": "Nº Workflow PL",
             "name": "N_WF_PL",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'nome_banco'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_11",
+            "label": "Banco",
+            "name": "NomeBanco",
             "sortable": "false",
             "style": "",
             "width": ""
@@ -312,38 +350,38 @@
     "disableResponsive": "",
     "filters": [{
         "datalist_type": "filter",
-        "filterParamName": "d-7655137-fn_activityName",
+        "filterParamName": "d-2989778-fn_NomeBanco",
         "hidden": "",
         "id": "filter_0",
-        "label": "Atividade",
-        "name": "activityName",
-        "permission_rules": {},
+        "label": "Banco",
+        "name": "NomeBanco",
+        "permission_rules": {
+            "14f53242-dec2-47ec-1415-4dab2b396111": {"hidden": "true"},
+            "3460c56e-4c9c-2840-323c-12ac562fae7d": {"hidden": "true"},
+            "8524db2c-6251-7ddd-8dd3-f51777439291": {"hidden": "true"},
+            "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {},
+            "ddb03536-b918-35c4-693f-ea8a909f07be": {"hidden": "true"}
+        },
         "type": {
             "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
             "properties": {
                 "controlField": "",
                 "defaultValue": "",
                 "multiple": "",
-                "options": [
-                    {
-                        "grouping": "",
-                        "label": "Depósito",
-                        "value": "Depósito"
-                    },
-                    {
-                        "grouping": "",
-                        "label": "Pagamento do Depósito",
-                        "value": "Pagamento do Depósito"
-                    },
-                    {
-                        "grouping": "",
-                        "label": "Inserção Chave",
-                        "value": "Inserção Chave"
-                    }
-                ],
+                "options": [],
                 "optionsBinder": {
-                    "className": "",
-                    "properties": {}
+                    "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                    "properties": {
+                        "addEmptyOption": "",
+                        "cacheInterval": "",
+                        "emptyLabel": "",
+                        "extraCondition": "c_nome_campo = 'nome_banco' AND e.customProperties.servico LIKE '%CH%'",
+                        "formDefId": "adicionarOpcaoLV",
+                        "groupingColumn": "",
+                        "idColumn": "value",
+                        "labelColumn": "label",
+                        "useAjax": ""
+                    }
                 },
                 "size": ""
             }
