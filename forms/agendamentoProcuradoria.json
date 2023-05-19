@@ -687,6 +687,25 @@
                             "id": "numero_centro_custo_balcao",
                             "label": "Número Centro de Custo Balcão",
                             "maxlength": "",
+                            "permission_rules": {
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                }
+                            },
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -708,6 +727,25 @@
                             "id": "nome_centro_custo_balcao",
                             "label": "Nome Centro de Custo Balcão",
                             "maxlength": "",
+                            "permission_rules": {
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                }
+                            },
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -802,7 +840,7 @@
                                 "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
                                 "f05453aa-e857-3dfd-90e1-d657d9b594a5": {}
                             },
-                            "value": "<script>\n    $(document).ready(function(){\n        \n        visibilidadeBCP();\n        formatValorLiquidacaoReceber();\n        $(\"input[id*=valores_liquidacao_receber]\").change(function(){\n           formatValorLiquidacaoReceber();\n        });\n        \n        \n        \n    });\n    \n    function visibilidadeBCP(){\n        var tipoProcesso = \"#form.detalhe_proce_procu.tipo_processo[{form.processos_procu.detalhe_processo}]#\";\n        var banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\n\n        if(banco_fundo === 'BCP'){\n            if (tipoProcesso === 'DIST' || tipoProcesso === 'MUT' || tipoProcesso === 'LEAS'){\n                $(\"div[id*=originais]\").parent().hide();\n            } \n            \n            if(tipoProcesso === 'LEAS'){\n                $(\"input[id*=local_envio_originais]\").parent().hide();\n            }\n            \n            if(tipoProcesso === 'MUT' || tipoProcesso === 'LEAS' || tipoProcesso === 'ISV' || tipoProcesso === 'CVJ' || tipoProcesso === 'DAC'){\n                $(\"input[id*=deposito]\").parent().hide();\n            }\n            \n            if(tipoProcesso === 'MUT' || tipoProcesso === 'ISV' || tipoProcesso === 'CVJ'){\n                $(\"input[id*=conta]\").parent().hide();\n            }\n            \n            if(tipoProcesso === 'ISV' || tipoProcesso === 'CVJ' || tipoProcesso === 'DAC'){\n               $(\"input[id*=centro_custo_balcao]\").parent().hide();\n            }\n        }\n    }\n    \n    function formatValorLiquidacaoReceber(){\n         //Formatar valor de campos em euros \n        var number =  $(\"input[id*=valores_liquidacao_receber]\").val();\n        if(number && number !== \"\"){\n            number = number.replaceAll('NaN', \"0\");\n            number = number.replaceAll('.', \"\");\n            number = number.replaceAll('\u20ac', \"\");\n            number = number.replaceAll('Eur', \"\");\n            number = number.replaceAll('EUR', \"\");\n            number = number.replaceAll(',', '.');\n            \n            let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(number);\n        \n            num = num.replace(/\\s/g, '.');\n            num = num.replaceAll('.\u20ac', ' EUR');\n            \n            $(\"input[id*=valores_liquidacao_receber]\").val(num);\n        }        \n\n    }\n<\/script>"
+                            "value": "<script>\n    $(document).ready(function(){\n        \n        visibilidadeBCP();\n        formatValorLiquidacaoReceber();\n        $(\"input[id*=valores_liquidacao_receber]\").change(function(){\n           formatValorLiquidacaoReceber();\n        });\n        \n        \n        \n    });\n    \n    function visibilidadeBCP(){\n        var tipoProcesso = \"#form.detalhe_proce_procu.tipo_processo[{form.processos_procu.detalhe_processo}]#\";\n        var banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\n\n        if(banco_fundo === 'BCP'){\n            if (tipoProcesso === 'DIST' || tipoProcesso === 'MUT' || tipoProcesso === 'LEAS'){\n                $(\"div[id*=originais]\").parent().hide();\n            } \n            \n            if(tipoProcesso === 'LEAS'){\n                $(\"input[id*=local_envio_originais]\").parent().hide();\n            }\n            \n            if(tipoProcesso === 'MUT' || tipoProcesso === 'LEAS' || tipoProcesso === 'ISV' || tipoProcesso === 'CVJ' || tipoProcesso === 'DAC'){\n                $(\"input[id*=deposito]\").parent().hide();\n            }\n            \n            if(tipoProcesso === 'MUT' || tipoProcesso === 'ISV' || tipoProcesso === 'CVJ'){\n                $(\"input[id*=conta]\").parent().hide();\n            }\n            \n            if(tipoProcesso === 'ISV' || tipoProcesso === 'CVJ' || tipoProcesso === 'DAC'){\n                $(\"input[id*=numero_centro_custo_balcao]\").parent().hide();\n                $(\"input[id*=nome_centro_custo_balcao]\").parent().hide();\n            }\n        }\n    }\n    \n    function formatValorLiquidacaoReceber(){\n         //Formatar valor de campos em euros \n        var number =  $(\"input[id*=valores_liquidacao_receber]\").val();\n        if(number && number !== \"\"){\n            number = number.replaceAll('NaN', \"0\");\n            number = number.replaceAll('.', \"\");\n            number = number.replaceAll('\u20ac', \"\");\n            number = number.replaceAll('Eur', \"\");\n            number = number.replaceAll('EUR', \"\");\n            number = number.replaceAll(',', '.');\n            \n            let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(number);\n        \n            num = num.replace(/\\s/g, '.');\n            num = num.replaceAll('.\u20ac', ' EUR');\n            \n            $(\"input[id*=valores_liquidacao_receber]\").val(num);\n        }        \n\n    }\n<\/script>"
                         }
                     }
                 ],
