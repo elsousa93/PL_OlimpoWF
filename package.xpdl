@@ -9836,7 +9836,7 @@
                                 <TransitionRefs>
                                     <TransitionRef Id="transition19"/>
                                     <TransitionRef Id="transition22"/>
-                                    <TransitionRef Id="transition29"/>
+                                    <TransitionRef Id="transition37"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
@@ -9906,8 +9906,8 @@
                             <Join Type="XOR"/>
                             <Split Type="XOR">
                                 <TransitionRefs>
-                                    <TransitionRef Id="transition20"/>
                                     <TransitionRef Id="transition25"/>
+                                    <TransitionRef Id="transition40"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
@@ -9920,6 +9920,11 @@
                 <Activity Id="route15">
                     <Route/>
                     <Performer>process28_participant3</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process28_participant3"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2200.9896850585938,-0.781260756835934"/>
@@ -10053,17 +10058,11 @@
                     <TransitionRestrictions>
                         <TransitionRestriction>
                             <Join Type="XOR"/>
-                            <Split Type="AND">
-                                <TransitionRefs>
-                                    <TransitionRef Id="transition17"/>
-                                    <TransitionRef Id="transition35"/>
-                                </TransitionRefs>
-                            </Split>
                         </TransitionRestriction>
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process28_participant3"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="662.9514312744141,406.71873924316407"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="662.9500427246094,406.51249237060546"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="HIPContratacao" Name="Contratação">
@@ -10096,7 +10095,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process28_participant3"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="302.95140838623047,46.406239243164066"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="306.95001220703125,45.187503051757815"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="route6_1">
@@ -10128,7 +10127,7 @@
                             <Split Type="XOR">
                                 <TransitionRefs>
                                     <TransitionRef Id="transition36"/>
-                                    <TransitionRef Id="transition37"/>
+                                    <TransitionRef Id="transition29"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
@@ -10136,6 +10135,27 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process28_participant3"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="827.0000534057617,270.1166719799805"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route9">
+                    <Route/>
+                    <Performer>process28_participant3</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process28_participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="334,228.00001831054686"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route10_1">
+                    <Route/>
+                    <Performer>process28_participant3</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process28_participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="752,66.39999694824219"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -10163,30 +10183,12 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="HIPContratacao" Id="transition21" To="HIPProducao">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="HIPProducao" Id="transition17" To="HIPValidacao">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="route6_1" Id="transition18" To="HIPContratacao">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route5" Id="transition19" Name="producao" To="HIPProducao">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="route14" Id="transition20" Name="contratacao" To="HIPContratacao">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
@@ -10227,12 +10229,6 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="route5" Id="transition29" Name="contratacao" To="HIPContratacao">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="sub_modelo11" Id="transition30" To="route7">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
@@ -10248,12 +10244,6 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="route6" Id="transition34" To="route14">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="HIPProducao" Id="transition35" To="route8">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
@@ -10266,7 +10256,41 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="route8" Id="transition37" Name="contratacao" To="HIPContratacao">
+                <Transition From="HIPContratacao" Id="transition21" To="route9">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route9" Id="transition38" Name="producao" To="HIPProducao">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route5" Id="transition37" Name="contratacao" To="route10_1">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route10_1" Id="transition42" To="HIPContratacao">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route14" Id="transition40" Name="contratacao" To="HIPContratacao">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route8" Id="transition29" Name="contratacao" To="route10_1">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route6" Id="transition34" To="route14">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
