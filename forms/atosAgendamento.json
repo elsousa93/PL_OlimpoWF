@@ -668,6 +668,73 @@
                         }
                     },
                     {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "centro_custo_balcao",
+                            "label": "Centro de Custo Balcão",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0c699003-580e-7faf-a39c-f2e5303bd5b5": {},
+                                "1804038d-e85d-3ea4-4ef3-4c4143e5145b": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "2dd4cc96-cc40-f285-e376-ebda47490646": {},
+                                "40b85e69-a77b-cdfa-05ef-6bd9811e4410": {},
+                                "44639061-b6ba-a2ef-a47c-c5bab888544c": {},
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "710a05c8-c837-e0d0-670a-720473cb5a7c": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "787c67d4-d157-ca8e-655e-43717638627d": {},
+                                "87e7b01c-e92b-e732-c50f-c2c7020e5482": {},
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "dccd1818-864d-54e3-09c2-6e246cfcf5fe": {},
+                                "ee177599-9c69-d878-10f8-9aebde208e06": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {},
+                                "f8c01627-bf37-05aa-5732-90fe1b2327b3": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                }
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
                         "className": "org.joget.apps.form.lib.CustomHTML",
                         "properties": {
                             "autoPopulate": "",
@@ -682,7 +749,7 @@
                                 "bed1ce32-9bde-d5e2-554a-ab5d0f9c01b3": {},
                                 "d067e984-f6d4-139d-8192-5a3c2256c54c": {}
                             },
-                            "value": "<script>\n    $(document).ready(function(){\n        \n        visibilidadeBCP();\n        formatValorLiquidacaoReceber();\n        $(\"input[id*=valores_liquidacao_receber]\").change(function(){\n           formatValorLiquidacaoReceber();\n        });\n        \n        \n        \n    });\n    \n    function visibilidadeBCP(){\n        var tipoProcesso = \"#form.detalhe_proce_procu.tipo_processo[{form.processos_procu.detalhe_processo}]#\";\n        var banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\n\n        if(banco_fundo === 'BCP'){\n            if (tipoProcesso === 'DIST' || tipoProcesso === 'MUT' || tipoProcesso === 'LEAS'){\n                $(\"div[id*=originais]\").parent().hide();\n                \n            } \n            if(tipoProcesso === 'LEAS'){\n                $(\"input[id*=local_envio_originais]\").parent().hide();\n            }\n            \n            if(tipoProcesso === 'MUT' || tipoProcesso === 'LEAS' || tipoProcesso === 'ISV' || tipoProcesso === 'CVJ' || tipoProcesso === 'DAC'){\n                $(\"input[id*=deposito]\").parent().hide();\n            }\n            if(tipoProcesso === 'MUT' || tipoProcesso === 'ISV' || tipoProcesso === 'CVJ'){\n                $(\"input[id*=conta]\").parent().hide();\n            }\n        }\n    }\n    \n     function formatValorLiquidacaoReceber(){\n         //Formatar valor de campos em euros \n        var number =  $(\"input[id*=valores_liquidacao_receber]\").val();\n        if(number && number !== \"\"){\n            number = number.replaceAll('NaN', \"0\");\n            number = number.replaceAll('.', \"\");\n            number = number.replaceAll('\u20ac', \"\");\n            number = number.replaceAll('Eur', \"\");\n            number = number.replaceAll('EUR', \"\");\n            number = number.replaceAll(',', '.');\n            \n            let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(number);\n        \n            num = num.replace(/\\s/g, '.');\n            num = num.replaceAll('.\u20ac', ' EUR');\n            \n            $(\"input[id*=valores_liquidacao_receber]\").val(num);\n        }        \n\n    }\n<\/script>"
+                            "value": "<script>\n    $(document).ready(function(){\n        \n        visibilidadeBCP();\n        formatValorLiquidacaoReceber();\n        $(\"input[id*=valores_liquidacao_receber]\").change(function(){\n           formatValorLiquidacaoReceber();\n        });\n        \n        \n        \n    });\n    \n    function visibilidadeBCP(){\n        var tipoProcesso = \"#form.detalhe_proce_procu.tipo_processo[{form.processos_procu.detalhe_processo}]#\";\n        var banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\n\n        if(banco_fundo === 'BCP'){\n            if (tipoProcesso === 'DIST' || tipoProcesso === 'MUT' || tipoProcesso === 'LEAS'){\n                $(\"div[id*=originais]\").parent().hide();\n                \n            } \n            if(tipoProcesso === 'LEAS'){\n                $(\"input[id*=local_envio_originais]\").parent().hide();\n            }\n            \n            if(tipoProcesso === 'MUT' || tipoProcesso === 'LEAS' || tipoProcesso === 'ISV' || tipoProcesso === 'CVJ' || tipoProcesso === 'DAC'){\n                $(\"input[id*=deposito]\").parent().hide();\n            }\n            if(tipoProcesso === 'MUT' || tipoProcesso === 'ISV' || tipoProcesso === 'CVJ'){\n                $(\"input[id*=conta]\").parent().hide();\n            }\n            if(tipoProcesso === 'ISV' || tipoProcesso === 'CVJ' || tipoProcesso === 'DAC'){\n               $(\"input[id*=centro_custo_balcao]\").parent().hide();\n            }\n            \n        }\n    }\n    \n     function formatValorLiquidacaoReceber(){\n         //Formatar valor de campos em euros \n        var number =  $(\"input[id*=valores_liquidacao_receber]\").val();\n        if(number && number !== \"\"){\n            number = number.replaceAll('NaN', \"0\");\n            number = number.replaceAll('.', \"\");\n            number = number.replaceAll('\u20ac', \"\");\n            number = number.replaceAll('Eur', \"\");\n            number = number.replaceAll('EUR', \"\");\n            number = number.replaceAll(',', '.');\n            \n            let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(number);\n        \n            num = num.replace(/\\s/g, '.');\n            num = num.replaceAll('.\u20ac', ' EUR');\n            \n            $(\"input[id*=valores_liquidacao_receber]\").val(num);\n        }        \n\n    }\n<\/script>"
                         }
                     }
                 ],
