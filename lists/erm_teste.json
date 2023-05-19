@@ -6,12 +6,20 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT det.c_data_entrada AS Data_entrada, det.c_nome_banco AS Banco, det.c_id_processo AS ID, det.c_categoria_processo\nFROM app_fd_detalhe_processo det\nWHERE det.c_categoria_processo != ''\n\n\n"
+            "sql": "SELECT det.c_data_entrada AS Data_entrada, det.c_nome_banco AS Banco, det.c_id_processo, det.c_categoria_processo,\nag.c_data_agendamento AS Data_agendamento\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\n\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
     "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "c_id_processo",
+            "name": "c_id_processo",
+            "sortable": "false"
+        },
         {
             "action": {
                 "className": "",
@@ -52,6 +60,14 @@
             "id": "column_2",
             "label": "c_categoria_processo",
             "name": "c_categoria_processo",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_3",
+            "label": "Data_agendamento",
+            "name": "Data_agendamento",
             "sortable": "false"
         }
     ],
