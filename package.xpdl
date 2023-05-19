@@ -9457,7 +9457,7 @@
                     <Performer>resgistos_qualidade</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="resgistos_qualidade"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1201.7874755859375,71.5500366210938"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1201.7874755859375,139.34999389648436"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="validacaoDeposito" Name="Validação do Depósito">
@@ -9467,7 +9467,7 @@
                     <Performer>resgistos_qualidade</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="resgistos_qualidade"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1354.2000122070312,71.82500000000005"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1357.1999816894531,138.62501831054686"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="configurarPagamentoRegisto" Name="Configurar Pagamento do Registo">
@@ -9517,7 +9517,7 @@
                     <Performer>resgistos_qualidade</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="resgistos_qualidade"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1514.4000244140625,70.9625122070313"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1519.3999938964844,136.7625305175781"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="route3">
@@ -9536,6 +9536,19 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="gestor_registos"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1236,38.40001220703124"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route4">
+                    <Route/>
+                    <Performer>resgistos_qualidade</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="resgistos_qualidade"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2379.5999755859375,136.78749389648436"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -9661,13 +9674,18 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
+                <Transition From="preencherCamposValidacaoDeposito" Id="transition30" To="route4">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
             </Transitions>
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="registos;gestor_registos;resgistos_qualidade"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=registos,CONNECTING_ACTIVITY_ID=ConfigurarProcessoRegistos,X_OFFSET=57,Y_OFFSET=151,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=registos,CONNECTING_ACTIVITY_ID=ConfigurarAtividadeAO,X_OFFSET=1282,Y_OFFSET=18,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=resgistos_qualidade,CONNECTING_ACTIVITY_ID=preencherCamposQualidade,X_OFFSET=2418,Y_OFFSET=73,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=resgistos_qualidade,CONNECTING_ACTIVITY_ID=preencherCamposValidacaoDeposito,X_OFFSET=1675,Y_OFFSET=84,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=resgistos_qualidade,CONNECTING_ACTIVITY_ID=route4,X_OFFSET=2515,Y_OFFSET=122,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=resgistos_qualidade,CONNECTING_ACTIVITY_ID=preencherCamposQualidade,X_OFFSET=2467,Y_OFFSET=69,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="CHModelo11" Name="CH - Modelo 11">
