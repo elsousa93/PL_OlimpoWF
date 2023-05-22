@@ -213,6 +213,43 @@
                         }
                     },
                     {
+                        "className": "org.joget.apps.form.lib.TextArea",
+                        "properties": {
+                            "cols": "20",
+                            "id": "motivo_urgencia_agendamento",
+                            "label": "Motivo de Urgência de Agendamento",
+                            "permission_rules": {
+                                "093a1241-e305-8c58-bf20-1cefd6a6df94": {},
+                                "0e7617d8-1161-e5f1-6cc4-902cedbaaa54": {},
+                                "570533e0-cbb7-f32b-9695-a8e9d2370a33": {},
+                                "581aec98-64de-cb6e-5a07-27c7d1e550ba": {},
+                                "5b2fae9f-2c09-fec1-c2ae-b82fc5ab6d09": {},
+                                "5d138c56-1736-dff2-b7d8-c8667858776c": {},
+                                "7d10cf1b-4a43-744c-57ae-b2442baee17c": {},
+                                "7dcda20a-eb2d-d47b-aa3c-1decb7a775a8": {},
+                                "8f7b8a9d-4999-7784-7a33-918d09fbdc0d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "9d853985-1ae4-3c97-4cca-9de6c3614741": {},
+                                "c1ad5abb-3437-3755-3fac-bbbe4c8ed572": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "rows": "5",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "",
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues) {\r\n    boolean result = true;\r\n     \r\n    //get dropdown select box value\r\n    String field1Id = \"urgencia_agendamento\";\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field1 = FormUtil.findElement(field1Id, form, formData);\r\n  \r\n    if (field1 != null) {\r\n        //get value of field 1\r\n        String[] field1Values = FormUtil.getElementPropertyValues(field1, formData);\r\n  \r\n        /*if(field1Values[0].equalsIgnoreCase(\"sim\") && fileUploadValues[0].isEmpty() ){*/\r\n        if(field1Values.length != 0 && fileUploadValues.length != 0){\r\n            if(field1Values[0].equalsIgnoreCase(\"sim\")  && fileUploadValues[0].isEmpty()){\r\n                String id = FormUtil.getElementParameterName(element);\r\n                formData.addFormError(id, \"Campo obrigatório quando existe Urgência de Agendamento\");\r\n                result = false;\r\n            }\r\n        }\r\n    } else {\r\n        //ignore if the dropdown does not exist\r\n    }\r\n  \r\n    return result;\r\n}\r\n  \r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
                         "className": "org.joget.apps.form.lib.SelectBox",
                         "properties": {
                             "controlField": "",
@@ -454,43 +491,6 @@
                         }
                     },
                     {
-                        "className": "org.joget.apps.form.lib.TextArea",
-                        "properties": {
-                            "cols": "20",
-                            "id": "motivo_urgencia_agendamento",
-                            "label": "Motivo de Urgência de Agendamento",
-                            "permission_rules": {
-                                "093a1241-e305-8c58-bf20-1cefd6a6df94": {},
-                                "0e7617d8-1161-e5f1-6cc4-902cedbaaa54": {},
-                                "570533e0-cbb7-f32b-9695-a8e9d2370a33": {},
-                                "581aec98-64de-cb6e-5a07-27c7d1e550ba": {},
-                                "5b2fae9f-2c09-fec1-c2ae-b82fc5ab6d09": {},
-                                "5d138c56-1736-dff2-b7d8-c8667858776c": {},
-                                "7d10cf1b-4a43-744c-57ae-b2442baee17c": {},
-                                "7dcda20a-eb2d-d47b-aa3c-1decb7a775a8": {},
-                                "8f7b8a9d-4999-7784-7a33-918d09fbdc0d": {
-                                    "permissionHidden": "",
-                                    "readonly": "true"
-                                },
-                                "9d853985-1ae4-3c97-4cca-9de6c3614741": {},
-                                "c1ad5abb-3437-3755-3fac-bbbe4c8ed572": {}
-                            },
-                            "placeholder": "",
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "rows": "5",
-                            "validator": {
-                                "className": "org.joget.apps.form.lib.BeanShellValidator",
-                                "properties": {
-                                    "decoration": "",
-                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues) {\r\n    boolean result = true;\r\n     \r\n    //get dropdown select box value\r\n    String field1Id = \"urgencia_agendamento\";\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field1 = FormUtil.findElement(field1Id, form, formData);\r\n  \r\n    if (field1 != null) {\r\n        //get value of field 1\r\n        String[] field1Values = FormUtil.getElementPropertyValues(field1, formData);\r\n  \r\n        /*if(field1Values[0].equalsIgnoreCase(\"sim\") && fileUploadValues[0].isEmpty() ){*/\r\n        if(field1Values.length != 0 && fileUploadValues.length != 0){\r\n            if(field1Values[0].equalsIgnoreCase(\"sim\")  && fileUploadValues[0].isEmpty()){\r\n                String id = FormUtil.getElementParameterName(element);\r\n                formData.addFormError(id, \"Campo obrigatório quando existe Urgência de Agendamento\");\r\n                result = false;\r\n            }\r\n        }\r\n    } else {\r\n        //ignore if the dropdown does not exist\r\n    }\r\n  \r\n    return result;\r\n}\r\n  \r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
-                                }
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    },
-                    {
                         "className": "org.joget.apps.form.lib.DatePicker",
                         "properties": {
                             "allowManual": "",
@@ -636,108 +636,6 @@
                             "readonly": "",
                             "readonlyLabel": "",
                             "startDateFieldId": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.SelectBox",
-                        "properties": {
-                            "controlField": "",
-                            "id": "estado_agendamento",
-                            "label": "Estado de Agendamento",
-                            "multiple": "",
-                            "options": [],
-                            "optionsBinder": {
-                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
-                                "properties": {
-                                    "addEmptyOption": "true",
-                                    "cacheInterval": "",
-                                    "emptyLabel": "",
-                                    "extraCondition": "c_nome_campo = 'estado_agendamento' AND e.customProperties.servico LIKE '%CH%'",
-                                    "formDefId": "adicionarOpcaoLV",
-                                    "groupingColumn": "",
-                                    "idColumn": "value",
-                                    "labelColumn": "label",
-                                    "useAjax": ""
-                                }
-                            },
-                            "permission_rules": {
-                                "093a1241-e305-8c58-bf20-1cefd6a6df94": {},
-                                "0e7617d8-1161-e5f1-6cc4-902cedbaaa54": {},
-                                "570533e0-cbb7-f32b-9695-a8e9d2370a33": {},
-                                "581aec98-64de-cb6e-5a07-27c7d1e550ba": {},
-                                "5b2fae9f-2c09-fec1-c2ae-b82fc5ab6d09": {},
-                                "5d138c56-1736-dff2-b7d8-c8667858776c": {},
-                                "7d10cf1b-4a43-744c-57ae-b2442baee17c": {},
-                                "7dcda20a-eb2d-d47b-aa3c-1decb7a775a8": {},
-                                "8f7b8a9d-4999-7784-7a33-918d09fbdc0d": {
-                                    "permissionHidden": "",
-                                    "readonly": "true"
-                                },
-                                "9d853985-1ae4-3c97-4cca-9de6c3614741": {},
-                                "c1ad5abb-3437-3755-3fac-bbbe4c8ed572": {}
-                            },
-                            "readonly": "",
-                            "readonlyLabel": "",
-                            "size": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "value": "",
-                            "workflowVariable": ""
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.Radio",
-                        "properties": {
-                            "controlField": "",
-                            "id": "reagendamento",
-                            "label": "Reagendamento",
-                            "options": [
-                                {
-                                    "grouping": "",
-                                    "label": "Sim",
-                                    "value": "SIM"
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Não",
-                                    "value": "NAO"
-                                },
-                                {
-                                    "grouping": "",
-                                    "label": "Por Validar",
-                                    "value": "VAL"
-                                }
-                            ],
-                            "optionsBinder": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "permission_rules": {
-                                "093a1241-e305-8c58-bf20-1cefd6a6df94": {},
-                                "0e7617d8-1161-e5f1-6cc4-902cedbaaa54": {},
-                                "570533e0-cbb7-f32b-9695-a8e9d2370a33": {},
-                                "581aec98-64de-cb6e-5a07-27c7d1e550ba": {},
-                                "5b2fae9f-2c09-fec1-c2ae-b82fc5ab6d09": {},
-                                "5d138c56-1736-dff2-b7d8-c8667858776c": {},
-                                "7d10cf1b-4a43-744c-57ae-b2442baee17c": {},
-                                "7dcda20a-eb2d-d47b-aa3c-1decb7a775a8": {},
-                                "8f7b8a9d-4999-7784-7a33-918d09fbdc0d": {
-                                    "permissionHidden": "",
-                                    "readonly": "true"
-                                },
-                                "9d853985-1ae4-3c97-4cca-9de6c3614741": {},
-                                "c1ad5abb-3437-3755-3fac-bbbe4c8ed572": {}
-                            },
-                            "readonly": "",
-                            "readonlyLabel": "",
                             "validator": {
                                 "className": "",
                                 "properties": {}
