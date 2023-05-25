@@ -707,6 +707,28 @@
                         "value": "",
                         "workflowVariable": ""
                     }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "visibilidadesBancos",
+                        "label": "",
+                        "permission_rules": {
+                            "0c699003-580e-7faf-a39c-f2e5303bd5b5": {},
+                            "1804038d-e85d-3ea4-4ef3-4c4143e5145b": {},
+                            "2dd4cc96-cc40-f285-e376-ebda47490646": {},
+                            "40b85e69-a77b-cdfa-05ef-6bd9811e4410": {},
+                            "44639061-b6ba-a2ef-a47c-c5bab888544c": {},
+                            "710a05c8-c837-e0d0-670a-720473cb5a7c": {},
+                            "787c67d4-d157-ca8e-655e-43717638627d": {},
+                            "87e7b01c-e92b-e732-c50f-c2c7020e5482": {},
+                            "dccd1818-864d-54e3-09c2-6e246cfcf5fe": {},
+                            "ee177599-9c69-d878-10f8-9aebde208e06": {},
+                            "f8c01627-bf37-05aa-5732-90fe1b2327b3": {}
+                        },
+                        "value": "<script>\n    $(document).ready(function(){\n        atualizarVisibilidadeBCP();\n        atualizarVisibilidadesMTG();\n        atualizarVisibilidadesABN();\n        atualizarVisibilidadesBIC();\n    \n\n        $(\"select[id*=banco_fundo]\").change(function(){\n            atualizarVisibilidadeBCP();\n            atualizarVisibilidadesMTG();\n            atualizarVisibilidadesABN();\n            atualizarVisibilidadesBIC();\n        });\n        \n        $(\"select[id*=tipo_processo]\").change(function(){\n            atualizarVisibilidadeBCP();\n            atualizarVisibilidadesMTG();\n            atualizarVisibilidadesABN();\n            atualizarVisibilidadesBIC();\n        });\n    });\n    \n    function atualizarVisibilidadeBCP(){\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        if(nome_banco==='BCP'){\n            $(\"input[id*=num_pedido]\").val(\"Número de Pedido\");\n        }\n    }\n    \n    function atualizarVisibilidadesMTG(){\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        if(nome_banco==='MTG'){\n            $(\"input[id*=num_pedido]\").val(\"Número de Pedido\");\n        }\n    }\n    \n    function atualizarVisibilidadesABN(){\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        if(nome_banco==='ABN'){\n            $(\"input[id*=num_pedido]\").val(\"Número de Ordem\");\n        }\n    }\n    \n    function atualizarVisibilidadesBIC(){\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        if(nome_banco==='BIC'){\n            $(\"input[id*=num_pedido]\").val(\"Número de Workflow\");\n            $(\"input[id*=num_workflow]\").parent().hide();\n        }\n    }\n<\/script>"
+                    }
                 }
             ],
             "properties": {"width": "100%"}
