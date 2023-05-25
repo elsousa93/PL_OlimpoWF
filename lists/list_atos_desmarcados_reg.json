@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "idProc",
-            "sql": "SELECT p.id as idProc, dp.c_n_wf_banco as N_WF_Banco,dp.c_tipo_entidade as Entidade, dp.c_categoria_processo as CategoriaProcesso, dp.c_n_wf_pl as N_WF_PL, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_pl_relacionado AS ProcessosRelacionados, ip.c_nome as NomeCliente, dp.c_tipo_processo as TipoProcesso, ato.c_status, CONCAT(ato.c_dataOutorga, ' ', ato.c_horaOutorga) AS DataAgendamento, dp.c_fase_processo, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nRIGHT JOIN app_fd_atos ato ON ato.c_id_processo = p.id AND (ato.c_status='DES' OR ato.c_status='NOUT')\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK'\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nWHERE sps.KeyValue LIKE 'open.running'\nAND p.id is not null\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\n"
+            "sql": "SELECT p.id as idProc, dp.c_n_wf_banco as N_WF_Banco,dp.c_tipo_entidade as Entidade, dp.c_categoria_processo as CategoriaProcesso, dp.c_n_wf_pl as N_WF_PL, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_pl_relacionado AS ProcessosRelacionados, ip.c_nome as NomeCliente, dp.c_tipo_processo as TipoProcesso, ato.c_status, ato.c_dataOutorga AS DataAgendamento, ato.c_horaOutorga AS HoraAgendamento, dp.c_fase_processo, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nRIGHT JOIN app_fd_atos ato ON ato.c_id_processo = p.id AND (ato.c_status='DES' OR ato.c_status='NOUT')\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK'\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nWHERE sps.KeyValue LIKE 'open.running'\nAND p.id is not null\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\n"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -34,6 +34,28 @@
             "id": "column_5",
             "label": "Data Agend.",
             "name": "DataAgendamento",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_0",
+            "label": "Hora Agend.",
+            "name": "HoraAgendamento",
             "sortable": "false",
             "style": "",
             "width": ""
