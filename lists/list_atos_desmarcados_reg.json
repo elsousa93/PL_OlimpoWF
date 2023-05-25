@@ -1,11 +1,247 @@
 {
     "actions": [],
     "binder": {
-        "className": "",
-        "name": "",
-        "properties": {}
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "idProc",
+            "sql": "SELECT p.id as idProc, dp.c_n_wf_banco as N_WF_Banco,dp.c_tipo_entidade as Entidade, dp.c_categoria_processo as CategoriaProcesso, dp.c_n_wf_pl as N_WF_PL, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_pl_relacionado AS ProcessosRelacionados, ip.c_nome as NomeCliente, dp.c_tipo_processo as TipoProcesso, ato.c_status, CONCAT(ato.c_dataOutorga, ' ', ato.c_horaOutorga) AS DataAgendamento, dp.c_fase_processo, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nRIGHT JOIN app_fd_atos ato ON ato.c_id_processo = p.id AND (ato.c_status='DES' OR ato.c_status='NOUT')\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK'\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nWHERE sps.KeyValue LIKE 'open.running'\nAND p.id is not null\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\n"
+        }
     },
-    "columns": [],
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_5",
+            "label": "Data Agend.",
+            "name": "DataAgendamento",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_2",
+            "label": "Nº Workflow Banco",
+            "name": "N_WF_Banco",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_3",
+            "label": "Nº Workflow PL",
+            "name": "N_WF_PL",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_6",
+            "label": "Processos Relacionados",
+            "name": "ProcessosRelacionados",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_4",
+            "label": "Banco",
+            "name": "NomeBanco",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_7",
+            "label": "Cliente",
+            "name": "NomeCliente",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_8",
+            "label": "Entidade",
+            "name": "Entidade",
+            "sortable": "false"
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_9",
+            "label": "Tipo Processo",
+            "name": "TipoProcesso",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_10",
+            "label": "Categoria Processo",
+            "name": "CategoriaProcesso",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_11",
+            "label": "Estado Agendamento",
+            "name": "c_status",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_1",
+            "label": "Fase Processo",
+            "name": "c_fase_processo",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
     "description": "",
     "filters": [],
     "id": "list_atos_desmarcados_reg",
@@ -13,5 +249,8 @@
     "order": "",
     "orderBy": "",
     "pageSize": "0",
-    "rowActions": []
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "rowActions": [],
+    "showPageSizeSelector": "true",
+    "useSession": "false"
 }
