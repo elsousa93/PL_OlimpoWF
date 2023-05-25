@@ -100,50 +100,6 @@
                     "className": "org.joget.apps.form.lib.TextField",
                     "properties": {
                         "encryption": "",
-                        "id": "num_pedido",
-                        "label": "Número do Pedido",
-                        "maxlength": "",
-                        "permissionHidden": "",
-                        "placeholder": "",
-                        "readonly": "true",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "storeNumeric": "",
-                        "style": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.TextField",
-                    "properties": {
-                        "encryption": "",
-                        "id": "num_pedido",
-                        "label": "Número de Ordem",
-                        "maxlength": "",
-                        "permissionHidden": "",
-                        "placeholder": "",
-                        "readonly": "true",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "storeNumeric": "",
-                        "style": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.TextField",
-                    "properties": {
-                        "encryption": "",
                         "id": "nome_cliente",
                         "label": "Nome do Cliente",
                         "maxlength": "",
@@ -306,6 +262,28 @@
                         },
                         "value": "",
                         "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field24",
+                        "label": "",
+                        "permission_rules": {
+                            "0c699003-580e-7faf-a39c-f2e5303bd5b5": {},
+                            "1804038d-e85d-3ea4-4ef3-4c4143e5145b": {},
+                            "2dd4cc96-cc40-f285-e376-ebda47490646": {},
+                            "40b85e69-a77b-cdfa-05ef-6bd9811e4410": {},
+                            "44639061-b6ba-a2ef-a47c-c5bab888544c": {},
+                            "710a05c8-c837-e0d0-670a-720473cb5a7c": {},
+                            "787c67d4-d157-ca8e-655e-43717638627d": {},
+                            "87e7b01c-e92b-e732-c50f-c2c7020e5482": {},
+                            "dccd1818-864d-54e3-09c2-6e246cfcf5fe": {},
+                            "ee177599-9c69-d878-10f8-9aebde208e06": {},
+                            "f8c01627-bf37-05aa-5732-90fe1b2327b3": {}
+                        },
+                        "value": "<script>\n    $(document).ready(function(){\n        atualizarVisibilidadeBCP();\n        atualizarVisibilidadesMTG();\n        var data_hora = $(\"select[id*=data_hora_agendamento]\").val();\n        $(\"select[id*=data_hora_agendamento]\").hide();\n        $(\"select[id*=banco_fundo]\").change(function(){\n            atualizarVisibilidadeBCP();\n            atualizarVisibilidadesMTG();\n        });\n        \n        $(\"select[id*=tipo_processo]\").change(function(){\n            atualizarVisibilidadeBCP();\n            atualizarVisibilidadesMTG();\n        });\n        \n        /*\n        $(\"select[id*=estado]\").change(function(){\n            var estado = $(\"select[id*=estado]\").val();\n            if(estado ==='OUT'){\n                \n                if(data_hora !== ''){    \n                    $(\"input[id*=data_entrada\").datepicker(\"setDate\", new Date(data_hora));  \n                }else{\n                    //Alerta de processo não agendado\n                    \n                }\n            }else if(estado === 'CON'){\n                \n                \n                \n            }\n        });\n        */\n\n            \n    });\n    \n    \n    \n    \n    function atualizarVisibilidadeBCP(){\n        var banco_fundo = $(\"select[id*=nome_banco]\").val();\n        if(banco_fundo==='BCP'){\n            if (tipoProcesso === 'DIST' || tipoProcesso === 'MUT' || tipoProcesso === 'LEAS'){\n                $(\"select[id*=sociedade_representada]\").parent().hide();\n                $(\"input[id*=codigo_certidao_predial]\").parent().hide();\n                $(\"input[id*=validade_certidao]\").parent().hide();\n            }else{\n                $(\"select[id*=sociedade_representada]\").parent().show();\n                $(\"input[id*=codigo_certidao_predial]\").parent().show();\n                $(\"input[id*=validade_certidao]\").parent().show();\n            }\n            \n\n            \n            \n            \n        }\n    }\n    \n    function atualizarVisibilidadesMTG(){\n        var tipoProcesso = $(\"select[id*=tipo_processo]\").val();\n        var banco_fundo = $(\"select[id*=banco_fundo]\").val();\n        if(banco_fundo === 'MTG'){\n            if(tipoProcesso === 'VIM'){\n                $(\"select[id*=fundo_mtg]\").parent().show();\n            }else{\n                $(\"select[id*=fundo_mtg]\").parent().hide();\n            }\n        }\n    }\n    \n    \n<\/script>"
                     }
                 }
             ],
