@@ -7773,7 +7773,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_mtg_2"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="975,34.437518310546864"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1065.0000305175781,35.237506103515614"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="efetuarDeposito" Name="Efetuar Depósito">
@@ -7803,7 +7803,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_abn_2"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="941.0000305175781,46.19999999999999"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1272.0000228881836,29.38749999999999"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="validacaoCobrancas" Name="Validação das Cobranças/Liquidações">
@@ -7995,7 +7995,7 @@
                             <Split Type="XOR">
                                 <TransitionRefs>
                                     <TransitionRef Id="transition33"/>
-                                    <TransitionRef Id="transition22"/>
+                                    <TransitionRef Id="transition60"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
@@ -8087,6 +8087,59 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="389,156.62501831054686"/>
                     </ExtendedAttributes>
                 </Activity>
+                <Activity Id="updateUltimaAtividade" Name="Configurar Última Atividade">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>dist_bic_3</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_bic_3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="955.6000061035156,66.4999877929688"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="updateUltimaAtividade2" Name="Configurar Última Atividade">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>dist_bcp_3</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_bcp_3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1264.6000061035156,40.537493896484364"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="updateUltimaAtividade3" Name="Configurar Última Atividade">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>dist_mtg_2</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_mtg_2"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="917.6000061035156,34.675006103515614"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route7">
+                    <Route/>
+                    <Performer>dist_abn_2</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_abn_2"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="975.5999984741211,32.237506103515614"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="updateUltimaAtividade4" Name="Configurar Última Atividade">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>dist_abn_2</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_abn_2"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1102.599998474121,28.237506103515614"/>
+                    </ExtendedAttributes>
+                </Activity>
             </Activities>
             <Transitions>
                 <Transition From="route5" Id="transition17" To="preenchimentoProcesso">
@@ -8145,11 +8198,6 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="validacaoProcesso" Id="transition25" To="autenticacao">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="preenchimentoProcesso" Id="transition32" To="vaiProcuradoria">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
@@ -8160,18 +8208,6 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;enviar_procuradoria&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;SIM&quot;},{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;enviado_procuradoria&quot;,&quot;operator&quot;:&quot;!==&quot;,&quot;value&quot;:&quot;1&quot;}]"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="vaiProcuradoria" Id="transition22" To="processamentoABN">
-                    <Condition Type="OTHERWISE"/>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="subProcuradoria2" Id="transition34" To="processamentoABN">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="preenchimentoProcesso2" Id="transition24" To="vaiProcuradoria2">
@@ -8270,11 +8306,6 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="autenticacao2" Id="transition51" To="efetuarDeposito">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="validacaoProcesso2" Id="transition52" To="autenticacao2">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
@@ -8290,7 +8321,54 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="validacaoProcesso3" Id="transition54" To="validacaoCobrancas">
+                <Transition From="validacaoProcesso3" Id="transition54" To="updateUltimaAtividade">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="updateUltimaAtividade" Id="transition55" To="validacaoCobrancas">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="autenticacao2" Id="transition51" To="updateUltimaAtividade2">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="updateUltimaAtividade2" Id="transition56" To="efetuarDeposito">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="validacaoProcesso" Id="transition57" To="updateUltimaAtividade3">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="updateUltimaAtividade3" Id="transition58" To="autenticacao">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="subProcuradoria2" Id="transition59" To="route7">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="vaiProcuradoria" Id="transition60" To="route7">
+                    <Condition Type="OTHERWISE"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route7" Id="transition61" To="updateUltimaAtividade4">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="updateUltimaAtividade4" Id="transition62" To="processamentoABN">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
