@@ -7791,16 +7791,6 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1264,45.69999999999999"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="realizarCobrancas" Name="Realizar Cobranças/Liquidações">
-                    <Implementation>
-                        <No/>
-                    </Implementation>
-                    <Performer>dist_bic_1</Performer>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_bic_1"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1200.0000305175781,41.200007629394534"/>
-                    </ExtendedAttributes>
-                </Activity>
                 <Activity Id="processamentoABN" Name="Processamento Distrate Abanca">
                     <Implementation>
                         <No/>
@@ -7917,7 +7907,7 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="413,50.675036621093795"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="validacaoProcesso3" Name="Validação do Processo e Depósito">
+                <Activity Id="validacaoProcesso3" Name="Validação, Depósito e Cobranças/Liquidações">
                     <Implementation>
                         <No/>
                     </Implementation>
@@ -8149,12 +8139,6 @@
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;sub_banco&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;BIC&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="realizarCobrancas" Id="transition30" To="validacaoCobrancas">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="validacaoCobrancas" Id="transition31" To="finalizarProcesso">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
@@ -8306,7 +8290,7 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="validacaoProcesso3" Id="transition54" To="realizarCobrancas">
+                <Transition From="validacaoProcesso3" Id="transition54" To="validacaoCobrancas">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
