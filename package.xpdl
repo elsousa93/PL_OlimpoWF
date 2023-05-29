@@ -6400,6 +6400,13 @@
         </WorkflowProcess>
         <WorkflowProcess Id="Procuradoria" Name="Procuradoria">
             <ProcessHeader DurationUnit="h"/>
+            <FormalParameters>
+                <FormalParameter Id="id_distrates" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+            </FormalParameters>
             <DataFields>
                 <DataField Id="status" IsArray="FALSE">
                     <DataType>
@@ -6411,6 +6418,11 @@
                         <BasicType Type="STRING"/>
                     </DataType>
                 </DataField>
+                <DataField Id="id_distrates" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
             </DataFields>
             <Activities>
                 <Activity Id="sub_processo_procuradoria" Name="Procuradoria">
@@ -6418,6 +6430,7 @@
                         <SubFlow Execution="SYNCHR" Id="PCDProcuradoria">
                             <ActualParameters>
                                 <ActualParameter>user_procuradoria</ActualParameter>
+                                <ActualParameter>id_distrates</ActualParameter>
                             </ActualParameters>
                         </SubFlow>
                     </Implementation>
@@ -6442,6 +6455,11 @@
                         <BasicType Type="STRING"/>
                     </DataType>
                 </FormalParameter>
+                <FormalParameter Id="id_distrates" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
             </FormalParameters>
             <DataFields>
                 <DataField Id="status" IsArray="FALSE">
@@ -6450,6 +6468,11 @@
                     </DataType>
                 </DataField>
                 <DataField Id="user_procuradoria" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="id_distrates" IsArray="FALSE">
                     <DataType>
                         <BasicType Type="STRING"/>
                     </DataType>
@@ -7521,6 +7544,13 @@
         </WorkflowProcess>
         <WorkflowProcess Id="distrates" Name="Distrates">
             <ProcessHeader DurationUnit="h"/>
+            <FormalParameters>
+                <FormalParameter Id="id_distrates" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+            </FormalParameters>
             <DataFields>
                 <DataField Id="status" IsArray="FALSE">
                     <DataType>
@@ -7572,6 +7602,11 @@
                         <BasicType Type="STRING"/>
                     </DataType>
                 </DataField>
+                <DataField Id="id_distrates" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
             </DataFields>
             <Activities>
                 <Activity Id="sub_processo_distrates" Name="Distrates">
@@ -7588,6 +7623,7 @@
                                 <ActualParameter>user_dist_geral_bcp</ActualParameter>
                                 <ActualParameter>user_dist_bic1</ActualParameter>
                                 <ActualParameter>user_dist_geral_bic</ActualParameter>
+                                <ActualParameter>id_distrates</ActualParameter>
                             </ActualParameters>
                         </SubFlow>
                     </Implementation>
@@ -7657,6 +7693,11 @@
                         <BasicType Type="STRING"/>
                     </DataType>
                 </FormalParameter>
+                <FormalParameter Id="id_distrates" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
             </FormalParameters>
             <DataFields>
                 <DataField Id="user_procuradoria" IsArray="FALSE">
@@ -7720,6 +7761,11 @@
                     </DataType>
                 </DataField>
                 <DataField Id="enviado_procuradoria" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="id_distrates" IsArray="FALSE">
                     <DataType>
                         <BasicType Type="STRING"/>
                     </DataType>
@@ -7924,7 +7970,11 @@
                 </Activity>
                 <Activity Id="subProcuradoria1" Name="Procuradoria">
                     <Implementation>
-                        <SubFlow Execution="ASYNCHR" Id="Procuradoria"/>
+                        <SubFlow Execution="ASYNCHR" Id="Procuradoria">
+                            <ActualParameters>
+                                <ActualParameter>id_distrates</ActualParameter>
+                            </ActualParameters>
+                        </SubFlow>
                     </Implementation>
                     <Performer>sistema</Performer>
                     <ExtendedAttributes>
@@ -7934,7 +7984,11 @@
                 </Activity>
                 <Activity Id="subProcuradoria2" Name="Procuradoria">
                     <Implementation>
-                        <SubFlow Execution="ASYNCHR" Id="Procuradoria"/>
+                        <SubFlow Execution="ASYNCHR" Id="Procuradoria">
+                            <ActualParameters>
+                                <ActualParameter>id_distrates</ActualParameter>
+                            </ActualParameters>
+                        </SubFlow>
                     </Implementation>
                     <Performer>dist_abn_1</Performer>
                     <ExtendedAttributes>
@@ -7944,32 +7998,44 @@
                 </Activity>
                 <Activity Id="subProcuradoria3" Name="Procuradoria">
                     <Implementation>
-                        <SubFlow Execution="ASYNCHR" Id="Procuradoria"/>
+                        <SubFlow Execution="ASYNCHR" Id="Procuradoria">
+                            <ActualParameters>
+                                <ActualParameter>id_distrates</ActualParameter>
+                            </ActualParameters>
+                        </SubFlow>
                     </Implementation>
                     <Performer>dist_mtg_1</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_mtg_1"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="753,46.787493896484364"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="802,46.37498779296874"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="subProcuradoria4" Name="Procuradoria">
                     <Implementation>
-                        <SubFlow Execution="ASYNCHR" Id="Procuradoria"/>
+                        <SubFlow Execution="ASYNCHR" Id="Procuradoria">
+                            <ActualParameters>
+                                <ActualParameter>id_distrates</ActualParameter>
+                            </ActualParameters>
+                        </SubFlow>
                     </Implementation>
                     <Performer>dist_bcp_1</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_bcp_1"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1026,59.675006103515614"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1172,18.26249999999999"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="subProcuradoria5" Name="Procuradoria">
                     <Implementation>
-                        <SubFlow Execution="ASYNCHR" Id="Procuradoria"/>
+                        <SubFlow Execution="ASYNCHR" Id="Procuradoria">
+                            <ActualParameters>
+                                <ActualParameter>id_distrates</ActualParameter>
+                            </ActualParameters>
+                        </SubFlow>
                     </Implementation>
                     <Performer>dist_bic_1</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_bic_1"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="779,53.88751525878905"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="813,54.07499999999999"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="aguardaCertificacao" Name="Aguarda Certificação">
