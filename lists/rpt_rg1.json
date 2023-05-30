@@ -6,19 +6,33 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT det.c_data_entrada AS Data_entrada, det.c_nome_banco AS Banco, det.c_id_processo, det.c_categoria_processo,\nag.c_data_agendamento AS Data_agendamento\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\n\n\n\n"
+            "sql": "SELECT det.c_categoria_processo AS Categoria, ato.c_dataOutorga AS DataAgendamento, COUNT(det.c_id_processo) AS Processos\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id AND (ato.c_status = 'AGD' OR ato.c_status = 'OUT')\nGROUP BY Categoria, DataAgendamento\n\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
     "columns": [
         {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
             "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
             "hidden": "false",
-            "id": "column_1",
-            "label": "c_id_processo",
-            "name": "c_id_processo",
-            "sortable": "false"
+            "id": "column_4",
+            "label": "Data Agendamento",
+            "name": "DataAgendamento",
+            "sortable": "false",
+            "style": "",
+            "width": ""
         },
         {
             "action": {
@@ -30,18 +44,30 @@
             "exclude_export": "",
             "filterable": true,
             "format": {
-                "className": "org.joget.plugin.enterprise.DateFormatter",
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
                 "properties": {
-                    "dataFormat": "yyyy-MM-dd",
-                    "dateStoreInUTC": "",
-                    "displayFormat": "dd/MM/yyyy"
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'categoria_processo'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    }
                 }
             },
             "headerAlignment": "",
             "hidden": "false",
-            "id": "column_0",
-            "label": "Data_entrada",
-            "name": "Data_entrada",
+            "id": "column_6",
+            "label": "Categoria",
+            "name": "Categoria",
             "sortable": "false",
             "style": "",
             "width": ""
@@ -49,25 +75,9 @@
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_5",
-            "label": "Banco",
-            "name": "Banco",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_2",
-            "label": "c_categoria_processo",
-            "name": "c_categoria_processo",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_3",
-            "label": "Data_agendamento",
-            "name": "Data_agendamento",
+            "id": "column_7",
+            "label": "Processos",
+            "name": "Processos",
             "sortable": "false"
         }
     ],
@@ -77,28 +87,56 @@
     "filters": [
         {
             "datalist_type": "filter",
-            "filterParamName": "d-3622638-fn_Data_entrada",
+            "filterParamName": "d-1344013-fn_Categoria",
             "hidden": "",
-            "id": "filter_1",
-            "label": "Data_entrada",
-            "name": "Data_entrada",
+            "id": "filter_3",
+            "label": "Categoria",
+            "name": "Categoria",
             "type": {
-                "className": "org.joget.plugin.enterprise.DateDataListFilterType",
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
                 "properties": {
+                    "controlField": "",
                     "defaultValue": "",
-                    "format": "dd/mm/yy",
-                    "formatJava": "yyyy-MM-dd",
-                    "yearRange": "c-10:c+10"
+                    "multiple": "",
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'categoria_processo'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    },
+                    "size": ""
                 }
             }
         },
         {
-            "id": "filter_0",
-            "label": "Banco",
-            "name": "Banco",
+            "datalist_type": "filter",
+            "filterParamName": "d-1344013-fn_DataAgendamento",
+            "hidden": "",
+            "id": "filter_2",
+            "label": "Data Agendamento",
+            "name": "DataAgendamento",
             "type": {
-                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
-                "properties": {}
+                "className": "org.joget.plugin.enterprise.DateRangeDataListFilterType",
+                "properties": {
+                    "dateStoreInUTC": "",
+                    "format": "yy/mm/dd",
+                    "formatJava": "yyyy/MM/dd",
+                    "fromDefaultValue": "",
+                    "fromLabel": "De",
+                    "showFieldLabel": "true",
+                    "toDefaultValue": "",
+                    "toLabel": "Até",
+                    "yearRange": "c-10:c+10"
+                }
             }
         }
     ],
