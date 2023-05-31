@@ -275,7 +275,7 @@
                                     "addEmpty": "",
                                     "cacheInterval": "",
                                     "jdbcDatasource": "default",
-                                    "sql": "SELECT id, c_nome_completo \nFROM app_fd_info_colaboradores \nWHERE c_cedula_profissional LIKE ? AND id IS NOT NULL",
+                                    "sql": "SELECT c.id, c_nome_completo\nFROM app_fd_info_colaboradores c\nLEFT JOIN (SELECT id, ? as 'cedula' FROM app_fd_info_colaboradores ) c1 ON c1.id =  c.id\nWHERE IF(c1.cedula != '', c_cedula_profissional LIKE c1.cedula, '')",
                                     "useAjax": "true"
                                 }
                             },
