@@ -1285,46 +1285,77 @@
             "className": "org.joget.apps.form.model.Section",
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
-                "elements": [{
-                    "className": "org.joget.apps.form.lib.SelectBox",
-                    "properties": {
-                        "controlField": "",
-                        "id": "status",
-                        "label": "Status",
-                        "multiple": "",
-                        "options": [],
-                        "optionsBinder": {
-                            "className": "org.joget.apps.form.lib.FormOptionsBinder",
-                            "properties": {
-                                "addEmptyOption": "",
-                                "cacheInterval": "",
-                                "emptyLabel": "",
-                                "extraCondition": "c_nome_campo = 'estado_agendamento'",
-                                "formDefId": "adicionarOpcaoLV",
-                                "groupingColumn": "",
-                                "idColumn": "value",
-                                "labelColumn": "label",
-                                "useAjax": ""
-                            }
-                        },
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "status",
+                            "label": "Status",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "extraCondition": "c_nome_campo = 'estado_agendamento'",
+                                    "formDefId": "adicionarOpcaoLV",
+                                    "groupingColumn": "",
+                                    "idColumn": "value",
+                                    "labelColumn": "label",
+                                    "useAjax": ""
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "entidade",
+                            "label": "Entidade",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.plugin.enterprise.JdbcOptionsBinder",
+                                "properties": {
+                                    "addEmpty": "",
+                                    "cacheInterval": "",
+                                    "jdbcDatasource": "default",
+                                    "sql": "SELECT c.id, c_nome_completo\nFROM app_fd_info_colaboradores c",
+                                    "useAjax": ""
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
                     }
-                }],
+                ],
                 "properties": {"width": "100%"}
             }],
             "properties": {
                 "comment": "",
                 "id": "section8",
                 "join": "",
-                "label": "Grid estado do Ato",
+                "label": "Grid Ato",
                 "loadBinder": {
                     "className": "",
                     "properties": {}
