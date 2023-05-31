@@ -7534,7 +7534,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="validadorInicial"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="515,46.1875"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="512,44.1875"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="notificarEntidade" Name="Notificar Entidade (Autónoma/Semi-Autónoma)">
@@ -7562,7 +7562,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="AO_Sistema"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="760,112.203125"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="368,131.203125"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="printActivityId" Name="Print Activity_Id">
@@ -7590,24 +7590,14 @@
                         <No/>
                     </Implementation>
                     <Performer>validadorInicial</Performer>
-                    <Deadline Execution="ASYNCHR">
-                        <DeadlineCondition>var d = new java.text.SimpleDateFormat('yyyy-MM-dd'); d.parse("#date.yyyy-MM-dd#");</DeadlineCondition>
-                        <ExceptionName>notifyEntity</ExceptionName>
-                    </Deadline>
                     <TransitionRestrictions>
                         <TransitionRestriction>
                             <Join Type="XOR"/>
-                            <Split Type="AND">
-                                <TransitionRefs>
-                                    <TransitionRef Id="transition3"/>
-                                    <TransitionRef Id="transition8"/>
-                                </TransitionRefs>
-                            </Split>
                         </TransitionRestriction>
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="validadorInicial"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="734,48.1875"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="707,42.1875"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="validacaoFinal" Name="Validação Final">
@@ -7617,7 +7607,7 @@
                     <Performer>validadorFinal</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="validadorFinal"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1162,46"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="985,48"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="configurarUltimaAtividade" Name="Configurar Última Atividade">
@@ -7627,7 +7617,7 @@
                     <Performer>validadorFinal</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="validadorFinal"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="977,44.8125"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="804,48.8125"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="printEmail" Name="Print Email_Entidade">
@@ -7649,12 +7639,17 @@
                         <DeadlineCondition>var d = new java.text.SimpleDateFormat('dd/MM/yyyy HH:mm'); d.parse("#date.dd/MM/yyyy# 17:00");</DeadlineCondition>
                         <ExceptionName>distribuirProcesso</ExceptionName>
                     </Deadline>
+                    <Deadline Execution="ASYNCHR">
+                        <DeadlineCondition>var d = new java.text.SimpleDateFormat('yyyy-MM-dd'); d.parse("#date.yyyy-MM-dd#");</DeadlineCondition>
+                        <ExceptionName>notifyEntity</ExceptionName>
+                    </Deadline>
                     <TransitionRestrictions>
                         <TransitionRestriction>
                             <Split Type="AND">
                                 <TransitionRefs>
                                     <TransitionRef Id="transition12"/>
                                     <TransitionRef Id="transition13"/>
+                                    <TransitionRef Id="transition16"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
@@ -7669,7 +7664,7 @@
                     <Performer>validadorInicial</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="validadorInicial"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="388,51"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="410,48"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="verificarDataOutorga" Name="Verificar Data de Outorga">
@@ -7685,12 +7680,6 @@
             </Activities>
             <Transitions>
                 <Transition From="ConfigurarProcessoAO" Id="transition4" To="validacaoInicial">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="validacaoInicial" Id="transition3" To="route1">
-                    <Condition Type="EXCEPTION">notifyEntity</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
@@ -7753,12 +7742,18 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
+                <Transition From="holdProcesses" Id="transition16" To="route1">
+                    <Condition Type="EXCEPTION">notifyEntity</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
             </Transitions>
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="AOGeral;validadorInicial;validadorFinal;AO_Sistema"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=AO_Sistema,CONNECTING_ACTIVITY_ID=notificarEntidade,X_OFFSET=1388,Y_OFFSET=55,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=AO_Sistema,CONNECTING_ACTIVITY_ID=notificarEntidade2,X_OFFSET=1386,Y_OFFSET=166,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=validadorFinal,CONNECTING_ACTIVITY_ID=validacaoFinal,X_OFFSET=1389,Y_OFFSET=58,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=validadorFinal,CONNECTING_ACTIVITY_ID=validacaoFinal,X_OFFSET=1163,Y_OFFSET=59,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=AOGeral,CONNECTING_ACTIVITY_ID=verificarDataOutorga,X_OFFSET=80,Y_OFFSET=49,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
