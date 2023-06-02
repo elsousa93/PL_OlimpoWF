@@ -705,31 +705,67 @@
             "className": "org.joget.apps.form.model.Section",
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
-                "elements": [{
-                    "className": "org.joget.apps.form.lib.SubForm",
-                    "properties": {
-                        "formDefId": "reg_op_val_dep",
-                        "id": "subform_registos_validacao_deposito",
-                        "label": "",
-                        "loadBinder": {
-                            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
-                            "properties": {}
-                        },
-                        "noframe": "",
-                        "parentSubFormId": "",
-                        "permission_rules": {
-                            "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
-                            "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
-                        },
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "storeBinder": {
-                            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
-                            "properties": {}
-                        },
-                        "subFormParentId": ""
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.SubForm",
+                        "properties": {
+                            "formDefId": "reg_op_val_dep",
+                            "id": "subform_registos_validacao_deposito",
+                            "label": "",
+                            "loadBinder": {
+                                "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+                                "properties": {}
+                            },
+                            "noframe": "",
+                            "parentSubFormId": "",
+                            "permission_rules": {
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "storeBinder": {
+                                "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+                                "properties": {}
+                            },
+                            "subFormParentId": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "necessarias_correcoes_dep",
+                            "permission_rules": {
+                                "04c4f36b-3dc7-5a89-5b12-78bc188b5be9": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {},
+                                "8ed12735-d92c-74bd-444f-888db20bd46a": {}
+                            },
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field20",
+                            "label": "",
+                            "permission_rules": {
+                                "04c4f36b-3dc7-5a89-5b12-78bc188b5be9": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {},
+                                "8ed12735-d92c-74bd-444f-888db20bd46a": {}
+                            },
+                            "value": "<script type=\"text/javascript\">\r\n    \r\n    $(document).change(function(){\r\n        \r\n        //get value from field that controls if the WF number is automatically generated or not\r\n        var values = FormUtil.getValues(\"checklist_reg.validacao_reg\");\r\n        var count = 0;\r\n        var i = 0;\r\n\r\n        if(values != null && values.length > 0){\r\n            while (count == 0 && i < values.length) {\r\n                if(values[i] === \"NOK\"){\r\n                    count++;\r\n                }\r\n                i++;\r\n            }\r\n        }\r\n        \r\n        console.log(\"Count \" + count);\r\n        \r\n        var field = FormUtil.getField(\"necessarias_correcoes_dep\");\r\n        if(count != 0){\r\n            $(field).val(\"SIM\"); //set value\r\n        }else{\r\n            $(field).val(\"NAO\"); //set value\r\n        }\r\n        \r\n        \r\n\r\n\r\n    });\r\n<\/script>"
+                        }
                     }
-                }],
+                ],
                 "properties": {"width": "100%"}
             }],
             "properties": {
@@ -770,6 +806,73 @@
             "className": "org.joget.apps.form.model.Section",
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
+                "elements": [{
+                    "className": "org.joget.apps.form.lib.CheckBox",
+                    "properties": {
+                        "controlField": "",
+                        "id": "pendecias_validadas",
+                        "label": "Pendências validadas?",
+                        "options": [{
+                            "grouping": "",
+                            "label": "",
+                            "value": "SIM"
+                        }],
+                        "optionsBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "validator": {
+                            "className": "org.joget.apps.form.lib.BeanShellValidator",
+                            "properties": {
+                                "decoration": "",
+                                "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\n\r\npublic boolean faseValidacaoPendencias(Element element, FormData formData){\r\n    \r\n    //Configure field to validate - UPDATE HERE\r\n    String fieldId = \"pendecias_validadas\";\r\n    String campo = FormUtil.getElementParameterName(element);\r\n    \r\n    String subfaseProcesso = \"#assignment.activityName#\";\r\n    String faseProcesso = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\r\n    Boolean result = false;\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    if(faseProcesso.equals(\"REG\")){\r\n        if ((fieldValue == null || fieldValue.equals(\"\")) && subfaseProcesso.equals(\"Qualidade\")){\r\n            formData.addFormError(campo, \"Campo obrigatório\");\r\n            result = false;\r\n        } else{\r\n            result = true;  \r\n        }\r\n    } else{\r\n       result = true; \r\n    }\r\n\r\n    \r\n    return result;\r\n}\r\n\r\n//call load method with injected variable\r\nreturn faseValidacaoPendencias(element, formData);"
+                            }
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                }],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "validacao_pendencias",
+                "join": "",
+                "label": "Validação de Pendências",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {
+                        "permissionHidden": "true",
+                        "readonly": ""
+                    },
+                    "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
                 "elements": [
                     {
                         "className": "org.joget.apps.form.lib.SubForm",
@@ -783,6 +886,10 @@
                             },
                             "noframe": "",
                             "parentSubFormId": "",
+                            "permission_rules": {
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
                             "readonly": "",
                             "readonlyLabel": "",
                             "storeBinder": {
@@ -798,6 +905,8 @@
                             "id": "necessarias_correcoes_qual",
                             "permission_rules": {
                                 "04c4f36b-3dc7-5a89-5b12-78bc188b5be9": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {},
                                 "8ed12735-d92c-74bd-444f-888db20bd46a": {}
                             },
                             "useDefaultWhenEmpty": "",
@@ -817,6 +926,8 @@
                             "label": "",
                             "permission_rules": {
                                 "04c4f36b-3dc7-5a89-5b12-78bc188b5be9": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {},
                                 "8ed12735-d92c-74bd-444f-888db20bd46a": {}
                             },
                             "value": "<script type=\"text/javascript\">\r\n    \r\n    $(document).change(function(){\r\n        \r\n        //get value from field that controls if the WF number is automatically generated or not\r\n        var values = FormUtil.getValues(\"checklist_reg.validacao_qual\");\r\n        var count = 0;\r\n        var i = 0;\r\n\r\n        if(values != null && values.length > 0){\r\n            while (count == 0 && i < values.length) {\r\n                if(values[i] === \"NOK\"){\r\n                    count++;\r\n                }\r\n                i++;\r\n            }\r\n        }\r\n        \r\n        console.log(\"Count \" + count);\r\n        \r\n        var field = FormUtil.getField(\"necessarias_correcoes_qual\");\r\n        if(count != 0){\r\n            $(field).val(\"SIM\"); //set value\r\n        }else{\r\n            $(field).val(\"NAO\"); //set value\r\n        }\r\n        \r\n        \r\n\r\n\r\n    });\r\n<\/script>"
