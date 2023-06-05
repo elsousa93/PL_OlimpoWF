@@ -9,7 +9,13 @@
                     "className": "org.joget.apps.form.lib.HiddenField",
                     "properties": {
                         "id": "id_processo",
-                        "permission_rules": {"178fdc63-b293-18b9-8aa9-e1b40619226d": {}},
+                        "permission_rules": {
+                            "178fdc63-b293-18b9-8aa9-e1b40619226d": {},
+                            "515f6900-9e90-0f82-7f73-83169ca25e3c": {},
+                            "90085c96-d6e4-c5b5-f473-17f2b1f6096e": {},
+                            "a117c3cc-b0cf-03af-3da4-4e2f6d8a5ead": {},
+                            "dcbd9072-5995-d265-ef54-a0241c80d8b8": {}
+                        },
                         "useDefaultWhenEmpty": "",
                         "validator": {
                             "className": "",
@@ -30,6 +36,21 @@
                         "format": "",
                         "id": "data_parametrizacao",
                         "label": "Data da Parametrização",
+                        "permission_rules": {
+                            "515f6900-9e90-0f82-7f73-83169ca25e3c": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "90085c96-d6e4-c5b5-f473-17f2b1f6096e": {},
+                            "a117c3cc-b0cf-03af-3da4-4e2f6d8a5ead": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "dcbd9072-5995-d265-ef54-a0241c80d8b8": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            }
+                        },
                         "placeholder": "",
                         "readonly": "",
                         "readonlyLabel": "",
@@ -54,6 +75,18 @@
                         "format": "",
                         "id": "data_liquidacao",
                         "label": "Data de Liquidação",
+                        "permission_rules": {
+                            "515f6900-9e90-0f82-7f73-83169ca25e3c": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "90085c96-d6e4-c5b5-f473-17f2b1f6096e": {},
+                            "a117c3cc-b0cf-03af-3da4-4e2f6d8a5ead": {},
+                            "dcbd9072-5995-d265-ef54-a0241c80d8b8": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            }
+                        },
                         "placeholder": "",
                         "readonly": "",
                         "readonlyLabel": "",
@@ -78,6 +111,12 @@
                         "format": "",
                         "id": "reiterar_pedido_agencia",
                         "label": "Reiterar pedido junto da Agência",
+                        "permission_rules": {
+                            "515f6900-9e90-0f82-7f73-83169ca25e3c": {},
+                            "90085c96-d6e4-c5b5-f473-17f2b1f6096e": {},
+                            "a117c3cc-b0cf-03af-3da4-4e2f6d8a5ead": {},
+                            "dcbd9072-5995-d265-ef54-a0241c80d8b8": {}
+                        },
                         "placeholder": "",
                         "readonly": "",
                         "readonlyLabel": "",
@@ -113,6 +152,12 @@
                             "className": "",
                             "properties": {}
                         },
+                        "permission_rules": {
+                            "515f6900-9e90-0f82-7f73-83169ca25e3c": {},
+                            "90085c96-d6e4-c5b5-f473-17f2b1f6096e": {},
+                            "a117c3cc-b0cf-03af-3da4-4e2f6d8a5ead": {},
+                            "dcbd9072-5995-d265-ef54-a0241c80d8b8": {}
+                        },
                         "readonly": "",
                         "readonlyLabel": "",
                         "validator": {
@@ -134,6 +179,12 @@
                         "format": "",
                         "id": "data_limite",
                         "label": "Data limite para emissão de Distrate",
+                        "permission_rules": {
+                            "515f6900-9e90-0f82-7f73-83169ca25e3c": {},
+                            "90085c96-d6e4-c5b5-f473-17f2b1f6096e": {},
+                            "a117c3cc-b0cf-03af-3da4-4e2f6d8a5ead": {},
+                            "dcbd9072-5995-d265-ef54-a0241c80d8b8": {}
+                        },
                         "placeholder": "",
                         "readonly": "",
                         "readonlyLabel": "",
@@ -145,15 +196,6 @@
                         "value": "",
                         "workflowVariable": "",
                         "yearRange": "c-10:c+10"
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.CustomHTML",
-                    "properties": {
-                        "autoPopulate": "",
-                        "id": "visibilidadesBancos",
-                        "label": "",
-                        "value": "<script>\n    $(document).ready(function(){\n        atualizarVisibilidadeBCP();\n        atualizarVisibilidadesMTG();\n        atualizarVisibilidadesABN();\n        atualizarVisibilidadesBIC();\n\n        $(\"select[id*=nome_banco]\").change(function(){\n            atualizarVisibilidadeBCP();\n            atualizarVisibilidadesMTG();\n            atualizarVisibilidadesABN();\n            atualizarVisibilidadesBIC();\n        });\n\n    });\n    \n    function atualizarVisibilidadeBCP(){\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        if(nome_banco==='BCP'){\n            $(\"label[for=field2_2_detalheProcessoDistrates_num_pedido]\").text(\"Número de Pedido\");\n            $(\"select[id*=finalidade_emprestimo]\").parent().hide();\n            $(\"select[id*=destino_imovel]\").parent().hide();\n        }\n    }\n    \n    function atualizarVisibilidadesMTG(){\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        if(nome_banco==='MTG'){\n            $(\"label[for=field2_2_detalheProcessoDistrates_num_pedido]\").text(\"Número de Pedido\");\n            $(\"select[id*=finalidade_emprestimo]\").parent().hide();\n            $(\"select[id*=destino_imovel]\").parent().hide();\n        }\n    }\n    \n    function atualizarVisibilidadesABN(){\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        console.log(\"Nome Banco\" + nome_banco);\n        if(nome_banco==='ABN'){\n            $(\"label[for=field2_2_detalheProcessoDistrates_num_pedido]\").text(\"Número de Ordem\");\n            $(\"select[id*=finalidade_emprestimo]\").parent().hide();\n            $(\"select[id*=destino_imovel]\").parent().hide();\n        }\n    }\n    \n    function atualizarVisibilidadesBIC(){\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        //console.log(\"Nome Banco: \" + nome_banco);\n        if(nome_banco==='BIC'){\n            $(\"label[for=field2_2_detalheProcessoDistrates_num_pedido]\").text(\"Número de Workflow\");\n            $(\"input[id*=num_workflow]\").parent().hide();\n        }\n    }\n<\/script>"
                     }
                 }
             ],
@@ -173,6 +215,12 @@
                 "properties": {}
             },
             "permissionReadonly": "",
+            "permission_rules": {
+                "515f6900-9e90-0f82-7f73-83169ca25e3c": {},
+                "90085c96-d6e4-c5b5-f473-17f2b1f6096e": {},
+                "a117c3cc-b0cf-03af-3da4-4e2f6d8a5ead": {},
+                "dcbd9072-5995-d265-ef54-a0241c80d8b8": {}
+            },
             "readonly": "",
             "readonlyLabel": "",
             "regex": "",
@@ -190,6 +238,52 @@
         "id": "parametrizacaoDistrates",
         "loadBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
         "name": "Distrates  - Parametrização",
+        "permission_rules": [
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_DIST_BCP",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "515f6900-9e90-0f82-7f73-83169ca25e3c",
+                "permission_name": "DIstrates BCP"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_DIST_ABN",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "a117c3cc-b0cf-03af-3da4-4e2f6d8a5ead",
+                "permission_name": "Distrates ABN"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_DIST_MTG",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "dcbd9072-5995-d265-ef54-a0241c80d8b8",
+                "permission_name": "Distrates MTG"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_DIST_BIC",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "90085c96-d6e4-c5b5-f473-17f2b1f6096e",
+                "permission_name": "Distrates BIC"
+            }
+        ],
         "storeBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
         "tableName": "parametrizacao_dist"
     }
