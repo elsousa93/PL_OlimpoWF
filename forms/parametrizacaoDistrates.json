@@ -146,6 +146,15 @@
                         "workflowVariable": "",
                         "yearRange": "c-10:c+10"
                     }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "visibilidadesBancos",
+                        "label": "",
+                        "value": "<script>\n    $(document).ready(function(){\n        atualizarVisibilidadeBCP();\n        atualizarVisibilidadesMTG();\n        atualizarVisibilidadesABN();\n        atualizarVisibilidadesBIC();\n\n        $(\"select[id*=nome_banco]\").change(function(){\n            atualizarVisibilidadeBCP();\n            atualizarVisibilidadesMTG();\n            atualizarVisibilidadesABN();\n            atualizarVisibilidadesBIC();\n        });\n\n    });\n    \n    function atualizarVisibilidadeBCP(){\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        if(nome_banco==='BCP'){\n            $(\"label[for=field2_2_detalheProcessoDistrates_num_pedido]\").text(\"Número de Pedido\");\n            $(\"select[id*=finalidade_emprestimo]\").parent().hide();\n            $(\"select[id*=destino_imovel]\").parent().hide();\n        }\n    }\n    \n    function atualizarVisibilidadesMTG(){\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        if(nome_banco==='MTG'){\n            $(\"label[for=field2_2_detalheProcessoDistrates_num_pedido]\").text(\"Número de Pedido\");\n            $(\"select[id*=finalidade_emprestimo]\").parent().hide();\n            $(\"select[id*=destino_imovel]\").parent().hide();\n        }\n    }\n    \n    function atualizarVisibilidadesABN(){\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        console.log(\"Nome Banco\" + nome_banco);\n        if(nome_banco==='ABN'){\n            $(\"label[for=field2_2_detalheProcessoDistrates_num_pedido]\").text(\"Número de Ordem\");\n            $(\"select[id*=finalidade_emprestimo]\").parent().hide();\n            $(\"select[id*=destino_imovel]\").parent().hide();\n        }\n    }\n    \n    function atualizarVisibilidadesBIC(){\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        //console.log(\"Nome Banco: \" + nome_banco);\n        if(nome_banco==='BIC'){\n            $(\"label[for=field2_2_detalheProcessoDistrates_num_pedido]\").text(\"Número de Workflow\");\n            $(\"input[id*=num_workflow]\").parent().hide();\n        }\n    }\n<\/script>"
+                    }
                 }
             ],
             "properties": {"width": "100%"}
