@@ -2199,6 +2199,15 @@
                </packageActivityPlugin>
             </entry>
             <entry>
+               <string>CHRegistos::validacaoDeposito</string>
+               <packageActivityPlugin>
+                  <processDefId>CHRegistos</processDefId>
+                  <activityDefId>validacaoDeposito</activityDefId>
+                  <pluginName>org.joget.process.AssignmentFormActions</pluginName>
+                  <pluginProperties>{&quot;runInBackground&quot;:&quot;&quot;,&quot;readonly&quot;:&quot;&quot;,&quot;enableClarification&quot;:&quot;&quot;,&quot;enableReassignment&quot;:&quot;true&quot;,&quot;reassignmentActivityId&quot;:&quot;validacaoDeposito&quot;,&quot;optionsBinder&quot;:{&quot;className&quot;:&quot;org.joget.plugin.enterprise.UserOptionsBinder&quot;,&quot;properties&quot;:{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_QUAL_REG&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;addEmptyOption&quot;:&quot;&quot;,&quot;emptyLabel&quot;:&quot;&quot;,&quot;optionLabel&quot;:&quot;&quot;,&quot;grouping&quot;:&quot;&quot;,&quot;useAjax&quot;:&quot;&quot;,&quot;cacheInterval&quot;:&quot;&quot;}},&quot;reassignButtonLabel&quot;:&quot;REALOCAR&quot;,&quot;reassignIgnoreValidation&quot;:&quot;true&quot;,&quot;postReassignTool&quot;:{&quot;className&quot;:&quot;&quot;,&quot;properties&quot;:{}},&quot;updateAsigneeField&quot;:&quot;&quot;,&quot;reassignTooltip&quot;:&quot;&quot;,&quot;enableWithdrawal&quot;:&quot;&quot;,&quot;enableApproval&quot;:&quot;&quot;,&quot;completeUpdateStatus&quot;:&quot;&quot;,&quot;completeButtonLabel&quot;:&quot;&quot;,&quot;enableComments&quot;:&quot;&quot;,&quot;enableProcessStatus&quot;:&quot;&quot;,&quot;processTable&quot;:&quot;{appId}_pd&quot;,&quot;updateStatus&quot;:&quot;true&quot;,&quot;workflowVariable&quot;:&quot;status&quot;,&quot;updateDraft&quot;:&quot;&quot;,&quot;parentFieldId&quot;:&quot;status&quot;,&quot;statusValue&quot;:[{&quot;status&quot;:&quot;Approved&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;},{&quot;status&quot;:&quot;Rejected&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;},{&quot;status&quot;:&quot;Clarification&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;},{&quot;status&quot;:&quot;Reassignment&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;},{&quot;status&quot;:&quot;Withdrawal&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;},{&quot;status&quot;:&quot;Completed&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;},{&quot;status&quot;:&quot;Draft&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;}]}</pluginProperties>
+               </packageActivityPlugin>
+            </entry>
+            <entry>
                <string>DSTDistrates::updateUltimaAtividade2</string>
                <packageActivityPlugin>
                   <processDefId>DSTDistrates</processDefId>
@@ -2214,15 +2223,6 @@
                   <activityDefId>ConfigurarProcesso</activityDefId>
                   <pluginName>org.joget.apps.app.lib.BeanShellTool</pluginName>
                   <pluginProperties>{&quot;script&quot;:&quot;import org.joget.workflow.model.service.*;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport java.time.LocalDateTime; \r\nimport java.time.format.DateTimeFormatter;\r\nimport java.time.DayOfWeek;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport javax.sql.DataSource;\r\nimport org.joget.commons.util.UuidGenerator;\r\nimport java.time.temporal.ChronoUnit;\r\n\r\npublic void updateFaseProcesso(){\r\n    Connection con = null;\r\n    PreparedStatement stmt = null;\r\n    ResultSet rs = null;\r\n    \r\n    try{\r\n        DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\&quot;setupDataSource\&quot;);\r\n        con = ds.getConnection();\r\n        \r\n        if(!con.isClosed()){\r\n            \r\n            \/\/Atualizar fase do processo\r\n            String recordId = \&quot;#process.recordId#\&quot;;\r\n                if(recordId!=null){\r\n                    String updateFaseProcesso = \&quot;UPDATE app_fd_detalhe_proce_hip SET c_fase_processo = ? WHERE c_id_processo = ?\&quot;;\r\n                    stmt = con.prepareStatement(updateFaseProcesso);\r\n                    stmt.setObject(1, \&quot;VAL\&quot;);\r\n                    stmt.setObject(2, recordId);\r\n                    rs = stmt.executeQuery();\r\n                }\r\n        }\r\n      \r\n    }catch(Exception e){\r\n                LogUtil.error(appDef.toString(), e, \&quot;Error getting info from DB\&quot;);\r\n            }finally{\r\n                try{\r\n                    if(rs != null){\r\n                    rs.close();\r\n                    }\r\n                    if(stmt != null){\r\n                        stmt.close();\r\n                    }\r\n                    if(con != null &amp;&amp; !con.isClosed()) {\r\n                        con.close();\r\n                    }\r\n                }catch(Exception e){\r\n                    LogUtil.error(appDef.toString(), e, \&quot;Error closing DB connection\&quot;);\r\n                }\r\n                \r\n            }\r\n}\r\nupdateFaseProcesso();\r\n\r\n            &quot;}</pluginProperties>
-               </packageActivityPlugin>
-            </entry>
-            <entry>
-               <string>CHRegistos::validacaoDeposito</string>
-               <packageActivityPlugin>
-                  <processDefId>CHRegistos</processDefId>
-                  <activityDefId>validacaoDeposito</activityDefId>
-                  <pluginName>org.joget.process.AssignmentFormActions</pluginName>
-                  <pluginProperties>{&quot;runInBackground&quot;:&quot;&quot;,&quot;readonly&quot;:&quot;&quot;,&quot;enableClarification&quot;:&quot;&quot;,&quot;enableReassignment&quot;:&quot;true&quot;,&quot;reassignmentActivityId&quot;:&quot;validacaoDeposito&quot;,&quot;optionsBinder&quot;:{&quot;className&quot;:&quot;org.joget.plugin.enterprise.UserOptionsBinder&quot;,&quot;properties&quot;:{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_QUAL_REG&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;addEmptyOption&quot;:&quot;&quot;,&quot;emptyLabel&quot;:&quot;&quot;,&quot;optionLabel&quot;:&quot;&quot;,&quot;grouping&quot;:&quot;&quot;,&quot;useAjax&quot;:&quot;&quot;,&quot;cacheInterval&quot;:&quot;&quot;}},&quot;reassignButtonLabel&quot;:&quot;REALOCAR&quot;,&quot;reassignIgnoreValidation&quot;:&quot;true&quot;,&quot;postReassignTool&quot;:{&quot;className&quot;:&quot;&quot;,&quot;properties&quot;:{}},&quot;updateAsigneeField&quot;:&quot;&quot;,&quot;reassignTooltip&quot;:&quot;&quot;,&quot;enableWithdrawal&quot;:&quot;&quot;,&quot;enableApproval&quot;:&quot;&quot;,&quot;completeUpdateStatus&quot;:&quot;&quot;,&quot;completeButtonLabel&quot;:&quot;&quot;,&quot;enableComments&quot;:&quot;&quot;,&quot;enableProcessStatus&quot;:&quot;&quot;,&quot;processTable&quot;:&quot;{appId}_pd&quot;,&quot;updateStatus&quot;:&quot;true&quot;,&quot;workflowVariable&quot;:&quot;status&quot;,&quot;updateDraft&quot;:&quot;&quot;,&quot;parentFieldId&quot;:&quot;status&quot;,&quot;statusValue&quot;:[{&quot;status&quot;:&quot;Approved&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;},{&quot;status&quot;:&quot;Rejected&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;},{&quot;status&quot;:&quot;Clarification&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;},{&quot;status&quot;:&quot;Reassignment&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;},{&quot;status&quot;:&quot;Withdrawal&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;},{&quot;status&quot;:&quot;Completed&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;},{&quot;status&quot;:&quot;Draft&quot;,&quot;customValue&quot;:&quot;&quot;,&quot;customLabel&quot;:&quot;&quot;}]}</pluginProperties>
                </packageActivityPlugin>
             </entry>
             <entry>
@@ -2488,51 +2488,12 @@
                </packageParticipant>
             </entry>
             <entry>
-               <string>DSTDistrates::dist_bcp_1</string>
-               <packageParticipant>
-                  <processDefId>DSTDistrates</processDefId>
-                  <participantId>dist_bcp_1</participantId>
-                  <type>plugin</type>
-                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
-                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_DIST_BCP&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%A8LtZ84V6E5jGb5mFIraVsumynuOKStcIRRwGtCfl1vhvN319/UPxw==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_dist_bcp#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;&quot;}</pluginProperties>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>DSTDistrates::dist_bcp_2</string>
-               <packageParticipant>
-                  <processDefId>DSTDistrates</processDefId>
-                  <participantId>dist_bcp_2</participantId>
-                  <type>plugin</type>
-                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
-                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_SIS_DIST_BCP&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%Y9v5BQ+jIhE+7CxP6JabHToLyB1QveYV+Zn9vHgYonVLmde70wDvDA==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_dist_geral_bcp#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;&quot;}</pluginProperties>
-               </packageParticipant>
-            </entry>
-            <entry>
                <string>PCDProcuradoria::processStartWhiteList</string>
                <packageParticipant>
                   <processDefId>PCDProcuradoria</processDefId>
                   <participantId>processStartWhiteList</participantId>
                   <type>role</type>
                   <value>adminUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>DSTDistrates::dist_bcp_3</string>
-               <packageParticipant>
-                  <processDefId>DSTDistrates</processDefId>
-                  <participantId>dist_bcp_3</participantId>
-                  <type>plugin</type>
-                  <value>org.joget.apps.app.lib.BeanShellTool</value>
-                  <pluginProperties>{&quot;script&quot;:&quot;w&quot;}</pluginProperties>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>poll_email::starter</string>
-               <packageParticipant>
-                  <processDefId>poll_email</processDefId>
-                  <participantId>starter</participantId>
-                  <type>requester</type>
-                  <value>terminate</value>
                </packageParticipant>
             </entry>
             <entry>
@@ -2555,41 +2516,12 @@
                </packageParticipant>
             </entry>
             <entry>
-               <string>CHContratacaoNormal::contratacao_mtg2</string>
-               <packageParticipant>
-                  <processDefId>CHContratacaoNormal</processDefId>
-                  <participantId>contratacao_mtg2</participantId>
-                  <type>plugin</type>
-                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
-                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_CNT_MTG_NOR_CRH&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%D5Cjs+1rSNwNc20WW5kWxbOfnWD+GZsuglr8lw6ZxyT0D1Yj5vSrzQ==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_contratacao_mtg2#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
-               </packageParticipant>
-            </entry>
-            <entry>
                <string>CHFiltroComplexo::processStartWhiteList</string>
                <packageParticipant>
                   <processDefId>CHFiltroComplexo</processDefId>
                   <participantId>processStartWhiteList</participantId>
                   <type>role</type>
                   <value>adminUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>CHAcompanhamentoOutorgas::processStartWhiteList</string>
-               <packageParticipant>
-                  <processDefId>CHAcompanhamentoOutorgas</processDefId>
-                  <participantId>processStartWhiteList</participantId>
-                  <type>role</type>
-                  <value>adminUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>CHContratacaoNormal::contratacao_mtg1</string>
-               <packageParticipant>
-                  <processDefId>CHContratacaoNormal</processDefId>
-                  <participantId>contratacao_mtg1</participantId>
-                  <type>plugin</type>
-                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
-                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_CNT_MTG_NOR_CRH&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%9stNPXq9hbRznHmQ1Dy1QXlmd0gfskyGcBpOrGDMzroUyHTKqiQpjQ==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_contratacao_mtg1#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
                </packageParticipant>
             </entry>
             <entry>
@@ -2633,15 +2565,6 @@
                </packageParticipant>
             </entry>
             <entry>
-               <string>HIPProducao::process29_ProdRobot</string>
-               <packageParticipant>
-                  <processDefId>HIPProducao</processDefId>
-                  <participantId>process29_ProdRobot</participantId>
-                  <type>department</type>
-                  <value>PL_INT_PRD_GEN_RPA_CRH</value>
-               </packageParticipant>
-            </entry>
-            <entry>
                <string>CHContratacaoNormal::contratacao_bcp</string>
                <packageParticipant>
                   <processDefId>CHContratacaoNormal</processDefId>
@@ -2649,15 +2572,6 @@
                   <type>plugin</type>
                   <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
                   <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_CNT_BCP_NOR_CRH&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%pVGAmoNJ37XLiZTfIwsOVShcLp/70O5rvCVgqp1lix9sqoLjNOzFIw==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_contratacao_bcp#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>diligenciaAut::participant2_1</string>
-               <packageParticipant>
-                  <processDefId>diligenciaAut</processDefId>
-                  <participantId>participant2_1</participantId>
-                  <type>user</type>
-                  <value>a_aferreira</value>
                </packageParticipant>
             </entry>
             <entry>
@@ -2690,79 +2604,12 @@
                </packageParticipant>
             </entry>
             <entry>
-               <string>DSTDistrates::processStartWhiteList</string>
-               <packageParticipant>
-                  <processDefId>DSTDistrates</processDefId>
-                  <participantId>processStartWhiteList</participantId>
-                  <type>role</type>
-                  <value>adminUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>CHAcompanhamentoOutorgas::validadorInicial</string>
-               <packageParticipant>
-                  <processDefId>CHAcompanhamentoOutorgas</processDefId>
-                  <participantId>validadorInicial</participantId>
-                  <type>plugin</type>
-                  <value>org.joget.apps.app.lib.BeanShellTool</value>
-                  <pluginProperties>{&quot;script&quot;:&quot;import java.lang.Exception;\r\nimport java.util.ArrayList;\r\nimport java.util.Collection;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.SQLException;\r\nimport java.sql.ResultSet;\r\nimport javax.sql.DataSource;\r\nimport org.joget.plugin.base.PluginManager;\r\nimport org.joget.commons.util.UuidGenerator;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport org.joget.directory.model.User;\r\nimport org.joget.directory.model.service.ExtDirectoryManager;\r\nimport org.joget.workflow.model.service.*;\r\nimport org.joget.workflow.model.WorkflowActivity;\r\nimport org.joget.workflow.model.WorkflowProcessResult;\r\nimport org.joget.workflow.model.service.WorkflowManager;\r\n\r\npublic Collection getValidadorInicial(WorkflowActivity activity) {\r\n    \/\/ [TO DO] Obter qual a entidade autenticadora do processo\r\n    \r\n    Collection participantes = new ArrayList();\r\n    ExtDirectoryManager directoryManager = (ExtDirectoryManager) pluginManager.getBean(\&quot;directoryManager\&quot;);\r\n    WorkflowManager wm = (WorkflowManager) AppUtil.getApplicationContext().getBean(\&quot;workflowManager\&quot;);\r\n\r\n    String recordId = \&quot;#process.recordId#\&quot;;\r\n    String tipoEntidade = \&quot;#variable.tipo_entidade#\&quot;;\r\n    \r\n    if (tipoEntidade.equals(\&quot;AUT\&quot;)) {\r\n        participantes.add(\&quot;#variable.nome_entidade#\&quot;);\r\n    }\r\n    \r\n    if (tipoEntidade.equals(\&quot;NAUT\&quot;) || tipoEntidade.equals(\&quot;SEMI\&quot;)) {\r\n        String userDistribuicaoManual = \&quot;#variable.username_distribuicao_manual#\&quot;;\r\n        \r\n        if (userDistribuicaoManual.isEmpty()) {\r\n            Connection con = null;\r\n            PreparedStatement stmt = null;\r\n            ResultSet rs = null;\r\n            \r\n            try {\r\n                DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\&quot;setupDataSource\&quot;);\r\n                con = ds.getConnection();\r\n                \r\n                if(!con.isClosed()) {\r\n                    String dataOutorga = \&quot;\&quot;;\r\n                    String horaOutorga = \&quot;\&quot;;\r\n                    String username = \&quot;\&quot;;\r\n                    \r\n                    String queryObterDataOutorga = \&quot;SELECT c_dataOutorga, c_horaOutorga FROM app_fd_atos a WHERE c_id_processo LIKE ? AND c_status LIKE &apos;AGD&apos;;\&quot;;\r\n                    stmt = con.prepareStatement(queryObterDataOutorga);\r\n                    stmt.setObject(1, recordId);\r\n                    rs = stmt.executeQuery();\r\n                    \r\n                    if (rs.next()) {\r\n                        dataOutorga = rs.getObject(\&quot;c_dataOutorga\&quot;);\r\n                        horaOutorga = rs.getObject(\&quot;c_horaOutorga\&quot;);\r\n                    }\r\n                    \r\n                    if (!(dataOutorga.isEmpty() || horaOutorga.isEmpty())) {\r\n                        \/\/ Obter Gestor com menos processos alocados\r\n                        String queryObterGestor = \&quot;SELECT c_user_colaborador, c_email_profissional, numero_processos, estado, data_outorga, hora_outorga FROM app_fd_info_colaboradores col LEFT JOIN (SELECT ato.c_status AS estado, ato.c_dataOutorga AS data_outorga, ato.c_horaOutorga AS hora_outorga, p.id AS idProc, count(p.id) as numero_processos, dp.c_n_wf_pl AS NProc, dp.c_nome_banco AS Banco, dp.c_tipo_processo AS TipoProcesso, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee FROM shkprocesses sp LEFT JOIN shkprocesses sp2 ON sp.ActivityRequesterProcessId = sp2.Id LEFT JOIN app_fd_processos p ON sp.ActivityRequesterProcessId = p.id LEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo LEFT JOIN shkprocessstates sps ON sps.oid = sp.State LEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id LEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State LEFT JOIN (SELECT ActivityId, group_concat(ResourceId separator &apos;; &apos;) AS ResourceId FROM SHKAssignmentsTable GROUP BY ActivityId) sass ON sact.Id = sass.ActivityId LEFT JOIN app_fd_atos ato ON ato.c_id_processo = p.id WHERE sps.KeyValue LIKE &apos;open.running&apos; AND p.id IS NOT NULL AND (ssta.oid = &apos;1000001&apos; OR ssta.oid = &apos;1000003&apos; OR ssta.oid = &apos;1000005&apos;) AND ato.c_status = &apos;AGD&apos; AND ato.c_dataOutorga = ? AND ato.c_horaOutorga = ?) tot ON (col.c_user_colaborador = tot.assignee) WHERE c_departamentos LIKE &apos;%PL_INT_AO%&apos; ORDER BY numero_processos ASC LIMIT 1;\&quot;;\r\n                        stmt = con.prepareStatement(queryObterGestor);\r\n                        stmt.setObject(1, dataOutorga);\r\n                        stmt.setObject(2, horaOutorga);\r\n                        rs = stmt.executeQuery();\r\n                        \r\n                        if (rs.next()) {\r\n                            username = rs.getObject(\&quot;c_user_colaborador\&quot;);\r\n                        } else {\r\n                            username = \&quot;acompanhamento_outorgas_geral\&quot;;\r\n                        }\r\n                        \r\n                        participantes.add(username);\r\n                    }\r\n                }\r\n              \r\n            } catch(Exception e) {\r\n                \/\/LogUtil.error(appDef.toString(), e, \&quot;Error getting info from DB\&quot;);\r\n                LogUtil.error(\&quot;AO | Mapear Validador Inicial\&quot;, e, \&quot;Error getting info from DB\&quot;);\r\n            } finally {\r\n                try {\r\n                    if(rs != null) {\r\n                        rs.close();\r\n                    }\r\n                    if(stmt != null) {\r\n                        stmt.close();\r\n                    }\r\n                    if(con != null &amp;&amp; !con.isClosed()) {\r\n                        con.close();\r\n                    }\r\n                } catch(Exception e) {\r\n                    \/\/LogUtil.error(appDef.toString(), e, \&quot;Error closing DB connection\&quot;);\r\n                    LogUtil.error(\&quot;AO | Mapear Validador Inicial\&quot;, e, \&quot;Error closing DB connection\&quot;);\r\n                }\r\n            }\r\n            \r\n            \/*\r\n                Distribuição Automática:\r\n                \r\n                2 processos por gestor por hora\r\n                    Se não houver disponibilidade serão atribuídos manualmente\r\n                    Exceção para NBAOPC e DL -&gt; 1 por gestor por hora\r\n            *\/\r\n            \r\n        }\r\n    }\r\n    \r\n    return participantes;\r\n}\r\n \r\nreturn getValidadorInicial(workflowActivity);&quot;}</pluginProperties>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>notificacoes::notificacaoStarter</string>
-               <packageParticipant>
-                  <processDefId>notificacoes</processDefId>
-                  <participantId>notificacaoStarter</participantId>
-                  <type>requester</type>
-                  <value></value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>CHContratacaoComplexo::contratacao_mtg1_com</string>
-               <packageParticipant>
-                  <processDefId>CHContratacaoComplexo</processDefId>
-                  <participantId>contratacao_mtg1_com</participantId>
-                  <type>plugin</type>
-                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
-                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_CNT_MTG_COM_CRH&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%zn4tFoUHKCp6yg9NhX9ZD5C1WqCCF8c5GmJa2wKoM2p54HjqbHojdA==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_contratacao_mtg1_com#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>CHContratacaoNormal::contratacao_bic</string>
-               <packageParticipant>
-                  <processDefId>CHContratacaoNormal</processDefId>
-                  <participantId>contratacao_bic</participantId>
-                  <type>plugin</type>
-                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
-                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_CNT_BIC_NOR_CRH&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%CULfPd5cbN1a6ndTvP6IQAkEl68WvLGi9xQUKNFzg+8wkZc9VI3++Q==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_contratacao_bic#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
-               </packageParticipant>
-            </entry>
-            <entry>
                <string>DISTdistribuicaoProcessosABN::processStartWhiteList</string>
                <packageParticipant>
                   <processDefId>DISTdistribuicaoProcessosABN</processDefId>
                   <participantId>processStartWhiteList</participantId>
                   <type>role</type>
                   <value>loggedInUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>HIPValidacao::process29_validacao</string>
-               <packageParticipant>
-                  <processDefId>HIPValidacao</processDefId>
-                  <participantId>process29_validacao</participantId>
-                  <type>plugin</type>
-                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
-                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_VAL_GEN_NOR_CRH&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%uh9ErZQQWi0WRqDhvHG6Mfi+BvsfEJa++kV9KlMGjpld02mDQr+AWg==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_validacao#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>poll_email::processStartWhiteList</string>
-               <packageParticipant>
-                  <processDefId>poll_email</processDefId>
-                  <participantId>processStartWhiteList</participantId>
-                  <type>role</type>
-                  <value>adminUser</value>
                </packageParticipant>
             </entry>
             <entry>
@@ -2796,49 +2643,12 @@
                </packageParticipant>
             </entry>
             <entry>
-               <string>HIPProducao::processStartWhiteList</string>
-               <packageParticipant>
-                  <processDefId>HIPProducao</processDefId>
-                  <participantId>processStartWhiteList</participantId>
-                  <type>role</type>
-                  <value>adminUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>REGdistribuicaoProcessos::processStartWhiteList</string>
-               <packageParticipant>
-                  <processDefId>REGdistribuicaoProcessos</processDefId>
-                  <participantId>processStartWhiteList</participantId>
-                  <type>role</type>
-                  <value>loggedInUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
                <string>CHValidacaoNormal::processStartWhiteList</string>
                <packageParticipant>
                   <processDefId>CHValidacaoNormal</processDefId>
                   <participantId>processStartWhiteList</participantId>
                   <type>role</type>
                   <value>adminUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>CHContratacaoComplexo::contratacao_bst_com</string>
-               <packageParticipant>
-                  <processDefId>CHContratacaoComplexo</processDefId>
-                  <participantId>contratacao_bst_com</participantId>
-                  <type>plugin</type>
-                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
-                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_CNT_BST_COM_CRH&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%Bj5E99XTv0O8bSVIMwam9FHc5WurfJFHWCgPtPsEr8aEdO4Be9e9gw==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_contratacao_bst_com#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>diligenciaAut::processStartWhiteList</string>
-               <packageParticipant>
-                  <processDefId>diligenciaAut</processDefId>
-                  <participantId>processStartWhiteList</participantId>
-                  <type>role</type>
-                  <value>loggedInUser</value>
                </packageParticipant>
             </entry>
             <entry>
@@ -2849,25 +2659,6 @@
                   <type>plugin</type>
                   <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
                   <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_CNT_MTG_COM_CRH&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%ZIw1l/bdvIfSqq6KOxa5KzH44ep3pLxF/OlJQm9NrBpGEDo1IKvHvg==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_contratacao_mtg2_com#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>DISTdistribuicaoProcessosBCP::processStartWhiteList</string>
-               <packageParticipant>
-                  <processDefId>DISTdistribuicaoProcessosBCP</processDefId>
-                  <participantId>processStartWhiteList</participantId>
-                  <type>role</type>
-                  <value>loggedInUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>PCDProcuradoria::procu_procuradoria</string>
-               <packageParticipant>
-                  <processDefId>PCDProcuradoria</processDefId>
-                  <participantId>procu_procuradoria</participantId>
-                  <type>plugin</type>
-                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
-                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_SIS_PROCU&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%BAO/8fRdgitYu3TN2q/DK7Ja5jvTawab9Fcp2A49mZ/ty0/jdYrSiQ==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_procuradoria#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
                </packageParticipant>
             </entry>
             <entry>
@@ -2890,49 +2681,12 @@
                </packageParticipant>
             </entry>
             <entry>
-               <string>CHArquivo::arquivo</string>
-               <packageParticipant>
-                  <processDefId>CHArquivo</processDefId>
-                  <participantId>arquivo</participantId>
-                  <type>plugin</type>
-                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
-                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_SIS_ARQ&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%1lfqdxkcQPZSeZMTT9eoq0dqFpEGlXVJHJiv1R8q0B1EAvPSr0cuHw==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_arquivo#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>CHConclusoes::processStartWhiteList</string>
-               <packageParticipant>
-                  <processDefId>CHConclusoes</processDefId>
-                  <participantId>processStartWhiteList</participantId>
-                  <type>role</type>
-                  <value>adminUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
                <string>DISTdistribuicaoProcessosMTG2::processStartWhiteList</string>
                <packageParticipant>
                   <processDefId>DISTdistribuicaoProcessosMTG2</processDefId>
                   <participantId>processStartWhiteList</participantId>
                   <type>role</type>
                   <value>loggedInUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>HIPContratacao::processStartWhiteList</string>
-               <packageParticipant>
-                  <processDefId>HIPContratacao</processDefId>
-                  <participantId>processStartWhiteList</participantId>
-                  <type>role</type>
-                  <value>adminUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>HIPProducao::process29_producao</string>
-               <packageParticipant>
-                  <processDefId>HIPProducao</processDefId>
-                  <participantId>process29_producao</participantId>
-                  <type>workflowVariable</type>
-                  <value>user_producao,user</value>
                </packageParticipant>
             </entry>
             <entry>
@@ -2964,15 +2718,6 @@
                </packageParticipant>
             </entry>
             <entry>
-               <string>DISTdistribuicaoProcessosBCP2::processStartWhiteList</string>
-               <packageParticipant>
-                  <processDefId>DISTdistribuicaoProcessosBCP2</processDefId>
-                  <participantId>processStartWhiteList</participantId>
-                  <type>role</type>
-                  <value>loggedInUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
                <string>CHContratacaoNormal::contratacao_nvb</string>
                <packageParticipant>
                   <processDefId>CHContratacaoNormal</processDefId>
@@ -2983,53 +2728,6 @@
                </packageParticipant>
             </entry>
             <entry>
-               <string>CHProducaoNormal::ProdRobot</string>
-               <packageParticipant>
-                  <processDefId>CHProducaoNormal</processDefId>
-                  <participantId>ProdRobot</participantId>
-                  <type>department</type>
-                  <value>PL_INT_PRD_GEN_RPA_CRH</value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>CHRegistos::registos</string>
-               <packageParticipant>
-                  <processDefId>CHRegistos</processDefId>
-                  <participantId>registos</participantId>
-                  <type>plugin</type>
-                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
-                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_SIS_REG&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%dL3RaLkPaaSjBqkSUhTSzLOiWJclIdtvSNjHwsx71iqeo6wMd98KIQ==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_registos#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;&quot;}</pluginProperties>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>DISTdistribuicaoProcessosMTG::processStartWhiteList</string>
-               <packageParticipant>
-                  <processDefId>DISTdistribuicaoProcessosMTG</processDefId>
-                  <participantId>processStartWhiteList</participantId>
-                  <type>role</type>
-                  <value>loggedInUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>CHConclusoes::conclusoes</string>
-               <packageParticipant>
-                  <processDefId>CHConclusoes</processDefId>
-                  <participantId>conclusoes</participantId>
-                  <type>plugin</type>
-                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
-                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_CON&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%dKnKTCdH9GkR2HCyYvHCsPFw3udihRv/2OURsBPURNDtXV2bV0WcNQ==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_conclusoes#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>CHContratacaoComplexo::processStartWhiteList</string>
-               <packageParticipant>
-                  <processDefId>CHContratacaoComplexo</processDefId>
-                  <participantId>processStartWhiteList</participantId>
-                  <type>role</type>
-                  <value>adminUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
                <string>CHContratacaoComplexo::contratacao_bcp_com</string>
                <packageParticipant>
                   <processDefId>CHContratacaoComplexo</processDefId>
@@ -3037,24 +2735,6 @@
                   <type>plugin</type>
                   <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
                   <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_CNT_BCP_COM_CRH&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%0upT2UV47Atz57Uj0TVpKiRolw9jbCEyVCEGI6B9lNa4KX/pkOARzA==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_contratacao_bcp_com#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>hipotecas::processStartWhiteList</string>
-               <packageParticipant>
-                  <processDefId>hipotecas</processDefId>
-                  <participantId>processStartWhiteList</participantId>
-                  <type>role</type>
-                  <value>adminUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>notificacoes::processStartWhiteList</string>
-               <packageParticipant>
-                  <processDefId>notificacoes</processDefId>
-                  <participantId>processStartWhiteList</participantId>
-                  <type>role</type>
-                  <value>adminUser</value>
                </packageParticipant>
             </entry>
             <entry>
@@ -3077,35 +2757,9 @@
                </packageParticipant>
             </entry>
             <entry>
-               <string>REGdistribuicaoProcessosDeposito::processStartWhiteList</string>
-               <packageParticipant>
-                  <processDefId>REGdistribuicaoProcessosDeposito</processDefId>
-                  <participantId>processStartWhiteList</participantId>
-                  <type>role</type>
-                  <value>loggedInUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
                <string>CHModelo11::processStartWhiteList</string>
                <packageParticipant>
                   <processDefId>CHModelo11</processDefId>
-                  <participantId>processStartWhiteList</participantId>
-                  <type>role</type>
-                  <value>adminUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>alertasValidacao::alertaStarter</string>
-               <packageParticipant>
-                  <processDefId>alertasValidacao</processDefId>
-                  <participantId>alertaStarter</participantId>
-                  <type>requester</type>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>CHFiltroNormal::processStartWhiteList</string>
-               <packageParticipant>
-                  <processDefId>CHFiltroNormal</processDefId>
                   <participantId>processStartWhiteList</participantId>
                   <type>role</type>
                   <value>adminUser</value>
@@ -3131,50 +2785,12 @@
                </packageParticipant>
             </entry>
             <entry>
-               <string>CHValidacaoComplexo::processStartWhiteList</string>
-               <packageParticipant>
-                  <processDefId>CHValidacaoComplexo</processDefId>
-                  <participantId>processStartWhiteList</participantId>
-                  <type>role</type>
-                  <value>adminUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>CHAcompanhamentoOutorgas::validadorFinal</string>
-               <packageParticipant>
-                  <processDefId>CHAcompanhamentoOutorgas</processDefId>
-                  <participantId>validadorFinal</participantId>
-                  <type>plugin</type>
-                  <value>org.joget.apps.app.lib.BeanShellTool</value>
-                  <pluginProperties>{&quot;script&quot;:&quot;import java.lang.Exception;\r\nimport java.util.ArrayList;\r\nimport java.util.Collection;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport javax.sql.DataSource;\r\nimport org.joget.workflow.model.WorkflowActivity;\r\nimport org.joget.workflow.model.service.*;\r\nimport org.joget.plugin.base.PluginManager;\r\nimport org.joget.commons.util.UuidGenerator;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.directory.model.User;\r\nimport org.joget.directory.model.service.ExtDirectoryManager;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.workflow.model.WorkflowProcessResult;\r\nimport org.joget.workflow.model.service.WorkflowManager;\r\n \r\npublic Collection getValidadorFinal(WorkflowActivity activity) {\r\n    Collection participantes = new ArrayList();\r\n    ExtDirectoryManager directoryManager = (ExtDirectoryManager) pluginManager.getBean(\&quot;directoryManager\&quot;);\r\n    WorkflowManager wm = (WorkflowManager) AppUtil.getApplicationContext().getBean(\&quot;workflowManager\&quot;);\r\n    \r\n    String tipoEntidade = \&quot;#variable.tipo_entidade#\&quot;;\r\n    \r\n    if(tipoEntidade.contains(\&quot;SEMI\&quot;)) {\r\n        \/\/ ALTERAR -&gt; Alocar para a Entidade\r\n        \r\n        participantes.add(\&quot;#variable.nome_entidade#\&quot;);\r\n        \r\n        \r\n        \r\n        \/*\r\n            String deptId = \&quot;PL_SIS_AO\&quot;;\r\n            \r\n            \/\/Get users using directory manager\r\n            Collection userList = directoryManager.getUserByDepartmentId(deptId);\r\n            for(Object u : userList){\r\n                User user = (User) u;\r\n                participantes.add(user.getUsername());\r\n            }\r\n        *\/\r\n    }\r\n    \r\n    return participantes;\r\n}\r\n \r\n\/\/call getAssignees method with injected variable\r\nreturn getValidadorFinal(workflowActivity);&quot;}</pluginProperties>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>CHModelo11::modelo11</string>
-               <packageParticipant>
-                  <processDefId>CHModelo11</processDefId>
-                  <participantId>modelo11</participantId>
-                  <type>plugin</type>
-                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
-                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_MOD11&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%DuUmw27nSdWod5b+2G79Ch6LuAwXmPri7D9Yd86nMU40YAzYtLdXJA==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_modelo11#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;&quot;}</pluginProperties>
-               </packageParticipant>
-            </entry>
-            <entry>
                <string>processoTesteAssync::participant48</string>
                <packageParticipant>
                   <processDefId>processoTesteAssync</processDefId>
                   <participantId>participant48</participantId>
                   <type>user</type>
                   <value>a_aferreira</value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>CHContratacaoNormal::processStartWhiteList</string>
-               <packageParticipant>
-                  <processDefId>CHContratacaoNormal</processDefId>
-                  <participantId>processStartWhiteList</participantId>
-                  <type>role</type>
-                  <value>adminUser</value>
                </packageParticipant>
             </entry>
             <entry>
@@ -3194,16 +2810,6 @@
                   <participantId>processStartWhiteList</participantId>
                   <type>role</type>
                   <value>adminUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>CHFiltroNormal::filtro</string>
-               <packageParticipant>
-                  <processDefId>CHFiltroNormal</processDefId>
-                  <participantId>filtro</participantId>
-                  <type>plugin</type>
-                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
-                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_FLT_GEN_NOR_CRH&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%fpnnJk0S7Uy6rnr3pwpfe9BxEwMjWg0APrZfg+10PpWwGQ+2hLnCjA==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_filtro#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
                </packageParticipant>
             </entry>
             <entry>
@@ -3294,6 +2900,446 @@
                </packageParticipant>
             </entry>
             <entry>
+               <string>DISTdistribuicaoProcessosBIC::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>DISTdistribuicaoProcessosBIC</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>loggedInUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>diligencias::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>diligencias</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>loggedInUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>distrates::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>distrates</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>adminUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>CHProducaoComplexo::producao_com</string>
+               <packageParticipant>
+                  <processDefId>CHProducaoComplexo</processDefId>
+                  <participantId>producao_com</participantId>
+                  <type>plugin</type>
+                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
+                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_PRD_GEN_COM_CRH&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%vwhLqGlOd4AGdpe44fIsIW9prErI6CK4ZaY3Gi8xzt+w2lDLaZp8wA==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_producao_com#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>conclusoes::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>conclusoes</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>adminUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>DSTDistrates::dist_bcp_1</string>
+               <packageParticipant>
+                  <processDefId>DSTDistrates</processDefId>
+                  <participantId>dist_bcp_1</participantId>
+                  <type>plugin</type>
+                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
+                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_DIST_BCP&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%A8LtZ84V6E5jGb5mFIraVsumynuOKStcIRRwGtCfl1vhvN319/UPxw==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_dist_bcp#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;&quot;}</pluginProperties>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>DSTDistrates::dist_bcp_2</string>
+               <packageParticipant>
+                  <processDefId>DSTDistrates</processDefId>
+                  <participantId>dist_bcp_2</participantId>
+                  <type>plugin</type>
+                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
+                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_SIS_DIST_BCP&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%Y9v5BQ+jIhE+7CxP6JabHToLyB1QveYV+Zn9vHgYonVLmde70wDvDA==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_dist_geral_bcp#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;&quot;}</pluginProperties>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>DSTDistrates::dist_bcp_3</string>
+               <packageParticipant>
+                  <processDefId>DSTDistrates</processDefId>
+                  <participantId>dist_bcp_3</participantId>
+                  <type>plugin</type>
+                  <value>org.joget.apps.app.lib.BeanShellTool</value>
+                  <pluginProperties>{&quot;script&quot;:&quot;w&quot;}</pluginProperties>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>poll_email::starter</string>
+               <packageParticipant>
+                  <processDefId>poll_email</processDefId>
+                  <participantId>starter</participantId>
+                  <type>requester</type>
+                  <value>terminate</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>CHContratacaoNormal::contratacao_mtg2</string>
+               <packageParticipant>
+                  <processDefId>CHContratacaoNormal</processDefId>
+                  <participantId>contratacao_mtg2</participantId>
+                  <type>plugin</type>
+                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
+                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_CNT_MTG_NOR_CRH&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%D5Cjs+1rSNwNc20WW5kWxbOfnWD+GZsuglr8lw6ZxyT0D1Yj5vSrzQ==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_contratacao_mtg2#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>CHAcompanhamentoOutorgas::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>CHAcompanhamentoOutorgas</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>adminUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>CHContratacaoNormal::contratacao_mtg1</string>
+               <packageParticipant>
+                  <processDefId>CHContratacaoNormal</processDefId>
+                  <participantId>contratacao_mtg1</participantId>
+                  <type>plugin</type>
+                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
+                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_CNT_MTG_NOR_CRH&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%9stNPXq9hbRznHmQ1Dy1QXlmd0gfskyGcBpOrGDMzroUyHTKqiQpjQ==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_contratacao_mtg1#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>HIPProducao::process29_ProdRobot</string>
+               <packageParticipant>
+                  <processDefId>HIPProducao</processDefId>
+                  <participantId>process29_ProdRobot</participantId>
+                  <type>department</type>
+                  <value>PL_INT_PRD_GEN_RPA_CRH</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>diligenciaAut::participant2_1</string>
+               <packageParticipant>
+                  <processDefId>diligenciaAut</processDefId>
+                  <participantId>participant2_1</participantId>
+                  <type>user</type>
+                  <value>a_aferreira</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>DSTDistrates::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>DSTDistrates</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>adminUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>CHAcompanhamentoOutorgas::validadorInicial</string>
+               <packageParticipant>
+                  <processDefId>CHAcompanhamentoOutorgas</processDefId>
+                  <participantId>validadorInicial</participantId>
+                  <type>plugin</type>
+                  <value>org.joget.apps.app.lib.BeanShellTool</value>
+                  <pluginProperties>{&quot;script&quot;:&quot;import java.lang.Exception;\r\nimport java.util.ArrayList;\r\nimport java.util.Collection;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.SQLException;\r\nimport java.sql.ResultSet;\r\nimport javax.sql.DataSource;\r\nimport org.joget.plugin.base.PluginManager;\r\nimport org.joget.commons.util.UuidGenerator;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport org.joget.directory.model.User;\r\nimport org.joget.directory.model.service.ExtDirectoryManager;\r\nimport org.joget.workflow.model.service.*;\r\nimport org.joget.workflow.model.WorkflowActivity;\r\nimport org.joget.workflow.model.WorkflowProcessResult;\r\nimport org.joget.workflow.model.service.WorkflowManager;\r\n\r\npublic Collection getValidadorInicial(WorkflowActivity activity) {\r\n    \/\/ [TO DO] Obter qual a entidade autenticadora do processo\r\n    \r\n    Collection participantes = new ArrayList();\r\n    ExtDirectoryManager directoryManager = (ExtDirectoryManager) pluginManager.getBean(\&quot;directoryManager\&quot;);\r\n    WorkflowManager wm = (WorkflowManager) AppUtil.getApplicationContext().getBean(\&quot;workflowManager\&quot;);\r\n\r\n    String recordId = \&quot;#process.recordId#\&quot;;\r\n    String tipoEntidade = \&quot;#variable.tipo_entidade#\&quot;;\r\n    \r\n    if (tipoEntidade.equals(\&quot;AUT\&quot;)) {\r\n        participantes.add(\&quot;#variable.nome_entidade#\&quot;);\r\n    }\r\n    \r\n    if (tipoEntidade.equals(\&quot;NAUT\&quot;) || tipoEntidade.equals(\&quot;SEMI\&quot;)) {\r\n        String userDistribuicaoManual = \&quot;#variable.username_distribuicao_manual#\&quot;;\r\n        \r\n        if (userDistribuicaoManual.isEmpty()) {\r\n            Connection con = null;\r\n            PreparedStatement stmt = null;\r\n            ResultSet rs = null;\r\n            \r\n            try {\r\n                DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\&quot;setupDataSource\&quot;);\r\n                con = ds.getConnection();\r\n                \r\n                if(!con.isClosed()) {\r\n                    String dataOutorga = \&quot;\&quot;;\r\n                    String horaOutorga = \&quot;\&quot;;\r\n                    String username = \&quot;\&quot;;\r\n                    \r\n                    String queryObterDataOutorga = \&quot;SELECT c_dataOutorga, c_horaOutorga FROM app_fd_atos a WHERE c_id_processo LIKE ? AND c_status LIKE &apos;AGD&apos;;\&quot;;\r\n                    stmt = con.prepareStatement(queryObterDataOutorga);\r\n                    stmt.setObject(1, recordId);\r\n                    rs = stmt.executeQuery();\r\n                    \r\n                    if (rs.next()) {\r\n                        dataOutorga = rs.getObject(\&quot;c_dataOutorga\&quot;);\r\n                        horaOutorga = rs.getObject(\&quot;c_horaOutorga\&quot;);\r\n                    }\r\n                    \r\n                    if (!(dataOutorga.isEmpty() || horaOutorga.isEmpty())) {\r\n                        \/\/ Obter Gestor com menos processos alocados\r\n                        String queryObterGestor = \&quot;SELECT c_user_colaborador, c_email_profissional, numero_processos, estado, data_outorga, hora_outorga FROM app_fd_info_colaboradores col LEFT JOIN (SELECT ato.c_status AS estado, ato.c_dataOutorga AS data_outorga, ato.c_horaOutorga AS hora_outorga, p.id AS idProc, count(p.id) as numero_processos, dp.c_n_wf_pl AS NProc, dp.c_nome_banco AS Banco, dp.c_tipo_processo AS TipoProcesso, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee FROM shkprocesses sp LEFT JOIN shkprocesses sp2 ON sp.ActivityRequesterProcessId = sp2.Id LEFT JOIN app_fd_processos p ON sp.ActivityRequesterProcessId = p.id LEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo LEFT JOIN shkprocessstates sps ON sps.oid = sp.State LEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id LEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State LEFT JOIN (SELECT ActivityId, group_concat(ResourceId separator &apos;; &apos;) AS ResourceId FROM SHKAssignmentsTable GROUP BY ActivityId) sass ON sact.Id = sass.ActivityId LEFT JOIN app_fd_atos ato ON ato.c_id_processo = p.id WHERE sps.KeyValue LIKE &apos;open.running&apos; AND p.id IS NOT NULL AND (ssta.oid = &apos;1000001&apos; OR ssta.oid = &apos;1000003&apos; OR ssta.oid = &apos;1000005&apos;) AND ato.c_status = &apos;AGD&apos; AND ato.c_dataOutorga = ? AND ato.c_horaOutorga = ?) tot ON (col.c_user_colaborador = tot.assignee) WHERE c_departamentos LIKE &apos;%PL_INT_AO%&apos; ORDER BY numero_processos ASC LIMIT 1;\&quot;;\r\n                        stmt = con.prepareStatement(queryObterGestor);\r\n                        stmt.setObject(1, dataOutorga);\r\n                        stmt.setObject(2, horaOutorga);\r\n                        rs = stmt.executeQuery();\r\n                        \r\n                        if (rs.next()) {\r\n                            username = rs.getObject(\&quot;c_user_colaborador\&quot;);\r\n                        } else {\r\n                            username = \&quot;acompanhamento_outorgas_geral\&quot;;\r\n                        }\r\n                        \r\n                        participantes.add(username);\r\n                    }\r\n                }\r\n              \r\n            } catch(Exception e) {\r\n                \/\/LogUtil.error(appDef.toString(), e, \&quot;Error getting info from DB\&quot;);\r\n                LogUtil.error(\&quot;AO | Mapear Validador Inicial\&quot;, e, \&quot;Error getting info from DB\&quot;);\r\n            } finally {\r\n                try {\r\n                    if(rs != null) {\r\n                        rs.close();\r\n                    }\r\n                    if(stmt != null) {\r\n                        stmt.close();\r\n                    }\r\n                    if(con != null &amp;&amp; !con.isClosed()) {\r\n                        con.close();\r\n                    }\r\n                } catch(Exception e) {\r\n                    \/\/LogUtil.error(appDef.toString(), e, \&quot;Error closing DB connection\&quot;);\r\n                    LogUtil.error(\&quot;AO | Mapear Validador Inicial\&quot;, e, \&quot;Error closing DB connection\&quot;);\r\n                }\r\n            }\r\n            \r\n            \/*\r\n                Distribuição Automática:\r\n                \r\n                2 processos por gestor por hora\r\n                    Se não houver disponibilidade serão atribuídos manualmente\r\n                    Exceção para NBAOPC e DL -&gt; 1 por gestor por hora\r\n            *\/\r\n            \r\n        }\r\n    }\r\n    \r\n    return participantes;\r\n}\r\n \r\nreturn getValidadorInicial(workflowActivity);&quot;}</pluginProperties>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>notificacoes::notificacaoStarter</string>
+               <packageParticipant>
+                  <processDefId>notificacoes</processDefId>
+                  <participantId>notificacaoStarter</participantId>
+                  <type>requester</type>
+                  <value></value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>CHContratacaoComplexo::contratacao_mtg1_com</string>
+               <packageParticipant>
+                  <processDefId>CHContratacaoComplexo</processDefId>
+                  <participantId>contratacao_mtg1_com</participantId>
+                  <type>plugin</type>
+                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
+                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_CNT_MTG_COM_CRH&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%zn4tFoUHKCp6yg9NhX9ZD5C1WqCCF8c5GmJa2wKoM2p54HjqbHojdA==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_contratacao_mtg1_com#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>CHContratacaoNormal::contratacao_bic</string>
+               <packageParticipant>
+                  <processDefId>CHContratacaoNormal</processDefId>
+                  <participantId>contratacao_bic</participantId>
+                  <type>plugin</type>
+                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
+                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_CNT_BIC_NOR_CRH&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%CULfPd5cbN1a6ndTvP6IQAkEl68WvLGi9xQUKNFzg+8wkZc9VI3++Q==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_contratacao_bic#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>HIPValidacao::process29_validacao</string>
+               <packageParticipant>
+                  <processDefId>HIPValidacao</processDefId>
+                  <participantId>process29_validacao</participantId>
+                  <type>plugin</type>
+                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
+                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_VAL_GEN_NOR_CRH&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%uh9ErZQQWi0WRqDhvHG6Mfi+BvsfEJa++kV9KlMGjpld02mDQr+AWg==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_validacao#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>poll_email::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>poll_email</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>adminUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>HIPProducao::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>HIPProducao</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>adminUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>REGdistribuicaoProcessos::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>REGdistribuicaoProcessos</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>loggedInUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>CHContratacaoComplexo::contratacao_bst_com</string>
+               <packageParticipant>
+                  <processDefId>CHContratacaoComplexo</processDefId>
+                  <participantId>contratacao_bst_com</participantId>
+                  <type>plugin</type>
+                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
+                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_CNT_BST_COM_CRH&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%Bj5E99XTv0O8bSVIMwam9FHc5WurfJFHWCgPtPsEr8aEdO4Be9e9gw==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_contratacao_bst_com#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>diligenciaAut::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>diligenciaAut</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>loggedInUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>DISTdistribuicaoProcessosBCP::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>DISTdistribuicaoProcessosBCP</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>loggedInUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>PCDProcuradoria::procu_procuradoria</string>
+               <packageParticipant>
+                  <processDefId>PCDProcuradoria</processDefId>
+                  <participantId>procu_procuradoria</participantId>
+                  <type>plugin</type>
+                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
+                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_SIS_PROCU&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%BAO/8fRdgitYu3TN2q/DK7Ja5jvTawab9Fcp2A49mZ/ty0/jdYrSiQ==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_procuradoria#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>CHArquivo::arquivo</string>
+               <packageParticipant>
+                  <processDefId>CHArquivo</processDefId>
+                  <participantId>arquivo</participantId>
+                  <type>plugin</type>
+                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
+                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_SIS_ARQ&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%1lfqdxkcQPZSeZMTT9eoq0dqFpEGlXVJHJiv1R8q0B1EAvPSr0cuHw==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_arquivo#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>CHConclusoes::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>CHConclusoes</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>adminUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>HIPContratacao::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>HIPContratacao</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>adminUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>HIPProducao::process29_producao</string>
+               <packageParticipant>
+                  <processDefId>HIPProducao</processDefId>
+                  <participantId>process29_producao</participantId>
+                  <type>workflowVariable</type>
+                  <value>user_producao,user</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>DISTdistribuicaoProcessosBCP2::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>DISTdistribuicaoProcessosBCP2</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>loggedInUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>CHProducaoNormal::ProdRobot</string>
+               <packageParticipant>
+                  <processDefId>CHProducaoNormal</processDefId>
+                  <participantId>ProdRobot</participantId>
+                  <type>department</type>
+                  <value>PL_INT_PRD_GEN_RPA_CRH</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>CHRegistos::registos</string>
+               <packageParticipant>
+                  <processDefId>CHRegistos</processDefId>
+                  <participantId>registos</participantId>
+                  <type>plugin</type>
+                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
+                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_SIS_REG&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%dL3RaLkPaaSjBqkSUhTSzLOiWJclIdtvSNjHwsx71iqeo6wMd98KIQ==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_registos#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;&quot;}</pluginProperties>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>DISTdistribuicaoProcessosMTG::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>DISTdistribuicaoProcessosMTG</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>loggedInUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>CHConclusoes::conclusoes</string>
+               <packageParticipant>
+                  <processDefId>CHConclusoes</processDefId>
+                  <participantId>conclusoes</participantId>
+                  <type>plugin</type>
+                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
+                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_CON&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%dKnKTCdH9GkR2HCyYvHCsPFw3udihRv/2OURsBPURNDtXV2bV0WcNQ==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_conclusoes#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>CHContratacaoComplexo::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>CHContratacaoComplexo</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>adminUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>hipotecas::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>hipotecas</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>adminUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>notificacoes::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>notificacoes</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>adminUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>REGdistribuicaoProcessosDeposito::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>REGdistribuicaoProcessosDeposito</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>loggedInUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>alertasValidacao::alertaStarter</string>
+               <packageParticipant>
+                  <processDefId>alertasValidacao</processDefId>
+                  <participantId>alertaStarter</participantId>
+                  <type>requester</type>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>CHFiltroNormal::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>CHFiltroNormal</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>adminUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>CHValidacaoComplexo::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>CHValidacaoComplexo</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>adminUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>CHAcompanhamentoOutorgas::validadorFinal</string>
+               <packageParticipant>
+                  <processDefId>CHAcompanhamentoOutorgas</processDefId>
+                  <participantId>validadorFinal</participantId>
+                  <type>plugin</type>
+                  <value>org.joget.apps.app.lib.BeanShellTool</value>
+                  <pluginProperties>{&quot;script&quot;:&quot;import java.lang.Exception;\r\nimport java.util.ArrayList;\r\nimport java.util.Collection;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport javax.sql.DataSource;\r\nimport org.joget.workflow.model.WorkflowActivity;\r\nimport org.joget.workflow.model.service.*;\r\nimport org.joget.plugin.base.PluginManager;\r\nimport org.joget.commons.util.UuidGenerator;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.directory.model.User;\r\nimport org.joget.directory.model.service.ExtDirectoryManager;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.workflow.model.WorkflowProcessResult;\r\nimport org.joget.workflow.model.service.WorkflowManager;\r\n \r\npublic Collection getValidadorFinal(WorkflowActivity activity) {\r\n    Collection participantes = new ArrayList();\r\n    ExtDirectoryManager directoryManager = (ExtDirectoryManager) pluginManager.getBean(\&quot;directoryManager\&quot;);\r\n    WorkflowManager wm = (WorkflowManager) AppUtil.getApplicationContext().getBean(\&quot;workflowManager\&quot;);\r\n    \r\n    String tipoEntidade = \&quot;#variable.tipo_entidade#\&quot;;\r\n    \r\n    if(tipoEntidade.contains(\&quot;SEMI\&quot;)) {\r\n        \/\/ ALTERAR -&gt; Alocar para a Entidade\r\n        \r\n        participantes.add(\&quot;#variable.nome_entidade#\&quot;);\r\n        \r\n        \r\n        \r\n        \/*\r\n            String deptId = \&quot;PL_SIS_AO\&quot;;\r\n            \r\n            \/\/Get users using directory manager\r\n            Collection userList = directoryManager.getUserByDepartmentId(deptId);\r\n            for(Object u : userList){\r\n                User user = (User) u;\r\n                participantes.add(user.getUsername());\r\n            }\r\n        *\/\r\n    }\r\n    \r\n    return participantes;\r\n}\r\n \r\n\/\/call getAssignees method with injected variable\r\nreturn getValidadorFinal(workflowActivity);&quot;}</pluginProperties>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>CHModelo11::modelo11</string>
+               <packageParticipant>
+                  <processDefId>CHModelo11</processDefId>
+                  <participantId>modelo11</participantId>
+                  <type>plugin</type>
+                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
+                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_MOD11&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%DuUmw27nSdWod5b+2G79Ch6LuAwXmPri7D9Yd86nMU40YAzYtLdXJA==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_modelo11#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;&quot;}</pluginProperties>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>CHContratacaoNormal::processStartWhiteList</string>
+               <packageParticipant>
+                  <processDefId>CHContratacaoNormal</processDefId>
+                  <participantId>processStartWhiteList</participantId>
+                  <type>role</type>
+                  <value>adminUser</value>
+               </packageParticipant>
+            </entry>
+            <entry>
+               <string>CHFiltroNormal::filtro</string>
+               <packageParticipant>
+                  <processDefId>CHFiltroNormal</processDefId>
+                  <participantId>filtro</participantId>
+                  <type>plugin</type>
+                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
+                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_FLT_GEN_NOR_CRH&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%fpnnJk0S7Uy6rnr3pwpfe9BxEwMjWg0APrZfg+10PpWwGQ+2hLnCjA==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_filtro#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
+               </packageParticipant>
+            </entry>
+            <entry>
                <string>Procuradoria::processStartWhiteList</string>
                <packageParticipant>
                   <processDefId>Procuradoria</processDefId>
@@ -3323,49 +3369,12 @@
                </packageParticipant>
             </entry>
             <entry>
-               <string>DISTdistribuicaoProcessosBIC::processStartWhiteList</string>
-               <packageParticipant>
-                  <processDefId>DISTdistribuicaoProcessosBIC</processDefId>
-                  <participantId>processStartWhiteList</participantId>
-                  <type>role</type>
-                  <value>loggedInUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>diligencias::processStartWhiteList</string>
-               <packageParticipant>
-                  <processDefId>diligencias</processDefId>
-                  <participantId>processStartWhiteList</participantId>
-                  <type>role</type>
-                  <value>loggedInUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>distrates::processStartWhiteList</string>
-               <packageParticipant>
-                  <processDefId>distrates</processDefId>
-                  <participantId>processStartWhiteList</participantId>
-                  <type>role</type>
-                  <value>adminUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
                <string>CHArquivo::processStartWhiteList</string>
                <packageParticipant>
                   <processDefId>CHArquivo</processDefId>
                   <participantId>processStartWhiteList</participantId>
                   <type>role</type>
                   <value>adminUser</value>
-               </packageParticipant>
-            </entry>
-            <entry>
-               <string>CHProducaoComplexo::producao_com</string>
-               <packageParticipant>
-                  <processDefId>CHProducaoComplexo</processDefId>
-                  <participantId>producao_com</participantId>
-                  <type>plugin</type>
-                  <value>org.joget.marketplace.EnhancedLoadBalancedParticipant</value>
-                  <pluginProperties>{&quot;orgId&quot;:&quot;PL&quot;,&quot;deptId&quot;:&quot;PL_INT_PRD_GEN_COM_CRH&quot;,&quot;deptIdDesc&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;&quot;,&quot;getChoiceThisApp&quot;:&quot;&quot;,&quot;getChoiceDatabaseType&quot;:&quot;mySql&quot;,&quot;getChoiceDatabaseAddress&quot;:&quot;#envVariable.databaseAddress#&quot;,&quot;getChoiceDatabasePort&quot;:&quot;#envVariable.databasePort#&quot;,&quot;getChoiceDatabaseUser&quot;:&quot;#envVariable.databaseUser#&quot;,&quot;getChoiceDatabasePass&quot;:&quot;%%%%vwhLqGlOd4AGdpe44fIsIW9prErI6CK4ZaY3Gi8xzt+w2lDLaZp8wA==%%%%&quot;,&quot;getChoiceAssignToLastPerformer&quot;:&quot;true&quot;,&quot;getChoiceLastLanePerformer&quot;:&quot;#variable.user_producao_com#&quot;,&quot;getChoiceCurrentUser&quot;:&quot;&quot;,&quot;exclusion&quot;:&quot;&quot;,&quot;debugMode&quot;:&quot;true&quot;}</pluginProperties>
                </packageParticipant>
             </entry>
             <entry>
