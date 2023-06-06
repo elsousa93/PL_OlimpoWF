@@ -1494,7 +1494,12 @@
             "hrefColumn": "ActivityId",
             "hrefParam": "activityId",
             "label": "EDITAR",
-            "rules": [],
+            "rules": [{
+                "field": "resourceId",
+                "join": "AND",
+                "operator": "<>",
+                "value": "#currentUser.username#"
+            }],
             "target": "_self"
         },
         "type": "text"
