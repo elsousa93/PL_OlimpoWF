@@ -8332,7 +8332,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="hip_user_contratacao"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1216.875114440918,171.31946250976563"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1283.875,174.3125"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="createInfoDiligencia" Name="Create Info Diligência">
@@ -8353,7 +8353,7 @@
                             <Split Type="XOR">
                                 <TransitionRefs>
                                     <TransitionRef Id="transition14"/>
-                                    <TransitionRef Id="transition15"/>
+                                    <TransitionRef Id="transition10"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
@@ -8361,6 +8361,16 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="hip_user_contratacao"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1041.9792404174805,57.98611900390625"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="tool3" Name="Configurar Ultima atividade">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>hip_user_contratacao</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="hip_user_contratacao"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1165,49"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -8391,12 +8401,6 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="filtro" Id="transition15" Name="sem_filtro" To="PedidoAgendamento">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="route3" Id="transition16" Name="primeira_vez" To="createInfoDiligencia">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
@@ -8408,6 +8412,17 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="HIPFiltro" Id="transition18" To="route1">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="filtro" Id="transition10" Name="sem_filtro" To="tool3">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="tool3" Id="transition11" To="PedidoAgendamento">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
