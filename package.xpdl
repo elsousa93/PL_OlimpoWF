@@ -9812,7 +9812,7 @@
                     <Performer>process29_producao</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process29_producao"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="967.9167404174805,23.999995649414075"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="843.90625,18.984375"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="processamentoRobotMinuta" Name="Processamento da Minuta pelo Robot">
@@ -9850,7 +9850,7 @@
                     <Performer>process29_producao</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process29_producao"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="777.9861373901367,21.666676254882816"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1216.96875,24"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="ConfigurarProcesso" Name="Configurar Processo">
@@ -9860,7 +9860,7 @@
                     <Performer>process29_producao</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process29_producao"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="566,22.312498247070323"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="564,21.296875"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="AtualizarVariavelRobot" Name="Atualizar a Variável do Robot e Estado Contratacao">
@@ -9903,7 +9903,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process29_producao"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1276.9792404174805,34.07985374511719"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1103.96875,24.078125"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="validacaoContrato" Name="Validação de Contrato e Documentação">
@@ -9918,7 +9918,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process29_producao"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1394.981185913086,29.137493896484386"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1393.96875,22.125"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="atualizacao" Name="Atualização de minuta?">
@@ -10009,33 +10009,12 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="ultimaAtividadeProd" Id="transition5" To="processamentoManualMinuta">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="ConfigurarProcesso" Id="transition4" To="ultimaAtividadeProd">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="processamentoRobotMinuta" Id="transition7" To="AtualizarVariavelRobot">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="verificacaoMinutaRobot" Id="transition10" To="route2">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="processamentoManualMinuta" Id="transition11" To="route2">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="route2" Id="transition12" To="validacaoContrato">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
@@ -10089,6 +10068,27 @@
                 <Transition From="route6" Id="transition22" Name="contratacao" To="route7">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="ConfigurarProcesso" Id="transition23" To="processamentoManualMinuta">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route2" Id="transition24" To="ultimaAtividadeProd">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="ultimaAtividadeProd" Id="transition25" To="validacaoContrato">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="verificacaoMinutaRobot" Id="transition26" To="route2">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
             </Transitions>
