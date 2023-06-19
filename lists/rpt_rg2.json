@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT det.c_categoria_processo AS Categoria, ato.c_dataOutorga AS DataAgendamento, COUNT(det.c_id_processo) AS Processos\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id AND (ato.c_status = 'AGD' OR ato.c_status = 'OUT')\nGROUP BY Categoria, DataAgendamento\n\n\n\n"
+            "sql": "SELECT det.c_categoria_processo AS Categoria, det.c_data_de_registo AS DataRegisto, COUNT(det.c_id_processo) AS Processos\nFROM app_fd_detalhe_processo det\nWHERE det.c_data_de_registo != ''\nGROUP BY Categoria, DataRegisto\n\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -22,15 +22,19 @@
             "exclude_export": "",
             "filterable": true,
             "format": {
-                "className": "",
-                "properties": {}
+                "className": "org.joget.plugin.enterprise.DateFormatter",
+                "properties": {
+                    "dataFormat": "yyyy-MM-dd",
+                    "dateStoreInUTC": "",
+                    "displayFormat": "dd/MM/yyyy"
+                }
             },
             "headerAlignment": "",
             "hidden": "false",
-            "id": "column_4",
-            "label": "Data Agendamento",
-            "name": "DataAgendamento",
-            "sortable": "true",
+            "id": "column_0",
+            "label": "Data de Registo",
+            "name": "DataRegisto",
+            "sortable": "false",
             "style": "",
             "width": ""
         },
@@ -119,11 +123,11 @@
         },
         {
             "datalist_type": "filter",
-            "filterParamName": "d-1344013-fn_DataAgendamento",
+            "filterParamName": "d-1344014-fn_DataRegisto",
             "hidden": "",
-            "id": "filter_2",
-            "label": "Data Agendamento",
-            "name": "DataAgendamento",
+            "id": "filter_0",
+            "label": "Data de Registo",
+            "name": "DataRegisto",
             "type": {
                 "className": "org.joget.plugin.enterprise.DateRangeDataListFilterType",
                 "properties": {
