@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "idProc",
-            "sql": "SELECT p.id as idProc, dp.c_n_processo as NProc, dp.c_n_agenda as NAgenda, dp.c_banco_fundo as Banco, dp.c_tipo_processo as TipoProcesso, sp.Id AS processId,\n sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee, p.dateCreated, sact.Id AS ActivityId, hpp.c_gestor as UltimoGestor\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos_procu p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_proce_procu dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN app_fd_hist_puxar_procu hpp ON hpp.c_id_processo = p.id AND c_gestor != 'procuradoria_geral'\nJOIN (SELECT id, MAX(c_data_puxar) FROM app_fd_hist_puxar_procu GROUP BY c_id_processo) hpp2 ON hpp2.id = hpp.id\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nWHERE sps.KeyValue LIKE 'open.running'\nAND p.id is not null\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id like '%PCDProcuradoria%'\nAND sass.ResourceId LIKE \"%procuradoria_geral%\""
+            "sql": "SELECT p.id as idProc, dp.c_n_processo as NProc, dp.c_n_agenda as NAgenda, dp.c_banco_fundo as Banco, dp.c_tipo_processo as TipoProcesso, sp.Id AS processId,\nsp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee, p.dateCreated, sact.Id AS ActivityId, hpp.c_gestor\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos_procu p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_proce_procu dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN app_fd_hist_puxar_procu hpp ON hpp.c_id_processo = p.id AND c_gestor != 'procuradoria_geral'\nLEFT JOIN (SELECT id, MAX(c_data_puxar) as max_date FROM app_fd_hist_puxar_procu GROUP BY c_id_processo) hpp2 ON hpp2.id = hpp.id AND hpp2.max_date = hpp.c_data_puxar\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nWHERE sps.KeyValue LIKE 'open.running'\nAND p.id is not null\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id like '%PCDProcuradoria%'\nAND sass.ResourceId LIKE \"%procuradoria_geral%\""
         }
     },
     "buttonPosition": "bottomLeft",
@@ -176,44 +176,6 @@
             "label": "Data de Registo",
             "name": "dateCreated",
             "sortable": "true",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
-                "properties": {
-                    "options": [],
-                    "optionsBinder": {
-                        "className": "org.joget.plugin.enterprise.UserOptionsBinder",
-                        "properties": {
-                            "addEmptyOption": "",
-                            "cacheInterval": "",
-                            "deptId": "",
-                            "emptyLabel": "",
-                            "groupId": "",
-                            "grouping": "",
-                            "optionLabel": "",
-                            "orgId": "",
-                            "useAjax": ""
-                        }
-                    }
-                }
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_7",
-            "label": "Último Gestor",
-            "name": "UltimoGestor",
-            "sortable": "false",
             "style": "",
             "width": ""
         }
