@@ -79,6 +79,10 @@
             "id": "column_13",
             "label": "Data Agend.",
             "name": "DataAgendamento",
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "sortable": "false",
             "style": "",
             "width": ""
@@ -169,6 +173,10 @@
             "id": "column_17",
             "label": "Processos Relacionados",
             "name": "ProcessosRelacionados",
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "sortable": "false",
             "style": "",
             "width": ""
@@ -430,6 +438,10 @@
             "id": "column_16",
             "label": "Estado Agendamento",
             "name": "EstadoAgendamento",
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "sortable": "false",
             "style": "",
             "width": ""
@@ -548,6 +560,10 @@
             "id": "filter_4",
             "label": "Data Agend.",
             "name": "c_dataOutorga",
+            "permission_rules": {
+                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
+            },
             "type": {
                 "className": "org.joget.plugin.enterprise.DateDataListFilterType",
                 "properties": {
@@ -930,7 +946,7 @@
         {
             "permission": {
                 "className": "org.joget.apps.userview.lib.BeanShellPermission",
-                "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString grupo = \"#currentUser.groups.id#\";\nString departamento = \"#currentUser.department.id#\";\n\nif(grupo.contains(\"Coordenador\") && departamento.contains(\"PL_INT_REG\")){\n    return true;\n} else{\n    return false;\n}"}
+                "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString grupo = \"#currentUser.groups.id#\";\nString departamento = \"#currentUser.department.id#\";\n\nif(grupo.contains(\"Coordenador\") && (departamento.contains(\"PL_INT_REG\") || departamento.contains(\"PL_INT_QUAL_REG\"))){\n    return true;\n} else{\n    return false;\n}"}
             },
             "permission_key": "a0548376-37e7-d6de-e2c4-dd124c7ba5db",
             "permission_name": "Coordenadores Registo"
