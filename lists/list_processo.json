@@ -387,13 +387,11 @@
                 "properties": {
                     "options": [],
                     "optionsBinder": {
-                        "className": "org.joget.plugin.enterprise.JdbcOptionsBinder",
+                        "className": "org.joget.apps.form.lib.BeanShellFormBinder",
                         "properties": {
-                            "addEmpty": "",
                             "cacheInterval": "",
-                            "jdbcDatasource": "default",
-                            "sql": "SELECT c_nome_completo\nFROM app_fd_info_colaboradores c\nINNER JOIN (SELECT ? as 'cedula') c1  \nWHERE IF(c1.cedula != '', c_cedula_profissional LIKE c1.cedula, '')",
-                            "useAjax": "true"
+                            "script": "import org.joget.apps.datalist.service.DataListService;\nimport org.joget.apps.app.service.AppUtil;\nimport java.time.LocalDateTime; \nimport java.time.format.DateTimeFormatter;\nimport java.time.temporal.ChronoUnit;\nimport org.joget.commons.util.LogUtil;\nimport java.lang.Math;\nimport java.sql.SQLException;\nimport java.sql.Connection;\nimport java.sql.PreparedStatement;\nimport java.sql.ResultSet;\nimport java.sql.SQLException;\nimport javax.sql.DataSource;\n\nConnection con = null;\nPreparedStatement stmt = null;\nResultSet rs = null;\nString entidade = \"\";\n\ntry{\n    DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\n    con = ds.getConnection();\n    \n    if(!con.isClosed()){\n        \n        //Obter Nome da Entidade\n        String queryGetEntityName = \"SELECT c_nome_completo FROM app_fd_info_colaboradores c WHERE c_cedula_profissional = ?;\";\n        stmt = con.prepareStatement(queryGetEntityName);\n        stmt.setObject(1, value);\n        rs = stmt.executeQuery();\n        \n        if(rs.next()){\n            entidade = rs.getObject(\"c_nome_completo\");\n        }\n    }\n    \n}catch(Exception e){\n    LogUtil.error(\"Olimpo | Consultar Processos - Erro ao obter nome de entidade da DB\", e, \"Error getting info from DB\");\n}finally{\n    try{\n        if(rs != null){\n            rs.close();\n        }\n        if(stmt != null){\n            stmt.close();\n        }\n        if(con != null && !con.isClosed()) {\n            con.close();\n        }\n    }catch(Exception e){\n        LogUtil.error(\"Olimpo | Consultar Processos - Erro ao fechar conexão\", e, \"Error closing DB connection\");\n    }\n}\n\nreturn entidade;",
+                            "useAjax": ""
                         }
                     }
                 }
