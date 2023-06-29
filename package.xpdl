@@ -6250,7 +6250,7 @@
                     <Performer>conclusoes</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="conclusoes"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="494.9857864379883,56.88921069677734"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="590.980110168457,51.78976916845703"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="route2" Name="Faz sentido?">
@@ -6342,6 +6342,34 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1085,118"/>
                     </ExtendedAttributes>
                 </Activity>
+                <Activity Id="activity5_1" Name="Alertas">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>conclusoes</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="conclusoes"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="299.97159576416016,77.88351916845703"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route4_1" Name="Alertas?">
+                    <Route/>
+                    <Performer>conclusoes</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition14"/>
+                                    <TransitionRef Id="transition16"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="conclusoes"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="436.9885940551758,80.99431323583984"/>
+                    </ExtendedAttributes>
+                </Activity>
             </Activities>
             <Transitions>
                 <Transition From="activity3" Id="transition3" To="route2">
@@ -6390,7 +6418,23 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="ultimaAtividadeConc" Id="transition9" To="activity3">
+                <Transition From="ultimaAtividadeConc" Id="transition9" To="activity5_1">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="activity5_1" Id="transition10" To="route4_1">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route4_1" Id="transition14" Name="Sim" To="activity3">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route4_1" Id="transition16" Name="Nao" To="route3">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
