@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT sact.id as 'idAtividade', FROM_UNIXTIME(floor(sact.activated/1000)) as DataAtividade, p.id, IF(sact.ResourceId IS NULL, IF(sass.ResourceId IS NULL,NULL, sass.ResourceId), sact.ResourceId) as 'Utilizador', dp.c_nome_banco AS Banco, dp.c_n_wf_pl AS WF_PL, dp.c_data_primeira_entrada as Data_1entrada\nFROM shkprocesses sp\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN shkassignmentstable sass ON sass.ActivityId = sact.id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON p.c_detalhe_processo= dp.id\nWHERE sact.id LIKE '%filtro%' AND (sact.ResourceId IS NOT NULL OR sass.ResourceId IS NOT NULL)\nORDER BY Data_1entrada DESC"
+            "sql": "SELECT sact.id as 'idAtividade', DATE_FORMAT(FROM_UNIXTIME(floor(sact.activated/1000)),\"%Y-%m-%d %H:%i\") as InicioAtividade, DATE_FORMAT(FROM_UNIXTIME(floor(sact.LastStateTime/1000)),\"%Y-%m-%d %H:%i\") as FimAtividade,\np.id, IF(sact.ResourceId IS NULL, IF(sass.ResourceId IS NULL,NULL, sass.ResourceId), sact.ResourceId) as 'Utilizador',\ndp.c_nome_banco AS Banco, dp.c_n_wf_pl AS WF_PL, dp.c_data_primeira_entrada as Data_1entrada, DATEDIFF(FROM_UNIXTIME(floor(sact.LastStateTime/1000)),FROM_UNIXTIME(floor(sact.activated/1000))) AS SLA\nFROM shkprocesses sp\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN shkassignmentstable sass ON sass.ActivityId = sact.id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON p.c_detalhe_processo= dp.id\nWHERE sact.id LIKE '%filtro%' AND (sact.ResourceId IS NOT NULL OR sass.ResourceId IS NOT NULL)\nORDER BY Data_1entrada DESC\n\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -90,50 +90,6 @@
             "exclude_export": "",
             "filterable": true,
             "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_3",
-            "label": "Atividade",
-            "name": "idAtividade",
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_5",
-            "label": "Data Atividade",
-            "name": "DataAtividade",
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
                 "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
                 "properties": {
                     "options": [],
@@ -161,34 +117,64 @@
             "sortable": "false",
             "style": "",
             "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_7",
+            "label": "Inicio Atividade",
+            "name": "InicioAtividade",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_8",
+            "label": "Fim Atividade",
+            "name": "FimAtividade",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_6",
+            "label": "SLA",
+            "name": "SLA",
+            "sortable": "false"
         }
     ],
     "considerFilterWhenGetTotal": "",
     "description": "",
     "disableResponsive": "",
     "filters": [
-        {
-            "datalist_type": "filter",
-            "filterParamName": "d-1334410-fn_DataAtividade",
-            "hidden": "",
-            "id": "filter_3",
-            "label": "Data Atividade",
-            "name": "DataAtividade",
-            "type": {
-                "className": "org.joget.plugin.enterprise.DateRangeDataListFilterType",
-                "properties": {
-                    "dateStoreInUTC": "",
-                    "format": "yy/mm/dd",
-                    "formatJava": "yyyy/MM/dd",
-                    "fromDefaultValue": "",
-                    "fromLabel": "De",
-                    "showFieldLabel": "true",
-                    "toDefaultValue": "",
-                    "toLabel": "Até",
-                    "yearRange": "c-10:c+10"
-                }
-            }
-        },
         {
             "datalist_type": "filter",
             "filterParamName": "d-1334410-fn_Utilizador",
