@@ -6,6 +6,29 @@
             "className": "org.joget.apps.form.model.Column",
             "elements": [
                 {
+                    "className": "org.joget.apps.form.lib.HiddenField",
+                    "properties": {
+                        "id": "servico",
+                        "useDefaultWhenEmpty": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field6",
+                        "label": "",
+                        "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
+                        "value": "<script>\n    $(document).ready(function(){\n        var text = \"Versão do Formulário \" + #appDef.version# + \" | Versão atual \" + $(\"select[id*=versaoRecente]\").val();\n        $(\"h2#versaoRecenteText\").text(text);\n        $(\"select[id*=versaoRecente\").parent().hide();\n        //<h2>#appDef.published#<\/h2>\n    });\n    \n<\/script>\n<h1 class=\"headertext\">#form.detalhe_proce_dist.num_pedido[{form.processos_distrates.detalhe_processo}]#<\/h1>\n<h2 id=\"versaoRecenteText\"><\/h2>\n"
+                    }
+                },
+                {
                     "className": "org.joget.apps.form.lib.SubForm",
                     "properties": {
                         "formDefId": "alertas",
@@ -32,29 +55,6 @@
                             "properties": {}
                         },
                         "subFormParentId": ""
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.HiddenField",
-                    "properties": {
-                        "id": "servico",
-                        "useDefaultWhenEmpty": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.CustomHTML",
-                    "properties": {
-                        "autoPopulate": "",
-                        "id": "field6",
-                        "label": "",
-                        "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
-                        "value": "<script>\n    $(document).ready(function(){\n        var text = \"Versão do Formulário \" + #appDef.version# + \" | Versão atual \" + $(\"select[id*=versaoRecente]\").val();\n        $(\"h2#versaoRecenteText\").text(text);\n        $(\"select[id*=versaoRecente\").parent().hide();\n        //<h2>#appDef.published#<\/h2>\n    });\n    \n<\/script>\n<h1 class=\"headertext\">#form.detalhe_proce_dist.num_pedido[{form.processos_distrates.detalhe_processo}]#<\/h1>\n<h2 id=\"versaoRecenteText\"><\/h2>\n"
                     }
                 },
                 {
@@ -144,17 +144,6 @@
                         "partiallyStore": "true",
                         "prevButtonlabel": "ANTERIOR",
                         "storeMainFormOnPartiallyStore": "true"
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.TextArea",
-                    "properties": {
-                        "cols": "20",
-                        "id": "field7",
-                        "label": "Text Area",
-                        "readonly": "False",
-                        "readonlyLabel": "False",
-                        "rows": "5"
                     }
                 },
                 {
