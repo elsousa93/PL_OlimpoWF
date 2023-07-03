@@ -9,6 +9,17 @@
                     "className": "org.joget.apps.form.lib.HiddenField",
                     "properties": {
                         "id": "id_processo",
+                        "permission_rules": {
+                            "5ee42406-9f6c-fbe3-35ff-508ce9d1f294": {},
+                            "728ab7bc-8346-ae22-64f5-3a4815d79acc": {},
+                            "83637e6f-3fe9-f5d3-0394-fb14a1ef53d3": {},
+                            "b4c18e58-d844-b963-2770-3257d9c7cefe": {},
+                            "d1d6996e-389d-35e9-3acf-1f95d1c30cd1": {},
+                            "e0225c76-302c-9aba-4b69-9cce67038591": {},
+                            "f1926293-b24b-1c59-d60b-c0c9c520646f": {},
+                            "fac6bdeb-6e9c-3eb1-3ecf-80d489711aba": {},
+                            "ffa341f0-9905-34c5-6ffb-8e1fdb024561": {}
+                        },
                         "useDefaultWhenEmpty": "",
                         "validator": {
                             "className": "",
@@ -128,6 +139,17 @@
                         "format24hr": "true",
                         "id": "data_comunicacao_informal",
                         "label": "Data de Comunicação Informal",
+                        "permission_rules": {
+                            "5ee42406-9f6c-fbe3-35ff-508ce9d1f294": {},
+                            "728ab7bc-8346-ae22-64f5-3a4815d79acc": {},
+                            "83637e6f-3fe9-f5d3-0394-fb14a1ef53d3": {},
+                            "b4c18e58-d844-b963-2770-3257d9c7cefe": {},
+                            "d1d6996e-389d-35e9-3acf-1f95d1c30cd1": {},
+                            "e0225c76-302c-9aba-4b69-9cce67038591": {},
+                            "f1926293-b24b-1c59-d60b-c0c9c520646f": {},
+                            "fac6bdeb-6e9c-3eb1-3ecf-80d489711aba": {},
+                            "ffa341f0-9905-34c5-6ffb-8e1fdb024561": {}
+                        },
                         "placeholder": "",
                         "readonly": "",
                         "readonlyLabel": "",
@@ -136,7 +158,7 @@
                             "className": "org.joget.apps.form.lib.BeanShellValidator",
                             "properties": {
                                 "decoration": "",
-                                "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\nimport java.time.LocalDateTime; \r\nimport java.time.format.DateTimeFormatter;\r\nimport java.time.ZoneId; \r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values){\r\n    \r\n    boolean result = true;\r\n    \r\n    Form form = FormUtil.findRootForm(element);\r\n    Element status = FormUtil.findElement(\"status\", form, formData);\r\n    \r\n    Form form = FormUtil.findRootForm(element);\r\n    Element dataConclusao = FormUtil.findElement(\"data_conclusao\", form, formData);\r\n    \r\n    if(dataConclusao!=null){\r\n        String[] dataConclusaoVal = FormUtil.getElementPropertyValues(dataConclusao, formData);\r\n        if(dataConclusaoVal.length > 0 && dataConclusaoVal[0].isEmpty()){\r\n            if (status != null) {\r\n                String[] statusVal = FormUtil.getElementPropertyValues(status, formData);\r\n                LogUtil.info(\"Data COnslusaoVal\", \"AAAA \" + dataConclusaoVal[0]);\r\n                LogUtil.info(\"Status Val\", \"AAAA \" + statusVal[0]);\r\n                if(statusVal.length > 0 && (statusVal[0].equals(\"NOUT\") || statusVal[0].equals(\"OUT\"))){\r\n                    String id = FormUtil.getElementParameterName(element);\r\n                    formData.addFormError(id, \"É obrigatório ter pelo menos uma data de comunicação\");\r\n                    result=false;\r\n                    return result;\r\n                \r\n                }\r\n            }\r\n        }\r\n    }\r\n    \r\n     \r\n    \r\n    \r\n    if(values.length > 0 && !values[0].isEmpty()){\r\n        \r\n        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"dd/MM/yyyy HH:mm\");\r\n        LocalDateTime dataConclusao = LocalDateTime.parse(values[0], formatter);\r\n        LocalDateTime now = LocalDateTime.parse(\"#date.dd/MM/yyyy HH:mm#\", formatter);\r\n        if(dataConclusao.isAfter(now)){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"A data selecionada não pode ser posterior à data atual\");\r\n            result = false;\r\n        }\r\n        \r\n    }\r\n    \r\n    \r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\nimport java.time.LocalDateTime; \r\nimport java.time.format.DateTimeFormatter;\r\nimport java.time.ZoneId;\r\n\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.apps.app.model.AppDefinition;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values){\r\n    \r\n    boolean result = true;\r\n    \r\n    Form form = FormUtil.findRootForm(element);\r\n    Element dataConclusao = FormUtil.findElement(\"data_conclusao\", form, formData);\r\n    \r\n     Connection con = null;\r\n        PreparedStatement stmt = null;\r\n        ResultSet rs = null;\r\n    \r\n\r\n    \r\n    \r\n    if(dataConclusao!=null){\r\n        String[] dataConclusaoVal = FormUtil.getElementPropertyValues(dataConclusao, formData);\r\n        if(dataConclusaoVal.length > 0 && dataConclusaoVal[0].isEmpty()){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"É obrigatório ter pelo menos uma data de comunicação\");\r\n            result=false;\r\n            return result;\r\n\r\n        }\r\n    }\r\n \r\n    \r\n    if(values.length > 0 && !values[0].isEmpty()){\r\n        \r\n        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"dd/MM/yyyy HH:mm\");\r\n        LocalDateTime dataConclusao = LocalDateTime.parse(values[0], formatter);\r\n        LocalDateTime now = LocalDateTime.parse(\"#date.dd/MM/yyyy HH:mm#\", formatter);\r\n        if(dataConclusao.isAfter(now)){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"A data selecionada não pode ser posterior à data atual\");\r\n            result = false;\r\n        }\r\n        \r\n    }\r\n    \r\n    \r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
                             }
                         },
                         "value": "",
@@ -416,7 +438,7 @@
                             "fac6bdeb-6e9c-3eb1-3ecf-80d489711aba": {},
                             "ffa341f0-9905-34c5-6ffb-8e1fdb024561": {}
                         },
-                        "value": "<script>\n    $(document).ready(function(){\n        atualizarVisibilidadeBCP();\n        $(\"select[id*=status]\").prop(\"disabled\", \"disabled\");\n        $(\"select[id*=motivo]\").prop(\"disabled\", \"disabled\");\n        if(!$(\"select[id*=status]\").val().includes('DES')){\n            $(\"select[id*=motivo]\").parent().remove();\n        }\n        \n    });\n\n    \n    function atualizarVisibilidadeBCP(){\n        var tipoProcesso = \"#form.detalhe_proce_procu.tipo_processo[{form.processos_procu.detalhe_processo}]#\";\n        var banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\n    \n        \n        if(banco_fundo === 'BCP'){\n            if(tipoProcesso === 'DIST' || tipoProcesso === 'MUT' || tipoProcesso === 'LEAS'){\n                $(\"input[id*=n_selo]\").parent().hide();\n                $(\"input[id*=envio_crp_registos_averbados]\").parent().hide();\n                $(\"input[id*=envio_originais_ao_cliente]\").parent().hide();\n                $(\"input[id*=rececao_originais]\").parent().hide();\n            }else{\n                $(\"input[id*=n_selo]\").parent().show();\n                $(\"input[id*=envio_crp_registos_averbados]\").parent().show();\n                $(\"input[id*=envio_originais_ao_cliente]\").parent().show();\n                $(\"input[id*=rececao_originais]\").parent().show();\n            }\n        } \n        \n    }\n    \n    \n    \n<\/script>"
+                        "value": "<script>\n    $(document).ready(function(){\n        atualizarVisibilidadeBCP();\n        //$(\"select[id*=status]\").prop(\"disabled\", \"disabled\");\n        //$(\"select[id*=motivo]\").prop(\"disabled\", \"disabled\");\n        if(!$(\"select[id*=status]\").val().includes('DES')){\n            $(\"select[id*=motivo]\").parent().remove();\n        }\n        \n    });\n\n    \n    function atualizarVisibilidadeBCP(){\n        var tipoProcesso = \"#form.detalhe_proce_procu.tipo_processo[{form.processos_procu.detalhe_processo}]#\";\n        var banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\n    \n        \n        if(banco_fundo === 'BCP'){\n            if(tipoProcesso === 'DIST' || tipoProcesso === 'MUT' || tipoProcesso === 'LEAS'){\n                $(\"input[id*=n_selo]\").parent().hide();\n                $(\"input[id*=envio_crp_registos_averbados]\").parent().hide();\n                $(\"input[id*=envio_originais_ao_cliente]\").parent().hide();\n                $(\"input[id*=rececao_originais]\").parent().hide();\n            }else{\n                $(\"input[id*=n_selo]\").parent().show();\n                $(\"input[id*=envio_crp_registos_averbados]\").parent().show();\n                $(\"input[id*=envio_originais_ao_cliente]\").parent().show();\n                $(\"input[id*=rececao_originais]\").parent().show();\n            }\n        } \n        \n    }\n    \n    \n    \n<\/script>"
                     }
                 }
             ],
