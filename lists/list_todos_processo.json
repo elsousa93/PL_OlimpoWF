@@ -252,54 +252,6 @@
                 "properties": {
                     "options": [],
                     "optionsBinder": {
-                        "className": "org.joget.plugin.enterprise.UserOptionsBinder",
-                        "properties": {
-                            "addEmptyOption": "",
-                            "cacheInterval": "",
-                            "deptId": "",
-                            "emptyLabel": "",
-                            "groupId": "",
-                            "grouping": "",
-                            "optionLabel": "fullname",
-                            "orgId": "",
-                            "useAjax": "true"
-                        }
-                    }
-                }
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_7",
-            "label": "Alocado a",
-            "name": "assignee",
-            "permission_rules": {
-                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
-                "51bdeaef-5b64-2026-6347-f9376acdccae": {},
-                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
-                "749156f0-2c8a-86f2-d34e-8c631e4b8974": {},
-                "75768f5e-6fe4-6ed0-42cc-670a652d4a63": {},
-                "b277a55d-0ec7-5049-4b6c-5960f2191a9b": {},
-                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {},
-                "ebb1805f-da1e-2061-4dc8-722c0b2a8b72": {}
-            },
-            "sortable": "true",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
-                "properties": {
-                    "options": [],
-                    "optionsBinder": {
                         "className": "org.joget.apps.form.lib.FormOptionsBinder",
                         "properties": {
                             "addEmptyOption": "",
@@ -337,6 +289,38 @@
                     "hidden": "true",
                     "include_export": ""
                 }
+            },
+            "sortable": "true",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_7",
+            "label": "Cliente",
+            "name": "cliente",
+            "permission_rules": {
+                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "51bdeaef-5b64-2026-6347-f9376acdccae": {},
+                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
+                "749156f0-2c8a-86f2-d34e-8c631e4b8974": {},
+                "75768f5e-6fe4-6ed0-42cc-670a652d4a63": {},
+                "b277a55d-0ec7-5049-4b6c-5960f2191a9b": {},
+                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {},
+                "ebb1805f-da1e-2061-4dc8-722c0b2a8b72": {}
             },
             "sortable": "true",
             "style": "",
@@ -571,9 +555,105 @@
             },
             "headerAlignment": "",
             "hidden": "false",
+            "id": "column_9",
+            "label": "Atividade",
+            "name": "activityName",
+            "permission_rules": {
+                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "51bdeaef-5b64-2026-6347-f9376acdccae": {},
+                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
+                "749156f0-2c8a-86f2-d34e-8c631e4b8974": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": ""
+                },
+                "75768f5e-6fe4-6ed0-42cc-670a652d4a63": {},
+                "b277a55d-0ec7-5049-4b6c-5960f2191a9b": {},
+                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
+                "ebb1805f-da1e-2061-4dc8-722c0b2a8b72": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": ""
+                }
+            },
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
             "id": "column_0",
             "label": "Estado do Processo",
             "name": "estadoProcesso",
+            "sortable": "true",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.BeanShellFormatter",
+                "properties": {"script": "import org.joget.apps.datalist.service.DataListService;\nimport org.joget.apps.app.service.AppUtil;\nimport java.time.LocalDateTime; \nimport java.time.format.DateTimeFormatter;\nimport java.time.temporal.ChronoUnit;\nimport org.joget.commons.util.LogUtil;\nimport java.lang.Math;\nimport java.sql.SQLException;\nimport java.sql.Connection;\nimport java.sql.PreparedStatement;\nimport java.sql.ResultSet;\nimport java.sql.SQLException;\nimport javax.sql.DataSource;\n\nConnection con = null;\nPreparedStatement stmt = null;\nResultSet rs = null;\nCollection holidays = new ArrayList();\ntry{\n     DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\n    con = ds.getConnection();\n            \n    if(!con.isClosed()){\n        \n        //Obter feriados\n        String queryGetHolidays = \"SELECT * FROM app_fd_lista_feriados;\";\n        stmt = con.prepareStatement(queryGetHolidays);\n        rs = stmt.executeQuery();\n\n        while(rs.next()){\n            holidays.add(rs.getObject(\"c_data\"));\n        }\n        \n    }\n    \n}catch(Exception e){\n    LogUtil.error(\"Olimpo-Fila Trabalho SLA DIAS\", e, \"Error getting info from DB\");\n}finally{\n    try{\n        if(rs != null){\n        rs.close();\n        }\n        if(stmt != null){\n            stmt.close();\n        }\n        if(con != null && !con.isClosed()) {\n            con.close();\n        }\n    }catch(Exception e){\n        LogUtil.error(\"Olimpo- Store Binder Detalhe Processo\", e, \"Error closing DB connection\");\n    }\n    \n}\n\nDataListService dataListService = (DataListService) AppUtil.getApplicationContext().getBean(\"dataListService\");\nString dataInicio = dataListService.evaluateColumnValueFromRow(row, \"dataInicio\");\nDateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"dd/MM/yyyy HH:mm\");\nDateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(\"yyyy-MM-dd\");\n\nString result = \"\";\nif(dataInicio !=  null && dataInicio.trim() != \"\" && value !=  null && !value.isEmpty()){\n    ////////LogUtil.info(\"SLA %\", value);\n    //if dataInicio date format is not \"dd/MM/yyyy HH:mm\"\n    if(dataInicio.charAt(2) != '/'){\n        //if dataInicio date format is of the format \"yyyy-MM-dd HH:mm\"\n        if(dataInicio.charAt(4) == '-' && dataInicio.charAt(10) == ' ' && dataInicio.charAt(13) == ':'){\n            dataInicio =  dataInicio.substring(8,10) + \"/\" + dataInicio.substring(5,7) + \"/\" + dataInicio.substring(0,4) + \" \" + dataInicio.substring(11,16);\n        }\n    }\n    //if value date format is not \"dd/MM/yyyy HH:mm\"\n    if(value.charAt(2) != '/'){\n        //if value date format is of the format \"yyyy-MM-dd HH:mm\"\n        if(value.charAt(4) == '-' && value.charAt(10) == ' ' && value.charAt(13) == ':'){\n            value =  value.substring(8,10) + \"/\" + value.substring(5,7) + \"/\" + value.substring(0,4) + \" \" + value.substring(11,16);\n        }\n    }\n    \n    LocalDateTime dateInit = LocalDateTime.parse(dataInicio, formatter);\n    LocalDateTime dateEnd = LocalDateTime.parse(value, formatter);\n    LocalDateTime dateNow = LocalDateTime.parse(\"#date.dd/MM/yyyy HH:mm#\",formatter);\n    \n    double totalMinutes = ChronoUnit.MINUTES.between(dateInit, dateEnd);\n    double passedMinutes = ChronoUnit.MINUTES.between(dateInit, dateNow);\n    \n    //Calcular dias não uteis entre a data de inicio e final\n    long totalDaysBetween = ChronoUnit.DAYS.between(dateInit, dateEnd);\n    long nonWorkDaysTotal = 0;\n    LocalDateTime dateInit2 = dateInit; //copy of dateInit\n    while(totalDaysBetween>=0){\n        \n        if(holidays.contains(dateInit2.format(dateFormatter))){\n            nonWorkDaysTotal+=1;\n        }else{\n        \n            String day = dateInit2.getDayOfWeek().toString();\n            \n            switch(day) {\n                case \"SATURDAY\":{\n                    nonWorkDaysTotal+=1;\n                    break;\n                }\n                case \"SUNDAY\":{\n                    nonWorkDaysTotal+=1;\n                    break;\n                }\n            }\n        }\n        \n        dateInit2 = dateInit2.plusDays(1);\n        totalDaysBetween-=1;\n    }\n    totalMinutes = totalMinutes - (1440 * nonWorkDaysTotal); //total de minutos menos dias não uteis em minutos\n    \n    \n    //Calcular dias não uteis entre a data de inicio e atual\n    long actualDaysBetween = ChronoUnit.DAYS.between(dateInit, dateNow);\n    long nonWorkDaysActual = 0;\n    while(actualDaysBetween>0){\n        if(holidays.contains(dateInit.format(dateFormatter))){\n            nonWorkDaysActual+=1;\n        }else{\n            String day = dateInit.getDayOfWeek().toString();\n            \n            switch(day) {\n                case \"SATURDAY\":{\n                    nonWorkDaysActual+=1;\n                    break;\n                }\n                case \"SUNDAY\":{\n                    nonWorkDaysActual+=1;\n                    break;\n                }\n            }\n        }\n        dateInit = dateInit.plusDays(1);\n        actualDaysBetween-=1;\n    }\n    passedMinutes = passedMinutes - (1440 * nonWorkDaysActual); //total de minutos menos dias não uteis em minutos\n    \n    int percentage = (Integer)Math.round((passedMinutes * 100)/totalMinutes);\n\n    result = percentage + \"%\";\n}else {\n    result = \"-\";\n}\n\n\nreturn result;"}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_12",
+            "label": "SLA (%)",
+            "name": "DataFim",
+            "permission_rules": {
+                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "51bdeaef-5b64-2026-6347-f9376acdccae": {},
+                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
+                "749156f0-2c8a-86f2-d34e-8c631e4b8974": {},
+                "75768f5e-6fe4-6ed0-42cc-670a652d4a63": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
+                "b277a55d-0ec7-5049-4b6c-5960f2191a9b": {},
+                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
+                "ebb1805f-da1e-2061-4dc8-722c0b2a8b72": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                }
+            },
             "sortable": "true",
             "style": "",
             "width": ""
@@ -659,47 +739,6 @@
         },
         {
             "datalist_type": "filter",
-            "filterParamName": "d-2614187-fn_assignee",
-            "hidden": "",
-            "id": "filter_4",
-            "label": "Alocado a",
-            "name": "assignee",
-            "permission_rules": {
-                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
-                "51bdeaef-5b64-2026-6347-f9376acdccae": {},
-                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
-                "749156f0-2c8a-86f2-d34e-8c631e4b8974": {},
-                "75768f5e-6fe4-6ed0-42cc-670a652d4a63": {},
-                "b277a55d-0ec7-5049-4b6c-5960f2191a9b": {},
-                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {},
-                "ebb1805f-da1e-2061-4dc8-722c0b2a8b72": {}
-            },
-            "type": {
-                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
-                "properties": {
-                    "defaultValue": "",
-                    "multiple": "autocomplete",
-                    "options": [],
-                    "optionsBinder": {
-                        "className": "org.joget.plugin.enterprise.UserOptionsBinder",
-                        "properties": {
-                            "addEmptyOption": "",
-                            "cacheInterval": "",
-                            "deptId": "",
-                            "emptyLabel": "",
-                            "groupId": "",
-                            "grouping": "",
-                            "optionLabel": "",
-                            "orgId": "PL",
-                            "useAjax": ""
-                        }
-                    },
-                    "size": ""
-                }
-            }
-        },
-        {
-            "datalist_type": "filter",
             "filterParamName": "d-2614187-fn_c_nome_banco",
             "hidden": "",
             "id": "filter_7",
@@ -738,6 +777,28 @@
                     },
                     "size": ""
                 }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-2614187-fn_cliente",
+            "hidden": "",
+            "id": "filter_4",
+            "label": "Cliente",
+            "name": "cliente",
+            "permission_rules": {
+                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "51bdeaef-5b64-2026-6347-f9376acdccae": {},
+                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
+                "749156f0-2c8a-86f2-d34e-8c631e4b8974": {},
+                "75768f5e-6fe4-6ed0-42cc-670a652d4a63": {},
+                "b277a55d-0ec7-5049-4b6c-5960f2191a9b": {},
+                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {},
+                "ebb1805f-da1e-2061-4dc8-722c0b2a8b72": {}
+            },
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {"defaultValue": ""}
             }
         },
         {
