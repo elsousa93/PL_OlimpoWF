@@ -136,45 +136,6 @@
                     "className": "org.joget.apps.form.lib.TextField",
                     "properties": {
                         "encryption": "",
-                        "id": "outro_tipo_distrate_2",
-                        "label": "Outro Tipo de Distrate",
-                        "maxlength": "",
-                        "permission_rules": {
-                            "178fdc63-b293-18b9-8aa9-e1b40619226d": {
-                                "permissionHidden": "true",
-                                "readonly": ""
-                            },
-                            "41f81fb9-ca76-9d7e-9726-1926ddf0b8c9": {
-                                "permissionHidden": "true",
-                                "readonly": ""
-                            },
-                            "6bb5bf30-8894-5d32-e79f-47a44ffc6065": {
-                                "permissionHidden": "true",
-                                "readonly": ""
-                            },
-                            "8b59af4e-3ade-8eaa-3a5c-44ddf77cbbb0": {
-                                "permissionHidden": "true",
-                                "readonly": ""
-                            }
-                        },
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "storeNumeric": "",
-                        "style": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.TextField",
-                    "properties": {
-                        "encryption": "",
                         "id": "num_workflow",
                         "label": "Número(s) do(s) Empréstimo(s)",
                         "maxlength": "",
@@ -942,7 +903,7 @@
                             "ee177599-9c69-d878-10f8-9aebde208e06": {},
                             "f8c01627-bf37-05aa-5732-90fe1b2327b3": {}
                         },
-                        "value": "<script>\n    $(document).change(function(){\n        atualizarVisibilidadeBCP();\n        atualizarVisibilidadesMTG();\n        atualizarVisibilidadesABN();\n        atualizarVisibilidadesBIC();\n\n    /* $(\"select[id*=nome_banco]\").change(function(){\n            atualizarVisibilidadeBCP();\n            atualizarVisibilidadesMTG();\n            atualizarVisibilidadesABN();\n            atualizarVisibilidadesBIC();\n        });*/\n\n    });\n    \n    function atualizarVisibilidadeBCP(){\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        var tipo_distrate = $(\"select[id*=tipo_distrate]\").val();\n        if(nome_banco==='BCP'){\n            $(\"label[for=field2_2_detalheProcessoDistrates_num_pedido]\").text(\"Número de Pedido\");\n            $(\"select[id*=finalidade_emprestimo]\").parent().hide();\n            $(\"select[id*=destino_imovel]\").parent().hide();\n           /* if(tipo_distrate === 'OTR'){\n                $(\"input[id*=outro_tipo_distrate]\").parent().show();\n                \n            } else {\n                $(\"input[id*=outro_tipo_distrate]\").parent().hide();\n            }*/\n        }\n    }\n    \n    function atualizarVisibilidadesMTG(){\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        var tipo_distrate = $(\"select[id*=tipo_distrate]\").val();\n        if(nome_banco==='MTG'){\n            $(\"label[for=field2_2_detalheProcessoDistrates_num_pedido]\").text(\"Número de Pedido\");\n            $(\"select[id*=finalidade_emprestimo]\").parent().hide();\n            $(\"select[id*=destino_imovel]\").parent().hide();\n           /* if(tipo_distrate === 'OTR'){\n                $(\"input[id*=outro_tipo_distrate]\").parent().show();\n                \n            } else {\n                $(\"input[id*=outro_tipo_distrate]\").parent().hide();\n            }*/\n        }\n    }\n    \n    function atualizarVisibilidadesABN(){\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        var tipo_distrate = $(\"select[id*=tipo_distrate]\").val();\n        //console.log(\"Nome Banco\" + nome_banco);\n        if(nome_banco==='ABN'){\n            $(\"label[for=field2_2_detalheProcessoDistrates_num_pedido]\").text(\"Número de Ordem\");\n            $(\"select[id*=finalidade_emprestimo]\").parent().hide();\n            $(\"select[id*=destino_imovel]\").parent().hide();\n           /* if(tipo_distrate === 'OTR'){\n                $(\"input[id*=outro_tipo_distrate]\").parent().show();\n                \n            } else {\n                $(\"input[id*=outro_tipo_distrate]\").parent().hide();\n            }*/\n        }\n    }\n    \n    function atualizarVisibilidadesBIC(){\n        //console.log(\"entrou3\");\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        var tipo_distrate = $(\"select[id*=tipo_distrate]\").val();\n        console.log(\"Nome Banco: \" + nome_banco);\n        if(nome_banco==='BIC'){\n            $(\"label[for=field2_2_detalheProcessoDistrates_num_pedido]\").text(\"Número de Workflow\");\n            $(\"input[id*=num_workflow]\").parent().hide();\n           /* if(tipo_distrate === 'OTR'){\n                $(\"input[id*=outro_tipo_distrate]\").parent().show();\n                \n            } else {\n                $(\"input[id*=outro_tipo_distrate]\").parent().hide();\n            }\n            */\n            if(tipo_distrate === 'VND' || tipo_distrate === 'TRF'){\n                $(\"input[id*=data_escritura]\").parent().show();\n                $(\"input[id*=hora_escritura]\").parent().show();\n                $(\"input[id*=local]\").parent().show();\n            \n            } else {\n                $(\"input[id*=data_escritura]\").parent().hide();\n                $(\"input[id*=hora_escritura]\").parent().hide();\n                $(\"input[id*=local]\").parent().hide();\n            }\n        }\n    }\n<\/script>"
+                        "value": "<script>\n    $(document).change(function(){\n        atualizarVisibilidadeBCP();\n        atualizarVisibilidadesMTG();\n        atualizarVisibilidadesABN();\n        atualizarVisibilidadesBIC();\n\n    /* $(\"select[id*=nome_banco]\").change(function(){\n            atualizarVisibilidadeBCP();\n            atualizarVisibilidadesMTG();\n            atualizarVisibilidadesABN();\n            atualizarVisibilidadesBIC();\n        });*/\n\n    });\n    \n    function atualizarVisibilidadeBCP(){\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        var tipo_distrate = $(\"select[id*=tipo_distrate]\").val();\n        if(nome_banco==='BCP'){\n            $(\"label[for=field2_2_detalheProcessoDistrates_num_pedido]\").text(\"Número de Pedido\");\n            $(\"select[id*=finalidade_emprestimo]\").parent().hide();\n            $(\"select[id*=destino_imovel]\").parent().hide();\n            if(tipo_distrate === 'OTR'){\n                $(\"input[id*=outro_tipo_distrate]\").parent().show();\n                \n            } else {\n                $(\"input[id*=outro_tipo_distrate]\").parent().hide();\n            }\n        }\n    }\n    \n    function atualizarVisibilidadesMTG(){\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        var tipo_distrate = $(\"select[id*=tipo_distrate]\").val();\n        if(nome_banco==='MTG'){\n            $(\"label[for=field2_2_detalheProcessoDistrates_num_pedido]\").text(\"Número de Pedido\");\n            $(\"select[id*=finalidade_emprestimo]\").parent().hide();\n            $(\"select[id*=destino_imovel]\").parent().hide();\n            if(tipo_distrate === 'OTR'){\n                $(\"input[id*=outro_tipo_distrate]\").parent().show();\n                \n            } else {\n                $(\"input[id*=outro_tipo_distrate]\").parent().hide();\n            }\n        }\n    }\n    \n    function atualizarVisibilidadesABN(){\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        var tipo_distrate = $(\"select[id*=tipo_distrate]\").val();\n        //console.log(\"Nome Banco\" + nome_banco);\n        if(nome_banco==='ABN'){\n            $(\"label[for=field2_2_detalheProcessoDistrates_num_pedido]\").text(\"Número de Ordem\");\n            $(\"select[id*=finalidade_emprestimo]\").parent().hide();\n            $(\"select[id*=destino_imovel]\").parent().hide();\n            if(tipo_distrate === 'OTR'){\n                $(\"input[id*=outro_tipo_distrate]\").parent().show();\n                \n            } else {\n                $(\"input[id*=outro_tipo_distrate]\").parent().hide();\n            }\n        }\n    }\n    \n    function atualizarVisibilidadesBIC(){\n        //console.log(\"entrou3\");\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        var tipo_distrate = $(\"select[id*=tipo_distrate]\").val();\n        console.log(\"Nome Banco: \" + nome_banco);\n        if(nome_banco==='BIC'){\n            $(\"label[for=field2_2_detalheProcessoDistrates_num_pedido]\").text(\"Número de Workflow\");\n            $(\"input[id*=num_workflow]\").parent().hide();\n            if(tipo_distrate === 'OTR'){\n                $(\"input[id*=outro_tipo_distrate]\").parent().show();\n                \n            } else {\n                $(\"input[id*=outro_tipo_distrate]\").parent().hide();\n            }\n            if(tipo_distrate === 'VND' || tipo_distrate === 'TRF'){\n                $(\"input[id*=data_escritura]\").parent().show();\n                $(\"input[id*=hora_escritura]\").parent().show();\n                $(\"input[id*=local]\").parent().show();\n            \n            } else {\n                $(\"input[id*=data_escritura]\").parent().hide();\n                $(\"input[id*=hora_escritura]\").parent().hide();\n                $(\"input[id*=local]\").parent().hide();\n            }\n        }\n    }\n<\/script>"
                     }
                 }
             ],
