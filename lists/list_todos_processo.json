@@ -67,7 +67,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "idProc",
-            "sql": "SELECT p.id AS idProc, dp.*, sp.Id AS processId, sp.Name AS processName, dp.c_n_wf_banco AS NwfBanco, ip.c_nome AS cliente, \n        CONCAT(ato.c_dataOutorga, ' ', ato.c_horaOutorga) AS DataAgendamento,\n        dp.c_inicializacao_gestor AS InicializacaoGestor, ato.c_cedula_entidade as entidadeAutenticadora,\n        g.c_estado_arquivo AS estadoArquivo, sps.KeyValue AS estadoProcesso\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK' \nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id AND ato.c_status = 'AGD'\nLEFT JOIN app_fd_geral g ON g.c_id_processo = p.id\nWHERE sps.KeyValue NOT LIKE 'closed.aborted'\nAND sp.Id not like '%Credito%'\nAND p.id IS NOT NULL\nAND (Select count(ID) from shkprocesses \n    where ActivityRequesterProcessId = sp2.id\n    AND ( If( '#currentUser.department.id#' like '%_CNT_BCP%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"BCP\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_BIC%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"BIC\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_BST%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"BST\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_NVB%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"NVB\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_MTG%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"MTG\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_GEN%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"GEN\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_ABN%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"ABN\", '')\n    OR If( '#currentUser.department.id#' like '%_FLT_%', ID like '%Filtro%', '')\n    OR If( '#currentUser.department.id#' like '%_PRD_%', ID like '%Producao%', '')\n    OR If( '#currentUser.department.id#' like '%_VAL_%', ID like '%Validacao%', '')\n    OR If( '#currentUser.department.id#' like '%_AO%', ID like '%AcompanhamentoOutorgas%', '')\n    OR If( '#currentUser.department.id#' like '%_CON%', ID like '%Conclusoes%', '')\n    OR If( '#currentUser.department.id#' like '%_ARQ%', ID like '%Arquivo%', '')\n    )\n) > 0\nGROUP BY p.Id"
+            "sql": "SELECT p.id AS idProc, dp.*, sp.Id AS processId, sp.Name AS processName, dp.c_n_wf_banco AS NwfBanco, ip.c_nome AS cliente, \n        CONCAT(ato.c_dataOutorga, ' ', ato.c_horaOutorga) AS DataAgendamento, SUBSTRING_INDEX(ato.c_dataOutorga, '-', 1) AS AnoAgendamento,\n        SUBSTRING_INDEX(SUBSTRING_INDEX(ato.c_dataOutorga, '-', 2), '-', -1) AS MesAgendamento, dp.c_inicializacao_gestor AS InicializacaoGestor, \n        ato.c_cedula_entidade as entidadeAutenticadora, g.c_estado_arquivo AS estadoArquivo, sps.KeyValue AS estadoProcesso\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK' \nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id AND ato.c_status = 'AGD'\nLEFT JOIN app_fd_geral g ON g.c_id_processo = p.id\nWHERE sps.KeyValue NOT LIKE 'closed.aborted'\nAND sp.Id not like '%Credito%'\nAND p.id IS NOT NULL\nAND (Select count(ID) from shkprocesses \n    where ActivityRequesterProcessId = sp2.id\n    AND ( If( '#currentUser.department.id#' like '%_CNT_BCP%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"BCP\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_BIC%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"BIC\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_BST%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"BST\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_NVB%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"NVB\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_MTG%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"MTG\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_GEN%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"GEN\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_ABN%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"ABN\", '')\n    OR If( '#currentUser.department.id#' like '%_FLT_%', ID like '%Filtro%', '')\n    OR If( '#currentUser.department.id#' like '%_PRD_%', ID like '%Producao%', '')\n    OR If( '#currentUser.department.id#' like '%_VAL_%', ID like '%Validacao%', '')\n    OR If( '#currentUser.department.id#' like '%_AO%', ID like '%AcompanhamentoOutorgas%', '')\n    OR If( '#currentUser.department.id#' like '%_CON%', ID like '%Conclusoes%', '')\n    OR If( '#currentUser.department.id#' like '%_ARQ%', ID like '%Arquivo%', '')\n    )\n) > 0\nGROUP BY p.Id"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -123,6 +123,50 @@
                 }
             },
             "sortable": "true",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "true",
+            "id": "column_12",
+            "include_export": "",
+            "label": "AnoAgendamento",
+            "name": "AnoAgendamento",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "true",
+            "id": "column_9",
+            "include_export": "",
+            "label": "MesAgendamento",
+            "name": "MesAgendamento",
+            "sortable": "false",
             "style": "",
             "width": ""
         },
@@ -592,6 +636,30 @@
                     "formatJava": "MM/dd/yyyy",
                     "yearRange": "c-10:c+10"
                 }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-5250425-fn_AnoAgendamento",
+            "hidden": "",
+            "id": "filter_8",
+            "label": "Ano de Agendamento",
+            "name": "AnoAgendamento",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {"defaultValue": ""}
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-5250425-fn_MesAgendamento",
+            "hidden": "",
+            "id": "filter_9",
+            "label": "Mês de Agendamento",
+            "name": "MesAgendamento",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {"defaultValue": ""}
             }
         },
         {
