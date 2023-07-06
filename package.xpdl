@@ -6255,7 +6255,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="conclusoes"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="388.96875,79.78125"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="383.96875,82.78125"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="activity4" Name="Validação">
@@ -6265,7 +6265,7 @@
                     <Performer>participant2_1_1</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant2_1_1"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="575,36"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="546,91"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="route4" Name="Tudo ok?">
@@ -6275,8 +6275,8 @@
                         <TransitionRestriction>
                             <Split Type="XOR">
                                 <TransitionRefs>
-                                    <TransitionRef Id="transition11"/>
                                     <TransitionRef Id="transition15"/>
+                                    <TransitionRef Id="transition8"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
@@ -6296,16 +6296,6 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="891.96875,86.796875"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="activity5" Name="Levantar incidência">
-                    <Implementation>
-                        <No/>
-                    </Implementation>
-                    <Performer>participant2_1_1</Performer>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant2_1_1"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="717,240"/>
-                    </ExtendedAttributes>
-                </Activity>
                 <Activity Id="flagFinalizarProcesso" Name="Flag Finalizar Processo">
                     <Implementation>
                         <Tool Id="default_application"/>
@@ -6313,17 +6303,11 @@
                     <Performer>participant2_1_1</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant2_1_1"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="388,42.21875"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="380,83.21875"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
             <Transitions>
-                <Transition From="route4" Id="transition11" Name="Nao" To="activity5">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="route4" Id="transition15" Name="sim" To="tool2">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
@@ -6350,12 +6334,17 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
+                <Transition From="route4" Id="transition8" To="activity3">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
             </Transitions>
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="conclusoes;participant2_1_1"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=conclusoes,CONNECTING_ACTIVITY_ID=ultimaAtividadeConc,X_OFFSET=58,Y_OFFSET=95,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant2_1_1,CONNECTING_ACTIVITY_ID=tool2,X_OFFSET=1166,Y_OFFSET=102,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant2_1_1,CONNECTING_ACTIVITY_ID=activity5,X_OFFSET=1035,Y_OFFSET=249,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="poll_email" Name="Poll Emails">
