@@ -6255,7 +6255,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="conclusoes"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="383.96875,82.78125"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="397.96875,72.78125"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="activity4" Name="Validação">
@@ -6270,7 +6270,7 @@
                 </Activity>
                 <Activity Id="route4" Name="Tudo ok?">
                     <Route/>
-                    <Performer>participant2_1_1</Performer>
+                    <Performer>conclusoes</Performer>
                     <TransitionRestrictions>
                         <TransitionRestriction>
                             <Split Type="XOR">
@@ -6282,8 +6282,8 @@
                         </TransitionRestriction>
                     </TransitionRestrictions>
                     <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant2_1_1"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="722,47"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="conclusoes"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1019,127.78125"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="tool2" Name="Envio de email ao banco">
@@ -6293,7 +6293,7 @@
                     <Performer>participant2_1_1</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant2_1_1"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="891.96875,86.796875"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="972.96875,96.796875"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="flagFinalizarProcesso" Name="Flag Finalizar Processo">
@@ -6303,7 +6303,7 @@
                     <Performer>participant2_1_1</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant2_1_1"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="380,83.21875"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="349,86.21875"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -6320,8 +6320,10 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="activity3" Id="transition3" To="flagFinalizarProcesso">
+                    <Condition Type="CONDITION">proxima_operativa === 'equipaConclusoeValidadcao'</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;equipaConclusoeValidadcao&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="flagFinalizarProcesso" Id="transition6" To="activity4">
@@ -6335,9 +6337,11 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route4" Id="transition8" To="activity3">
+                    <Condition Type="CONDITION">proxima_operativa === 'equipaConclusoeAlertas'</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;equipaConclusoeAlertas&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
             </Transitions>
