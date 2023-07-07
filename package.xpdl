@@ -6253,7 +6253,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="conclusoes"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="339.96875,76.78125"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="359.96875,78.78125"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="activity4" Name="Validação">
@@ -6268,7 +6268,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant2_1_1"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="586,75"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="621,109"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="route4" Name="Tudo ok?">
@@ -6279,14 +6279,14 @@
                             <Split Type="XOR">
                                 <TransitionRefs>
                                     <TransitionRef Id="transition15"/>
-                                    <TransitionRef Id="transition10"/>
+                                    <TransitionRef Id="transition11"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant2_1_1"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="485,181.78125"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="502,183.78125"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="tool2" Name="Envio de email ao banco">
@@ -6296,7 +6296,7 @@
                     <Performer>participant2_1_1</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant2_1_1"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="813.96875,173.796875"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="816.96875,183.796875"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="route2" Name="Primeira Vez?">
@@ -6330,6 +6330,16 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant2_1_1"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="775,34.21875"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="resetFlagUltimaAtividade" Name="Reset Flag Última Atividade">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>participant2_1_1</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant2_1_1"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="357,38"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -6371,7 +6381,7 @@
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;flag_primeira_vez&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;0&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="route4" Id="transition10" To="activity3">
+                <Transition From="route4" Id="transition11" To="resetFlagUltimaAtividade">
                     <Condition Type="CONDITION">proxima_operativa === 'verificarAlertas'</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
@@ -6379,10 +6389,15 @@
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;verificarAlertas&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
+                <Transition From="resetFlagUltimaAtividade" Id="transition10" To="activity3">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
             </Transitions>
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="conclusoes;participant2_1_1"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant2_1_1,CONNECTING_ACTIVITY_ID=tool2,X_OFFSET=1093,Y_OFFSET=188,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant2_1_1,CONNECTING_ACTIVITY_ID=tool2,X_OFFSET=1094,Y_OFFSET=192,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=conclusoes,CONNECTING_ACTIVITY_ID=route2,X_OFFSET=1058,Y_OFFSET=85,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=conclusoes,CONNECTING_ACTIVITY_ID=configurarConclusoes,X_OFFSET=58,Y_OFFSET=95,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
             </ExtendedAttributes>
