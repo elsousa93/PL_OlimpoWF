@@ -6322,22 +6322,15 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="357,38"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="verificarAlertas" Name="Verificação de alertas">
-                    <Implementation>
-                        <No/>
-                    </Implementation>
+                <Activity Id="route3">
+                    <Route/>
                     <Performer>conclusoes</Performer>
-                    <TransitionRestrictions>
-                        <TransitionRestriction>
-                            <Join Type="XOR"/>
-                        </TransitionRestriction>
-                    </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="conclusoes"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="359.96875,78.78125"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="993,75"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="conclusoesValidacao" Name="Validação">
+                <Activity Id="conclusoes_Validacao" Name="Validação">
                     <Implementation>
                         <No/>
                     </Implementation>
@@ -6352,12 +6345,19 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="621,109"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="route3">
-                    <Route/>
+                <Activity Id="verificar_Alertas" Name="Verificação de alertas">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
                     <Performer>conclusoes</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="conclusoes"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="993,75"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="359.96875,78.78125"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -6370,24 +6370,24 @@
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;final&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="configurarConclusoes" Id="transition5" To="verificarAlertas">
+                <Transition From="configurarConclusoes" Id="transition5" To="verificar_Alertas">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="flagvalidarProcesso" Id="transition6" To="conclusoesValidacao">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="conclusoesValidacao" Id="transition7" To="route4">
+                <Transition From="flagvalidarProcesso" Id="transition6" To="conclusoes_Validacao">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="verificarAlertas" Id="transition8" To="route2">
+                <Transition From="conclusoes_Validacao" Id="transition7" To="route4">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="verificar_Alertas" Id="transition8" To="route2">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
@@ -6407,7 +6407,7 @@
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;verificarAlertas&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="resetFlagUltimaAtividade" Id="transition10" To="verificarAlertas">
+                <Transition From="resetFlagUltimaAtividade" Id="transition10" To="verificar_Alertas">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
