@@ -6241,16 +6241,6 @@
                 </DataField>
             </DataFields>
             <Activities>
-                <Activity Id="ultimaAtividadeConc" Name="Configurar Ultima Atividade">
-                    <Implementation>
-                        <Tool Id="default_application"/>
-                    </Implementation>
-                    <Performer>conclusoes</Performer>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="conclusoes"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="142,79"/>
-                    </ExtendedAttributes>
-                </Activity>
                 <Activity Id="activity3" Name="Verificação de alertas">
                     <Implementation>
                         <No/>
@@ -6309,7 +6299,25 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="813.96875,173.796875"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="flagFinalizarProcesso" Name="Flag Finalizar Processo">
+                <Activity Id="route2" Name="Primeira Vez?">
+                    <Route/>
+                    <Performer>conclusoes</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="conclusoes"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="809,80"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="configurarConclusoes" Name="Configurar Conclusões">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>conclusoes</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="conclusoes"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="142,79"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="flagvalidarProcesso" Name="Flag Validar Processo">
                     <Implementation>
                         <Tool Id="default_application"/>
                     </Implementation>
@@ -6324,14 +6332,6 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="775,34.21875"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="route2" Name="Primeira Vez?">
-                    <Route/>
-                    <Performer>conclusoes</Performer>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="conclusoes"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="809,80"/>
-                    </ExtendedAttributes>
-                </Activity>
             </Activities>
             <Transitions>
                 <Transition From="route4" Id="transition15" Name="sim" To="tool2">
@@ -6342,12 +6342,12 @@
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;final&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="ultimaAtividadeConc" Id="transition5" To="activity3">
+                <Transition From="configurarConclusoes" Id="transition5" To="activity3">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="flagFinalizarProcesso" Id="transition6" To="activity4">
+                <Transition From="flagvalidarProcesso" Id="transition6" To="activity4">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
@@ -6364,7 +6364,7 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="route2" Id="transition9" To="flagFinalizarProcesso">
+                <Transition From="route2" Id="transition9" To="flagvalidarProcesso">
                     <Condition Type="CONDITION">flag_primeira_vez === '0'</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
@@ -6382,9 +6382,9 @@
             </Transitions>
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="conclusoes;participant2_1_1"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=conclusoes,CONNECTING_ACTIVITY_ID=ultimaAtividadeConc,X_OFFSET=58,Y_OFFSET=95,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant2_1_1,CONNECTING_ACTIVITY_ID=tool2,X_OFFSET=1093,Y_OFFSET=188,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=conclusoes,CONNECTING_ACTIVITY_ID=route2,X_OFFSET=1058,Y_OFFSET=85,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=conclusoes,CONNECTING_ACTIVITY_ID=configurarConclusoes,X_OFFSET=58,Y_OFFSET=95,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="poll_email" Name="Poll Emails">
