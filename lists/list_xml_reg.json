@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT id, c_entidade, c_nif, c_ficheiro_xml, c_data_xml FROM app_fd_modelo11\n"
+            "sql": "SELECT id, c_entidade, c_nif, c_ficheiro_xml, YEAR(c_data_xml) AS Ano, MONTH(c_data_xml) AS MES FROM app_fd_modelo11\n"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -96,12 +96,20 @@
             },
             "headerAlignment": "",
             "hidden": "false",
-            "id": "column_3",
-            "label": "c_data_xml",
-            "name": "c_data_xml",
+            "id": "column_5",
+            "label": "Mês",
+            "name": "MES",
             "sortable": "false",
             "style": "",
             "width": ""
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "Ano",
+            "name": "Ano",
+            "sortable": "false"
         }
     ],
     "considerFilterWhenGetTotal": "",
