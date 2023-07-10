@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT id, c_entidade, c_nif, c_ficheiro_xml, c_ano_xml AS Ano, c_mes_xml AS Mes FROM app_fd_modelo11\n"
+            "sql": "SELECT id, c_entidade, c_nif, c_ficheiro_xml, c_ano_xml AS Ano, c_mes_xml AS Mes, ROW_NUMBER() OVER (ORDER BY c_ano_xml DESC, c_mes_xml DESC, c_entidade ASC) AS No FROM app_fd_modelo11\n"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -169,6 +169,7 @@
     ],
     "considerFilterWhenGetTotal": "",
     "description": "",
+    "disableResponsive": "",
     "filters": [
         {
             "datalist_type": "filter",
@@ -266,13 +267,28 @@
             }
         }
     ],
+    "hidePageSize": "",
     "id": "list_xml_reg",
     "name": "Registos - XML",
-    "order": "",
-    "orderBy": "",
+    "order": "2",
+    "orderBy": "No",
     "pageSize": "0",
     "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "responsiveView": [
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Mobile"
+        },
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Tablet"
+        }
+    ],
     "rowActions": [],
+    "searchPopup": "",
+    "showDataWhenFilterSet": "",
     "showPageSizeSelector": "true",
-    "useSession": "false"
+    "useSession": ""
 }
