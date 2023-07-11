@@ -263,40 +263,6 @@
                             },
                             "value": "<script>\n    $(document).ready(function(){\n        //Readonly em todos os inputs do pedido\n        $(\"div[id*=pedidoAgendamento] :input\").prop('disabled', true);\n        $(\"textarea[id*=observacoes_agendamento]\").prop(\"disabled\", false);\n        var tipoProcesso = \"#form.detalhe_proce_procu.tipo_processo[{form.processos_procu.detalhe_processo}]#\";\n        var banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\n        if((banco_fundo === 'BCP' && tipoProcesso === 'DIST') || banco_fundo === 'BIC' || banco_fundo==='MTG' || banco_fundo === 'DHM'){\n            $(\"textarea[id*=observacoes_agendamento]\").prop(\"disabled\", true);\n        }\n        \n\n        $(\"select[id*=status]\").on('change', function(){\n            \n           if($(this).val().includes('DES')){\n               $(\"select[id*=motivo_desmarcacao]\").parent().show();\n           }else{\n               $(\"select[id*=motivo_desmarcacao]\").val(\"\"); \n               $(\"select[id*=motivo_desmarcacao]\").parent().hide();\n           }\n            \n        });\n\n        $(\"input#submit\").val(\"CONFIRMAR\");\n\n            \n    });\n    \n    \n    \n   \n    \n\n        \n        \n        \n\n    \n<\/script>"
                         }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.Grid",
-                        "properties": {
-                            "errorMessage": "Invalid number of rows",
-                            "id": "intervenientes",
-                            "label": "Intervenientes",
-                            "loadBinder": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "options": [
-                                {
-                                    "label": "Nome",
-                                    "value": "nome"
-                                },
-                                {
-                                    "label": "NIF",
-                                    "value": "nif"
-                                }
-                            ],
-                            "permissionHidden": "",
-                            "readonly": "true",
-                            "storeBinder": {
-                                "className": "",
-                                "properties": {}
-                            },
-                            "validateMaxRow": "",
-                            "validateMinRow": "",
-                            "validator": {
-                                "className": "",
-                                "properties": {}
-                            }
-                        }
                     }
                 ],
                 "properties": {"width": "100%"}
@@ -1416,6 +1382,40 @@
                             },
                             "value": "",
                             "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.Grid",
+                        "properties": {
+                            "errorMessage": "Invalid number of rows",
+                            "id": "intervenientes",
+                            "label": "Intervenientes",
+                            "loadBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "options": [
+                                {
+                                    "label": "Nome",
+                                    "value": "nome"
+                                },
+                                {
+                                    "label": "NIF",
+                                    "value": "nif"
+                                }
+                            ],
+                            "permissionHidden": "",
+                            "readonly": "true",
+                            "storeBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "validateMaxRow": "",
+                            "validateMinRow": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            }
                         }
                     },
                     {
