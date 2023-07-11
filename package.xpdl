@@ -9067,16 +9067,6 @@
                 </DataField>
             </DataFields>
             <Activities>
-                <Activity Id="ConfigurarProcessoModelo11" Name="Configurar Processo Modelo 11">
-                    <Implementation>
-                        <Tool Id="default_application"/>
-                    </Implementation>
-                    <Performer>robot</Performer>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="robot"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="152,30.000003051757815"/>
-                    </ExtendedAttributes>
-                </Activity>
                 <Activity Id="processamentoRobotModelo" Name="Processamento do Modelo 11 pelo Robot">
                     <Implementation>
                         <No/>
@@ -9089,7 +9079,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="robot"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="469,29.796875"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="629,29.187503051757815"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="listagemProcessosRobot" Name="Listagem Processos Robot">
@@ -9102,14 +9092,39 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="310,30"/>
                     </ExtendedAttributes>
                 </Activity>
+                <Activity Id="configurarProcessoModelo11" Name="Configurar Processo Modelo 11">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>robot</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="robot"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="152,30.000003051757815"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="configurarProcessamentoRobot" Name="Configurar Processo Processamento Robot">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>robot</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="robot"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="477,20.799998474121097"/>
+                    </ExtendedAttributes>
+                </Activity>
             </Activities>
             <Transitions>
-                <Transition From="ConfigurarProcessoModelo11" Id="transition1" To="listagemProcessosRobot">
+                <Transition From="configurarProcessoModelo11" Id="transition1" To="listagemProcessosRobot">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="listagemProcessosRobot" Id="transition2" To="processamentoRobotModelo">
+                <Transition From="listagemProcessosRobot" Id="transition2" To="configurarProcessamentoRobot">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="configurarProcessamentoRobot" Id="transition3" To="processamentoRobotModelo">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
@@ -9117,8 +9132,8 @@
             </Transitions>
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="robot;modelo11"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=robot,CONNECTING_ACTIVITY_ID=ConfigurarProcessoModelo11,X_OFFSET=75,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=robot,CONNECTING_ACTIVITY_ID=processamentoRobotModelo,X_OFFSET=644,Y_OFFSET=42,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=robot,CONNECTING_ACTIVITY_ID=processamentoRobotModelo,X_OFFSET=796,Y_OFFSET=41,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=robot,CONNECTING_ACTIVITY_ID=configurarProcessoModelo11,X_OFFSET=75,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="hipotecas" Name="Hipotecas">
