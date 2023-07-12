@@ -10470,7 +10470,7 @@
                     <Performer>notificacaoSystem</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="notificacaoSystem"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="449,80"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="558,47"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="route1">
@@ -10481,6 +10481,16 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="250,37"/>
                     </ExtendedAttributes>
                 </Activity>
+                <Activity Id="notificacoesCH" Name="Notificações CH">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>notificacaoSystem</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="notificacaoSystem"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="374,30"/>
+                    </ExtendedAttributes>
+                </Activity>
             </Activities>
             <Transitions>
                 <Transition From="terminateNotificacao" Id="transition1" To="notificacoesProcu">
@@ -10489,12 +10499,17 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="notificacoesProcu" Id="transition3" To="terminateNotificacao">
+                <Transition From="route1" Id="transition4" To="terminateNotificacao">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="route1" Id="transition4" To="terminateNotificacao">
+                <Transition From="notificacoesCH" Id="transition5" To="terminateNotificacao">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="notificacoesProcu" Id="transition6" To="notificacoesCH">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
