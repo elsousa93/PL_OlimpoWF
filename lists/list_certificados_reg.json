@@ -23,7 +23,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT id, c_entidade, c_ficheiro_certificado, c_data_expiracao, c_notas FROM app_fd_certificados_reg"
+            "sql": "SELECT id, c_entidade, c_ficheiro_certificado, c_data_validacao, c_notas FROM app_fd_certificados_reg"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -102,18 +102,14 @@
             "exclude_export": "",
             "filterable": true,
             "format": {
-                "className": "org.joget.plugin.enterprise.DateFormatter",
-                "properties": {
-                    "dataFormat": "yyyy-MM-dd",
-                    "dateStoreInUTC": "",
-                    "displayFormat": "dd/MM/yyyy"
-                }
+                "className": "",
+                "properties": {}
             },
             "headerAlignment": "",
             "hidden": "false",
-            "id": "column_2",
-            "label": "Data de Expiração",
-            "name": "c_data_expiracao",
+            "id": "column_4",
+            "label": "Data de Validação",
+            "name": "c_data_validacao",
             "sortable": "false",
             "style": "",
             "width": ""
@@ -144,61 +140,37 @@
     "considerFilterWhenGetTotal": "",
     "description": "",
     "disableResponsive": "",
-    "filters": [
-        {
-            "datalist_type": "filter",
-            "filterParamName": "d-5340970-fn_c_entidade",
-            "hidden": "",
-            "id": "filter_0",
-            "label": "Entidade",
-            "name": "c_entidade",
-            "type": {
-                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
-                "properties": {
-                    "defaultValue": "",
-                    "multiple": "autocomplete",
-                    "options": [],
-                    "optionsBinder": {
-                        "className": "org.joget.plugin.enterprise.UserOptionsBinder",
-                        "properties": {
-                            "addEmptyOption": "",
-                            "cacheInterval": "",
-                            "deptId": "PL_EXT_ENT",
-                            "emptyLabel": "",
-                            "groupId": "",
-                            "grouping": "",
-                            "optionLabel": "",
-                            "orgId": "PL",
-                            "useAjax": ""
-                        }
-                    },
-                    "size": ""
-                }
-            }
-        },
-        {
-            "datalist_type": "filter",
-            "filterParamName": "d-5340970-fn_c_data_expiracao",
-            "hidden": "",
-            "id": "filter_1",
-            "label": "Data de Expiração",
-            "name": "c_data_expiracao",
-            "type": {
-                "className": "org.joget.plugin.enterprise.DateRangeDataListFilterType",
-                "properties": {
-                    "dateStoreInUTC": "",
-                    "format": "dd/mm/yy",
-                    "formatJava": "yyyy-MM-dd",
-                    "fromDefaultValue": "",
-                    "fromLabel": "De",
-                    "showFieldLabel": "true",
-                    "toDefaultValue": "",
-                    "toLabel": "A",
-                    "yearRange": "c-10:c+10"
-                }
+    "filters": [{
+        "datalist_type": "filter",
+        "filterParamName": "d-5340970-fn_c_entidade",
+        "hidden": "",
+        "id": "filter_0",
+        "label": "Entidade",
+        "name": "c_entidade",
+        "type": {
+            "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+            "properties": {
+                "defaultValue": "",
+                "multiple": "autocomplete",
+                "options": [],
+                "optionsBinder": {
+                    "className": "org.joget.plugin.enterprise.UserOptionsBinder",
+                    "properties": {
+                        "addEmptyOption": "",
+                        "cacheInterval": "",
+                        "deptId": "PL_EXT_ENT",
+                        "emptyLabel": "",
+                        "groupId": "",
+                        "grouping": "",
+                        "optionLabel": "",
+                        "orgId": "PL",
+                        "useAjax": ""
+                    }
+                },
+                "size": ""
             }
         }
-    ],
+    }],
     "hidePageSize": "",
     "id": "list_certificados_reg",
     "name": "Registos - Repositório de Certificados",
