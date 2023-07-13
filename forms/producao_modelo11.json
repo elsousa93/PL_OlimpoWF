@@ -1,125 +1,165 @@
 {
     "className": "org.joget.apps.form.model.Form",
-    "elements": [{
-        "className": "org.joget.apps.form.model.Section",
-        "elements": [{
-            "className": "org.joget.apps.form.model.Column",
-            "elements": [
-                {
-                    "className": "org.joget.apps.form.lib.TextField",
-                    "properties": {
-                        "encryption": "",
-                        "id": "data_envio_producao_mod11",
-                        "label": "Data de Envio para Produção",
-                        "maxlength": "",
-                        "permission_rules": {"985000be-214d-1b1a-cb5e-5afe66ca5a1e": {}},
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "storeNumeric": "",
-                        "style": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.TextField",
-                    "properties": {
-                        "encryption": "",
-                        "id": "data_inicio_processamento_mod11",
-                        "label": "Data de Início de Processamento",
-                        "maxlength": "",
-                        "permission_rules": {"985000be-214d-1b1a-cb5e-5afe66ca5a1e": {}},
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "storeNumeric": "",
-                        "style": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.TextField",
-                    "properties": {
-                        "encryption": "",
-                        "id": "data_fim_processamento_mod11",
-                        "label": "Data de Fim de Processamento",
-                        "maxlength": "",
-                        "permission_rules": {"985000be-214d-1b1a-cb5e-5afe66ca5a1e": {}},
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "storeNumeric": "",
-                        "style": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.SelectBox",
-                    "properties": {
-                        "controlField": "",
-                        "id": "estado_processamento_mod11",
-                        "label": "Estado de Processamento da Minuta",
-                        "multiple": "",
-                        "options": [],
-                        "optionsBinder": {
-                            "className": "org.joget.apps.form.lib.FormOptionsBinder",
-                            "properties": {
-                                "addEmptyOption": "true",
-                                "cacheInterval": "",
-                                "emptyLabel": "",
-                                "extraCondition": "c_nome_campo = 'estado_processamento_minuta_mod11'",
-                                "formDefId": "adicionarOpcaoLV",
-                                "groupingColumn": "",
-                                "idColumn": "value",
-                                "labelColumn": "label",
-                                "useAjax": ""
-                            }
-                        },
-                        "permission_rules": {
-                            "2f0ba282-dff7-c485-6c92-a33146d89b3f": {
-                                "permissionHidden": "",
-                                "readonly": "true"
+    "elements": [
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "data_envio_producao_mod11",
+                            "label": "Data de Envio para Produção",
+                            "maxlength": "",
+                            "permission_rules": {"985000be-214d-1b1a-cb5e-5afe66ca5a1e": {}},
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
                             },
-                            "78ba5dc6-ab7a-b286-2b6c-3449d8d47c31": {},
-                            "7978a487-5ff6-b326-3ce8-5c48f37c64c0": {
-                                "permissionHidden": "",
-                                "readonly": "true"
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "data_inicio_processamento_mod11",
+                            "label": "Data de Início de Processamento",
+                            "maxlength": "",
+                            "permission_rules": {"985000be-214d-1b1a-cb5e-5afe66ca5a1e": {}},
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
                             },
-                            "985000be-214d-1b1a-cb5e-5afe66ca5a1e": {}
-                        },
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "validator": {
-                            "className": "org.joget.apps.form.lib.BeanShellValidator",
-                            "properties": {
-                                "decoration": "",
-                                "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    String faseProcesso = \"#process.processId#\";\r\n    if(!faseProcesso.contains(\"Producao\")){\r\n        return true;\r\n        \r\n    }\r\n    \r\n    String origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo.equals(\"ACE\") || origem_processo.equals(\"PRE\") || origem_processo.equals(\"TRD\"))){\r\n        return true;   \r\n    }\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        //If element is not filled give error message\r\n        if (values.length <= 0 || values[0].isEmpty()){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }\r\n    }\r\n    \r\n    \r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
-                            }
-                        },
-                        "value": "",
-                        "workflowVariable": ""
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "data_fim_processamento_mod11",
+                            "label": "Data de Fim de Processamento",
+                            "maxlength": "",
+                            "permission_rules": {"985000be-214d-1b1a-cb5e-5afe66ca5a1e": {}},
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "estado_processamento_mod11",
+                            "label": "Estado de Processamento da Minuta",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "true",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "extraCondition": "c_nome_campo = 'estado_processamento_minuta_mod11'",
+                                    "formDefId": "adicionarOpcaoLV",
+                                    "groupingColumn": "",
+                                    "idColumn": "value",
+                                    "labelColumn": "label",
+                                    "useAjax": ""
+                                }
+                            },
+                            "permission_rules": {
+                                "2f0ba282-dff7-c485-6c92-a33146d89b3f": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "78ba5dc6-ab7a-b286-2b6c-3449d8d47c31": {},
+                                "7978a487-5ff6-b326-3ce8-5c48f37c64c0": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "985000be-214d-1b1a-cb5e-5afe66ca5a1e": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "",
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    String faseProcesso = \"#process.processId#\";\r\n    if(!faseProcesso.contains(\"Producao\")){\r\n        return true;\r\n        \r\n    }\r\n    \r\n    String origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo.equals(\"ACE\") || origem_processo.equals(\"PRE\") || origem_processo.equals(\"TRD\"))){\r\n        return true;   \r\n    }\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        //If element is not filled give error message\r\n        if (values.length <= 0 || values[0].isEmpty()){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }\r\n    }\r\n    \r\n    \r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
                     }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "informacao_geral",
+                "join": "",
+                "label": "Informação Geral",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
                 },
-                {
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "2f0ba282-dff7-c485-6c92-a33146d89b3f": {},
+                    "78ba5dc6-ab7a-b286-2b6c-3449d8d47c31": {},
+                    "7978a487-5ff6-b326-3ce8-5c48f37c64c0": {},
+                    "985000be-214d-1b1a-cb5e-5afe66ca5a1e": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [{
                     "className": "org.joget.apps.form.lib.TextField",
                     "properties": {
                         "encryption": "",
@@ -151,57 +191,101 @@
                         "value": "",
                         "workflowVariable": ""
                     }
+                }],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "erro",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
                 },
-                {
-                    "className": "org.joget.apps.form.lib.CustomHTML",
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "estado_processamento_mod11",
+                "visibilityValue": "ERR"
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [{
+                    "className": "org.joget.apps.form.lib.TextArea",
                     "properties": {
-                        "autoPopulate": "",
-                        "id": "apresentacao_campos",
-                        "label": "",
+                        "cols": "20",
+                        "id": "lista_alertas",
+                        "label": "Alertas:",
                         "permission_rules": {
-                            "2f0ba282-dff7-c485-6c92-a33146d89b3f": {},
-                            "78ba5dc6-ab7a-b286-2b6c-3449d8d47c31": {},
-                            "7978a487-5ff6-b326-3ce8-5c48f37c64c0": {},
+                            "2f0ba282-dff7-c485-6c92-a33146d89b3f": {
+                                "permissionHidden": "",
+                                "readonly": "true"
+                            },
+                            "78ba5dc6-ab7a-b286-2b6c-3449d8d47c31": {
+                                "permissionHidden": "",
+                                "readonly": "true"
+                            },
+                            "7978a487-5ff6-b326-3ce8-5c48f37c64c0": {
+                                "permissionHidden": "",
+                                "readonly": "true"
+                            },
                             "985000be-214d-1b1a-cb5e-5afe66ca5a1e": {}
                         },
-                        "value": ""
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "rows": "5",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
                     }
-                }
-            ],
-            "properties": {"width": "100%"}
-        }],
-        "properties": {
-            "comment": "",
-            "id": "informacao_geral",
-            "join": "",
-            "label": "Informação Geral",
-            "loadBinder": {
-                "className": "",
-                "properties": {}
-            },
-            "permission": {
-                "className": "",
-                "properties": {}
-            },
-            "permissionReadonly": "",
-            "permission_rules": {
-                "2f0ba282-dff7-c485-6c92-a33146d89b3f": {},
-                "78ba5dc6-ab7a-b286-2b6c-3449d8d47c31": {},
-                "7978a487-5ff6-b326-3ce8-5c48f37c64c0": {},
-                "985000be-214d-1b1a-cb5e-5afe66ca5a1e": {}
-            },
-            "readonly": "",
-            "readonlyLabel": "",
-            "regex": "",
-            "reverse": "",
-            "storeBinder": {
-                "className": "",
-                "properties": {}
-            },
-            "visibilityControl": "",
-            "visibilityValue": ""
+                }],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "alerta",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "estado_processamento_mod11",
+                "visibilityValue": "ALR"
+            }
         }
-    }],
+    ],
     "properties": {
         "description": "",
         "id": "producao_modelo11",
