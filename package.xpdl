@@ -6363,6 +6363,7 @@
             </Activities>
             <Transitions>
                 <Transition From="route4" Id="transition15" Name="sim" To="tool2">
+                    <Condition Type="CONDITION">proxima_operativa === 'final'</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
@@ -6399,10 +6400,11 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route4" Id="transition11" Name="verificarAlertas" To="resetFlagUltimaAtividade">
+                    <Condition Type="CONDITION">proxima_operativa === 'verificar_alertas'</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;verificarAlertas&quot;}]"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;verificar_alertas&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="resetFlagUltimaAtividade" Id="transition10" To="verificar_Alertas">
