@@ -4652,6 +4652,14 @@
             },
             {
                 "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString grupo = \"#currentUser.groups.id#\";\nString departamento = \"#currentUser.department.id#\";\n\nif(grupo.contains(\"Coordenador\") && (departamento.contains(\"PL_INT_REG\") || departamento.contains(\"PL_INT_QUAL_REG\"))){\n    return true;\n} else{\n    return false;\n}"}
+                },
+                "permission_key": "94c61551-208b-5093-fbad-41d5f6b323c0",
+                "permission_name": "Coordenadores Registos"
+            },
+            {
+                "permission": {
                     "className": "org.joget.apps.userview.lib.GroupPermission",
                     "properties": {
                         "allowedGroupIds": "Coordenador",
@@ -4792,14 +4800,6 @@
                 },
                 "permission_key": "de0223e9-d62d-f5f5-f75a-4f6199b32f73",
                 "permission_name": "Acompanhamento de Outorgas"
-            },
-            {
-                "permission": {
-                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
-                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString grupo = \"#currentUser.groups.id#\";\nString departamento = \"#currentUser.department.id#\";\n\nif(grupo.contains(\"Coordenador\") && (departamento.contains(\"PL_INT_REG\") || departamento.contains(\"PL_INT_QUAL_REG\"))){\n    return true;\n} else{\n    return false;\n}"}
-                },
-                "permission_key": "94c61551-208b-5093-fbad-41d5f6b323c0",
-                "permission_name": "Coordenadores Registos"
             },
             {
                 "permission": {
