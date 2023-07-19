@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "/*Diligências Filtro Hipotecas*/\n(SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, null as OrigemProcesso, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco, dp.c_n_wf_pl as NumeroWFPL, dp.c_tipo_processo as TipoProcesso, dp.c_nome_cliente as NomeCliente, c_estado_contratacao AS EstadoContratacao, sact.Id AS ActivityId, from_unixtime(sact.LimitTime/1000, '%Y-%m-%d %H:%i') as limittime, null as DataInicio, null as DataFim, ip.c_nome AS Cliente, ag.c_data_agendamento AS DataAgendamento, null as entidadeAutenticadora, null as SLADuracao, interp.c_intervencao_juridica, interp.c_intervencao_juridica_novo, p.c_servico as Servico, null as DateModified, null as inicializacaoGestor, null as CategoriaProcesso, null as UrgenciaRegisto, null as EstadoAgendamento, null as DataAgendamentoFiltro, null as AtoStatus, null as DepositoPago, null as RegistoPago\nFROM shkprocesses sp \nJOIN app_fd_info_diligencia d on sp.Id = d.c_id_diligencia\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id \nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State \nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId \nLEFT JOIN app_fd_processos_hip p ON p.id = d.c_id_processo \nLEFT JOIN app_fd_detalhe_proce_hip dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN app_fd_interv_processo interp ON interp.c_id_processo = p.id\nLEFT JOIN app_fd_interv_processo_hip ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK' \nLEFT JOIN app_fd_agendamento ag ON ag.id = p.c_agendamento\nWHERE sps.KeyValue LIKE 'open.running' AND (ssta.KeyValue LIKE 'open.not_running.not_started' OR ssta.KeyValue LIKE 'open.running') \nAND sass.resourceid LIKE '%#currentUser.username#%'\nAND d.id LIKE '%hipotecas%'\nAND d.c_diligencia_prioritaria = 0)\n\n/*Diligências Geral*/\nUNION\n(SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_origem_processo as OrigemProcesso, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco, dp.c_n_wf_pl as NumeroWFPL, dp.c_tipo_processo as TipoProcesso, dp.c_nome_cliente as NomeCliente, c_estado_contratacao AS EstadoContratacao, sact.Id AS ActivityId, from_unixtime(sact.LimitTime/1000, '%Y-%m-%d %H:%i') as limittime, p.dateCreated as DataInicio,sla.c_data_fim as DataFim, ip.c_nome AS Cliente, CONCAT(ato.c_dataOutorga, ' ', ato.c_horaOutorga) AS DataAgendamento, null as entidadeAutenticadora, sla.c_duracao as SLADuracao, interp.c_intervencao_juridica, interp.c_intervencao_juridica_novo, p.c_servico as Servico, null as DateModified, dp.c_inicializacao_gestor as inicializacaoGestor, null as CategoriaProcesso, null as UrgenciaRegisto, null as EstadoAgendamento, ato.c_dataOutorga as DataAgendamentoFiltro, null as AtoStatus,null as DepositoPago, null as RegistoPago\nFROM shkprocesses sp \nJOIN app_fd_info_diligencia d ON sp.Id = d.id \nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State \nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id \nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State \nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId \nLEFT JOIN app_fd_processos p ON p.id = d.c_id_processo \nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo \nLEFT JOIN app_fd_interv_processo interp ON interp.c_id_processo = p.id \nLEFT JOIN app_fd_sla_atividade sla ON sla.c_id_processo = sp.Id\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK' \nLEFT JOIN app_fd_agendamento ag ON ag.id = p.c_agendamento\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id AND (ato.c_status = 'AGD' OR ato.c_status = 'OUT')\nWHERE sps.KeyValue LIKE 'open.running' AND (ssta.KeyValue LIKE 'open.not_running.not_started' OR ssta.KeyValue LIKE 'open.running') \nAND (sla.c_estado_atividade is null or sla.c_estado_atividade = 'Em curso' or sla.c_estado_atividade = 'Pendente') \nAND sass.resourceid LIKE '%#currentUser.username#%'\nAND d.c_diligencia_prioritaria = 0)\n\n\n/*Processos CH*/\nUNION\n(SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_origem_processo as OrigemProcesso, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco, dp.c_n_wf_pl as NumeroWFPL, dp.c_tipo_processo as TipoProcesso, dp.c_nome_cliente as NomeCliente, c_estado_contratacao AS EstadoContratacao, sact.Id AS ActivityId, from_unixtime(sact.LimitTime/1000, '%Y-%m-%d %H:%i') as limittime, sla.c_data_inicio as DataInicio, sla.c_data_fim as DataFim, ip.c_nome AS Cliente, IF(ato.c_status = 'AGD' OR ato.c_status = 'OUT' OR ato.c_status = 'ACOM' OR ato.c_status = 'NOUT',CONCAT(ato.c_dataOutorga, ' ', ato.c_horaOutorga),'-') AS DataAgendamento, ato.c_cedula_entidade as entidadeAutenticadora, sla.c_duracao as SLADuracao, interp.c_intervencao_juridica, interp.c_intervencao_juridica_novo, p.c_servico as Servico, dp.dateModified as DateModified, dp.c_inicializacao_gestor as inicializacaoGestor, dp.c_categoria_processo as CategoriaProcesso, dp.c_urgencia_registo as UrgenciaRegisto,  ato.c_status as EstadoAgendamento, ato.c_dataOutorga as DataAgendamentoFiltro, ato.c_status as AtoStatus,doc.c_deposito_pago as DepositoPago, doc.c_registo_pago as RegistoPago\nFROM shkprocesses sp\nJOIN app_fd_processos p ON sp.ActivityRequesterProcessId = p.id \nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State \nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id \nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State \nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId \nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo \nLEFT JOIN app_fd_interv_processo interp ON interp.c_id_processo = p.id \nLEFT JOIN app_fd_sla_atividade sla ON sla.c_id_processo = sp.Id \nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK' \nLEFT JOIN app_fd_agendamento ag ON ag.id = p.c_agendamento \nLEFT JOIN app_fd_docs_processo doc ON doc.id = p.c_docs\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id\nWHERE sps.KeyValue LIKE 'open.running' AND (ssta.KeyValue LIKE 'open.not_running.not_started' OR ssta.KeyValue LIKE 'open.running') \nAND (c_estado_contratacao is null or (c_estado_contratacao <> 'PND' AND c_estado_contratacao <> 'PNDEQ')) \nAND (sla.c_estado_atividade is null or sla.c_estado_atividade = 'Em curso' or sla.c_estado_atividade = 'Pendente') \nAND sass.resourceid LIKE '%#currentUser.username#%'\nAND (ato.dateCreated = (SELECT MAX(dateCreated) FROM app_fd_atos a2 WHERE a2.c_id_processo = p.id) || ato.dateCreated IS null)\nORDER BY Urgencia DESC, DataFim)\n\n/*Procuradoria*/\nUNION\n(SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, null AS Urgencia, null as OrigemProcesso, dp.c_banco_fundo AS NomeBanco, dp.c_n_processo AS NumeroWFBanco, dp.c_n_agenda as NumeroWFPL, dp.c_tipo_processo as TipoProcesso, null as NomeCliente, dp.c_estado AS EstadoContratacao, sact.Id AS ActivityId, from_unixtime(sact.LimitTime/1000, '%Y-%m-%d %H:%i') as limittime, sla.c_data_inicio as DataInicio, sla.c_data_fim as DataFim, null AS Cliente, IF(ato.c_status = 'AGD' OR ato.c_status = 'OUT' OR ato.c_status = 'ACOM' OR ato.c_status = 'NOUT',CONCAT(ato.c_dataOutorga, ' ', ato.c_horaOutorga),'-') AS DataAgendamento, null as entidadeAutenticadora, sla.c_duracao as SLADuracao, null, null, p.c_servico as Servico, null as DateModified, null as inicializacaoGestor, null as CategoriaProcesso, null as UrgenciaRegisto, null as EstadoAgendamento, null as DataAgendamentoFiltro, ato.c_status as AtoStatus, null as DepositoPago, null as RegistoPago\nFROM shkprocesses sp\nJOIN app_fd_processos_procu p ON sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_proce_procu dp ON p.c_detalhe_processo = dp.id\nLEFT JOIN app_fd_sla_atividade sla ON sla.c_id_processo = sp.Id AND (c_estado_atividade = 'Em curso')\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\nLEFT JOIN app_fd_atos ato ON ato.c_id_processo = p.id \nWHERE sass.resourceid LIKE '%#currentUser.username#%'\nAND (ato.dateCreated = (SELECT MAX(dateCreated) FROM app_fd_atos a2 WHERE a2.c_id_processo = p.id) || ato.dateCreated IS null)\nORDER BY Urgencia DESC, DataFim)\n\n/*Distrates*/\nUNION\n(SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, null AS Urgencia, null as OrigemProcesso, null AS NomeBanco, dp.c_num_pedido AS NumeroWFBanco, null as NumeroWFPL, dp.c_tipo_distrate as TipoProcesso, null as NomeCliente, dp.c_estado_distrate AS EstadoContratacao, sact.Id AS ActivityId, from_unixtime(sact.LimitTime/1000, '%Y-%m-%d %H:%i') as limittime, null as DataInicio, null as DataFim, null AS Cliente, null AS DataAgendamento, null as entidadeAutenticadora, null as SLADuracao, null, null, p.c_servico as Servico, null as DateModified, null as inicializacaoGestor, null as CategoriaProcesso, null as UrgenciaRegisto, null as EstadoAgendamento, null as DataAgendamentoFiltro,null as AtoStatus, null as DepositoPago, null as RegistoPago\nFROM shkprocesses sp\nJOIN app_fd_processos_distrates p ON sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_proce_dist dp ON p.c_detalhe_processo = dp.id\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\nWHERE sass.resourceid LIKE '%#currentUser.username#%'\nORDER BY Urgencia DESC, DataFim)\n/*Hipotecas*/\nUNION\n(SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, null as OrigemProcesso, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco, dp.c_n_wf_pl as NumeroWFPL, dp.c_tipo_processo_final as TipoProcesso, dp.c_nome_cliente as NomeCliente, dp.c_estado_contratacao AS EstadoContratacao, sact.Id AS ActivityId, from_unixtime(sact.LimitTime/1000, '%Y-%m-%d %H:%i') as limittime, null as DataInicio, null as DataFim, ip.c_nome AS Cliente, null AS DataAgendamento, null as entidadeAutenticadora, null as SLADuracao, null, null, p.c_servico as Servico, null as DateModified, null as inicializacaoGestor, null as CategoriaProcesso, null as UrgenciaRegisto, null as EstadoAgendamento, null as DataAgendamentoFiltro,null as AtoStatus, null as DepositoPago, null as RegistoPago\nFROM shkprocesses sp\nJOIN app_fd_processos_hip p ON sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_proce_hip dp ON p.c_detalhe_processo = dp.id\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN app_fd_interv_processo_hip ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK' \nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\nWHERE sass.resourceid LIKE '%#currentUser.username#%'\nORDER BY Urgencia DESC, DataFim)"
+            "sql": "/*Diligências Filtro Hipotecas*/\n(SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, null AS PID, null as OrigemProcesso, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco, dp.c_n_wf_pl as NumeroWFPL, dp.c_tipo_processo as TipoProcesso, dp.c_nome_cliente as NomeCliente, c_estado_contratacao AS EstadoContratacao, sact.Id AS ActivityId, from_unixtime(sact.LimitTime/1000, '%Y-%m-%d %H:%i') as limittime, null as DataInicio, null as DataFim, ip.c_nome AS Cliente, ag.c_data_agendamento AS DataAgendamento, null as entidadeAutenticadora, null as SLADuracao, interp.c_intervencao_juridica, interp.c_intervencao_juridica_novo, p.c_servico as Servico, null as DateModified, null as inicializacaoGestor, null as CategoriaProcesso, null as UrgenciaRegisto, null as EstadoAgendamento, null as DataAgendamentoFiltro, null as AtoStatus, null as DepositoPago, null as RegistoPago\nFROM shkprocesses sp \nJOIN app_fd_info_diligencia d on sp.Id = d.c_id_diligencia\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id \nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State \nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId \nLEFT JOIN app_fd_processos_hip p ON p.id = d.c_id_processo \nLEFT JOIN app_fd_detalhe_proce_hip dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN app_fd_interv_processo interp ON interp.c_id_processo = p.id\nLEFT JOIN app_fd_interv_processo_hip ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK' \nLEFT JOIN app_fd_agendamento ag ON ag.id = p.c_agendamento\nWHERE sps.KeyValue LIKE 'open.running' AND (ssta.KeyValue LIKE 'open.not_running.not_started' OR ssta.KeyValue LIKE 'open.running') \nAND sass.resourceid LIKE '%#currentUser.username#%'\nAND d.id LIKE '%hipotecas%'\nAND d.c_diligencia_prioritaria = 0)\n\n/*Diligências Geral*/\nUNION\n(SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_pid AS PID, dp.c_origem_processo as OrigemProcesso, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco, dp.c_n_wf_pl as NumeroWFPL, dp.c_tipo_processo as TipoProcesso, dp.c_nome_cliente as NomeCliente, c_estado_contratacao AS EstadoContratacao, sact.Id AS ActivityId, from_unixtime(sact.LimitTime/1000, '%Y-%m-%d %H:%i') as limittime, p.dateCreated as DataInicio,sla.c_data_fim as DataFim, ip.c_nome AS Cliente, CONCAT(ato.c_dataOutorga, ' ', ato.c_horaOutorga) AS DataAgendamento, null as entidadeAutenticadora, sla.c_duracao as SLADuracao, interp.c_intervencao_juridica, interp.c_intervencao_juridica_novo, p.c_servico as Servico, null as DateModified, dp.c_inicializacao_gestor as inicializacaoGestor, null as CategoriaProcesso, null as UrgenciaRegisto, null as EstadoAgendamento, ato.c_dataOutorga as DataAgendamentoFiltro, null as AtoStatus,null as DepositoPago, null as RegistoPago\nFROM shkprocesses sp \nJOIN app_fd_info_diligencia d ON sp.Id = d.id \nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State \nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id \nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State \nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId \nLEFT JOIN app_fd_processos p ON p.id = d.c_id_processo \nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo \nLEFT JOIN app_fd_interv_processo interp ON interp.c_id_processo = p.id \nLEFT JOIN app_fd_sla_atividade sla ON sla.c_id_processo = sp.Id\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK' \nLEFT JOIN app_fd_agendamento ag ON ag.id = p.c_agendamento\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id AND (ato.c_status = 'AGD' OR ato.c_status = 'OUT')\nWHERE sps.KeyValue LIKE 'open.running' AND (ssta.KeyValue LIKE 'open.not_running.not_started' OR ssta.KeyValue LIKE 'open.running') \nAND (sla.c_estado_atividade is null or sla.c_estado_atividade = 'Em curso' or sla.c_estado_atividade = 'Pendente') \nAND sass.resourceid LIKE '%#currentUser.username#%'\nAND d.c_diligencia_prioritaria = 0)\n\n\n/*Processos CH*/\nUNION\n(SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_pid AS PID, dp.c_origem_processo as OrigemProcesso, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco, dp.c_n_wf_pl as NumeroWFPL, dp.c_tipo_processo as TipoProcesso, dp.c_nome_cliente as NomeCliente, c_estado_contratacao AS EstadoContratacao, sact.Id AS ActivityId, from_unixtime(sact.LimitTime/1000, '%Y-%m-%d %H:%i') as limittime, sla.c_data_inicio as DataInicio, sla.c_data_fim as DataFim, ip.c_nome AS Cliente, IF(ato.c_status = 'AGD' OR ato.c_status = 'OUT' OR ato.c_status = 'ACOM' OR ato.c_status = 'NOUT',CONCAT(ato.c_dataOutorga, ' ', ato.c_horaOutorga),'-') AS DataAgendamento, ato.c_cedula_entidade as entidadeAutenticadora, sla.c_duracao as SLADuracao, interp.c_intervencao_juridica, interp.c_intervencao_juridica_novo, p.c_servico as Servico, dp.dateModified as DateModified, dp.c_inicializacao_gestor as inicializacaoGestor, dp.c_categoria_processo as CategoriaProcesso, dp.c_urgencia_registo as UrgenciaRegisto,  ato.c_status as EstadoAgendamento, ato.c_dataOutorga as DataAgendamentoFiltro, ato.c_status as AtoStatus,doc.c_deposito_pago as DepositoPago, doc.c_registo_pago as RegistoPago\nFROM shkprocesses sp\nJOIN app_fd_processos p ON sp.ActivityRequesterProcessId = p.id \nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State \nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id \nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State \nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId \nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo \nLEFT JOIN app_fd_interv_processo interp ON interp.c_id_processo = p.id \nLEFT JOIN app_fd_sla_atividade sla ON sla.c_id_processo = sp.Id \nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK' \nLEFT JOIN app_fd_agendamento ag ON ag.id = p.c_agendamento \nLEFT JOIN app_fd_docs_processo doc ON doc.id = p.c_docs\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id\nWHERE sps.KeyValue LIKE 'open.running' AND (ssta.KeyValue LIKE 'open.not_running.not_started' OR ssta.KeyValue LIKE 'open.running') \nAND (c_estado_contratacao is null or (c_estado_contratacao <> 'PND' AND c_estado_contratacao <> 'PNDEQ')) \nAND (sla.c_estado_atividade is null or sla.c_estado_atividade = 'Em curso' or sla.c_estado_atividade = 'Pendente') \nAND sass.resourceid LIKE '%#currentUser.username#%'\nAND (ato.dateCreated = (SELECT MAX(dateCreated) FROM app_fd_atos a2 WHERE a2.c_id_processo = p.id) || ato.dateCreated IS null)\nORDER BY Urgencia DESC, DataFim)\n\n/*Procuradoria*/\nUNION\n(SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, null AS Urgencia, null AS PID, null as OrigemProcesso, dp.c_banco_fundo AS NomeBanco, dp.c_n_processo AS NumeroWFBanco, dp.c_n_agenda as NumeroWFPL, dp.c_tipo_processo as TipoProcesso, null as NomeCliente, dp.c_estado AS EstadoContratacao, sact.Id AS ActivityId, from_unixtime(sact.LimitTime/1000, '%Y-%m-%d %H:%i') as limittime, sla.c_data_inicio as DataInicio, sla.c_data_fim as DataFim, null AS Cliente, IF(ato.c_status = 'AGD' OR ato.c_status = 'OUT' OR ato.c_status = 'ACOM' OR ato.c_status = 'NOUT',CONCAT(ato.c_dataOutorga, ' ', ato.c_horaOutorga),'-') AS DataAgendamento, null as entidadeAutenticadora, sla.c_duracao as SLADuracao, null, null, p.c_servico as Servico, null as DateModified, null as inicializacaoGestor, null as CategoriaProcesso, null as UrgenciaRegisto, null as EstadoAgendamento, null as DataAgendamentoFiltro, ato.c_status as AtoStatus, null as DepositoPago, null as RegistoPago\nFROM shkprocesses sp\nJOIN app_fd_processos_procu p ON sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_proce_procu dp ON p.c_detalhe_processo = dp.id\nLEFT JOIN app_fd_sla_atividade sla ON sla.c_id_processo = sp.Id AND (c_estado_atividade = 'Em curso')\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\nLEFT JOIN app_fd_atos ato ON ato.c_id_processo = p.id \nWHERE sass.resourceid LIKE '%#currentUser.username#%'\nAND (ato.dateCreated = (SELECT MAX(dateCreated) FROM app_fd_atos a2 WHERE a2.c_id_processo = p.id) || ato.dateCreated IS null)\nORDER BY Urgencia DESC, DataFim)\n\n/*Distrates*/\nUNION\n(SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, null AS Urgencia, null AS PID, null as OrigemProcesso, null AS NomeBanco, dp.c_num_pedido AS NumeroWFBanco, null as NumeroWFPL, dp.c_tipo_distrate as TipoProcesso, null as NomeCliente, dp.c_estado_distrate AS EstadoContratacao, sact.Id AS ActivityId, from_unixtime(sact.LimitTime/1000, '%Y-%m-%d %H:%i') as limittime, null as DataInicio, null as DataFim, null AS Cliente, null AS DataAgendamento, null as entidadeAutenticadora, null as SLADuracao, null, null, p.c_servico as Servico, null as DateModified, null as inicializacaoGestor, null as CategoriaProcesso, null as UrgenciaRegisto, null as EstadoAgendamento, null as DataAgendamentoFiltro,null as AtoStatus, null as DepositoPago, null as RegistoPago\nFROM shkprocesses sp\nJOIN app_fd_processos_distrates p ON sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_proce_dist dp ON p.c_detalhe_processo = dp.id\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\nWHERE sass.resourceid LIKE '%#currentUser.username#%'\nORDER BY Urgencia DESC, DataFim)\n/*Hipotecas*/\nUNION\n(SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, null AS PID, null as OrigemProcesso, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco, dp.c_n_wf_pl as NumeroWFPL, dp.c_tipo_processo_final as TipoProcesso, dp.c_nome_cliente as NomeCliente, dp.c_estado_contratacao AS EstadoContratacao, sact.Id AS ActivityId, from_unixtime(sact.LimitTime/1000, '%Y-%m-%d %H:%i') as limittime, null as DataInicio, null as DataFim, ip.c_nome AS Cliente, null AS DataAgendamento, null as entidadeAutenticadora, null as SLADuracao, null, null, p.c_servico as Servico, null as DateModified, null as inicializacaoGestor, null as CategoriaProcesso, null as UrgenciaRegisto, null as EstadoAgendamento, null as DataAgendamentoFiltro,null as AtoStatus, null as DepositoPago, null as RegistoPago\nFROM shkprocesses sp\nJOIN app_fd_processos_hip p ON sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_proce_hip dp ON p.c_detalhe_processo = dp.id\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN app_fd_interv_processo_hip ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK' \nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\nWHERE sass.resourceid LIKE '%#currentUser.username#%'\nORDER BY Urgencia DESC, DataFim)"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -33,6 +33,11 @@
             "name": "DataAgendamento",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {},
                 "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {},
@@ -76,9 +81,57 @@
             "id": "column_22",
             "label": "Estado Agend.",
             "name": "AtoStatus",
+            "permission_rules": {
+                "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
+                "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
+                "8524db2c-6251-7ddd-8dd3-f51777439291": {},
+                "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {},
+                "ddb03536-b918-35c4-693f-ea8a909f07be": {}
+            },
             "sortable": "false",
             "style": "",
             "width": ""
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_24",
+            "label": "PID",
+            "name": "PID",
+            "permission_rules": {
+                "14f53242-dec2-47ec-1415-4dab2b396111": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
+                "3460c56e-4c9c-2840-323c-12ac562fae7d": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
+                "8524db2c-6251-7ddd-8dd3-f51777439291": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
+                "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
+                "ddb03536-b918-35c4-693f-ea8a909f07be": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                }
+            },
+            "sortable": "false"
         },
         {
             "action": {
@@ -111,6 +164,7 @@
                     "hidden": "true",
                     "include_export": "true"
                 },
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {
                     "exclude_export": "",
@@ -144,6 +198,7 @@
             "name": "NumeroWFPL",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {
                     "exclude_export": "",
@@ -197,6 +252,7 @@
                     "hidden": "true",
                     "include_export": "true"
                 },
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {
                     "exclude_export": "",
                     "hidden": "true",
@@ -238,6 +294,7 @@
             "name": "Cliente",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {
                     "exclude_export": "",
@@ -271,11 +328,21 @@
             "name": "entidadeAutenticadora",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
+                "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "51bdeaef-5b64-2026-6347-f9376acdccae": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
                 "749156f0-2c8a-86f2-d34e-8c631e4b8974": {},
                 "75768f5e-6fe4-6ed0-42cc-670a652d4a63": {},
+                "8524db2c-6251-7ddd-8dd3-f51777439291": {},
                 "b277a55d-0ec7-5049-4b6c-5960f2191a9b": {},
+                "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {},
+                "ddb03536-b918-35c4-693f-ea8a909f07be": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {},
                 "ebb1805f-da1e-2061-4dc8-722c0b2a8b72": {}
             },
@@ -319,6 +386,7 @@
             "name": "TipoProcesso",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {},
                 "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {},
@@ -364,6 +432,11 @@
             "name": "OrigemProcesso",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {
                     "exclude_export": "",
@@ -417,6 +490,11 @@
             "name": "CategoriaProcesso",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
+                "31af9455-870d-dffd-65c7-1596f13ff927": {
                     "exclude_export": "",
                     "hidden": "true",
                     "include_export": "true"
@@ -481,6 +559,11 @@
                     "hidden": "true",
                     "include_export": "true"
                 },
+                "31af9455-870d-dffd-65c7-1596f13ff927": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {
                     "exclude_export": "",
                     "hidden": "true",
@@ -537,6 +620,11 @@
             "name": "RegistoPago",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
+                "31af9455-870d-dffd-65c7-1596f13ff927": {
                     "exclude_export": "",
                     "hidden": "true",
                     "include_export": "true"
@@ -602,6 +690,11 @@
                     "hidden": "false",
                     "include_export": ""
                 },
+                "31af9455-870d-dffd-65c7-1596f13ff927": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {
                     "exclude_export": "",
                     "hidden": "true",
@@ -647,6 +740,7 @@
             "name": "Atividade",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {
                     "exclude_export": "",
@@ -684,6 +778,7 @@
                     "hidden": "true",
                     "include_export": "true"
                 },
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {},
                 "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {
@@ -717,6 +812,7 @@
             "name": "DateModified",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {
                     "exclude_export": "",
                     "hidden": "true",
@@ -770,6 +866,11 @@
             "name": "EstadoContratacao",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {},
                 "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {
@@ -818,6 +919,11 @@
             "name": "Urgencia",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {
                     "exclude_export": "",
@@ -855,6 +961,11 @@
             "name": "UrgenciaRegisto",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
+                "31af9455-870d-dffd-65c7-1596f13ff927": {
                     "exclude_export": "",
                     "hidden": "true",
                     "include_export": "true"
@@ -920,6 +1031,11 @@
                     "hidden": "true",
                     "include_export": "true"
                 },
+                "31af9455-870d-dffd-65c7-1596f13ff927": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {
                     "exclude_export": "",
                     "hidden": "true",
@@ -976,6 +1092,11 @@
             "name": "inicializacaoGestor",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                },
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {
                     "exclude_export": "",
                     "hidden": "true",
@@ -1021,6 +1142,7 @@
                     "hidden": "true",
                     "include_export": "true"
                 },
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {},
                 "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {
@@ -1058,6 +1180,7 @@
                     "hidden": "true",
                     "include_export": "true"
                 },
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {},
                 "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {
@@ -1095,6 +1218,7 @@
                     "hidden": "true",
                     "include_export": "true"
                 },
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {},
                 "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {
@@ -1117,6 +1241,14 @@
             "id": "filter_16",
             "label": "NomeBanco",
             "name": "NomeBanco",
+            "permission_rules": {
+                "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
+                "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
+                "8524db2c-6251-7ddd-8dd3-f51777439291": {},
+                "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {},
+                "ddb03536-b918-35c4-693f-ea8a909f07be": {}
+            },
             "type": {
                 "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
                 "properties": {}
@@ -1129,6 +1261,14 @@
             "id": "filter_8",
             "label": "Estado Agendamento",
             "name": "AtoStatus",
+            "permission_rules": {
+                "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
+                "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
+                "8524db2c-6251-7ddd-8dd3-f51777439291": {},
+                "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {},
+                "ddb03536-b918-35c4-693f-ea8a909f07be": {}
+            },
             "type": {
                 "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
                 "properties": {
@@ -1163,6 +1303,7 @@
             "name": "DataAgendamentoFiltro",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {},
                 "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {},
@@ -1187,6 +1328,7 @@
             "name": "Servico",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {},
                 "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {},
@@ -1252,6 +1394,7 @@
             "name": "c_intervencao_juridica",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {},
                 "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {"hidden": "true"},
@@ -1297,6 +1440,7 @@
             "name": "c_intervencao_juridica_novo",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {},
                 "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {"hidden": "true"},
@@ -1342,6 +1486,7 @@
             "name": "NumeroWFPL",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {"hidden": "true"},
                 "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {},
@@ -1361,6 +1506,7 @@
             "name": "NomeBanco",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {"hidden": "true"},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {"hidden": "true"},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {"hidden": ""},
                 "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {},
@@ -1397,6 +1543,7 @@
             "name": "Cliente",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {"hidden": "true"},
                 "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {},
@@ -1416,6 +1563,7 @@
             "name": "TipoProcesso",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {},
                 "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {},
@@ -1455,6 +1603,7 @@
             "name": "OrigemProcesso",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {"hidden": "true"},
                 "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {},
@@ -1494,6 +1643,7 @@
             "name": "CategoriaProcesso",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {"hidden": "true"},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {"hidden": "true"},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {"hidden": "true"},
                 "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {},
@@ -1530,6 +1680,7 @@
             "name": "Atividade",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {},
                 "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {},
@@ -1549,6 +1700,7 @@
             "name": "dateCreated",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {},
                 "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {},
@@ -1573,6 +1725,7 @@
             "name": "EstadoContratacao",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {},
                 "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {},
@@ -1612,6 +1765,7 @@
             "name": "Urgencia",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {},
                 "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {},
@@ -1652,6 +1806,7 @@
             "name": "DataFim",
             "permission_rules": {
                 "14f53242-dec2-47ec-1415-4dab2b396111": {},
+                "31af9455-870d-dffd-65c7-1596f13ff927": {},
                 "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
                 "8524db2c-6251-7ddd-8dd3-f51777439291": {},
                 "bbf32619-0680-6597-c3a6-bf2d45a76d6f": {"hidden": "true"},
@@ -1730,6 +1885,17 @@
             },
             "permission_key": "8524db2c-6251-7ddd-8dd3-f51777439291",
             "permission_name": "Procuradoria"
+        },
+        {
+            "permission": {
+                "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                "properties": {
+                    "allowedDeptIds": "PL_INT_CON;PL_INT_CON_VAL",
+                    "orgId": "PL"
+                }
+            },
+            "permission_key": "31af9455-870d-dffd-65c7-1596f13ff927",
+            "permission_name": "Conclusoes"
         }
     ],
     "responsiveView": [
@@ -1752,6 +1918,7 @@
         "name": "Data List Hyperlink Action",
         "permission_rules": {
             "14f53242-dec2-47ec-1415-4dab2b396111": {},
+            "31af9455-870d-dffd-65c7-1596f13ff927": {},
             "3460c56e-4c9c-2840-323c-12ac562fae7d": {},
             "43b040f1-d472-a8bc-eba3-daf54b8c112c": {},
             "8524db2c-6251-7ddd-8dd3-f51777439291": {},
