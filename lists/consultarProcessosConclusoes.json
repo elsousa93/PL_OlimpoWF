@@ -33,60 +33,12 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "procId",
-            "sql": "SELECT p.id as procId, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName,\n sass.ResourceId AS assignee, dp.c_n_wf_pl AS NwfPL, dp.c_n_wf_banco AS NwfBanco, dp.c_nome_banco AS NomeBanco, dp.dateCreated AS DataCriacao, dp.c_urgencia AS Urgencia, dp.c_tipo_processo as TipoProcesso, dp.dateModified AS DataModificacao,\n dp.c_fase_processo AS FaseProcesso, ip.c_nome AS cliente, d.c_necessarias_correcoes AS CorrecoesRegistos,  \n d.c_observacoes_correcao AS ObservacoesRegistos, dp.c_tipo_entidade as Entidade, atos.c_dataOutorga, atos.c_horaOutorga, dp.c_categoria_processo as CategoriaProcesso,\n atos.c_status as EstadoAgendamento, CONCAT(atos.c_dataOutorga, ' ', atos.c_horaOutorga) AS DataAgendamento, dp.c_n_wf_pl_relacionado AS ProcessosRelacionados, ROW_NUMBER() OVER (ORDER BY atos.c_dataOutorga ASC, atos.c_horaOutorga ASC, dp.c_urgencia DESC) AS No\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK'\nLEFT JOIN app_fd_docs_processo d ON  d.id = p.c_docs\nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nLEFT JOIN (SELECT c_dataOutorga, c_horaOutorga, c_id_agendamento, c_status FROM app_fd_atos ORDER BY dateCreated DESC) atos ON atos.c_id_agendamento = ag.id\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id not like '%Credito%'\nAND sact.Id like '%CHConclusoes%'\n"
+            "sql": "SELECT p.id as procId, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName,\n sass.ResourceId AS assignee, dp.c_n_wf_pl AS NwfPL, dp.c_n_wf_banco AS NwfBanco, dp.c_nome_banco AS NomeBanco, dp.dateCreated AS DataCriacao, dp.c_urgencia AS Urgencia, dp.c_pid AS PID, dp.c_tipo_processo as TipoProcesso, dp.dateModified AS DataModificacao,\n dp.c_fase_processo AS FaseProcesso, ip.c_nome AS cliente, d.c_necessarias_correcoes AS CorrecoesRegistos,  \n d.c_observacoes_correcao AS ObservacoesRegistos, dp.c_tipo_entidade as Entidade, atos.c_dataOutorga, atos.c_horaOutorga, dp.c_categoria_processo as CategoriaProcesso,\n atos.c_status as EstadoAgendamento, CONCAT(atos.c_dataOutorga, ' ', atos.c_horaOutorga) AS DataAgendamento, dp.c_n_wf_pl_relacionado AS ProcessosRelacionados, ROW_NUMBER() OVER (ORDER BY atos.c_dataOutorga ASC, atos.c_horaOutorga ASC, dp.c_urgencia DESC) AS No\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK'\nLEFT JOIN app_fd_docs_processo d ON  d.id = p.c_docs\nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nLEFT JOIN (SELECT c_dataOutorga, c_horaOutorga, c_id_agendamento, c_status FROM app_fd_atos ORDER BY dateCreated DESC) atos ON atos.c_id_agendamento = ag.id\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id not like '%Credito%'\nAND sact.Id like '%CHConclusoes%'\n"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
     "columns": [
-        {
-            "exclude_export": "true",
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_4",
-            "include_export": "",
-            "label": "instanceId",
-            "name": "instanceId",
-            "permission_rules": {
-                "800fccfb-8f04-e988-d120-94634c25f6d8": {
-                    "exclude_export": "true",
-                    "hidden": "false",
-                    "include_export": ""
-                },
-                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
-            },
-            "sortable": "false"
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "org.joget.plugin.enterprise.DateFormatter",
-                "properties": {
-                    "dataFormat": "yyyy-MM-dd HH:mm",
-                    "dateStoreInUTC": "",
-                    "displayFormat": "dd/MM/yyyy HH:mm"
-                }
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_13",
-            "label": "Data Agend.",
-            "name": "DataAgendamento",
-            "permission_rules": {
-                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
-                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
-            },
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
         {
             "action": {
                 "className": "",
@@ -112,6 +64,14 @@
             "sortable": "false",
             "style": "",
             "width": ""
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "PID",
+            "name": "PID",
+            "sortable": "false"
         },
         {
             "action": {
@@ -147,32 +107,6 @@
             "id": "column_6",
             "label": "Alocado a",
             "name": "assignee",
-            "permission_rules": {
-                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
-                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
-            },
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_17",
-            "label": "Processos Relacionados",
-            "name": "ProcessosRelacionados",
             "permission_rules": {
                 "800fccfb-8f04-e988-d120-94634c25f6d8": {},
                 "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
@@ -259,48 +193,6 @@
             "exclude_export": "",
             "filterable": true,
             "format": {
-                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
-                "properties": {
-                    "options": [],
-                    "optionsBinder": {
-                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
-                        "properties": {
-                            "addEmptyOption": "",
-                            "cacheInterval": "",
-                            "emptyLabel": "",
-                            "extraCondition": "c_nome_campo = 'tipo_entidade'",
-                            "formDefId": "adicionarOpcaoLV",
-                            "groupingColumn": "",
-                            "idColumn": "value",
-                            "labelColumn": "label",
-                            "useAjax": ""
-                        }
-                    }
-                }
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_10",
-            "label": "Entidade",
-            "name": "Entidade",
-            "permission_rules": {
-                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
-                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
-            },
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
                 "className": "",
                 "properties": {}
             },
@@ -309,135 +201,6 @@
             "id": "column_12",
             "label": "Tipo Processo",
             "name": "TipoProcesso",
-            "permission_rules": {
-                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
-                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
-            },
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
-                "properties": {
-                    "options": [],
-                    "optionsBinder": {
-                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
-                        "properties": {
-                            "addEmptyOption": "",
-                            "cacheInterval": "",
-                            "emptyLabel": "",
-                            "extraCondition": "c_nome_campo = 'categoria_processo'",
-                            "formDefId": "adicionarOpcaoLV",
-                            "groupingColumn": "",
-                            "idColumn": "value",
-                            "labelColumn": "label",
-                            "useAjax": ""
-                        }
-                    }
-                }
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_14",
-            "label": "Categoria Processo",
-            "name": "CategoriaProcesso",
-            "permission_rules": {
-                "800fccfb-8f04-e988-d120-94634c25f6d8": {
-                    "exclude_export": "",
-                    "hidden": "true",
-                    "include_export": "true"
-                },
-                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
-            },
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
-                "properties": {
-                    "options": [
-                        {
-                            "label": "Não",
-                            "value": "NAO"
-                        },
-                        {
-                            "label": "Sim",
-                            "value": "SIM"
-                        }
-                    ],
-                    "optionsBinder": {
-                        "className": "",
-                        "properties": {}
-                    }
-                }
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_11",
-            "label": "Urgência",
-            "name": "Urgencia",
-            "permission_rules": {
-                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
-                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
-            },
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
-                "properties": {
-                    "options": [],
-                    "optionsBinder": {
-                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
-                        "properties": {
-                            "addEmptyOption": "",
-                            "cacheInterval": "",
-                            "emptyLabel": "",
-                            "extraCondition": "c_nome_campo = 'estado_agendamento'",
-                            "formDefId": "adicionarOpcaoLV",
-                            "groupingColumn": "",
-                            "idColumn": "value",
-                            "labelColumn": "label",
-                            "useAjax": ""
-                        }
-                    }
-                }
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_16",
-            "label": "Estado Agendamento",
-            "name": "EstadoAgendamento",
             "permission_rules": {
                 "800fccfb-8f04-e988-d120-94634c25f6d8": {},
                 "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
@@ -470,48 +233,6 @@
                     "hidden": "true",
                     "include_export": "true"
                 },
-                "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
-            },
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
-                "properties": {
-                    "options": [],
-                    "optionsBinder": {
-                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
-                        "properties": {
-                            "addEmptyOption": "",
-                            "cacheInterval": "",
-                            "emptyLabel": "",
-                            "extraCondition": "c_nome_campo = 'fase_processo'",
-                            "formDefId": "adicionarOpcaoLV",
-                            "groupingColumn": "",
-                            "idColumn": "value",
-                            "labelColumn": "label",
-                            "useAjax": ""
-                        }
-                    }
-                }
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_9",
-            "label": "Fase Processo",
-            "name": "FaseProcesso",
-            "permission_rules": {
-                "800fccfb-8f04-e988-d120-94634c25f6d8": {},
                 "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
             },
             "sortable": "false",
