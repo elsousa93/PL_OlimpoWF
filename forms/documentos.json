@@ -76,7 +76,7 @@
                             "validator": {
                                 "className": "org.joget.apps.form.lib.BeanShellValidator",
                                 "properties": {
-                                    "decoration": "",
+                                    "decoration": "*",
                                     "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\n\r\npublic boolean validacaoOutorgaIniciada(Element element, FormData formData){\r\n\r\n    //Configure field to validate - UPDATE HERE\r\n    String fieldId = \"outorga_iniciada\";\r\n    String campo = FormUtil.getElementParameterName(element);\r\n    \r\n    String faseProcesso = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\r\n    Boolean result = false;\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    LogUtil.info(\"TIAGOOOOOOOOOOO\", \"Fase Processo: \" + faseProcesso);\r\n    LogUtil.info(\"TIAGOOOOOOOOOOO\", \"Field Value: \" + fieldValue);\r\n    \r\n    if(faseProcesso.equals(\"AO\")){\r\n        if ((fieldValue == null || fieldValue.equals(\"\"))){\r\n            formData.addFormError(campo, \"Campo obrigatório\");\r\n            result = false;\r\n        } else{\r\n            result = true;  \r\n        }\r\n    } else{\r\n       result = true; \r\n    }\r\n    \r\n    return result;\r\n}\r\n\r\n//call load method with injected variable\r\nreturn validacaoOutorgaIniciada(element, formData);"
                                 }
                             },
@@ -117,15 +117,12 @@
                 "permissionHidden": "true",
                 "permissionReadonly": "",
                 "permission_rules": {
-                    "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
-                    "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {
+                    "0ccd6329-a205-14d1-b885-f026bfe54bc7": {
                         "permissionHidden": "true",
                         "readonly": ""
                     },
-                    "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {
-                        "permissionHidden": "true",
-                        "readonly": ""
-                    }
+                    "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                    "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
                 },
                 "readonly": "",
                 "readonlyLabel": "",
