@@ -25,6 +25,19 @@
                     }
                 },
                 {
+                    "className": "org.joget.apps.form.lib.HiddenField",
+                    "properties": {
+                        "id": "id",
+                        "useDefaultWhenEmpty": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
                     "className": "org.joget.apps.form.lib.SelectBox",
                     "properties": {
                         "controlField": "",
@@ -940,6 +953,15 @@
                             "f8c01627-bf37-05aa-5732-90fe1b2327b3": {}
                         },
                         "value": "<script>\n    $(document).change(function(){\n        atualizarVisibilidadeBCP();\n        atualizarVisibilidadesMTG();\n        atualizarVisibilidadesABN();\n        atualizarVisibilidadesBIC();\n    });\n    \n    \n    \n    function atualizarVisibilidadeBCP(){\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        var tipo_distrate = $(\"select[id*=tipo_distrate]\").val();\n        if(nome_banco==='BCP'){\n            $(\"label[for=field2_2_detalheProcessoDistrates_num_pedido]\").text(\"Número de Pedido\");\n            $(\"select[id*=finalidade_emprestimo]\").parent().hide();\n            $(\"select[id*=destino_imovel]\").parent().hide();\n            if(tipo_distrate === 'OTR'){\n                $(\"input[id*=outro_tipo_distrate]\").parent().show();\n                \n            } else {\n                $(\"input[id*=outro_tipo_distrate]\").parent().hide();\n            }\n        }\n    }\n    \n    function atualizarVisibilidadesMTG(){\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        var tipo_distrate = $(\"select[id*=tipo_distrate]\").val();\n        if(nome_banco==='MTG'){\n            $(\"label[for=field2_2_detalheProcessoDistrates_num_pedido]\").text(\"Número de Pedido\");\n            $(\"select[id*=finalidade_emprestimo]\").parent().hide();\n            $(\"select[id*=destino_imovel]\").parent().hide();\n            if(tipo_distrate === 'OTR'){\n                $(\"input[id*=outro_tipo_distrate]\").parent().show();\n                \n            } else {\n                $(\"input[id*=outro_tipo_distrate]\").parent().hide();\n            }\n        }\n    }\n    \n    function atualizarVisibilidadesABN(){\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        var tipo_distrate = $(\"select[id*=tipo_distrate]\").val();\n        //console.log(\"Nome Banco\" + nome_banco);\n        if(nome_banco==='ABN'){\n            $(\"label[for=field2_2_detalheProcessoDistrates_num_pedido]\").text(\"Número de Ordem\");\n            $(\"select[id*=finalidade_emprestimo]\").parent().hide();\n            $(\"select[id*=destino_imovel]\").parent().hide();\n            if(tipo_distrate === 'OTR'){\n                $(\"input[id*=outro_tipo_distrate]\").parent().show();\n                \n            } else {\n                $(\"input[id*=outro_tipo_distrate]\").parent().hide();\n            }\n        }\n    }\n    \n    function atualizarVisibilidadesBIC(){\n        //console.log(\"entrou3\");\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        var tipo_distrate = $(\"select[id*=tipo_distrate]\").val();\n        //console.log(\"Nome Banco: \" + nome_banco);\n        if(nome_banco==='BIC'){\n            $(\"label[for=field2_2_detalheProcessoDistrates_num_pedido]\").text(\"Número de Workflow\");\n            $(\"input[id*=num_workflow]\").parent().hide();\n            if(tipo_distrate === 'OTR'){\n                $(\"input[id*=outro_tipo_distrate]\").parent().show();\n                \n            } else {\n                $(\"input[id*=outro_tipo_distrate]\").parent().hide();\n            }\n            if(tipo_distrate === 'VND' || tipo_distrate === 'TRF'){\n                $(\"input[id*=data_escritura]\").parent().show();\n                $(\"input[id*=hora_escritura]\").parent().show();\n                $(\"input[id*=local]\").parent().show();\n            \n            } else {\n                $(\"input[id*=data_escritura]\").parent().hide();\n                $(\"input[id*=hora_escritura]\").parent().hide();\n                $(\"input[id*=local]\").parent().hide();\n            }\n        }\n    }\n<\/script>"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field27",
+                        "label": "",
+                        "value": "<script type=\"text/javascript\">\r\n    $(document).ready(function(){\r\n        \r\n        //create Variables\r\n        //var flagShowId = \"gerar_numero\";\r\n        \r\n        //get value from field that controls if the WF number is automatically generated or not\r\n        var value = FormUtil.getValue(\"id\");\r\n\r\n        console.log(value);\r\n        \r\n        sessionStorage.setItem(\"id\", value);\r\n\r\n    });\r\n<\/script>"
                     }
                 }
             ],
