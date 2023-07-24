@@ -271,6 +271,9 @@
         <Participant Id="participant88" Name="Sistema">
             <ParticipantType Type="ROLE"/>
         </Participant>
+        <Participant Id="process40_arquivo" Name="Arquivo">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
     </Participants>
     <Applications>
         <Application Id="default_application"/>
@@ -11114,6 +11117,43 @@
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="participant88"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant88,CONNECTING_ACTIVITY_ID=send_email,X_OFFSET=75,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=participant88,CONNECTING_ACTIVITY_ID=send_email,X_OFFSET=448,Y_OFFSET=44,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+            </ExtendedAttributes>
+        </WorkflowProcess>
+        <WorkflowProcess Id="process40" Name="Crédito Pessoal">
+            <ProcessHeader DurationUnit="h"/>
+            <Activities>
+                <Activity Id="configurarProcessoCreditoPessoal" Name="Configurar Processo Crédito Pessoal">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>process40_arquivo</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process40_arquivo"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="182,32"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="creditoPessoal" Name="Crédito Pessoal">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>process40_arquivo</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process40_arquivo"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="367,32"/>
+                    </ExtendedAttributes>
+                </Activity>
+            </Activities>
+            <Transitions>
+                <Transition From="configurarProcessoCreditoPessoal" Id="transition1" To="creditoPessoal">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+            </Transitions>
+            <ExtendedAttributes>
+                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="process40_arquivo"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process40_arquivo,CONNECTING_ACTIVITY_ID=configurarProcessoCreditoPessoal,X_OFFSET=75,Y_OFFSET=49,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process40_arquivo,CONNECTING_ACTIVITY_ID=creditoPessoal,X_OFFSET=581,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
     </WorkflowProcesses>
