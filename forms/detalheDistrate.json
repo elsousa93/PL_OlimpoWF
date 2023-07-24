@@ -37,6 +37,7 @@
                                     "readonly": ""
                                 },
                                 "d6fe0da9-3aa3-9d28-ded2-07a6fb980292": {},
+                                "dade72d9-fef8-50f4-1b63-a8d2c211d4f3": {},
                                 "de0223e9-d62d-f5f5-f75a-4f6199b32f73": {
                                     "permissionHidden": "",
                                     "readonly": ""
@@ -53,6 +54,7 @@
                         "className": "org.joget.apps.form.lib.HiddenField",
                         "properties": {
                             "id": "id",
+                            "permission_rules": {"dade72d9-fef8-50f4-1b63-a8d2c211d4f3": {}},
                             "useDefaultWhenEmpty": "",
                             "validator": {
                                 "className": "",
@@ -317,6 +319,7 @@
                             "autoPopulate": "",
                             "id": "field16",
                             "label": "",
+                            "permission_rules": {"dade72d9-fef8-50f4-1b63-a8d2c211d4f3": {}},
                             "value": "<script>\n\n $(document).change(function(){\n    var banco = \"#form.detalhe_proce_dist.nome_banco[{form.processos_distrates.detalhe_processo}]#\"; \n    //console.log(banco);\n    if (banco === \"BIC\"){\n          $(\"input[id*=data_envio_SWIFT]\").parent().hide();\n          //console.log(\"entroubic\");\n    } else {\n         // console.log(\"entrousembic\");\n          $(\"input[id*=data_envio_SWIFT]\").parent().show();\n    }\n    \n    \n });\n \n<\/script>"
                         }
                     }
@@ -838,6 +841,7 @@
                             "autoPopulate": "",
                             "id": "field25",
                             "label": "",
+                            "permission_rules": {"dade72d9-fef8-50f4-1b63-a8d2c211d4f3": {}},
                             "value": "<script>\n    $(document).ready(function(){\n        var numRegisto1 =  $(\"input[name$=num_registo_1]\");\n        var numRegisto2 =  $(\"input[name$=num_registo_2]\");\n        var numRegisto3 =  $(\"input[name$=num_registo_3]\");\n        var numRegisto4 =  $(\"input[name$=num_registo_4]\");\n        var numRegisto5 =  $(\"input[name$=num_registo_5]\");\n        var tipoEmissao1 = $(\"select[name$=tipo_emissao_1]\");\n        var tipoEmissao2 = $(\"select[name$=tipo_emissao_2]\");\n        var tipoEmissao3 = $(\"select[name$=tipo_emissao_3]\");\n        var tipoEmissao4 = $(\"select[name$=tipo_emissao_4]\");\n        var tipoEmissao5 = $(\"select[name$=tipo_emissao_5]\");\n        \n        if (numRegisto1.val() === '' || numRegisto1.val() == undefined){\n            numRegisto2.parent().hide();\n            numRegisto3.parent().hide();\n            numRegisto4.parent().hide();\n            numRegisto5.parent().hide();\n            tipoEmissao2.parent().hide();\n            tipoEmissao3.parent().hide();\n            tipoEmissao4.parent().hide();\n            tipoEmissao5.parent().hide();\n            \n            } else {\n                numRegisto2.parent().show();\n                tipoEmissao2.parent().show();\n            }\n        if (numRegisto2.val() === '' || numRegisto2.val() == undefined){\n            numRegisto3.parent().hide();\n            numRegisto4.parent().hide();\n            numRegisto5.parent().hide();\n            tipoEmissao3.parent().hide();\n            tipoEmissao4.parent().hide();\n            tipoEmissao5.parent().hide();\n            \n            } else {\n                numRegisto3.parent().show();\n                tipoEmissao3.parent().show();\n            }\n        if (numRegisto3.val() === '' || numRegisto3.val() == undefined){\n            numRegisto4.parent().hide();\n            numRegisto5.parent().hide();\n            tipoEmissao4.parent().hide();\n            tipoEmissao5.parent().hide();\n            } else {\n                \n                numRegisto4.parent().show();\n                tipoEmissao4.parent().show()\n             }\n        if (numRegisto4.val() === '' || numRegisto4.val() == undefined){\n            numRegisto5.parent().hide();\n            tipoEmissao5.parent().hide();\n            } else {\n                \n                numRegisto5.parent().show();\n                tipoEmissao5.parent().show()\n             }\n        \n        \n        $(numRegisto1).change(function(){\n        if (numRegisto1.val() === '' || numRegisto1.val() == undefined){\n            numRegisto2.parent().hide();\n            numRegisto3.parent().hide();\n            numRegisto4.parent().hide();\n            numRegisto5.parent().hide();\n            tipoEmissao2.parent().hide();\n            tipoEmissao3.parent().hide();\n            tipoEmissao4.parent().hide();\n            tipoEmissao5.parent().hide();\n            numRegisto2.val('');\n            numRegisto3.val('');\n            numRegisto4.val('');\n            numRegisto5.val('');\n            tipoEmissao2.val('');\n            tipoEmissao3.val('');\n            tipoEmissao4.val('');\n            tipoEmissao5.val('');\n            \n            \n            } else {\n                numRegisto2.parent().show();\n                tipoEmissao2.parent().show();\n            }\n         });\n         \n        $(numRegisto2).change(function(){\n        if (numRegisto2.val() === '' || numRegisto2.val() == undefined){\n            numRegisto3.parent().hide();\n            numRegisto4.parent().hide();\n            numRegisto5.parent().hide();\n            tipoEmissao3.parent().hide();\n            tipoEmissao4.parent().hide();\n            tipoEmissao5.parent().hide();\n            numRegisto3.val('');\n            numRegisto4.val('');\n            numRegisto5.val('');\n            tipoEmissao3.val('');\n            tipoEmissao4.val('');\n            tipoEmissao5.val('');\n            \n            } else {\n                numRegisto3.parent().show();\n                tipoEmissao3.parent().show();\n            }\n        });\n        \n        $(numRegisto3).change(function(){\n        if (numRegisto3.val() === '' || numRegisto3.val() == undefined){\n            numRegisto4.parent().hide();\n            numRegisto5.parent().hide();\n            tipoEmissao4.parent().hide();\n            tipoEmissao5.parent().hide();\n            numRegisto4.val('');\n            numRegisto5.val('');\n            tipoEmissao4.val('');\n            tipoEmissao5.val('');\n            } else {\n                numRegisto4.parent().show();\n                tipoEmissao4.parent().show()\n             }\n        });\n        \n        $(numRegisto4).change(function(){\n        if (numRegisto4.val() === '' || numRegisto4.val() == undefined){\n            numRegisto5.parent().hide();\n            tipoEmissao5.parent().hide();\n            numRegisto5.val('');\n            tipoEmissao5.val('');\n            \n            } else {\n                \n                numRegisto5.parent().show();\n                tipoEmissao5.parent().show()\n             }\n        });\n        \n  });\n  \n\n<\/script>"
                         }
                     }
@@ -945,6 +949,6 @@
             "className": "org.joget.apps.form.lib.WorkflowFormBinder",
             "properties": {}
         },
-        "tableName": "detalhe_proce_list"
+        "tableName": "detalhe_dist_list"
     }
 }
