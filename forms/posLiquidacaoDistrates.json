@@ -165,6 +165,15 @@
                         "label": "",
                         "value": "<script>\n    $(document).ready(function(){\n        var numeroRegisto = '#form.detalhe_proce_dist.numero_distrate[{form.processos_distrates.detalhe_processo}]#';\n        console.log('CCCC' + numeroRegisto);\n        console.log('coisasssss');\n        var despesasReconhecimentoAssinaturas = $(\"input[name$=despesasReconhecimentoAssinaturas]\");\n        var despesa = 35;\n        var iva = 0.23;\n        despesasReconhecimentoAssinaturas.val((despesa + (despesa*iva))*numeroRegisto);\n     \n        \n  });\n  \n\n<\/script>"
                     }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field8",
+                        "label": "",
+                        "value": "<script>\r\n    $(document).ready(function(){\r\n        var f1 = FormUtil.getField(\"despesasReconhecimentoAssinaturas\");\r\n        var number = FormUtil.getValue(\"despesasReconhecimentoAssinaturas\");\r\n        \r\n       if(number != null && number !== \"\"){\r\n            number = number.replaceAll('NaN', \"0\");\r\n            number = number.replaceAll('.', \"\");\r\n            number = number.replaceAll('\u20ac', \"\");\r\n            number = number.replaceAll('Eur', \"\");\r\n            number = number.replaceAll('EUR', \"\");\r\n            number = number.replaceAll(',', '.');\r\n            \r\n            let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(number);\r\n        \r\n            num = num.replace(/\\s/g, '.');\r\n            num = num.replaceAll('.\u20ac', ' EUR');\r\n            \r\n            $(f1).val(num);\r\n        }else{\r\n            //do nothing\r\n        }  \r\n        \r\n  });\r\n  \r\n\r\n<\/script>\r\n        \r\n"
+                    }
                 }
             ],
             "properties": {"width": "100%"}
