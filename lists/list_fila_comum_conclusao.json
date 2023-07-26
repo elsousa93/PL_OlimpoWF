@@ -6,87 +6,12 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "procId",
-            "sql": "SELECT p.id AS procId, dp.*, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName,\n        sass.ResourceId AS assignee, dp.c_n_wf_banco AS NwfBanco, ip.c_nome AS cliente, CONCAT(ato.c_dataOutorga, ' ', ato.c_horaOutorga) AS DataAgendamento, \n        val.c_inicializacao_gestor AS InicializacaoGestor\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id\n    AND ip.c_cliente_principal LIKE (SELECT i.c_cliente_principal\n                                    FROM app_fd_intervenientes_proc i\n                                    WHERE i.c_id_processo = p.id\n                                    AND i.c_cliente_principal = 'CHECK')\nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id AND ato.c_status = 'AGD'\nLEFT JOIN app_fd_validacao val ON  val.id = p.c_geral\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id not like '%Credito%'\nAND sass.ResourceId LIKE \"%conclusoes_geral%\""
+            "sql": "SELECT p.id AS procId, dp.*, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName,\n        sass.ResourceId AS assignee, dp.c_n_wf_banco AS NwfBanco, ip.c_nome AS cliente, CONCAT(ato.c_dataOutorga, ' ', ato.c_horaOutorga) AS DataAgendamento, \n        val.c_inicializacao_gestor AS InicializacaoGestor,g.c_estadosConclusoes AS EstadoConclusoes\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN app_fd_geral g ON g.c_id_processo = p.id\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id\n    AND ip.c_cliente_principal LIKE (SELECT i.c_cliente_principal\n                                    FROM app_fd_intervenientes_proc i\n                                    WHERE i.c_id_processo = p.id\n                                    AND i.c_cliente_principal = 'CHECK')\nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id AND ato.c_status = 'AGD'\nLEFT JOIN app_fd_validacao val ON  val.id = p.c_geral\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id not like '%Credito%'\nAND sass.ResourceId LIKE \"%conclusoes_geral%\""
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
     "columns": [
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "true",
-            "id": "column_5",
-            "include_export": "",
-            "label": "Data Agend.",
-            "name": "DataAgendamento",
-            "permission_rules": {
-                "1081155f-1700-be08-9c6f-364a49cf8d0b": {
-                    "exclude_export": "",
-                    "hidden": "false",
-                    "include_export": ""
-                },
-                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {
-                    "exclude_export": "",
-                    "hidden": "true",
-                    "include_export": "true"
-                },
-                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
-            },
-            "sortable": "true",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "true",
-            "id": "column_9",
-            "include_export": "",
-            "label": "instanceId",
-            "name": "instanceId",
-            "permission_rules": {
-                "1081155f-1700-be08-9c6f-364a49cf8d0b": {
-                    "exclude_export": "",
-                    "hidden": "true",
-                    "include_export": "true"
-                },
-                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {
-                    "exclude_export": "",
-                    "hidden": "true",
-                    "include_export": "true"
-                },
-                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {
-                    "exclude_export": "",
-                    "hidden": "true",
-                    "include_export": ""
-                }
-            },
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
         {
             "action": {
                 "className": "",
@@ -124,6 +49,28 @@
             "exclude_export": "",
             "filterable": true,
             "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_4",
+            "label": "PID",
+            "name": "c_pid",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
                 "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
                 "properties": {
                     "options": [],
@@ -146,7 +93,7 @@
             "headerAlignment": "",
             "hidden": "false",
             "id": "column_2",
-            "label": "Nome Banco",
+            "label": "Banco",
             "name": "c_nome_banco",
             "permission_rules": {
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
@@ -194,35 +141,14 @@
             "exclude_export": "",
             "filterable": true,
             "format": {
-                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
-                "properties": {
-                    "options": [],
-                    "optionsBinder": {
-                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
-                        "properties": {
-                            "addEmptyOption": "",
-                            "cacheInterval": "",
-                            "emptyLabel": "",
-                            "extraCondition": "c_nome_campo = 'tipo_processo'",
-                            "formDefId": "adicionarOpcaoLV",
-                            "groupingColumn": "",
-                            "idColumn": "value",
-                            "labelColumn": "label",
-                            "useAjax": ""
-                        }
-                    }
-                }
+                "className": "",
+                "properties": {}
             },
             "headerAlignment": "",
             "hidden": "false",
-            "id": "column_4",
-            "label": "Tipo Processo",
-            "name": "c_tipo_processo",
-            "permission_rules": {
-                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
-                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
-                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
-            },
+            "id": "column_0",
+            "label": "Atividade",
+            "name": "activityName",
             "sortable": "false",
             "style": "",
             "width": ""
@@ -237,70 +163,14 @@
             "exclude_export": "",
             "filterable": true,
             "format": {
-                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
-                "properties": {
-                    "options": [],
-                    "optionsBinder": {
-                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
-                        "properties": {
-                            "addEmptyOption": "",
-                            "cacheInterval": "",
-                            "emptyLabel": "",
-                            "extraCondition": "c_nome_campo = 'origem_processo'",
-                            "formDefId": "adicionarOpcaoLV",
-                            "groupingColumn": "",
-                            "idColumn": "value",
-                            "labelColumn": "label",
-                            "useAjax": ""
-                        }
-                    }
-                }
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_10",
-            "label": "Origem do Processo",
-            "name": "c_origem_processo",
-            "permission_rules": {
-                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
-                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
-                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
-            },
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
                 "className": "",
                 "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "org.joget.plugin.enterprise.DateFormatter",
-                "properties": {
-                    "dataFormat": "yyyy-MM-dd HH:mm:ss",
-                    "dateStoreInUTC": "",
-                    "displayFormat": "dd/MM/yyyy HH:mm:ss"
-                }
             },
             "headerAlignment": "",
             "hidden": "false",
             "id": "column_3",
-            "label": "Data de Registo",
-            "name": "dateCreated",
-            "permission_rules": {
-                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
-                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
-                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {
-                    "exclude_export": "",
-                    "hidden": "true",
-                    "include_export": "true"
-                }
-            },
+            "label": "Estado Conclusões",
+            "name": "EstadoConclusoes",
             "sortable": "false",
             "style": "",
             "width": ""
