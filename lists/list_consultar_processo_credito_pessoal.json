@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "idProc",
-            "sql": "SELECT p.dateCreated, ato.c_status, IF(ato.c_status = 'AGD', ato.c_dataOutorga, '-') as dataAgendamento, \np.id as idProc, dp.c_n_processo as NProc, dp.c_banco_fundo as Banco, dp.c_tipo_processo as TipoProcesso, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId,\nsact.Name AS activityName, sass.ResourceId AS assignee, dp.c_n_agenda as NAgenda\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos_procu p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_proce_procu dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN app_fd_atos ato ON ato.c_id_processo = p.id \nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nWHERE sps.KeyValue LIKE 'open.running'\nAND p.id is not null\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id like '%PCDProcuradoria%'\nAND (ato.dateCreated = (SELECT MAX(dateCreated) FROM app_fd_atos a2 WHERE a2.c_id_processo = p.id) || ato.dateCreated IS null)\n\n"
+            "sql": "SELECT p.dateCreated, p.id AS idProc, dp.c_scoring AS scoring, dp.c_gestor AS gestor, dp.c_data_entrada AS dataEntrada, dp.c_momento_entrada AS momentoEntrada, sp.Id AS processId,\n\t\tsp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee, dp.c_n_agenda as NAgenda\nFROM shkprocesses sp\nLEFT JOIN app_fd_processos_cp p ON sp.Id = p.id\nLEFT JOIN app_fd_detalhe_proce_cp dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nWHERE sps.KeyValue LIKE 'open.running'\nAND p.id is not null\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id like '%CreditoPessoal%'"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -27,145 +27,9 @@
             },
             "headerAlignment": "",
             "hidden": "false",
-            "id": "column_0",
-            "label": "Data Agendamento",
-            "name": "dataAgendamento",
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
-                "properties": {
-                    "options": [],
-                    "optionsBinder": {
-                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
-                        "properties": {
-                            "addEmptyOption": "",
-                            "cacheInterval": "",
-                            "emptyLabel": "",
-                            "extraCondition": "c_nome_campo = 'estado_agendamento' AND e.customProperties.servico LIKE '%PROCU%'",
-                            "formDefId": "adicionarOpcaoLV",
-                            "groupingColumn": "",
-                            "idColumn": "value",
-                            "labelColumn": "label",
-                            "useAjax": ""
-                        }
-                    }
-                }
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_1",
-            "label": "Estado do Agendamento",
-            "name": "c_status",
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_3",
-            "label": "Número do Processo",
-            "name": "NProc",
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
-                "properties": {
-                    "options": [],
-                    "optionsBinder": {
-                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
-                        "properties": {
-                            "addEmptyOption": "",
-                            "cacheInterval": "",
-                            "emptyLabel": "",
-                            "extraCondition": "c_nome_campo = 'nome_banco' AND e.customProperties.servico LIKE '%PROCU%'",
-                            "formDefId": "adicionarOpcaoLV",
-                            "groupingColumn": "",
-                            "idColumn": "value",
-                            "labelColumn": "label",
-                            "useAjax": ""
-                        }
-                    }
-                }
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_4",
-            "label": "Banco",
-            "name": "Banco",
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
-                "properties": {
-                    "options": [],
-                    "optionsBinder": {
-                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
-                        "properties": {
-                            "addEmptyOption": "",
-                            "cacheInterval": "",
-                            "emptyLabel": "",
-                            "extraCondition": "c_nome_campo = 'tipo_processo' AND e.customProperties.servico LIKE '%PROCU%'",
-                            "formDefId": "adicionarOpcaoLV",
-                            "groupingColumn": "",
-                            "idColumn": "value",
-                            "labelColumn": "label",
-                            "useAjax": ""
-                        }
-                    }
-                }
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_6",
-            "label": "Tipo Processo",
-            "name": "TipoProcesso",
+            "id": "column_8",
+            "label": "Scoring",
+            "name": "scoring",
             "sortable": "false",
             "style": "",
             "width": ""
@@ -232,6 +96,43 @@
             "sortable": "false",
             "style": "",
             "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [
+                        {
+                            "label": "Manhã",
+                            "value": "manha"
+                        },
+                        {
+                            "label": "Tarde",
+                            "value": "tarde"
+                        }
+                    ],
+                    "optionsBinder": {
+                        "className": "",
+                        "properties": {}
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_7",
+            "label": "Momento de Entrada",
+            "name": "momentoEntrada",
+            "sortable": "false",
+            "style": "",
+            "width": ""
         }
     ],
     "considerFilterWhenGetTotal": "",
@@ -240,11 +141,11 @@
     "filters": [
         {
             "datalist_type": "filter",
-            "filterParamName": "d-3292549-fn_NProc",
+            "filterParamName": "d-1381974-fn_scoring",
             "hidden": "",
-            "id": "filter_4",
-            "label": "Número do Processo",
-            "name": "NProc",
+            "id": "filter_5",
+            "label": "Scoring",
+            "name": "scoring",
             "type": {
                 "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
                 "properties": {"defaultValue": ""}
@@ -252,31 +153,37 @@
         },
         {
             "datalist_type": "filter",
-            "filterParamName": "d-3292549-fn_Banco",
+            "filterParamName": "d-1381974-fn_momentoEntrada",
             "hidden": "",
-            "id": "filter_0",
-            "label": "Banco",
-            "name": "Banco",
+            "id": "filter_6",
+            "label": "Momento de Entrada",
+            "name": "momentoEntrada",
             "type": {
                 "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
                 "properties": {
                     "controlField": "",
                     "defaultValue": "",
                     "multiple": "",
-                    "options": [],
-                    "optionsBinder": {
-                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
-                        "properties": {
-                            "addEmptyOption": "",
-                            "cacheInterval": "",
-                            "emptyLabel": "",
-                            "extraCondition": "c_nome_campo = 'nome_banco' AND e.customProperties.servico LIKE '%PROCU%'",
-                            "formDefId": "adicionarOpcaoLV",
-                            "groupingColumn": "",
-                            "idColumn": "value",
-                            "labelColumn": "label",
-                            "useAjax": ""
+                    "options": [
+                        {
+                            "grouping": "",
+                            "label": "Momento de Entrada",
+                            "value": ""
+                        },
+                        {
+                            "grouping": "",
+                            "label": "Correio da Manhã",
+                            "value": "manha"
+                        },
+                        {
+                            "grouping": "",
+                            "label": "Correio da Tarde",
+                            "value": "tarde"
                         }
+                    ],
+                    "optionsBinder": {
+                        "className": "",
+                        "properties": {}
                     },
                     "size": ""
                 }
@@ -284,71 +191,7 @@
         },
         {
             "datalist_type": "filter",
-            "filterParamName": "d-3292549-fn_TipoProcesso",
-            "hidden": "",
-            "id": "filter_1",
-            "label": "Tipo Processo",
-            "name": "TipoProcesso",
-            "type": {
-                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
-                "properties": {
-                    "controlField": "",
-                    "defaultValue": "",
-                    "multiple": "",
-                    "options": [],
-                    "optionsBinder": {
-                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
-                        "properties": {
-                            "addEmptyOption": "",
-                            "cacheInterval": "",
-                            "emptyLabel": "",
-                            "extraCondition": "c_nome_campo = 'tipo_processo' AND e.customProperties.servico LIKE '%PROCU%'",
-                            "formDefId": "adicionarOpcaoLV",
-                            "groupingColumn": "",
-                            "idColumn": "value",
-                            "labelColumn": "label",
-                            "useAjax": ""
-                        }
-                    },
-                    "size": ""
-                }
-            }
-        },
-        {
-            "datalist_type": "filter",
-            "filterParamName": "d-3292549-fn_c_status",
-            "hidden": "",
-            "id": "filter_2",
-            "label": "Estado Agendamento",
-            "name": "c_status",
-            "type": {
-                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
-                "properties": {
-                    "controlField": "",
-                    "defaultValue": "",
-                    "multiple": "",
-                    "options": [],
-                    "optionsBinder": {
-                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
-                        "properties": {
-                            "addEmptyOption": "",
-                            "cacheInterval": "",
-                            "emptyLabel": "",
-                            "extraCondition": "c_nome_campo = 'estado_agendamento' AND e.customProperties.servico LIKE '%PROCU%'",
-                            "formDefId": "adicionarOpcaoLV",
-                            "groupingColumn": "",
-                            "idColumn": "value",
-                            "labelColumn": "label",
-                            "useAjax": ""
-                        }
-                    },
-                    "size": ""
-                }
-            }
-        },
-        {
-            "datalist_type": "filter",
-            "filterParamName": "d-3292549-fn_assignee",
+            "filterParamName": "d-1381974-fn_assignee",
             "hidden": "",
             "id": "filter_3",
             "label": "Gestor",
