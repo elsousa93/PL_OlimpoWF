@@ -12,6 +12,7 @@
                         "permission_rules": {
                             "178fdc63-b293-18b9-8aa9-e1b40619226d": {},
                             "515f6900-9e90-0f82-7f73-83169ca25e3c": {},
+                            "8520c5b5-ef0d-3991-1a78-ce897d51e351": {},
                             "90085c96-d6e4-c5b5-f473-17f2b1f6096e": {},
                             "a117c3cc-b0cf-03af-3da4-4e2f6d8a5ead": {},
                             "dcbd9072-5995-d265-ef54-a0241c80d8b8": {}
@@ -41,6 +42,7 @@
                                 "permissionHidden": "true",
                                 "readonly": ""
                             },
+                            "8520c5b5-ef0d-3991-1a78-ce897d51e351": {},
                             "90085c96-d6e4-c5b5-f473-17f2b1f6096e": {},
                             "a117c3cc-b0cf-03af-3da4-4e2f6d8a5ead": {
                                 "permissionHidden": "true",
@@ -80,6 +82,7 @@
                                 "permissionHidden": "true",
                                 "readonly": ""
                             },
+                            "8520c5b5-ef0d-3991-1a78-ce897d51e351": {},
                             "90085c96-d6e4-c5b5-f473-17f2b1f6096e": {},
                             "a117c3cc-b0cf-03af-3da4-4e2f6d8a5ead": {},
                             "dcbd9072-5995-d265-ef54-a0241c80d8b8": {
@@ -113,6 +116,7 @@
                         "label": "Reiterar pedido junto da Agência",
                         "permission_rules": {
                             "515f6900-9e90-0f82-7f73-83169ca25e3c": {},
+                            "8520c5b5-ef0d-3991-1a78-ce897d51e351": {},
                             "90085c96-d6e4-c5b5-f473-17f2b1f6096e": {},
                             "a117c3cc-b0cf-03af-3da4-4e2f6d8a5ead": {},
                             "dcbd9072-5995-d265-ef54-a0241c80d8b8": {}
@@ -146,6 +150,7 @@
                                 "permissionHidden": "true",
                                 "readonly": ""
                             },
+                            "8520c5b5-ef0d-3991-1a78-ce897d51e351": {},
                             "90085c96-d6e4-c5b5-f473-17f2b1f6096e": {},
                             "a117c3cc-b0cf-03af-3da4-4e2f6d8a5ead": {
                                 "permissionHidden": "true",
@@ -193,6 +198,7 @@
                         },
                         "permission_rules": {
                             "515f6900-9e90-0f82-7f73-83169ca25e3c": {},
+                            "8520c5b5-ef0d-3991-1a78-ce897d51e351": {},
                             "90085c96-d6e4-c5b5-f473-17f2b1f6096e": {},
                             "a117c3cc-b0cf-03af-3da4-4e2f6d8a5ead": {},
                             "dcbd9072-5995-d265-ef54-a0241c80d8b8": {}
@@ -220,6 +226,7 @@
                         "label": "Data limite para emissão de Distrate",
                         "permission_rules": {
                             "515f6900-9e90-0f82-7f73-83169ca25e3c": {},
+                            "8520c5b5-ef0d-3991-1a78-ce897d51e351": {},
                             "90085c96-d6e4-c5b5-f473-17f2b1f6096e": {},
                             "a117c3cc-b0cf-03af-3da4-4e2f6d8a5ead": {},
                             "dcbd9072-5995-d265-ef54-a0241c80d8b8": {}
@@ -243,7 +250,12 @@
                         "autoPopulate": "",
                         "id": "datasAutomatizadas",
                         "label": "",
-                        "value": "<script>\n    $(document).ready(function(){\n        var banco = \"#form.detalhe_proce_dist.nome_banco[{form.processos_distrates.detalhe_processo}]#\"; \n        console.log(banco);\n        //Calcular as datas de pedido_agencia e data_limite  \n        $(\"input[id*=data_liquidacao]\").change(function(){\n                var dataLiquidacao = $(\"input[id*=data_liquidacao]\").datepicker('getDate');\n                if(dataLiquidacao != null){\n                    if(banco === \"BIC\"){\n                        var dataPedidoAgenda = dataLiquidacao;\n                        dataPedidoAgenda.setDate(dataPedidoAgenda.getDate() + 3);\n                        var day = dataPedidoAgenda.getDate();\n                        var month = dataPedidoAgenda.getMonth() + 1; //Javascript months start at 0\n                        if(day<10){\n                            day=\"0\" + day;\n                        }\n                        if(month<10){\n                            month = \"0\" + month;\n                        }\n                        var validade = day + \"/\" + month + \"/\" + dataPedidoAgenda.getFullYear();\n\n                        $(\"input[id*=reiterar_pedido_agencia]\").datepicker('setDate', validade);\n                        \n                        \n                        \n                        \n                        var dataReiterarPedido = $(\"input[id*=reiterar_pedido_agencia]\").datepicker('getDate'); \n                        \n                        dataLiquidacao.setDate(dataLiquidacao.getDate() + 7);\n                        day = dataLiquidacao.getDate();\n                        month = dataLiquidacao.getMonth() + 1;\n                        if(day<10){\n                            day=\"0\" + day;\n                        }\n                        if(month<10){\n                            month = \"0\" + month;\n                        }\n                        validade =  day + \"/\" + month + \"/\" + dataLiquidacao.getFullYear();\n                         $(\"input[id*=data_limite]\").datepicker('setDate', validade);\n                        \n                        dataReiterarPedido.setDate(dataReiterarPedido.getDate() + 2);\n                        day = dataReiterarPedido.getDate();\n                        month = dataReiterarPedido.getMonth() + 1;\n                        if(day<10){\n                            day=\"0\" + day;\n                        }\n                        if(month<10){\n                            month = \"0\" + month;\n                        }\n                        validade =  day + \"/\" + month + \"/\" + dataReiterarPedido.getFullYear();\n                        $(\"input[id*=obter_certidao_predial]\").datepicker('setDate', validade);\n                         \n                                \n                    }\n                    \n                } else {\n                       $(\"input[id*=reiterar_pedido_agencia]\").val('');\n                       $(\"input[id*=data_limite]\").val(''); \n                        $(\"input[id*=obter_certidao_predial]\").val('');\n                }\n        \n        });\n        \n    });\n    \n <\/script>\n\n        "
+                        "permission_rules": {
+                            "515f6900-9e90-0f82-7f73-83169ca25e3c": {},
+                            "8520c5b5-ef0d-3991-1a78-ce897d51e351": {},
+                            "90085c96-d6e4-c5b5-f473-17f2b1f6096e": {}
+                        },
+                        "value": "<script>\n    $(document).ready(function(){\n        var banco = \"#form.detalhe_proce_dist.nome_banco[{form.processos_distrates.detalhe_processo}]#\"; \n        console.log(banco);\n        //Calcular as datas de pedido_agencia e data_limite  \n        $(\"input[id*=data_liquidacao]\").change(function(){\n                var dataLiquidacao = $(\"input[id*=data_liquidacao]\").datepicker('getDate');\n                if(dataLiquidacao != null){\n                    if(banco === \"BIC\"){\n                        var dataPedidoAgenda = dataLiquidacao;\n                        for(int=0; i < 3; i++){\n                          dataPedidoAgenda.setDate(dataPedidoAgenda.getDate() + 1);\n                          var weekday = dataPedidoAgenda.getDay();\n                          while(weekday == 0 || weekday == 6){\n                            dataPedidoAgenda.setDate(dataPedidoAgenda.getDate() + 1);\n                            weekday = dataPedidoAgenda.getDay(); \n                          }\n                        //dataPedidoAgenda.setDate(dataPedidoAgenda.getDate() + 3);\n                        }\n                        var day = dataPedidoAgenda.getDate();\n                        var month = dataPedidoAgenda.getMonth() + 1; //Javascript months start at 0\n                        if(day<10){\n                            day=\"0\" + day;\n                        }\n                        if(month<10){\n                            month = \"0\" + month;\n                        }\n                        var validade = day + \"/\" + month + \"/\" + dataPedidoAgenda.getFullYear();\n\n                        $(\"input[id*=reiterar_pedido_agencia]\").datepicker('setDate', validade);\n                        \n                        \n                        var dataReiterarPedido = $(\"input[id*=reiterar_pedido_agencia]\").datepicker('getDate'); \n                        \n                        dataLiquidacao.setDate(dataLiquidacao.getDate() + 7);\n                        day = dataLiquidacao.getDate();\n                        month = dataLiquidacao.getMonth() + 1;\n                        if(day<10){\n                            day=\"0\" + day;\n                        }\n                        if(month<10){\n                            month = \"0\" + month;\n                        }\n                        validade =  day + \"/\" + month + \"/\" + dataLiquidacao.getFullYear();\n                         $(\"input[id*=data_limite]\").datepicker('setDate', validade);\n                        \n                        dataReiterarPedido.setDate(dataReiterarPedido.getDate() + 2);\n                        day = dataReiterarPedido.getDate();\n                        month = dataReiterarPedido.getMonth() + 1;\n                        if(day<10){\n                            day=\"0\" + day;\n                        }\n                        if(month<10){\n                            month = \"0\" + month;\n                        }\n                        validade =  day + \"/\" + month + \"/\" + dataReiterarPedido.getFullYear();\n                        $(\"input[id*=obter_certidao_predial]\").datepicker('setDate', validade);\n                         \n                                \n                    }\n                    \n                } else {\n                       $(\"input[id*=reiterar_pedido_agencia]\").val('');\n                       $(\"input[id*=data_limite]\").val(''); \n                       $(\"input[id*=obter_certidao_predial]\").val('');\n                }\n        \n        });\n        \n    });\n    \n <\/script>\n\n        "
                     }
                 }
             ],
@@ -265,6 +277,7 @@
             "permissionReadonly": "",
             "permission_rules": {
                 "515f6900-9e90-0f82-7f73-83169ca25e3c": {},
+                "8520c5b5-ef0d-3991-1a78-ce897d51e351": {},
                 "90085c96-d6e4-c5b5-f473-17f2b1f6096e": {},
                 "a117c3cc-b0cf-03af-3da4-4e2f6d8a5ead": {},
                 "dcbd9072-5995-d265-ef54-a0241c80d8b8": {}
@@ -295,6 +308,14 @@
             "properties": {}
         },
         "permission_rules": [
+            {
+                "permission": {
+                    "className": "",
+                    "properties": []
+                },
+                "permission_key": "8520c5b5-ef0d-3991-1a78-ce897d51e351",
+                "permission_name": "Unnamed"
+            },
             {
                 "permission": {
                     "className": "org.joget.apps.userview.lib.DepartmentPermission",
