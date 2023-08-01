@@ -9445,7 +9445,7 @@
                 </Activity>
                 <Activity Id="subConclusao" Name="Conclusões">
                     <Implementation>
-                        <SubFlow Execution="SYNCHR" Id="CHConclusoes">
+                        <SubFlow Execution="SYNCHR" Id="HIPConclusoes">
                             <ActualParameters>
                                 <ActualParameter>status</ActualParameter>
                                 <ActualParameter>user_conclusoes</ActualParameter>
@@ -9670,12 +9670,6 @@
                     <TransitionRestrictions>
                         <TransitionRestriction>
                             <Join Type="XOR"/>
-                            <Split Type="AND">
-                                <TransitionRefs>
-                                    <TransitionRef Id="transition21"/>
-                                    <TransitionRef Id="transition44"/>
-                                </TransitionRefs>
-                            </Split>
                         </TransitionRestriction>
                     </TransitionRestrictions>
                     <ExtendedAttributes>
@@ -9725,9 +9719,19 @@
                 <Activity Id="route9">
                     <Route/>
                     <Performer>process28_participant3</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition38"/>
+                                    <TransitionRef Id="transition44"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process28_participant3"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="334,228.00001831054686"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="383,223"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="route10_1">
@@ -9934,12 +9938,9 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="HIPContratacao" Id="transition44" Name="conclusoes" To="subConclusao">
-                    <Condition Type="CONDITION">proxima_operativa === 'conclusoes'</Condition>
+                <Transition From="route9" Id="transition44" Name="conclusoes" To="subConclusao">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;conclusoes&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
             </Transitions>
