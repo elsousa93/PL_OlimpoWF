@@ -3627,7 +3627,7 @@
                                     },
                                     "6c9a9c6d-bd10-4f4a-0682-541bcbb1222b": {
                                         "permissionHidden": "",
-                                        "readonly": "true"
+                                        "readonly": ""
                                     },
                                     "94c61551-208b-5093-fbad-41d5f6b323c0": {
                                         "permissionHidden": "",
@@ -5038,11 +5038,8 @@
             },
             {
                 "permission": {
-                    "className": "org.joget.apps.userview.lib.GroupPermission",
-                    "properties": {
-                        "allowedGroupIds": "Coordenador",
-                        "orgId": "PL"
-                    }
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString grupo = \"#currentUser.groups.id#\";\n\nif(grupo.contains(\"Coordenador\") || grupo.contains(\"Apoio à Coordenação\")){\n    return true;\n} else{\n    return false;\n}"}
                 },
                 "permission_key": "aa6ccea8-6e7f-1433-8d14-32132e9bf1e0",
                 "permission_name": "Coordenadores"
