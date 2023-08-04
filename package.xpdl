@@ -8705,7 +8705,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="resgistos_qualidade"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1579.0277709960938,60.638881996093744"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1457.0277709960938,79.38888199609374"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="validacaoDeposito" Name="Validação do Depósito">
@@ -8715,7 +8715,7 @@
                     <Performer>resgistos_qualidade</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="resgistos_qualidade"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1824.4583129882812,36.43053849023437"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1762.4583129882812,88.1944850234375"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="configurarPagamentoRegisto" Name="Configurar Pagamento do Registo">
@@ -8783,7 +8783,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="gestor_registos"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1632.0000348772323,46.70378417968749"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1629,47.583340003906244"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="route5">
@@ -8821,22 +8821,32 @@
                             <Split Type="XOR">
                                 <TransitionRefs>
                                     <TransitionRef Id="transition35"/>
-                                    <TransitionRef Id="transition36"/>
+                                    <TransitionRef Id="transition30"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="gestor_registos"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1501.9375174386162,48.36625976562499"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1495.9305725097656,45.250027015624994"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="route8">
+                <Activity Id="route7_1">
                     <Route/>
                     <Performer>resgistos_qualidade</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition37"/>
+                                    <TransitionRef Id="transition38"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="resgistos_qualidade"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1248.2000122070312,57.47502441406249"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1657,91.70834000390624"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -8912,11 +8922,6 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="configurarValidacaoDeposito" Id="transition21" To="validacaoDeposito">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="registo" Id="transition22" To="configurarPagamentoRegisto">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
@@ -8985,22 +8990,35 @@
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;tem_registo&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;SIM&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="route7" Id="transition36" To="route8">
+                <Transition From="preencherCamposValidacaoDeposito" Id="transition39" To="ultimaAtividadeRegisto">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route7" Id="transition30" To="configurarValidacaoDeposito">
                     <Condition Type="CONDITION">tem_registo === 'NAO'</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;tem_registo&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;NAO&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="route8" Id="transition37" To="configurarValidacaoDeposito">
+                <Transition From="configurarValidacaoDeposito" Id="transition36" To="route7_1">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="preencherCamposValidacaoDeposito" Id="transition39" To="ultimaAtividadeRegisto">
+                <Transition From="route7_1" Id="transition37" To="validacaoDeposito">
+                    <Condition Type="CONDITION">tem_deposito === 'SIM'</Condition>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;tem_deposito&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;SIM&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route7_1" Id="transition38" To="ultimaAtividadeRegisto">
+                    <Condition Type="CONDITION">tem_deposito === 'NAO'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;tem_deposito&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;NAO&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
             </Transitions>
