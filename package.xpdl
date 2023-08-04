@@ -8773,6 +8773,7 @@
                     <Performer>gestor_registos</Performer>
                     <TransitionRestrictions>
                         <TransitionRestriction>
+                            <Join Type="XOR"/>
                             <Split Type="AND">
                                 <TransitionRefs>
                                     <TransitionRef Id="transition23"/>
@@ -8794,8 +8795,8 @@
                             <Split Type="XOR">
                                 <TransitionRefs>
                                     <TransitionRef Id="transition32"/>
-                                    <TransitionRef Id="transition33"/>
                                     <TransitionRef Id="transition34"/>
+                                    <TransitionRef Id="transition40"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
@@ -8964,13 +8965,6 @@
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;tem_deposito&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;NAO&quot;},{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;tem_registo&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;NAO&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="route5" Id="transition33" To="ConfigurarAtividadeRegisto">
-                    <Condition Type="CONDITION">tem_deposito === 'NAO' &amp;&amp; tem_registo === 'SIM'</Condition>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;tem_deposito&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;NAO&quot;},{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;tem_registo&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;SIM&quot;}]"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="route5" Id="transition34" To="configurarPagamentoDeposito">
                     <Condition Type="CONDITION">tem_deposito === 'SIM'</Condition>
                     <ExtendedAttributes>
@@ -9019,6 +9013,13 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;tem_deposito&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;NAO&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route5" Id="transition40" To="route3">
+                    <Condition Type="CONDITION">tem_deposito === 'NAO' &amp;&amp; tem_registo === 'SIM'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;tem_deposito&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;NAO&quot;},{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;tem_registo&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;SIM&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
             </Transitions>
