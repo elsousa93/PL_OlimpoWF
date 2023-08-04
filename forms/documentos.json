@@ -305,6 +305,62 @@
                         }
                     },
                     {
+                        "className": "org.joget.apps.form.lib.CheckBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "inserida_pendencia",
+                            "label": "Pendência Inserida?",
+                            "options": [{
+                                "grouping": "",
+                                "label": "",
+                                "value": ""
+                            }],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "*",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\n\r\npublic boolean validacaoInsercaoPendencia(Element element, FormData formData){\r\n\r\n    //Configure field to validate - UPDATE HERE\r\n    String fieldId = \"inserida_pendencia\";\r\n    String campo = FormUtil.getElementParameterName(element);\r\n    \r\n    String faseProcesso = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\r\n    String temRegisto = \"#form.docs_processo.tem_registo[{form.processos.docs}]#\";\r\n    String subfaseProcesso = \"#assignment.activityName#\";\r\n    Boolean result = false;\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    if(faseProcesso.equals(\"REG\")){\r\n        if ((fieldValue == null || fieldValue.equals(\"\")) && subfaseProcesso.equals(\"Pagamento do Registo\") && temRegisto.equals(\"SIM\")){\r\n            formData.addFormError(campo, \"Campo obrigatório\");\r\n            result = false;\r\n        } else{\r\n            result = true;  \r\n        }\r\n    } else{\r\n       result = true; \r\n    }\r\n\r\n    \r\n    return result;\r\n}\r\n\r\n//call load method with injected variable\r\nreturn validacaoInsercaoPendencia(element, formData);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.DatePicker",
+                        "properties": {
+                            "allowManual": "true",
+                            "currentDateAs": "",
+                            "dataFormat": "yyyy-MM-dd HH:mm:ss",
+                            "datePickerType": "dateTime",
+                            "endDateFieldId": "",
+                            "format": "dd/mm/yy HH:mm:ss",
+                            "format24hr": "true",
+                            "id": "data_da_pendencia",
+                            "label": "Data da Pendência",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "startDateFieldId": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "*",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\n\r\npublic boolean validacaoDataPendencia(Element element, FormData formData){\r\n\r\n    //Configure field to validate - UPDATE HERE\r\n    String fieldId = \"data_da_pendencia\";\r\n    String campo = FormUtil.getElementParameterName(element);\r\n    \r\n    String faseProcesso = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\r\n    String temRegisto = \"#form.docs_processo.tem_registo[{form.processos.docs}]#\";\r\n    String subfaseProcesso = \"#assignment.activityName#\";\r\n    Boolean result = false;\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    if(faseProcesso.equals(\"REG\")){\r\n        if ((fieldValue == null || fieldValue.equals(\"\")) && subfaseProcesso.equals(\"Pagamento do Registo\") && temRegisto.equals(\"SIM\")){\r\n            formData.addFormError(campo, \"Campo obrigatório\");\r\n            result = false;\r\n        } else{\r\n            result = true;  \r\n        }\r\n    } else{\r\n       result = true; \r\n    }\r\n\r\n    \r\n    return result;\r\n}\r\n\r\n//call load method with injected variable\r\nreturn validacaoDataPendencia(element, formData);"
+                                }
+                            },
+                            "value": "#date.yyyy-MM-dd HH:mm:ss#",
+                            "workflowVariable": "",
+                            "yearRange": "c-10:c+10"
+                        }
+                    },
+                    {
                         "className": "org.joget.apps.form.lib.CustomHTML",
                         "properties": {
                             "autoPopulate": "",
