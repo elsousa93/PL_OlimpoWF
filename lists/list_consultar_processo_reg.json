@@ -33,7 +33,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "procId",
-            "sql": "SELECT p.id as procId, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName,\n sass.ResourceId AS assignee, dp.c_n_wf_pl AS NwfPL, dp.c_n_wf_banco AS NwfBanco, dp.c_nome_banco AS NomeBanco, dp.dateCreated AS DataCriacao, dp.c_urgencia_registo AS Urgencia, dp.c_tipo_processo as TipoProcesso, dp.dateModified AS DataModificacao,\n dp.c_fase_processo AS FaseProcesso, ip.c_nome AS cliente, d.c_necessarias_correcoes AS CorrecoesRegistos,  \n d.c_observacoes_correcao AS ObservacoesRegistos, dp.c_tipo_entidade as Entidade, atos.c_dataOutorga, atos.c_horaOutorga, dp.c_categoria_processo as CategoriaProcesso,\n atos.c_status as EstadoAgendamento, CONCAT(atos.c_dataOutorga, ' ', atos.c_horaOutorga) AS DataAgendamento, atos.c_cedula_entidade as entidadeAutenticadora, dp.c_n_wf_pl_relacionado AS ProcessosRelacionados, ROW_NUMBER() OVER (ORDER BY atos.c_dataOutorga ASC, atos.c_horaOutorga ASC, dp.c_urgencia DESC) AS No\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK'\nLEFT JOIN app_fd_docs_processo d ON  d.id = p.c_docs\nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nLEFT JOIN (SELECT c_dataOutorga, c_horaOutorga, c_id_agendamento, c_status, c_cedula_entidade FROM app_fd_atos ORDER BY dateCreated DESC) atos ON atos.c_id_agendamento = ag.id\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id not like '%Credito%'\nAND (Select count(ID) from shkprocesses \n   where ActivityRequesterProcessId = sp2.id\n    AND (ID like '%Registos%'\n\t     OR ID like '%AcompanhamentoOutorgas%')\n) > 0"
+            "sql": "SELECT p.id as procId, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName,\n sass.ResourceId AS assignee, dp.c_n_wf_pl AS NwfPL, dp.c_n_wf_banco AS NwfBanco, dp.c_nome_banco AS NomeBanco, dp.dateCreated AS DataCriacao, dp.c_urgencia_registo AS Urgencia, dp.c_tipo_processo as TipoProcesso, dp.dateModified AS DataModificacao,\n dp.c_origem_processo as OrigemProcesso, dp.c_fase_processo AS FaseProcesso, ip.c_nome AS cliente, d.c_necessarias_correcoes AS CorrecoesRegistos,  \n d.c_observacoes_correcao AS ObservacoesRegistos, dp.c_tipo_entidade as Entidade, atos.c_dataOutorga, atos.c_horaOutorga, dp.c_categoria_processo as CategoriaProcesso,\n atos.c_status as EstadoAgendamento, CONCAT(atos.c_dataOutorga, ' ', atos.c_horaOutorga) AS DataAgendamento, atos.c_cedula_entidade as entidadeAutenticadora, dp.c_n_wf_pl_relacionado AS ProcessosRelacionados, ROW_NUMBER() OVER (ORDER BY atos.c_dataOutorga ASC, atos.c_horaOutorga ASC, dp.c_urgencia DESC) AS No\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK'\nLEFT JOIN app_fd_docs_processo d ON  d.id = p.c_docs\nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nLEFT JOIN (SELECT c_dataOutorga, c_horaOutorga, c_id_agendamento, c_status, c_cedula_entidade FROM app_fd_atos ORDER BY dateCreated DESC) atos ON atos.c_id_agendamento = ag.id\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id not like '%Credito%'\nAND (Select count(ID) from shkprocesses \n   where ActivityRequesterProcessId = sp2.id\n    AND (ID like '%Registos%'\n\t     OR ID like '%AcompanhamentoOutorgas%')\n) > 0"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -67,12 +67,8 @@
             "exclude_export": "",
             "filterable": true,
             "format": {
-                "className": "org.joget.plugin.enterprise.DateFormatter",
-                "properties": {
-                    "dataFormat": "yyyy-MM-dd HH:mm",
-                    "dateStoreInUTC": "",
-                    "displayFormat": "dd/MM/yyyy HH:mm"
-                }
+                "className": "org.joget.plugin.enterprise.BeanShellFormatter",
+                "properties": {"script": "import org.joget.apps.datalist.service.DataListService;\nimport org.joget.apps.app.service.AppUtil;\nimport java.time.LocalDateTime; \nimport java.time.format.DateTimeFormatter;\nimport java.time.temporal.ChronoUnit;\nimport org.joget.commons.util.LogUtil;\nimport java.lang.Math;\n\nDataListService dataListService = (DataListService) AppUtil.getApplicationContext().getBean(\"dataListService\");\nDateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"dd/MM/yyyy HH:mm\");\n\nString result = \"\";\n\n//if value date format is not \"dd/MM/yyyy HH:mm\"\nif(value == null || value.isEmpty() || value.trim().equals(\"\")) {\n    result = \"-\";\n    \n} else {\n    if(value.length() > 2 && value.charAt(2) != '/') {\n    //if value date format is of the format \"yyyy-MM-dd HH:mm\"\n        if(value.charAt(4) == '-' && value.charAt(10) == ' ' && value.charAt(13) == ':'){\n            result =  value.substring(8,10) + \"/\" + value.substring(5,7) + \"/\" + value.substring(0,4) + \" \" + value.substring(11,16);\n        }else if(value.charAt(2) == '-' && value.charAt(10) == ' ' && value.charAt(13) == ':'){\n            result =  value.substring(0,2) + \"/\" + value.substring(3,5) + \"/\" + value.substring(6,11) + \" \" + value.substring(11,16);\n        }\n    }else {\n        result = value;\n    }\n}\n\n\nreturn result;"}
             },
             "headerAlignment": "",
             "hidden": "false",
@@ -119,7 +115,7 @@
             "headerAlignment": "",
             "hidden": "false",
             "id": "column_16",
-            "label": "Estado Agendamento",
+            "label": "Estado Agend.",
             "name": "EstadoAgendamento",
             "permission_rules": {
                 "800fccfb-8f04-e988-d120-94634c25f6d8": {},
@@ -333,8 +329,24 @@
             "exclude_export": "",
             "filterable": true,
             "format": {
-                "className": "",
-                "properties": {}
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'tipo_processo'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    }
+                }
             },
             "headerAlignment": "",
             "hidden": "false",
@@ -345,6 +357,44 @@
                 "800fccfb-8f04-e988-d120-94634c25f6d8": {},
                 "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {}
             },
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'origem_processo'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_10",
+            "label": "Origem Processo",
+            "name": "OrigemProcesso",
             "sortable": "false",
             "style": "",
             "width": ""
