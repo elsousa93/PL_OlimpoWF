@@ -5130,17 +5130,6 @@
         "permission_rules": [
             {
                 "permission": {
-                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
-                    "properties": {
-                        "allowedDeptIds": "PL_INT_CON;PL_INT_CON_VAL",
-                        "orgId": "PL"
-                    }
-                },
-                "permission_key": "cf41d852-8769-5507-356b-aa08e7f23301",
-                "permission_name": "Conclusões"
-            },
-            {
-                "permission": {
                     "className": "org.joget.apps.userview.lib.BeanShellPermission",
                     "properties": {"script": "\nString grupo = \"#currentUser.groups.id#\";\nString departamento = \"#currentUser.department.id#\";\n\nif(grupo.contains(\"Coordenador\") && (departamento.contains(\"PL_INT_REG\") || departamento.contains(\"PL_INT_QUAL_REG\"))){\n    return true; \n} else{\n    return false;\n}\n\n"}
                 },
@@ -5168,6 +5157,17 @@
                 },
                 "permission_key": "ef4b83d7-c9b4-50cf-e735-584bc5d96c28",
                 "permission_name": "Registos"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_CON;PL_INT_CON_VAL",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "cf41d852-8769-5507-356b-aa08e7f23301",
+                "permission_name": "Conclusões"
             },
             {
                 "permission": {
