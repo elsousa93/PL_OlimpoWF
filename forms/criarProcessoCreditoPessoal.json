@@ -85,31 +85,34 @@
                     "className": "org.joget.apps.form.lib.SelectBox",
                     "properties": {
                         "controlField": "",
-                        "id": "momento_entrada",
-                        "label": "Momento de Entrada",
+                        "id": "via_entrada",
+                        "label": "Via de Entrada",
                         "multiple": "",
-                        "options": [
-                            {
-                                "grouping": "",
-                                "label": "Correio da Manhã",
-                                "value": "manha"
-                            },
-                            {
-                                "grouping": "",
-                                "label": "Correio da Tarde",
-                                "value": "tarde"
-                            }
-                        ],
+                        "options": [],
                         "optionsBinder": {
-                            "className": "",
-                            "properties": {}
+                            "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                            "properties": {
+                                "addEmptyOption": "true",
+                                "cacheInterval": "",
+                                "emptyLabel": "",
+                                "extraCondition": "c_nome_campo = 'cp_via_entrada' AND e.customProperties.servico LIKE '%CH%'",
+                                "formDefId": "adicionarOpcaoLV",
+                                "groupingColumn": "",
+                                "idColumn": "value",
+                                "labelColumn": "label",
+                                "useAjax": ""
+                            }
                         },
                         "readonly": "",
                         "readonlyLabel": "",
                         "size": "",
                         "validator": {
-                            "className": "",
-                            "properties": {}
+                            "className": "org.joget.apps.form.lib.DefaultValidator",
+                            "properties": {
+                                "mandatory": "true",
+                                "message": "#i18n.mandatorymsg#",
+                                "type": ""
+                            }
                         },
                         "value": "",
                         "workflowVariable": ""
