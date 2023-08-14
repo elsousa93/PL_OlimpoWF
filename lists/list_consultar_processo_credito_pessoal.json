@@ -6,12 +6,59 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "idProc",
-            "sql": "SELECT p.dateCreated, p.id AS idProc, dp.c_scoring AS scoring, dp.c_gestor AS gestor, dp.c_data_entrada AS dataEntrada, dp.c_momento_entrada AS momentoEntrada, sp.Id AS processId,\n\t\tsp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee, dp.c_n_agenda as NAgenda\nFROM shkprocesses sp\nLEFT JOIN app_fd_processos_cp p ON sp.Id = p.id\nLEFT JOIN app_fd_detalhe_proce_cp dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nWHERE sps.KeyValue LIKE 'open.running'\nAND p.id is not null\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id like '%CreditoPessoal%'"
+            "sql": "SELECT p.dateCreated, p.id AS idProc, dp.c_scoring AS scoring, dp.c_data_entrada AS dataEntrada, dp.c_via_entrada AS viaEntrada, sp.Id AS processId,\n\t\tsp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee, dp.c_n_agenda as NAgenda, dp.c_n_entrada as numEntrada, \n\t\tdp.c_fase as fase, dp.c_tipo as tipo, dp.c_valor as valor, dp.c_tipo_garantia as tipoGarantia, dp.c_gestor as gestor, dp.c_nivel_servico as nivelServico, dp.c_urgente as urgente,\n\t\tdp.c_status as status, dp.c_estado as estado, dp.c_data_tratamento as dataTratamento, dp.c_banco as banco\nFROM shkprocesses sp\nLEFT JOIN app_fd_processos_cp p ON sp.Id = p.id\nLEFT JOIN app_fd_detalhe_proce_cp dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nWHERE sps.KeyValue LIKE 'open.running'\nAND p.id is not null\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id like '%CreditoPessoal%'"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
     "columns": [
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.DateFormatter",
+                "properties": {
+                    "dateStoreInUTC": "true",
+                    "displayFormat": "dd/MM/yyyy HH:mm:ss"
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_2",
+            "label": "Data de Entrada",
+            "name": "dateCreated",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_0",
+            "label": "Via de Entrada",
+            "name": "viaEntrada",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
         {
             "action": {
                 "className": "",
@@ -33,6 +80,74 @@
             "sortable": "false",
             "style": "",
             "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_1",
+            "label": "Nº Entrada",
+            "name": "numEntrada",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_3",
+            "label": "Tipo",
+            "name": "tipo",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "valor",
+            "name": "valor",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_6",
+            "label": "tipoGarantia",
+            "name": "tipoGarantia",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_9",
+            "label": "gestor",
+            "name": "gestor",
+            "sortable": "false"
         },
         {
             "action": {
@@ -73,66 +188,52 @@
             "width": ""
         },
         {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
             "filterable": true,
-            "format": {
-                "className": "org.joget.plugin.enterprise.DateFormatter",
-                "properties": {
-                    "dateStoreInUTC": "true",
-                    "displayFormat": "dd/MM/yyyy HH:mm:ss"
-                }
-            },
-            "headerAlignment": "",
             "hidden": "false",
-            "id": "column_2",
-            "label": "Data de Criação",
-            "name": "dateCreated",
-            "sortable": "false",
-            "style": "",
-            "width": ""
+            "id": "column_10",
+            "label": "nivelServico",
+            "name": "nivelServico",
+            "sortable": "false"
         },
         {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
             "filterable": true,
-            "format": {
-                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
-                "properties": {
-                    "options": [
-                        {
-                            "label": "Manhã",
-                            "value": "manha"
-                        },
-                        {
-                            "label": "Tarde",
-                            "value": "tarde"
-                        }
-                    ],
-                    "optionsBinder": {
-                        "className": "",
-                        "properties": {}
-                    }
-                }
-            },
-            "headerAlignment": "",
             "hidden": "false",
-            "id": "column_7",
-            "label": "Momento de Entrada",
-            "name": "momentoEntrada",
-            "sortable": "false",
-            "style": "",
-            "width": ""
+            "id": "column_11",
+            "label": "urgente",
+            "name": "urgente",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_12",
+            "label": "status",
+            "name": "status",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_13",
+            "label": "estado",
+            "name": "estado",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_14",
+            "label": "dataTratamento",
+            "name": "dataTratamento",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_15",
+            "label": "banco",
+            "name": "banco",
+            "sortable": "false"
         }
     ],
     "considerFilterWhenGetTotal": "",
@@ -149,44 +250,6 @@
             "type": {
                 "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
                 "properties": {"defaultValue": ""}
-            }
-        },
-        {
-            "datalist_type": "filter",
-            "filterParamName": "d-1381974-fn_momentoEntrada",
-            "hidden": "",
-            "id": "filter_6",
-            "label": "Momento de Entrada",
-            "name": "momentoEntrada",
-            "type": {
-                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
-                "properties": {
-                    "controlField": "",
-                    "defaultValue": "",
-                    "multiple": "",
-                    "options": [
-                        {
-                            "grouping": "",
-                            "label": "Momento de Entrada",
-                            "value": ""
-                        },
-                        {
-                            "grouping": "",
-                            "label": "Correio da Manhã",
-                            "value": "manha"
-                        },
-                        {
-                            "grouping": "",
-                            "label": "Correio da Tarde",
-                            "value": "tarde"
-                        }
-                    ],
-                    "optionsBinder": {
-                        "className": "",
-                        "properties": {}
-                    },
-                    "size": ""
-                }
             }
         },
         {
