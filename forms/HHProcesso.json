@@ -56,6 +56,15 @@
                     "className": "org.joget.apps.form.lib.CustomHTML",
                     "properties": {
                         "autoPopulate": "",
+                        "id": "logica_fases_processo",
+                        "label": "",
+                        "value": "<script>\n    $(document).change(function(){\n        var faseProcesso = '#form.detalhe_proce_hh.faseProcesso[{form.processos_hh.detalhe_processo}]#';\n        console.log('CCCC' + faseProcesso);\n        //console.log('coisasssss');\n       // var despesasReconhecimentoAssinaturas = $(\"input[name$=despesasReconhecimentoAssinaturas]\");\n        //var despesa = 35;\n       \n        \n  });\n\n<\/script>"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
                         "id": "field2",
                         "label": "",
                         "value": "<script>\n\n//Alterar labels de botões\n$(document).ready(function(){\n    $(\"input#assignmentComplete\").val(\"CONCLUIR\");\n    $(\"input#saveAsDraft\").val(\"GUARDAR\");\n    $(\"button#cancel\").html(\"CANCELAR\");\n     \n    var mode = \"#requestParam._mode#\";\n    if(mode=='edit'){\n        $(\"button#cancel\").html(\"VOLTAR\");\n    }\n    \n     $( \"form\" ).submit(function(){\n        var btnVal = $(document.activeElement).val();\n        if(btnVal === 'GUARDAR'){\n            window.sessionStorage.setItem(\"button\", \"guardar\");\n        }\n         \n         \n         \n     });\n});\n\n<\/script>\n"
