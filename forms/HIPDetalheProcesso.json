@@ -295,6 +295,15 @@
                         }
                     },
                     {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "logica_numero_agenda",
+                            "label": "",
+                            "value": "<script>\n    $(document).change(function() {\n         var numero_agenda_final = '';\n         var banco = \"#form.banco_hip.nome_banco[{form.processos_hip.banco}]#\";\n         var servico = \"#form.processos_hip.servico#\";\n         var n_wf_banco = $(\"input[id*=n_wf_banco]\").val();\n         var tipo_processo_lea = $(\"select[id*=tipo_processo_lea]\").val();\n         if(servico === \"LEA\"){\n             if(banco === \"BST\"){\n                 numero_agenda_final = \"BST\" + n_wf_banco;\n             }\n         }\n         $(\"input[id*=numero_agenda]\").val(numero_agenda_final);\n        \n    });\n<\/script>\n"
+                        }
+                    },
+                    {
                         "className": "org.joget.apps.form.lib.Radio",
                         "properties": {
                             "controlField": "",
