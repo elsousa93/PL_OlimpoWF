@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "idProc",
-            "sql": "SELECT  p.id AS idProc, sp.Id AS processId,\tsp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee, dp.*\nFROM shkprocesses sp\nLEFT JOIN app_fd_processos_hh p ON sp.Id = p.id\nLEFT JOIN app_fd_tomada_con_hh dp ON dp.id = p.c_tomada_conhecimento\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nWHERE sps.KeyValue LIKE 'open.running'\nAND p.id is not null\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id like '%HabilitacaoHerdeiros%'\nAND sass.ResourceId like '%habilitacao_herdeiros_geral%'"
+            "sql": "SELECT  p.id AS idProc, sp.Id AS processId,\tsp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee, dp.*\nFROM shkprocesses sp\nLEFT JOIN app_fd_processos_hh p ON sp.Id = p.id\nLEFT JOIN app_fd_detalhe_proce_hh dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nWHERE sps.KeyValue LIKE 'open.running'\nAND p.id is not null\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id like '%HabilitacaoHerdeiros%'\nAND sass.ResourceId like '%habilitacao_herdeiros_geral%'"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -71,163 +71,9 @@
             },
             "headerAlignment": "",
             "hidden": "false",
-            "id": "column_6",
-            "label": "Col.",
-            "name": "c_col",
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "false",
             "id": "column_0",
             "label": "Data entrada",
             "name": "c_data_entrada",
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_7",
-            "label": "Aplicativo",
-            "name": "c_aplicativo",
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_8",
-            "label": "Pendentes",
-            "name": "c_pendentes",
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_9",
-            "label": "Data Análise",
-            "name": "c_data_analise",
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_4",
-            "label": "Fase",
-            "name": "c_fase",
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_3",
-            "label": "Estado",
-            "name": "c_estado",
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_5",
-            "label": "Urgência",
-            "name": "c_urgencia",
             "sortable": "false",
             "style": "",
             "width": ""
