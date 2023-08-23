@@ -69,7 +69,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "true",
             "primaryKey": "idProc",
-            "sql": "SELECT p.id AS idProc, dp.*, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName,\n        sass.ResourceId AS assignee, dp.c_n_wf_banco AS NwfBanco, ip.c_nome AS cliente, CONCAT(ato.c_dataOutorga, ' ', ato.c_horaOutorga) AS DataAgendamento, \n        SUBSTRING_INDEX(ato.c_dataOutorga, '-', -1) AS AnoAgendamento, SUBSTRING_INDEX(SUBSTRING_INDEX(ato.c_dataOutorga, '-', 2), '-', -1) AS MesAgendamento, \n        dp.c_inicializacao_gestor AS InicializacaoGestor, sla.c_data_inicio as DataInicio, sla.c_data_fim as DataFim, ato.c_cedula_entidade as entidadeAutenticadora,\n        g.c_estado_processamento AS estadoProcessamento, g.c_estado_arquivo AS estadoArquivo, IF((dp.c_estado_contratacao = 'PND' OR dp.c_estado_contratacao = 'PNDEQ'), 'Pendente', 'Ativo') AS estadoContratacao\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN app_fd_sla_atividade sla ON sla.c_id_processo = sp.Id \nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK' \nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id AND ato.c_status = 'AGD'\nLEFT JOIN app_fd_geral g ON g.c_id_processo = p.id\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id not like '%Credito%'\nAND (sla.c_estado_atividade is null or sla.c_estado_atividade = 'Em curso' or sla.c_estado_atividade = 'Pendente') \nAND (Select count(ID) from shkprocesses \n    where ActivityRequesterProcessId = sp2.id\n    AND ( If( '#currentUser.department.id#' like '%_CNT_BCP%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"BCP\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_BIC%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"BIC\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_BST%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"BST\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_NVB%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"NVB\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_MTG%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"MTG\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_GEN%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"GEN\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_ABN%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"ABN\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_BNI%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"BNI\", '')\n    OR If( '#currentUser.department.id#' like '%_FLT_%', ID like '%Filtro%', '')\n    OR If( '#currentUser.department.id#' like '%_PRD_%', ID like '%Producao%', '')\n    OR If( '#currentUser.department.id#' like '%_VAL_%', ID like '%Validacao%', '')\n    OR If( '#currentUser.department.id#' like '%_AO%', ID like '%AcompanhamentoOutorgas%', '')\n    OR If( '#currentUser.department.id#' like '%_CON%', ID like '%Conclusoes%', '')\n    OR If( '#currentUser.department.id#' like '%_ARQ%', ID like '%Arquivo%', '')\n    )\n) > 0"
+            "sql": "SELECT p.id AS idProc, dp.c_n_wf_banco, dp.c_pid, dp.c_nome_banco, dp.c_tipo_processo, dp.c_origem_processo, dp.c_urgencia, dp.c_fase_processo, c_inicializacao_gestor, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName,\n        sass.ResourceId AS assignee, dp.c_n_wf_banco AS NwfBanco, ip.c_nome AS cliente, CONCAT(ato.c_dataOutorga, ' ', ato.c_horaOutorga) AS DataAgendamento, \n        SUBSTRING_INDEX(ato.c_dataOutorga, '-', -1) AS AnoAgendamento, SUBSTRING_INDEX(SUBSTRING_INDEX(ato.c_dataOutorga, '-', 2), '-', -1) AS MesAgendamento, \n        dp.c_inicializacao_gestor AS InicializacaoGestor, sla.c_data_inicio as DataInicio, sla.c_data_fim as DataFim, ato.c_cedula_entidade as entidadeAutenticadora,\n        g.c_estado_processamento AS estadoProcessamento, g.c_estado_arquivo AS estadoArquivo, IF((dp.c_estado_contratacao = 'PND' OR dp.c_estado_contratacao = 'PNDEQ'), 'Pendente', 'Ativo') AS estadoContratacao\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN app_fd_sla_atividade sla ON sla.c_id_processo = sp.Id \nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK' \nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id AND ato.c_status = 'AGD'\nLEFT JOIN app_fd_geral g ON g.c_id_processo = p.id\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id not like '%Credito%'\nAND (sla.c_estado_atividade is null or sla.c_estado_atividade = 'Em curso' or sla.c_estado_atividade = 'Pendente') \nAND (Select count(ID) from shkprocesses \n    where ActivityRequesterProcessId = sp2.id\n    AND ( If( '#currentUser.department.id#' like '%_CNT_BCP%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"BCP\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_BIC%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"BIC\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_BST%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"BST\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_NVB%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"NVB\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_MTG%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"MTG\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_GEN%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"GEN\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_ABN%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"ABN\", '')\n    OR IF( '#currentUser.department.id#' like '%_CNT_BNI%', ID like '%Contratacao%' AND dp.c_nome_banco LIKE \"BNI\", '')\n    OR If( '#currentUser.department.id#' like '%_FLT_%', ID like '%Filtro%', '')\n    OR If( '#currentUser.department.id#' like '%_PRD_%', ID like '%Producao%', '')\n    OR If( '#currentUser.department.id#' like '%_VAL_%', ID like '%Validacao%', '')\n    OR If( '#currentUser.department.id#' like '%_AO%', ID like '%AcompanhamentoOutorgas%', '')\n    OR If( '#currentUser.department.id#' like '%_CON%', ID like '%Conclusoes%', '')\n    OR If( '#currentUser.department.id#' like '%_ARQ%', ID like '%Arquivo%', '')\n    )\n) > 0"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -636,90 +636,6 @@
             "exclude_export": "",
             "filterable": true,
             "format": {
-                "className": "org.joget.plugin.enterprise.DateFormatter",
-                "properties": {
-                    "dateStoreInUTC": "true",
-                    "displayFormat": "dd/MM/yyyy HH:mm:ss"
-                }
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_3",
-            "label": "Data de Registo",
-            "name": "dateCreated",
-            "permission_rules": {
-                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
-                "18b1dd32-edb3-9de7-a000-bc7aab875065": {
-                    "exclude_export": "",
-                    "hidden": "false",
-                    "include_export": ""
-                },
-                "51bdeaef-5b64-2026-6347-f9376acdccae": {},
-                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
-                "749156f0-2c8a-86f2-d34e-8c631e4b8974": {},
-                "75768f5e-6fe4-6ed0-42cc-670a652d4a63": {},
-                "b277a55d-0ec7-5049-4b6c-5960f2191a9b": {},
-                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {
-                    "exclude_export": "",
-                    "hidden": "true",
-                    "include_export": "true"
-                },
-                "ebb1805f-da1e-2061-4dc8-722c0b2a8b72": {}
-            },
-            "sortable": "true",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
-                "className": "org.joget.plugin.enterprise.DateFormatter",
-                "properties": {
-                    "dateStoreInUTC": "true",
-                    "displayFormat": "dd/MM/yyyy HH:mm:ss"
-                }
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_11",
-            "label": "Última Alteração",
-            "name": "dateModified",
-            "permission_rules": {
-                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
-                "18b1dd32-edb3-9de7-a000-bc7aab875065": {},
-                "51bdeaef-5b64-2026-6347-f9376acdccae": {},
-                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
-                "749156f0-2c8a-86f2-d34e-8c631e4b8974": {},
-                "75768f5e-6fe4-6ed0-42cc-670a652d4a63": {},
-                "b277a55d-0ec7-5049-4b6c-5960f2191a9b": {},
-                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {
-                    "exclude_export": "",
-                    "hidden": "true",
-                    "include_export": "true"
-                },
-                "ebb1805f-da1e-2061-4dc8-722c0b2a8b72": {}
-            },
-            "sortable": "true",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
                 "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
                 "properties": {
                     "options": [
@@ -1031,49 +947,6 @@
             }
         },
         {
-            "datalist_type": "filter",
-            "filterParamName": "d-2614187-fn_c_estado_contratacao",
-            "hidden": "",
-            "id": "filter_15",
-            "label": "Estado Contratação",
-            "name": "c_estado_contratacao",
-            "permission_rules": {
-                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
-                "18b1dd32-edb3-9de7-a000-bc7aab875065": {},
-                "51bdeaef-5b64-2026-6347-f9376acdccae": {},
-                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
-                "749156f0-2c8a-86f2-d34e-8c631e4b8974": {},
-                "75768f5e-6fe4-6ed0-42cc-670a652d4a63": {},
-                "b277a55d-0ec7-5049-4b6c-5960f2191a9b": {},
-                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {},
-                "ebb1805f-da1e-2061-4dc8-722c0b2a8b72": {}
-            },
-            "type": {
-                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
-                "properties": {
-                    "controlField": "",
-                    "defaultValue": "",
-                    "multiple": "",
-                    "options": [],
-                    "optionsBinder": {
-                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
-                        "properties": {
-                            "addEmptyOption": "",
-                            "cacheInterval": "",
-                            "emptyLabel": "",
-                            "extraCondition": "c_nome_campo = 'estado_contratacao' AND c_servico LIKE '%CH%'",
-                            "formDefId": "adicionarOpcaoLV",
-                            "groupingColumn": "",
-                            "idColumn": "value",
-                            "labelColumn": "label",
-                            "useAjax": ""
-                        }
-                    },
-                    "size": ""
-                }
-            }
-        },
-        {
             "hidden": "true",
             "id": "filter_13",
             "label": "processId",
@@ -1135,48 +1008,6 @@
         },
         {
             "datalist_type": "filter",
-            "filterParamName": "d-2614187-fn_c_gestor_pl",
-            "hidden": "",
-            "id": "filter_2",
-            "label": "Gestor PL",
-            "name": "c_gestor_pl",
-            "permission_rules": {
-                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
-                "18b1dd32-edb3-9de7-a000-bc7aab875065": {},
-                "51bdeaef-5b64-2026-6347-f9376acdccae": {},
-                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
-                "749156f0-2c8a-86f2-d34e-8c631e4b8974": {},
-                "75768f5e-6fe4-6ed0-42cc-670a652d4a63": {},
-                "b277a55d-0ec7-5049-4b6c-5960f2191a9b": {},
-                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {},
-                "ebb1805f-da1e-2061-4dc8-722c0b2a8b72": {}
-            },
-            "type": {
-                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
-                "properties": {
-                    "defaultValue": "",
-                    "multiple": "autocomplete",
-                    "options": [],
-                    "optionsBinder": {
-                        "className": "org.joget.plugin.enterprise.UserOptionsBinder",
-                        "properties": {
-                            "addEmptyOption": "",
-                            "cacheInterval": "",
-                            "deptId": "",
-                            "emptyLabel": "",
-                            "groupId": "",
-                            "grouping": "",
-                            "optionLabel": "",
-                            "orgId": "",
-                            "useAjax": ""
-                        }
-                    },
-                    "size": ""
-                }
-            }
-        },
-        {
-            "datalist_type": "filter",
             "filterParamName": "d-2614187-fn_assignee",
             "hidden": "",
             "id": "filter_0",
@@ -1214,34 +1045,6 @@
                         }
                     },
                     "size": ""
-                }
-            }
-        },
-        {
-            "datalist_type": "filter",
-            "filterParamName": "d-2614187-fn_dateCreated",
-            "hidden": "",
-            "id": "filter_14",
-            "label": "Data Registo",
-            "name": "dateCreated",
-            "permission_rules": {
-                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
-                "18b1dd32-edb3-9de7-a000-bc7aab875065": {},
-                "51bdeaef-5b64-2026-6347-f9376acdccae": {},
-                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
-                "749156f0-2c8a-86f2-d34e-8c631e4b8974": {},
-                "75768f5e-6fe4-6ed0-42cc-670a652d4a63": {},
-                "b277a55d-0ec7-5049-4b6c-5960f2191a9b": {},
-                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {},
-                "ebb1805f-da1e-2061-4dc8-722c0b2a8b72": {}
-            },
-            "type": {
-                "className": "org.joget.plugin.enterprise.DateDataListFilterType",
-                "properties": {
-                    "defaultValue": "",
-                    "format": "dd/mm/yy",
-                    "formatJava": "yyyy-MM-dd",
-                    "yearRange": "c-10:c+10"
                 }
             }
         },
@@ -1395,29 +1198,6 @@
                     },
                     "size": ""
                 }
-            }
-        },
-        {
-            "datalist_type": "filter",
-            "filterParamName": "d-2614187-fn_dateModified",
-            "hidden": "",
-            "id": "filter_10",
-            "label": "Última Alteração",
-            "name": "dateModified",
-            "permission_rules": {
-                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
-                "18b1dd32-edb3-9de7-a000-bc7aab875065": {},
-                "51bdeaef-5b64-2026-6347-f9376acdccae": {},
-                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
-                "749156f0-2c8a-86f2-d34e-8c631e4b8974": {},
-                "75768f5e-6fe4-6ed0-42cc-670a652d4a63": {},
-                "b277a55d-0ec7-5049-4b6c-5960f2191a9b": {},
-                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {},
-                "ebb1805f-da1e-2061-4dc8-722c0b2a8b72": {}
-            },
-            "type": {
-                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
-                "properties": {"defaultValue": ""}
             }
         },
         {
@@ -1581,29 +1361,6 @@
                     },
                     "size": ""
                 }
-            }
-        },
-        {
-            "datalist_type": "filter",
-            "filterParamName": "d-2614187-fn_c_complex_processo",
-            "hidden": "",
-            "id": "filter_8",
-            "label": "Complexidade do Processo",
-            "name": "c_complex_processo",
-            "permission_rules": {
-                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
-                "18b1dd32-edb3-9de7-a000-bc7aab875065": {},
-                "51bdeaef-5b64-2026-6347-f9376acdccae": {},
-                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
-                "749156f0-2c8a-86f2-d34e-8c631e4b8974": {},
-                "75768f5e-6fe4-6ed0-42cc-670a652d4a63": {},
-                "b277a55d-0ec7-5049-4b6c-5960f2191a9b": {},
-                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {},
-                "ebb1805f-da1e-2061-4dc8-722c0b2a8b72": {}
-            },
-            "type": {
-                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
-                "properties": {"defaultValue": ""}
             }
         },
         {
