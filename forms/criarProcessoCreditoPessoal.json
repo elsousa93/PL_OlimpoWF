@@ -19,11 +19,10 @@
                         "storeNumeric": "",
                         "style": "",
                         "validator": {
-                            "className": "org.joget.apps.form.lib.DefaultValidator",
+                            "className": "org.joget.apps.form.lib.BeanShellValidator",
                             "properties": {
-                                "mandatory": "true",
-                                "message": "",
-                                "type": ""
+                                "decoration": "",
+                                "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values){\r\n    Connection con = null;\r\n    PreparedStatement stmt = null;\r\n    ResultSet rs = null;\r\n    \r\n    boolean result = true;\r\n\r\n    String id = FormUtil.getElementParameterName(element);\r\n    //If element is not filled give error message\r\n    if (values == null || values[0].isEmpty()){\r\n        formData.addFormError(id, \"Campo obrigatório\");\r\n        return false;\r\n    }\r\n    \r\n    \r\n    return result;\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
                             }
                         },
                         "value": "",
