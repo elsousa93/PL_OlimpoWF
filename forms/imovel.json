@@ -1191,83 +1191,6 @@
                 "permission": {
                     "className": "org.joget.apps.userview.lib.DepartmentPermission",
                     "properties": {
-                        "allowedDeptIds": "PL_INT_CNT_ABN_COM_CRH;PL_INT_CNT_ABN_NOR_CRH",
-                        "orgId": "PL"
-                    }
-                },
-                "permission_key": "8ed12735-d92c-74bd-444f-888db20bd46a",
-                "permission_name": "Contratação ABN"
-            },
-            {
-                "permission": {
-                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
-                    "properties": {
-                        "allowedDeptIds": "PL_INT_CNT_BNI_NOR_CRH",
-                        "orgId": "PL"
-                    }
-                },
-                "permission_key": "04c4f36b-3dc7-5a89-5b12-78bc188b5be9",
-                "permission_name": "Contratação BNI"
-            },
-            {
-                "permission": {
-                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
-                    "properties": {
-                        "allowedDeptIds": "PL_INT_CNT_BST_COM_CRH;PL_INT_CNT_BST_NOR_CRH",
-                        "orgId": "PL"
-                    }
-                },
-                "permission_key": "1405d883-3f63-bc1e-7949-1ce7e4457892",
-                "permission_name": "Contratação BST"
-            },
-            {
-                "permission": {
-                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
-                    "properties": {
-                        "allowedDeptIds": "PL_INT_CNT_BCP_COM_CRH;PL_INT_CNT_BCP_NOR_CRH",
-                        "orgId": "PL"
-                    }
-                },
-                "permission_key": "79f8c35b-a7ad-ec7e-b9d8-f656d6176fa7",
-                "permission_name": "Contratação BCP"
-            },
-            {
-                "permission": {
-                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
-                    "properties": {
-                        "allowedDeptIds": "PL_INT_CNT_BIC_COM_CRH;PL_INT_CNT_BIC_NOR_CRH",
-                        "orgId": "PL"
-                    }
-                },
-                "permission_key": "aea23972-1f73-2c75-befa-3c2288f6d5bb",
-                "permission_name": "Contratação BIC"
-            },
-            {
-                "permission": {
-                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
-                    "properties": {
-                        "allowedDeptIds": "PL_INT_CNT_NVB_COM_CRH;PL_INT_CNT_NVB_NOR_CRH",
-                        "orgId": "PL"
-                    }
-                },
-                "permission_key": "7f975a7f-0e81-1fe8-a41b-b5ae7202b9be",
-                "permission_name": "Contratação NVB"
-            },
-            {
-                "permission": {
-                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
-                    "properties": {
-                        "allowedDeptIds": "PL_INT_CNT_MTG_COM_CRH;PL_INT_CNT_MTG_NOR_CRH",
-                        "orgId": "PL"
-                    }
-                },
-                "permission_key": "0d6bd36c-8423-b830-526f-d71499d72a55",
-                "permission_name": "Contratação MTG"
-            },
-            {
-                "permission": {
-                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
-                    "properties": {
                         "allowedDeptIds": "PL_INT_FLT_GEN_COM_CRH;PL_INT_FLT_GEN_NOR_CRH",
                         "orgId": "PL"
                     }
@@ -1296,6 +1219,62 @@
                 },
                 "permission_key": "7cb0a003-f9de-cb30-4a9f-c17080392739",
                 "permission_name": "Validação"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\nif(banco.equals(\"ABN\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "8ed12735-d92c-74bd-444f-888db20bd46a",
+                "permission_name": "Contratação ABN"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\nif(banco.equals(\"BNI\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "04c4f36b-3dc7-5a89-5b12-78bc188b5be9",
+                "permission_name": "Contratação BNI"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\nif(banco.equals(\"BST\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "1405d883-3f63-bc1e-7949-1ce7e4457892",
+                "permission_name": "Contratação BST"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\nif(banco.equals(\"BCP\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "79f8c35b-a7ad-ec7e-b9d8-f656d6176fa7",
+                "permission_name": "Contratação BCP"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\nif(banco.equals(\"BIC\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "aea23972-1f73-2c75-befa-3c2288f6d5bb",
+                "permission_name": "Contratação BIC"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\nif(banco.equals(\"NVB\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "7f975a7f-0e81-1fe8-a41b-b5ae7202b9be",
+                "permission_name": "Contratação NVB"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\nif(banco.equals(\"MTG\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "0d6bd36c-8423-b830-526f-d71499d72a55",
+                "permission_name": "Contratação MTG"
             }
         ],
         "postProcessor": {
