@@ -2119,13 +2119,16 @@
                             },
                             "permissionHidden": "",
                             "permission_rules": {
+                                "26400434-6e65-a54c-c9ae-c1ae4296b0cd": {},
                                 "2940eb02-3781-26bf-b45d-0562d53698f8": {},
+                                "32ee12d9-9652-2de9-8655-018292520365": {},
                                 "4686233f-e0df-ed34-d3b2-1005caf9470c": {},
                                 "72fb2b9f-2537-a54f-60e0-251f39c75424": {},
                                 "cf41d852-8769-5507-356b-aa08e7f23301": {},
                                 "d22d0102-1211-614e-fa12-4fc285206772": {},
                                 "d6fe0da9-3aa3-9d28-ded2-07a6fb980292": {},
-                                "de0223e9-d62d-f5f5-f75a-4f6199b32f73": {}
+                                "de0223e9-d62d-f5f5-f75a-4f6199b32f73": {},
+                                "ef4b83d7-c9b4-50cf-e735-584bc5d96c28": {}
                             },
                             "readonly": "",
                             "readonlyLabel": "",
@@ -2146,13 +2149,16 @@
                             "maxlength": "",
                             "permissionHidden": "",
                             "permission_rules": {
+                                "26400434-6e65-a54c-c9ae-c1ae4296b0cd": {},
                                 "2940eb02-3781-26bf-b45d-0562d53698f8": {},
+                                "32ee12d9-9652-2de9-8655-018292520365": {},
                                 "4686233f-e0df-ed34-d3b2-1005caf9470c": {},
                                 "72fb2b9f-2537-a54f-60e0-251f39c75424": {},
                                 "cf41d852-8769-5507-356b-aa08e7f23301": {},
                                 "d22d0102-1211-614e-fa12-4fc285206772": {},
                                 "d6fe0da9-3aa3-9d28-ded2-07a6fb980292": {},
-                                "de0223e9-d62d-f5f5-f75a-4f6199b32f73": {}
+                                "de0223e9-d62d-f5f5-f75a-4f6199b32f73": {},
+                                "ef4b83d7-c9b4-50cf-e735-584bc5d96c28": {}
                             },
                             "placeholder": "",
                             "readonly": "true",
@@ -3235,7 +3241,9 @@
                             "permission_rules": {
                                 "04d94e96-37aa-1e4b-d5fe-5595f325e232": {},
                                 "1fb8f1eb-7717-2af5-ccf1-03a73c560f16": {},
+                                "26400434-6e65-a54c-c9ae-c1ae4296b0cd": {},
                                 "2940eb02-3781-26bf-b45d-0562d53698f8": {},
+                                "32ee12d9-9652-2de9-8655-018292520365": {},
                                 "4686233f-e0df-ed34-d3b2-1005caf9470c": {
                                     "permissionHidden": "",
                                     "readonly": "true"
@@ -3258,6 +3266,7 @@
                                     "readonly": "true"
                                 },
                                 "e43944ee-a329-cbb2-13bf-98bd5dfc033d": {},
+                                "ef4b83d7-c9b4-50cf-e735-584bc5d96c28": {},
                                 "f6d47cc6-84dc-c359-9ec5-794a6dcbf118": {}
                             },
                             "value": "<script>\n    $(document).ready(function(){\n        var banco = \"#form.banco.nome_banco[{form.processos.banco}]#\"; \n        if(banco !== \"BST\"){\n            $(\"input[id*=numero_mfs]\").parent().hide();\n            $(\"input[id*=mfs_check]\").parent().parent().parent().hide();\n\n        }else{\n            if($(\"input[id*=mfs_check]\").is(\":checked\") === false){\n                $(\"input[id*=numero_mfs]\").parent().hide();\n                $(\"input[id*=numero_mfs]\").val(\"\");\n            } else{\n                $(\"input[id*=numero_mfs]\").parent().show();\n            }\n        }\n        \n    });\n\n<\/script>"
@@ -5183,11 +5192,8 @@
             },
             {
                 "permission": {
-                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
-                    "properties": {
-                        "allowedDeptIds": "PL_INT_CNT_BCP_COM_CRH;PL_INT_CNT_BCP_NOR_CRH",
-                        "orgId": ""
-                    }
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco_fundo = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\nif(banco_fundo.equals(\"BCP\")){\n    return true;\n}else{\n    return false;\n}\n"}
                 },
                 "permission_key": "26400434-6e65-a54c-c9ae-c1ae4296b0cd",
                 "permission_name": "Contratação BCP"
