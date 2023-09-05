@@ -23,12 +23,56 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "c.id",
-            "sql": "SELECT c.*\nFROM app_fd_certificados_reg c\nLEFT JOIN app_fd_info_colaboradores ic ON ic.c_user_colaborador = c.c_entidade"
+            "sql": "SELECT c.id, c_entidade, c_ficheiro_certificado, c_data_validacao, c_notas, c_nome_completo, c_nif\nFROM app_fd_certificados_reg c\nLEFT JOIN app_fd_info_colaboradores ic ON ic.c_user_colaborador = c.c_entidade"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
     "columns": [
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_0",
+            "label": "Entidade",
+            "name": "c_nome_completo",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_2",
+            "label": "NIF",
+            "name": "c_nif",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
         {
             "action": {
                 "className": "",
@@ -86,31 +130,6 @@
             "exclude_export": "",
             "filterable": true,
             "format": {
-                "className": "org.joget.tutorial.FileLinkDatalistFormatter",
-                "properties": {
-                    "attachment": "true",
-                    "formDefId": "importacao_certificados_reg"
-                }
-            },
-            "headerAlignment": "",
-            "hidden": "false",
-            "id": "column_5",
-            "label": "c_ficheiro_certificado",
-            "name": "c_ficheiro_certificado",
-            "sortable": "false",
-            "style": "",
-            "width": ""
-        },
-        {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
-            "filterable": true,
-            "format": {
                 "className": "",
                 "properties": {}
             },
@@ -127,7 +146,32 @@
     "considerFilterWhenGetTotal": "",
     "description": "",
     "disableResponsive": "",
-    "filters": [],
+    "filters": [
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-5340970-fn_c_nome_completo",
+            "hidden": "",
+            "id": "filter_0",
+            "label": "Entidade",
+            "name": "c_nome_completo",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {"defaultValue": ""}
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-5340970-fn_c_nif",
+            "hidden": "",
+            "id": "filter_1",
+            "label": "NIF",
+            "name": "c_nif",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {"defaultValue": ""}
+            }
+        }
+    ],
     "hidePageSize": "",
     "id": "list_certificados_reg",
     "name": "Registos - Repositório de Certificados",
