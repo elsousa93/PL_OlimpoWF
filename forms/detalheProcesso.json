@@ -5150,6 +5150,14 @@
             },
             {
                 "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nLogUtil.info(\"Banco\", \"AAAA\" + banco);\nif(banco.equals(\"BCP\") && fase.equals(\"CNT\")){\n    LogUtil.info(\"BCP\", \"Sim\");\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "f6d47cc6-84dc-c359-9ec5-794a6dcbf118",
+                "permission_name": "Contratação BCP"
+            },
+            {
+                "permission": {
                     "className": "org.joget.apps.userview.lib.DepartmentPermission",
                     "properties": {
                         "allowedDeptIds": "PL_INT_AO",
@@ -5169,14 +5177,6 @@
                 },
                 "permission_key": "48b48ad7-5499-aa5d-69b5-3f6bc87b7133",
                 "permission_name": "Registos e Qualidade"
-            },
-            {
-                "permission": {
-                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
-                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nLogUtil.info(\"Banco\", \"AAAA\" + banco);\nif(banco.equals(\"BCP\") && fase.equals(\"CNT\")){\n    LogUtil.info(\"BCP\", \"Sim\");\n    return true;\n}else{\n    return false;\n}\n"}
-                },
-                "permission_key": "f6d47cc6-84dc-c359-9ec5-794a6dcbf118",
-                "permission_name": "Contratação BCP"
             },
             {
                 "permission": {
