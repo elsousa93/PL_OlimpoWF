@@ -5225,7 +5225,7 @@
             {
                 "permission": {
                     "className": "org.joget.apps.userview.lib.BeanShellPermission",
-                    "properties": {"script": "\nString grupo = \"#currentUser.groups.id#\";\nString departamento = \"#currentUser.department.id#\";\nLogUtil.info(\"Coordenadores Registos\", \"AAAAA\");\n\n\nif(grupo.contains(\"Coordenador\") && (departamento.contains(\"PL_INT_REG\") || departamento.contains(\"PL_INT_QUAL_REG\"))){\n    return true; \n} else{\n    return false;\n}\n\n"}
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString grupo = \"#currentUser.groups.id#\";\nString departamento = \"#currentUser.department.id#\";\nLogUtil.info(\"Coordenadores Registos\", \"AAAAA\");\n\n\nif(grupo.contains(\"Coordenador\") && (departamento.contains(\"PL_INT_REG\") || departamento.contains(\"PL_INT_QUAL_REG\"))){\n    return true; \n} else{\n    return false;\n}\n\n"}
                 },
                 "permission_key": "2940eb02-3781-26bf-b45d-0562d53698f8",
                 "permission_name": "Coordenadores Registos"
