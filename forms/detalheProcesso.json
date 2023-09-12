@@ -5117,11 +5117,8 @@
             },
             {
                 "permission": {
-                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
-                    "properties": {
-                        "allowedDeptIds": "PL_INT_PRD_GEN_COM_CRH;PL_INT_PRD_GEN_NOR_CRH;PL_INT_PRD_GEN_RPAPRD_GEN_COM_CRH;PL_INT_PRD_GEN_NOR_CRH;PL_INT_PRD_GEN_RPAPRD_GEN_COM_CRH;PL_INT_PRD_GEN_NOR_CRH;PL_INT_PRD_GEN_RPA_CRH",
-                        "orgId": "PL"
-                    }
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\n//LogUtil.info(\"FASE\", \"AAAAA\" + fase);\nLogUtil.info(\"Fase\", \"AAAAAAa\" + fase);\nif(fase.equals(\"PRD\")){\n    LogUtil.info(\"PRODUÇÃO\", \"TRUE\");\n    return true;\n}else{\n    return false;\n}"}
                 },
                 "permission_key": "9fb8a08a-3747-1f8e-48ac-fff77f61d611",
                 "permission_name": "Produção"
