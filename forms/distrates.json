@@ -157,6 +157,15 @@
                     "className": "org.joget.apps.form.lib.CustomHTML",
                     "properties": {
                         "autoPopulate": "",
+                        "id": "visibilidades_tab",
+                        "label": "",
+                        "value": "<script>\n\n    $(document).change(function(){\n        var banco = \"#form.detalhe_proce_dist.nome_banco[{form.processos_distrates.detalhe_processo}]#\"; \n        console.log(banco);\n        if(banco === \"MTG\"){\n         $(\"button[rel=3\").hide();\n         $(\"button[rel=9]\").hide();\n         $(\"button[rel=10]\").hide();\n        }\n        \n  });\n\n<\/script>\n\n"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
                         "id": "field4",
                         "label": "",
                         "value": "<script>\n\n//Alterar labels de botões\n$(document).ready(function(){\n    $(\"input#saveAsDraft\").val(\"GUARDAR\");\n    $(\"input#submit\").val(\"GUARDAR\");\n    $(\"button#cancel\").html(\"CANCELAR\");\n    $(\"button[name=cancel]\").click(function() {\n            window.sessionStorage.setItem(\"button\", \"null\");\n            window.sessionStorage.setItem(\"previousPage\", \"processo\");\n        });\n        \n        $(\"form\").submit(function() {\n            var btnVal = $(document.activeElement).val();\n            \n            if(btnVal === 'GUARDAR'){\n                window.sessionStorage.setItem(\"button\", \"guardar\");\n            } else if(btnVal === \"REALOCAR\"  || btnVal.includes(\"ENVIAR PARA\")){\n                window.sessionStorage.setItem(\"button\", \"null\");\n            } else {\n                window.sessionStorage.setItem(\"button\", \"tabChange\");\n            }\n        });\n    $(\"button[name=cancel]\").click(function() {\n            window.sessionStorage.setItem(\"button\", \"null\");\n            window.sessionStorage.setItem(\"previousPage\", \"processo\");\n        });\n        \n        $(\"form\").submit(function() {\n            var btnVal = $(document.activeElement).val();\n            \n            if(btnVal === 'GUARDAR'){\n                window.sessionStorage.setItem(\"button\", \"guardar\");\n            } else if(btnVal === \"REALOCAR\"  || btnVal.includes(\"ENVIAR PARA\")){\n                window.sessionStorage.setItem(\"button\", \"null\");\n            } else {\n                window.sessionStorage.setItem(\"button\", \"tabChange\");\n            }\n        });\n});\n\n<\/script>\n"
