@@ -4432,33 +4432,24 @@
         "permission_rules": [
             {
                 "permission": {
-                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
-                    "properties": {
-                        "allowedDeptIds": "PL_INT_FLT_GEN_COM_CRH;PL_INT_FLT_GEN_NOR_CRH",
-                        "orgId": "PL"
-                    }
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nif(fase.equals(\"FLT\")){\n    return true;\n}else{\n    return false;\n}"}
                 },
                 "permission_key": "c991cad6-1e54-4bbf-0406-8dd2a733c81d",
                 "permission_name": "Filtro"
             },
             {
                 "permission": {
-                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
-                    "properties": {
-                        "allowedDeptIds": "PL_INT_PRD_GEN_COM_CRH;PL_INT_PRD_GEN_NOR_CRH;PL_INT_PRD_GEN_RPAPRD_GEN_COM_CRH;PL_INT_PRD_GEN_NOR_CRH;PL_INT_PRD_GEN_RPA_CRH",
-                        "orgId": "PL"
-                    }
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nif(fase.equals(\"PRD\")){\n    return true;\n}else{\n    return false;\n}"}
                 },
                 "permission_key": "7382f1a1-5604-563f-ca2a-b5600f921006",
                 "permission_name": "Produção"
             },
             {
                 "permission": {
-                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
-                    "properties": {
-                        "allowedDeptIds": "PL_INT_VAL_BCP_COM_CRH;PL_INT_VAL_BCP_NOR_CRH;PL_INT_VAL_BNI_COM_CRH;PL_INT_VAL_BNI_NOR_CRH;PL_INT_VAL_BST_COM_CRH;PL_INT_VAL_BST_NOR_CRH;PL_INT_VAL_GEN_COM_CRH;PL_INT_VAL_GEN_NOR_CRH",
-                        "orgId": "PL"
-                    }
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nif(fase.equals(\"VAL\")){\n    return true;\n}else{\n    return false;\n}"}
                 },
                 "permission_key": "bafc1ddc-0d15-0cf9-c615-91abfb48c636",
                 "permission_name": "Validação"
@@ -4466,7 +4457,7 @@
             {
                 "permission": {
                     "className": "org.joget.apps.userview.lib.BeanShellPermission",
-                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\nif(banco.equals(\"BIC\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nif(banco.equals(\"BIC\") && fase.equals(\"CNT\")){\n    return true;\n}else{\n    return false;\n}"}
                 },
                 "permission_key": "e65f7ec0-8c54-5c64-f115-db763624cf5f",
                 "permission_name": "Contratação BIC"
@@ -4474,7 +4465,7 @@
             {
                 "permission": {
                     "className": "org.joget.apps.userview.lib.BeanShellPermission",
-                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\nif(banco.equals(\"ABN\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nif(banco.equals(\"ABN\") && fase.equals(\"CNT\")){\n    return true;\n}else{\n    return false;\n}"}
                 },
                 "permission_key": "607861ec-6ead-d50c-842c-2aa73dec24a0",
                 "permission_name": "Contratação ABN"
@@ -4482,7 +4473,7 @@
             {
                 "permission": {
                     "className": "org.joget.apps.userview.lib.BeanShellPermission",
-                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\nLogUtil.info(\"Banco\", \"AA\" + banco);\nif(banco.equals(\"BCP\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nif(banco.equals(\"BCP\") && fase.equals(\"CNT\")){\n    return true;\n}else{\n    return false;\n}"}
                 },
                 "permission_key": "3d413454-11f8-a8ab-ce78-cac0bce6f59b",
                 "permission_name": "Contratação BCP"
@@ -4490,7 +4481,7 @@
             {
                 "permission": {
                     "className": "org.joget.apps.userview.lib.BeanShellPermission",
-                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\nif(banco.equals(\"BST\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nif(banco.equals(\"BST\") && fase.equals(\"CNT\")){\n    return true;\n}else{\n    return false;\n}"}
                 },
                 "permission_key": "73aa20c7-f9ca-9da7-089b-9008a5f9acab",
                 "permission_name": "Contratação BST"
@@ -4498,7 +4489,7 @@
             {
                 "permission": {
                     "className": "org.joget.apps.userview.lib.BeanShellPermission",
-                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\nif(banco.equals(\"NVB\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nif(banco.equals(\"NVB\") && fase.equals(\"CNT\")){\n    return true;\n}else{\n    return false;\n}"}
                 },
                 "permission_key": "be0ae92d-a00d-83ce-2c77-453e6972fdd9",
                 "permission_name": "Contratação NVB"
@@ -4506,7 +4497,7 @@
             {
                 "permission": {
                     "className": "org.joget.apps.userview.lib.BeanShellPermission",
-                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\nif(banco.equals(\"MTG\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nif(banco.equals(\"MTG\") && fase.equals(\"CNT\")){\n    return true;\n}else{\n    return false;\n}"}
                 },
                 "permission_key": "d3ad26eb-c6f2-0304-3fb3-c3b3875470a2",
                 "permission_name": "Contratação MTG"
@@ -4514,7 +4505,7 @@
             {
                 "permission": {
                     "className": "org.joget.apps.userview.lib.BeanShellPermission",
-                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\nif(banco.equals(\"BNI\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nif(banco.equals(\"BNI\") && fase.equals(\"CNT\")){\n    return true;\n}else{\n    return false;\n}"}
                 },
                 "permission_key": "fc7f2cce-9755-d638-d121-60a5210256d3",
                 "permission_name": "Contratação BNI"
