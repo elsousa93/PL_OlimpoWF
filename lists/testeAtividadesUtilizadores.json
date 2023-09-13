@@ -1,0 +1,60 @@
+{
+    "actions": [],
+    "binder": {
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "idAtividade",
+            "sql": "SELECT sact.id as 'idAtividade', p.id, IF(sact.ResourceId IS NULL, IF(sass.ResourceId IS NULL,NULL, sass.ResourceId), sact.ResourceId) as 'UtilizadorHistorico', dp.c_n_wf_banco as 'Numero Wf Banco'\nFROM shkprocesses sp\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN shkassignmentstable sass ON sass.ActivityId = sact.id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON p.c_detalhe_processo= dp.id\nWHERE (sact.ResourceId IS NOT NULL OR sass.ResourceId IS NOT NULL)\nORDER BY sact.oid DESC"
+        }
+    },
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "idAtividade",
+            "name": "idAtividade",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_0",
+            "label": "id",
+            "name": "id",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_2",
+            "label": "Numero Wf Banco",
+            "name": "Numero Wf Banco",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_3",
+            "label": "UtilizadorHistorico",
+            "name": "UtilizadorHistorico",
+            "sortable": "false"
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
+    "description": "",
+    "filters": [],
+    "id": "testeAtividadesUtilizadores",
+    "name": "Teste Atividades Utilizadores",
+    "order": "",
+    "orderBy": "",
+    "pageSize": "0",
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "rowActions": [],
+    "showPageSizeSelector": "true",
+    "useSession": "false"
+}

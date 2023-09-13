@@ -1,0 +1,1464 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section2",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                    "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                    "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.Radio",
+                        "properties": {
+                            "controlField": "",
+                            "id": "tem_deposito",
+                            "label": "Tem depósito?",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Sim",
+                                    "value": "SIM"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Não",
+                                    "value": "NAO"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "*",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\n\r\npublic boolean validacaoTemDeposito(Element element, FormData formData){\r\n\r\n    //Configure field to validate - UPDATE HERE\r\n    String fieldId = \"tem_deposito\";\r\n    String campo = FormUtil.getElementParameterName(element);\r\n    \r\n    String faseProcesso = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\r\n    String subfaseProcesso = \"#form.detalhe_processo.subfase_processo[{form.processos.detalhe_processo}]#\";\r\n    Boolean result = false;\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    if(faseProcesso.equals(\"REG\")){\r\n        if ((fieldValue == null || fieldValue.equals(\"\")) && !subfaseProcesso.equals(\"Validação Entidades Autónomas\")){\r\n            formData.addFormError(campo, \"Campo obrigatório\");\r\n            //LogUtil.info(\"DOCUMENTOS \" , \"TEM_DEPOSITO\" );\r\n            result = false;\r\n        } else{\r\n            result = true;  \r\n        }\r\n    } else{\r\n       result = true; \r\n    }\r\n\r\n    \r\n    return result;\r\n}\r\n\r\n//call load method with injected variable\r\nreturn validacaoTemDeposito(element, formData);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": "tem_deposito"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.Radio",
+                        "properties": {
+                            "controlField": "",
+                            "id": "field34",
+                            "label": "Outorga Iniciada",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Sim",
+                                    "value": "SIM"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Não",
+                                    "value": "NAO"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.Radio",
+                        "properties": {
+                            "controlField": "",
+                            "id": "tem_registo",
+                            "label": "Tem registo?",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Sim",
+                                    "value": "SIM"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Não",
+                                    "value": "NAO"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "*",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\n\r\npublic boolean validacaoTemRegisto(Element element, FormData formData){\r\n\r\n    //Configure field to validate - UPDATE HERE\r\n    String fieldId = \"tem_registo\";\r\n    String campo = FormUtil.getElementParameterName(element);\r\n    \r\n    String faseProcesso = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\r\n    String subfaseProcesso = \"#form.detalhe_processo.subfase_processo[{form.processos.detalhe_processo}]#\";\r\n    Boolean result = false;\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    if(faseProcesso.equals(\"REG\")){\r\n        if ((fieldValue == null || fieldValue.equals(\"\")) && !subfaseProcesso.equals(\"Validação Entidades Autónomas\")){\r\n            formData.addFormError(campo, \"Campo obrigatório\");\r\n            result = false;\r\n        } else{\r\n            result = true;  \r\n        }\r\n    } else{\r\n       result = true; \r\n    }\r\n\r\n    \r\n    return result;\r\n}\r\n\r\n//call load method with injected variable\r\nreturn validacaoTemRegisto(element, formData);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": "tem_registo"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.Radio",
+                        "properties": {
+                            "controlField": "",
+                            "id": "deposito_pago",
+                            "label": "Pagamento do Depósito Efetuado?",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Sim",
+                                    "value": "SIM"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Não",
+                                    "value": "NAO"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "*",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\n\r\npublic boolean validacaoChaveDeposito(Element element, FormData formData){\r\n\r\n    //Configure field to validate - UPDATE HERE\r\n    String fieldId = \"deposito_pago\";\r\n    String campo = FormUtil.getElementParameterName(element);\r\n    \r\n    String flagUltimaAtividade = \"#variable.flag_ultima_atividade#\";\r\n    String faseProcesso = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\r\n    Boolean result = false;\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    if(faseProcesso.equals(\"REG\")){\r\n        if ((fieldValue == null || fieldValue.equals(\"\") || fieldValue.equals(\"NAO\")) && flagUltimaAtividade.equals(\"2\")){\r\n            formData.addFormError(campo, \"Pagamento obrigatório\");\r\n            result = false;\r\n        } else{\r\n            result = true;  \r\n        }\r\n    } else{\r\n       result = true; \r\n    }\r\n\r\n    \r\n    return result;\r\n}\r\n\r\n//call load method with injected variable\r\nreturn validacaoChaveDeposito(element, formData);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.Radio",
+                        "properties": {
+                            "controlField": "",
+                            "id": "registo_pago",
+                            "label": "Pagamento do Registo Efetuado?",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Sim",
+                                    "value": "SIM"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Não",
+                                    "value": "NAO"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "*",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\n\r\npublic boolean validacaoChaveDeposito(Element element, FormData formData){\r\n\r\n    //Configure field to validate - UPDATE HERE\r\n    String fieldId = \"registo_pago\";\r\n    String campo = FormUtil.getElementParameterName(element);\r\n    \r\n    String flagUltimaAtividade = \"#variable.flag_ultima_atividade#\";\r\n    String faseProcesso = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\r\n    Boolean result = false;\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    if(faseProcesso.equals(\"REG\")){\r\n        if ((fieldValue == null || fieldValue.equals(\"\") || fieldValue.equals(\"NAO\")) && flagUltimaAtividade.equals(\"6\")){\r\n            formData.addFormError(campo, \"Pagamento obrigatório\");\r\n            result = false;\r\n        } else{\r\n            result = true;  \r\n        }\r\n    } else{\r\n       result = true; \r\n    }\r\n\r\n    \r\n    return result;\r\n}\r\n\r\n//call load method with injected variable\r\nreturn validacaoChaveDeposito(element, formData);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "chave_deposito",
+                            "label": "Chave do Depósito",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "*",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\n\r\npublic boolean validacaoChaveDeposito(Element element, FormData formData){\r\n\r\n    //Configure field to validate - UPDATE HERE\r\n    String fieldId = \"chave_deposito\";\r\n    String campo = FormUtil.getElementParameterName(element);\r\n    \r\n    String faseProcesso = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\r\n    String subfaseProcesso_edit = \"#form.detalhe_processo.subfase_processo[{form.processos.detalhe_processo}]#\";\r\n    String subfaseProcesso = \"#assignment.activityName#\";\r\n    String temDeposito = \"#form.docs_processo.tem_deposito[{form.processos.docs}]#\";\r\n    Boolean result = false;\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    if(faseProcesso.equals(\"REG\")){\r\n        if ((fieldValue == null || fieldValue.equals(\"\")) && !subfaseProcesso.equals(\"Validação Entidades\") && !subfaseProcesso.equals(\"Depósito\") && !subfaseProcesso.equals(\"Pagamento do Depósito\") && !subfaseProcesso_edit.equals(\"Pagamento do Depósito\") && temDeposito.equals(\"SIM\")){\r\n            formData.addFormError(campo, \"Campo obrigatório\");\r\n            result = false;\r\n        } else{\r\n            result = true;  \r\n        }\r\n    } else{\r\n       result = true; \r\n    }\r\n\r\n    \r\n    return result;\r\n}\r\n\r\n//call load method with injected variable\r\nreturn validacaoChaveDeposito(element, formData);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "numero_registo",
+                            "label": "Número de Registo",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "*",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\n\r\npublic boolean validacaoNumeroRegisto(Element element, FormData formData){\r\n\r\n    //Configure field to validate - UPDATE HERE\r\n    String fieldId = \"numero_registo\";\r\n    String campo = FormUtil.getElementParameterName(element);\r\n    \r\n    String faseProcesso = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\r\n    String temRegisto = \"#form.docs_processo.tem_registo[{form.processos.docs}]#\";\r\n    String temRegisto = \"#form.docs_processo.tem_registo[{form.processos.docs}]#\";\r\n    String subfaseProcesso = \"#assignment.activityName#\";\r\n    Boolean result = false;\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    if(faseProcesso.equals(\"REG\")){\r\n        if ((fieldValue == null || fieldValue.equals(\"\")) && (subfaseProcesso.equals(\"Registo\") || subfaseProcesso.equals(\"Pagamento do Registo\") || subfaseProcesso.equals(\"Qualidade\")) && temRegisto.equals(\"SIM\") && temRegisto.equals(\"SIM\")){\r\n            formData.addFormError(campo, \"Campo obrigatório\");\r\n            result = false;\r\n        } else{\r\n            result = true;  \r\n        }\r\n    } else{\r\n       result = true; \r\n    }\r\n\r\n    \r\n    return result;\r\n}\r\n\r\n//call load method with injected variable\r\nreturn validacaoNumeroRegisto(element, formData);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CheckBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "inserida_pendencia",
+                            "label": "Pendência Inserida?",
+                            "options": [{
+                                "grouping": "",
+                                "label": "",
+                                "value": "SIM"
+                            }],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "*",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\n\r\npublic boolean validacaoInsercaoPendencia(Element element, FormData formData){\r\n\r\n    //Configure field to validate - UPDATE HERE\r\n    String fieldId = \"inserida_pendencia\";\r\n    String campo = FormUtil.getElementParameterName(element);\r\n    \r\n    String faseProcesso = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\r\n    String temRegisto = \"#form.docs_processo.tem_registo[{form.processos.docs}]#\";\r\n    String subfaseProcesso = \"#assignment.activityName#\";\r\n    \r\n    Boolean result = false;\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    if(faseProcesso.equals(\"REG\")){\r\n        if ((fieldValue == null || fieldValue.equals(\"\")) && subfaseProcesso.equals(\"Pagamento do Registo\") && temRegisto.equals(\"SIM\")){\r\n            formData.addFormError(campo, \"Campo obrigatório\");\r\n            result = false;\r\n        } else{\r\n            result = true;  \r\n        }\r\n    } else{\r\n       result = true; \r\n    }\r\n\r\n    \r\n    return result;\r\n}\r\n\r\n//call load method with injected variable\r\nreturn validacaoInsercaoPendencia(element, formData);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.DatePicker",
+                        "properties": {
+                            "allowManual": "",
+                            "currentDateAs": "",
+                            "dataFormat": "yyyy-MM-dd",
+                            "datePickerType": "dateTime",
+                            "endDateFieldId": "",
+                            "format": "dd/mm/yy",
+                            "format24hr": "true",
+                            "id": "data_da_pendencia",
+                            "label": "Data da Pendência",
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "startDateFieldId": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "*",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\n\r\npublic boolean validacaoDataPendencia(Element element, FormData formData){\r\n\r\n    //Configure field to validate - UPDATE HERE\r\n    String fieldId = \"data_da_pendencia\";\r\n    String campo = FormUtil.getElementParameterName(element);\r\n    \r\n    String faseProcesso = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\r\n    String temRegisto = \"#form.docs_processo.tem_registo[{form.processos.docs}]#\";\r\n    String subfaseProcesso = \"#assignment.activityName#\";\r\n    Boolean result = false;\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    if(faseProcesso.equals(\"REG\")){\r\n        if ((fieldValue == null || fieldValue.equals(\"\")) && subfaseProcesso.equals(\"Pagamento do Registo\") && temRegisto.equals(\"SIM\")){\r\n            formData.addFormError(campo, \"Campo obrigatório\");\r\n            result = false;\r\n        } else{\r\n            result = true;  \r\n        }\r\n    } else{\r\n       result = true; \r\n    }\r\n\r\n    \r\n    return result;\r\n}\r\n\r\n//call load method with injected variable\r\nreturn validacaoDataPendencia(element, formData);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": "",
+                            "yearRange": "c-10:c+10"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "mostrar_esconder_seccoes",
+                            "label": "",
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "value": "<script type=\"text/javascript\">\r\n\r\n    $(document).ready(function() {\r\n       \r\n        var faseProcesso = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\r\n        var subfaseProcesso_edit = \"#form.detalhe_processo.subfase_processo[{form.processos.detalhe_processo}]#\";\r\n        var subfaseProcesso = \"#assignment.activityName#\";\r\n        var temDeposito = \"#form.docs_processo.tem_deposito[{form.processos.docs}]#\";\r\n        var temRegisto = \"#form.docs_processo.tem_registo[{form.processos.docs}]#\";\r\n        var mode = \"#requestParam._mode#\";\r\n        \r\n        if(faseProcesso === 'REG'){\r\n            \r\n            if(!(subfaseProcesso === 'Registo' || subfaseProcesso_edit === 'Registo' || subfaseProcesso === 'Pagamento do Registo' || (subfaseProcesso_edit === 'Pagamento do Registo' && mode === 'edit') || subfaseProcesso === 'Qualidade' || subfaseProcesso_edit === 'Qualidade')){\r\n                $('div[id*=registo_pago]').parent().hide();\r\n                $('input[name*=numero_registo]').parent().hide();\r\n                $('div[id*=inserida_pendencia]').parent().hide();\r\n                $('input[id*=data_da_pendencia]').parent().hide();\r\n                //console.log(\"ENTROUUUU 1\");\r\n            }\r\n            \r\n            //Fase Registo\r\n            if(subfaseProcesso === 'Registo' || subfaseProcesso_edit === 'Registo'){\r\n                colocarDefaultRegisto();\r\n                $('div[id*=registo_pago]').parent().hide();\r\n                \r\n                if(temDeposito === \"NAO\"){\r\n                    $('div[id*=deposito_pago]').parent().hide();\r\n                    $('label[field-tooltip*=chave_deposito]').parent().hide();\r\n                }\r\n                \r\n                $('div[id*=inserida_pendencia]').parent().hide();\r\n                $('input[id*=data_da_pendencia]').parent().hide();\r\n            }\r\n            \r\n            //Fase Pagamento Registo\r\n            if(subfaseProcesso === 'Pagamento do Registo' || (subfaseProcesso_edit === 'Pagamento do Registo' && mode === 'edit')){\r\n                if(temDeposito === \"NAO\"){\r\n                    $('div[id*=deposito_pago]').parent().hide();\r\n                    $('label[field-tooltip*=chave_deposito]').parent().hide();\r\n                }\r\n                \r\n                //Preencher campo pendencias se este tiver vazio\r\n                var dataPendencia = '#date.dd/MM/yyyy HH:mm#';\r\n                var campoDataPendencia = $('input[id*=data_da_pendencia]');\r\n                \r\n                if(campoDataPendencia.val() === null || campoDataPendencia.val() === ''){\r\n                    campoDataPendencia.datepicker(\"setDate\", dataPendencia);\r\n                }\r\n            }\r\n            \r\n            if(subfaseProcesso === 'Validação Entidades' || subfaseProcesso_edit === 'Validação Entidades Autónomas') {\r\n               $('div[id*=documentos_registos]').hide(); \r\n            }\r\n            \r\n            if(subfaseProcesso === 'Depósito' || subfaseProcesso_edit === 'Depósito'){\r\n                $('div[id*=deposito_pago]').parent().hide();\r\n                $('input[id*=chave_deposito]').parent().hide();\r\n                $('div[id*=registo_pago]').parent().hide();\r\n                $('input[id*=numero_registo]').parent().hide();\r\n                $('div[id*=validacao_deposito]').hide();\r\n                $('div[id*=validacao_pendencias]').hide();\r\n                $('div[id*=validacao_qualidade]').hide();\r\n                \r\n            }\r\n            \r\n            //Fase Pagamento Depósito\r\n            if(subfaseProcesso === 'Pagamento do Depósito' || subfaseProcesso_edit === 'Pagamento do Depósito'){\r\n                colocarDefaultDeposito();\r\n                $('input[id*=chave_deposito]').parent().hide();\r\n                $('div[id*=registo_pago]').parent().hide();\r\n                $('div[id*=validacao_deposito]').hide();\r\n                $('div[id*=validacao_pendencias]').hide();\r\n                $('div[id*=validacao_qualidade]').hide();\r\n                \r\n            }\r\n            \r\n            //Fase Inserção Chave\r\n            if(subfaseProcesso === 'Inserção Chave' || subfaseProcesso_edit === 'Inserção Chave' || subfaseProcesso === 'Registo' || subfaseProcesso === 'Pagamento do Registo' || (subfaseProcesso_edit === 'Pagamento do Registo' && mode === 'edit')){\r\n                $('div[id*=validacao_deposito]').hide();\r\n                $('div[id*=validacao_pendencias]').hide();\r\n                $('div[id*=validacao_qualidade]').hide();\r\n            }\r\n            \r\n            //Fase Validação Depósito\r\n            if(subfaseProcesso === 'Validação do Depósito'){\r\n                $('div[id*=validacao_pendencias]').hide();\r\n                $('div[id*=validacao_qualidade]').hide();\r\n            }\r\n            \r\n            //Fase Qualidade\r\n            if(subfaseProcesso === 'Qualidade'){\r\n                $('div[id*=validacao_deposito]').hide();\r\n                \r\n                if(temDeposito === \"NAO\"){\r\n                    $('div[id*=deposito_pago]').parent().hide();\r\n                    $('label[field-tooltip*=chave_deposito]').parent().hide();\r\n                }\r\n                \r\n                if(temRegisto === \"NAO\"){\r\n                    $('label[field-tooltip*=inserida_pendencia]').parent().hide();\r\n                    $('label[field-tooltip*=data_da_pendencia]').parent().hide();\r\n                }\r\n            }\r\n            \r\n            if(subfaseProcesso_edit === 'Qualidade' && mode === 'edit'){\r\n                \r\n                if(temDeposito === \"NAO\"){\r\n                    $('div[id*=deposito_pago]').parent().hide();\r\n                    $('label[field-tooltip*=chave_deposito]').parent().hide();\r\n                }\r\n            }\r\n            \r\n            //Desabilitar Pagamento Depósito Efetuado\r\n            if(!(subfaseProcesso === 'Validação Entidades' || subfaseProcesso === 'Depósito' || subfaseProcesso === 'Pagamento do Depósito' || subfaseProcesso_edit === 'Pagamento do Depósito')){\r\n               var radios = document.querySelectorAll('input[id*=deposito_pago]');\r\n               \r\n                for(var i = 0; i < radios.length; i++){\r\n                    radios[i].onclick = function(){\r\n                        return false\r\n                    };\r\n                }\r\n            }\r\n            \r\n            //Desabilitar Pagamento Registo Efetuado Qualidade\r\n            if(subfaseProcesso === 'Qualidade'){\r\n               var radios = document.querySelectorAll('input[id*=registo_pago]');\r\n               \r\n                for(var i = 0; i < radios.length; i++){\r\n                    radios[i].onclick = function(){\r\n                        return false\r\n                    };\r\n                }\r\n            }\r\n            \r\n        } else {\r\n            if(faseProcesso === 'ARQ' || faseProcesso === 'CNC' || faseProcesso === 'MOD'){\r\n                $('div[id*=documentos_registos]').show();\r\n            } else{\r\n                $('div[id*=documentos_registos]').hide();\r\n            }\r\n        }\r\n        \r\n        //Função para colocar opção \"Não\" como default\r\n        function colocarDefaultDeposito() {\r\n            var radios = document.querySelectorAll('input[id*=deposito_pago]');\r\n            var nenhumSelecionado = true;\r\n            \r\n            for (var i = 0; i < radios.length; i++) {\r\n                if (radios[i].checked) {\r\n                    nenhumSelecionado = false;\r\n                    break;\r\n                }\r\n            }\r\n            \r\n            if (nenhumSelecionado) {\r\n                var opcaoNao = document.querySelector('input[id*=deposito_pago][value=\"NAO\"]');\r\n                opcaoNao.checked = true;\r\n            }\r\n        }\r\n        \r\n        //Função para colocar opção \"Não\" no Pagamento Registo como default\r\n        function colocarDefaultRegisto() {\r\n            var radios = document.querySelectorAll('input[id*=registo_pago]');\r\n            var nenhumSelecionado = true;\r\n            \r\n            for (var i = 0; i < radios.length; i++) {\r\n                if (radios[i].checked) {\r\n                    nenhumSelecionado = false;\r\n                    break;\r\n                }\r\n            }\r\n            \r\n            if (nenhumSelecionado) {\r\n                var opcaoNao = document.querySelector('input[id*=registo_pago][value=\"NAO\"]');\r\n                opcaoNao.checked = true;\r\n            }\r\n        }\r\n        \r\n        //Se não tiver registo\r\n        if(temRegisto === \"NAO\"){\r\n            $('label[field-tooltip*=registo_pago]').parent().hide();\r\n            $('label[field-tooltip*=numero_registo]').parent().hide();\r\n        }\r\n        \r\n    });\r\n\r\n<\/script>"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "registos",
+                "join": "",
+                "label": "REGISTOS",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionHidden": "true",
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "0ccd6329-a205-14d1-b885-f026bfe54bc7": {
+                        "permissionHidden": "true",
+                        "readonly": ""
+                    },
+                    "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                    "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field6",
+                            "label": "",
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "value": "<div class=\"col text-start\">\r\n    <span class=\"material-symbols-rounded md-40\"> folder <\/span> \r\n\t<div class = \"subform-section-title\">\r\n\t\t<span>DOCUMENTOS<\/span>\r\n\t<\/div> \r\n<\/div>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "id_processo",
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "useDefaultWhenEmpty": "true",
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.plugin.enterprise.FormGrid",
+                        "properties": {
+                            "abortRelatedRunningProcesses": "",
+                            "deleteFiles": "true",
+                            "deleteGridData": "true",
+                            "deleteMessage": "Delete row?",
+                            "deleteSubformData": "true",
+                            "disabledAdd": "",
+                            "disabledDelete": "",
+                            "enableSorting": "true",
+                            "errorMessage": "Invalid number of rows",
+                            "formDefId": "documento",
+                            "height": "85%",
+                            "id": "field6",
+                            "label": "",
+                            "loadBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "id_doc",
+                                    "formDefId": "documento"
+                                }
+                            },
+                            "options": [
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "DATA DE INSERÇÃO",
+                                    "value": "data_insercao_ficheiro",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "documento",
+                                    "formatType": "file",
+                                    "label": "FICHEIRO",
+                                    "value": "documento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "DOCUMENTOS (A-Z)",
+                                    "value": "tipo_ficheiros",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "opcoesDisplayGrid",
+                                    "formatType": "options",
+                                    "label": "Estado",
+                                    "value": "estado_ficheiro",
+                                    "width": ""
+                                }
+                            ],
+                            "pageSize": "20",
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "showRowNumber": "",
+                            "sortField": "id_sorting",
+                            "storeBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "id_doc",
+                                    "formDefId": "documento"
+                                }
+                            },
+                            "submit-label-normal": "ADICIONAR",
+                            "submit-label-readonly": "ADICIONAR",
+                            "uniqueKey": "",
+                            "validateMaxRow": "",
+                            "validateMinRow": "",
+                            "validator": {
+                                "className": "org.joget.plugin.enterprise.MultirowBasicValidator",
+                                "properties": {"validationrules": [{
+                                    "fieldId": "tipo_ficheiros",
+                                    "mandatory": "true",
+                                    "message": "Campo Obrigatório",
+                                    "validationType": ""
+                                }]}
+                            },
+                            "width": "85%"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "docs_processo",
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field5",
+                            "label": "",
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "value": "<script type=\"text/javascript\">\r\n    $(document).ready(function(){\r\n        //get value from field that controls if the WF number is automatically generated or not\r\n        var value = FormUtil.getValue(\"id_processo\");\r\n        \r\n        sessionStorage.setItem(\"id_processo\", value);\r\n    });\r\n    \r\n    $(window).load(function(){\r\n    var flag_validacao = '#variable.flag_validacao#';\r\n    if(flag_validacao === '1' || flag_validacao.startsWith(\"#variable.flag_validacao\")){\r\n       $(\"div[id*=documentos_field6_]\").change(function(){\r\n            $(\"input#flag_alteracoes\").attr(\"value\",\"SIM\");    \r\n        });\r\n  \r\n    }\r\n});\r\n   \r\n    \r\n    \r\n<\/script>\r\n"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field4",
+                            "label": "",
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "value": "<script type=\"text/javascript\">\r\n$(function(){\r\n     $('.grid-action-add').html(\"<br> <b>ADICIONAR FICHEIRO ÚNICO<\/b>\"); \r\n     $('.grid-action-add').css(\"display\", \"inline\"); \r\n     $('.grid-action-add').css(\"vertical-align\", \"text-bottom\"); \r\n});\r\n<\/script>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "visualizarPDF",
+                            "label": "",
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "value": "<div id=\"pdfPreview\" style=\"display:none;\">\r\n    <object\r\n      data=\"pdfFilePath\" width=\"100%\" height=\"100%\">\r\n      <iframe src=\"pdfFilePath\" width=\"100%\" height=\"100%\" style=\"border: none;\">\r\n        <p>Your browser does not support PDFs. <a href=\"pdfFilePath\">Download the PDF<\/a>.<\/p>\r\n      <\/iframe>\r\n    <\/object>\r\n<\/div>\r\n\r\n<script type=\"text/javascript\">\r\n\r\n $(document).change(function(){\r\n        var fileChange = sessionStorage.getItem(\"fileChange\");\r\n        \r\n        if(fileChange === \"SIM\"){\r\n            $(\"#multiPaged_5_documentos_field6_documento > a\").attr(\"href\",\"#\");\r\n            $(\"#multiPaged_5_documentos_field6_documento > a\").unbind(\"click\").bind(\"click\", function(e){\r\n                e.preventDefault();\r\n                alert(\"É necessário gravar o formulário antes de visualizar os ficheiros\");\r\n            });\r\n            \r\n        }\r\n });     \r\n \r\n /*\r\n //Função que faz a alteração do link dos documentos de modo a abri-los numa janela popup\r\n$(function(){\r\n    $(\"#multiPaged_5_documentos_field6_documento > a\").click(function(e){\r\n    url = $(this).attr(\"href\");\r\n    var found = url.match(/[0-9a-fA-F]{8}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{12}_[0-9]+\\//gi);\r\n    console.log(found);\r\n    if(found!=null){\r\n        found=found[0].slice(0,-3);\r\n        \r\n        url=url.replace(/[0-9a-fA-F]{8}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{12}_[0-9]+/gi, found);\r\n    }\r\n    var novoUrl = url.replace(/attachment=true/g,\"__a_=workflowPL&__u_=UV_PL_Geral\");\r\n    console.log(novoUrl);\r\n    \r\n    $(this).attr(\"href\",novoUrl);\r\n    if($(\"novoUrl:contains(.pdf.)\")){\r\n        e.preventDefault();\r\n        showPopupActionDialog(novoUrl);\r\n    }\r\n        \r\n    });\r\n});*/\r\n\r\nfunction saveFilesWarning(){\r\n    alert(\"É necessário guardar o formulário para aceder aos ficheiros\");\r\n}\r\n\r\n/*\r\n//Função que faz abrir a janela de popup para visualizar o ficheiro\r\nfunction showPopupActionDialog(url){\r\n    var wWidth = $(window).width();\r\n    var dWidth = wWidth * 0.9;\r\n    var wHeight = $(window).height();\r\n    var dHeight = wHeight * 0.9;\r\n    \r\n  \r\n        var previewObj = $( \"#pdfPreview\" ).clone().html(function(index,html){\r\n            return html.replace(/pdfFilePath/g, url);\r\n        });\r\n        \r\n        var inputDialog = $(previewObj).dialog({\r\n            autoOpen: true,\r\n            height: dHeight,\r\n            width: dWidth,\r\n            modal: true,\r\n            buttons: [\r\n                {\r\n                text: \"Fechar\",\r\n                  click: function() {\r\n                    inputDialog.dialog( \"close\" );\r\n                  }\r\n                }\r\n            ]\r\n        });\r\n}*/\r\n\r\n<\/script>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field60",
+                            "label": "",
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "value": "<script>\n    $(document).ready(function(){\n        \n        $(\"div[id*=multiDocs]\").hide();\n        $(\"button#singleDocument\").hide();\n        \n        $(\"button#multipleDocuments\").click(function(e){\n            e.preventDefault();\n            $(\"a[class=grid-action-add]\").hide();\n            $(\"div[id*=multiDocs]\").show();\n            $(\"button#singleDocument\").show();\n            $(\"button#multipleDocuments\").hide();\n            \n        });\n        \n        $(\"button#singleDocument\").click(function(e){\n            e.preventDefault();\n            $(\"a[class=grid-action-add]\").show();\n            $(\"div[id*=multiDocs]\").hide();\n            $(\"button#multipleDocuments\").show();\n            $(\"button#singleDocument\").hide();\n            $(\"ul[class=form-fileupload-value]\").children().remove();\n        });\n        \n    });\n    \n<\/script>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "preencherNumeroRegisto",
+                            "label": "",
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "value": "<script>\r\n\r\n    $(document).ready(function(){\r\n        \r\n        updateDocs_Processo();\r\n        \r\n    });\r\n\r\n    $(\"div[name*= field6]\").change(function(){\r\n        \r\n        updateDocs_Processo();\r\n        //Encontrar linha da tabela com o pedido de registo\r\n        var linha_pedido_registo = null;\r\n        var soma_numero_pedidos_registo_ok = 0;\r\n        var estado_numero_pedido_registo = null;\r\n        var numero_linhas = 0;\r\n\r\n        $(\"tr[id*=documento] td span.tablesaw-cell-content span[name *= tipo_ficheiros]\").each(function(){\r\n            \r\n            estado_numero_pedido_registo = $(\"tr[id*=documento] td span.tablesaw-cell-content span[name *= estado_ficheiro]\")[numero_linhas].innerText;\r\n            \r\n            if($(this).text().trim() == \"PRO\" && estado_numero_pedido_registo == \"Ok\"){\r\n                linha_pedido_registo = numero_linhas;\r\n                soma_numero_pedidos_registo_ok++;\r\n            }\r\n\r\n            numero_linhas++;\r\n        });\r\n        \r\n\r\n        //Encontrar nome do ficheiro do pedido de registo\r\n        var campo_valor_total = FormUtil.getField(\"multiPagedRegistos_3_documentos_numero_registo\");\r\n        \r\n        if(linha_pedido_registo != null && soma_numero_pedidos_registo_ok == 1){\r\n            \r\n            var coluna_documentos = FormUtil.getGridCellValues(\"field6.documento\");\r\n            var numero_pedido_registo = null;\r\n            \r\n            const nome_pedido_registo = coluna_documentos[linha_pedido_registo];\r\n            const regex = /PedidoRegistoOnline\\s+(\\d+)/;\r\n            const resultado_regex = regex.exec(nome_pedido_registo);\r\n            \r\n            if(resultado_regex){\r\n                numero_pedido_registo = resultado_regex[1];\r\n                \r\n                //Preencher campo numero de registo\r\n                if(numero_pedido_registo != null){\r\n                    campo_valor_total.val(numero_pedido_registo);\r\n                } \r\n            }\r\n        } else {\r\n            campo_valor_total.val(\"\");\r\n        }\r\n        \r\n    });\r\n    \r\n    \r\n    function updateDocs_Processo(){\r\n        var docsArray = [];\r\n        var docs_processo_db = \"#form.docs_processo.docs_processo[{form.processos.docs}]#\";\r\n        $(\"tr[id*=documentos] span[id*=documento] a\").each(function(){\r\n            var name = $(this).text().trim();\r\n            docsArray.push(name);\r\n        });\r\n        var strDocsArray = docsArray.sort().toString();\r\n        \r\n        if(strDocsArray!=='' && docs_processo_db!== strDocsArray){\r\n            $(\"input[id*=docs_processo]\").val(strDocsArray);\r\n        }\r\n    }\r\n    \r\n<\/script>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field62",
+                            "label": "",
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "value": "<div>\r\n    <button id=\"multipleDocuments\">ADICIONAR VÁRIOS FICHEIROS<\/button>\r\n    <button id=\"singleDocument\">ADICIONAR APENAS UM FICHEIRO<\/button>\r\n<\/div>"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "documentos",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                    "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                    "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field63",
+                            "label": "",
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "value": "<div class=\"col text-start\">\r\n\t<div class = \"subform-section-title\">\r\n\t\t<span>MÚLTIPLOS DOCUMENTOS<\/span>\r\n\t\t \r\n\t<\/div> \r\n<\/div>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SubForm",
+                        "properties": {
+                            "formDefId": "multiplosDocumentos",
+                            "id": "field61",
+                            "label": "",
+                            "loadBinder": {
+                                "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+                                "properties": {}
+                            },
+                            "noframe": "",
+                            "parentSubFormId": "",
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "storeBinder": {
+                                "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                                "properties": {
+                                    "autoHandleFiles": "",
+                                    "autoHandleWorkflowVariable": "true",
+                                    "cacheInterval": "",
+                                    "script": "import java.io.File;\r\nimport java.util.ArrayList;\r\nimport java.util.Collection;\r\nimport java.util.HashMap;\r\nimport java.util.Map;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport org.joget.apps.app.service.AppService;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.dao.FormDataDao;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormBinder;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormDataDeletableBinder;\r\nimport org.joget.apps.form.model.FormLoadBinder;\r\nimport org.joget.apps.form.model.FormLoadMultiRowElementBinder;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.FormStoreBinder;\r\nimport org.joget.apps.form.model.FormStoreMultiRowElementBinder;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.commons.util.FileManager;\r\nimport org.joget.apps.form.service.FileUtil;\r\nimport org.joget.commons.util.UuidGenerator;\r\n\r\n   \r\npublic FormRowSet store(Element element, FormRowSet rows, FormData formData) {\r\n    if (rows == null) {\r\n        return null;\r\n    }\r\n\r\n    FormRow firstRow = rows.iterator().next();\r\n    \r\n    if(!firstRow.get(\"documento\").isEmpty() && firstRow.get(\"documento\") != \"\"){\r\n \r\n        try {\r\n            String tableName = \"docs_processo\";\r\n            String formDefId = \"documentos\";//\"multiplosDocumentos\";\r\n            String foreignKey = \"fk\";\r\n            String fileField = \"documento\";\r\n             \r\n            FormDataDao formDataDao = (FormDataDao) AppUtil.getApplicationContext().getBean(\"formDataDao\");\r\n             \r\n            Form parentForm = FormUtil.findRootForm(element);\r\n            String primaryKeyValue = parentForm.getPrimaryKeyValue(formData);\r\n             \r\n            \r\n            Date currentDate = new Date();\r\n            \r\n            for (FormRow row : rows) {\r\n                \r\n                String uploadedDocuments = row.get(\"documento\");\r\n                String[] documentos = uploadedDocuments.split(\";\");\r\n                String id_processo = row.get(\"id_processo\");\r\n                String id_doc = row.get(\"id_doc\");\r\n                String data_validade_documento = row.get(\"data_validade_documento\");\r\n                \r\n                String uuid=\"\";\r\n                String initUuid = \"\";\r\n                \r\n                for(int i = 0; i<documentos.length; i++){\r\n                    FormRowSet rowSet = new FormRowSet();\r\n                    FormRow oneDocRow = new FormRow();\r\n                    //row;\r\n                    \r\n                    uuid= UuidGenerator.getInstance().getUuid();\r\n                    \r\n                    row.setId(uuid);\r\n                    \r\n                        \r\n                    // set created date\r\n                    row.setDateCreated(currentDate);\r\n                    \r\n                    // set modified date\r\n                    row.setDateModified(currentDate);\r\n                    row.put(\"documento\", documentos[i]);\r\n                    row.put(\"nome_ficheiro\", documentos[i].toString());\r\n                    row.put(\"id_processo\", id_processo);\r\n                    row.put(\"id_doc\", id_doc);\r\n                    row.put(\"createdBy\", \"#currentUser.username#\");\r\n                    row.put(\"createdByName\", \"#currentUser.fullName#\");\r\n                    row.put(\"data_validade_documento\", data_validade_documento);\r\n                    \r\n                    rowSet.add(row);\r\n                    \r\n                    //Check and update filename if exists\r\n                    FileUtil.checkAndUpdateFileName(rowSet, tableName, uuid);\r\n            \r\n                    // save data\r\n                    formDataDao.saveOrUpdate(formDefId, tableName, rowSet);\r\n\r\n                    if(i>0){\r\n                        String sourceDocs = \"#envVariable.sourceDocumentsPath#\";\r\n                        File destPath = new File(sourceDocs + uuid);\r\n                        destPath.mkdir();\r\n                        File sourceFile = new File(sourceDocs+  initUuid + \"\\\\\" + documentos[i].toString());\r\n                        sourceFile.renameTo(new File(destPath + \"\\\\\" + documentos[i].toString()));\r\n\r\n                        \r\n                    }else{\r\n                    //store files\r\n                    FileUtil.storeFileFromFormRowSet(rowSet, tableName, uuid);\r\n                    initUuid = uuid;\r\n                    }\r\n                    \r\n                    \r\n                    \r\n                }\r\n                \r\n               \r\n            }\r\n\r\n\r\n        } catch (Exception e) {\r\n            LogUtil.error(\"File Handling in Bean Shell Binder Sample - Grid Form\", e, \"Store data error!!\");\r\n        }\r\n    }\r\n    return rows;\r\n}\r\n   \r\n//call store method with injected variable\r\nreturn store(element, rows, formData);",
+                                    "useAjax": ""
+                                }
+                            },
+                            "subFormParentId": ""
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "multiDocs",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                    "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                    "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.Radio",
+                        "properties": {
+                            "controlField": "",
+                            "id": "outorga_iniciada",
+                            "label": "Outorga Iniciada",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Sim",
+                                    "value": "1"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Não",
+                                    "value": "0"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "*",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\n\r\npublic boolean validacaoOutorgaIniciada(Element element, FormData formData) {\r\n\r\n    //Configure field to validate - UPDATE HERE\r\n    String fieldId = \"outorga_iniciada\";\r\n    String campo = FormUtil.getElementParameterName(element);\r\n    \r\n    String faseProcesso = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\r\n    Boolean result = false;\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    if(faseProcesso.equals(\"AO\")){\r\n        if ((fieldValue == null || fieldValue.equals(\"\"))){\r\n            formData.addFormError(campo, \"Campo obrigatório\");\r\n            result = false;\r\n        } else{\r\n            result = true;  \r\n        }\r\n    } else{\r\n       result = true; \r\n    }\r\n    \r\n    return result;\r\n}\r\n\r\n//call load method with injected variable\r\nreturn validacaoOutorgaIniciada(element, formData);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "esconder_campos_ao",
+                            "label": "",
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "value": "<script type=\"text/javascript\">\r\n\r\n    $(document).ready(function() {\r\n       \r\n        var faseProcesso = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\r\n        \r\n        if(faseProcesso === 'AO'){\r\n            colocarDefaultOutorgaIniciada();\r\n        } else {\r\n            $('div[id*=documentos_acompanhamentoOutorgas]').hide();\r\n        }\r\n        \r\n        //Função para colocar opção \"Não\" como default\r\n        function colocarDefaultOutorgaIniciada() {\r\n            var radios = document.querySelectorAll('input[id*=outorga_iniciada]');\r\n            var nenhumSelecionado = true;\r\n            \r\n            for (var i = 0; i < radios.length; i++) {\r\n                if (radios[i].checked) {\r\n                    nenhumSelecionado = false;\r\n                    break;\r\n                }\r\n            }\r\n            \r\n            if (nenhumSelecionado) {\r\n                var opcaoNao = document.querySelector('input[id*=outorga_iniciada][value=\"NAO\"]');\r\n                opcaoNao.checked = true;\r\n            }\r\n        }\r\n    });\r\n\r\n<\/script>"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "acompanhamentoOutorgas",
+                "join": "",
+                "label": "Acompanhamento de Outorgas",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionHidden": "true",
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "0ccd6329-a205-14d1-b885-f026bfe54bc7": {
+                        "permissionHidden": "",
+                        "readonly": ""
+                    },
+                    "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {
+                        "permissionHidden": "true",
+                        "readonly": ""
+                    },
+                    "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {
+                        "permissionHidden": "true",
+                        "readonly": ""
+                    }
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "mostrar_apenas_atividade_entidades",
+                            "label": "",
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "value": "<script type=\"text/javascript\">\r\n\r\n    $(document).ready(function() {\r\n       \r\n        var subfaseProcesso = \"#form.detalhe_processo.subfase_processo[{form.processos.detalhe_processo}]#\";\r\n        \r\n        if(subfaseProcesso != \"Validação Entidades Autónomas\"){\r\n            $('div[id*=validacao_entidades_autonomas]').hide();\r\n            $('div[id*=seccao_observacoes_entidades]').hide();\r\n        } else{\r\n            //colocarDefault();\r\n        }\r\n        \r\n        //Função para colocar opção \"Não\" no Pagamento Registo como default\r\n        /*function colocarDefault() {\r\n            var radios = document.querySelectorAll('input[id*=multiPagedRegistos_2_documentos_valido_para_registos]');\r\n            var nenhumSelecionado = true;\r\n            \r\n            for (var i = 0; i < radios.length; i++) {\r\n                if (radios[i].checked) {\r\n                    nenhumSelecionado = false;\r\n                    break;\r\n                }\r\n            }\r\n            \r\n            if (nenhumSelecionado) {\r\n                var opcaoNao = document.querySelector('input[id*=valido_para_registos][value=\"NAO\"]');\r\n                opcaoNao.checked = true;\r\n            }\r\n        }*/\r\n    });\r\n\r\n<\/script>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.Radio",
+                        "properties": {
+                            "controlField": "",
+                            "id": "valido_para_registos",
+                            "label": "Processo válido para registos",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Sim",
+                                    "value": "SIM"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Não",
+                                    "value": "NAO"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "*",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\n\r\npublic boolean faseValidacaoEntidades(Element element, FormData formData){\r\n    \r\n    //Configure field to validate - UPDATE HERE\r\n    String fieldId = \"valido_para_registos\";\r\n    String campo = FormUtil.getElementParameterName(element);\r\n    \r\n    String flagUltimaAtividade = \"#variable.flag_ultima_atividade#\";\r\n    String faseProcesso = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\r\n    Boolean result = false;\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    if(faseProcesso.equals(\"REG\")){\r\n        if ((fieldValue == null || fieldValue.equals(\"\")) && flagUltimaAtividade.equals(\"0\")){\r\n            formData.addFormError(campo, \"Campo obrigatório\");\r\n            result = false;\r\n        } else{\r\n            result = true;  \r\n        }\r\n    } else{\r\n       result = true; \r\n    }\r\n\r\n    \r\n    return result;\r\n}\r\n\r\n//call load method with injected variable\r\nreturn faseValidacaoEntidades(element, formData);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": "valido"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "validacao_entidades_autonomas",
+                "join": "",
+                "label": "VALIDAÇÃO ENTIDADES AUTÓNOMAS",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionHidden": "true",
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "0ccd6329-a205-14d1-b885-f026bfe54bc7": {
+                        "permissionHidden": "true",
+                        "readonly": ""
+                    },
+                    "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {
+                        "permissionHidden": "",
+                        "readonly": ""
+                    },
+                    "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {
+                        "permissionHidden": "true",
+                        "readonly": ""
+                    }
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [{
+                    "className": "org.joget.apps.form.lib.TextArea",
+                    "properties": {
+                        "cols": "20",
+                        "id": "observacoes_correcao_entidades",
+                        "label": "Observações",
+                        "permission_rules": {
+                            "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                            "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                            "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                        },
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "rows": "5",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                }],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "seccao_observacoes_entidades",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionHidden": "true",
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "0ccd6329-a205-14d1-b885-f026bfe54bc7": {
+                        "permissionHidden": "true",
+                        "readonly": ""
+                    },
+                    "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {
+                        "permissionHidden": "",
+                        "readonly": ""
+                    },
+                    "53700863-35b8-fcf7-b5a3-deffa46b2f19": {},
+                    "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {
+                        "permissionHidden": "true",
+                        "readonly": ""
+                    },
+                    "7f8e8db0-dcc1-fbab-51b7-91b99d146dbf": {},
+                    "950c7e5e-1ed7-1d34-274d-9c2de99e55f5": {},
+                    "b30c3291-9376-6a3b-a9dd-37d7b0e17f25": {},
+                    "f88c8048-04f7-1389-3bd3-a597abd6714a": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "valido_para_registos",
+                "visibilityValue": "NAO"
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.SubForm",
+                        "properties": {
+                            "formDefId": "reg_op_val_dep",
+                            "id": "subform_registos_validacao_deposito",
+                            "label": "",
+                            "loadBinder": {
+                                "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+                                "properties": {}
+                            },
+                            "noframe": "",
+                            "parentSubFormId": "",
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "storeBinder": {
+                                "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+                                "properties": {}
+                            },
+                            "subFormParentId": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "necessarias_correcoes_dep",
+                            "permission_rules": {
+                                "04c4f36b-3dc7-5a89-5b12-78bc188b5be9": {},
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {},
+                                "8ed12735-d92c-74bd-444f-888db20bd46a": {}
+                            },
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field20",
+                            "label": "",
+                            "permission_rules": {
+                                "04c4f36b-3dc7-5a89-5b12-78bc188b5be9": {},
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {},
+                                "8ed12735-d92c-74bd-444f-888db20bd46a": {}
+                            },
+                            "value": "<script type=\"text/javascript\">\r\n    \r\n    $(document).change(function(){\r\n        \r\n        //get value from field that controls if the WF number is automatically generated or not\r\n        var values = FormUtil.getValues(\"checklist_reg.validacao_reg\");\r\n        var count = 0;\r\n        var i = 0;\r\n\r\n        if(values != null && values.length > 0){\r\n            while (count == 0 && i < values.length) {\r\n                if(values[i] === \"NOK\"){\r\n                    count++;\r\n                }\r\n                i++;\r\n            }\r\n        }\r\n        \r\n        //console.log(\"Count \" + count);\r\n        \r\n        var field = FormUtil.getField(\"necessarias_correcoes_dep\");\r\n        if(count != 0){\r\n            $(field).val(\"SIM\"); //set value\r\n        }else{\r\n            $(field).val(\"NAO\"); //set value\r\n        }\r\n        \r\n        \r\n\r\n\r\n    });\r\n<\/script>"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "validacao_deposito",
+                "join": "",
+                "label": "Validação do Depósito",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionHidden": "true",
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "0ccd6329-a205-14d1-b885-f026bfe54bc7": {
+                        "permissionHidden": "true",
+                        "readonly": ""
+                    },
+                    "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {
+                        "permissionHidden": "true",
+                        "readonly": ""
+                    },
+                    "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.CheckBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "pendecias_validadas",
+                            "label": "Pendências validadas?",
+                            "options": [{
+                                "grouping": "",
+                                "label": "",
+                                "value": "SIM"
+                            }],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "*",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\n\r\npublic boolean faseValidacaoPendencias(Element element, FormData formData){\r\n    \r\n    //Configure field to validate - UPDATE HERE\r\n    String fieldId = \"pendecias_validadas\";\r\n    String campo = FormUtil.getElementParameterName(element);\r\n    \r\n    String subfaseProcesso = \"#assignment.activityName#\";\r\n    String faseProcesso = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\r\n    Boolean result = false;\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    if(faseProcesso.equals(\"REG\")){\r\n        if ((fieldValue == null || fieldValue.equals(\"\")) && subfaseProcesso.equals(\"Qualidade\")){\r\n            formData.addFormError(campo, \"Campo obrigatório\");\r\n            result = false;\r\n        } else{\r\n            result = true;  \r\n        }\r\n    } else{\r\n       result = true; \r\n    }\r\n\r\n    \r\n    return result;\r\n}\r\n\r\n//call load method with injected variable\r\nreturn faseValidacaoPendencias(element, formData);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "user_validacao_pendencia",
+                            "label": "User",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "data_validacao_pendencia",
+                            "label": "Data Validação Pendência",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field29",
+                            "label": "",
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "value": "<script>\r\n    \r\n    $(document).change(function() {\r\n        var campoUser = $('div [id*=user_validacao_pendencia]');\r\n        var campoData =  $('div [id*=data_validacao_pendencia]');\r\n        \r\n        campoUser.parent().hide();\r\n        campoData.parent().hide();\r\n        \r\n    });\r\n    \r\n    \r\n    //Guardar valor de utilizador e data quando validam as pendências\r\n    $(document.getElementById('multiPagedRegistos_3_documentos_pendecias_validadas')).change(function() {\r\n        \r\n        var checkbox = document.getElementById('multiPagedRegistos_3_documentos_pendecias_validadas');\r\n        var campoUser = $('div [id*=user_validacao_pendencia]');\r\n        var campoData =  $('div [id*=data_validacao_pendencia]');\r\n        \r\n        // If the checkbox is checked, display the output text\r\n        if (checkbox.checked == true){\r\n            campoUser.val('#currentUser.fullName#');\r\n            campoData.val('#date.yyyy-MM-dd HH:mm:ss#');\r\n        } else {\r\n            campoUser.val('');\r\n            campoData.val('');\r\n        }\r\n        \r\n        campoUser.parent().hide();\r\n        campoData.parent().hide();\r\n        \r\n    });\r\n<\/script>"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "validacao_pendencias",
+                "join": "",
+                "label": "Validação de Pendências",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionHidden": "true",
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "0ccd6329-a205-14d1-b885-f026bfe54bc7": {
+                        "permissionHidden": "true",
+                        "readonly": ""
+                    },
+                    "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {
+                        "permissionHidden": "true",
+                        "readonly": ""
+                    },
+                    "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.SubForm",
+                        "properties": {
+                            "formDefId": "reg_op_qual",
+                            "id": "subform_registos_validacao_registo",
+                            "label": "",
+                            "loadBinder": {
+                                "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+                                "properties": {}
+                            },
+                            "noframe": "",
+                            "parentSubFormId": "",
+                            "permission_rules": {
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "storeBinder": {
+                                "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+                                "properties": {}
+                            },
+                            "subFormParentId": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "necessarias_correcoes_qual",
+                            "permission_rules": {
+                                "04c4f36b-3dc7-5a89-5b12-78bc188b5be9": {},
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {},
+                                "8ed12735-d92c-74bd-444f-888db20bd46a": {}
+                            },
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field20",
+                            "label": "",
+                            "permission_rules": {
+                                "04c4f36b-3dc7-5a89-5b12-78bc188b5be9": {},
+                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {},
+                                "8ed12735-d92c-74bd-444f-888db20bd46a": {}
+                            },
+                            "value": "<script type=\"text/javascript\">\r\n    \r\n    $(document).change(function(){\r\n        \r\n        //get value from field that controls if the WF number is automatically generated or not\r\n        var values = FormUtil.getValues(\"checklist_reg.validacao_qual\");\r\n        var count = 0;\r\n        var i = 0;\r\n\r\n        if(values != null && values.length > 0){\r\n            while (count == 0 && i < values.length) {\r\n                if(values[i] === \"NOK\"){\r\n                    count++;\r\n                }\r\n                i++;\r\n            }\r\n        }\r\n        \r\n        //console.log(\"Count \" + count);\r\n        \r\n        var field = FormUtil.getField(\"necessarias_correcoes_qual\");\r\n        if(count != 0){\r\n            $(field).val(\"SIM\"); //set value\r\n        }else{\r\n            $(field).val(\"NAO\"); //set value\r\n        }\r\n        \r\n        \r\n\r\n\r\n    });\r\n<\/script>"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "validacao_qualidade",
+                "join": "",
+                "label": "Validação do Registo",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionHidden": "true",
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "0ccd6329-a205-14d1-b885-f026bfe54bc7": {
+                        "permissionHidden": "true",
+                        "readonly": ""
+                    },
+                    "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {
+                        "permissionHidden": "true",
+                        "readonly": ""
+                    },
+                    "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        }
+    ],
+    "properties": {
+        "description": "",
+        "id": "documentos",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "CH - Documentos",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "permission_rules": [
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_QUAL_REG",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "61ac1506-03a2-c3ca-8103-7e96c6eecd6c",
+                "permission_name": "Registos - Equipa Qualidade"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_REG",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7",
+                "permission_name": "Registos"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_AO",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "0ccd6329-a205-14d1-b885-f026bfe54bc7",
+                "permission_name": "Acompanhamento de Outorgas"
+            }
+        ],
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "docs_processo"
+    }
+}

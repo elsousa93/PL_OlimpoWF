@@ -1,0 +1,229 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [{
+        "className": "org.joget.apps.form.model.Section",
+        "elements": [{
+            "className": "org.joget.apps.form.model.Column",
+            "elements": [
+                {
+                    "className": "org.joget.apps.form.lib.SelectBox",
+                    "properties": {
+                        "controlField": "",
+                        "id": "formulario",
+                        "label": "Formulário",
+                        "multiple": "",
+                        "options": [
+                            {
+                                "grouping": "",
+                                "label": "Processo",
+                                "value": "detalheProcesso"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Banco",
+                                "value": "banco"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Análise Bancária",
+                                "value": "analiseBancaria"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Análise Bancária - Autorizações",
+                                "value": "analBancTabelaAutoriz"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Análise Legal",
+                                "value": "analiseLegal"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Análise Legal - Ónus",
+                                "value": "analiseLegalTabelaOnus"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Intervenientes",
+                                "value": "intervenientes"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Interveniente",
+                                "value": "interveniente"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Ficheiros",
+                                "value": "documentos"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Ficheiro",
+                                "value": "documento"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Documento",
+                                "value": "documentosSeparados"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Imóvel",
+                                "value": "imovel"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Contratação",
+                                "value": "contratacao"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Agendamento",
+                                "value": "agendamento"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Resumo",
+                                "value": "menuPrincipal2"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Operativa - Filtro",
+                                "value": "filtro"
+                            }
+                        ],
+                        "optionsBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.SelectBox",
+                    "properties": {
+                        "controlField": "formulario",
+                        "id": "campo",
+                        "label": "Campo",
+                        "multiple": "",
+                        "options": [],
+                        "optionsBinder": {
+                            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                            "properties": {
+                                "cacheInterval": "",
+                                "script": "import java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.defaultHashVariablePlugin;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport java.util.Collection;\r\nimport org.joget.apps.form.dao.FormDataDao;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport org.joget.apps.app.model.FormDefinition;\r\nimport org.joget.apps.app.dao.FormDefinitionDao;\r\nimport org.joget.apps.form.service.FormService;\r\n\r\n \r\npublic FormRowSet load(String[] values) {\r\n    \r\n    FormRowSet rows = new FormRowSet();\r\n    Connection con = null;\r\n    \r\n    //set value of formulario based on dependency value\r\n    String formulario = \"\";\r\n    \r\n    \r\n    if (values != null && values.length > 0) {\r\n        formulario = values[0];\r\n    }\r\n    \r\n    \r\n    \r\n    \r\n    if(formulario.isEmpty()){\r\n        FormRow option = new FormRow();\r\n        option.setProperty(FormUtil.PROPERTY_VALUE, \"\");\r\n        option.setProperty(FormUtil.PROPERTY_LABEL, \"\");\r\n        rows.add(option);\r\n    }else{\r\n    \r\n    FormDataDao formDataDao = (FormDataDao) AppUtil.getApplicationContext().getBean(\"formDataDao\");\r\n    FormDefinitionDao formDefinitionDao = (FormDefinitionDao) AppUtil.getApplicationContext().getBean(\"formDefinitionDao\");\r\n    FormService formService = (FormService) AppUtil.getApplicationContext().getBean(\"formService\");\r\n    \r\n    \r\n    \r\n    AppDefinition appDef = AppUtil.getCurrentAppDefinition();\r\n    FormDefinition formDef = formDefinitionDao.loadById(formulario, appDef);\r\n    \r\n    HashSet map = formDataDao.getFormDefinitionColumnNames(formDef.getTableName());\r\n    map.add(\"dateCreated\");\r\n    map.add(\"dateModified\");\r\n    if(formDef != null){\r\n        String formJson = formDef.getJson();\r\n        if(formJson != null) {\r\n            Form form = (Form) formService.createElementFromJson(formJson, false);\r\n\r\n            for(String field : map){\r\n                \r\n                //Condição de excessão para hiddenField de adicionar ficheiros\r\n                if(formulario.equals(\"documentos\") && field.equals(\"docs_processo\")){\r\n                    FormRow option = new FormRow();\r\n                    option.setProperty(FormUtil.PROPERTY_VALUE, field);\r\n                    option.setProperty(FormUtil.PROPERTY_LABEL, \"Adicionar Ficheiros\");\r\n                    rows.add(option);\r\n                }\r\n                    \r\n                \r\n                String label = \"\";\r\n                Element element = FormUtil.findElement(field, form, null, true);\r\n                if(element != null){\r\n                    label = element.getPropertyString(FormUtil.PROPERTY_LABEL);\r\n                }\r\n                if(label != null  && !label.isEmpty() && label != \"\"){\r\n                FormRow option = new FormRow();\r\n                option.setProperty(FormUtil.PROPERTY_VALUE, field);\r\n                option.setProperty(FormUtil.PROPERTY_LABEL, label);\r\n                rows.add(option);\r\n                }\r\n            }\r\n        \r\n        }\r\n    }\r\n    \r\n            \r\n            \r\n            \r\n    \r\n    \r\n            \r\n    \r\n    \r\n    }\r\n    \r\n    \r\n    \r\n    /**Data Base Connection**/\r\n    /*\r\n    String formTable= \"app_fd_\" + formulario;\r\n        DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n        con = ds.getConnection();\r\n       \r\n       if(!con.isClosed()){\r\n            String query = \"SELECT column_name FROM information_schema.columns WHERE table_schema='jwdb' AND  table_name=?\"; \r\n            PreparedStatement stmt = con.prepareStatement(query);\r\n            stmt.setObject(1, formTable);\r\n            ResultSet rs = stmt.executeQuery();\r\n            while (rs.next()) {\r\n                FormRow option = new FormRow();\r\n                option.setProperty(FormUtil.PROPERTY_VALUE, rs.getObject(\"column_name\").toString());\r\n                option.setProperty(FormUtil.PROPERTY_LABEL, rs.getObject(\"column_name\").toString());\r\n                rows.add(option);\r\n           }\r\n        } else {\r\n     \r\n            System.out.println(\"Connection Problem\");\r\n        }\r\n           \r\n        \r\n        con.close();\r\n    */\r\n\r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(values);",
+                                "useAjax": "true"
+                            }
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.SelectBox",
+                    "properties": {
+                        "controlField": "formulario",
+                        "id": "tabela_formulario",
+                        "label": "Tabela Formulario",
+                        "multiple": "",
+                        "options": [],
+                        "optionsBinder": {
+                            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                            "properties": {
+                                "cacheInterval": "",
+                                "script": "import java.sql.ResultSet;\nimport java.sql.SQLException;\nimport javax.sql.DataSource;\nimport org.joget.apps.app.service.AppUtil;\nimport org.joget.apps.form.model.Element;\nimport org.joget.apps.form.model.FormData;\nimport org.joget.apps.form.model.FormRow;\nimport org.joget.apps.form.model.FormRowSet;\nimport org.joget.commons.util.LogUtil;\nimport org.joget.apps.form.model.Form;\nimport org.joget.apps.form.model.defaultHashVariablePlugin;\nimport org.joget.apps.form.service.FormUtil;\nimport java.util.Collection;\nimport org.joget.apps.form.dao.FormDataDao;\nimport org.joget.apps.app.model.AppDefinition;\nimport org.joget.apps.app.model.FormDefinition;\nimport org.joget.apps.app.dao.FormDefinitionDao;\n\n\npublic FormRowSet load(String[] values) {\n    FormRowSet rows = new FormRowSet();\n    \n    \n    //set value of formulario based on dependency value\n    String formulario = \"\";\n    \n    \n     if (values != null && values.length > 0) {\n        formulario = values[0];\n    }\n    \n    \n    //set value of formulario based on dependency value\n    String formulario = \"\";\n    \n    \n     if (values != null && values.length > 0) {\n        formulario = values[0];\n    }\n    \n    if(formulario.isEmpty()){\n        FormRow option = new FormRow();\n        option.setProperty(FormUtil.PROPERTY_VALUE, \"\");\n        option.setProperty(FormUtil.PROPERTY_LABEL, \"\");\n        rows.add(option);\n    }else{\n    \n        FormDataDao formDataDao = (FormDataDao) AppUtil.getApplicationContext().getBean(\"formDataDao\");\n        FormDefinitionDao formDefinitionDao = (FormDefinitionDao) AppUtil.getApplicationContext().getBean(\"formDefinitionDao\");\n        \n        AppDefinition appDef = AppUtil.getCurrentAppDefinition();\n        FormDefinition formDef = formDefinitionDao.loadById(formulario, appDef);\n        \n        \n        if(formDef != null){\n            String tableName = formDef.getTableName();\n            FormRow option = new FormRow();\n                option.setProperty(FormUtil.PROPERTY_VALUE, tableName);\n                option.setProperty(FormUtil.PROPERTY_LABEL, tableName);\n                rows.add(option);\n            \n        }\n        \n    }\n    \n    \n    \n    \n    \n    return rows;\n}\nreturn load(values);",
+                                "useAjax": "true"
+                            }
+                        },
+                        "permissionHidden": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field4",
+                        "label": "",
+                        "value": "<script>\n    $(document).ready(function(){\n        $(\"input#submit\").val(\"GUARDAR\");\n        \n    });\n    \n<\/script>"
+                    }
+                }
+            ],
+            "properties": {"width": "100%"}
+        }],
+        "properties": {
+            "comment": "",
+            "id": "section1",
+            "join": "",
+            "label": "Informação do Campo",
+            "loadBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "permission": {
+                "className": "",
+                "properties": {}
+            },
+            "permissionReadonly": "",
+            "readonly": "",
+            "readonlyLabel": "",
+            "regex": "",
+            "reverse": "",
+            "storeBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "visibilityControl": "",
+            "visibilityValue": ""
+        }
+    }],
+    "properties": {
+        "description": "",
+        "id": "camposLog",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "Campos Log",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "org.joget.apps.app.lib.BeanShellTool",
+            "properties": {"script": "/*\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.defaultHashVariablePlugin;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport java.util.Collection;\r\n\r\n    Connection con = null;\r\n    PreparedStatement stmt = null;\r\n    ResultSet rs = null;\r\n\r\n    try{\r\n        DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n        con = ds.getConnection();\r\n       \r\n       if(!con.isClosed()){\r\n            String query = \"SELECT c_formulario, c_campo, c_tabela_formulario FROM app_fd_campos_log ORDER BY c_formulario\"; \r\n            String dropQuery = \"\";\r\n            \r\n            \r\n            //Drop all log triggers\r\n            dropTriggerQuery = \"SELECT CONCAT('DROP TRIGGER IF EXISTS ', Trigger_Name, ';') as 'drop_query' FROM information_schema.TRIGGERS WHERE TRIGGER_NAME LIKE '%_logs';\";\r\n            stmt = con.prepareStatement(dropTriggerQuery);\r\n            rs = stmt.executeQuery();\r\n            \r\n            \r\n            while(rs.next()){\r\n                dropQuery= rs.getObject(\"drop_query\").toString();\r\n                stmt = con.prepareStatement(dropQuery);\r\n                stmt.executeQuery();\r\n            }\r\n            \r\n            \r\n            stmt = con.prepareStatement(query);\r\n            rs = stmt.executeQuery();\r\n            \r\n            String idForm = \"\";\r\n            String idField = \"\";\r\n            String formTable =\"\";\r\n            String queryTrigger = \"\";\r\n            String prevIdForm = \"\";\r\n            String dropTriggerQuery = \"\";\r\n            \r\n            \r\n            \r\n            int counter = 0;\r\n            while (rs.next()) {\r\n\r\n                if(counter > 0){\r\n                    prevIdForm = idForm;\r\n                }\r\n                \r\n                idForm = rs.getObject(\"c_formulario\").toString();\r\n                idField = rs.getObject(\"c_campo\").toString();\r\n                formTable = rs.getObject(\"c_tabela_formulario\").toString();\r\n                \r\n                \r\n                if(counter == 0){\r\n                    prevIdForm = idForm;\r\n                    queryTrigger = \"CREATE TRIGGER update_\" + idForm + \"_logs AFTER UPDATE ON app_fd_\"+ formTable+\" FOR EACH ROW BEGIN\";\r\n                }\r\n                \r\n\r\n                if(!prevIdForm.equals(idForm)){\r\n                    queryTrigger += \" END;\";\r\n                    \r\n                    //Create Trigger\r\n                    stmt = con.prepareStatement(queryTrigger);\r\n                    stmt.executeQuery();\r\n\r\n                    //Trigger for another table\r\n                    queryTrigger = \"CREATE TRIGGER update_\" + idForm + \"_logs AFTER UPDATE ON app_fd_\"+ formTable+\" FOR EACH ROW BEGIN\";\r\n                    queryTrigger += \" IF OLD.c_\" + idField +\" <> NEW.c_\" + idField + \" THEN INSERT INTO app_audit_log (process_id, campo, novo_valor, data_alteracao) VALUES(old.c_id_processo, '\" + idField + \"', new.c_\" + idField+ \", now()); END IF;\";\r\n                    \r\n                }else{\r\n                    \r\n                    queryTrigger += \" IF OLD.c_\" + idField +\" <> NEW.c_\" + idField + \" THEN INSERT INTO app_audit_log (process_id, campo, novo_valor, data_alteracao) VALUES(old.c_id_processo, '\" + idField + \"', new.c_\" + idField+ \", now()); END IF;\";\r\n                }\r\n                \r\n                \r\n                \r\n                counter += 1;\r\n            }\r\n            queryTrigger += \" END;\";\r\n        \r\n            \r\n            //Create Trigger\r\n            stmt = con.prepareStatement(queryTrigger);\r\n            stmt.executeQuery();\r\n            \r\n            \r\n        } else {\r\n     \r\n            //System.out.println(\"Connection Problem\");\r\n        }\r\n    } catch(Exception e) {\r\n            LogUtil.error(\"Sample app - Form 1\", e, \"Error loading user data in load binder\");\r\n    } finally {\r\n            //always close the connection after used\r\n            try {\r\n               if(rs != null){\r\n                    rs.close();\r\n                }\r\n                if(stmt != null){\r\n                    stmt.close();\r\n                }\r\n                if(con != null) {\r\n                    con.close();\r\n                }\r\n            } catch(SQLException e) {/* ignored }\r\n    }\r\n        */"}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "campos_log"
+    }
+}

@@ -1,0 +1,259 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [{
+        "className": "org.joget.apps.form.model.Section",
+        "elements": [{
+            "className": "org.joget.apps.form.model.Column",
+            "elements": [
+                {
+                    "className": "org.joget.marketplace.FormRecordLockingField",
+                    "properties": {
+                        "displayNameFormat": "firstLast",
+                        "formDefId": "registos",
+                        "id": "record_lock",
+                        "label": "Formulário bloqueado para edição por:",
+                        "lockDuration": "5",
+                        "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
+                        "validator": {
+                            "className": "org.joget.marketplace.FormRecordLockingValidator",
+                            "properties": {
+                                "errorMessage": "O formulário está bloqueado.",
+                                "formDefId": "registos"
+                            }
+                        }
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field6",
+                        "label": "",
+                        "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
+                        "value": "<h1 class=\"headertext\">#form.detalhe_processo.n_wf_pl[{form.processos.detalhe_processo}]#<\/h1>\n<h1 class=\"headertextfase\">#assignment.activityName#<\/h1>\n<h2 id=\"versaoRecenteText\"><\/h2>\n\n<script>\n    $(document).ready(function(){\n        var text = \"Versão do Formulário \" + #appDef.version# + \" | Versão atual \" + $(\"select[id*=versaoRecente]\").val();\n        var mode = '#requestParam._mode#';\n        var subfase = '#form.detalhe_processo.subfase_processo[{form.processos.detalhe_processo}]#';\n        \n        //console.log(mode);\n        \n        $(\"h2#versaoRecenteText\").text();\n        $(\"select[id*=versaoRecente\").parent().hide();\n        \n        if(mode === 'edit'){\n            $(\"h1.headertextfase\").text(subfase);\n        }\n        //<h2>#appDef.published#<\/h2>\n    });\n    \n<\/script>\n\n"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "imagemBanco",
+                        "label": "",
+                        "value": "\n<img id = \"imagemBancoBCP\" class = \"imagemBanco\">\n<script type=\"text/javascript\">\n    $(window).on('load', function() {\n        var banco = '#form.banco.nome_banco[{form.processos.banco}]#';\n        \n        //console.log(\"banco: \" + banco);\n        if(banco == \"BCP\"){\n            $('.imagemBanco').attr('src', \"#appResource.bcp_cores_lateral.png#\");\n        }else if(banco == \"BCTT\"){\n            $('.imagemBanco').attr('src', \"#appResource.bctt_cores_lateral.png#\");\n        }else if(banco == \"BIC\"){\n            $('.imagemBanco').attr('src', \"#appResource.eurobic_cores_lateral.png#\");\n        }else if(banco == \"BNI\"){\n            $('.imagemBanco').attr('src', \"#appResource.bni_cores_lateral.jpg#\");\n        }else if(banco == \"BST\"){\n            $('.imagemBanco').attr('src', \"#appResource.bst_cores_lateral.jpg#\");\n        }else if(banco == \"MTG\"){\n            $('.imagemBanco').attr('src', \"#appResource.mtg_cores_lateral.jpg#\");\n        }else if(banco == \"NVB\"){\n            $('.imagemBanco').attr('src', \"#appResource.nb_cores_lateral.png#\");\n        }else if(banco == \"ABN\"){\n            $('.imagemBanco').attr('src', \"#appResource.abanca_cores_lateral.png#\");\n        }else{\n            \n        }\n    });\n<\/script>"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.HiddenField",
+                    "properties": {
+                        "id": "servico",
+                        "useDefaultWhenEmpty": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.SelectBox",
+                    "properties": {
+                        "controlField": "",
+                        "id": "versaoRecente",
+                        "label": "",
+                        "multiple": "",
+                        "options": [],
+                        "optionsBinder": {
+                            "className": "org.joget.plugin.enterprise.JdbcOptionsBinder",
+                            "properties": {
+                                "addEmpty": "",
+                                "cacheInterval": "",
+                                "jdbcDatasource": "default",
+                                "sql": "SELECT appVersion, appVersion FROM app_app WHERE appId = 'workflowPL' ORDER BY appVersion DESC LIMIT 1;",
+                                "useAjax": ""
+                            }
+                        },
+                        "permissionHidden": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.plugin.enterprise.MultiPagedForm",
+                    "properties": {
+                        "ajaxMode": "",
+                        "css": "p {\n    display: inline;\n    position: relative;\n    top: -52px;\n    left: 320px;\n    color: #777!important;\n}\n\ndiv#section-actions {\n    width: 75%;\n    position: relative;\n    top: -121px;\n    left: 250px;\n    padding-bottom: 0px!important;\n}\n\ni.page-button-prev.btn.button.waves-input-wrapper.waves-effect.btn.waves-button.waves-float {\n    background-color: #67a168!important;\n}\n\ni.page-button-next.btn.button.waves-input-wrapper.waves-effect.btn.waves-button.waves-float {\n    background-color: #67a168!important;\n}\n\n.panel.panel-default.formRecordLockContainer {\n    height: 48px!important;\n    margin: 0px!important;\n    padding: 0px!important;\n}\n\n.panel-heading {\n    background-color: #EAEE7A!important;\n}\n\n/* borda_exterior-formulários */ \nbody #form-canvas .form-section {\n  padding-bottom: 100px;\n}\n\nh4.panel-title {\n    color: #777;\n}\n\n.page-container {\n    min-height: 500px;\n}",
+                        "displayMode": "wizard",
+                        "id": "multiPagedRegistos",
+                        "nextButtonlabel": "PRÓXIMO",
+                        "numberOfPage": {
+                            "className": "6",
+                            "properties": {
+                                "page1_formDefId": "menuPrincipal2",
+                                "page1_label": "Resumo",
+                                "page1_parentSubFormId": "detalhe_processo",
+                                "page1_readonly": "",
+                                "page1_readonlyLabel": "",
+                                "page1_subFormParentId": "",
+                                "page1_validate": "",
+                                "page2_formDefId": "detalheProcesso",
+                                "page2_label": "Processo",
+                                "page2_parentSubFormId": "detalhe_processo",
+                                "page2_readonly": "",
+                                "page2_readonlyLabel": "",
+                                "page2_subFormParentId": "id_processo",
+                                "page2_validate": "",
+                                "page3_formDefId": "documentos",
+                                "page3_label": "Documentos",
+                                "page3_parentSubFormId": "docs",
+                                "page3_readonly": "",
+                                "page3_readonlyLabel": "",
+                                "page3_subFormParentId": "id_processo",
+                                "page3_validate": "",
+                                "page4_formDefId": "comunicacoes",
+                                "page4_label": "Comunicações",
+                                "page4_parentSubFormId": "comunicacoes",
+                                "page4_readonly": "",
+                                "page4_readonlyLabel": "",
+                                "page4_subFormParentId": "id_processo",
+                                "page4_validate": "",
+                                "page5_formDefId": "esclarecimentos",
+                                "page5_label": "Diligências",
+                                "page5_parentSubFormId": "esclarecimentos",
+                                "page5_readonly": "",
+                                "page5_readonlyLabel": "",
+                                "page5_subFormParentId": "id_processo",
+                                "page5_validate": "",
+                                "page6_formDefId": "geral",
+                                "page6_label": "Operativa",
+                                "page6_parentSubFormId": "geral",
+                                "page6_readonly": "",
+                                "page6_readonlyLabel": "",
+                                "page6_subFormParentId": "id_processo",
+                                "page6_validate": "true"
+                            }
+                        },
+                        "onlyAllowSubmitOnLastPage": "",
+                        "partiallyStore": "true",
+                        "prevButtonlabel": "ANTERIOR",
+                        "storeMainFormOnPartiallyStore": "true"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.SelectBox",
+                    "properties": {
+                        "controlField": "",
+                        "id": "select_valido_registos",
+                        "label": "Select Box",
+                        "multiple": "",
+                        "options": [
+                            {
+                                "grouping": "",
+                                "label": "Sim",
+                                "value": "SIM"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Não",
+                                "value": "NAO"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "NAN",
+                                "value": "NAN"
+                            }
+                        ],
+                        "optionsBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field9",
+                        "label": "",
+                        "value": "<script type=\"text/javascript\">\r\n    $(document).ready(function(){\r\n        \r\n        $(\"button[name=cancel]\").click(function() {\r\n            window.sessionStorage.setItem(\"button\", \"null\");\r\n            window.sessionStorage.setItem(\"previousPage\", \"processo\");\r\n        });\r\n        \r\n        $(\"form\").submit(function() {\r\n            var btnVal = $(document.activeElement).val();\r\n            \r\n            if(btnVal === 'GUARDAR'){\r\n                window.sessionStorage.setItem(\"button\", \"guardar\");\r\n            } else if(btnVal === \"REALOCAR\"  || btnVal.includes(\"ENVIAR PARA\")){\r\n                window.sessionStorage.setItem(\"button\", \"null\");\r\n            } else {\r\n                window.sessionStorage.setItem(\"button\", \"tabChange\");\r\n            }\r\n            \r\n            var activityId = '#requestParam.activityId#';\r\n            var modo = '#requestParam._mode#';\r\n            \r\n            var temDeposito = '#form.docs_processo.tem_deposito[{form.processos.docs}]#';\r\n            var temRegisto = '#form.docs_processo.tem_registo[{form.processos.docs}]#';\r\n            \r\n            if(btnVal.includes(\"ENVIAR PARA\") || btnVal.includes(\"CONCLUÍDO\") || btnVal.includes(\"MODELO 11\")){\r\n                if(modo === 'assignment' && activityId.includes('deposito') && temDeposito === \"NAO\" && temRegisto === \"NAO\"){\r\n                    window.sessionStorage.setItem(\"previousPage\", \"redirectRegistos\"); \r\n                } \r\n                \r\n                if(modo === 'assignment' && (activityId.includes('pagamentoRegisto') || activityId.includes('qualidade'))){\r\n                    window.sessionStorage.setItem(\"previousPage\", \"redirectRegistos\");\r\n                }\r\n            }\r\n        });\r\n\r\n    });\r\n    \r\n<\/script>\r\n"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "edicao_botoes_default",
+                        "label": "",
+                        "value": "<script type=\"text/javascript\">\r\n\r\n    $(function(){\r\n\r\n        var assignmentButton;\r\n        \r\n        nomeBotao();\r\n        \r\n        $(\"select[name*=menuPrincipal2_envio_processo]\").on('change', function() {\r\n            nomeBotao();\r\n        });\r\n        \r\n        $(window).on('load', function() {\r\n            nomeBotao();\r\n        });\r\n        \r\n        $(\"div[id*=valido_para_registos]\").change(function() {\r\n            nomeBotao();\r\n        });\r\n        \r\n        $(\"div[id*=tem_deposito]\").change(function() {\r\n            nomeBotao();\r\n        });\r\n        \r\n        $(\"div[id*=tem_registo]\").change(function() {\r\n           nomeBotao();\r\n        });\r\n        \r\n        $(\"select[id*=categoria_processo]\").change(function() {\r\n           nomeBotao();\r\n        });\r\n        \r\n        /*Botão Assignment Complete*/\r\n        function nomeBotao(){\r\n                \r\n            var flagUltimaAtividade='#variable.flag_ultima_atividade#';\r\n            var flagNomeAtividade = '#assignment.activityName#';\r\n            var flagValido = $('select[name=select_valido_registos]');\r\n            var flagTemDeposito = $('input[name*=tem_deposito]:checked').val();\r\n            var flagTemDeposito_val = '#form.docs_processo.tem_deposito[{form.processos.docs}]#';\r\n            var flagTemRegisto = $('input[name*=tem_registo]:checked').val();\r\n            var flagTemRegisto_val = '#form.docs_processo.tem_registo[{form.processos.docs}]#';\r\n            var categoriaProcesso ='#form.detalhe_processo.categoria_processo[{form.processos.detalhe_processo}]#'\r\n            var flagElegivelModelo11 = $('select[id*=categoria_processo]').val();\r\n            flagValido.parent().hide();\r\n\r\n            //console.log(\"FlagModelo11 \" + flagModelo11);\r\n            \r\n            var campo = $(\"input[name*=valido_para_registos]:checked\");\r\n            \r\n            if(campo != undefined){\r\n               valor_valido = $(\"input[name*=valido_para_registos]:checked\").val(); \r\n            }\r\n            \r\n            //console.log(valor_valido);\r\n            \r\n            if(valor_valido != undefined){\r\n                flagValido.val(valor_valido);\r\n            }\r\n  \r\n            assignmentButton = \"ENVIAR PARA \";\r\n             \r\n            if(flagUltimaAtividade == 0){\r\n                if(flagValido.val() == \"SIM\"){\r\n                    assignmentButton += \"DEPÓSITO\";\r\n                } else if(flagValido.val() == \"NAO\"){\r\n                    assignmentButton += \"ENTIDADE\";\r\n                }else{\r\n                    assignmentButton += \"\";\r\n                }\r\n            } else if(flagUltimaAtividade == 1){\r\n                if(flagTemDeposito !== undefined && flagTemRegisto !== undefined){\r\n                    if(flagTemDeposito === \"SIM\"){\r\n                        assignmentButton += 'PAGAMENTO DO DEPÓSITO';\r\n                    } else if(flagTemDeposito === \"NAO\" && flagTemRegisto === \"SIM\"){\r\n                       assignmentButton += 'REGISTO'; \r\n                    } else if(flagTemDeposito === \"NAO\" && flagTemRegisto === \"NAO\"){\r\n                        assignmentButton += 'CONCLUSÕES E ARQUIVO';\r\n                    } else {\r\n                        assignmentButton += 'PAGAMENTO DO DEPÓSITO';\r\n                    }\r\n                } else{\r\n                   if(flagTemDeposito_val === \"SIM\"){\r\n                        assignmentButton += 'PAGAMENTO DO DEPÓSITO';\r\n                    } else if(flagTemDeposito_val === \"NAO\" && flagTemRegisto_val === \"SIM\"){\r\n                       assignmentButton += 'REGISTO'; \r\n                    } else if(flagTemDeposito_val === \"NAO\" && flagTemRegisto_val === \"NAO\"){\r\n                        assignmentButton += 'CONCLUSÕES E ARQUIVO';\r\n                    } else {\r\n                        assignmentButton += 'PAGAMENTO DO DEPÓSITO';\r\n                    } \r\n                }\r\n            }else if(flagUltimaAtividade == 2){\r\n            \tassignmentButton += 'INSERÇÃO CHAVE';\r\n            }else if(flagUltimaAtividade == 3){\r\n                if(flagTemRegisto === \"SIM\"){\r\n                    assignmentButton += 'VALIDAÇÃO DO DEPÓSITO E REGISTO';\r\n                } else {\r\n                    assignmentButton += 'VALIDAÇÃO DO DEPÓSITO';\r\n                }\r\n            }else if(flagUltimaAtividade == 5){\r\n                if(flagNomeAtividade === 'Validação do Depósito'){\r\n                    assignmentButton = 'VALIDAÇÃO QUALIDADE'; \r\n                } else{\r\n                    assignmentButton += 'PAGAMENTO DO REGISTO';  \r\n                }\r\n            }else if(flagUltimaAtividade == 6){\r\n                if(flagNomeAtividade === 'Validação do Depósito'){\r\n                    assignmentButton += 'VALIDAÇÃO QUALIDADE'; \r\n                } else{\r\n                    assignmentButton = 'CONCLUÍDO';   \r\n                }\r\n            } else if(flagUltimaAtividade == 7){\r\n            \tif(flagNomeAtividade === 'Validação do Depósito'){\r\n                    assignmentButton += 'VALIDAÇÃO QUALIDADE'; \r\n                } else if(flagNomeAtividade === 'Registo'){\r\n                    assignmentButton += 'PAGAMENTO DO REGISTO';\r\n                } else if(flagNomeAtividade === 'Pagamento do Registo'){\r\n                    assignmentButton += 'CONCLUÍDO';\r\n                } else {\r\n                    if(categoriaProcesso === 'REG'){\r\n                       assignmentButton += 'MODELO 11 E CONCLUSÕES'; \r\n                    } else {\r\n                        assignmentButton += 'ARQUIVO E CONCLUSÕES';\r\n                    }\r\n                    \r\n                }\r\n            } else{\r\n                assignmentButton = \"PROXIMA ATIVIDADE\";\r\n            }\r\n            \r\n            $(\"#assignmentComplete\").val(assignmentButton);\r\n            \r\n        }\r\n    \r\n        //Botão Guardar\r\n        $(\"#saveAsDraft\").val(\"GUARDAR\");\r\n        $(\"#submit\").val(\"GUARDAR\");\r\n        \r\n        //Botão Cancelar\r\n        $(\"#cancel\").text(\"CANCELAR\");\r\n        \r\n\r\n    });\r\n\r\n<\/script>"
+                    }
+                }
+            ],
+            "properties": {"width": "100%"}
+        }],
+        "properties": {
+            "comment": "",
+            "id": "section1_1",
+            "join": "",
+            "label": "",
+            "loadBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "permission": {
+                "className": "",
+                "properties": {}
+            },
+            "permissionReadonly": "",
+            "readonly": "",
+            "readonlyLabel": "",
+            "regex": "",
+            "reverse": "",
+            "storeBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "visibilityControl": "",
+            "visibilityValue": ""
+        }
+    }],
+    "properties": {
+        "description": "",
+        "id": "registos",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "Registos: Processos",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "processos"
+    }
+}

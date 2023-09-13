@@ -1,0 +1,508 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.SubForm",
+                        "properties": {
+                            "formDefId": "alertas",
+                            "id": "alertas",
+                            "label": "",
+                            "loadBinder": {
+                                "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                                "properties": {
+                                    "autoHandleFiles": "",
+                                    "autoHandleWorkflowVariable": "true",
+                                    "cacheIdlePause": "60",
+                                    "cacheInterval": "500",
+                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.*;\r\nimport org.joget.commons.util.LogUtil;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport java.time.format.DateTimeFormatter;\r\nimport java.time.LocalDateTime; \r\nimport java.time.LocalDate;\r\nimport org.joget.apps.app.model.AppDefinition;\r\n\r\n\r\npublic boolean validateDate(String date){\r\n   \r\n    boolean result = true;\r\n    if(date.trim().charAt(2) != '/'){\r\n        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"yyyy-MM-dd\");\r\n        LocalDate dateLimit = LocalDate.parse(date, formatter);\r\n        LocalDate today = LocalDate.now();\r\n        \r\n        result= true;\r\n    \r\n        if(dateLimit.isBefore(today)){\r\n            result = false;\r\n        }\r\n    }\r\n    \r\n    return result;\r\n}\r\n\r\n\r\npublic boolean isWeekend(LocalDateTime dt) {\r\n    String dayOfWeek = dt.getDayOfWeek().toString();\r\n    switch(dayOfWeek) {\r\n        case \"SATURDAY\":{\r\n            return true;\r\n        }\r\n        case \"SUNDAY\":{\r\n            return true;\r\n        }\r\n        default:{\r\n            return false;\r\n        }\r\n    }\r\n}\r\n\r\n\r\npublic boolean validateDataFINE(String dataAgendamento, String dataFINE){\r\n    boolean result = true;\r\n    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"yyyy-MM-dd HH:mm\");\r\n    DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern(\"yyyy-MM-dd\");\r\n    LocalDateTime dateAgendamento = LocalDateTime.parse(dataAgendamento, formatter);\r\n    LocalDateTime dateFINE = LocalDate.parse(dataFINE, formatterDate).atTime(23, 59);\r\n    dateFINE = dateFINE.minusDays(1);\r\n\r\n    if(dateFINE.isAfter(dateAgendamento)){\r\n        result = false;\r\n    }\r\n\r\n    return result;\r\n}\r\n\r\n \r\nString ProcessID = \"#process.processId#\";\r\nString idDetalheProcesso = \"#form.detalhe_processo.id[{form.processos.detalhe_processo}]#\";\r\nString idProcesso = \"#form.processos.id#\";\r\n//String htmlAlertas = \"<div class=\\\"container text-start\\\"><div class=\\\"row justify-content-start text-start\\\"><div class=\\\"col text-start\\\"><b><small class=\\\"text-muted m-align\\\"> | <span class=\\\"material-symbols-rounded\\\"> warning <\/span> | ALERTA: AVISO PROCESSO 200245 | <\/span> | AVISO REVISÃO TXPT <\/b><\/small><\/div><div class=\\\"col text-start\\\"><b><small class=\\\"text-muted m-align\\\"> | <span class=\\\"material-symbols-rounded\\\"> warning <\/span> | AVISO REVISÃO TXPT | <\/span> |  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel dapibus eros <\/b><\/small><\/div><div class=\\\"col text-start\\\"><b><small class=\\\"text-muted m-align\\\"> | <span class=\\\"material-symbols-rounded\\\"> warning <\/span> | ALERTA: AVISO ALERTA 2 | <\/span> | INFORMAÇÂO DE ALERTA XPTOXPTO <\/b><\/small><\/div><\/div><\/div>\";\r\n\r\nString htmlAlertas = \"\";\r\n\r\n\r\nAppDefinition appDef = AppUtil.getCurrentAppDefinition();\r\nConnection con = null;\r\nPreparedStatement stmt = null;\r\nResultSet rs = null;\r\nResultSet rs2 = null;\r\n\r\ntry {\r\n    DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n    con = ds.getConnection();\r\n    \r\n    if(!con.isClosed()){\r\n        String queryGetIdDocsProce = \"SELECT f.id as 'idFicheiro', d.id,  f.c_nome_ficheiro, d.c_id_processo, d.c_tipo_documento, d.c_data_validade_documento FROM app_fd_docs_processo f JOIN app_fd_documento_processo d ON d.c_doc_id = f.id WHERE f.c_id_processo = ? AND d.c_documento_valido = 'sim' AND d.c_data_validade_documento NOT LIKE '' AND d.c_data_validade_documento < DATE(NOW()) ORDER BY f.dateCreated DESC;\";\r\n        stmt = con.prepareStatement(queryGetIdDocsProce);\r\n        stmt.setObject(1, idProcesso);\r\n        rs = stmt.executeQuery();\r\n        \r\n        String idDocProce = \"\";\r\n        htmlAlertas += \"<div class=\\\"container text-start\\\"><div class=\\\"row justify-content-start text-start\\\"><div class=\\\"col text-start\\\"><b><small class=\\\"text-muted m-align\\\"> | <span class=\\\"material-symbols-rounded\\\"> warning <\/span><span> | ALERTA: DOCUMENTOS EXPIRADOS || \";\r\n        boolean fileHasDocExp = false;\r\n        boolean existsAlert = false;\r\n        \r\n        String previousIdFicheiro = \"\";\r\n        String htmlFicheiroAlerta = \"\";\r\n        while(rs.next()){\r\n            existsAlert = true;\r\n            \r\n            String idFicheiro = rs.getObject(\"idFicheiro\");\r\n            if(previousIdFicheiro.equals(idFicheiro)){\r\n                \r\n                htmlFicheiroAlerta += \" \" + rs.getObject(\"c_tipo_documento\") + \",\";\r\n                previousIdFicheiro = idFicheiro;\r\n                \r\n            }else{\r\n                if(!previousIdFicheiro.isEmpty()){\r\n                    htmlFicheiroAlerta = htmlFicheiroAlerta.substring(0, htmlFicheiroAlerta.length() -1) + \" | \";\r\n                }\r\n                htmlFicheiroAlerta +=  rs.getObject(\"c_nome_ficheiro\") + \" -\" ;\r\n                htmlFicheiroAlerta += \" \" + rs.getObject(\"c_tipo_documento\") + \",\";\r\n                previousIdFicheiro = idFicheiro;\r\n            }\r\n            \r\n        }\r\n        if(!htmlFicheiroAlerta.isEmpty()){\r\n            htmlAlertas += htmlFicheiroAlerta.substring(0, htmlFicheiroAlerta.length() -1);\r\n            htmlAlertas += \"<\/span><\/small><\/b><\/div><\/div><\/div>\";\r\n        }else{\r\n            htmlAlertas = \"\";\r\n        }\r\n        \r\n        //Alertas para datas\r\n        String dataAgendamento = \"\";\r\n        String queryGetLastAto = \"SELECT c_dataOutorga, c_horaOutorga FROM app_fd_atos WHERE c_id_processo = ? AND c_status = 'AGD' ORDER BY dateCreated DESC LIMIT 1;\";\r\n        stmt = con.prepareStatement(queryGetLastAto);\r\n        stmt.setObject(1, idProcesso);\r\n        rs = stmt.executeQuery();\r\n        if(rs.next()){\r\n            String dataOutorga = \"\";\r\n            String horaOutorga = \"\";\r\n            dataOutorga = rs.getObject(\"c_dataOutorga\");\r\n            horaOutorga = rs.getObject(\"c_horaOutorga\");\r\n            if(dataOutorga != null && !dataOutorga.isEmpty() && horaOutorga != null && !horaOutorga.isEmpty()){\r\n                dataAgendamento = dataOutorga + \" \" + horaOutorga; \r\n            }\r\n        }\r\n        \r\n        String dataSwift = \"#form.anal_banc_processo.data_swift[{form.processos.anal_banc}]#\";\r\n        String dataPedidoSwift = \"#form.anal_banc_processo.data_pedido_swift[{form.processos.anal_banc}]#\";\r\n        String dataFINEAgendamento = \"#form.anal_banc_processo.data_fine_agendamento[{form.processos.anal_banc}]#\";\r\n        String htmlAlertaDatas= \"<div class=\\\"container text-start\\\"><div class=\\\"row justify-content-start text-start\\\"><div class=\\\"col text-start\\\"><b><small class=\\\"text-muted m-align\\\"> | <span class=\\\"material-symbols-rounded\\\"> warning <\/span><span> | ALERTA: DATAS || \";\r\n        boolean alertaDatas = false;\r\n        \r\n        if(!dataAgendamento.trim().isEmpty()){\r\n            if(!dataSwift.isEmpty() && !dataSwift.startsWith(\"#form.anal_banc_processo.data_swift[{form.processos.anal_banc}]\")){\r\n                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"yyyy-MM-dd HH:mm\");\r\n                DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern(\"yyyy-MM-dd\");\r\n                LocalDateTime dateAgendamento = LocalDate.parse(dataAgendamento, formatter).atTime(0,0);\r\n                LocalDateTime dateSwift = LocalDate.parse(dataSwift, formatterDate).atTime(0, 0);\r\n                \r\n                if(!dateAgendamento.equals(dateSwift)){\r\n                    alertaDatas = true;\r\n                    htmlAlertaDatas += \" Data de Agendamento diferente de Data do SWIFT/Declaração De Dívida |\";\r\n                }\r\n            }\r\n            \r\n            if(!dataFINEAgendamento.isEmpty() && !dataFINEAgendamento.startsWith(\"#form.detalhe_processo.data_fine_agendamento[{form.processos.detalhe_processo}]\")){\r\n                if(!validateDataFINE(dataAgendamento, dataFINEAgendamento)){\r\n                    alertaDatas = true;\r\n                    htmlAlertaDatas += \" Data de agendamento não cumpre período de reflexão da FINE |\";\r\n                }\r\n            }\r\n        }\r\n        \r\n        //Alerta Data de Relatório de Avaliação\r\n        String dataDeValidade = \"#form.anal_banc_processo.validade_relatorio_avaliacao[{form.processos.anal_banc}]#\";\r\n        if(!dataDeValidade.isEmpty() && !dataDeValidade.startsWith(\"#form.anal_banc_processo.validade_relatorio_avaliacao[{form.processos.anal_banc}]\")){\r\n            if(!validateDate(dataDeValidade)){\r\n                alertaDatas = true;\r\n                htmlAlertaDatas += \" Data de validade do Relatório de Avaliação expirou |\";\r\n            }\r\n        }\r\n        \r\n        htmlAlertaDatas = htmlAlertaDatas.substring(0, htmlAlertaDatas.length() -1);\r\n        htmlAlertaDatas += \"<\/span><\/small><\/b><\/div><\/div><\/div>\";\r\n        \r\n        if(alertaDatas){\r\n            htmlAlertas += htmlAlertaDatas;\r\n        }\r\n        \r\n        \r\n        // Alerta Ato Agendado sem Entidade ou Nenhum Ato Agendado\r\n        String fase_processo = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\r\n        \r\n        \r\n        String htmlAlertaAgendamento = \"<div class=\\\"container text-start\\\"><div class=\\\"row justify-content-start text-start\\\"><div class=\\\"col text-start\\\"><b><small class=\\\"text-muted m-align\\\"> | <span class=\\\"material-symbols-rounded\\\"> warning <\/span><span> | ALERTA: AGENDAMENTO || \";\r\n        boolean alertaAgendamento = false;\r\n        \r\n        if(idProcesso != null) {\r\n            String queryObterAtoAgendado = \"SELECT id, c_cedula_entidade FROM app_fd_atos a WHERE c_id_processo LIKE ? AND c_status LIKE 'AGD' AND length(c_cedula_entidade) != 0;\";\r\n            stmt = con.prepareStatement(queryObterAtoAgendado);\r\n            stmt.setObject(1, idProcesso);\r\n            rs = stmt.executeQuery();\r\n            \r\n            if (!rs.next()) {\r\n                //Comentado para o alerta de não haver Entidade aparecer em todas as fases e não só em Validação\r\n                if (fase_processo == \"VAL\") {\r\n                    alertaAgendamento = true;\r\n                    htmlAlertaAgendamento += \" Não existe nenhum Ato Agendado com Entidade Autenticadora selecionada\";\r\n                }\r\n            }else{\r\n                var cedula = rs.getObject(\"c_cedula_entidade\");\r\n                String queryVerificarCedula = \"SELECT id FROM app_fd_info_colaboradores WHERE c_cedula_profissional = ?;\";\r\n                stmt = con.prepareStatement(queryVerificarCedula);\r\n                stmt.setObject(1, cedula);\r\n                rs = stmt.executeQuery();\r\n                if(!rs.next()){\r\n                    alertaAgendamento = true;\r\n                    htmlAlertaAgendamento += \" Não existe correspondência entre a cédula da entidade e um utilizador\";\r\n                }\r\n                \r\n            }\r\n        }\r\n        \r\n        htmlAlertaAgendamento = htmlAlertaAgendamento.substring(0, htmlAlertaAgendamento.length());\r\n        htmlAlertaAgendamento += \"<\/span><\/small><\/b><\/div><\/div><\/div>\";\r\n        \r\n        if(alertaAgendamento) {\r\n            htmlAlertas += htmlAlertaAgendamento;\r\n        }\r\n        \r\n        \r\n        \r\n \r\n        \r\n        \r\n        \r\n        \r\n    }\r\n    \r\n}catch(Exception e){\r\n    LogUtil.error(appDef.toString(), e, \"Error getting info from DB\");\r\n}finally{\r\n    try{\r\n        if(rs != null){\r\n            rs.close();\r\n        }\r\n        if(stmt != null){\r\n            stmt.close();\r\n        }\r\n        if(con != null && !con.isClosed()) {\r\n            con.close();\r\n        }\r\n    }catch(Exception e){\r\n        LogUtil.error(appDef.toString(), e, \"Error closing DB connection\");\r\n    }\r\n}\r\n\r\n \r\nFormRowSet f = new FormRowSet();\r\nFormRow r1 = new FormRow();\r\n//r1.put(\"alertas\", \"Alertas\");\r\n\r\nr1.put(\"tb_alertas\", htmlAlertas);\r\nf.add(r1);\r\n \r\nreturn f;",
+                                    "useAjax": ""
+                                }
+                            },
+                            "noframe": "",
+                            "parentSubFormId": "alertas",
+                            "permissionHidden": "",
+                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "storeBinder": {
+                                "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+                                "properties": {}
+                            },
+                            "subFormParentId": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.marketplace.FormRecordLockingField",
+                        "properties": {
+                            "displayNameFormat": "firstLast",
+                            "formDefId": "processo",
+                            "id": "record_lock",
+                            "label": "Formulário bloqueado para edição por:",
+                            "lockDuration": "5",
+                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
+                            "validator": {
+                                "className": "org.joget.marketplace.FormRecordLockingValidator",
+                                "properties": {
+                                    "errorMessage": "O formulário está bloqueado.",
+                                    "formDefId": "processo"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field6",
+                            "label": "",
+                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
+                            "value": "<script>\n    $(document).ready(function(){\n        var text = \"Versão do Formulário \" + #appDef.version# + \" | Versão atual \" + $(\"select[id*=versaoRecente]\").val();\n        $(\"h2#versaoRecenteText\").text(text);\n        $(\"select[id*=versaoRecente\").parent().hide();\n        //<h2>#appDef.published#<\/h2>\n    });\n    \n<\/script>\n<h1 class=\"headertext\">#form.detalhe_processo.n_wf_pl[{form.processos.detalhe_processo}]#<\/h1>\n<h1 class=\"headertextfase\">#form.detalhe_processo.subfase_processo[{form.processos.detalhe_processo}]#<\/h1>\n<h2 id=\"versaoRecenteText\"><\/h2>\n"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "flag_alerta_alteracoes",
+                            "useDefaultWhenEmpty": "true",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "flag_alteracoes",
+                            "useDefaultWhenEmpty": "true",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "servico",
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "user_validacao",
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": "user_validacao"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "flag_validacao",
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": "flag_validacao"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "versaoRecente",
+                            "label": "",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.plugin.enterprise.JdbcOptionsBinder",
+                                "properties": {
+                                    "addEmpty": "",
+                                    "cacheInterval": "",
+                                    "jdbcDatasource": "default",
+                                    "sql": "SELECT appVersion, appVersion FROM app_app WHERE appId = 'workflowPL' ORDER BY appVersion DESC LIMIT 1;",
+                                    "useAjax": ""
+                                }
+                            },
+                            "permissionHidden": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "imagemBanco",
+                            "label": "",
+                            "value": "\n<img id = \"imagemBancoBCP\" class = \"imagemBanco\">\n<script type=\"text/javascript\">\n    $(window).on('load', function() {\n        var banco = '#form.banco.nome_banco[{form.processos.banco}]#';\n        \n        //console.log(\"banco: \" + banco);\n        if(banco == \"BCP\"){\n            $('.imagemBanco').attr('src', \"#appResource.bcp_cores_lateral.png#\");\n        }else if(banco == \"BCTT\"){\n            $('.imagemBanco').attr('src', \"#appResource.bctt_cores_lateral.png#\");\n        }else if(banco == \"BIC\"){\n            $('.imagemBanco').attr('src', \"#appResource.eurobic_cores_lateral.png#\");\n        }else if(banco == \"BNI\"){\n            $('.imagemBanco').attr('src', \"#appResource.bni_cores_lateral.jpg#\");\n        }else if(banco == \"BST\"){\n            $('.imagemBanco').attr('src', \"#appResource.bst_cores_lateral.jpg#\");\n        }else if(banco == \"MTG\"){\n            $('.imagemBanco').attr('src', \"#appResource.mtg_cores_lateral.jpg#\");\n        }else if(banco == \"NVB\"){\n            $('.imagemBanco').attr('src', \"#appResource.nb_cores_lateral.png#\");\n        }else if(banco == \"ABN\"){\n            $('.imagemBanco').attr('src', \"#appResource.abanca_cores_lateral.png#\");\n        }else{\n            \n        }\n    });\n<\/script>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.plugin.enterprise.MultiPagedForm",
+                        "properties": {
+                            "ajaxMode": "",
+                            "css": "p {\n    display: inline;\n    position: relative;\n    top: -52px;\n    left: 320px;\n    color: #777!important;\n}\n\ndiv#section-actions {\n    width: 75%;\n    position: relative;\n    top: -121px;\n    left: 250px;\n    padding-bottom: 0px!important;\n}\n\ni.page-button-prev.btn.button.waves-input-wrapper.waves-effect.btn.waves-button.waves-float {\n    background-color: #67a168!important;\n}\n\ni.page-button-next.btn.button.waves-input-wrapper.waves-effect.btn.waves-button.waves-float {\n    background-color: #67a168!important;\n}\n\n.panel.panel-default.formRecordLockContainer {\n    height: 48px!important;\n    margin: 0px!important;\n    padding: 0px!important;\n}\n\n.panel-heading {\n    background-color: #EAEE7A!important;\n}\n\n/* borda_exterior-formulários */ \nbody #form-canvas .form-section {\n  padding-bottom: 100px;\n}\n\nh4.panel-title {\n    color: #777;\n}\n\n.page-container {\n    min-height: 500px;\n}",
+                            "displayMode": "wizard",
+                            "id": "multiPaged",
+                            "nextButtonlabel": "PRÓXIMO",
+                            "numberOfPage": {
+                                "className": "12",
+                                "properties": {
+                                    "page10_formDefId": "comunicacoes",
+                                    "page10_label": "Comunicações",
+                                    "page10_parentSubFormId": "comunicacoes",
+                                    "page10_readonly": "",
+                                    "page10_readonlyLabel": "",
+                                    "page10_subFormParentId": "id_processo",
+                                    "page10_validate": "",
+                                    "page11_formDefId": "agendamento",
+                                    "page11_label": "Agendamento",
+                                    "page11_parentSubFormId": "agendamento",
+                                    "page11_readonly": "",
+                                    "page11_readonlyLabel": "",
+                                    "page11_subFormParentId": "id_processo",
+                                    "page11_validate": "true",
+                                    "page12_formDefId": "geral",
+                                    "page12_label": "Operativa",
+                                    "page12_parentSubFormId": "geral",
+                                    "page12_readonly": "",
+                                    "page12_readonlyLabel": "",
+                                    "page12_subFormParentId": "id_processo",
+                                    "page12_validate": "",
+                                    "page1_formDefId": "menuPrincipal2",
+                                    "page1_label": "Resumo",
+                                    "page1_parentSubFormId": "detalhe_processo",
+                                    "page1_readonly": "",
+                                    "page1_readonlyLabel": "",
+                                    "page1_subFormParentId": "",
+                                    "page1_validate": "",
+                                    "page2_formDefId": "detalheProcesso",
+                                    "page2_label": "Processo",
+                                    "page2_parentSubFormId": "detalhe_processo",
+                                    "page2_readonly": "",
+                                    "page2_readonlyLabel": "",
+                                    "page2_subFormParentId": "id_processo",
+                                    "page2_validate": "",
+                                    "page3_formDefId": "intervenientes",
+                                    "page3_label": "Intervenientes",
+                                    "page3_parentSubFormId": "intervenientes",
+                                    "page3_readonly": "",
+                                    "page3_readonlyLabel": "",
+                                    "page3_subFormParentId": "id_processo",
+                                    "page3_validate": "",
+                                    "page4_formDefId": "imoveis",
+                                    "page4_label": "Imóveis",
+                                    "page4_parentSubFormId": "imoveis",
+                                    "page4_readonly": "",
+                                    "page4_readonlyLabel": "",
+                                    "page4_subFormParentId": "id_processo",
+                                    "page4_validate": "",
+                                    "page5_formDefId": "documentos",
+                                    "page5_label": "Documentos",
+                                    "page5_parentSubFormId": "docs",
+                                    "page5_readonly": "",
+                                    "page5_readonlyLabel": "",
+                                    "page5_subFormParentId": "id_processo",
+                                    "page5_validate": "",
+                                    "page6_formDefId": "banco",
+                                    "page6_label": "Banco",
+                                    "page6_parentSubFormId": "banco",
+                                    "page6_readonly": "",
+                                    "page6_readonlyLabel": "",
+                                    "page6_subFormParentId": "id_processo",
+                                    "page6_validate": "",
+                                    "page7_formDefId": "analiseBancaria",
+                                    "page7_label": "Análise Bancária",
+                                    "page7_parentSubFormId": "anal_banc",
+                                    "page7_readonly": "",
+                                    "page7_readonlyLabel": "",
+                                    "page7_subFormParentId": "id_processo",
+                                    "page7_validate": "",
+                                    "page8_formDefId": "analiseLegal",
+                                    "page8_label": "Análise Legal",
+                                    "page8_parentSubFormId": "anal_legal",
+                                    "page8_readonly": "",
+                                    "page8_readonlyLabel": "",
+                                    "page8_subFormParentId": "id_processo",
+                                    "page8_validate": "",
+                                    "page9_formDefId": "esclarecimentos",
+                                    "page9_label": "Diligências",
+                                    "page9_parentSubFormId": "esclarecimentos",
+                                    "page9_readonly": "",
+                                    "page9_readonlyLabel": "",
+                                    "page9_subFormParentId": "id_processo",
+                                    "page9_validate": ""
+                                }
+                            },
+                            "onlyAllowSubmitOnLastPage": "",
+                            "partiallyStore": "true",
+                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
+                            "prevButtonlabel": "ANTERIOR",
+                            "storeMainFormOnPartiallyStore": "true"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "validacaoErrosCoordenador",
+                            "label": "",
+                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
+                            "value": "<script type=\"text/javascript\">\n    $(document).ready(function(){\n        \n        $(\"button[name=cancel]\").click(function() {\n            window.sessionStorage.setItem(\"button\", \"null\");\n            window.sessionStorage.setItem(\"previousPage\", \"processo\");\n        });\n        $( \"form\" ).submit(function() {\n            var btnVal = $(document.activeElement).val();\n            \n            if(btnVal === 'GUARDAR'){\n                window.sessionStorage.setItem(\"button\", \"guardar\");\n            }else if( btnVal === \"PROXIMA ATIVIDADE\"){\n                 window.sessionStorage.setItem(\"button\", \"proximaAtividade\");\n                 var assignmentProcessId = \"#assignment.processId#\";\n                 window.sessionStorage.setItem(\"assignmentProcessId\", assignmentProcessId);\n                 var subBanco = \"#variable.sub_banco#\";\n                 //Flag para redirecionar para o Processo\n                 //Caso a atividade atual seja \"Emissão da Carta\" não redireciona para o processo\n                 var flagRedirect = 0;\n                 var activityId = \"#assignment.activityId#\";\n                 if(subBanco !== \"MTG\" || !activityId.includes(\"emissaoCarta\")){\n                     flagRedirect = 1;\n                 }\n                 window.sessionStorage.setItem(\"redirect\", flagRedirect);\n                 \n            }else if(btnVal === \"REALOCAR\"  || btnVal.includes(\"ENVIAR PARA\") || btnVal === \"COLOCAR PENDENTE\"){\n                window.sessionStorage.setItem(\"button\", \"null\");\n            }else {\n                window.sessionStorage.setItem(\"button\", \"tabChange\");\n            }\n        });\n        \n        \n        \n        \n        //console.log(\"#process.activityInst.{assignment.activityDefId}.performer#\");\n        \n\n    });\n    \n    $(window).load(function(){\n        \n        var flag_alerta_alteracoes = \"#form.processos.flag_alerta_alteracoes#\";\n        if(flag_alerta_alteracoes === \"1\"){\n            $(\"input#flag_alerta_alteracoes\").attr(\"value\",\"1\");\n        }\n        var flag_alteracoes = \"#form.processos.flag_alteracoes#\";\n        if(flag_alteracoes === \"NAO\"){\n            $(\"input#flag_alteracoes\").attr(\"value\",\"NAO\");\n        }\n        \n        \n        \n    });\n    \n    \n    window.onload = (event) => {\n        if($(\".form-errors\").text() === \"EXISTEM ERROS DE VALIDAÇÃO\"){\n            if(\"#currentUser.groups.name#\".split(\";\").includes(\"Coordenadores\")){\n                var currentFase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\n                var origemProcesso = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\"\n                var proximaFase = \"\";\n                if(currentFase===\"CNT\"){\n                    proximaFase= \"Filtro\";\n                }else if(currentFase===\"FLT\"){\n                    proximaFase = \"Produção Manual\";\n                }else if(currentFase===\"PRD\"){\n                    proximaFase = \"Validação\";\n                }else if(currentFase===\"VAL\"){\n                    proximaFase = \"Conclusões\";\n                }\n                if(origemProcesso === \"CAR\" || origemProcesso === \"CPR\"){\n                    proximaFase = \"Conclusões\";\n                }\n                \n                $(\"#filaTrabalho\").append('<table name=\"modalVerificarAlteracoes\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" class=\"boxy-wrapper fixed\" style=\"z-index: 1339; visibility: visible; left: 556.5px; top: 66.012px; opacity: 1;\"><tbody><tr><td class=\"top-left\"><\/td><td class=\"top\"><\/td><td class=\"top-right\"><\/td><\/tr><tr><td class=\"left\"><\/td><td class=\"boxy-inner\"><div class=\"title-bar\"><h2>&nbsp;<\/h2><a href=\"#\" class=\"close\"><i class=\"fa fas fa-times\"><\/i><\/a><\/div><div style=\"width: 650px;height: 450px;\"><span class=\"material-symbols-rounded icone_alerta2\">warning<\/span><div class=\"textValidation\" style=\"width: 100%;height: 450px;text-align: center;vertical-align: middle;line-height: 20px;padding: 180px 0px 0px 0px;font-family: \"Ubuntu\", sans-serif !important;font-size: 18px;\">Existem alguns erros de validação, tem a certeza que pretende continuar?<\/div><div style=\"width: 100%;height: 100px;text-align: center;vertical-align: middle;line-height: 20px;bottom: 0;position: absolute;\"><i class=\"waves-button-input waves-input-wrapper waves-effect btn waves-button waves-float\" style=\"color:rgb(33, 33, 33);background:rgba(0, 0, 0, 0);width: 15%;margin-right: 25%;\"><input id=\"confirmarAlteracoesCoordenador\" name=\"confirmarAlteracoesCoordenador\" class=\"waves-button-input\" type=\"submit\" value=\"SIM\" style=\"background-color:rgba(0,0,0,0);\"><\/i><i class=\"waves-button-input waves-input-wrapper waves-effect btn waves-button waves-float\" style=\"color:rgb(33, 33, 33);background:rgba(0, 0, 0, 0);width: 15%;\"><input id=\"cancelarAlteracoesCoordenador\" name=\"cancelarAlteracoesCoordenador\" class=\"waves-button-input\" type=\"submit\" value=\"NAO\" style=\"background-color:rgba(0,0,0,0);\"><\/i><\/div><\/div><\/td><td class=\"right\"><\/td><\/tr><tr><td class=\"bottom-left\"><\/td><td class=\"bottom\"><\/td><td class=\"bottom-right\"><\/td><\/tr><\/tbody><\/table>');\n                $(\"#filaTrabalho\").append('<div name=\"blackoutEcra\" class=\"boxy-modal-blackout\" style=\"z-index: 1338; opacity: 0.7; width: 100%; height: 100%; position:fixed; top:0px; left:0px;\"><\/div>');\n                var proximaOperativa = $(\"select[id*=envio_processo] option:selected\").val();\n                    //console.log(proximaOperativa);\n                    if(proximaOperativa === ''){\n                        $(\"div.textValidation\").html(\"Existem alguns erros de validação, tem a certeza que pretende continuar?<br>O processo irá avançar para \" + proximaFase);\n                    }\n                $(\"#confirmarAlteracoesCoordenador\").on('click', function() {\n                    var processId = \"#form.processos.id#\";\n                    var subProcessId = \"#process.processId#\";\n                    var activityInstance = \"#process.activityInst.{assignment.activityDefId}.instanceId#\";\n                    var estado = $(\"select[name=multiPaged_2_detalheProcesso_estado_contratacao]\").val();\n                    \n                    if(estado === undefined){\n                        estado = '#form.detalhe_processo.estado_contratacao[{form.processos.detalhe_processo}]#';\n                    }\n                    \n                    var performer = \"#process.activityInst.{assignment.activityDefId}.performer#\";\n                    var laneUser = \"user_\" + performer;\n                    \n                    var complexidade = $(\"select[name=multiPaged_2_detalheProcesso_complex_processo]\").val();\n                    \n                    if(complexidade === undefined){\n                        complexidade = \"#form.detalhe_processo.complex_processo[{form.processos.detalhe_processo}]#\";\n                    }\n                    \n                    if(complexidade === 'COM'){\n                        laneUser += \"_com\";\n                    }\n                    \n                    var apiKey = \"#envVariable.apiKeyAssignments#\";\n                    var apiId = \"#envVariable.apiIdAssignments#\";\n                    \n                    $.ajax({\n                        beforeSend: function(request){\n                            request.setRequestHeader(\"api_key\", apiKey);\n                            request.setRequestHeader(\"api_id\", apiId);\n                        },\n                        type: \"POST\",\n                        dataType: \"json\",\n                        url: \"/jw/api/process/CreditoHabitacao/setActivityVariables/\" + processId + \"/\" + activityInstance + \"?estado=\" + estado + \"&\" + laneUser + \"=#currentUser.username#&proxima_operativa=\" + proximaOperativa, \n                        success: function(data){\n                            $.ajax({\n                                beforeSend: function(request){\n                                    request.setRequestHeader(\"api_key\", apiKey);\n                                    request.setRequestHeader(\"api_id\", apiId);\n                                },\n                                type: \"POST\",\n                                dataType: \"json\",\n                                url: \"/jw/api/process/CreditoHabitacao/completeActivity/\" + subProcessId + \"/\" + activityInstance,\n                                success: function(data){\n                                    console.log(\"Aaaaaa\" + proximaOperativa);\n                                    window.location = \"#request.scheme#://#request.serverName#:#request.serverPort##request.contextPath#/web/userview/workflowPL/UV_PL_Geral/_/ListaFilaTrabalho\";\n                                }\n                            });\n                        }\n                    });\n                });\n                $(\"#cancelarAlteracoesCoordenador\").on('click', function() {\n                    $(\"table[name=modalVerificarAlteracoes]\").remove();\n                    $(\"div[name=blackoutEcra]\").remove();\n                });\n            }\n        }\n    };\n<\/script>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "edicao_botoes_default",
+                            "label": "",
+                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
+                            "value": "<script type=\"text/javascript\">\r\n\r\n\r\n$(function(){\r\n\r\n    $(\"label[field-tooltip=enviar_processo_hidden]\").css(\"display\",\"none\");\r\n    $(\"input[name=enviar_processo_hidden]\").css(\"display\",\"none\");\r\n    \r\n    ////if($(\"select[name=multiPaged_1_menuPrincipal2_envio_processo] :selected\").val() !== $(\"#enviar_processo_hidden\").val()){\r\n       //// $(\"select[name=multiPaged_1_menuPrincipal2_envio_processo]\").val($(\"#enviar_processo_hidden\").val() + \"\").change();\r\n   //// }\r\n    \r\n    /*\r\n    if($(\"select[name=multiPaged_2_detalheProcesso_estado_contratacao]\").val() !== $(\"#enviar_processo_hidden\").val()){\r\n        $(\"select[name=multiPaged_2_detalheProcesso_estado_contratacao]\").val($(\"#enviar_processo_hidden\").val() + \"\").change();\r\n    }*/\r\n    \r\n    var assignmentButton;\r\n    \r\n    nomeBotao();\r\n    \r\n    $(\"select[name=multiPaged_1_menuPrincipal2_envio_processo]\").on('change', function() {\r\n        nomeBotao();\r\n    });\r\n    \r\n    $(\"select[name=multiPaged_2_detalheProcesso_estado_contratacao]\").on('change', function() {\r\n        nomeBotao();\r\n    });\r\n    \r\n    $(window).on('load', function() {\r\n        nomeBotao();\r\n    });\r\n    \r\n    function nomeBotao(){\r\n        var estadoContratacao = $(\"select[id*=estado_contratacao] :selected\").val();\r\n        var envioProcesso = $(\"select[id*=envio_processo] :selected\").val();\r\n        var flagUltimaAtividade='#variable.flag_ultima_atividade#';\r\n        var flagPrimeiraVez = '#variable.flag_primeira_vez#';\r\n        \r\n        if(estadoContratacao === undefined){\r\n            estadoContratacao = \"#form.detalhe_processo.estado_contratacao[{form.processos.detalhe_processo}]#\";\r\n        }\r\n        \r\n        if(envioProcesso === undefined){\r\n            envioProcesso = \"#form.detalhe_processo.envio_processo[{form.processos.detalhe_processo}]#\";\r\n        }\r\n        \r\n        /*Botão Assignment Complete*/\r\n        if(estadoContratacao == 'PND' || estadoContratacao =='PNDEQ'){\r\n            //assignmentButton = \"COLOCAR PENDENTE\";\r\n            $(\"#assignmentComplete\").hide();\r\n            //$(\"#enviar_processo_hidden\").val(\"PND\");\r\n        }else{\r\n            $(\"#assignmentComplete\").show();\r\n            if(flagUltimaAtividade == 1){\r\n                assignmentButton = \"ENVIAR PARA \";\r\n                if(envioProcesso === \"producao_manual\"){\r\n                    assignmentButton += \"PRODUÇÃO MANUAL\";\r\n                } else if(envioProcesso === \"producao_robot\"){\r\n                    assignmentButton += \"PRODUÇÃO ROBOT\";\r\n                } else{\r\n                    assignmentButton += envioProcesso.toUpperCase();\r\n                }\r\n                \r\n                $(\"#enviar_processo_hidden\").val(envioProcesso);\r\n                \r\n            } else if(flagUltimaAtividade == 2) {\r\n                if(envioProcesso === \"contratacao\") {\r\n                    assignmentButton = \"ENVIAR PARA CONTRATAÇÃO\";\r\n                } else if(envioProcesso === \"conclusoes_validacao\"){\r\n                    if(flagPrimeiraVez == 0) {\r\n                        assignmentButton = \"ENVIAR PARA CONCLUSÕES - VALIDAÇÃO\";    \r\n                    } else {\r\n                        assignmentButton = \"FINALIZAR PROCESSO\";    \r\n                    }\r\n                } else {\r\n                    assignmentButton = \"FINALIZAR PROCESSO\";\r\n                }\r\n            } else if (flagUltimaAtividade == 3) {\r\n                if(envioProcesso === \"contratacao\") {\r\n                    assignmentButton = \"ENVIAR PARA CONTRATAÇÃO\";\r\n                } else if (envioProcesso === \"verificar_alertas\") {\r\n                    assignmentButton = \"ENVIAR PARA CONCLUSÕES - VERIFICAR INCIDÊNCIAS\";        \r\n                } else {\r\n                    assignmentButton = \"FINALIZAR PROCESSO\";    \r\n                }\r\n            } else {\r\n                assignmentButton = \"PROXIMA ATIVIDADE\";\r\n            }\r\n            \r\n            $(\"#assignmentComplete\").val(assignmentButton);\r\n        }\r\n        \r\n        /*Botão Guardar*/\r\n        if(estadoContratacao == 'PND' || estadoContratacao == 'PNDEQ'){\r\n            $(\"#saveAsDraft\").val(\"COLOCAR PENDENTE\");\r\n        }else{\r\n            $(\"#saveAsDraft\").val(\"GUARDAR\");\r\n        }\r\n            \r\n        \r\n        \r\n        /*\r\n        if(envioProcesso !== undefined || estadoContratacao !== undefined){\r\n            \r\n            \r\n            \r\n        } else {\r\n            var novoEnvioProcesso = $(\"#enviar_processo_hidden\").val() + \"\";\r\n            if(novoEnvioProcesso === \"PND\"){\r\n                $(\"#assignmentComplete\").val(\"COLOCAR PENDENTE\");\r\n            } else{\r\n                $(\"#assignmentComplete\").val(\"ENVIAR PARA \" + novoEnvioProcesso.toUpperCase());\r\n            }\r\n        }*/\r\n    }\r\n    \r\n    \r\n    $(\"#cancel\").text(\"CANCELAR\"); \r\n    \r\n    /*Hide the Reassign button*/\r\n    var listGroups = '#currentUser.groups.name#';\r\n    if(listGroups.toLowerCase().includes(\"coordenadores\")){\r\n\r\n    }else{\r\n\r\n        $('#process_reassign').parent().hide()\r\n    }\r\n \r\n});\r\n<\/script>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "enviar_processo_hidden",
+                            "label": "enviar_processo_hidden",
+                            "maxlength": "",
+                            "permissionHidden": "",
+                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {
+                                "permissionHidden": "",
+                                "readonly": ""
+                            }},
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "saveAsDraftId",
+                            "useDefaultWhenEmpty": "",
+                            "value": "#requestParam.recordId#",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "validar_entidade",
+                            "label": "",
+                            "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
+                            "value": "<script>\r\n\r\n$(document).ready(function() {\r\n    \r\n    var idProcesso = \"#process.recordId#\";\r\n    var currentFase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\r\n    \r\n    if (currentFase === \"VAL\") {\r\n        var proximaOperativa = \"\";\r\n        \r\n        $(\"select[id*=envio_processo]\").change(function(e) {\r\n            proximaOperativa = $(\"select[id*=envio_processo] option:selected\").val();   \r\n            \r\n            if (proximaOperativa === \"acompanhamento_outorgas\") {\r\n                var urlAtos =\"/jw/api/list/list_atos?idProc=\" + idProcesso;\r\n        \r\n                $.ajax({\r\n                    type:\"GET\",\r\n                    url: urlAtos,\r\n                    headers:{\r\n                        \"api_id\": \"#envVariable.apiIdComunicacaoMediaView#\",\r\n                        \"api_key\": \"#envVariable.apiKeyComunicacaoMediaView#\",\r\n                        \"Accept\": \"application/json\",\r\n                        \"Content-Type\": \"application/json\"\r\n                    },\r\n                    success: function(response) {\r\n                        if (response.size !== 0) {\r\n                            if (!response.data[0].c_cedula_entidade) {\r\n                                \r\n                                // Remover Botão de Envio\r\n                                $(\"input#assignmentComplete\").hide();\r\n                            }\r\n                            \r\n                        } else {\r\n                            \r\n                            // Remover Botão de Envio\r\n                            $(\"input#assignmentComplete\").hide();\r\n                        }\r\n                    }\r\n                });    \r\n            }\r\n        });\r\n    }\r\n});\r\n\r\n<\/script>"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section1",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [{
+                    "className": "org.joget.apps.form.lib.TextField",
+                    "properties": {
+                        "encryption": "",
+                        "id": "robot",
+                        "label": "Robot",
+                        "maxlength": "",
+                        "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "storeNumeric": "",
+                        "style": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                }],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section2",
+                "join": "",
+                "label": "Robot",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionHidden": "true",
+                "permissionReadonly": "",
+                "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section3",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                    "properties": {
+                        "autoHandleFiles": "",
+                        "autoHandleWorkflowVariable": "true",
+                        "cacheInterval": "",
+                        "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.commons.util.LogUtil;\r\n\r\npublic FormRowSet load(Element element, String primaryKey, FormData formData) {\r\n        \r\n    if (\"#requestParam._mode#\".equalsIgnoreCase(\"edit\")) {\r\n        Form form = FormUtil.findRootForm(element);\r\n        removeValidator(form, formData);\r\n    }\r\n\r\n    return null;\r\n}\r\n\r\npublic void removeValidator(Element e, FormData formData) {\r\n    e.setValidator(null);\r\n\r\n    Collection children = e.getChildren(formData);\r\n    if (children != null) {\r\n        for (Element child : children) {\r\n            removeValidator(child, formData);\r\n        }\r\n    }\r\n}\r\n\r\n//call load method with injected variable\r\nreturn load(element, primaryKey, formData);",
+                        "useAjax": ""
+                    }
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        }
+    ],
+    "properties": {
+        "description": "",
+        "id": "processo",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "CH - 1 - Processo",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "permission_rules": [{
+            "permission": {
+                "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                "properties": {
+                    "allowedDeptIds": "PL_INT_PRD_GEN_RPA_CRH",
+                    "orgId": "PL"
+                }
+            },
+            "permission_key": "c0d6089f-5c41-67ce-3c8d-c24ca172207e",
+            "permission_name": "Robots"
+        }],
+        "postProcessor": {
+            "className": "org.joget.apps.app.lib.BeanShellTool",
+            "properties": {"script": "import org.joget.apps.form.model.Element;\r\nimport org.joget.workflow.model.service.*;\r\nimport org.joget.commons.util.LogUtil;\r\nimport java.util.Arrays;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport java.util.Map;\r\nimport javax.servlet.http.HttpServletRequest;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport org.joget.apps.app.service.AppPluginUtil;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.plugin.base.ApplicationPlugin;\r\nimport org.joget.plugin.base.Plugin;\r\nimport org.joget.plugin.base.PluginManager;\r\nimport org.joget.plugin.property.model.PropertyEditable;\r\n\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport org.joget.commons.util.UuidGenerator;\r\nimport java.time.LocalDate;\r\n  \r\n\r\npublic Object execute(AppDefinition appDef, HttpServletRequest request) {\r\n\r\n    /***************    É EXECUTADO SOMENTE QUANDO O UTILIZADOR PASSA A ATIVIDADE  ********************/\r\n    \r\n    String ProcessID = workflowAssignment.getProcessId();\r\n    String Username = \"#currentUser.username#\";\r\n    String Performer = \"#process.activityInst.{assignment.activityDefId}.performer#\";\r\n    String LaneUser = \"user_\" + Performer;\r\n    String EstadoContratacao = \"#form.detalhe_processo.estado_contratacao[{form.processos.detalhe_processo}]#\";\r\n    String EstadoContratacaoEval = \"\";\r\n    String DetalheProcesso = \"#form.processos.detalhe_processo#\";\r\n    int SlaToApplyMin = 0;\r\n    WorkflowManager wm = (WorkflowManager) pluginManager.getBean(\"workflowManager\");\r\n    //Set workflow variables- \r\n    //Last Lane user for reasignment purposes\r\n    wm.processVariable(ProcessID, LaneUser , Username);\r\n\r\n   // wm.processVariable(ProcessID, \"estado\" , EstadoContratacao);\r\n\r\n    \r\n    \r\n    LogUtil.info(\"Post Processing Tool\", \"O processo avançou de \" + ProcessID + \" para #form.detalhe_processo.envio_processo[{form.processos.detalhe_processo}]# por #currentUser.username#\");\r\n    \r\n    \r\n    \r\n    return null;\r\n    \r\n}\r\n\r\nreturn execute(appDef, request);\r\n        \r\n\r\n"}
+        },
+        "postProcessorRunOn": "both",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+            "properties": {
+                "autoHandleFiles": "",
+                "autoHandleWorkflowVariable": "true",
+                "cacheInterval": "",
+                "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.FormStoreBinder;\r\nimport org.joget.plugin.base.PluginManager;\r\nimport org.joget.workflow.model.WorkflowProcess;\r\nimport org.joget.workflow.model.WorkflowProcessResult;\r\nimport org.joget.apps.app.service.AppService;\r\nimport org.joget.workflow.model.service.WorkflowManager;\r\nimport org.joget.workflow.model.service.WorkflowUserManager;\r\n\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport org.joget.commons.util.UuidGenerator;\r\nimport java.time.LocalDate;\r\nimport org.joget.workflow.model.service.*;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport java.time.LocalDateTime; \r\nimport java.time.format.DateTimeFormatter;\r\nimport java.time.DayOfWeek;\r\n\r\n\r\n\r\npublic String calculateValidadeProposta(String dataDespacho){\r\n    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(\"yyyy-MM-dd\");\r\n    LocalDate dataValidade = LocalDate.parse(dataDespacho, dateFormatter);\r\n    dataValidade = dataValidade.plusDays(120);\r\n    String validade=dataValidade.format(dateFormatter);\r\n    \r\n    return validade;\r\n}\r\n\r\npublic String calculateSLAD(String dataInicio, Collection feriados, String sla, String urgencia){\r\n    \r\n    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"yyyy-MM-dd HH:mm\");\r\n    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(\"yyyy-MM-dd\");\r\n    LocalDateTime dateInit = LocalDateTime.parse(dataInicio, formatter);  \r\n    LocalDateTime endDateTime = null;\r\n    String endDate = \"\";\r\n    Collection holidays = feriados;\r\n    \r\n    \r\n    \r\n    var hour = dateInit.getHour();\r\n    int slaNumber = Integer.parseInt(sla);\r\n    \r\n    if(urgencia.equals(\"SIM\")){\r\n        //Calcular SLA urgente\r\n        endDateTime = dateInit.plusHours(slaNumber);\r\n        //Passar dias não uteis\r\n        while(isWeekend(endDateTime) || holidays.contains(endDateTime.format(dateFormatter))){\r\n           endDateTime = endDateTime.plusDays(1);\r\n        }\r\n        \r\n        endDate = endDateTime.format(formatter);\r\n\r\n    }else{\r\n        //Calcular SLA não urgente\r\n\r\n            if(hour < 12){\r\n                endDateTime = dateInit.withHour(23).withMinute(59);   /**   HORAS UTEIS???   **/\r\n                \r\n                //Incrementar dias consoante o SLA\r\n                while(slaNumber > 1){\r\n                    endDateTime = endDateTime.plusDays(1);\r\n                    //Passar dias não uteis\r\n                    while(isWeekend(endDateTime) || holidays.contains(endDateTime.format(dateFormatter))){\r\n                       endDateTime = endDateTime.plusDays(1);\r\n                    }   \r\n                    slaNumber -= 1;\r\n                }\r\n            }else{\r\n                endDateTime = dateInit.plusDays(1).withHour(12).withMinute(0);\r\n                \r\n                //Incrementar dias consoante o SLA\r\n                while(slaNumber > 1){\r\n                    endDateTime = endDateTime.plusDays(1);\r\n                    //Passar dias não uteis\r\n                    while(isWeekend(endDateTime) || holidays.contains(endDateTime.format(dateFormatter))){\r\n                       endDateTime = endDateTime.plusDays(1);\r\n                    }\r\n                    slaNumber -= 1;\r\n                }\r\n            }\r\n            \r\n        endDate = endDateTime.format(formatter);\r\n    }\r\n    \r\n    return endDate;\r\n}\r\n\r\npublic boolean isWeekend(LocalDateTime dt) {\r\n    String dayOfWeek = dt.getDayOfWeek().toString();\r\n    switch(dayOfWeek) {\r\n        case \"SATURDAY\":{\r\n            return true;\r\n        }\r\n        case \"SUNDAY\":{\r\n            return true;\r\n        }\r\n        default:{\r\n            return false;\r\n        }\r\n    }\r\n}\r\n\r\npublic boolean validateRecordLock(String recordLock) {\r\n    String [] rl = recordLock.split(\";\");\r\n    \r\n    String time = rl[0];\r\n    String user = rl[1];\r\n    String currentUser = \"#currentUser.username#\";\r\n    \r\n    DateTimeFormatter format = DateTimeFormatter.ofPattern(\"yyyy-MM-dd HH:mm:ss\");\r\n    LocalDateTime lockTime = LocalDateTime.parse(time, format).plusHours(1);  \r\n    LocalDateTime currentTime = LocalDateTime.now();\r\n    \r\n    //Se o tempo do recordLock ainda não expirou e o utilizador for diferente \r\n    if(currentTime.isBefore(lockTime) && !user.trim().equals(currentUser)){\r\n        return false;\r\n    }\r\n\r\n    return true;\r\n}\r\n\r\npublic void updateSLAAndStore(Element element, FormRowSet rows, FormData formData){\r\n    \r\n    store(element, rows, formData); \r\n    \r\n \r\n    \r\n}\r\n\r\npublic FormRowSet store(Element element, FormRowSet rows, FormData formData) {\r\n    \r\n    String modifiedByUser = \"#currentUser.username#\";\r\n    String flag_alteracoes = rows.get(0).get(\"flag_alteracoes\");\r\n    String flag_alerta_alteracoes = \"#form.processos.flag_alerta_alteracoes#\";//rows.get(0).get(\"flag_alerta_alteracoes\");\r\n    AppService appService = (AppService) AppUtil.getApplicationContext().getBean(\"appService\");\r\n    WorkflowManager workflowManager = (WorkflowManager) AppUtil.getApplicationContext().getBean(\"workflowManager\");\r\n    \r\n    \r\n    /////////////////////////   SLA   /////////////////////////////////\r\n    \r\n    /*********************************      É EXECUTADO QUANDO O UTILIZADOR GUARDA O FORMULÁRIO, PASSA DE TAB NO MULTIFORM OU AVANÇA PARA A PROXIMA ATIVIDADE    **********************************/\r\n    \r\n    //Processo é criado, SLA em estado de 'Em curso'\r\n    //Processo fica em pendente, é 'fechado' o SLA, e criado um novo com estado de 'Pendente'\r\n    //Processo sai de pendente, o estado passa de 'Pendente' a 'Em curso'\r\n    \r\n    String ProcessID = \"#process.processId#\";\r\n    String idDetalheProcesso = \"#form.detalhe_processo.id[{form.processos.detalhe_processo}]#\";\r\n    AppDefinition appDef = AppUtil.getCurrentAppDefinition();\r\n    \r\n    \r\n    //Obter campos do formulário de detalhe do processo\r\n    Map paramValues = FormUtil.loadFormData(appDef.getAppId(), appDef.getVersion().toString(), \"detalheProcesso\", idDetalheProcesso, false, false, false, null);\r\n    String EstadoContratacao = paramValues.get(\"estado_contratacao\");\r\n    String Urgencia = paramValues.get(\"urgencia\");\r\n    String mainProcessId = paramValues.get(\"id_processo\");\r\n    \r\n    \r\n\r\n    String val= \"#variable.sub_complexidade#\";\r\n   // LogUtil.info(\"Param Val 1:\", \"\"+ val);\r\n    //LogUtil.info(\"Estado\", \"\" + EstadoContratacao);\r\n    \r\n    \r\n    String proximaoperativa = \"#variable.proxima_operativa#\";\r\n    String operativaAnterior = \"#variable.operativa_anterior#\";\r\n    \r\n    var SLAIsOpen = false;\r\n    var SLAOnHold = false;\r\n    boolean isLocked = false;\r\n    \r\n    Connection con = null;\r\n    PreparedStatement stmt = null;\r\n    ResultSet rs = null;\r\n    try{\r\n            DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n            con = ds.getConnection();\r\n            \r\n            if(!con.isClosed()){\r\n                \r\n                /**Caso outro utilizador que não o assignado à tarefa faça alterações no processo, não será possivel obter o id do processo**/\r\n                //Assumindo que não existem subprocessos em paralelo\r\n                //Obter o id do processo mais recente\r\n                \r\n                \r\n                if(ProcessID.startsWith(\"#process.processId\")){\r\n                    \r\n                    String queryGetProcessId = \"SELECT Id FROM shkprocesses WHERE ActivityRequesterProcessId = ? order by created desc ;\";\r\n                    stmt = con.prepareStatement(queryGetProcessId);\r\n                    stmt.setObject(1, mainProcessId);\r\n                    rs = stmt.executeQuery();\r\n                    if(rs.next()){\r\n                        ProcessID = rs.getObject(\"Id\");\r\n                    }\r\n \r\n                }\r\n                \r\n                \r\n                /**Caso outro utilizador que não o assignado entre no processo, não será possivel obter a operativa anterior**/\r\n                //Assumindo que não existem subprocessos em paralelo\r\n                //Obter o oid do processo mais recente e posteriormente o valor da WF variable \"Proxima Operativa\"\r\n                if(operativaAnterior.startsWith(\"#variable.operativa_anterior\")){\r\n                    String processOid = \"\";\r\n                    String queryGetProcessDefinition = \"SELECT oid FROM shkprocesses WHERE id=? ORDER BY oid DESC;\";\r\n                    stmt = con.prepareStatement(queryGetProcessDefinition);\r\n                    stmt.setObject(1, ProcessID);\r\n                    rs = stmt.executeQuery();\r\n                    if(rs.next()){\r\n                        processOid = rs.getObject(\"oid\").toString();\r\n                        String queryGetProximaOperativa = \"SELECT VariableValueVCHAR FROM shkprocessdata WHERE Process=? AND VariableDefinitionId= 'operativa_anterior' \";\r\n                        stmt = con.prepareStatement(queryGetProximaOperativa);\r\n                        stmt.setObject(1, processOid);\r\n                        rs = stmt.executeQuery();\r\n                        if(rs.next()){\r\n                            operativaAnterior = rs.getObject(\"VariableValueVCHAR\"); \r\n                        }\r\n                    }\r\n                    \r\n                }\r\n                \r\n                \r\n                //Obter utilizador atribuido à tarefa\r\n                String queryGetUserAssign = \"SELECT resourceid FROM shkassignmentstable WHERE activityprocessid =?\";\r\n                stmt = con.prepareStatement(queryGetUserAssign);\r\n                stmt.setObject(1, ProcessID);\r\n                rs = stmt.executeQuery();\r\n                String utilizador = \"\";\r\n                if(rs.next()){\r\n                    utilizador= rs.getObject(\"resourceid\").toString();\r\n                }\r\n                \r\n                //Obter RecorLocks de cada página\r\n                String queryGetRecordLock = \"SELECT c_record_lock FROM app_fd_processos WHERE id = ?\";\r\n                \r\n                stmt = con.prepareStatement(queryGetRecordLock);\r\n                stmt.setObject(1, mainProcessId);\r\n                rs = stmt.executeQuery();\r\n                String recordLock = \"\";\r\n\r\n                if(rs.next()){\r\n                    recordLock = rs.getObject(\"c_record_lock\").toString();;\r\n                }\r\n               \r\n               \r\n               //Se todos os record locks forem validos\r\n                 if(!validateRecordLock(recordLock)){\r\n                   isLocked = true;\r\n               }\r\n               \r\n               //Caso o utilizador que altera o processo for diferente d utilizador que está com o processo, alterar validação de alterações para não  \r\n               if(!utilizador.equals(modifiedByUser)){\r\n                    String queryUpdateFiltroValidacao = \"UPDATE app_fd_detalhe_processo SET c_validar_filtro = 'NAO' WHERE id = ? ;\";\r\n                    stmt = con.prepareStatement(queryUpdateFiltroValidacao);\r\n                    stmt.setObject(1, idDetalheProcesso);\r\n                    rs = stmt.executeQuery();\r\n               }\r\n               \r\n               \r\n               //Atualizar SubFase do Processo\r\n                String currentSubfase = \"#form.detalhe_processo.subfase_processo[{form.processos.detalhe_processo}]#\";\r\n                String actualSubfase = \"\";\r\n                String userAssigned = \"\";\r\n                String idDetalhe_processo = \"#form.processos.detalhe_processo#\";\r\n                String queryGetSubfase = \"SELECT  a.`name` as subfase, asst.ResourceId as 'resourceId' FROM shkassignmentstable asst JOIN shkactivities a ON a.id=asst.activityid WHERE asst.activityprocessid =? ;\";\r\n                stmt = con.prepareStatement(queryGetSubfase);\r\n                stmt.setObject(1, ProcessID);\r\n                rs = stmt.executeQuery();\r\n                \r\n                \r\n                if(rs.next()){\r\n                    actualSubfase = rs.getObject(\"subfase\").toString();\r\n                    userAssigned = rs.getObject(\"resourceId\").toString();\r\n                    if(currentSubfase.trim().isEmpty() || currentSubfase.equals(\"\") || !currentSubfase.equals(actualSubfase) ){\r\n                        String queryUpdateSubfase = \"Update app_fd_detalhe_processo SET c_subfase_processo = ? WHERE id =? ;\";\r\n                        stmt = con.prepareStatement(queryUpdateSubfase);\r\n                        stmt.setObject(1, actualSubfase);\r\n                        stmt.setObject(2, idDetalhe_processo); //id registo do detalhe_processo\r\n                        rs = stmt.executeQuery();\r\n                    }\r\n                }\r\n                \r\n                //Atualizar Gestor PL\r\n                String queryGetGestorPL=\"SELECT c_gestor_pl FROM app_fd_detalhe_processo WHERE id = ? ;\";\r\n                String gestorPL = \"\";\r\n                stmt = con.prepareStatement(queryGetGestorPL);\r\n                stmt.setObject(1, idDetalhe_processo);\r\n                rs = stmt.executeQuery();\r\n                \r\n                if(rs.next()){\r\n                    gestorPL = rs.getObject(\"c_gestor_pl\").toString();\r\n                }\r\n                \r\n                if(gestorPL == null || gestorPL.isEmpty() || !gestorPL.equals(userAssigned)){\r\n                    String queryUpdateGestorPL = \"UPDATE app_fd_detalhe_processo SET c_gestor_pl = ? WHERE id = ?\";\r\n                    stmt = con.prepareStatement(queryUpdateGestorPL);\r\n                    stmt.setObject(1, userAssigned);\r\n                    stmt.setObject(2, idDetalhe_processo); //id registo do detalhe_processo\r\n                    rs = stmt.executeQuery();\r\n                }\r\n                \r\n                //Atualizar Validade da Proposta\r\n                String validadeAtual = \"#form.detalhe_processo.validade_proposta[{form.processos.detalhe_processo}]#\";\r\n                String dataDespacho = \"#form.anal_banc_processo.data_despacho[{form.processos.anal_banc}]#\";\r\n                if(validadeAtual.isEmpty() || validadeAtual == \"\"){\r\n                    if(!dataDespacho.isEmpty() && dataDespacho != \"\"){\r\n                        calculateValidadeProposta(dataDespacho);\r\n                    }    \r\n                }\r\n                \r\n                \r\n                //Enviar Diligência de Alterações para Validação\r\n                String flag_validacao =\"#form.processos.flag_validacao#\" ;//\"#variable.flag_validacao#\";\r\n                FormRow row = rows.get(0);\r\n                //LogUtil.info(\"AAAAAa\" , \"Flag Validacaos\" + flag_validacao);\r\n                //LogUtil.info(\"BBBBBBBBBB\" , \"Flag \" + flag_alteracoes);\r\n                \r\n                String getFlagAlertaAlteracoes = \"SELECT p.c_flag_alerta_alteracoes as 'Flag' FROM app_fd_processos p WHERE p.id = ?\";\r\n                    stmt = con.prepareStatement(getFlagAlertaAlteracoes);\r\n                    stmt.setObject(1, mainProcessId);\r\n                    rs = stmt.executeQuery();\r\n                    if(rs.next()){\r\n                        flag_alerta_alteracoes= rs.getObject(\"Flag\");\r\n                        //LogUtil.info(\"AAAAAa\" , \"Flag Alteracoes\" + flag_alerta_alteracoes);\r\n                        //Se o alerta ainda não foi alançado\r\n                        if(flag_alerta_alteracoes!=null && !flag_alerta_alteracoes.equals(\"1\")){\r\n                            \r\n                \r\n                            if(flag_validacao.equals(\"1\") && flag_alteracoes.equals(\"SIM\")){\r\n                                \r\n                           \r\n                                //Criar vaiáveis da diligência\r\n                                String banco = \"#form.banco.nome_banco[{form.processos.banco}]#\";\r\n                                String complexidade = \"#form.detalhe_processo.complex_processo[{form.processos.detalhe_processo}]#\";\r\n                                String userValidacao = \"\";\r\n                                if(complexidade.equals(\"NOR\")){\r\n                                    userValidacao = \"#variable.user_validacao#\";\r\n                                }else if(complexidade.equals(\"COM\")){\r\n                                    userValidacao = \"#variable.user_validacao_com#\";\r\n                                }\r\n                                \r\n                                userValidacao= \"#form.processos.user_validacao#\";\r\n                                \r\n                                \r\n                                String faseProcesso = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\r\n                                String equipaDest = \"SISTEMA\";\r\n                                String equipaRem = \"PL_INT_VAL_\" + banco + \"_\" + complexidade + \"_CRH\";\r\n                                Map variables = new HashMap();\r\n                                variables.put(\"equipa_destinataria\", equipaDest);\r\n                                variables.put(\"gestor_remetente\", userValidacao);\r\n                                variables.put(\"gestor_destinatario\", \"SISTEMA\");\r\n                                variables.put(\"equipa_remetente\",equipaRem );\r\n                                variables.put(\"flag_alerta\",\"1\" );\r\n                                variables.put(\"tipo_alerta\",\"ALTERACOES\" );\r\n                                \r\n                                \r\n                                //LogUtil.info(\"USER VALIDAÇÃO\", \"AAA\" + userValidacao);\r\n                                \r\n                                WorkflowProcess process = appService.getWorkflowProcessForApp(appDef.getAppId(), appDef.getVersion().toString(), \"Diligências\");\r\n                                WorkflowProcessResult result = workflowManager.processStart(process.getId(), variables);\r\n                                String diligenciaId = result.getProcess().getInstanceId();\r\n                                \r\n                                //Obter informações da Diligência iniciada\r\n                                String activityQuery = \"select ass.activityID, ass.ResourceID  from shkprocesses pro left join shkassignmentstable ass on pro.id = ass.ActivityProcessID where pro.id = ?;\";\r\n                                stmt = con.prepareStatement(activityQuery);\r\n                                stmt.setObject(1, diligenciaId);\r\n                                rs = stmt.executeQuery();\r\n            \r\n                                if(rs.next()){\r\n                                   \r\n                                    //Avançar a Diligência uma fase\r\n                                    workflowManager.assignmentForceComplete(process.getId(), diligenciaId, rs.getString(1), rs.getString(2));\r\n                                    String nWfPl = \"#form.detalhe_processo.n_wf_pl[{form.processos.detalhe_processo}]#\";\r\n                                    \r\n                                    \r\n                                    //Inserir registo da diligência na BD\r\n                                    String assunto = \"Alerta | ALTERAÇÕES | Processo - \" + nWfPl;\r\n                                    String mensagem = \"Foram feitas alterações no processo \" + nWfPl + \" que necessitam de validação.\";\r\n                                    String insertQuery = \"INSERT INTO app_fd_info_diligencia(id, c_id_processo, c_operativa_destinataria, c_equipa_destinataria, c_gestor_destinatario, c_operativa_remetente, c_equipa_remetente, c_gestor_remetente, c_assunto, c_tipo_diligencia, c_diligencia, c_urgencia, c_banco, c_complexidade, dateCreated) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = VALUES(id), c_id_processo = VALUES(c_id_processo), c_operativa_destinataria= VALUE(c_operativa_destinataria), c_equipa_destinataria = VALUES(c_equipa_destinataria), c_gestor_destinatario = VALUES(c_gestor_destinatario), c_operativa_remetente = VALUES(c_operativa_remetente), c_equipa_remetente = VALUES(c_equipa_remetente), c_gestor_remetente = VALUES(c_gestor_remetente), c_assunto = VALUES(c_assunto), c_tipo_diligencia = VALUES(c_tipo_diligencia), c_diligencia = VALUES(c_diligencia), c_urgencia = VALUES(c_urgencia), c_banco= VALUES(c_banco), c_complexidade= VALUES(c_complexidade), dateCreated= VALUES(dateCreated);\";      \r\n                                    stmt = con.prepareStatement(insertQuery);\r\n                                    stmt.setObject(1, diligenciaId);\r\n                                    stmt.setObject(2, mainProcessId);\r\n                                    stmt.setObject(3, faseProcesso);\r\n                                    stmt.setObject(4, equipaDest);\r\n                                    stmt.setObject(5, \"SISTEMA\");\r\n                                    stmt.setObject(6, faseProcesso);\r\n                                    stmt.setObject(7, equipaRem);\r\n                                    stmt.setObject(8, gestorPL);\r\n                                    stmt.setObject(9, assunto);\r\n                                    stmt.setObject(10, \"ALERTA\");\r\n                                    stmt.setObject(11, mensagem);\r\n                                    stmt.setObject(12, \"SIM\");\r\n                                    stmt.setObject(13, banco);\r\n                                    stmt.setObject(14, complexidade);\r\n                                    stmt.setObject(15, \"#date.yyyy-MM-dd hh:mm:ss#\");\r\n                                    stmt.executeQuery();\r\n                                    \r\n                                    //Atualizar flag para lançar o alerta\r\n                                    row.setProperty(\"flag_alerta_alteracoes\", \"1\");\r\n                            }\r\n                            //Atualizar valor da flag de Alterações\r\n                            row.setProperty(\"flag_alteracoes\", \"NAO\");\r\n                        }   \r\n                    \r\n                    }\r\n                }\r\n            }\r\n            \r\n        }catch(Exception e){\r\n            LogUtil.error(appDef.toString(), e, \"Error getting info from DB\");\r\n        }finally{\r\n            try{\r\n                if(rs != null){\r\n                rs.close();\r\n                }\r\n                if(stmt != null){\r\n                    stmt.close();\r\n                }\r\n                if(con != null && !con.isClosed()) {\r\n                    con.close();\r\n                }\r\n            }catch(Exception e){\r\n                LogUtil.error(appDef.toString(), e, \"Error closing DB connection\");\r\n            }\r\n            \r\n        }\r\n        \r\n\r\n    //Caso o processo não esteja bloqueado\r\n    if(!isLocked){\r\n        \r\n        if(rows != null && !rows.isEmpty()) {\r\n            PluginManager pluginManager = (PluginManager) AppUtil.getApplicationContext().getBean(\"pluginManager\");\r\n            FormStoreBinder binder = (FormStoreBinder) pluginManager.getPlugin(\"org.joget.apps.form.lib.WorkflowFormBinder\");\r\n            binder.store(element, rows, formData);\r\n        }\r\n        \r\n    }else{\r\n        formData.addFormError(\"record_lock\", \"Campo obrigatório\");\r\n        \r\n    }\r\n\r\n    return rows;\r\n}\r\nreturn store(element, rows, formData); ",
+                "useAjax": ""
+            }
+        },
+        "tableName": "processos"
+    }
+}

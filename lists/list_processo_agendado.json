@@ -1,0 +1,228 @@
+{
+    "actions": [{
+        "className": "org.joget.apps.datalist.lib.HyperlinkDataListAction",
+        "hidden": "true",
+        "icon": "<i class=\"fas fa-link\"><\/i>",
+        "id": "action_0",
+        "label": "Hyperlink",
+        "name": "Data List Hyperlink Action",
+        "permission_rules": {
+            "1081155f-1700-be08-9c6f-364a49cf8d0b": {"hidden": ""},
+            "5ef76f30-3a46-461b-e85b-26e07d368c1e": {"hidden": "true"},
+            "7acc8ca8-49d2-41f4-f9fe-98060e5c2333": {},
+            "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {"hidden": "true"}
+        },
+        "properties": {
+            "confirmation": "",
+            "datalist_type": "action",
+            "href": "realocar_multi_proc",
+            "hrefColumn": "instanceId",
+            "hrefParam": "aid",
+            "label": "Realocar",
+            "target": "_self",
+            "visible": ""
+        },
+        "type": "text"
+    }],
+    "binder": {
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "idAto",
+            "sql": "SELECT p.id as idProc, ato.*, ato.id as idAto \nFROM app_fd_atos_procu ato \nLEFT JOIN app_fd_processos_procu p ON ato.c_id_processo = p.id\nLEFT JOIN app_fd_agendamento_procu a ON a.id = p.c_agendamento\nLEFT JOIN shkprocesses shk ON shk.ActivityRequesterProcessId  = p.id\nLEFT JOIN SHKActivities sact ON sact.ProcessId = shk.Id \nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nWHERE (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND ato.c_status = 'AGN'\nGROUP BY ato.id"
+        }
+    },
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_11",
+            "label": "Id Processo",
+            "name": "idProc",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_3",
+            "label": "Data Solicitada",
+            "name": "c_data_solicitada",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_7",
+            "label": "Hora Solicitada",
+            "name": "c_hora_solicitada",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_0",
+            "label": "Urgência",
+            "name": "c_urgencia",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
+    "description": "",
+    "disableResponsive": "",
+    "filters": [{
+        "datalist_type": "filter",
+        "filterParamName": "d-2614187-fn_c_urgencia",
+        "hidden": "",
+        "id": "filter_7",
+        "label": "Urgência",
+        "name": "c_urgencia",
+        "permission_rules": {
+            "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+            "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
+            "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
+        },
+        "type": {
+            "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+            "properties": {
+                "controlField": "",
+                "defaultValue": "",
+                "multiple": "",
+                "options": [
+                    {
+                        "grouping": "",
+                        "label": "Sim",
+                        "value": "SIM"
+                    },
+                    {
+                        "grouping": "",
+                        "label": "Não",
+                        "value": "NAO"
+                    }
+                ],
+                "optionsBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "size": ""
+            }
+        }
+    }],
+    "hidePageSize": "",
+    "id": "list_processo_agendado",
+    "name": "List - Processos Agendado ",
+    "order": "1",
+    "orderBy": "dateCreated",
+    "pageSize": "0",
+    "pageSizeSelectorOptions": "5,10,20,30,40,50,100",
+    "permission_rules": [
+        {
+            "permission": {
+                "className": "org.joget.apps.userview.lib.GroupPermission",
+                "properties": {
+                    "allowedGroupIds": "apoioCoordenador;Coordenador;DiretorCoordenador",
+                    "orgId": "PL"
+                }
+            },
+            "permission_key": "1081155f-1700-be08-9c6f-364a49cf8d0b",
+            "permission_name": "Coordenadores (Vários tipos)"
+        },
+        {
+            "permission": {
+                "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                "properties": {
+                    "allowedDeptIds": "PL_INT_CNT_ABN_COM_CRH;PL_INT_CNT_ABN_NOR_CRH;PL_INT_CNT_BCP_COM_CRH;PL_INT_CNT_BCP_NOR_CRH;PL_INT_CNT_BIC_COM_CRH;PL_INT_CNT_BIC_NOR_CRH;PL_INT_CNT_BST_COM_CRH;PL_INT_CNT_BST_NOR_CRH;PL_INT_CNT_CTT_COM_CRH;PL_INT_CNT_CTT_NOR_CRH;PL_INT_CNT_GEN_COM_CRH;PL_INT_CNT_GEN_NOR_CRH;PL_INT_CNT_MTG_COM_CRH;PL_INT_CNT_MTG_NOR_CRH;PL_INT_CNT_NVB_COM_CRH;PL_INT_CNT_NVB_NOR_CRH;PL_INT_FLT_GEN_COM_CRH;PL_INT_FLT_GEN_NOR_CRH;PL_INT_PRD_GEN_COM_CRH;PL_INT_PRD_GEN_NOR_CRH;PL_INT_PRD_GEN_RPA_CRH",
+                    "orgId": "PL"
+                }
+            },
+            "permission_key": "5ef76f30-3a46-461b-e85b-26e07d368c1e",
+            "permission_name": "Contratação/Filtro/Produção"
+        },
+        {
+            "permission": {
+                "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                "properties": {
+                    "allowedDeptIds": "PL_INT_VAL_BCP_COM_CRH;PL_INT_VAL_BCP_NOR_CRH;PL_INT_VAL_BNI_COM_CRH;PL_INT_VAL_BNI_NOR_CRH;PL_INT_VAL_BST_COM_CRH;PL_INT_VAL_BST_NOR_CRH;PL_INT_VAL_GEN_COM_CRH;PL_INT_VAL_GEN_NOR_CRH",
+                    "orgId": "PL"
+                }
+            },
+            "permission_key": "e0b223db-b2f1-9e66-7db4-112f9da0c40a",
+            "permission_name": "Validacao"
+        }
+    ],
+    "responsiveView": [
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Mobile"
+        },
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Tablet"
+        }
+    ],
+    "rowActions": [],
+    "searchPopup": "",
+    "showDataWhenFilterSet": "",
+    "showPageSizeSelector": "true",
+    "useSession": ""
+}

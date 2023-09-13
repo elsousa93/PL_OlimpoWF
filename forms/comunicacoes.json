@@ -1,0 +1,223 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [{
+        "className": "org.joget.apps.form.model.Section",
+        "elements": [{
+            "className": "org.joget.apps.form.model.Column",
+            "elements": [
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field4",
+                        "label": "",
+                        "permission_rules": {"022897b8-cf58-cc55-3da6-34c4ea16dd2a": {}},
+                        "value": "<div class=\"col text-start\">\r\n    <span class=\"material-symbols-rounded md-40\"> mail <\/span> \r\n\t<div class = \"subform-section-title\">\r\n\t\t<span>COMUNICAÇÕES<\/span>\r\n\t<\/div> \r\n<\/div>"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.HiddenField",
+                    "properties": {
+                        "id": "id_processo",
+                        "permission_rules": {
+                            "022897b8-cf58-cc55-3da6-34c4ea16dd2a": {},
+                            "0ddbe080-2061-3956-cbf4-97b10368862f": {},
+                            "9dbdfc37-e367-7134-3775-0ed0b5fe10bb": {},
+                            "c62e9ac9-2029-c302-f4ac-c80d01fb0c03": {}
+                        },
+                        "useDefaultWhenEmpty": "",
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field3",
+                        "label": "",
+                        "permission_rules": {
+                            "022897b8-cf58-cc55-3da6-34c4ea16dd2a": {},
+                            "0ddbe080-2061-3956-cbf4-97b10368862f": {},
+                            "9dbdfc37-e367-7134-3775-0ed0b5fe10bb": {},
+                            "c62e9ac9-2029-c302-f4ac-c80d01fb0c03": {}
+                        },
+                        "value": "<script> \nvar url, processId;\n    $(document).ready(function(){\n        processId =$(\"input[id*=comunicacoes_id_processo]\").val();\n        url=  \"#request.scheme#://#request.serverName#:#request.serverPort##request.contextPath#/web/userview/workflowPL/UV_PL_Geral/_/enviarEmail?fk_id_processo=\" + processId + \"&id_atividade=#assignment.activityId#\";\n        //urlMailTo=  \"mailto:abc@example.com?subject=Feedback&body=\" + \"<!DOCTYPE html><html><body><p>Message<\/p><p>Message2<\/p><\/body><\/html>\";\n        \n        var activityId = \"#requestParam.activityId#\";\n        if(activityId.includes(\"Procuradoria\")){\n            //Remover botão de concluir apenas para Procuradoria\n            $(\"input#assignmentComplete\").remove();\n        }\n\n    });   \n        \n\n<\/script>\n<!--button type=\"button\" onclick=\"location.replace(url)\" >Novo Email<\/button-->\n<button type=\"button\" onclick=\"window.open(url, '_blank');\" >Novo Email<\/button>\n"
+                    }
+                },
+                {
+                    "className": "org.joget.plugin.enterprise.ListGrid",
+                    "properties": {
+                        "abortRelatedRunningProcesses": "",
+                        "buttonLabel": "",
+                        "deleteFiles": "",
+                        "deleteGridData": "",
+                        "deleteMessage": "Delete row?",
+                        "deleteSubformData": "",
+                        "disabledAdd": "true",
+                        "disabledDelete": "true",
+                        "enableSorting": "",
+                        "errorMessage": "Invalid number of rows",
+                        "formDefId": "visualizarEmail",
+                        "height": "1000",
+                        "id": "lista_comunicacoes",
+                        "label": "Lista de Comunicações",
+                        "listId": "list_comunicacoes",
+                        "loadBinder": {
+                            "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
+                            "properties": {
+                                "autoHandleFiles": "",
+                                "autoHandleWorkflowVariable": "",
+                                "jdbcDatasource": "default",
+                                "sql": "SELECT * FROM app_fd_comunicacoes_proce WHERE \n(c_id_processo = \"#form.processos.id#\" \nOR c_id_processo = \"#form.processos_procu.id#\"\nOR c_id_processo = \"#form.processos_distrates.id#\")\nAND c_assunto IS NOT NULL;"
+                            }
+                        },
+                        "options": [
+                            {
+                                "editable": "no",
+                                "format": "",
+                                "formatType": "text",
+                                "label": "Destinatários",
+                                "value": "destinatarios",
+                                "width": ""
+                            },
+                            {
+                                "editable": "no",
+                                "format": "",
+                                "formatType": "text",
+                                "label": "Assunto",
+                                "value": "assunto",
+                                "width": ""
+                            },
+                            {
+                                "editable": "no",
+                                "format": "yyyy-MM-dd hh:mm:ss|dd-MM-yyyy hh:mm:ss",
+                                "formatType": "date",
+                                "label": "Data de Criação",
+                                "value": "dateCreated",
+                                "width": ""
+                            }
+                        ],
+                        "pageSize": "20",
+                        "permissionHidden": "",
+                        "permission_rules": {
+                            "022897b8-cf58-cc55-3da6-34c4ea16dd2a": {},
+                            "0ddbe080-2061-3956-cbf4-97b10368862f": {},
+                            "9dbdfc37-e367-7134-3775-0ed0b5fe10bb": {},
+                            "c62e9ac9-2029-c302-f4ac-c80d01fb0c03": {}
+                        },
+                        "readonly": "true",
+                        "readonlyLabel": "",
+                        "requestParams": [],
+                        "showRowNumber": "",
+                        "sortField": "sort",
+                        "storeBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "submit-label-normal": "",
+                        "submit-label-readonly": "",
+                        "uniqueKey": "",
+                        "validateMaxRow": "",
+                        "validateMinRow": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "width": "900"
+                    }
+                }
+            ],
+            "properties": {"width": "100%"}
+        }],
+        "properties": {
+            "comment": "",
+            "id": "comuniccoes_cliente_banco",
+            "join": "",
+            "label": "",
+            "loadBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "permission": {
+                "className": "",
+                "properties": {}
+            },
+            "permissionReadonly": "",
+            "permission_rules": {
+                "022897b8-cf58-cc55-3da6-34c4ea16dd2a": {},
+                "0ddbe080-2061-3956-cbf4-97b10368862f": {},
+                "9dbdfc37-e367-7134-3775-0ed0b5fe10bb": {},
+                "c62e9ac9-2029-c302-f4ac-c80d01fb0c03": {}
+            },
+            "readonly": "",
+            "readonlyLabel": "",
+            "regex": "",
+            "reverse": "",
+            "storeBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "visibilityControl": "",
+            "visibilityValue": ""
+        }
+    }],
+    "properties": {
+        "description": "",
+        "id": "comunicacoes",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "CH - Comunicações",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "permission_rules": [
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nif(fase.equals(\"VAL\")){\n    return true;\n}else{\n    return false;\n}"}
+                },
+                "permission_key": "022897b8-cf58-cc55-3da6-34c4ea16dd2a",
+                "permission_name": "Validação"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nif(fase.equals(\"PRD\")){\n    return true;\n}else{\n    return false;\n}"}
+                },
+                "permission_key": "c62e9ac9-2029-c302-f4ac-c80d01fb0c03",
+                "permission_name": "Produção"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nif(fase.equals(\"FLT\")){\n    return true;\n}else{\n    return false;\n}"}
+                },
+                "permission_key": "9dbdfc37-e367-7134-3775-0ed0b5fe10bb",
+                "permission_name": "Filtro"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nif(fase.equals(\"CNT\")){\n    return true;\n}else{\n    return false;\n}"}
+                },
+                "permission_key": "0ddbe080-2061-3956-cbf4-97b10368862f",
+                "permission_name": "Contratação"
+            }
+        ],
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "comunicacoes_proce"
+    }
+}

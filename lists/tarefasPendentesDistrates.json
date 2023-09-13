@@ -1,0 +1,68 @@
+{
+    "actions": [],
+    "binder": {
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "username",
+            "sql": "SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia_pedido AS UrgenciaGeral, dp.c_nome_banco AS NomeBanco, dp.c_num_pedido AS NumeroEmprestimo, dp.c_num_workfow as NumeroWF, dp.c_nome_cliente as NomeCliente, c_estado_processo AS EstadoProcesso, sact.Id AS ActivityId, from_unixtime(sact.LimitTime/1000, '%Y-%m-%d %H:%i') as limittime, dp.DateModified as DataUltimaAlteracao\nFROM shkprocesses sp\nLEFT JOIN app_fd_processos_distrates p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\nLEFT JOIN app_fd_detalhe_proce_dist dp ON dp.id = p.c_detalhe_processo\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.KeyValue LIKE 'open.not_running.not_started' OR ssta.KeyValue LIKE 'open.running')\nAND (c_estado_processo = 'PND' || c_estado_processo = 'PNDEQ')\nAND sass.resourceid like  '%#currentUser.username#%'\nORDER BY UrgenciaGeral desc, LimitTime desc"
+        }
+    },
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_0",
+            "label": "NomeBanco",
+            "name": "NomeBanco",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "NumeroEmprestimo",
+            "name": "NumeroEmprestimo",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_2",
+            "label": "NumeroWF",
+            "name": "NumeroWF",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_3",
+            "label": "EstadoProcesso",
+            "name": "EstadoProcesso",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "NomeCliente",
+            "name": "NomeCliente",
+            "sortable": "false"
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
+    "description": "",
+    "filters": [],
+    "id": "tarefasPendentesDistrates",
+    "name": "Distrates - Fila Pendentes",
+    "order": "",
+    "orderBy": "",
+    "pageSize": "0",
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "rowActions": [],
+    "showPageSizeSelector": "true",
+    "useSession": "false"
+}

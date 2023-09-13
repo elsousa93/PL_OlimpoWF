@@ -1,0 +1,126 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [{
+        "className": "org.joget.apps.form.model.Section",
+        "elements": [{
+            "className": "org.joget.apps.form.model.Column",
+            "elements": [
+                {
+                    "className": "org.joget.plugin.enterprise.MultiPagedForm",
+                    "properties": {
+                        "ajaxMode": "",
+                        "css": "p {\n    display: inline;\n    position: relative;\n    top: -52px;\n    left: 320px;\n    color: #777!important;\n}\n\ndiv#section-actions {\n    width: 75%;\n    position: relative;\n    top: -121px;\n    left: 250px;\n    padding-bottom: 0px!important;\n}\n\ni.page-button-prev.btn.button.waves-input-wrapper.waves-effect.btn.waves-button.waves-float {\n    background-color: #67a168!important;\n}\n\ni.page-button-next.btn.button.waves-input-wrapper.waves-effect.btn.waves-button.waves-float {\n    background-color: #67a168!important;\n}\n\n.panel.panel-default.formRecordLockContainer {\n    height: 48px!important;\n    margin: 0px!important;\n    padding: 0px!important;\n}\n\n.panel-heading {\n    background-color: #EAEE7A!important;\n}\n\n/* borda_exterior-formulários */ \nbody #form-canvas .form-section {\n  padding-bottom: 100px;\n}\n\nh4.panel-title {\n    color: #777;\n}\n\n.page-container {\n    min-height: 500px;\n}",
+                        "displayMode": "wizard",
+                        "id": "multiPagedHH",
+                        "nextButtonlabel": "PRÓXIMO",
+                        "numberOfPage": {
+                            "className": "4",
+                            "properties": {
+                                "page1_formDefId": "detalheProcessoHH",
+                                "page1_label": "Detalhe do Processo",
+                                "page1_parentSubFormId": "detalhe_processo",
+                                "page1_readonly": "",
+                                "page1_readonlyLabel": "",
+                                "page1_subFormParentId": "",
+                                "page1_validate": "true",
+                                "page2_formDefId": "tomadaConhecimentoHH",
+                                "page2_label": "Tomada de Conhecimento",
+                                "page2_parentSubFormId": "tomada_conhecimento",
+                                "page2_readonly": "",
+                                "page2_readonlyLabel": "",
+                                "page2_subFormParentId": "id_processo",
+                                "page2_validate": "",
+                                "page3_formDefId": "relacoesdeBensHH",
+                                "page3_label": "Relações de Bem",
+                                "page3_parentSubFormId": "relacoes_bem",
+                                "page3_readonly": "",
+                                "page3_readonlyLabel": "",
+                                "page3_subFormParentId": "id_processo",
+                                "page3_validate": "true",
+                                "page4_formDefId": "libertacaoValoresHH",
+                                "page4_label": "Libertação de Valores",
+                                "page4_parentSubFormId": "libertacao_valores",
+                                "page4_readonly": "",
+                                "page4_readonlyLabel": "",
+                                "page4_subFormParentId": "id_processo",
+                                "page4_validate": "true"
+                            }
+                        },
+                        "onlyAllowSubmitOnLastPage": "",
+                        "partiallyStore": "true",
+                        "prevButtonlabel": "ANTERIOR",
+                        "storeMainFormOnPartiallyStore": "true"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field2",
+                        "label": "",
+                        "value": "<script>\n\n//Alterar labels de botões\n$(document).ready(function(){\n    $(\"input#assignmentComplete\").val(\"CONCLUIR\");\n    $(\"input#saveAsDraft\").val(\"GUARDAR\");\n    $(\"button#cancel\").html(\"CANCELAR\");\n     \n    var mode = \"#requestParam._mode#\";\n    if(mode=='edit'){\n        $(\"button#cancel\").html(\"VOLTAR\");\n    }\n    \n     $( \"form\" ).submit(function(){\n        var btnVal = $(document.activeElement).val();\n        if(btnVal === 'GUARDAR'){\n            window.sessionStorage.setItem(\"button\", \"guardar\");\n        }\n         \n         \n         \n     });\n});\n\n<\/script>\n"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "logica_fases_processo",
+                        "label": "",
+                        "value": "<script>\n\n    $(document).change(function(){\n        var faseProcesso = $(\"select[id*=_faseProcesso]\").val();\n        var faseProcesso2 = '#form.tomada_con_hh.fase_processo[{form.processos_hh.tomada_conhecimento}]#';\n        var faseProcesso3 = '#form.relacoesBens_hh.fase_processo[{form.processos_hh.relacoes_bem}]#';\n        var faseProcesso4 = '#form.analise_finan_hh.fase_processo[{form.processos_hh.libertacao_valores}]#';\n        var faseProcessoFim = '#form.detalhe_proce_hh.faseProcesso[{form.processos_hh.detalhe_processo}]#'\n        //console.log('CCCC' + faseProcesso);\n        //console.log('CCCC2' + faseProcesso2);\n        //console.log('CCCC3' + faseProcesso3);\n        //console.log('CCCC4' + faseProcesso4);\n        //console.log('Fim'+ faseProcessoFim);\n        \n         $(\"button[rel=2]\").hide();\n         $(\"button[rel=3]\").hide();\n         $(\"button[rel=4]\").hide();\n        if(faseProcesso === \"TC\"){\n            $(\"button[rel=2]\").show();\n            $(\"button[rel=3]\").hide();\n            $(\"button[rel=4]\").hide();\n        }else if(faseProcesso === \"RB\"){\n            $(\"button[rel=2]\").hide();\n            $(\"button[rel=3]\").show();\n            $(\"button[rel=4]\").hide();\n        }else if(faseProcesso === \"LV\"){\n            $(\"button[rel=2]\").hide();\n            $(\"button[rel=3]\").hide();\n            $(\"button[rel=4]\").show();\n        } \n       /* if(faseProcesso2 === \"TC\"){\n            $(\"button[rel=2]\").show();\n            $(\"button[rel=3]\").hide();\n            $(\"button[rel=4]\").hide();\n        }else if(faseProcesso3 === \"RB\"){\n            $(\"button[rel=2]\").hide();\n            $(\"button[rel=3]\").show();\n            $(\"button[rel=4]\").hide();\n        }else if(faseProcesso4 === \"AF\"){\n            $(\"button[rel=2]\").hide();\n            $(\"button[rel=3]\").hide();\n            $(\"button[rel=4]\").show();\n        } */\n        \n        \n        \n        \n        \n  });\n\n<\/script>\n\n"
+                    }
+                }
+            ],
+            "properties": {"width": "100%"}
+        }],
+        "properties": {
+            "comment": "",
+            "id": "section1",
+            "join": "",
+            "label": "",
+            "loadBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "permission": {
+                "className": "",
+                "properties": {}
+            },
+            "permissionReadonly": "",
+            "readonly": "",
+            "readonlyLabel": "",
+            "regex": "",
+            "reverse": "",
+            "storeBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "visibilityControl": "",
+            "visibilityValue": ""
+        }
+    }],
+    "properties": {
+        "description": "",
+        "id": "HHProcesso",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "HH - Processo",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "processos_hh"
+    }
+}

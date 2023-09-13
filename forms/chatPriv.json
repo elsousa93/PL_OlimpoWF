@@ -1,0 +1,160 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [{
+        "className": "org.joget.apps.form.model.Section",
+        "elements": [{
+            "className": "org.joget.apps.form.model.Column",
+            "elements": [
+                {
+                    "className": "org.joget.apps.form.lib.TextField",
+                    "properties": {
+                        "encryption": "",
+                        "id": "para",
+                        "label": "Para",
+                        "maxlength": "",
+                        "permissionHidden": "",
+                        "placeholder": "",
+                        "readonly": "true",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "storeNumeric": "",
+                        "style": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "#requestParam.para#",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "area_chat",
+                        "label": "",
+                        "value": "<div id=\"chatLog\" style=\"height:45vh\"><\/div>"
+                    }
+                },
+                {
+                    "className": "org.joget.plugin.enterprise.AjaxSubForm",
+                    "properties": {
+                        "ajax": "true",
+                        "collapsible": "",
+                        "collapsibleExpanded": "true",
+                        "collapsibleLabelCollapsed": "View Details",
+                        "collapsibleLabelExpanded": "Hide Details",
+                        "formDefId": "chatSubform",
+                        "hideEmpty": "",
+                        "id": "chat_ajax_subform",
+                        "label": "",
+                        "noLoad": "",
+                        "noframe": "true",
+                        "parentSubFormId": "para",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "storeBinder": {
+                            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+                            "properties": {}
+                        },
+                        "subFormParentId": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.TextField",
+                    "properties": {
+                        "encryption": "",
+                        "id": "mensagem",
+                        "label": "Mensagem",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "storeNumeric": "",
+                        "style": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "chat_privado_script",
+                        "label": "",
+                        "value": "<script>\n$(document).ready(function() {\n    $(\"#submit\").prop(\"disabled\", true);\n    \n    $(\"#mensagem\").keyup(function() {\n        if ($(\"#mensagem\").val() === \"\") {\n            $(\"#submit\").prop(\"disabled\", true);\n        } else {\n            $(\"#submit\").prop(\"disabled\", false);\n        }\n    });\n    \n    $(\"#submit\").click(function() {\n\t    $(\"#chat_ajax_subform_chatSubform_mensagem_dataChat_mensagem\").val($(\"#mensagem\").val());\n\t    $(\"#mensagem\").val(\"\");\n    });\n    \n    setInterval(function(){ refreshMessage(); }, 30000);\n    refreshMessage();\n});\n\nfunction refreshMessage() {\n    FormUtil.getField(\"chat_ajax_subform\").attr(\"loadedValue\",\"\");\n    FormUtil.getField(\"para\").trigger(\"change\");\n}\n\nfunction decorateTable() {\n    //Reset chat area\n    $(\"#chatLog\").html(\"\");\n    \n    $(\"#chat_ajax_subform_chatSubform_painel_mensagem\").find(\"tr\").each(function(){\n    var alignment = \"\";\n    var content = \"\";\n    var messageAuthor = $(this).find(\"td:nth-child(1)\").text().trim();\n    var timeStamp = $(this).find(\"td:nth-child(3)\").text();\n    var message = $(this).find(\"td:nth-child(4)\").text();\n    \n    var currentUser = \"#currentUser.id#\";\n    \n    if (message.trim()) {\n        if (currentUser === messageAuthor) {\n            alignment = \"right\";\n        } else {\n            alignment = \"left\";\n        }\n        content = '<div class=\"chat\"><div class=\"speech-bubble-' + alignment + '\" id=\"speech-content\"><div id=\"message-style-me\">' + message + '<div><div id=\"timestamp\">' + timeStamp + '<\/div><\/div><\/div>'\n        $(\"#chatLog\").append(content);\n    }\n    \n    //scroll to the bottom\n    var objDiv = document.getElementById(\"chatLog\");\n    objDiv.scrollTop = objDiv.scrollHeight;\n});\n}\n<\/script>"
+                    }
+                }
+            ],
+            "properties": {"width": "100%"}
+        }],
+        "properties": {
+            "comment": "",
+            "id": "section1",
+            "join": "",
+            "label": "Chat",
+            "loadBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "permission": {
+                "className": "",
+                "properties": {}
+            },
+            "permissionReadonly": "",
+            "readonly": "",
+            "readonlyLabel": "",
+            "regex": "",
+            "reverse": "",
+            "storeBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "visibilityControl": "",
+            "visibilityValue": ""
+        }
+    }],
+    "properties": {
+        "description": "",
+        "id": "chatPriv",
+        "loadBinder": {
+            "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
+            "properties": {
+                "autoHandleFiles": "",
+                "autoHandleWorkflowVariable": "true",
+                "jdbcDatasource": "default",
+                "sql": "UPDATE app_fd_data_chat dc SET c_lida=\"sim\" WHERE c_thread_id=\"#requestParam.para#\" AND createdby not like \"#currentUser.id#\";"
+            }
+        },
+        "name": "Chat Privado",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "org.joget.apps.app.lib.DatabaseUpdateTool",
+            "properties": {
+                "jdbcDatasource": "default",
+                "query": "UPDATE app_fd_data_chat dc SET c_lida=\"sim\" WHERE c_thread_id=\"#requestParam.para#\" AND createdby not like \"#currentUser.id#\";"
+            }
+        },
+        "postProcessorRunOn": "both",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+            "properties": {
+                "autoHandleFiles": "",
+                "autoHandleWorkflowVariable": "true",
+                "cacheInterval": "",
+                "script": "return null;",
+                "useAjax": ""
+            }
+        },
+        "tableName": "mensagens_chat"
+    }
+}

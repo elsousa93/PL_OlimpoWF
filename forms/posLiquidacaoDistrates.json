@@ -1,0 +1,215 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [{
+        "className": "org.joget.apps.form.model.Section",
+        "elements": [{
+            "className": "org.joget.apps.form.model.Column",
+            "elements": [
+                {
+                    "className": "org.joget.apps.form.lib.HiddenField",
+                    "properties": {
+                        "id": "id_processo",
+                        "permission_rules": {"178fdc63-b293-18b9-8aa9-e1b40619226d": {}},
+                        "useDefaultWhenEmpty": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.DatePicker",
+                    "properties": {
+                        "allowManual": "true",
+                        "currentDateAs": "",
+                        "dataFormat": "yyyy-MM-dd",
+                        "datePickerType": "",
+                        "endDateFieldId": "",
+                        "format": "",
+                        "id": "data_cobranca",
+                        "label": "Data de Cobrança",
+                        "permission_rules": {
+                            "17ed5bee-7891-b0b3-04d6-0a7519f46e72": {},
+                            "8a7e6ce8-d50c-d9bf-5e51-018fb772b51f": {},
+                            "d8ea6052-e830-f0aa-4186-e2a9c3fb186d": {},
+                            "dade72d9-fef8-50f4-1b63-a8d2c211d4f3": {}
+                        },
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "startDateFieldId": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": "",
+                        "yearRange": "c-10:c+10"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.Radio",
+                    "properties": {
+                        "controlField": "",
+                        "id": "deposito_cheque",
+                        "label": "Depósito do Cheque",
+                        "options": [
+                            {
+                                "grouping": "",
+                                "label": "Sim",
+                                "value": "SIM"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Não",
+                                "value": "NAO"
+                            }
+                        ],
+                        "optionsBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.Radio",
+                    "properties": {
+                        "controlField": "",
+                        "id": "cobrancas",
+                        "label": "Cobranças",
+                        "options": [
+                            {
+                                "grouping": "",
+                                "label": "Sim",
+                                "value": "SIM"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Não",
+                                "value": "NAO"
+                            }
+                        ],
+                        "optionsBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.TextField",
+                    "properties": {
+                        "encryption": "",
+                        "id": "despesasReconhecimentoAssinaturas",
+                        "label": "Despesa de Reconhecimento de Assinaturas",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "storeNumeric": "",
+                        "style": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.SelectBox",
+                    "properties": {
+                        "controlField": "",
+                        "id": "conferencia",
+                        "label": "Conferência",
+                        "multiple": "",
+                        "options": [],
+                        "optionsBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "despesasReconhecimentologica",
+                        "label": "",
+                        "value": "<script>\n    $(document).ready(function(){\n        var numeroRegisto = '#form.detalhe_proce_dist.numero_distrate[{form.processos_distrates.detalhe_processo}]#';\n        console.log('CCCC' + numeroRegisto);\n        //console.log('coisasssss');\n        var despesasReconhecimentoAssinaturas = $(\"input[name$=despesasReconhecimentoAssinaturas]\");\n        var despesa = 35;\n        var iva = 23/100;\n        num = ((despesa + (despesa * iva)) )* numeroRegisto;\n        \n        num = num.toString().replaceAll('.', ',');\n        console.log(\"conta 2\" + num);\n        despesasReconhecimentoAssinaturas.val(num);\n     \n        \n  });\n  \n\n<\/script>"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field8",
+                        "label": "",
+                        "value": "<script>\r\n    $(document).ready(function(){\r\n        var f1 = FormUtil.getField(\"despesasReconhecimentoAssinaturas\");\r\n        var number = FormUtil.getValue(\"despesasReconhecimentoAssinaturas\");\r\n       console.log(\"1\"+number);\r\n       if(number != null && number !== \"\"){\r\n           \r\n            number = number.replaceAll('NaN', \"0\");\r\n              console.log(\"2\"+number);\r\n            number = number.replaceAll('.', \"\");\r\n              console.log(number);\r\n            number = number.replaceAll('\u20ac', \"\");\r\n              console.log(\"3\"+ number);\r\n            number = number.replaceAll('Eur', \"\");\r\n              console.log(\"4\" + number);\r\n            number = number.replaceAll('EUR', \"\");\r\n              console.log(\"5\"+ number);\r\n            number = number.replaceAll(',', '.');\r\n            \r\n            let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(number);\r\n        \r\n            num = num.replace(/\\s/g, '.');\r\n            num = num.replaceAll('.\u20ac', ' EUR');\r\n            \r\n            $(f1).val(num);\r\n        }else{\r\n            //do nothing\r\n        }  \r\n        \r\n  });\r\n  \r\n\r\n<\/script>\r\n        \r\n"
+                    }
+                }
+            ],
+            "properties": {"width": "100%"}
+        }],
+        "properties": {
+            "comment": "",
+            "id": "posLiquidacao",
+            "join": "",
+            "label": "Informação Geral",
+            "loadBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "permission": {
+                "className": "",
+                "properties": {}
+            },
+            "permissionReadonly": "",
+            "readonly": "",
+            "readonlyLabel": "",
+            "regex": "",
+            "reverse": "",
+            "storeBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "visibilityControl": "",
+            "visibilityValue": ""
+        }
+    }],
+    "properties": {
+        "description": "",
+        "id": "posLiquidacaoDistrates",
+        "loadBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "name": "Distrates - Pós Liquidação",
+        "storeBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "tableName": "pos_liquidacao_dist"
+    }
+}

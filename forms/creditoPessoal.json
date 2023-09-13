@@ -1,0 +1,103 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [{
+        "className": "org.joget.apps.form.model.Section",
+        "elements": [{
+            "className": "org.joget.apps.form.model.Column",
+            "elements": [
+                {
+                    "className": "org.joget.plugin.enterprise.MultiPagedForm",
+                    "properties": {
+                        "ajaxMode": "",
+                        "css": "p {\n    display: inline;\n    position: relative;\n    top: -52px;\n    left: 320px;\n    color: #777!important;\n}\n\ndiv#section-actions {\n    width: 75%;\n    position: relative;\n    top: -121px;\n    left: 250px;\n    padding-bottom: 0px!important;\n}\n\ni.page-button-prev.btn.button.waves-input-wrapper.waves-effect.btn.waves-button.waves-float {\n    background-color: #67a168!important;\n}\n\ni.page-button-next.btn.button.waves-input-wrapper.waves-effect.btn.waves-button.waves-float {\n    background-color: #67a168!important;\n}\n\n.panel.panel-default.formRecordLockContainer {\n    height: 48px!important;\n    margin: 0px!important;\n    padding: 0px!important;\n}\n\n.panel-heading {\n    background-color: #EAEE7A!important;\n}\n\n/* borda_exterior-formulários */ \nbody #form-canvas .form-section {\n  padding-bottom: 100px;\n}\n\nh4.panel-title {\n    color: #777;\n}\n\n.page-container {\n    min-height: 500px;\n}",
+                        "displayMode": "wizard",
+                        "id": "multiPagedProcuradoria",
+                        "nextButtonlabel": "PRÓXIMO",
+                        "numberOfPage": {
+                            "className": "2",
+                            "properties": {
+                                "page1_formDefId": "detalheProcessoCreditoPessoal",
+                                "page1_label": "Detalhe Processo",
+                                "page1_parentSubFormId": "detalhe_processo",
+                                "page1_readonly": "",
+                                "page1_readonlyLabel": "",
+                                "page1_subFormParentId": "id_processo",
+                                "page1_validate": "true",
+                                "page2_formDefId": "visoCreditoPessoal",
+                                "page2_label": "Viso",
+                                "page2_parentSubFormId": "viso",
+                                "page2_readonly": "",
+                                "page2_readonlyLabel": "",
+                                "page2_subFormParentId": "id_processo",
+                                "page2_validate": ""
+                            }
+                        },
+                        "onlyAllowSubmitOnLastPage": "",
+                        "partiallyStore": "true",
+                        "prevButtonlabel": "ANTERIOR",
+                        "storeMainFormOnPartiallyStore": "true"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field2",
+                        "label": "",
+                        "value": "<script>\n\n//Alterar labels de botões\n$(document).ready(function(){\n    $(\"input#assignmentComplete\").val(\"CONCLUIR\");\n    $(\"input#saveAsDraft\").val(\"GUARDAR\");\n    $(\"button#cancel\").html(\"CANCELAR\");\n     \n    var mode = \"#requestParam._mode#\";\n    if(mode=='edit'){\n        $(\"button#cancel\").html(\"VOLTAR\");\n    }\n    \n     $( \"form\" ).submit(function(){\n        var btnVal = $(document.activeElement).val();\n        if(btnVal === 'GUARDAR'){\n            window.sessionStorage.setItem(\"button\", \"guardar\");\n        }\n         \n         \n         \n     });\n});\n\n<\/script>\n"
+                    }
+                }
+            ],
+            "properties": {"width": "100%"}
+        }],
+        "properties": {
+            "comment": "",
+            "id": "section1",
+            "join": "",
+            "label": "",
+            "loadBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "permission": {
+                "className": "",
+                "properties": {}
+            },
+            "permissionReadonly": "",
+            "readonly": "",
+            "readonlyLabel": "",
+            "regex": "",
+            "reverse": "",
+            "storeBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "visibilityControl": "",
+            "visibilityValue": ""
+        }
+    }],
+    "properties": {
+        "description": "",
+        "id": "creditoPessoal",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "CP - Processos",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "processos_cp"
+    }
+}

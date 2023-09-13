@@ -1,0 +1,161 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [{
+        "className": "org.joget.apps.form.model.Section",
+        "elements": [{
+            "className": "org.joget.apps.form.model.Column",
+            "elements": [
+                {
+                    "className": "org.joget.apps.form.lib.SelectBox",
+                    "properties": {
+                        "controlField": "",
+                        "id": "entidade",
+                        "label": "Entidade Autenticadora",
+                        "multiple": "",
+                        "options": [],
+                        "optionsBinder": {
+                            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                            "properties": {
+                                "cacheInterval": "",
+                                "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.directory.model.service.ExtDirectoryManager;\r\nimport org.joget.plugin.base.Plugin;\r\nimport org.joget.plugin.base.PluginManager;\r\nimport org.joget.directory.model.User;\r\nimport org.joget.workflow.model.service.WorkflowManager;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.workflow.model.service.WorkflowUserManager;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport javax.servlet.http.HttpServletRequest;\r\nimport org.joget.apps.datalist.model.DataListBinderDefaultimport;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\n\r\n \r\npublic FormRowSet load(String[] values) {\r\n    \r\n    Connection con = null;\r\n    PreparedStatement stmt = null;\r\n    ResultSet rs = null;\r\n    \r\n    FormRowSet rows = new FormRowSet();\r\n    \r\n    FormRow option = new FormRow();\r\n    option.setProperty(FormUtil.PROPERTY_VALUE, \"\");\r\n    option.setProperty(FormUtil.PROPERTY_LABEL, \"\");\r\n    rows.add(option);\r\n    \r\n    String value = \"\";\r\n    String label = \"\";\r\n    \r\n        \r\n    AppDefinition appDef = AppUtil.getCurrentAppDefinition();\r\n    \r\n    PluginManager pluginManager = (PluginManager) AppUtil.getApplicationContext().getBean(\"pluginManager\");\r\n    ExtDirectoryManager directoryManager = (ExtDirectoryManager) pluginManager.getBean(\"directoryManager\");\r\n    \r\n    String[] array_entidades= {\"PL_EXT_ENT_A\",\"PL_EXT_ENT_NA\",\"PL_EXT_ENT_SA\"};\r\n    String label = \"\";\r\n    \r\n    for(i = 0; i < array_entidades.length; i++){\r\n        \r\n        String deptId = array_entidades[i];\r\n        \r\n        Collection userList = directoryManager.getUserByDepartmentId(deptId);\r\n        for(Object u : userList) {\r\n            User user = (User) u;\r\n            FormRow option = new FormRow();\r\n            String NIF = \"\";\r\n            \r\n            value = user.getUsername();\r\n            \r\n            try{\r\n                DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n                con = ds.getConnection();\r\n                \r\n                if(!con.isClosed()){\r\n                    String queryGetAid = \"SELECT c_nif as 'NIF' FROM app_fd_info_colaboradores WHERE c_user_colaborador = ?;\";\r\n                    stmt = con.prepareStatement(queryGetAid);\r\n                    stmt.setObject(1, value);\r\n            \t\trs = stmt.executeQuery();\r\n            \t\t\r\n            \t\tif(rs.next()){\r\n            \t\t\tNIF = rs.getObject(\"NIF\");\r\n        \t\t    }\r\n        \t\t    \r\n                    label = user.getFirstName() + \" \" + user.getLastName() + \" (\" + NIF + \") \";\r\n\r\n                    option.setProperty(FormUtil.PROPERTY_VALUE, value);\r\n                    option.setProperty(FormUtil.PROPERTY_LABEL, label);\r\n                    rows.add(option);\r\n        \t\t    \r\n                }\r\n            \r\n            } catch(Exception e){\r\n                LogUtil.error(appDef.toString(), e, \"Error getting info from DB\");\r\n            } finally{\r\n                try{\r\n                    if(rs != null){\r\n                    rs.close();\r\n                    }\r\n                    if(stmt != null){\r\n                        stmt.close();\r\n                    }\r\n                    if(con != null && !con.isClosed()) {\r\n                        con.close();\r\n                    }\r\n                }catch(Exception e){\r\n                    LogUtil.error(appDef.toString(), e, \"Error closing DB connection\");\r\n                }\r\n            }\r\n        }\r\n        \r\n    }\r\n\r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(values);",
+                                "useAjax": ""
+                            }
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "validator": {
+                            "className": "org.joget.apps.form.lib.DefaultValidator",
+                            "properties": {
+                                "mandatory": "true",
+                                "message": "#i18n.mandatorymsg#",
+                                "type": ""
+                            }
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.FileUpload",
+                    "properties": {
+                        "attachment": "true",
+                        "fileType": "",
+                        "fileTypeMsg": "Tipo de ficheiro inválido",
+                        "id": "ficheiro_certificado",
+                        "label": "Certificado",
+                        "maxSize": "",
+                        "maxSizeMsg": "Limite do tamanho do ficheiro excedido",
+                        "multiple": "",
+                        "padding": "",
+                        "permissionType": "",
+                        "readonly": "",
+                        "removeFile": "",
+                        "resizeHeight": "",
+                        "resizeMethod": "",
+                        "resizeQuality": "0.8",
+                        "resizeWidth": "",
+                        "size": "",
+                        "validator": {
+                            "className": "org.joget.apps.form.lib.DefaultValidator",
+                            "properties": {
+                                "mandatory": "true",
+                                "message": "#i18n.mandatorymsg#",
+                                "type": ""
+                            }
+                        }
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.DatePicker",
+                    "properties": {
+                        "allowManual": "",
+                        "currentDateAs": "",
+                        "dataFormat": "yyyy-MM-dd",
+                        "datePickerType": "",
+                        "endDateFieldId": "",
+                        "format": "",
+                        "id": "data_validacao",
+                        "label": "Data de Validação",
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "startDateFieldId": "",
+                        "validator": {
+                            "className": "org.joget.apps.form.lib.DefaultValidator",
+                            "properties": {
+                                "mandatory": "true",
+                                "message": "#i18n.mandatorymsg#",
+                                "type": ""
+                            }
+                        },
+                        "value": "",
+                        "workflowVariable": "",
+                        "yearRange": "c-10:c+10"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.TextArea",
+                    "properties": {
+                        "cols": "20",
+                        "id": "notas",
+                        "label": "Notas",
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "rows": "5",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field7",
+                        "label": "",
+                        "value": "\r\n<script>\r\n\r\n    $(document).ready(function(){\r\n\r\n        $(\"input[type = submit]\").val(\"IMPORTAR\");\r\n        $('div.dz-message').text(\"Solte o certificado aqui ou clique para fazer upload.\");\r\n    });\r\n\r\n<\/script>"
+                    }
+                }
+            ],
+            "properties": {"width": "100%"}
+        }],
+        "properties": {
+            "comment": "",
+            "id": "section1",
+            "join": "",
+            "label": "Importar Certificado",
+            "loadBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "permission": {
+                "className": "",
+                "properties": {}
+            },
+            "permissionReadonly": "",
+            "readonly": "",
+            "readonlyLabel": "",
+            "regex": "",
+            "reverse": "",
+            "storeBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "visibilityControl": "",
+            "visibilityValue": ""
+        }
+    }],
+    "properties": {
+        "description": "",
+        "id": "importacao_certificados_reg",
+        "loadBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "name": "Registos: Importação Certificados",
+        "storeBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "tableName": "certificados_reg"
+    }
+}

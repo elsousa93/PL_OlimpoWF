@@ -1,0 +1,247 @@
+{
+    "actions": [],
+    "binder": {
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "id",
+            "sql": "Select * FROM(\nSELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco, c_estado_contratacao AS EstadoContratacao, sact.Id AS ActivityId, from_unixtime(sact.LimitTime/1000, '%Y-%m-%d %H:%i') as limittime, sp.ActivityRequesterProcessId as ProcessId, p.c_robot as Robot, dp.c_data_swift as 'DataSwift', dp.id as 'IDDetalheProcesso', p.c_servico as Servico\nFROM shkprocesses sp\nJOIN app_fd_processos p ON p.id = sp.ActivityRequesterProcessId\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.KeyValue LIKE 'open.not_running.not_started' OR ssta.KeyValue LIKE 'open.running')\nAND (c_estado_contratacao is null or c_estado_contratacao <> 'PND')\nAND sact.Name LIKE 'Processamento da Minuta pelo Robot'\nUNION\nSELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, sact.Name AS Atividade, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco, c_estado_contratacao AS EstadoContratacao, sact.Id AS ActivityId, from_unixtime(sact.LimitTime/1000, '%Y-%m-%d %H:%i') as limittime, sp.ActivityRequesterProcessId as ProcessId, p.c_robot as Robot, null as 'DataSwift' ,dp.id as 'IDDetalheProcesso',p.c_servico as Servico\nFROM shkprocesses sp\nJOIN app_fd_processos_hip p ON p.id = sp.ActivityRequesterProcessId\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\nLEFT JOIN app_fd_detalhe_proce_hip dp ON dp.id = p.c_detalhe_processo\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.KeyValue LIKE 'open.not_running.not_started' OR ssta.KeyValue LIKE 'open.running')\nAND (c_estado_contratacao is null or c_estado_contratacao <> 'PND')\nAND sact.Name LIKE 'Processamento da Minuta pelo Robot'\n) as total"
+        }
+    },
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_0",
+            "label": "id",
+            "name": "id",
+            "permission_rules": {"46af378b-22dd-3ae1-0edb-f8f8ebaaad76": {}},
+            "sortable": "false"
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_2",
+            "label": "Data de Criação",
+            "name": "dateCreated",
+            "permission_rules": {"46af378b-22dd-3ae1-0edb-f8f8ebaaad76": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_3",
+            "label": "Estado de Contratacao",
+            "name": "EstadoContratacao",
+            "permission_rules": {"46af378b-22dd-3ae1-0edb-f8f8ebaaad76": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "datalist_type": "column",
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "Urgencia",
+            "name": "Urgencia",
+            "permission_rules": {"46af378b-22dd-3ae1-0edb-f8f8ebaaad76": {}},
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_5",
+            "label": "limittime",
+            "name": "limittime",
+            "permission_rules": {"46af378b-22dd-3ae1-0edb-f8f8ebaaad76": {}},
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_6",
+            "label": "Atividade",
+            "name": "Atividade",
+            "permission_rules": {"46af378b-22dd-3ae1-0edb-f8f8ebaaad76": {}},
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_7",
+            "label": "ActivityId",
+            "name": "ActivityId",
+            "permission_rules": {"46af378b-22dd-3ae1-0edb-f8f8ebaaad76": {}},
+            "sortable": "false"
+        },
+        {
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_8",
+            "include_export": "",
+            "label": "ProcessId",
+            "name": "ProcessId",
+            "permission_rules": {"46af378b-22dd-3ae1-0edb-f8f8ebaaad76": {}},
+            "sortable": "false"
+        },
+        {
+            "exclude_export": "",
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_9",
+            "include_export": "",
+            "label": "Robot",
+            "name": "Robot",
+            "permission_rules": {"46af378b-22dd-3ae1-0edb-f8f8ebaaad76": {}},
+            "sortable": "false"
+        },
+        {
+            "exclude_export": "",
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_10",
+            "include_export": "",
+            "label": "IDDetalheProcesso",
+            "name": "IDDetalheProcesso",
+            "permission_rules": {"46af378b-22dd-3ae1-0edb-f8f8ebaaad76": {}},
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "Servico",
+            "name": "Servico",
+            "permission_rules": {"46af378b-22dd-3ae1-0edb-f8f8ebaaad76": {}},
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_12",
+            "label": "DataSwift",
+            "name": "DataSwift",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_11",
+            "label": "resourceId",
+            "name": "resourceId",
+            "permission_rules": {"46af378b-22dd-3ae1-0edb-f8f8ebaaad76": {}},
+            "sortable": "false"
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
+    "description": "",
+    "disableResponsive": "",
+    "filters": [
+        {
+            "id": "filter_0",
+            "label": "Servico",
+            "name": "Servico",
+            "permission_rules": {"46af378b-22dd-3ae1-0edb-f8f8ebaaad76": {}},
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-3945390-fn_resourceId",
+            "hidden": "",
+            "id": "filter_1",
+            "label": "resourceId",
+            "name": "resourceId",
+            "permission_rules": {"46af378b-22dd-3ae1-0edb-f8f8ebaaad76": {}},
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "defaultValue": "",
+                    "multiple": "textfield",
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.plugin.enterprise.UserOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "deptId": "",
+                            "emptyLabel": "",
+                            "groupId": "",
+                            "grouping": "",
+                            "optionLabel": "",
+                            "orgId": "PL",
+                            "useAjax": ""
+                        }
+                    },
+                    "size": ""
+                }
+            }
+        }
+    ],
+    "hidePageSize": "",
+    "id": "tarefasGeralHip",
+    "name": "List - Tarefas Hip",
+    "order": "",
+    "orderBy": "",
+    "pageSize": "0",
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "permission_rules": [{
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "permission_key": "46af378b-22dd-3ae1-0edb-f8f8ebaaad76",
+        "permission_name": "Robot"
+    }],
+    "responsiveView": [
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Mobile"
+        },
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Tablet"
+        }
+    ],
+    "rowActions": [],
+    "searchPopup": "",
+    "showDataWhenFilterSet": "",
+    "showPageSizeSelector": "true",
+    "useSession": ""
+}

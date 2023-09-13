@@ -1,0 +1,185 @@
+{
+    "actions": [],
+    "binder": {
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "id",
+            "sql": "SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, dp.c_tipo_processo as TipoProcesso, dp.c_estado_contratacao as EstadoContratacao, dp.c_n_wf_pl as NumeroWFPL, dp.c_pid as PID, dp.c_categoria_processo as CategoriaProcesso, sact.Name AS Atividade, dp.c_n_wf_banco AS NumeroWFBanco, dp.c_origem_processo AS Origem, sact.Id AS ActivityId, sp.ActivityRequesterProcessId as ProcessId, dp.id as 'IDDetalheProcesso', g.c_estado_processamento_mod11 AS EstadoProcessamento\r\nFROM shkprocesses sp\r\nLEFT JOIN app_fd_processos p ON p.id = sp.ActivityRequesterProcessId\r\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\r\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\r\nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\nLEFT JOIN app_fd_geral g ON g.id = p.c_geral\r\nWHERE sps.KeyValue LIKE 'open.running'\r\nAND (ssta.KeyValue LIKE 'open.not_running.not_started' OR ssta.KeyValue LIKE 'open.running')"
+        }
+    },
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "id",
+            "name": "id",
+            "sortable": "false"
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_5",
+            "label": "Data de Criação",
+            "name": "dateCreated",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_6",
+            "label": "Atividade",
+            "name": "Atividade",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_7",
+            "label": "ActivityId",
+            "name": "ActivityId",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_8",
+            "label": "ProcessId",
+            "name": "ProcessId",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_12",
+            "label": "NumeroWFPL",
+            "name": "NumeroWFPL",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "Origem",
+            "name": "Origem",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_2",
+            "label": "EstadoContratacao",
+            "name": "EstadoContratacao",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_9",
+            "label": "PID",
+            "name": "PID",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_10",
+            "label": "TipoProcesso",
+            "name": "TipoProcesso",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_11",
+            "label": "CategoriaProcesso",
+            "name": "CategoriaProcesso",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_0",
+            "label": "IDDetalheProcesso",
+            "name": "IDDetalheProcesso",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_3",
+            "label": "EstadoProcessamento",
+            "name": "EstadoProcessamento",
+            "sortable": "false"
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
+    "description": "",
+    "filters": [
+        {
+            "id": "filter_3",
+            "label": "ProcessId",
+            "name": "ProcessId",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        },
+        {
+            "id": "filter_2",
+            "label": "EstadoProcessamento",
+            "name": "EstadoProcessamento",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        },
+        {
+            "id": "filter_1",
+            "label": "EstadoContratacao",
+            "name": "EstadoContratacao",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-7755381-fn_Atividade",
+            "id": "filter_0",
+            "label": "Atividade",
+            "name": "Atividade",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        }
+    ],
+    "id": "robotModelo11DetalheProcesso",
+    "name": "List - Processo Robot Modelo 11",
+    "order": "",
+    "orderBy": "",
+    "pageSize": "0",
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "rowActions": [],
+    "showPageSizeSelector": "true",
+    "useSession": "false"
+}

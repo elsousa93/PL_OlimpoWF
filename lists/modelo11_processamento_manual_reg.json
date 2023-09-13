@@ -1,0 +1,437 @@
+{
+    "actions": [],
+    "binder": {
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "procId",
+            "sql": "SELECT p.id as procId, dp.c_n_wf_banco as N_WF_Banco, dp.c_categoria_processo as CategoriaProcesso, dp.c_processo_vip AS VIP, dp.c_tipo_relacao AS tipoRelacao, dp.c_n_wf_pl as N_WF_PL, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_pl_relacionado AS ProcessosRelacionados, dp.c_urgencia_registo AS Urgencia, ip.c_nome as NomeCliente, dp.c_tipo_processo as TipoProcesso, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee, p.dateCreated, dp.c_tipo_entidade as Entidade, ato.c_status as EstadoAgendamento, ato.c_cedula_entidade as entidadeAutenticadora, CONCAT(ato.c_dataOutorga, ' ', ato.c_horaOutorga) AS DataAgendamento, ROW_NUMBER() OVER (ORDER BY ato.c_dataOutorga ASC, ato.c_horaOutorga ASC, dp.c_urgencia_registo DESC) AS No\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK'\nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id AND ato.c_status = 'OUT'\nWHERE sps.KeyValue LIKE 'open.running'\nAND p.id is not null\nAND (ato.dateCreated = (SELECT MAX(dateCreated) FROM app_fd_atos a2 WHERE a2.c_id_processo = p.id) || ato.dateCreated IS null)\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sass.ResourceId LIKE '%modelo11_geral%'\nORDER BY DataAgendamento ASC, Urgencia DESC"
+        }
+    },
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.DateFormatter",
+                "properties": {
+                    "dataFormat": "yyyy-MM-dd HH:mm",
+                    "dateStoreInUTC": "",
+                    "displayFormat": "dd/MM/yyyy HH:mm"
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_0",
+            "label": "Data Agend.",
+            "name": "DataAgendamento",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'estado_agendamento'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_12",
+            "label": "Estado Agendamento",
+            "name": "EstadoAgendamento",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_1",
+            "label": "Nº Workflow Banco",
+            "name": "N_WF_Banco",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_2",
+            "label": "Nº Workflow PL",
+            "name": "N_WF_PL",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_3",
+            "label": "Processos Relacionados",
+            "name": "ProcessosRelacionados",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'tipo_relacao'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_4",
+            "label": "Tipo Ligação",
+            "name": "tipoRelacao",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'nome_banco'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_5",
+            "label": "Banco",
+            "name": "NomeBanco",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_6",
+            "label": "Cliente",
+            "name": "NomeCliente",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.BeanShellFormatter",
+                "properties": {"script": "import org.joget.apps.datalist.service.DataListService;\nimport org.joget.apps.app.service.AppUtil;\nimport java.time.LocalDateTime; \nimport java.time.format.DateTimeFormatter;\nimport java.time.temporal.ChronoUnit;\nimport org.joget.commons.util.LogUtil;\nimport java.lang.Math;\nimport java.sql.SQLException;\nimport java.sql.Connection;\nimport java.sql.PreparedStatement;\nimport java.sql.ResultSet;\nimport java.sql.SQLException;\nimport javax.sql.DataSource;\n\nConnection con = null;\nPreparedStatement stmt = null;\nResultSet rs = null;\nString entidade = \"\";\n\nif (!value.isEmpty()) {\n    try {\n        DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\n        con = ds.getConnection();\n        \n        if(!con.isClosed()){\n            \n            //Obter Nome da Entidade\n            String queryGetEntityName = \"SELECT c_nome_completo FROM app_fd_info_colaboradores WHERE c_cedula_profissional = ?;\";\n            stmt = con.prepareStatement(queryGetEntityName);\n            stmt.setObject(1, value);\n            rs = stmt.executeQuery();\n            \n            if(rs.next()) {\n                entidade = rs.getObject(\"c_nome_completo\");\n            }\n        }\n        \n    } catch(Exception e){\n        LogUtil.error(\"Olimpo | Consultar Processos - Erro ao obter nome de entidade da DB\", e, \"Error getting info from DB\");\n    } finally {\n        try {\n            if(rs != null) {\n                rs.close();\n            }\n            if(stmt != null) {\n                stmt.close();\n            }\n            if(con != null && !con.isClosed()) {\n                con.close();\n            }\n        } catch(Exception e) {\n            LogUtil.error(\"Olimpo | Consultar Processos - Erro ao fechar conexão\", e, \"Error closing DB connection\");\n        }\n    }    \n}\n\n\nreturn entidade;"}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_7",
+            "label": "Entidade Autenticadora",
+            "name": "entidadeAutenticadora",
+            "sortable": "true",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_8",
+            "label": "Tipo Processo",
+            "name": "TipoProcesso",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'categoria_processo'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_9",
+            "label": "Categoria Processo",
+            "name": "CategoriaProcesso",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [
+                        {
+                            "label": "Não",
+                            "value": "0"
+                        },
+                        {
+                            "label": "Sim",
+                            "value": "1"
+                        }
+                    ],
+                    "optionsBinder": {
+                        "className": "",
+                        "properties": {}
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_10",
+            "label": "VIP",
+            "name": "VIP",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_11",
+            "label": "Urgência",
+            "name": "Urgencia",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.DateFormatter",
+                "properties": {
+                    "dataFormat": "yyyy-MM-dd HH:mm:ss",
+                    "dateStoreInUTC": "",
+                    "displayFormat": "dd/MM/yyyy HH:mm:ss"
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_13",
+            "label": "Data Criação",
+            "name": "dateCreated",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
+    "description": "",
+    "filters": [],
+    "id": "modelo11_processamento_manual_reg",
+    "name": "Registos - Modelo 11: Processamento Manual",
+    "order": "",
+    "orderBy": "",
+    "pageSize": "0",
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "rowActions": [{
+        "className": "org.joget.plugin.enterprise.BeanShellDatalistAction",
+        "icon": "<i class=\"fas fa-code\"><\/i>",
+        "id": "rowAction_0",
+        "label": "Bean Shell",
+        "name": "Bean Shell Datalist Action",
+        "properties": {
+            "confirmation": "",
+            "datalist_type": "row_action",
+            "label": "Atribuir Processo",
+            "rules": [],
+            "script": "import org.joget.workflow.model.service.WorkflowManager;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.workflow.model.service.WorkflowUserManager;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport javax.servlet.http.HttpServletRequest;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.datalist.model.DataListBinderDefaultimport;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\n\r\nString idProcesso=\"\";\r\nString aid = \"\";\r\nString resourceId = \"\";\r\nfor (String key : rowKeys) {\r\n    idProcesso = key;\r\n    \r\n}\r\n\r\n    Connection con = null;\r\n    PreparedStatement stmt = null;\r\n    ResultSet rs = null;\r\n    \r\n    try{\r\n        DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n        con = ds.getConnection();\r\n        \r\n        if(!con.isClosed()){\r\n\t\t\tString queryGetAid = \"SELECT a.id as 'Aid', sass.ResourceId as 'ResourceId' FROM shkprocesses p LEFT JOIN shkactivities a ON p.id = ProcessId LEFT JOIN shkprocessstates ps ON ps.oid = p.State LEFT JOIN SHKActivityStates acs ON acs.oid = a.State LEFT JOIN shkassignmentstable sass ON sass.ActivityId = a.id WHERE p.ActivityRequesterProcessId = ? AND a.id LIKE '%processamentoManualModelo' AND ps.KeyValue LIKE 'open.running' AND (acs.KeyValue LIKE 'open.not_running.not_started' OR acs.KeyValue LIKE 'open.running');\";\r\n\t\t\tstmt = con.prepareStatement(queryGetAid);\r\n\t\t\tstmt.setObject(1, idProcesso);\r\n\t\t\trs = stmt.executeQuery();\r\n    \t\t\r\n    \t\tLogUtil.info(\"ID\", idProcesso);\r\n    \t\t\r\n    \t\tif(rs.next()){\r\n    \t\t\taid = rs.getObject(\"Aid\");\r\n                resourceId = rs.getObject(\"ResourceId\");\r\n\t\t\t\r\n\t\t\t    WorkflowManager wm = (WorkflowManager) AppUtil.getApplicationContext().getBean(\"workflowManager\");\r\n                WorkflowUserManager wum = (WorkflowUserManager) AppUtil.getApplicationContext().getBean(\"workflowUserManager\");\r\n                \r\n                //get the values from the \r\n                String replaceUser = resourceId;\r\n                String username = \"#currentUser.username#\";\r\n            \r\n            \r\n                //getCurrentThreadUser() Method used by system to get current thread user\r\n                String currentUser = wum.getCurrentThreadUser();\r\n                wum.setCurrentThreadUser(replaceUser);\r\n                wum.setCurrentThreadUser(currentUser);\r\n                \r\n                //Reassigns the assignment from a user (replaceUser) to another user (username)\r\n                wm.assignmentReassign(\"\", \"\", aid, username, replaceUser);\r\n    \t\t}\r\n        }\r\n            \r\n    }catch(Exception e){\r\n            LogUtil.error(appDef.toString(), e, \"Error getting info from DB\");\r\n    }finally{\r\n        try{\r\n            if(rs != null){\r\n            rs.close();\r\n            }\r\n            if(stmt != null){\r\n                stmt.close();\r\n            }\r\n            if(con != null && !con.isClosed()) {\r\n                con.close();\r\n            }\r\n        }catch(Exception e){\r\n            LogUtil.error(appDef.toString(), e, \"Error closing DB connection\");\r\n        }\r\n        \r\n    }"
+        },
+        "type": "text"
+    }],
+    "showPageSizeSelector": "true",
+    "useSession": "false"
+}

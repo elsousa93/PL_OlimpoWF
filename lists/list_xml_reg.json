@@ -1,0 +1,338 @@
+{
+    "actions": [],
+    "binder": {
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "id",
+            "sql": "SELECT id, c_entidade, c_nif, c_ficheiro_xml, c_ano_xml AS Ano, c_mes_xml AS Mes, ROW_NUMBER() OVER (ORDER BY c_ano_xml DESC, c_mes_xml DESC, c_entidade ASC) AS No \nFROM app_fd_modelo11\nWHERE if('#currentUser.department.id#' LIKE '%_ENT%', c_nif = (Select c_nif from app_fd_info_colaboradores ic\n    where '#currentUser.username#' = ic.c_user_colaborador), 1)"
+        }
+    },
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_1",
+            "label": "NIF",
+            "name": "c_nif",
+            "permission_rules": {"943bebef-6806-8885-953d-5008580ff6dc": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_0",
+            "label": "Entidade",
+            "name": "c_entidade",
+            "permission_rules": {"943bebef-6806-8885-953d-5008580ff6dc": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.tutorial.FileLinkDatalistFormatter",
+                "properties": {
+                    "attachment": "true",
+                    "formDefId": "modelo11_reg"
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_2",
+            "label": "XML",
+            "name": "c_ficheiro_xml",
+            "permission_rules": {"943bebef-6806-8885-953d-5008580ff6dc": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [
+                        {
+                            "label": "Janeiro",
+                            "value": "01"
+                        },
+                        {
+                            "label": "Fevereiro",
+                            "value": "02"
+                        },
+                        {
+                            "label": "Março",
+                            "value": "03"
+                        },
+                        {
+                            "label": "Abril",
+                            "value": "04"
+                        },
+                        {
+                            "label": "Maio",
+                            "value": "05"
+                        },
+                        {
+                            "label": "Junho",
+                            "value": "06"
+                        },
+                        {
+                            "label": "Julho",
+                            "value": "07"
+                        },
+                        {
+                            "label": "Agosto",
+                            "value": "08"
+                        },
+                        {
+                            "label": "Setembro",
+                            "value": "09"
+                        },
+                        {
+                            "label": "Outubro",
+                            "value": "10"
+                        },
+                        {
+                            "label": "Novembro",
+                            "value": "11"
+                        },
+                        {
+                            "label": "Dezembro",
+                            "value": "12"
+                        }
+                    ],
+                    "optionsBinder": {
+                        "className": "",
+                        "properties": {}
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_5",
+            "label": "Mês",
+            "name": "Mes",
+            "permission_rules": {"943bebef-6806-8885-953d-5008580ff6dc": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "Ano",
+            "name": "Ano",
+            "permission_rules": {"943bebef-6806-8885-953d-5008580ff6dc": {}},
+            "sortable": "false"
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
+    "description": "",
+    "disableResponsive": "",
+    "filters": [
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-6468093-fn_c_entidade",
+            "hidden": "true",
+            "id": "filter_3",
+            "label": "Entidade",
+            "name": "c_entidade",
+            "permission_rules": {"943bebef-6806-8885-953d-5008580ff6dc": {}},
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {"defaultValue": ""}
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-6468093-fn_c_nif",
+            "hidden": "true",
+            "id": "filter_2",
+            "label": "NIF",
+            "name": "c_nif",
+            "permission_rules": {"943bebef-6806-8885-953d-5008580ff6dc": {}},
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {"defaultValue": ""}
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-6468093-fn_Mes",
+            "hidden": "",
+            "id": "filter_0",
+            "label": "Mês",
+            "name": "Mes",
+            "permission_rules": {"943bebef-6806-8885-953d-5008580ff6dc": {}},
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "controlField": "",
+                    "defaultValue": "",
+                    "multiple": "",
+                    "options": [
+                        {
+                            "grouping": "",
+                            "label": "Janeiro",
+                            "value": "01"
+                        },
+                        {
+                            "grouping": "",
+                            "label": "Fevereiro",
+                            "value": "02"
+                        },
+                        {
+                            "grouping": "",
+                            "label": "Março",
+                            "value": "03"
+                        },
+                        {
+                            "grouping": "",
+                            "label": "Abril",
+                            "value": "04"
+                        },
+                        {
+                            "grouping": "",
+                            "label": "Maio",
+                            "value": "05"
+                        },
+                        {
+                            "grouping": "",
+                            "label": "Junho",
+                            "value": "06"
+                        },
+                        {
+                            "grouping": "",
+                            "label": "Julho",
+                            "value": "07"
+                        },
+                        {
+                            "grouping": "",
+                            "label": "Agosto",
+                            "value": "08"
+                        },
+                        {
+                            "grouping": "",
+                            "label": "Setembro",
+                            "value": "09"
+                        },
+                        {
+                            "grouping": "",
+                            "label": "Outubro",
+                            "value": "10"
+                        },
+                        {
+                            "grouping": "",
+                            "label": "Novembro",
+                            "value": "11"
+                        },
+                        {
+                            "grouping": "",
+                            "label": "Dezembro",
+                            "value": "12"
+                        }
+                    ],
+                    "optionsBinder": {
+                        "className": "",
+                        "properties": {}
+                    },
+                    "size": ""
+                }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-6468093-fn_Ano",
+            "hidden": "",
+            "id": "filter_1",
+            "label": "Ano",
+            "name": "Ano",
+            "permission_rules": {"943bebef-6806-8885-953d-5008580ff6dc": {}},
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {"defaultValue": "#date.yyyy#"}
+            }
+        }
+    ],
+    "hidePageSize": "",
+    "id": "list_xml_reg",
+    "name": "Registos - XML",
+    "order": "2",
+    "orderBy": "No",
+    "pageSize": "0",
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "permission_rules": [{
+        "permission": {
+            "className": "org.joget.apps.userview.lib.DepartmentPermission",
+            "properties": {
+                "allowedDeptIds": "PL_INT_MOD11",
+                "orgId": "PL"
+            }
+        },
+        "permission_key": "943bebef-6806-8885-953d-5008580ff6dc",
+        "permission_name": "Modelo 11"
+    }],
+    "responsiveView": [
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Mobile"
+        },
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Tablet"
+        }
+    ],
+    "rowActions": [],
+    "searchPopup": "",
+    "showDataWhenFilterSet": "",
+    "showPageSizeSelector": "true",
+    "useSession": ""
+}

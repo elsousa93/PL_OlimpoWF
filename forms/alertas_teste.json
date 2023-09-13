@@ -1,0 +1,95 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [{
+        "className": "org.joget.apps.form.model.Section",
+        "elements": [{
+            "className": "org.joget.apps.form.model.Column",
+            "elements": [
+                {
+                    "className": "org.joget.apps.form.lib.HiddenField",
+                    "properties": {
+                        "id": "id_processo",
+                        "useDefaultWhenEmpty": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.TextArea",
+                    "properties": {
+                        "cols": "20",
+                        "id": "tb_alertas",
+                        "label": "",
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "rows": "5",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field2",
+                        "label": "",
+                        "value": "<script type=\"text/javascript\">\r\n    $(document).ready(function(){\r\n            \r\n        var textAreaid =  document.getElementById(\"alertas_alertas_teste_tb_alertas\");\r\n        var htmlAlerta = textAreaid.value;\r\n        textAreaid.style.display = \"none\";\r\n        \r\n        if(htmlAlerta === \"\" || htmlAlerta == null){\r\n            $(\"div#alertas_alertas_teste_section1\").parent().remove();\r\n        }\r\n\r\n    });\r\n<\/script>"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field5",
+                        "label": "",
+                        "value": "<script type=\"text/javascript\">\r\n    $(window).load(function(){\r\n        //var alertasID = \"field2\";\r\n        \r\n        \r\n        //store the value to a field\r\n        var tbAlertaId = \"alertas_alertas_teste_tb_alertas\";\r\n        var htmlAlerta = $('[name='+tbAlertaId+']:enabled').val();\r\n\r\n\r\n         \r\n        //present in HTML\r\n        $(\".field2\").html(htmlAlerta)\r\n    });\r\n<\/script>"
+                    }
+                }
+            ],
+            "properties": {"width": "100%"}
+        }],
+        "properties": {
+            "id": "section1",
+            "label": "Section"
+        }
+    }],
+    "properties": {
+        "description": "",
+        "id": "alertas_teste",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+            "properties": {
+                "autoHandleFiles": "",
+                "autoHandleWorkflowVariable": "true",
+                "cacheInterval": "",
+                "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.*;\r\nimport org.joget.commons.util.LogUtil;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport java.time.format.DateTimeFormatter;\r\nimport java.time.LocalDateTime; \r\nimport java.time.LocalDate;\r\nimport org.joget.apps.app.model.AppDefinition;\r\n\r\n\r\n\r\n\r\nString result = \"\";\r\n\r\n    AppDefinition appDef = AppUtil.getCurrentAppDefinition();\r\n    Connection con = null;\r\n    PreparedStatement stmt = null;\r\n    ResultSet rs = null;\r\n    ResultSet rs2 = null;\r\n    try{\r\n            DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n            con = ds.getConnection();\r\n            \r\n            if(!con.isClosed()){\r\n             \r\n                    \r\n                \r\n                    \r\n               \r\n            }\r\n    }catch(Exception e){\r\n        LogUtil.error(appDef.toString() + \" - Alertas Subform Procuradoria\", e, \"Error getting info from DB\");\r\n    }finally{\r\n        try{\r\n            if(rs != null){\r\n            rs.close();\r\n            }\r\n            if(stmt != null){\r\n                stmt.close();\r\n            }\r\n            if(con != null && !con.isClosed()) {\r\n                con.close();\r\n            }\r\n        }catch(Exception e){\r\n            LogUtil.error(appDef.toString() + \" - Alertas Subform Procuradoria\", e, \"Error closing DB connection\");\r\n        }\r\n        \r\n    }\r\n\r\n\r\n \r\nFormRowSet f = new FormRowSet();\r\nFormRow r1 = new FormRow();\r\n//r1.put(\"alertas\", \"Alertas\");\r\n\r\nString pk = \"#requestParam.alertas#\";\r\nString servico = \"#requestParam.servico#\";\r\nString idProcesso = \"#requestParam.id_processo#\";\r\n\r\n\r\nString data_conclusoes = \"#form.conclusao_procu.data_conclusao[{requestParam.id}]#\";\r\n\r\nLogUtil.info(\"ID\", \"AAAAAAAAAA\" + pk);\r\n//LogUtil.info(\"Servico\", \"AAAAAAAAAA\" + servico);\r\n//LogUtil.info(\"IdProcesso\", \"AAAAAAAAAA\" + idProcesso);\r\n\r\n\r\nresult = pk + \"  -  \" + data_conclusoes;\r\n\r\nr1.put(\"tb_alertas\", result);\r\n\r\nf.add(r1);\r\n \r\nreturn f;",
+                "useAjax": ""
+            }
+        },
+        "name": "Alertas TESTE",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "alertas"
+    }
+}

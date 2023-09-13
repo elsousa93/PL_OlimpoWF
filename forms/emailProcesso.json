@@ -1,0 +1,252 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [{
+        "className": "org.joget.apps.form.model.Section",
+        "elements": [{
+            "className": "org.joget.apps.form.model.Column",
+            "elements": [
+                {
+                    "className": "org.joget.apps.form.lib.HiddenField",
+                    "properties": {
+                        "id": "id_processo",
+                        "useDefaultWhenEmpty": "",
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.TextField",
+                    "properties": {
+                        "encryption": "",
+                        "id": "destinatarios",
+                        "label": "Destinatários",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "storeNumeric": "",
+                        "style": "",
+                        "validator": {
+                            "className": "org.joget.apps.form.lib.DefaultValidator",
+                            "properties": {
+                                "mandatory": "true",
+                                "message": "",
+                                "type": ""
+                            }
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.TextField",
+                    "properties": {
+                        "encryption": "",
+                        "id": "cc",
+                        "label": "Cc",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "storeNumeric": "",
+                        "style": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.TextField",
+                    "properties": {
+                        "encryption": "",
+                        "id": "assunto",
+                        "label": "Assunto",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "storeNumeric": "",
+                        "style": "",
+                        "validator": {
+                            "className": "org.joget.apps.form.lib.DefaultValidator",
+                            "properties": {
+                                "mandatory": "true",
+                                "message": "",
+                                "type": ""
+                            }
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.SelectBox",
+                    "properties": {
+                        "controlField": "",
+                        "id": "template",
+                        "label": "Template",
+                        "multiple": "",
+                        "options": [],
+                        "optionsBinder": {
+                            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                            "properties": {
+                                "cacheInterval": "",
+                                "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.FormStoreBinder;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport org.joget.commons.util.LogUtil;\r\n\r\n \r\npublic FormRowSet load(String[] values) {\r\n    \r\n    FormRowSet rows = new FormRowSet();\r\n    \r\n    FormRow option = new FormRow();\r\n    option.setProperty(FormUtil.PROPERTY_VALUE, \"\");\r\n    option.setProperty(FormUtil.PROPERTY_LABEL, \"\");\r\n    rows.add(option);\r\n    \r\n    String servico = null;\r\n    String operativa = null;\r\n    String idAtividade = null;\r\n    String banco = null;\r\n    //if (values != null && values.length > 0) {\r\n        // servico = \"%\" + values[0] + \"%\";\r\n        idAtividade = \"#paramRequest.id_atividade#\";\r\n        servico = \"#form.processos.servico[{requestParam.fk_id_processo}]#\";\r\n        banco = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo[{requestParam.fk_id_processo}]}]#\";\r\n        \r\n        if(servico.startsWith(\"#form.processos.servico[{requestParam.fk_id_processo}]\")){\r\n            servico =  \"#form.processos_procu.servico[{requestParam.fk_id_processo}]#\";\r\n            LogUtil.info(\"SERVICO IF1\", \"Servico \" + servico);\r\n        }\r\n        \r\n        if (servico.startsWith(\"#form.processos_procu.servico[{requestParam.fk_id_processo}]\"))\r\n        {\r\n            servico =  \"#form.processos_distrates.servico[{requestParam.fk_id_processo}]#\";\r\n            LogUtil.info(\"SERVICO IF2\", \"Servico \" + servico);\r\n        }\r\n        \r\n        if (servico.startsWith(\"#form.processos_distrates.servico[{requestParam.fk_id_processo}]\"))\r\n        {\r\n            servico =  \"#form.processos_hip.servico[{requestParam.fk_id_processo}]#\";\r\n            LogUtil.info(\"SERVICO IF3\", \"Servico \" + servico);\r\n        }\r\n        \r\n        /*if (servico.startsWith(\"#form.processos_hip.servico[{requestParam.fk_id_processo}]\"))\r\n        {\r\n            servico =  \"#form.processos_hip.servico[{requestParam.fk_id_processo}]#\";\r\n            LogUtil.info(\"SERVICO IF4\", \"Servico \" + servico);\r\n        }*/\r\n        \r\n        if(servico.equals(\"CH\")){\r\n            operativa = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo[{requestParam.fk_id_processo}]}]#\";\r\n            banco = \"#form.banco.nome_banco[{form.processos.banco[{requestParam.fk_id_processo}]}]#\";\r\n        }else if(servico.equals(\"PROCU\")){\r\n            operativa = \"PROCU\";\r\n            banco = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo[{requestParam.fk_id_processo}]}]#\";\r\n            \r\n        }else if(servico.equals(\"DIST\")){\r\n            operativa = \"DIST\";\r\n            banco = \"#form.detalhe_proce_dist.nome_banco[{form.processos_distrates.detalhe_processo[{requestParam.fk_id_processo}]}]#\";\r\n            LogUtil.info(\"Entrou IF\", \"IF \" + banco);\r\n        }else if(servico.equals(\"HIP\")){\r\n            operativa = \"HIP\";\r\n            banco = \"#form.detalhe_proce_hip.nome_banco[{form.processos_hip.detalhe_processo[{requestParam.fk_id_processo}]}]#\";            \r\n        \r\n            \r\n        }else if(servico.equals(\"LEA\")){\r\n            operativa = \"LEA\";\r\n            banco = \"#form.detalhe_proce_hip.nome_banco[{form.processos_hip.detalhe_processo[{requestParam.fk_id_processo}]}]#\";\r\n            //LogUtil.info(\"Entrou LEA\");\r\n        }else{\r\n            operativa = \"%%\";\r\n        }\r\n        \r\n        \r\n        //LogUtil.info(\"AAAAAA\", \"servico \" + servico);\r\n        //LogUtil.info(\"AAAAAA\", \"Operativa \" + operativa);\r\n        //LogUtil.info(\"AAAAAA\", \"Banco \" + banco);\r\n        \r\n        \r\n        Connection con = null;\r\n        PreparedStatement stmt = null;\r\n        ResultSet rs = null;\r\n        String outorga_value = \"\";\r\n        String outorga_label = \"\";\r\n        \r\n        AppDefinition appDef = AppUtil.getCurrentAppDefinition();\r\n        \r\n        try{\r\n                DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n                con = ds.getConnection();\r\n                \r\n                \r\n                if(!con.isClosed()){\r\n                    \r\n                    \r\n                    /*LogUtil.info(\"Servico\", \"AAAAAA\" + servico);\r\n                    LogUtil.info(\"operativa\", \"AAAAAA\" + operativa);\r\n                    LogUtil.info(\"banco\", \"AAAAAA\" + banco);*/\r\n                    //Verificar o utilizador atribuido e atualizar caso esteja errado\r\n                    String query=\"SELECT id, c_nome FROM app_fd_template_email WHERE (c_servico LIKE ? OR c_servico LIKE '') AND (c_operativa LIKE ? OR c_operativa LIKE '') AND (c_banco LIKE ?  OR c_banco LIKE '');\";\r\n                    stmt = con.prepareStatement(query);\r\n                    stmt.setObject(1, servico);\r\n                    stmt.setObject(2, operativa);\r\n                    stmt.setObject(3, banco);\r\n                    rs = stmt.executeQuery();\r\n                    \r\n                    while(rs.next()){\r\n                        outorga_value = rs.getString(1);\r\n                        outorga_label = rs.getString(2);\r\n                        \r\n                        FormRow option = new FormRow();\r\n                        option.setProperty(FormUtil.PROPERTY_VALUE, outorga_value);\r\n                        option.setProperty(FormUtil.PROPERTY_LABEL, outorga_label);\r\n                        rows.add(option);\r\n                        \r\n                    }\r\n                }\r\n                \r\n        }catch(Exception e){\r\n            LogUtil.error(\"Criar email - Templates de email\", e, \"Error getting info from DB\");\r\n        }finally{\r\n            try{\r\n                if(rs != null){\r\n                rs.close();\r\n                }\r\n                if(stmt != null){\r\n                    stmt.close();\r\n                }\r\n                if(con != null && !con.isClosed()) {\r\n                    con.close();\r\n                }\r\n            }catch(Exception e){\r\n                LogUtil.error(\"Importa processo - forma de outorga\", e, \"Error closing DB connection\");\r\n            }\r\n            \r\n        }\r\n        \r\n    //}\r\n\r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(values);",
+                                "useAjax": "true"
+                            }
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "validator": {
+                            "className": "org.joget.apps.form.lib.DefaultValidator",
+                            "properties": {
+                                "mandatory": "true",
+                                "message": "",
+                                "type": ""
+                            }
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.plugin.enterprise.AjaxSubForm",
+                    "properties": {
+                        "ajax": "true",
+                        "collapsible": "",
+                        "collapsibleExpanded": "true",
+                        "collapsibleLabelCollapsed": "View Details",
+                        "collapsibleLabelExpanded": "Hide Details",
+                        "formDefId": "mensagemEmailSubform",
+                        "hideEmpty": "",
+                        "id": "mensagem",
+                        "label": "",
+                        "noLoad": "",
+                        "noframe": "",
+                        "parentSubFormId": "template",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "storeBinder": {
+                            "className": "org.joget.plugin.enterprise.ParentFormBinder",
+                            "properties": {}
+                        },
+                        "subFormParentId": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.FileUpload",
+                    "properties": {
+                        "attachment": "true",
+                        "fileType": "",
+                        "fileTypeMsg": "Invalid file type",
+                        "id": "anexos",
+                        "label": "Anexos",
+                        "maxSize": "",
+                        "maxSizeMsg": "File size limit exceeded",
+                        "multiple": "true",
+                        "padding": "",
+                        "permissionType": "",
+                        "readonly": "",
+                        "removeFile": "",
+                        "resizeHeight": "",
+                        "resizeMethod": "",
+                        "resizeQuality": "0.8",
+                        "resizeWidth": "",
+                        "size": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        }
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "btn_enviar",
+                        "label": "",
+                        "value": "\n<!-- type=submit & name=assignmentComplete para concluir atividade do processo Esclarecimentos-->\n\n\n<input type=\"submit\" name=\"submit\" value=\"ENVIAR EMAIL\" id=\"btn\" style=\"background-color:rgba(0,0,0,0);\"/>\n<button type=\"button\" id=\"abrirEmail\" onclick=\"myFunction()\">ABRIR EMAIL<\/button>\n<script type=\"text/javascript\">\n    var url, value, action, formAction, htmlContent, destinatario, assunto, Cc;\n    \n    $(window).load(function(){\n        setTimeout(function() {\n            \n        }, 10000);\n    }); \n\n    \n    $(document).ready(function(){\n        $(\"#submit\").remove();\n        value = \"#requestParam.id_atividade#\"; //get activity id do processo \"pai\"\n        action= \"#requestParam._action#\";\n        url = \"#request.scheme#://#request.serverName#:#request.serverPort##request.contextPath#/web/userview/workflowPL/UV_PL_Geral/_/filaTrabalho?_mode=assignment&activityId=\" + value; //criar url inserindo activity id atual do processo\";\n        \n        htmlContent = $(\"div[name=mensagem] textarea[id*=mensagem]\").text();\n        \n        if(action===\"submit\"){\n            url = localStorage.getItem(\"redirectUrl\");\n            redirect();\n        }\n        \n        if(value===\"\") {\n            $(\"#btn\").remove();\n        }else {\n            localStorage.setItem(\"redirectUrl\",url); \n        }\n        \n        $(\"button#abrirEmail\").show();\n        \n        if (!value.includes(\"CHArquivo\")) {\n            $(\"#btn\").remove();        \n        }\n    });\n    \n    \n    $(document).change(function(){\n        if($(\"ul[class*=fileupload]\").children().length > 0){\n            $(\"button#abrirEmail\").hide();\n        }else{\n            $(\"button#abrirEmail\").show();\n        }\n        \n        $('a.remove').click( function(e){\n            if($(\"ul[class*=fileupload]\").children().length == 1){ //Igual a 1 pois o número só atualiza após o evento\n                $(\"button#abrirEmail\").show();\n            }\n        });\n    });\n    \n    \nfunction myFunction(){\n    if($('select[id^=template]').val() !== ''){\n        htmlContent = $(\"div[name=mensagem] iframe\").contents().find('html:first').find('body:first').html();\n    }else{\n        htmlContent = $(\"div[name=mensagem] textarea[id*=mensagem]\").text();\n    }\n    \n    destinatario = $(\"input#destinatarios\").val();\n    assunto = $(\"input#assunto\").val();\n    Cc = $(\"input#cc\").val();\n\n    var mailHtm = htmlContent;\n    var emailto = destinatario;\n    var emailsubject = assunto;\n    var emlCont = 'To: '+emailto + '\\n';\n    \n    emlCont += 'Cc: '+ Cc + '\\n';\n    emlCont += 'Subject: '+emailsubject+'\\n';\n    emlCont += 'X-Unsent: 1'+'\\n';\n\n    emlCont += 'Content-Type: text/html; charset=utf-8'+'\\n';\n    emlCont += ''+'\\n';\n\n    emlCont += \"<!DOCTYPE html><html><head><\/head><body>\" + mailHtm + \"<\/body><\/html>\";\n    var textFile = null;\n    var data = new Blob([emlCont], {type: \"text/html; charset=utf-8\" });\n    if (textFile !== null) {\n        window.URL.revokeObjectURL(textFile);\n    }\n\n    textFile = window.URL.createObjectURL(data);\n    //console.log(textFile);\n\n    var a = document.createElement('a'); //make a link in document\n    var linkText = document.createTextNode('fileLink');\n    a.appendChild(linkText) ;\n\n    a.href = textFile;\n\n    a.id = 'fileLink';\n    a.download = emailsubject+\".eml\"; //'filenameTest.eml' ;\n    a.style.visibility = \"hidden\";\n\n    document.body.appendChild(a) ;\n\n    document.getElementById('fileLink').click();\n    document.getElementById('fileLink').remove();\n}\n\n   \nfunction redirect(){\n    return window.location.href=url;\n}\n\n  \n//Substituição de valores no texto do template\n$(\"div[name=mensagem]\").on('DOMSubtreeModified',function(){\n    var emailHtml = $(\"iframe[id*=mensagem]\").contents().find('body').html();\n    if(emailHtml){\n        var idProcesso= \"#requestParam.fk_id_processo#\";\n        var idDetalheProcesso = \"#form.processos.detalhe_processo[{requestParam.fk_id_processo}]#\";\n        var n_wf_banco = \"#form.detalhe_processo.n_wf_banco[{form.processos.detalhe_processo[{requestParam.fk_id_processo}]}]#\";\n        if(!n_wf_banco.startsWith(\"#form.\")){\n            var newHtml = emailHtml.replace(\"n_wf_banco\", n_wf_banco);\n            if(emailHtml !== newHtml){\n                $(\"iframe[id*=mensagem]\").contents().find('body').html(newHtml);\n            }\n        }\n    }\n});\n\n<\/script>"
+                    }
+                }
+            ],
+            "properties": {"width": "100%"}
+        }],
+        "properties": {
+            "comment": "",
+            "id": "criar_email",
+            "join": "",
+            "label": "Criar E-mail",
+            "loadBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "permission": {
+                "className": "",
+                "properties": {}
+            },
+            "permissionReadonly": "",
+            "readonly": "",
+            "readonlyLabel": "",
+            "regex": "",
+            "reverse": "",
+            "storeBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "visibilityControl": "",
+            "visibilityValue": ""
+        }
+    }],
+    "properties": {
+        "description": "",
+        "id": "emailProcesso",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "CH - Email",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "org.joget.apps.app.lib.EmailTool",
+            "properties": {
+                "bcc": "",
+                "cc": "#form.comunicacoes_proce.cc#",
+                "fields": [{
+                    "embed": "false",
+                    "field": "anexos"
+                }],
+                "files": [],
+                "formDefId": "emailProcesso",
+                "from": "fenix_dev@plataformalegal.net",
+                "host": "smtp-mail.outlook.com",
+                "icsAttachement": "",
+                "isHtml": "true",
+                "message": "#form.comunicacoes_proce.mensagem#",
+                "password": "%%%%r5gc9DbLjanJBX1sbclubJrPIkWEgQoj%%%%",
+                "port": "587",
+                "security": "TLS",
+                "subject": "#form.comunicacoes_proce.assunto#",
+                "toParticipantId": "",
+                "toSpecific": "#form.comunicacoes_proce.destinatarios#",
+                "username": "fenix_dev@plataformalegal.net"
+            }
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "comunicacoes_proce"
+    }
+}

@@ -1,0 +1,337 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [{
+        "className": "org.joget.apps.form.model.Section",
+        "elements": [{
+            "className": "org.joget.apps.form.model.Column",
+            "elements": [
+                {
+                    "className": "org.joget.apps.form.lib.Radio",
+                    "properties": {
+                        "controlField": "",
+                        "id": "tratamento_contratacao",
+                        "label": "Tratamento por Contratação",
+                        "options": [
+                            {
+                                "grouping": "",
+                                "label": "Sim",
+                                "value": "SIM"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Não",
+                                "value": "NAO"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Por Validar",
+                                "value": "VAL"
+                            }
+                        ],
+                        "optionsBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "permission_rules": {
+                            "2ed4a1ac-4741-c2b3-4162-22db003307e9": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "3691cbd9-9ce5-b281-7fe4-af83a90c9665": {},
+                            "7fb5d1bc-e8f6-ca82-45ea-3e08e96f2cf5": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "cd060507-2f0d-2d1a-429e-831709963715": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            }
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.TextArea",
+                    "properties": {
+                        "cols": "20",
+                        "id": "notificacao_retorno",
+                        "label": "Notificação de Retorno",
+                        "permission_rules": {
+                            "2ed4a1ac-4741-c2b3-4162-22db003307e9": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "3691cbd9-9ce5-b281-7fe4-af83a90c9665": {},
+                            "7fb5d1bc-e8f6-ca82-45ea-3e08e96f2cf5": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "cd060507-2f0d-2d1a-429e-831709963715": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            }
+                        },
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "rows": "5",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.DatePicker",
+                    "properties": {
+                        "allowManual": "true",
+                        "currentDateAs": "",
+                        "dataFormat": "yyyy-MM-dd",
+                        "datePickerType": "",
+                        "endDateFieldId": "",
+                        "format": "dd/mm/yy",
+                        "id": "data_retorno",
+                        "label": "Data de Retorno",
+                        "permission_rules": {
+                            "2ed4a1ac-4741-c2b3-4162-22db003307e9": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "3691cbd9-9ce5-b281-7fe4-af83a90c9665": {},
+                            "7fb5d1bc-e8f6-ca82-45ea-3e08e96f2cf5": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "cd060507-2f0d-2d1a-429e-831709963715": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            }
+                        },
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "startDateFieldId": "",
+                        "validator": {
+                            "className": "org.joget.apps.form.lib.BeanShellValidator",
+                            "properties": {
+                                "decoration": "",
+                                "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\nimport java.io.*;\r\n\r\npublic boolean validate(Element element, FormData formData, String[] values) {\r\n    boolean result = true;\r\n    \r\n    \r\n    String origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo.equals(\"ACE\") || origem_processo.equals(\"PRE\") || origem_processo.equals(\"TRD\"))){\r\n        return true;\r\n    }\r\n    \r\n    String faseProcesso = \"#process.processId#\";\r\n    if(!faseProcesso.contains(\"Contratacao\")){\r\n        return true;\r\n        \r\n    }\r\n     \r\n    //get dropdown select box value\r\n    String field1Id = \"notificacao_retorno\";\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field1 = FormUtil.findElement(field1Id, form, formData);\r\n    \r\n    \r\n    if (field1 != null) {\r\n        //get value of field 1\r\n        String field1Values = FormUtil.getElementPropertyValue(field1, formData);\r\n\r\n        \r\n        if(field1Values != null && field1Values.length() > 0 && (values.length <= 0 || values[0].isEmpty()) ){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório quando existe uma Notificação de Retorno\");\r\n            result = false;\r\n        }\r\n    } else {\r\n        //ignore if the dropdown does not exist\r\n    }\r\n    \r\n    \r\n    \r\n    \r\n    return result;\r\n    \r\n    \r\n}\r\n  \r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);\r\n\r\n"
+                            }
+                        },
+                        "value": "",
+                        "workflowVariable": "",
+                        "yearRange": "c-10:c+10"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.Radio",
+                    "properties": {
+                        "controlField": "",
+                        "id": "urgencia_analise",
+                        "label": "Urgência de Análise",
+                        "options": [
+                            {
+                                "grouping": "",
+                                "label": "Sim",
+                                "value": "SIM"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Não",
+                                "value": "NAO"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Por Validar",
+                                "value": "VAL"
+                            }
+                        ],
+                        "optionsBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "permission_rules": {
+                            "2ed4a1ac-4741-c2b3-4162-22db003307e9": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "3691cbd9-9ce5-b281-7fe4-af83a90c9665": {},
+                            "7fb5d1bc-e8f6-ca82-45ea-3e08e96f2cf5": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "cd060507-2f0d-2d1a-429e-831709963715": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            }
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.TextArea",
+                    "properties": {
+                        "cols": "20",
+                        "id": "motivo_urgencia",
+                        "label": "Motivo de Urgência de Análise",
+                        "permission_rules": {
+                            "2ed4a1ac-4741-c2b3-4162-22db003307e9": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "3691cbd9-9ce5-b281-7fe4-af83a90c9665": {},
+                            "7fb5d1bc-e8f6-ca82-45ea-3e08e96f2cf5": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "cd060507-2f0d-2d1a-429e-831709963715": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            }
+                        },
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "rows": "5",
+                        "validator": {
+                            "className": "org.joget.apps.form.lib.BeanShellValidator",
+                            "properties": {
+                                "decoration": "",
+                                "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values) {\r\n    boolean result = true;\r\n    \r\n    String faseProcesso = \"#process.processId#\";\r\n    if(!faseProcesso.contains(\"Contratacao\")){\r\n        return true;\r\n        \r\n    }\r\n     \r\n    //get dropdown select box value\r\n    String field1Id = \"urgencia_analise\";\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field1 = FormUtil.findElement(field1Id, form, formData);\r\n    \r\n    if (field1 != null) {\r\n        //get value of field 1\r\n        String field1Values = FormUtil.getElementPropertyValue(field1, formData);\r\n  \r\n        if (field1Values != null && field1Values.equalsIgnoreCase(\"sim\") && (values.length <= 0 || values[0].isEmpty()) ){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório quando existe Urgência de Análise\");\r\n            result = false;\r\n        }\r\n    } else {\r\n        //ignore if the dropdown does not exist\r\n    }\r\n    \r\n \r\n    return result;\r\n}\r\n  \r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                            }
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                }
+            ],
+            "properties": {"width": "100%"}
+        }],
+        "properties": {
+            "comment": "",
+            "id": "contratacao",
+            "join": "",
+            "label": "Informação Geral",
+            "loadBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "permission": {
+                "className": "",
+                "properties": {}
+            },
+            "permissionReadonly": "",
+            "permission_rules": {
+                "2ed4a1ac-4741-c2b3-4162-22db003307e9": {
+                    "permissionHidden": "true",
+                    "readonly": ""
+                },
+                "3691cbd9-9ce5-b281-7fe4-af83a90c9665": {},
+                "7fb5d1bc-e8f6-ca82-45ea-3e08e96f2cf5": {
+                    "permissionHidden": "true",
+                    "readonly": ""
+                },
+                "cd060507-2f0d-2d1a-429e-831709963715": {
+                    "permissionHidden": "true",
+                    "readonly": ""
+                }
+            },
+            "readonly": "",
+            "readonlyLabel": "",
+            "regex": "",
+            "reverse": "",
+            "storeBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "visibilityControl": "",
+            "visibilityValue": ""
+        }
+    }],
+    "properties": {
+        "description": "",
+        "id": "contratacao",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "CH - Contratação",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "permission_rules": [
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_CNT_ABN_NOR_CRH;PL_INT_CNT_BCP_NOR_CRH;PL_INT_CNT_BIC_NOR_CRH;PL_INT_CNT_BNI_NOR_CRH;PL_INT_CNT_BST_NOR_CRH;PL_INT_CNT_CTT_NOR_CRH;PL_INT_CNT_GEN_NOR_CRH",
+                        "orgId": ""
+                    }
+                },
+                "permission_key": "3691cbd9-9ce5-b281-7fe4-af83a90c9665",
+                "permission_name": "Contratação"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_PRD_GEN_COM_CRH;PL_INT_PRD_GEN_NOR_CRH;PL_INT_PRD_GEN_RPA_CRH",
+                        "orgId": ""
+                    }
+                },
+                "permission_key": "cd060507-2f0d-2d1a-429e-831709963715",
+                "permission_name": "Produção"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_VAL_BCP_NOR_CRH;PL_INT_VAL_BNI_NOR_CRH;PL_INT_VAL_BST_NOR_CRH;PL_INT_VAL_GEN_NOR_CRH",
+                        "orgId": ""
+                    }
+                },
+                "permission_key": "2ed4a1ac-4741-c2b3-4162-22db003307e9",
+                "permission_name": "Validação"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_FLT_GEN_COM_CRH;PL_INT_FLT_GEN_NOR_CRH",
+                        "orgId": ""
+                    }
+                },
+                "permission_key": "7fb5d1bc-e8f6-ca82-45ea-3e08e96f2cf5",
+                "permission_name": "Filtro"
+            }
+        ],
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "geral"
+    }
+}

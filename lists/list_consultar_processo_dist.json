@@ -1,0 +1,309 @@
+{
+    "actions": [
+        {
+            "className": "org.joget.apps.datalist.lib.HyperlinkDataListAction",
+            "hidden": "",
+            "icon": "<i class=\"fas fa-link\"><\/i>",
+            "id": "action_0",
+            "label": "Hyperlink",
+            "name": "Data List Hyperlink Action",
+            "permission_rules": {
+                "1081155f-1700-be08-9c6f-364a49cf8d0b": {"hidden": ""},
+                "230d5174-9050-f08d-3232-ba468273f0d2": {},
+                "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
+                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {"hidden": "true"},
+                "7acc8ca8-49d2-41f4-f9fe-98060e5c2333": {},
+                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {"hidden": "true"}
+            },
+            "properties": {
+                "confirmation": "",
+                "datalist_type": "action",
+                "href": "realocar_multi_proc_dist",
+                "hrefColumn": "instanceId",
+                "hrefParam": "aid",
+                "label": "Realocar",
+                "target": "_self",
+                "visible": ""
+            },
+            "type": "text"
+        },
+        {
+            "className": "org.joget.apps.datalist.lib.FormRowDeleteDataListAction",
+            "hidden": "true",
+            "icon": "<i class=\"fas fa-trash-alt\"><\/i>",
+            "id": "action_1",
+            "label": "Delete",
+            "name": "Form Row Delete Action",
+            "permission_rules": {"230d5174-9050-f08d-3232-ba468273f0d2": {}},
+            "properties": {
+                "abortRelatedRunningProcesses": "true",
+                "confirmation": "",
+                "datalist_type": "action",
+                "deleteFiles": "true",
+                "deleteGridData": "true",
+                "deleteSubformData": "true",
+                "formDefId": "distrates",
+                "label": "APAGAR"
+            },
+            "type": "text"
+        }
+    ],
+    "binder": {
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "idDist",
+            "sql": "SELECT p.id as idDist, dp.c_num_pedido as NumPedido, p.dateCreated as DataCriacao ,dp.c_num_workflow as NumWorkflow, dp.c_nome_banco as Banco, dp.c_tipo_distrate as TipoDistrate, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos_distrates p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_proce_dist dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nWHERE sps.KeyValue LIKE 'open.running'\nAND p.id is not null\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id like '%DSTDistrates%'"
+        }
+    },
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "NumPedido",
+            "name": "NumPedido",
+            "permission_rules": {"230d5174-9050-f08d-3232-ba468273f0d2": {}},
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_3",
+            "label": "NumWorkflow",
+            "name": "NumWorkflow",
+            "permission_rules": {"230d5174-9050-f08d-3232-ba468273f0d2": {}},
+            "sortable": "false"
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.DateFormatter",
+                "properties": {
+                    "dataFormat": "yyyy-MM-dd HH:mm:ss",
+                    "dateStoreInUTC": "",
+                    "displayFormat": "dd/MM/yyyy HH:mm:ss"
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_6",
+            "label": "DataCriacao",
+            "name": "DataCriacao",
+            "permission_rules": {"230d5174-9050-f08d-3232-ba468273f0d2": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_5",
+            "label": "TipoDistrate",
+            "name": "TipoDistrate",
+            "permission_rules": {"230d5174-9050-f08d-3232-ba468273f0d2": {}},
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "activityName",
+            "name": "activityName",
+            "permission_rules": {"230d5174-9050-f08d-3232-ba468273f0d2": {}},
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_0",
+            "label": "Banco",
+            "name": "Banco",
+            "permission_rules": {"230d5174-9050-f08d-3232-ba468273f0d2": {}},
+            "sortable": "false"
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_2",
+            "label": "Alocado a",
+            "name": "assignee",
+            "permission_rules": {"230d5174-9050-f08d-3232-ba468273f0d2": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
+    "description": "",
+    "disableResponsive": "",
+    "filters": [
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-3893304-fn_NumWorkflow",
+            "id": "filter_0",
+            "label": "NumWorkflow",
+            "name": "NumWorkflow",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        },
+        {
+            "id": "filter_4",
+            "label": "NumPedido",
+            "name": "NumPedido",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-3893304-fn_assignee",
+            "hidden": "",
+            "id": "filter_3",
+            "label": "Alocado a",
+            "name": "assignee",
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "controlField": "",
+                    "defaultValue": "",
+                    "multiple": "",
+                    "options": [{
+                        "grouping": "",
+                        "label": "",
+                        "value": ""
+                    }],
+                    "optionsBinder": {
+                        "className": "org.joget.plugin.enterprise.UserOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "deptId": "PL_INT_DIST",
+                            "emptyLabel": "",
+                            "groupId": "",
+                            "grouping": "",
+                            "optionLabel": "",
+                            "orgId": "PL",
+                            "useAjax": ""
+                        }
+                    },
+                    "size": ""
+                }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-3893304-fn_Banco",
+            "id": "filter_2",
+            "label": "Banco",
+            "name": "Banco",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-3893304-fn_DataCriacao",
+            "hidden": "",
+            "id": "filter_1",
+            "label": "DataCriacao",
+            "name": "DataCriacao",
+            "type": {
+                "className": "org.joget.plugin.enterprise.DateDataListFilterType",
+                "properties": {
+                    "defaultValue": "",
+                    "format": "dd/MM/yyyy HH:mm:ss",
+                    "formatJava": "yyyy-MM-dd HH:mm:ss",
+                    "yearRange": "c-10:c+10"
+                }
+            }
+        }
+    ],
+    "hidePageSize": "",
+    "id": "list_consultar_processo_dist",
+    "name": "Distrates  - Consultar Processos",
+    "order": "",
+    "orderBy": "",
+    "pageSize": "0",
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "permission_rules": [{
+        "permission": {
+            "className": "org.joget.apps.userview.lib.GroupPermission",
+            "properties": {
+                "allowedGroupIds": "EquipaNeyond",
+                "orgId": ""
+            }
+        },
+        "permission_key": "230d5174-9050-f08d-3232-ba468273f0d2",
+        "permission_name": "Equipa Neyond"
+    }],
+    "responsiveView": [
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Mobile"
+        },
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Tablet"
+        }
+    ],
+    "rowActions": [{
+        "className": "org.joget.apps.datalist.lib.HyperlinkDataListAction",
+        "hidden": "",
+        "icon": "<i class=\"fas fa-link\"><\/i>",
+        "id": "rowAction_0",
+        "label": "Hyperlink",
+        "name": "Data List Hyperlink Action",
+        "permission_rules": {
+            "1081155f-1700-be08-9c6f-364a49cf8d0b": {"hidden": ""},
+            "230d5174-9050-f08d-3232-ba468273f0d2": {},
+            "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
+            "5ef76f30-3a46-461b-e85b-26e07d368c1e": {"hidden": "true"},
+            "7acc8ca8-49d2-41f4-f9fe-98060e5c2333": {},
+            "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {"hidden": "true"}
+        },
+        "properties": {
+            "confirmation": "",
+            "datalist_type": "row_action",
+            "href": "realocar_proc_dist",
+            "hrefColumn": "instanceId;assignee;idDist",
+            "hrefParam": "aid;replaceUser;procId",
+            "label": "Realocar",
+            "rules": [],
+            "target": "_self"
+        },
+        "type": "text"
+    }],
+    "searchPopup": "",
+    "showDataWhenFilterSet": "",
+    "showPageSizeSelector": "true",
+    "useSession": ""
+}

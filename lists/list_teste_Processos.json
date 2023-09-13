@@ -1,0 +1,120 @@
+{
+    "actions": [],
+    "binder": {
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "instanceId",
+            "sql": "\r\nWITH CONTRATACAO_BCP AS (SELECT p.id AS idProc, dp.*,\r\n                    sp.Id AS processId, \r\n                    sp.Name AS processName,\r\n                    sact.Id AS instanceId, \r\n                    sact.Name AS activityName,\r\n                    sass.ResourceId AS assignee,\r\n                    dp.c_n_wf_banco AS NwfBanco\r\n                    FROM shkprocesses sp\r\n                    INNER JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\n                    RIGHT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\n                    RIGHT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\n                    INNER JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\n                    WHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_BCP%') AND dp.c_fase_processo = \"CNT\"),\r\nCONTRATACAO_NB AS (SELECT p.id AS idProc, dp.*,\r\n                    sp.Id AS processId, \r\n                    sp.Name AS processName,\r\n                    sact.Id AS instanceId, \r\n                    sact.Name AS activityName,\r\n                    sass.ResourceId AS assignee,\r\n                    dp.c_n_wf_banco AS NwfBanco\r\n                    FROM shkprocesses sp\r\n                    INNER JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\n                    RIGHT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\n                    RIGHT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\n                    INNER JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\n                    WHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_NVB%') AND dp.c_fase_processo = \"CNT\"),\r\nCONTRATACAO_CTT AS(SELECT p.id AS idProc, dp.*,\r\n                    sp.Id AS processId, \r\n                    sp.Name AS processName,\r\n                    sact.Id AS instanceId, \r\n                    sact.Name AS activityName,\r\n                    sass.ResourceId AS assignee,\r\n                    dp.c_n_wf_banco AS NwfBanco\r\n                    FROM shkprocesses sp\r\n                    INNER JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\n                    RIGHT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\n                    RIGHT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\n                    INNER JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\n                    WHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_CTT%') AND dp.c_fase_processo = \"CNT\"),\r\nCONTRATACAO_MG AS (SELECT p.id AS idProc, dp.*,\r\n                    sp.Id AS processId, \r\n                    sp.Name AS processName,\r\n                    sact.Id AS instanceId, \r\n                    sact.Name AS activityName,\r\n                    sass.ResourceId AS assignee,\r\n                    dp.c_n_wf_banco AS NwfBanco\r\n                    FROM shkprocesses sp\r\n                    INNER JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\n                    RIGHT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\n                    RIGHT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\n                    INNER JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\n                    WHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_MTG%') AND dp.c_fase_processo = \"CNT\"),\r\nCONTRATACAO_BNI AS (SELECT p.id AS idProc, dp.*,\r\n                    sp.Id AS processId, \r\n                    sp.Name AS processName,\r\n                    sact.Id AS instanceId, \r\n                    sact.Name AS activityName,\r\n                    sass.ResourceId AS assignee,\r\n                    dp.c_n_wf_banco AS NwfBanco\r\n                    FROM shkprocesses sp\r\n                    INNER JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\n                    RIGHT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\n                    RIGHT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\n                    INNER JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\n                    WHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_BNI%') AND dp.c_fase_processo = \"CNT\"),\r\nCONTRATACAO_BST AS (SELECT p.id AS idProc, dp.*,\r\n                    sp.Id AS processId, \r\n                    sp.Name AS processName,\r\n                    sact.Id AS instanceId, \r\n                    sact.Name AS activityName,\r\n                    sass.ResourceId AS assignee,\r\n                    dp.c_n_wf_banco AS NwfBanco\r\n                    FROM shkprocesses sp\r\n                    INNER JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\n                    RIGHT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\n                    RIGHT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\n                    INNER JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\n                    WHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_BST%') AND dp.c_fase_processo = \"CNT\"),\r\nCONTRATACAO_BIC AS (SELECT p.id AS idProc, dp.*,\r\n                    sp.Id AS processId, \r\n                    sp.Name AS processName,\r\n                    sact.Id AS instanceId, \r\n                    sact.Name AS activityName,\r\n                    sass.ResourceId AS assignee,\r\n                    dp.c_n_wf_banco AS NwfBanco\r\n                    FROM shkprocesses sp\r\n                    INNER JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\n                    RIGHT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\n                    RIGHT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\n                    INNER JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\n                    WHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_BIC%') AND dp.c_fase_processo = \"CNT\"),\r\nCONTRATACAO_GEN AS (SELECT p.id AS idProc, dp.*,\r\n                    sp.Id AS processId, \r\n                    sp.Name AS processName,\r\n                    sact.Id AS instanceId, \r\n                    sact.Name AS activityName,\r\n                    sass.ResourceId AS assignee,\r\n                    dp.c_n_wf_banco AS NwfBanco\r\n                    FROM shkprocesses sp\r\n                    INNER JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\n                    RIGHT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\n                    RIGHT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\n                    INNER JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\n                    WHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_CNT_GEN%') AND dp.c_fase_processo = \"CNT\"),\r\nFILTRO AS (SELECT p.id AS idProc, dp.*,\r\n                    sp.Id AS processId, \r\n                    sp.Name AS processName,\r\n                    sact.Id AS instanceId, \r\n                    sact.Name AS activityName,\r\n                    sass.ResourceId AS assignee,\r\n                    dp.c_n_wf_banco AS NwfBanco\r\n                    FROM shkprocesses sp\r\n                    INNER JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\n                    RIGHT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\n                    RIGHT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\n                    INNER JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\n                    WHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_FLT%') AND dp.c_fase_processo = \"FLT\"),\r\nPRODUCAO AS (SELECT p.id AS idProc, dp.*,\r\n                    sp.Id AS processId, \r\n                    sp.Name AS processName,\r\n                    sact.Id AS instanceId, \r\n                    sact.Name AS activityName,\r\n                    sass.ResourceId AS assignee,\r\n                    dp.c_n_wf_banco AS NwfBanco\r\n                    FROM shkprocesses sp\r\n                    INNER JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\n                    RIGHT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\n                    RIGHT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\n                    INNER JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\n                    WHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_PRD%') AND (dp.c_fase_processo = \"PRD\" OR dp.c_fase_processo = \"VAL\")),\r\nVALIDACAO AS (SELECT p.id AS idProc, dp.*,\r\n                    sp.Id AS processId, \r\n                    sp.Name AS processName,\r\n                    sact.Id AS instanceId, \r\n                    sact.Name AS activityName,\r\n                    sass.ResourceId AS assignee,\r\n                    dp.c_n_wf_banco AS NwfBanco\r\n                    FROM shkprocesses sp\r\n                    INNER JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\r\n                    RIGHT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\r\n                    RIGHT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId\r\n                    INNER JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\r\n                    WHERE '%#user.{currentUser.username}.department.name#%' LIKE ('%PL_INT_VAL%') AND dp.c_fase_processo = \"VAL\")\r\n\r\nSELECT DISTINCT * FROM CONTRATACAO_BCP\r\nUNION\r\nSELECT DISTINCT * FROM CONTRATACAO_NB\r\nUNION\r\nSELECT DISTINCT * FROM CONTRATACAO_MG\r\nUNION\r\nSELECT DISTINCT * FROM CONTRATACAO_CTT\r\nUNION\r\nSELECT DISTINCT * FROM CONTRATACAO_BNI\r\nUNION\r\nSELECT DISTINCT * FROM CONTRATACAO_BST\r\nUNION\r\nSELECT DISTINCT * FROM CONTRATACAO_BIC\r\nUNION\r\nSELECT DISTINCT * FROM CONTRATACAO_GEN\r\nUNION\r\nSELECT DISTINCT * FROM FILTRO\r\nUNION\r\nSELECT DISTINCT * FROM PRODUCAO\r\nUNION\r\nSELECT DISTINCT * FROM VALIDACAO"
+        }
+    },
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_0",
+            "label": "activityName",
+            "name": "activityName",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "assignee",
+            "name": "assignee",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_2",
+            "label": "instanceId",
+            "name": "instanceId",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_3",
+            "label": "processId",
+            "name": "processId",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "processName",
+            "name": "processName",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_6",
+            "label": "idProc",
+            "name": "idProc",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_5",
+            "label": "NwfBanco",
+            "name": "NwfBanco",
+            "sortable": "false"
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
+    "description": "",
+    "disableResponsive": "",
+    "filters": [{
+        "id": "filter_0",
+        "label": "NwfBanco",
+        "name": "NwfBanco",
+        "type": {
+            "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+            "properties": {}
+        }
+    }],
+    "hidePageSize": "",
+    "id": "list_teste_Processos",
+    "name": "Lista Teste Processos",
+    "order": "",
+    "orderBy": "",
+    "pageSize": "0",
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "responsiveView": [
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Mobile"
+        },
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Tablet"
+        }
+    ],
+    "rowActions": [{
+        "className": "org.joget.apps.datalist.lib.HyperlinkDataListAction",
+        "icon": "<i class=\"fas fa-link\"><\/i>",
+        "id": "rowAction_0",
+        "label": "Hyperlink",
+        "name": "Data List Hyperlink Action",
+        "properties": {
+            "datalist_type": "row_action",
+            "label": "Hyperlink",
+            "target": "_self"
+        },
+        "type": "text"
+    }],
+    "searchPopup": "",
+    "showDataWhenFilterSet": "",
+    "showPageSizeSelector": "true",
+    "useSession": ""
+}

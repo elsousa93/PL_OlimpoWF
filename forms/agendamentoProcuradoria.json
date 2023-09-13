@@ -1,0 +1,1799 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "flag_notificacao_alteracoes",
+                            "permission_rules": {
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {},
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {}
+                            },
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "validar_alteracoes_agenda",
+                            "permission_rules": {
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {},
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {}
+                            },
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "",
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\n\r\n \r\npublic boolean validate(Element element, FormData formData, String[] values) {\r\n    boolean result = true;\r\n    \r\n    String processId = \"#form.processos_procu.id#\";\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element atos = FormUtil.findElement(\"atos\", form, formData);\r\n    String idAtos = FormUtil.getElementParameterName(atos);\r\n    \r\n    Connection con = null;\r\n    PreparedStatement stmt = null;\r\n    ResultSet rs = null;\r\n    try{\r\n        DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n        con = ds.getConnection();\r\n            \r\n        if(!con.isClosed()){\r\n        \r\n            String queryGetMaxAlteracoes = \"SELECT MAX(c_flag_alteracoes_agenda) as max FROM app_fd_atos WHERE c_id_processo = ? ;\";\r\n            stmt = con.prepareStatement(queryGetMaxAlteracoes);\r\n            stmt.setObject(1, processId);\r\n            rs = stmt.executeQuery();\r\n            \r\n            if(rs.next()){\r\n                \r\n                String max = rs.getObject(\"max\");\r\n                if(max!=null && max.equals(\"1\")){\r\n                    result = false;  \r\n                    formData.addFormError(idAtos, \"Houve alterações nos Atos pela Agenda. O processo vai ter de ser atualizado.\");\r\n                }\r\n            }\r\n        }\r\n        \r\n    }catch(Exception e){\r\n            LogUtil.error(\"Olimpo- Validator Agendamento Alterações\", e, \"Error getting info from DB\");\r\n    }finally{\r\n        try{\r\n            if(rs != null){\r\n            rs.close();\r\n            }\r\n            if(stmt != null){\r\n                stmt.close();\r\n            }\r\n            if(con != null && !con.isClosed()) {\r\n                con.close();\r\n            }\r\n        }catch(Exception e){\r\n            LogUtil.error(\"Olimpo- Validator Agendamento Alterações\", e, \"Error closing DB connection\");\r\n        }\r\n        \r\n    }\r\n    \r\n \r\n    return result;\r\n}\r\n \r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);\r\n//return true;"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "flag_agendado",
+                            "permission_rules": {
+                                "03c775dc-a743-e094-4e35-cf487b91cef2": {},
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {},
+                                "2f7e0d1d-ee44-6d46-f4bc-434ed5e08f53": {},
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "5173a640-6d7b-ff47-1db9-349049a3ee8f": {},
+                                "61eed640-2e15-cba4-8522-d7b5ae130f31": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                                "7e7faade-f35a-329d-a7a9-b6b63b1bc5b4": {},
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                                "d4230f5d-0b67-d8a3-8845-6d41ad2f225b": {},
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "dd84b73a-a59f-28e2-68ab-489586ddeac1": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {}
+                            },
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "id_processo",
+                            "permission_rules": {
+                                "03c775dc-a743-e094-4e35-cf487b91cef2": {},
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {},
+                                "2f7e0d1d-ee44-6d46-f4bc-434ed5e08f53": {},
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "5173a640-6d7b-ff47-1db9-349049a3ee8f": {},
+                                "61eed640-2e15-cba4-8522-d7b5ae130f31": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                                "7e7faade-f35a-329d-a7a9-b6b63b1bc5b4": {},
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                                "d4230f5d-0b67-d8a3-8845-6d41ad2f225b": {},
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "dd84b73a-a59f-28e2-68ab-489586ddeac1": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {}
+                            },
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "n_wf_agendamento",
+                            "label": "Número Agenda",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {},
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.Radio",
+                        "properties": {
+                            "controlField": "",
+                            "id": "urgencia",
+                            "label": "Urgência",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Sim",
+                                    "value": "SIM"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Não",
+                                    "value": "NAO"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permission_rules": {
+                                "03c775dc-a743-e094-4e35-cf487b91cef2": {},
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {},
+                                "2f7e0d1d-ee44-6d46-f4bc-434ed5e08f53": {},
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "5173a640-6d7b-ff47-1db9-349049a3ee8f": {},
+                                "61eed640-2e15-cba4-8522-d7b5ae130f31": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                                "7e7faade-f35a-329d-a7a9-b6b63b1bc5b4": {},
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                                "d4230f5d-0b67-d8a3-8845-6d41ad2f225b": {},
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "dd84b73a-a59f-28e2-68ab-489586ddeac1": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.DatePicker",
+                        "properties": {
+                            "allowManual": "true",
+                            "currentDateAs": "",
+                            "dataFormat": "yyyy-MM-dd",
+                            "datePickerType": "",
+                            "endDateFieldId": "",
+                            "format": "",
+                            "id": "data_solicitada",
+                            "label": "Data Solicitada",
+                            "permission_rules": {
+                                "03c775dc-a743-e094-4e35-cf487b91cef2": {},
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {},
+                                "2f7e0d1d-ee44-6d46-f4bc-434ed5e08f53": {},
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "5173a640-6d7b-ff47-1db9-349049a3ee8f": {},
+                                "61eed640-2e15-cba4-8522-d7b5ae130f31": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                                "7e7faade-f35a-329d-a7a9-b6b63b1bc5b4": {},
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                                "d4230f5d-0b67-d8a3-8845-6d41ad2f225b": {},
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "dd84b73a-a59f-28e2-68ab-489586ddeac1": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "startDateFieldId": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": "",
+                            "yearRange": "c-10:c+10"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.DatePicker",
+                        "properties": {
+                            "allowManual": "",
+                            "datePickerType": "timeOnly",
+                            "endDateFieldId": "",
+                            "format24hr": "true",
+                            "id": "hora_solicitada",
+                            "label": "Hora Solicitada",
+                            "permission_rules": {
+                                "03c775dc-a743-e094-4e35-cf487b91cef2": {},
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {},
+                                "2f7e0d1d-ee44-6d46-f4bc-434ed5e08f53": {},
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "5173a640-6d7b-ff47-1db9-349049a3ee8f": {},
+                                "61eed640-2e15-cba4-8522-d7b5ae130f31": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                                "7e7faade-f35a-329d-a7a9-b6b63b1bc5b4": {},
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                                "d4230f5d-0b67-d8a3-8845-6d41ad2f225b": {},
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "dd84b73a-a59f-28e2-68ab-489586ddeac1": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "startDateFieldId": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "local",
+                            "label": "Local",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "03c775dc-a743-e094-4e35-cf487b91cef2": {},
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {},
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "morada",
+                            "label": "Morada",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "03c775dc-a743-e094-4e35-cf487b91cef2": {},
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.Radio",
+                        "properties": {
+                            "controlField": "",
+                            "id": "originais",
+                            "label": "Tem Originais?",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Sim",
+                                    "value": "SIM"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Nao",
+                                    "value": "NAO"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permission_rules": {
+                                "0c699003-580e-7faf-a39c-f2e5303bd5b5": {},
+                                "1804038d-e85d-3ea4-4ef3-4c4143e5145b": {},
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {},
+                                "2dd4cc96-cc40-f285-e376-ebda47490646": {},
+                                "40b85e69-a77b-cdfa-05ef-6bd9811e4410": {},
+                                "44639061-b6ba-a2ef-a47c-c5bab888544c": {},
+                                "467e0936-e8fb-e23b-f48d-e5c28c5ab7ed": {},
+                                "47d9dac4-bb53-53f7-2c45-a2b2e20e7f54": {},
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "504595d7-fa4b-d219-d8a6-65d1a4da0728": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                                "710a05c8-c837-e0d0-670a-720473cb5a7c": {},
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                                "787c67d4-d157-ca8e-655e-43717638627d": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "87e7b01c-e92b-e732-c50f-c2c7020e5482": {},
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "dccd1818-864d-54e3-09c2-6e246cfcf5fe": {},
+                                "e94738b9-1966-5300-3072-703d03acb3df": {},
+                                "ee177599-9c69-d878-10f8-9aebde208e06": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {},
+                                "f8c01627-bf37-05aa-5732-90fe1b2327b3": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "chaves_receber",
+                            "label": "Chaves a Receber",
+                            "multiple": "",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "",
+                                    "value": ""
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Sim",
+                                    "value": "SIM"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Dispensado",
+                                    "value": "DIS"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permission_rules": {
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.DatePicker",
+                        "properties": {
+                            "allowManual": "",
+                            "currentDateAs": "",
+                            "dataFormat": "yyyy-MM-dd",
+                            "datePickerType": "",
+                            "endDateFieldId": "",
+                            "format": "",
+                            "id": "data_rececao_originais",
+                            "label": "Data de Receção Originais",
+                            "permission_rules": {
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                }
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "startDateFieldId": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": "",
+                            "yearRange": "c-10:c+10"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "local_envio_originais",
+                            "label": "Local de Envio dos Originais",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0c699003-580e-7faf-a39c-f2e5303bd5b5": {},
+                                "1804038d-e85d-3ea4-4ef3-4c4143e5145b": {},
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {},
+                                "2dd4cc96-cc40-f285-e376-ebda47490646": {},
+                                "40b85e69-a77b-cdfa-05ef-6bd9811e4410": {},
+                                "44639061-b6ba-a2ef-a47c-c5bab888544c": {},
+                                "467e0936-e8fb-e23b-f48d-e5c28c5ab7ed": {},
+                                "47d9dac4-bb53-53f7-2c45-a2b2e20e7f54": {},
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "504595d7-fa4b-d219-d8a6-65d1a4da0728": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                                "710a05c8-c837-e0d0-670a-720473cb5a7c": {},
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                                "787c67d4-d157-ca8e-655e-43717638627d": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "87e7b01c-e92b-e732-c50f-c2c7020e5482": {},
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "dccd1818-864d-54e3-09c2-6e246cfcf5fe": {},
+                                "e94738b9-1966-5300-3072-703d03acb3df": {},
+                                "ee177599-9c69-d878-10f8-9aebde208e06": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {},
+                                "f8c01627-bf37-05aa-5732-90fe1b2327b3": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.DatePicker",
+                        "properties": {
+                            "allowManual": "",
+                            "currentDateAs": "",
+                            "dataFormat": "yyyy-MM-dd",
+                            "datePickerType": "",
+                            "endDateFieldId": "",
+                            "format": "",
+                            "id": "data_envio_originais_procu",
+                            "label": "Data de Envio de Originais para Procuradores",
+                            "permission_rules": {
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                }
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "startDateFieldId": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": "",
+                            "yearRange": "c-10:c+10"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "registoCTT",
+                            "label": "Registo CTT",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0c699003-580e-7faf-a39c-f2e5303bd5b5": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "1804038d-e85d-3ea4-4ef3-4c4143e5145b": {},
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {},
+                                "2dd4cc96-cc40-f285-e376-ebda47490646": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "40b85e69-a77b-cdfa-05ef-6bd9811e4410": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "44639061-b6ba-a2ef-a47c-c5bab888544c": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "467e0936-e8fb-e23b-f48d-e5c28c5ab7ed": {},
+                                "47d9dac4-bb53-53f7-2c45-a2b2e20e7f54": {},
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "504595d7-fa4b-d219-d8a6-65d1a4da0728": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                                "710a05c8-c837-e0d0-670a-720473cb5a7c": {},
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                                "787c67d4-d157-ca8e-655e-43717638627d": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "87e7b01c-e92b-e732-c50f-c2c7020e5482": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "dccd1818-864d-54e3-09c2-6e246cfcf5fe": {},
+                                "e94738b9-1966-5300-3072-703d03acb3df": {},
+                                "ee177599-9c69-d878-10f8-9aebde208e06": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "f8c01627-bf37-05aa-5732-90fe1b2327b3": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "deposito",
+                            "label": "Código de Depósito do Distrate",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0c699003-580e-7faf-a39c-f2e5303bd5b5": {},
+                                "1804038d-e85d-3ea4-4ef3-4c4143e5145b": {},
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {},
+                                "2dd4cc96-cc40-f285-e376-ebda47490646": {},
+                                "40b85e69-a77b-cdfa-05ef-6bd9811e4410": {},
+                                "44639061-b6ba-a2ef-a47c-c5bab888544c": {},
+                                "467e0936-e8fb-e23b-f48d-e5c28c5ab7ed": {},
+                                "47d9dac4-bb53-53f7-2c45-a2b2e20e7f54": {},
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "504595d7-fa4b-d219-d8a6-65d1a4da0728": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                                "710a05c8-c837-e0d0-670a-720473cb5a7c": {},
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                                "787c67d4-d157-ca8e-655e-43717638627d": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "87e7b01c-e92b-e732-c50f-c2c7020e5482": {},
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "dccd1818-864d-54e3-09c2-6e246cfcf5fe": {},
+                                "e94738b9-1966-5300-3072-703d03acb3df": {},
+                                "ee177599-9c69-d878-10f8-9aebde208e06": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {},
+                                "f8c01627-bf37-05aa-5732-90fe1b2327b3": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "conta",
+                            "label": "Conta",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0c699003-580e-7faf-a39c-f2e5303bd5b5": {},
+                                "1804038d-e85d-3ea4-4ef3-4c4143e5145b": {},
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {},
+                                "2dd4cc96-cc40-f285-e376-ebda47490646": {},
+                                "40b85e69-a77b-cdfa-05ef-6bd9811e4410": {},
+                                "44639061-b6ba-a2ef-a47c-c5bab888544c": {},
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                                "710a05c8-c837-e0d0-670a-720473cb5a7c": {},
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                                "787c67d4-d157-ca8e-655e-43717638627d": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "87e7b01c-e92b-e732-c50f-c2c7020e5482": {},
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "dccd1818-864d-54e3-09c2-6e246cfcf5fe": {},
+                                "ee177599-9c69-d878-10f8-9aebde208e06": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {},
+                                "f8c01627-bf37-05aa-5732-90fe1b2327b3": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "valores_liquidacao_receber",
+                            "label": "Valor de Liquidação / a Receber",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {},
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "valor_sinal",
+                            "label": "Valor do Sinal",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                }
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "finalidade_financiamento",
+                            "label": "Finalidade do Financiamento",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                }
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "pagamento",
+                            "label": "Pagamento",
+                            "multiple": "",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "",
+                                    "value": ""
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Cheque",
+                                    "value": "CHQ"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Transferência",
+                                    "value": "TRS"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permission_rules": {
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "valor_financiamento",
+                            "label": "Valor de Financiamento",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                }
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "valor_declarado_cv",
+                            "label": "Valor declarado em CV",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                }
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "numero_centro_custo_balcao",
+                            "label": "Número Centro de Custo Banco",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "nome_centro_custo_balcao",
+                            "label": "Nome Centro de Custo Banco",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextArea",
+                        "properties": {
+                            "cols": "20",
+                            "id": "observacoes_agendamento",
+                            "label": "Observações do Agendamento",
+                            "permission_rules": {
+                                "03c775dc-a743-e094-4e35-cf487b91cef2": {},
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {},
+                                "2f7e0d1d-ee44-6d46-f4bc-434ed5e08f53": {},
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "5173a640-6d7b-ff47-1db9-349049a3ee8f": {},
+                                "61eed640-2e15-cba4-8522-d7b5ae130f31": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                                "7e7faade-f35a-329d-a7a9-b6b63b1bc5b4": {},
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                                "d4230f5d-0b67-d8a3-8845-6d41ad2f225b": {},
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "dd84b73a-a59f-28e2-68ab-489586ddeac1": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "rows": "5",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.plugin.enterprise.SpreadSheetGrid",
+                        "properties": {
+                            "customSettings": "",
+                            "disabledAdd": "",
+                            "disabledDelete": "",
+                            "errorMessage": "Invalid number of rows",
+                            "fixedColumnsLeft": "0",
+                            "headerSorting": "",
+                            "id": "intervenientes",
+                            "label": "Intervenientes",
+                            "loadBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "maxHeight": "",
+                            "minSpareRows": "1",
+                            "options": [
+                                {
+                                    "format": "opcoesDisplayGrid",
+                                    "formatType": "dropdown",
+                                    "formula": "",
+                                    "label": "Tipo",
+                                    "readonly": "",
+                                    "regexValidator": "",
+                                    "value": "tipoIntervenienteProcu",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "",
+                                    "formula": "",
+                                    "label": "Nome",
+                                    "readonly": "",
+                                    "regexValidator": "",
+                                    "value": "nome",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "",
+                                    "formula": "",
+                                    "label": "NIF",
+                                    "readonly": "",
+                                    "regexValidator": "",
+                                    "value": "nif",
+                                    "width": ""
+                                }
+                            ],
+                            "permission_rules": {
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {}
+                            },
+                            "readonly": "",
+                            "showRowNumber": "",
+                            "sortingField": "",
+                            "storeBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "validateMaxRow": "",
+                            "validateMinRow": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            }
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field7",
+                            "label": "",
+                            "permission_rules": {
+                                "03c775dc-a743-e094-4e35-cf487b91cef2": {},
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {},
+                                "2f7e0d1d-ee44-6d46-f4bc-434ed5e08f53": {},
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "5173a640-6d7b-ff47-1db9-349049a3ee8f": {},
+                                "61eed640-2e15-cba4-8522-d7b5ae130f31": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                                "7e7faade-f35a-329d-a7a9-b6b63b1bc5b4": {},
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                                "d4230f5d-0b67-d8a3-8845-6d41ad2f225b": {},
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "dd84b73a-a59f-28e2-68ab-489586ddeac1": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {}
+                            },
+                            "value": "<script>\nvar flagDesmarcado, local, morada, nagenda, dataSolicitada, horaSolicitada, nWfAgenda;\n    $(document).ready(function(){\n        \n        var idAtos = FormUtil.getValues(\"atos.id\");\n        var mode = \"#requestParam._mode#\";\n        //Caso o seja modo de consulta remover o botão de \"Pedir Agendamento\"\n        if(mode!=='assignment'){\n            $(\"input#agendar\").parent().hide();\n             $(\"div[id*=mensagemAgendamento]\").hide();\n        }\n        \n        \n        nagenda = \"#form.detalhe_proce_procu.n_agenda[{form.processos_procu.detalhe_processo}]#\";\n        nWfAgenda = \"#form.detalhe_proce_procu.n_wf_agenda[{form.processos_procu.detalhe_processo}]#\";\n        //Caso o NWF Agendamento esteja vazio é assumido o valor do NWF PL\n        if($(\"input[id*=n_wf_agendamento]\").val() === ''){\n            $(\"input[id*=n_wf_agendamento]\").val(nWfAgenda);\n        }\n        \n        \n        if($(\"input[id*=flag_agendado]\").val() === '1'){\n            $(\"div[id*=agendamentoProcuradoria_agendamento]\").hide();\n        }\n        \n        local = $(\"input[id*=local]\").val();\n        $(\"input[id*=local]\").change(function(){\n            local = $(\"input[id*=local]\").val();\n            atualizarObservacoes();\n        });\n        \n        morada = $(\"input[id*=morada]\").val();\n        $(\"input[id*=morada]\").change(function(){\n            morada= $(\"input[id*=morada]\").val();\n            atualizarObservacoes();\n        });\n        \n        dataSolicitada=$(\"input[id*=data_solicitada]\").val();\n        $(\"input[id*=data_solicitada]\").change(function(){\n            dataSolicitada=$(\"input[id*=data_solicitada]\").val();\n            atualizarObservacoes();\n        });\n        \n        horaSolicitada=$(\"input[id*=hora_solicitada]\").val();\n        $(\"input[id*=hora_solicitada]\").change(function(){\n            horaSolicitada=$(\"input[id*=hora_solicitada]\").val();\n            atualizarObservacoes();\n        });\n        \n        nWfAgenda = $(\"input[id*=n_wf_agendamento]\").val();\n        $(\"input[id*=n_wf_agendamento]\").change(function(){\n            nWfAgenda = $(\"input[id*=n_wf_agendamento]\").val();\n        });\n        \n        atualizarObservacoes();\n        \n\n        \n        $(\"input#agendar\").click(function(){\n            $(this).prop(\"disabled\", true);\n            var urlAto =\"/jw/api/form/atosGeral/\" + idAtos[idAtos.length-1];\n            if(idAtos.length>0){\n                $.ajax({\n                    type:\"GET\",\n                    url: urlAto,\n                    headers:{\n                        \"api_id\": \"#envVariable.apiIdComunicacaoMediaView#\",\n                        \"api_key\": \"#envVariable.apiKeyComunicacaoMediaView#\",\n                        \"Accept\":\"application/json\",\n                        \"Content-Type\": \"application/json\"\n                    },\n                    success: function(response){\n                        var flagAlteracoes=parseInt(response.flag_alteracoes_agenda);\n                        if(flagAlteracoes===1){\n                            showReloadModal();\n                        }else{\n                            atualizarFormAgendamento();\n                        }\n                    }\n                });\n            }else{\n                atualizarFormAgendamento();\n            }\n        });\n        \n        $(\"form#procuradoria :input\").change(function(){\n            $(\"input#agendar\").prop(\"disabled\", false);\n            \n        });\n        \n        \n        \n    });\n    \nfunction atualizarObservacoes(){\n    var observacoesVal = $(\"textarea[id*=observacoes_agendamento]\").val(\"Local: \" + local+ \"\\nMorada: \" + morada + \"\\nData solicitada: \" + dataSolicitada + \" \" + horaSolicitada);    \n    \n}\n    \nfunction atualizarFormAgendamento(){\n\n    if(validadeDataEHoraSolicitada() && validateNWFAgendamento()){\n        var urgencia = $(\"div[id*=urgencia] input:checked\").val();\n        dataSolicitada=$(\"input[id*=data_solicitada]\").val();\n        horaSolicitada=$(\"input[id*=hora_solicitada]\").val();\n        var observacoes=$(\"textarea[id*=observacoes_agendamento]\").val();\n        var local = $(\"input[id*=local]\").val();\n        var morada = $(\"input[id*=morada]\").val();\n        var dataRececaoOriginais = $(\"input[id*=data_rececao_originais]\").val();\n        var originais = $(\"input[id*=originais]:checked\").val();\n        var localEnvioOriginais = $(\"input[id*=local_envio_originais]\").val();\n        var registoCTT = $(\"input[id*=registoCTT]\").val();\n        var deposito = $(\"input[id*=deposito]\").val();\n        var conta = $(\"input[id*=conta]\").val();\n        var valoresLiquidacaoReceber = $(\"input[id*=valores_liquidacao_receber]\").val();\n        var valorSinal = $(\"input[id*=valor_sinal]\").val();\n        var numeroCentroCustoBalcao = $(\"input[id*=numero_centro_custo_balcao]\").val();\n        var nomeCentroCustoBalcao = $(\"input[id*=nome_centro_custo_balcao]\").val();\n        var dataEnvioOriginaisProcu = $(\"input[id*=data_envio_originais_procu]\").val();\n        var finalidadeFinanciamento = $(\"input[id*=finalidade_financiamento]\").val();\n        var pagamento = $(\"select[id*=pagamento]\").val();\n        var valorFinanciamento = $(\"input[id*=valor_financiamento]\").val();\n        var valorDeclaradoCV = $(\"input[id*=valor_declarado_cv]\").val();\n        var intervenientesNome = FormUtil.getGridCellValues(\"intervenientes.nome\");\n        var intervenientesNif = FormUtil.getGridCellValues(\"intervenientes.nif\");\n        var intervenientesTipo = FormUtil.getGridCellValues(\"intervenientes.tipoIntervenienteProcu\");\n        var jsonIntervenientes = \"[\";\n        for (var i = 0; i < intervenientesNome.length; i++) {\n            jsonIntervenientes+= '{\"id\":\"'+i+'\",\"nome\":\"'+intervenientesNome[i]+'\",\"nif\":\"'+intervenientesNif[i]+'\",\"tipoIntervenienteProcu\":\"'+intervenientesTipo[i]+'\"}';\n            if(i != intervenientesNome.length-1){\n                jsonIntervenientes += ',';\n                \n            }\n        \n        }\n        //'[{\"id\": \"0\",\"nome\": \"Duarte\",\"nif\": \"268208140\"},{\"id\": \"1\",\"nome\": \"Joana\",\"nif\": \"0000000\"}]'\n        jsonIntervenientes+=\"]\";\n        \n        \n        //Criação do Ato\n        $.ajax({\n            type:\"POST\",\n            url: \"/jw/api/form/atosGeral\",\n            headers:{\n                \"api_id\": \"#envVariable.apiIdComunicacaoMediaView#\",\n                \"api_key\": \"#envVariable.apiKeyComunicacaoMediaView#\",\n                \"Accept\":\"application/json\",\n                \"Content-Type\": \"application/json\"\n            },\n            data: JSON.stringify({\n                            \"id_processo\": \"#form.processos_procu.id#\",\n                            \"id_agendamento\": \"#form.processos_procu.agendamento#\",\n                            \"n_wf_agendamento\": nWfAgenda,\n                            \"urgencia\": 'SIM',\n                            \"data_solicitada\":dataSolicitada,\n                            \"hora_solicitada\":horaSolicitada,\n                            \"local\": local,\n                            \"morada\": morada,\n                            \"observacoes_agendamento\": observacoes,\n                            \"data_rececao_originais\": dataRececaoOriginais,\n                            \"originais\": originais,\n                            \"local_envio_originais\": localEnvioOriginais,\n                            \"data_envio_originais_procu\": dataEnvioOriginaisProcu,\n                            \"registoCTT\": registoCTT,\n                            \"deposito\": deposito,\n                            \"conta\": conta,\n                            \"valores_liquidacao_receber\": valoresLiquidacaoReceber,\n                            \"valor_sinal\": valorSinal,\n                            \"finalidade_financiamento\": finalidadeFinanciamento,\n                            \"pagamento\": pagamento,\n                            \"valor_financiamento\": valorFinanciamento,\n                            \"valor_declarado_cv\": valorDeclaradoCV,\n                            \"numero_centro_custo_balcao\": numeroCentroCustoBalcao,\n                            \"nome_centro_custo_balcao\": nomeCentroCustoBalcao,\n                            \"intervenientes\":  JSON.parse(jsonIntervenientes),\n                            \"status\": \"AGN\"\n                        }),\n            success: function(response){\n                console.log(id);\n                var id = response.id;\n\n                pedirAgendamento(id);\n            }\n        });\n    }   \n}\n    \n    \n    $(window).load(function(){\n        \n        $(\"a.grid-action-edit\").not(\":last\").click(function(){\n            $('iframe[id*=atos]').on(\"load\", function(){\n                $('iframe[id*=atos]').contents().find(\"body form#atosAgendamento select\").attr(\"disabled\", true);\n                $('iframe[id*=atos]').contents().find(\"form\").on('submit', function(){\n                    $('iframe[id*=atos]').contents().find(\"body form#atosAgendamento select\").attr(\"disabled\", false);\n                });\n            });\n        });\n        /*\n        $(\"a.grid-action-edit\").click(function(){\n            $('iframe[id*=atos]').on(\"load\", function(){\n                if($('iframe[id*=atos]').contents().find(\"select[id*=status]\").val() ){\n                    if( $('iframe[id*=atos]').contents().find(\"select[id*=status]\").val().includes('DES')){\n                        $('iframe[id*=atos]').contents().find(\"select[id*=motivo_desmarcacao]\").parent().show();\n                    }else{\n                        $('iframe[id*=atos]').contents().find(\"select[id*=motivo_desmarcacao]\").val(\"\");    \n                        $('iframe[id*=atos]').contents().find(\"select[id*=motivo_desmarcacao]\").parent().hide();\n                    }\n                }\n            });\n        });*/\n    });\n    \n    $(document).change(function(){\n        var status = FormUtil.getValues(\"atos.status\");\n        var flagAGN = false;\n        flagDesmarcado = false;\n        \n        \n        if(status.length>0){\n            //Se existir atos Desmarcados\n            if(status[status.length-1].indexOf('DES') !== -1 || status[status.length-1].indexOf('NOUT') !== -1 || status[status.length-1].indexOf('RJD') !== -1 || status[status.length-1].indexOf('DESC') !== -1 ){\n                flagDesmarcado = true;\n            }\n        }\n        \n            //Caso não existam atos desmarcados ou não haja nenhum pedido de agendamento\n            if(!flagDesmarcado || $(\"input[id*=flag_agendado]\").val() === '0'){\n                $(\"div[id*=mensagemAgendamento]\").hide();\n            }else{\n                $(\"div[id*=mensagemAgendamento]\").show();\n            }\n \n        \n    });\n    \n\n    \n    \nfunction updateEstadoAgendamento(idAto){\n            var dataRececaoOriginais = $(\"input[id*=data_rececao_originais]\").val();\n            var originais = $(\"input[id*=originais]:checked\").val();\n            var localEnvioOriginais = $(\"input[id*=local_envio_originais]\").val();\n            var registoCTT = $(\"input[id*=registoCTT]\").val();\n            var deposito = $(\"input[id*=deposito]\").val();\n            var conta = $(\"input[id*=conta]\").val();\n            var valoresLiquidacaoReceber = $(\"input[id*=valores_liquidacao_receber]\").val();\n            var valorSinal = $(\"input[id*=valor_sinal]\").val();\n            var numeroCentroCustoBalcao = $(\"input[id*=numero_centro_custo_balcao]\").val();\n            var nomeCentroCustoBalcao = $(\"input[id*=nome_centro_custo_balcao]\").val();\n            var dataEnvioOriginaisProcu = $(\"input[id*=data_envio_originais_procu]\").val();\n            var finalidadeFinanciamento = $(\"input[id*=finalidade_financiamento]\").val();\n            var pagamento = $(\"select[id*=pagamento]\").val();\n            var valorFinanciamento = $(\"input[id*=valor_financiamento]\").val();\n            var valorDeclaradoCV = $(\"input[id*=valor_declarado_cv]\").val();\n            var intervenientesNome = FormUtil.getGridCellValues(\"intervenientes.nome\");\n            var intervenientesNif = FormUtil.getGridCellValues(\"intervenientes.nif\");\n            var intervenientesTipo = FormUtil.getGridCellValues(\"intervenientes.tipoIntervenienteProcu\");\n            var jsonIntervenientes = \"[\";\n            for (var i = 0; i < intervenientesNome.length; i++) {\n                jsonIntervenientes+= '{\"id\":\"'+i+'\",\"nome\":\"'+intervenientesNome[i]+'\",\"nif\":\"'+intervenientesNif[i]+'\",\"tipoIntervenienteProcu\":\"'+intervenientesTipo[i]+'\"}';\n                if(i != intervenientesNome.length-1){\n                    jsonIntervenientes += ',';\n                    \n                }\n            }\n            jsonIntervenientes+=\"]\";\n        \n            \n        $.ajax({\n                type:\"POST\",\n                url: \"/jw/api/form/agendamentoProcuradoria/saveOrUpdate\",\n                headers:{\n                    \"api_id\": \"#envVariable.apiIdComunicacaoMediaView#\",\n                    \"api_key\": \"#envVariable.apiKeyComunicacaoMediaView#\",\n                    \"accept\":\"application/json\",\n                    \"Content-Type\": \"application/json\"\n                },\n                data: JSON.stringify({\n                                \"id\": \"#form.processos_procu.agendamento#\",\n                                \"n_wf_agendamento\": nWfAgenda,\n                                \"flag_agendado\": \"1\",\n                                \"local\": local,\n                                \"morada\": morada,\n                                \"originais\": originais,\n                                \"data_rececao_originais\": dataRececaoOriginais, \n                                \"local_envio_originais\": localEnvioOriginais,\n                                \"data_envio_originais_procu\": dataEnvioOriginaisProcu,\n                                \"registoCTT\": registoCTT,\n                                \"deposito\": deposito,\n                                \"conta\": conta,\n                                \"valores_liquidacao_receber\": valoresLiquidacaoReceber,\n                                \"valor_sinal\": valorSinal,\n                                \"finalidade_financiamento\": finalidadeFinanciamento,\n                                \"pagamento\": pagamento,\n                                \"valor_financiamento\": valorFinanciamento,\n                                \"valor_declarado_cv\": valorDeclaradoCV,\n                                \"numero_centro_custo_balcao\": numeroCentroCustoBalcao,\n                                \"nome_centro_custo_balcao\": nomeCentroCustoBalcao,\n                                \"intervenientes\": JSON.parse(jsonIntervenientes)\n                            }),\n                success: function(data){\n                    envioEmailPedidoAgendamento(idAto);\n\n                }\n            });\n    }\n    \nfunction pedirAgendamento(idRegisto){\n        //Banco\n        var banco = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\n        var bancoMediaView = \"\";\n        switch(banco){\n            case \"BCP\":\n                bancoMediaView = \"BCP\";\n                break;\n            case \"BNI\":\n                bancoMediaView = \"BNI\";\n                break;\n            case \"BIC\":\n                bancoMediaView = \"BIC\";\n                break;\n            case \"HPG\":\n                bancoMediaView = \"HIPO\";\n                break;\n            case \"MTG\":\n                bancoMediaView = \"MPG\";\n                break;\n            case \"NOR\":\n                bancoMediaView = \"NORF\";\n                break;\n            case \"WHS\":\n                bancoMediaView = \"WHITS\";\n                break;\n            case \"NVB\":\n                bancoMediaView = \"NB\";\n                break;\n            default:\n                bancoMediaView = \"\";  //Falta sem banco\n                break;\n        }\n        \n        //Data e Hora Solicitada\n        var dataSolicitada = $(\"input[id*= data_solicitada]\").val();\n        var horaSolicitada = $(\"input[id*=hora_solicitada]\").val() + \":00\";\n        dataSolicitada = dataSolicitada.substring(6,10) + \"-\" + dataSolicitada.substring(3,5) + \"-\" + dataSolicitada.substring(0,2);\n        var dataSolicitada = dataSolicitada +\"T\" +horaSolicitada;\n        \n\n        //Observações\n        var observacoes =  $(\"textarea[id*=observacoes_agendamento]\").val();\n        \n        \n        \n        //Pedir Agendamento\n        var username = \"#envVariable.apiMediaViewUsername#\";\n        var password = \"#envVariable.apiMediaViewPassword#\";\n        \n        var xmlhttp = new XMLHttpRequest();\n        //xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=ISO-8859-1');\n        \n        xmlhttp.open('POST', 'https://www.plataformalegal.pt/qualdesign/rpts/workflow.asmx?wsdl', true);\n        xmlhttp.setRequestHeader('Content-Type', 'text/xml; charset=UTF-8');\n        xmlhttp.onreadystatechange = function () {\n            if (xmlhttp.readyState == 4) {\n                if (xmlhttp.status >= 200 && xmlhttp.status <= 299) {\n                    var xmlResponse = $.parseXML(xmlhttp.responseText);\n                    var result = $(xmlResponse).find(\"EnviarProcessoResult\").text();\n                                        \n                    console.log(xmlResponse);\n                    console.log(result);\n                    if(result === '-1'){\n                        $(\"input[id*=n_wf_agendamento]\").css(\"border\", \"1px solid red\");\n                        $(\"input[id*=n_wf_agendamento]\").parent().find(\"label\").append('<span class=\"form-error-message\">Número Workflow não definido<\/span>');\n                        $(window).scrollTop(0);\n                        apagarAto(idRegisto);\n                    }else if(result === '-2'){\n                        $(\"form#procuradoria div[class=form-column] input#servico\").after('<span class=\"form-error-message\" style=\"font-size: 20px;font-weight: bold;\">O processo não existe na Agenda<\/span>');\n                        $(window).scrollTop(0);\n                        apagarAto(idRegisto);\n                    }else if(result === '-3'){\n                        $(\"form#procuradoria div[class=form-column] input#servico\").after('<span class=\"form-error-message\" style=\"font-size: 20px;font-weight: bold;\">Banco mal definido<\/span>');\n                        $(window).scrollTop(0);\n                        apagarAto(idRegisto);\n                        \n                    }else if(result === '-4'){\n                        $(\"form#procuradoria div[class=form-column] input#servico\").after('<span class=\"form-error-message\" style=\"font-size: 20px;font-weight: bold;\">Tipo de Processo não definido<\/span>');\n                        $(window).scrollTop(0);\n                        apagarAto(idRegisto);\n                    }else if(result === '-5'){\n                        $(\"form#procuradoria div[class=form-column] input#servico\").after('<span class=\"form-error-message\" style=\"font-size: 20px;font-weight: bold;\">Combinação distrito e concelho que está errada<\/span>');\n                        $(window).scrollTop(0);\n                        apagarAto(idRegisto);\n                    }else if(result === '-6'){\n                        $(\"form#procuradoria div[class=form-column] input#servico\").after('<span class=\"form-error-message\" style=\"font-size: 20px;font-weight: bold;\">Não existe banco relacionado com o distrito/concelho<\/span>');\n                        $(window).scrollTop(0);\n                        apagarAto(idRegisto);\n                    }else if(result === '-7'){\n                        $(\"form#procuradoria div[class=form-column] input#servico\").after('<span class=\"form-error-message\" style=\"font-size: 20px;font-weight: bold;\">Local mal definido<\/span>');\n                        $(window).scrollTop(0);\n                        apagarAto(idRegisto);\n                    }else if(result === '-8'){\n                        $(\"form#procuradoria div[class=form-column] input#servico\").after('<span class=\"form-error-message\" style=\"font-size: 20px;font-weight: bold;\">Sem proponentes ou seu conteúdo<\/span>');\n                        $(window).scrollTop(0);\n                        apagarAto(idRegisto);\n                    }else if(result === '-9'){\n                        $(\"form#procuradoria div[class=form-column] input#servico\").after('<span class=\"form-error-message\" style=\"font-size: 20px;font-weight: bold;\">Sem Data Indicativa definida<\/span>');\n                        $(window).scrollTop(0);\n                        apagarAto(idRegisto);\n                    }else if(result === '-99'){\n                        $(\"form#procuradoria div[class=form-column] input#servico\").after('<span class=\"form-error-message\" style=\"font-size: 20px;font-weight: bold;\">Ocorreu um erro no pedido de agendamento<\/span>');\n                        $(window).scrollTop(0);\n                        apagarAto(idRegisto);\n                    }else{\n                        updateEstadoAgendamento(idRegisto);\n                    }\n\n                }else if(xmlhttp.status >= 400 && xmlhttp.status <= 499){\n                     $(\"form#procuradoria div[class=form-column] input#servico\").after('<span class=\"form-error-message\" style=\"font-size: 20px;font-weight: bold;\">Ocorreu um erro ao fazer o pedido de agendamento<\/span>');\n                    $(window).scrollTop(0);\n                    apagarAto(idRegisto);\n\n                }else if(xmlhttp.status >= 500 && xmlhttp.status <= 599){\n                     $(\"form#procuradoria div[class=form-column] input#servico\").after('<span class=\"form-error-message\" style=\"font-size: 20px;font-weight: bold;\">Ocorreu um erro ao fazer o pedido de agendamento<\/span>');\n                    $(window).scrollTop(0);\n                    apagarAto(idRegisto);\n\n                }\n            }\n        }\n\n        \n        var sr= `<?xml version=\"1.0\" encoding=\"utf-8\"?>\n                <soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n                  <soap:Header>\n                    <Header xmlns=\"http://tempuri.org/\">\n                      <Username>`+username+`<\/Username>\n                      <Password>`+password+`<\/Password>\n                    <\/Header>\n                  <\/soap:Header>\n                  <soap:Body>\n                    <EnviarProcesso xmlns=\"http://tempuri.org/\">\n                      <processo>\n                        <IdRegisto>`+idRegisto+`<\/IdRegisto>\n                        <NWF>`+nWfAgenda+`<\/NWF>\n                        <Banco>`+bancoMediaView+`<\/Banco>\n                        <DataIndicativa>`+dataSolicitada+`<\/DataIndicativa>\n                        <Observacoes>`+observacoes+`<\/Observacoes>\n                      <\/processo>\n                    <\/EnviarProcesso>\n                  <\/soap:Body>\n                <\/soap:Envelope>`;\n        \n        console.log(sr);\n        xmlhttp.send(sr);\n}\n\nfunction validadeDataEHoraSolicitada(){\n    \n    var data = $(\"input[id*=data_solicitada]\").val();\n    var hora = $(\"input[id*=hora_solicitada]\").val();\n    var result = true;\n    if(data === '' ){\n        result=false;\n        $(\"input[id*=data_solicitada]\").css(\"border\", \"1px solid red\");\n        $(\"input[id*=data_solicitada]\").attr('placeholder', \"CAMPO OBRIGATÓRIO\");\n    }else{\n        $(\"input[id*=data_solicitada]\").css(\"border\", \"none\");\n        $(\"input[id*=data_solicitada]\").css(\"border-bottom\", \"1px solid #555\");\n        $(\"input[id*=data_solicitada]\").attr('placeholder', \"\");\n    }\n    if(hora === ''){\n        result=false;\n        $(\"input[id*=hora_solicitada]\").css(\"border\", \"1px solid red\");\n        $(\"input[id*=hora_solicitada]\").attr('placeholder', \"CAMPO OBRIGATÓRIO\");\n    }else{\n        $(\"input[id*=hora_solicitada]\").css(\"border\", \"none\");\n        $(\"input[id*=hora_solicitada]\").css(\"border-bottom\", \"1px solid #555\");\n        $(\"input[id*=hora_solicitada]\").attr('placeholder', \"\");\n    }\n    return result;\n}\n\nfunction validateNWFAgendamento(){\n    var result = true;\n    var nWfAgendamento =  $(\"input[id*=n_wf_agendamento]\").val();\n    if(nWfAgendamento === ''){\n        result = false;\n        $(\"input[id*=n_wf_agendamento]\").css(\"border\", \"1px solid red\");\n        $(\"input[id*=n_wf_agendamento]\").parent().find(\"label\").append('<span class=\"form-error-message\">Número Workflow não definido<\/span>');\n    }\n    \n    return result;\n}\n \nfunction apagarAto(idAto){\n     $.ajax({\n            type:\"DELETE\",\n            url: \"/jw/api/form/atosGeral/\" + idAto,\n            headers:{\n                \"api_id\": \"#envVariable.apiIdComunicacaoMediaView#\",\n                \"api_key\": \"#envVariable.apiKeyComunicacaoMediaView#\",\n                \"Accept\":\"application/json\",\n                \"Content-Type\": \"application/json\"\n            },\n            success: function(response){\n                \n            var id = response.code;\n            //console.log(id);\n\n            }\n        });\n}\n\nfunction envioEmailPedidoAgendamento(idAto){\n    console.log(\"Envio de Email\");\n    var msg = \"Pedido de Agendamento\\n\\nNúmero de processo: \" + nWfAgenda + \"\\nData solicitada: \" +dataSolicitada+ \"\\nHora solicitada: \" +horaSolicitada+ \"\\nLocal: \" +local+ \"\\nMorada: \"+morada;\n    var subject = \"Pedido de Agendamento - \" + nWfAgenda;\n    var to = \"#envVariable.emailEnvioAgenda#\";\n    $.ajax({\n            type:\"POST\",\n            url: \"/jw/api/process/sendEmail/startProcess\",\n            headers:{\n                \"api_id\": \"#envVariable.apiIdAtualizarCampos#\",\n                \"api_key\": \"#envVariable.apiKeyAtualizarCampos#\",\n                \"Accept\":\"application/json\",\n                \"Content-Type\": \"application/json\"\n            },data: JSON.stringify({\n                \"email_msg\": msg,\n                \"subject\": subject,\n                \"to\": to\n            }),\n            success: function(response){\n                //Atualização da data de envio de email\n                $.ajax({\n                    type:\"POST\",\n                    url: \"/jw/api/form/atosGeral/saveOrUpdate\",\n                    headers:{\n                        \"api_id\": \"#envVariable.apiIdComunicacaoMediaView#\",\n                        \"api_key\": \"#envVariable.apiKeyComunicacaoMediaView#\",\n                        \"Accept\":\"application/json\",\n                        \"Content-Type\": \"application/json\"\n                    },data: JSON.stringify({\n                        \"id\": idAto,\n                        \"data_envio_agenda\": \"#date.dd-MM-yyyy HH:mm#\"\n                    }),\n                    success: function(response){\n                        location.reload();\n                    }\n                });\n            }\n        });\n    \n}\n\n    \n<\/script>\n<input id=\"agendar\" type=\"button\" value=\"PEDIR AGENDAMENTO\">"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field15",
+                            "label": "",
+                            "permission_rules": {
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {},
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {}
+                            },
+                            "value": "<script>\n    $(document).ready(function(){\n\n        visibilidadeBCP();\n        visibilidadeBNI();\n        visibilidadeMTG();\n        $(\"input[id*=valores_liquidacao_receber]\").change(function(){\n            formatValorLiquidacaoReceber();\n        });\n        \n        $(\"input[id*=valor_financiamento]\").change(function(){\n            formatValorFinanciamento();\n        });\n       $(\"input[id*=valor_declarado_cv]\").change(function(){\n           formatValorDeclaradoCV();\n       });\n           \n       //Alterar labels\n       $(\"div[id*=intervenientes] a[class=grid-row-add]\").text(\"Adicionar\");\n        \n    });\n    \n    function visibilidadeBCP(){\n        var tipoProcesso = \"#form.detalhe_proce_procu.tipo_processo[{form.processos_procu.detalhe_processo}]#\";\n        var banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\n\n        if(banco_fundo === 'BCP'){\n            if (tipoProcesso === 'DIST' || tipoProcesso === 'MUT' || tipoProcesso === 'LEAS'){\n                $(\"div[id*=originais]\").parent().hide();\n                $(\"select[id*=chaves_receber]\").parent().hide();\n            } \n            \n            if(tipoProcesso === 'MUT' || tipoProcesso === 'LEAS' || tipoProcesso === 'ISV' || tipoProcesso === 'CVJ' || tipoProcesso === 'DAC'){\n                $(\"input[id*=deposito]\").parent().hide();\n                $(\"input[id*=local_envio_originais]\").parent().hide();\n            }\n            \n            if(tipoProcesso === 'MUT' || tipoProcesso === 'ISV' || tipoProcesso === 'CVJ' || tipoProcesso === 'DAC'){\n                $(\"input[id*=conta]\").parent().hide();\n                $(\"input[id*=valores_liquidacao_receber]\").parent().hide();\n            }\n            \n            if(tipoProcesso === 'ISV' || tipoProcesso === 'CVJ' || tipoProcesso === 'DAC'|| tipoProcesso === 'DIST'){\n                $(\"input[id*=finalidade_financiamento]\").parent().hide();\n                $(\"select[id*=pagamento]\").parent().hide();\n                $(\"input[id*=valor_declarado_cv]\").parent().hide();\n            }\n            if(tipoProcesso === 'ISV' || tipoProcesso === 'CVJ' || tipoProcesso === 'DAC'|| tipoProcesso === 'DIST'|| tipoProcesso === 'LEAS'){\n              $(\"input[id*=valor_financiamento]\").parent().hide();\n                \n            }\n            if(tipoProcesso === 'DIST'){\n                $(\"div[id*=intervenientes]\").parent().parent().hide();\n            }\n            \n        }\n    }\n    \n    function visibilidadeBNI(){\n        var tipoProcesso = \"#form.detalhe_proce_procu.tipo_processo[{form.processos_procu.detalhe_processo}]#\";\n        var banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\n\n        if(banco_fundo === 'BNI'){\n             if(tipoProcesso === 'MUT'){\n                $(\"input[id*=deposito]\").parent().hide();\n             }\n             if(tipoProcesso === 'DIST'){\n                $(\"input[id*=finalidade_financiamento]\").parent().hide();\n                $(\"select[id*=pagamento]\").parent().hide();\n                $(\"input[id*=valor_financiamento]\").parent().hide();\n                $(\"input[id*=valor_declarado_cv]\").parent().hide();\n                $(\"div[id*=intervenientes]\").parent().parent().hide();\n             }\n        }\n    }\n    \n    function visibilidadeMTG(){\n        var tipoProcesso = \"#form.detalhe_proce_procu.tipo_processo[{form.processos_procu.detalhe_processo}]#\";\n        var banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\n        if(banco_fundo === 'MTG'){\n            if(tipoProcesso !== 'VIM'){\n                $(\"div[id*=originais]\").parent().hide();\n                $(\"input[id*=local_envio_originais]\").parent().hide();\n                $(\"input[id*=conta]\").parent().hide();\n                $(\"input[id*=valores_liquidacao_receber]\").parent().hide();\n                $(\"input[id*=valor_sinal]\").parent().hide()\n            }\n            if(tipoProcesso === 'VIM' || tipoProcesso === 'MUT'){\n                $(\"select[id*=chaves_receber]\").parent().hide();\n                $(\"input[id*=data_rececao_originais]\").parent().hide()\n            }\n            if(tipoProcesso !== 'MUT' && tipoProcesso !== 'VIM'){\n                $(\"input[id*=finalidade_financiamento]\").parent().hide();\n                $(\"select[id*=pagamento]\").parent().hide();\n                $(\"input[id*=valor_financiamento]\").parent().hide();\n                $(\"input[id*=valor_declarado_cv]\").parent().hide();\n                \n            }\n        }\n    }\n    \n    function formatValorLiquidacaoReceber(){\n         //Formatar valor de campos em euros \n        var number =  $(\"input[id*=valores_liquidacao_receber]\").val();\n        if(number && number !== \"\"){\n            number = number.replaceAll('NaN', \"0\");\n            number = number.replaceAll('.', \"\");\n            number = number.replaceAll('\u20ac', \"\");\n            number = number.replaceAll('Eur', \"\");\n            number = number.replaceAll('EUR', \"\");\n            number = number.replaceAll(',', '.');\n            \n            let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(number);\n        \n            num = num.replace(/\\s/g, '.');\n            num = num.replaceAll('.\u20ac', ' EUR');\n            \n            $(\"input[id*=valores_liquidacao_receber]\").val(num);\n        }        \n\n    }\n\n    function formatValorFinanciamento(){\n         //Formatar valor de campos em euros \n        var number =  $(\"input[id*=valor_financiamento]\").val();\n        if(number && number !== \"\"){\n            number = number.replaceAll('NaN', \"0\");\n            number = number.replaceAll('.', \"\");\n            number = number.replaceAll('\u20ac', \"\");\n            number = number.replaceAll('Eur', \"\");\n            number = number.replaceAll('EUR', \"\");\n            number = number.replaceAll(',', '.');\n            \n            let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(number);\n        \n            num = num.replace(/\\s/g, '.');\n            num = num.replaceAll('.\u20ac', ' EUR');\n            \n            $(\"input[id*=valor_financiamento]\").val(num);\n        }        \n    }\n    function formatValorDeclaradoCV(){\n         //Formatar valor de campos em euros \n        var number =  $(\"input[id*=valor_declarado_cv]\").val();\n        if(number && number !== \"\"){\n            number = number.replaceAll('NaN', \"0\");\n            number = number.replaceAll('.', \"\");\n            number = number.replaceAll('\u20ac', \"\");\n            number = number.replaceAll('Eur', \"\");\n            number = number.replaceAll('EUR', \"\");\n            number = number.replaceAll(',', '.');\n            \n            let num = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' }).format(number);\n        \n            num = num.replace(/\\s/g, '.');\n            num = num.replaceAll('.\u20ac', ' EUR');\n            \n            $(\"input[id*=valor_declarado_cv]\").val(num);\n        }        \n    }\n    \n<\/script>\n"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "agendamento_1",
+                "join": "",
+                "label": "Pedido de Agendamento",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "03c775dc-a743-e094-4e35-cf487b91cef2": {},
+                    "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {},
+                    "2f7e0d1d-ee44-6d46-f4bc-434ed5e08f53": {},
+                    "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                    "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                    "5173a640-6d7b-ff47-1db9-349049a3ee8f": {},
+                    "61eed640-2e15-cba4-8522-d7b5ae130f31": {},
+                    "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                    "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                    "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                    "7e7faade-f35a-329d-a7a9-b6b63b1bc5b4": {},
+                    "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                    "d4230f5d-0b67-d8a3-8845-6d41ad2f225b": {},
+                    "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                    "dd84b73a-a59f-28e2-68ab-489586ddeac1": {},
+                    "f05453aa-e857-3dfd-90e1-d657d9b594a5": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field8",
+                            "label": "",
+                            "permission_rules": {
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {},
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {}
+                            },
+                            "value": "<div>\n    \n<\/div>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field8",
+                            "label": "",
+                            "permission_rules": {
+                                "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {},
+                                "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                                "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                                "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                                "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                                "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                                "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                                "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                                "f05453aa-e857-3dfd-90e1-d657d9b594a5": {}
+                            },
+                            "value": "<script>\n\n$(document).ready(function(){\n    var idAtos = FormUtil.getValues(\"atos.id\");\n    $(\"input#novoagendamento\").click(function(){\n       // var flagAlteracoes = 0;\n       var urlAto =\"/jw/api/form/atosGeral/\" + idAtos[idAtos.length-1];\n        if(idAtos.length>0){\n            $.ajax({\n                type:\"GET\",\n                url: urlAto,\n                headers:{\n                    \"api_id\": \"#envVariable.apiIdComunicacaoMediaView#\",\n                    \"api_key\": \"#envVariable.apiKeyComunicacaoMediaView#\",\n                    \"Accept\":\"application/json\",\n                    \"Content-Type\": \"application/json\"\n                },\n                success: function(response){\n                    var flagAlteracoes=parseInt(response.flag_alteracoes_agenda);\n                    if(flagAlteracoes===1){\n                        showReloadModal();\n                    }else{\n                        resetEstadoAgendamento(); \n                    }\n                }\n            });\n        }else{\n            resetEstadoAgendamento(); \n        }\n    });\n    \n    if($(\"div.form-errors\").length === 1){\n        $(\"div.form-errors\").text(\"EXISTEM ERROS DE AGENDAMENTO\");\n        showReloadModal();\n    }\n    $(\"input#saveAsDraft\").parent().parent().hide();\n    $(\"input#assignmentComplete\").parent().parent().hide();\n\n});\n\n\n\n//Esconder botão Guardar e Concluir/ dar reset às flags de alterações dos atos\n$(window).load(function(){\n    var idAtos = FormUtil.getValues(\"atos.id\");\n    if(idAtos.length>0){\n        for(i=0; i<idAtos.length; i++){\n            if($(\"div.form-errors\").length !== 1){\n                resetFlagAlteracoes(idAtos[i]);\n            }\n        }\n    }\n    \n    $(\"input[id*=flag_notificacao_alteracoes]\").val('0');\n    resetFlagNotificacaoAlteracoes();\n    \n    \n});\n\nfunction resetEstadoAgendamento(){\n           $.ajax({\n                type:\"POST\",\n                url: \"/jw/api/form/agendamentoProcuradoria/saveOrUpdate\",\n                headers:{\n                    \"api_id\": \"#envVariable.apiIdComunicacaoMediaView#\",\n                    \"api_key\": \"#envVariable.apiKeyComunicacaoMediaView#\",\n                    \"accept\":\"application/json\",\n                    \"Content-Type\": \"application/json\"\n                },\n                data: JSON.stringify({\n                                \"id\": \"#form.processos_procu.agendamento#\",\n                                \"flag_agendado\": \"0\"\n                            }),\n                success: function(data){\n                    var idAtos = FormUtil.getValues(\"atos.id\");\n                    if(idAtos.length>0){\n                        var motivoAto = FormUtil.getValues(\"atos.motivo_ato\");\n                        var status = FormUtil.getValues(\"atos.status\");\n                        var dataEnvioOriginais = FormUtil.getValues(\"atos.data_envio_originais\");\n                        var dataComunicacaoCliente = FormUtil.getValues(\"atos.data_comunicacao_cliente\");\n                        var valorDespesas = FormUtil.getValues(\"atos.valor_despesas\");\n                        var despesasAsseguradasPl = FormUtil.getValues(\"atos.despesas_asseguradas_pl\");\n                        var observacoes = FormUtil.getValues(\"atos.observacoes\");\n                        var nomeCentroCustoBalcao = FormUtil.getValues(\"atos.nome_centro_custo_balcao\");\n                        var numeroCentroCustoBalcao = FormUtil.getValues(\"atos.numero_centro_custo_balcao\");\n                        var valoresLiquidacaoReceber = FormUtil.getValues(\"atos.valores_liquidacao_receber\");\n                        var valorSinal = FormUtil.getValues(\"atos.valor_sinal\");\n                        var conta = FormUtil.getValues(\"atos.conta\");\n                        var deposito = FormUtil.getValues(\"atos.deposito\");\n                        var registoCTT = FormUtil.getValues(\"atos.registoCTT\");\n                        var localEnvioOriginais = FormUtil.getValues(\"atos.local_envio_originais\");\n                        var dataRececaoOriginais = FormUtil.getValues(\"atos.data_rececao_originais\");\n                        var originais = FormUtil.getValues(\"atos.originais\");\n                        var dataEnvioOriginaisProcu = FormUtil.getValues(\"atos.data_envio_originais_procu\");\n                        var finalidadeFinanciamento = FormUtil.getValues(\"atos.finalidade_financiamento\");\n                        var pagamento = FormUtil.getValues(\"atos.pagamento\");\n                        var valorFinanciamento = FormUtil.getValues(\"atos.valor_financiamento\");\n                        var valorDeclaradoCV = FormUtil.getValues(\"atos.valor_declarado_cv\");\n                        var dataEnvioAgenda = FormUtil.getValues(\"atos.data_envio_agenda\");\n                         \n                        for(i=0; i<idAtos.length; i++){\n                            updateAto(idAtos[i],motivoAto[i], status[i], dataEnvioOriginais[i], dataComunicacaoCliente[i], valorDespesas[i], despesasAsseguradasPl[i], \n                            observacoes[i], nomeCentroCustoBalcao[i], numeroCentroCustoBalcao[i], valoresLiquidacaoReceber[i], valorSinal[i],conta[i], deposito[i], registoCTT[i], \n                            localEnvioOriginais[i], dataRececaoOriginais[i], originais[i], dataEnvioOriginaisProcu[i], finalidadeFinanciamento[i], pagamento[i], valorFinanciamento[i],\n                            valorDeclaradoCV[i], dataEnvioAgenda[i]);\n                        }\n\n                    }\n                    location.reload();\n                }\n            });\n}\n\nfunction updateAto(id, motivoAto, status, dataEnvioOriginais, dataComunicacaoCliente, valorDespesas, despesasAsseguradasPl, observacoes, nomeCentroCustoBalcao, \nnumeroCentroCustoBalcao, valoresLiquidacaoReceber, valorSinal, conta, deposito, registoCTT, localEnvioOriginais, dataRececaoOriginais, originais, dataEnvioOriginaisProcu, \nfinalidadeFinanciamento, pagamento,valorFinanciamento, valorDeclaradoCV, dataEnvioAgenda){\n    console.log(\"\")\n    $.ajax({\n        type:\"POST\",\n        url: \"/jw/api/form/atosGeral/saveOrUpdate\",\n        headers:{\n            \"api_id\": \"#envVariable.apiIdComunicacaoMediaView#\",\n            \"api_key\": \"#envVariable.apiKeyComunicacaoMediaView#\",\n            \"Accept\":\"application/json\",\n            \"Content-Type\": \"application/json\"\n        },\n        data: JSON.stringify({\n                        \"id\": id,\n                        \"status\": status,\n                        \"motivo_ato\": motivoAto,\n                        \"data_envio_originais\": dataEnvioOriginais,\n                        \"data_comunicacao_cliente\": dataComunicacaoCliente,\n                        \"valor_despesas\": valorDespesas,\n                        \"despesas_asseguradas_pl\": despesasAsseguradasPl,\n                        \"observacoes\": observacoes,\n                        \"nome_centro_custo_balcao\": nomeCentroCustoBalcao,\n                        \"numero_centro_custo_balcao\": numeroCentroCustoBalcao,\n                        \"valores_liquidacao_receber\": valoresLiquidacaoReceber,\n                        \"valor_sinal\": valorSinal,\n                        \"finalidade_financiamento\": finalidadeFinanciamento,\n                        \"pagamento\": pagamento,\n                        \"valor_financiamento\": valorFinanciamento,\n                        \"valor_declarado_cv\": valorDeclaradoCV,\n                        \"conta\": conta,\n                        \"deposito\": deposito,\n                        \"registoCTT\": registoCTT,\n                        \"local_envio_originais\": localEnvioOriginais,\n                        \"data_envio_originais_procu\": dataEnvioOriginaisProcu,\n                        \"data_rececao_originais\": dataRececaoOriginais,\n                        \"originais\": originais,\n                        \"data_envio_agenda\": dataEnvioAgenda\n                    }),\n        success: function(response){\n            \n        }\n    });\n}\n    \nfunction resetFlagAlteracoes(id){\n    $.ajax({\n        type:\"POST\",\n        url: \"/jw/api/form/atosGeral/saveOrUpdate\",\n        headers:{\n            \"api_id\": \"#envVariable.apiIdComunicacaoMediaView#\",\n            \"api_key\": \"#envVariable.apiKeyComunicacaoMediaView#\",\n            \"Accept\":\"application/json\",\n            \"Content-Type\": \"application/json\"\n        },\n        data: JSON.stringify({\n            \"id\": id,\n            \"flag_alteracoes_agenda\": \"0\"\n        }),\n        success: function(response){\n\n        }\n    });\n}\n\n\n\nfunction showReloadModal(){\n    $(\"#filaTrabalho\").append('<table name=\"modalVerificarAlteracoes\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" class=\"boxy-wrapper fixed\" style=\"z-index: 1339; visibility: visible; left: 556.5px; top: 66.012px; opacity: 1;\"><tbody><tr><td class=\"top-left\"><\/td><td class=\"top\"><\/td><td class=\"top-right\"><\/td><\/tr><tr><td class=\"left\"><\/td><td class=\"boxy-inner\"><div class=\"title-bar\"><h2>&nbsp;<\/h2><a href=\"#\" class=\"close\"><i class=\"fa fas fa-times\"><\/i><\/a><\/div><div style=\"width: 650px;height: 450px;\"><span class=\"material-symbols-rounded icone_alerta2\">warning<\/span><div class=\"textValidation\" style=\"width: inherit;height: 450px;text-align: center;vertical-align: middle;line-height: 20px;padding: 180px 0px 0px 0px;font-family: \"Ubuntu\", sans-serif !important;font-size: 18px;\">Houveram alterações aos Atos pela Agenda. É necessário atualizar a página.<\/div><div style=\"width: 100%;height: 100px;text-align: center;vertical-align: middle;line-height: 20px;bottom: 0;position: absolute;\"><i class=\"waves-button-input waves-input-wrapper waves-effect btn waves-button waves-float\" style=\"color:rgb(33, 33, 33);background:rgba(0, 0, 0, 0);\"><input id=\"reloadPage\" name=\"reloadPage\" class=\"waves-button-input\" type=\"submit\" value=\"Atualizar página\" style=\"background-color:rgba(0,0,0,0);\"><\/i><\/div><\/div><\/td><td class=\"right\"><\/td><\/tr><tr><td class=\"bottom-left\"><\/td><td class=\"bottom\"><\/td><td class=\"bottom-right\"><\/td><\/tr><\/tbody><\/table>');\n    $(\"#filaTrabalho\").append('<div name=\"blackoutEcra\" class=\"boxy-modal-blackout\" style=\"z-index: 1338; opacity: 0.7; width: 100%; height: 100%; position:fixed; top:0px; left:0px;\"><\/div>');\n    \n    $(\"#reloadPage\").on('click', function() {\n        var idAtos = FormUtil.getValues(\"atos.id\");\n        if(idAtos.length>0){\n            for(i=0; i<idAtos.length; i++){\n                resetFlagAlteracoes(idAtos[i]);\n            }\n        }\n        \n        window.location = \"#request.scheme#://#request.serverName#:#request.serverPort##request.contextPath#/web/userview/workflowPL/UV_PL_Geral/_/filaTrabalho?activityId=#requestParam.activityId#&_mode=assignment\";\n    });\n}\n\nfunction resetFlagNotificacaoAlteracoes(){\n    \n    $.ajax({\n        type:\"POST\",\n        url: \"/jw/api/form/agendamentoProcuradoria/saveOrUpdate\",\n        headers:{\n            \"api_id\": \"#envVariable.apiIdComunicacaoMediaView#\",\n            \"api_key\": \"#envVariable.apiKeyComunicacaoMediaView#\",\n            \"accept\":\"application/json\",\n            \"Content-Type\": \"application/json\"\n        },\n        data: JSON.stringify({\n                        \"id\": \"#form.processos_procu.agendamento#\",\n                        \"flag_notificacao_alteracoes\": \"0\"\n                    }),\n        success: function(response){\n \n        }\n    });\n  \n} \n\n    \n<\/script>\n<input id=\"novoagendamento\" type=\"button\" value=\"PEDIR NOVO AGENDAMENTO\">"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "mensagemAgendamento",
+                "join": "",
+                "label": "Agendamento",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {},
+                    "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                    "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                    "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                    "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                    "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                    "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                    "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                    "f05453aa-e857-3dfd-90e1-d657d9b594a5": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [{
+                    "className": "org.joget.plugin.enterprise.FormGrid",
+                    "properties": {
+                        "abortRelatedRunningProcesses": "",
+                        "deleteFiles": "",
+                        "deleteGridData": "",
+                        "deleteMessage": "Delete row?",
+                        "deleteSubformData": "",
+                        "disabledAdd": "true",
+                        "disabledDelete": "true",
+                        "enableSorting": "",
+                        "errorMessage": "Invalid number of rows",
+                        "formDefId": "atosAgendamento",
+                        "height": "85%",
+                        "id": "atos",
+                        "label": "Atos",
+                        "loadBinder": {
+                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                            "properties": {
+                                "foreignKey": "id_agendamento",
+                                "formDefId": "atosAgendamento"
+                            }
+                        },
+                        "options": [
+                            {
+                                "format": "opcoesDisplayGrid",
+                                "formatType": "options",
+                                "label": "Status",
+                                "value": "status",
+                                "width": ""
+                            },
+                            {
+                                "format": "",
+                                "formatType": "text",
+                                "label": "Data Outorga",
+                                "value": "dataOutorga",
+                                "width": ""
+                            },
+                            {
+                                "format": "",
+                                "formatType": "text",
+                                "label": "Hora Outorga",
+                                "value": "horaOutorga",
+                                "width": ""
+                            },
+                            {
+                                "format": "",
+                                "formatType": "text",
+                                "label": "Procurador",
+                                "value": "procurador",
+                                "width": ""
+                            },
+                            {
+                                "format": "",
+                                "formatType": "text",
+                                "label": "Última comunicação para Agenda",
+                                "value": "data_envio_agenda",
+                                "width": ""
+                            }
+                        ],
+                        "pageSize": "100",
+                        "permissionHidden": "",
+                        "permission_rules": {
+                            "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {},
+                            "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                            "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                            "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                            "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                            "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                            "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                            "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                            "f05453aa-e857-3dfd-90e1-d657d9b594a5": {}
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "showRowNumber": "",
+                        "storeBinder": {
+                            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                            "properties": {
+                                "autoHandleFiles": "",
+                                "autoHandleWorkflowVariable": "true",
+                                "cacheInterval": "",
+                                "script": "import java.util.HashSet;\r\nimport java.util.Set;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.commons.util.StringUtil;\r\nimport org.joget.apps.form.model.FormStoreBinder;\r\nimport org.joget.plugin.base.PluginManager;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport org.joget.apps.app.service.AppService;\r\n\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport org.joget.commons.util.UuidGenerator;\r\nimport java.time.LocalDate;\r\nimport org.joget.workflow.model.service.*;\r\n\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport java.time.LocalDateTime; \r\nimport java.time.format.DateTimeFormatter;\r\nimport java.time.DayOfWeek;\r\nimport java.time.temporal.ChronoUnit;\r\n\r\n\r\n\r\npublic FormRowSet store(Element element, FormRowSet rows, FormData formData) {\r\n    PluginManager pluginManager = (PluginManager) AppUtil.getApplicationContext().getBean(\"pluginManager\");\r\n    FormStoreBinder binder = (FormStoreBinder) pluginManager.getPlugin(\"org.joget.apps.form.lib.WorkflowFormBinder\");\r\n    AppDefinition appDef = AppUtil.getCurrentAppDefinition();\r\n    try {\r\n         \r\n        if(rows!=null && !rows.isEmpty()){\r\n            int indexLastAto = rows.size() - 1;\r\n            int count = 0;\r\n            for (FormRow row : rows) {\r\n                //Get the submitted data for each grid row\r\n                \r\n               \r\n                String id = row.getProperty(\"id\");\r\n                /*\r\n                String urgencia = row.getProperty(\"urgencia\");\r\n                String dataSolicitada = row.getProperty(\"data_solicitada\");\r\n                String horaSolicitada = row.getProperty(\"hora_solicitada\");\r\n                String local = row.getProperty(\"local\");\r\n                String morada = row.getProperty(\"morada\");\r\n                String observacoesAgendamento = row.getProperty(\"observacoes_agendamento\");\r\n                String flagAlteracoesAgenda = row.getProperty(\"flag_alteracoes_agenda\");\r\n                String dataAlteracaoAgenda = row.getProperty(\"data_alteracao_agenda\");\r\n                String originais = row.getProperty(\"originais\");\r\n                String chavesReceber = row.getProperty(\"chaves_receber\");\r\n                String dataRececaoOriginais = row.getProperty(\"data_rececao_originais\");\r\n                String localEnvioOriginais = row.getProperty(\"local_envio_originais\");\r\n                String dataEnvioOriginaisProcu = row.getProperty(\"data_envio_originais_procu\");\r\n                String registoCTT = row.getProperty(\"registoCTT\");\r\n                String deposito = row.getProperty(\"deposito\");\r\n                String conta = row.getProperty(\"conta\");\r\n                String valoresLiquidacaoReceber = row.getProperty(\"valores_liquidacao_receber\");\r\n                String finalidadeFinanciamento = row.getProperty(\"finalidade_financiamento\");\r\n                String pagamento = row.getProperty(\"pagamento\");\r\n                String valorFinanciamento = row.getProperty(\"valor_financiamento\");\r\n                String valorDeclaradoCv = row.getProperty(\"valor_declarado_cv\");\r\n                String numeroCentroCustoBalcao = row.getProperty(\"numero_centro_custo_balcao\");\r\n                String nomeCentroCustoBalcao = row.getProperty(\"nome_centro_custo_balcao\");\r\n                String idProcesso = row.getProperty(\"id_processo\");\r\n                String idAgendamento = row.getProperty(\"id_agendamento\");\r\n                String procurador = row.getProperty(\"procurador\");\r\n                String entidade = row.getProperty(\"entidade\");\r\n                String dataOutorga = row.getProperty(\"dataOutorga\");\r\n                String horaOutorga = row.getProperty(\"horaOutorga\");\r\n                String localOutorga = row.getProperty(\"localOutorga\");\r\n                String status = row.getProperty(\"status\");\r\n                String motivoAto = row.getProperty(\"motivo_ato\");\r\n                String motivoDesc = row.getProperty(\"motivo_desc\");\r\n                String observacoes = row.getProperty(\"observacoes\");\r\n                String despesasAsseguradasPl = row.getProperty(\"despesas_asseguradas_pl\");\r\n                String valorDespesas = row.getProperty(\"valor_despesas\");\r\n                String dataComunicacaoCliente = row.getProperty(\"data_comunicacao_cliente\");\r\n                String dataEnvioOriginais = row.getProperty(\"data_envio_originais\");\r\n                */\r\n                FormRowSet rowsToStore = new FormRowSet();\r\n                rowsToStore.add(row);\r\n                \r\n                //Reuse Workflow Form Binder to store data of each row\r\n                storeToOtherFormDataTable(appDef,element, rowsToStore, formData, \"atosAgendamento\", id);\r\n                \r\n                //Caso seja o ultimo Ato\r\n                if(count == indexLastAto){\r\n                    String status = row.getProperty(\"status\");\r\n                    String dataComunicacaoCliente = row.getProperty(\"data_comunicacao_cliente\");\r\n                    String idProcesso = row.getProperty(\"id_processo\");\r\n                    //Caso o status seja agendamento comunicado e a data de comunicação não esteja vazia \r\n                    \r\n                    dataFimSLA = dataComunicacaoCliente;\r\n                    Connection con = null;\r\n                    PreparedStatement stmt = null;\r\n                    ResultSet rs = null;\r\n                    String ProcessID = \"#process.processId#\";\r\n                    boolean SLAIsOpen = false;\r\n                        try{\r\n                            DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n                            con = ds.getConnection();\r\n                            if(!con.isClosed()){\r\n                                if(status.equals(\"ACOM\") && !dataComunicacaoCliente.isEmpty()){\r\n                                    if(ProcessID.startsWith(\"#process.processId\")){\r\n                                        String queryGetProcessId = \"SELECT Id FROM shkprocesses WHERE ActivityRequesterProcessId = ? order by created desc ;\";\r\n                                        stmt = con.prepareStatement(queryGetProcessId);\r\n                                        stmt.setObject(1, idProcesso);\r\n                                        rs = stmt.executeQuery();\r\n                                        if(rs.next()){\r\n                                            ProcessID = rs.getObject(\"Id\");\r\n                                        }\r\n                                    }\r\n                                    \r\n                                    //Verificar se existe algum SLA do processo em aberto\r\n                                    String queryGetOpenSLA = \"SELECT id, c_data_inicio FROM app_fd_sla_atividade WHERE c_id_processo=? AND c_estado_atividade = 'Em curso' AND (c_flag_sla_outorga != '1' OR c_flag_sla_outorga IS NULL);\";\r\n                                    stmt = con.prepareStatement(queryGetOpenSLA);\r\n                                    stmt.setObject(1, ProcessID);\r\n                                    rs = stmt.executeQuery();\r\n                                    String idSLA = \"\";\r\n                                    String dataInicio = \"\";\r\n                                    if(rs.next()){\r\n                                        SLAIsOpen = true;\r\n                                        idSLA = rs.getObject(\"id\");\r\n                                        dataInicio = rs.getObject(\"c_data_inicio\");\r\n                                        \r\n                                    }\r\n                                    \r\n         \r\n                                    //Se existir um SLA 'Em curso'\r\n                                    if(SLAIsOpen){\r\n                                    //Obter feriados para o cálculo do SLA\r\n                                    Collection holidays = getHolidays(con);\r\n                \r\n                                    String slaDuration = calculateSLADuration(dataInicio, dataFimSLA, holidays);\r\n                                    //Fechar SLA 'Em curso'\r\n                                    String queryCloseSLA = \"UPDATE app_fd_sla_atividade SET c_estado_atividade = 'Fechada', c_data_conclusao=? , c_duracao = ? WHERE id = ?;\";\r\n                                    stmt = con.prepareStatement(queryCloseSLA);\r\n                                    stmt.setObject(1, dataFimSLA);\r\n                                    stmt.setObject(2, slaDuration);\r\n                                    stmt.setObject(3, idSLA);\r\n                                    rs = stmt.executeQuery();\r\n        \r\n                                    }\r\n                                }else if(status.equals(\"DES\")){\r\n                                  /*  \r\n                                    Map variableMap = new HashMap();\r\n                                    String msg = \"Foi feito um pedido de desmarcação\";\r\n                                    String subject = \"Pedido de Desmarcação\";\r\n                                    String to = \"dpardal@neyond.pt\";\r\n                                    variableMap.put(\"email_msg\",msg);\r\n                                    variableMap.put(\"subject\",subject);\r\n                                    variableMap.put(\"to\", to);\r\n                           \r\n                                    //start a new process instance with data from each row\r\n                                    //processStart(String processDefId, String processId, Map<String, String> variables, String startProcUsername, String parentProcessId, boolean startManually)\r\n                                    workflowManager.processStart(\"workflowPL#536#sendEmail\", null, variableMap, null, null, false);\r\n*/\r\n                                }\r\n                            }   \r\n                        }catch(Exception e){\r\n                            LogUtil.error(\"Olimpo- Multirow Store Binder Atos Procuradoria\", e, \"Error getting info from DB\");\r\n                        \r\n                        }finally{\r\n                            try{\r\n                                if(rs != null){\r\n                                rs.close();\r\n                                }\r\n                                if(stmt != null){\r\n                                    stmt.close();\r\n                                }\r\n                                if(con != null && !con.isClosed()) {\r\n                                    con.close();\r\n                                }\r\n                            }catch(Exception e){\r\n                                LogUtil.error(\"Olimpo- Multirow Store Binder Atos Procuradoria\", e, \"Error closing DB connection\");\r\n                            }\r\n                        \r\n                        }           \r\n                    \r\n                }\r\n                count += 1;\r\n            }\r\n        }\r\n    } catch (Exception e) {\r\n        LogUtil.error(\"Olimpo MultiRow Store Binder - Atos Procuradoria\", e);\r\n    }\r\n    return rows;\r\n}\r\n\r\npublic void storeToOtherFormDataTable(AppDefinition appDef, Element element, FormRowSet rows, FormData formData, String formId, String id) {\r\n    try{\r\n        AppService appService = (AppService) AppUtil.getApplicationContext().getBean(\"appService\");\r\n        FormRowSet storedInfo = appService.storeFormData(appDef.getId(), appDef.getVersion().toString(), formId, rows, id);\r\n    }catch(Exception e){\r\n        LogUtil.error(\"Olimpo MultiRow Store Binder - Atos Procuradoria\", e, \"Error storing data\");\r\n    }\r\n    \r\n}\r\n\r\n\r\n\r\npublic String calculateDataFim(String dataInicio){ //Falta receber configuração do SLA e holidays\r\n    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"yyyy-MM-dd HH:mm\");\r\n    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(\"yyyy-MM-dd\");\r\n    LocalDateTime dateInit = LocalDateTime.parse(dataInicio, formatter);\r\n    LocalDateTime endDateTime = null;\r\n    String endDate = \"\";\r\n     \r\n    var hour = dateInit.getHour();\r\n    int slaNumber = 1;//Integer.parseInt(sla); Hardcoded falta implementar configurações de SLA para Procuradoria\r\n    if(hour < 12){\r\n            endDateTime = dateInit.withHour(23).withMinute(59);   /**   HORAS UTEIS???   **/\r\n            \r\n            //Incrementar dias consoante o SLA\r\n            while(slaNumber > 1){\r\n                endDateTime = endDateTime.plusDays(1);\r\n                //Passar dias não uteis\r\n                while(isWeekend(endDateTime) || holidays.contains(endDateTime.format(dateFormatter))){\r\n                   endDateTime = endDateTime.plusDays(1);\r\n                }   \r\n                slaNumber -= 1;\r\n            }\r\n    \r\n        }else{\r\n            endDateTime = dateInit.plusDays(1).withHour(12).withMinute(0);\r\n            \r\n            //Incrementar dias consoante o SLA\r\n            while(slaNumber > 1){\r\n                endDateTime = endDateTime.plusDays(1);\r\n                //Passar dias não uteis\r\n                while(isWeekend(endDateTime) || holidays.contains(endDateTime.format(dateFormatter))){\r\n                   endDateTime = endDateTime.plusDays(1);\r\n                }\r\n                slaNumber -= 1;\r\n            }\r\n            \r\n            \r\n        }\r\n        \r\n        endDate = endDateTime.format(formatter);\r\n    \r\n    \r\n        return endDate;\r\n}\r\n\r\npublic String calculateSLADuration(String dataInit, String dateEnd, Collection holidays){\r\n    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"dd/MM/yyyy HH:mm\");\r\n    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(\"yyyy-MM-dd\");\r\n    String result=\"\";\r\n    //if Data Init date format is not \"dd/MM/yyyy HH:mm\"\r\n    //LogUtil.info(\"DATE INIT\", \"AAA\" + dataInit);\r\n    if(dataInit.charAt(2) != '/'){\r\n        //if Data Init date format is of the format \"yyyy-MM-dd HH:mm\"\r\n        if(dataInit.charAt(4) == '-' && dataInit.charAt(10) == ' ' && dataInit.charAt(13) == ':'){\r\n            dataInit =  dataInit.substring(8,10) + \"/\" + dataInit.substring(5,7) + \"/\" + dataInit.substring(0,4) + \" \" + dataInit.substring(11,16);\r\n        }\r\n    }\r\n    \r\n    if(dateEnd.charAt(2) != '/'){\r\n         //if Data Init date format is of the format \"yyyy-MM-dd HH:mm\"\r\n        if(dateEnd.charAt(4) == '-' && dateEnd.charAt(10) == ' ' && dateEnd.charAt(13) == ':'){\r\n            dateEnd =  dateEnd.substring(8,10) + \"/\" + dateEnd.substring(5,7) + \"/\" + dateEnd.substring(0,4) + \" \" + dateEnd.substring(11,16);\r\n        }\r\n    }\r\n\r\n    LocalDateTime dateInit = LocalDateTime.parse(dataInit, formatter);\r\n    LocalDateTime dateFinish = LocalDateTime.parse(dateEnd,formatter);\r\n    \r\n    long days = ChronoUnit.DAYS.between(dateInit, dateFinish);\r\n    int initHours = dateInit.getHour();\r\n    int finishHours = dateFinish.getHour();\r\n    \r\n    \r\n    if(initHours > 12 && finishHours < 12){\r\n        days= days - 1;    \r\n    }else if(days>0 && initHours < 12 && finishHours >= 12){\r\n        days = days + 1;\r\n    }\r\n    \r\n    \r\n    long workDays = days;\r\n    \r\n    while(days>0){\r\n        \r\n        if(holidays.contains(dateInit.format(dateFormatter))){\r\n            workDays-=1;\r\n            \r\n        }else{\r\n            String day = dateInit.getDayOfWeek().toString();\r\n        \r\n            switch(day) {\r\n                case \"SATURDAY\":{\r\n                    workDays-=1;\r\n                    break;\r\n                }\r\n                case \"SUNDAY\":{\r\n                    workDays-=1;\r\n                    break;\r\n                }\r\n            }\r\n        }\r\n        \r\n\r\n        dateInit = dateInit.plusDays(1);\r\n  \r\n        days-=1;\r\n    }\r\n    \r\n    result = \"D\";\r\n    if(workDays>0){\r\n        result =result + \"+\" + workDays;\r\n    }\r\n    \r\n    \r\n    \r\n    return result;\r\n}\r\n\r\n//Obter lista de feriados\r\npublic Collection getHolidays(Connection con){\r\n    Collection holidays = new ArrayList(); \r\n    try{\r\n        String queryGetHolidays = \"SELECT * FROM app_fd_lista_feriados;\";\r\n        PreparedStatement stmt = con.prepareStatement(queryGetHolidays);\r\n        ResultSet rs = stmt.executeQuery();\r\n        while(rs.next()){\r\n            holidays.add(rs.getObject(\"c_data\"));\r\n        }\r\n    } catch(Exception e) {\r\n        LogUtil.error(\"Load Binder - Resumo Procuradoria \", e, \"Error getting holidays\");\r\n    } \r\n    \r\n    return holidays;\r\n}\r\n\r\n//Verificar de o dia é fim de semana\r\npublic boolean isWeekend(LocalDateTime dt) {\r\n    String dayOfWeek = dt.getDayOfWeek().toString();\r\n    switch(dayOfWeek) {\r\n        case \"SATURDAY\":{\r\n            return true;\r\n        }\r\n        case \"SUNDAY\":{\r\n            return true;\r\n        }\r\n        default:{\r\n            return false;\r\n        }\r\n    }\r\n}\r\n\r\n  \r\n//call store method with injected variable\r\nreturn store(element, rows, formData);",
+                                "useAjax": ""
+                            }
+                        },
+                        "submit-label-normal": "",
+                        "submit-label-readonly": "",
+                        "uniqueKey": "",
+                        "validateMaxRow": "",
+                        "validateMinRow": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "width": "85%"
+                    }
+                }],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section2",
+                "join": "",
+                "label": "Atos",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9": {},
+                    "4ca43afb-7ca5-9595-7d5e-480f9e1269aa": {},
+                    "4dd344b6-5ff8-6608-a338-63d5c40ffc38": {},
+                    "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1": {},
+                    "73d59c6e-5d43-9985-020a-1564a2bd69fd": {},
+                    "7661310a-7dc3-e855-1d82-7f7bb70319c7": {},
+                    "8d26fcff-b200-5ba6-a36b-6bf75f33839e": {},
+                    "d71cd104-0c18-2072-f92d-82b847d18ab5": {},
+                    "f05453aa-e857-3dfd-90e1-d657d9b594a5": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        }
+    ],
+    "properties": {
+        "description": "",
+        "id": "agendamentoProcuradoria",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "Procuradoria - Agendamento",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "permission_rules": [
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\nif(banco_fundo.equals(\"NVB\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "4dd344b6-5ff8-6608-a338-63d5c40ffc38",
+                "permission_name": "NVB"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\nif(banco_fundo.equals(\"MTG\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "73d59c6e-5d43-9985-020a-1564a2bd69fd",
+                "permission_name": "MTG"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\nif(banco_fundo.equals(\"BIC\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "f05453aa-e857-3dfd-90e1-d657d9b594a5",
+                "permission_name": "BIC"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\nif(banco_fundo.equals(\"BNI\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "d71cd104-0c18-2072-f92d-82b847d18ab5",
+                "permission_name": "BNI"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\nif(banco_fundo.equals(\"BCP\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "4ca43afb-7ca5-9595-7d5e-480f9e1269aa",
+                "permission_name": "BCP"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\nif(banco_fundo.equals(\"HPG\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "6fb83d36-30a3-de4b-f6ee-475a1d3c4ee1",
+                "permission_name": "Hipoges (HPG)"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\nif(banco_fundo.equals(\"NOR\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "7661310a-7dc3-e855-1d82-7f7bb70319c7",
+                "permission_name": "Norfin (NOR)"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\nif(banco_fundo.equals(\"DHM\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "1fa5eef4-6607-58b1-6a12-e2ed8ae717c9",
+                "permission_name": "DHM"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\nif(banco_fundo.equals(\"WHS\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "8d26fcff-b200-5ba6-a36b-6bf75f33839e",
+                "permission_name": "Whitestar (WHS)"
+            }
+        ],
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "agendamento_procu"
+    }
+}

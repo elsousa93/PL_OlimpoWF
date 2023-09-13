@@ -1,0 +1,207 @@
+{
+    "actions": [],
+    "binder": {
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "activity",
+            "sql": "(SELECT asst.activityid as 'activityId', a.`name` as 'activityName', proce.activityrequesterprocessId as 'processId',proce.name as 'processName',dp.c_urgencia as 'urgencia', dp.c_estado_contratacao as 'estado_contratacao', null as 'origemProcesso', FROM_UNIXTIME(floor(a.activated/1000)) as 'dateCreated', asst.resourceid as 'resourceId', dp.dateModified as \"dateModified\", dp.c_n_wf_banco as \"nwfbanco\" \nFROM shkassignmentstable asst\nJOIN shkprocesses proce ON proce.id=asst.activityprocessid\nLEFT JOIN app_fd_processos_hip p ON p.id = proce.activityrequesterprocessId\nLEFT JOIN app_fd_detalhe_proce_hip dp ON p.c_detalhe_processo = dp.id\nJOIN shkactivities a ON a.id=asst.activityid\nWHERE asst.resourceid LIKE '#currentUser.id#'\nORDER BY dp.dateModified DESC)\n\n\n"
+        }
+    },
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_0",
+            "label": "activityId",
+            "name": "activityId",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "activityName",
+            "name": "activityName",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_3",
+            "label": "processId",
+            "name": "processId",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_9",
+            "label": "processName",
+            "name": "processName",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_10",
+            "label": "resourceId",
+            "name": "resourceId",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_11",
+            "label": "urgencia",
+            "name": "urgencia",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_2",
+            "label": "estado_contratacao",
+            "name": "estado_contratacao",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "origemProcesso",
+            "name": "origemProcesso",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_8",
+            "label": "dateCreated",
+            "name": "dateCreated",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_5",
+            "label": "dateModified",
+            "name": "dateModified",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_6",
+            "label": "nwfbanco",
+            "name": "nwfbanco",
+            "sortable": "false"
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
+    "description": "",
+    "disableResponsive": "",
+    "filters": [
+        {
+            "id": "filter_3",
+            "label": "origemProcesso",
+            "name": "origemProcesso",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        },
+        {
+            "id": "filter_4",
+            "label": "processId",
+            "name": "processId",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        },
+        {
+            "id": "filter_2",
+            "label": "estado_contratacao",
+            "name": "estado_contratacao",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-6475180-fn_processName",
+            "hidden": "",
+            "id": "filter_0",
+            "label": "processName",
+            "name": "processName",
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "controlField": "",
+                    "defaultValue": "",
+                    "multiple": "true",
+                    "options": [
+                        {
+                            "grouping": "",
+                            "label": "Diligencias",
+                            "value": "diligencias"
+                        },
+                        {
+                            "grouping": "",
+                            "label": "CH-Global",
+                            "value": "CH-Global"
+                        },
+                        {
+                            "grouping": "",
+                            "label": "Crédito Habitação-Contratação Complexo",
+                            "value": "Crédito Habitação-Contratação Complexo"
+                        }
+                    ],
+                    "optionsBinder": {
+                        "className": "",
+                        "properties": {}
+                    },
+                    "size": ""
+                }
+            }
+        },
+        {
+            "id": "filter_1",
+            "label": "urgencia",
+            "name": "urgencia",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        }
+    ],
+    "hidePageSize": "",
+    "id": "list_assigment_hip_lea",
+    "name": "Lista Assigment HIP/LEA",
+    "order": "1",
+    "orderBy": "dateModified",
+    "pageSize": "0",
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "responsiveView": [
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Mobile"
+        },
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Tablet"
+        }
+    ],
+    "rowActions": [],
+    "searchPopup": "",
+    "showDataWhenFilterSet": "",
+    "showPageSizeSelector": "true",
+    "useSession": ""
+}

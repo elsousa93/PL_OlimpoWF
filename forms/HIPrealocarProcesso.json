@@ -1,0 +1,289 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "n_wf_pl",
+                            "label": "Número Processo Pl",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "n_wf_banco",
+                            "label": "Número Workflow Banco",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section1",
+                "join": "",
+                "label": "Processo",
+                "loadBinder": {
+                    "className": "org.joget.plugin.enterprise.JdbcLoadBinder",
+                    "properties": {
+                        "autoHandleFiles": "",
+                        "autoHandleWorkflowVariable": "true",
+                        "jdbcDatasource": "default",
+                        "sql": "SELECT * FROM app_fd_detalhe_proce_hip WHERE c_id_processo = '#requestParam.procId#'"
+                    }
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionHidden": "",
+                "permissionReadonly": "",
+                "readonly": "true",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                    "properties": {
+                        "autoHandleFiles": "",
+                        "autoHandleWorkflowVariable": "true",
+                        "cacheInterval": "",
+                        "script": "return null;",
+                        "useAjax": ""
+                    }
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "id_processo",
+                            "useDefaultWhenEmpty": "",
+                            "value": "#requestParam.procId#",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "replaceUser",
+                            "label": "Utilizador Atual",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.plugin.enterprise.UserOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "",
+                                    "cacheInterval": "",
+                                    "deptId": "",
+                                    "emptyLabel": "",
+                                    "groupId": "",
+                                    "grouping": "",
+                                    "optionLabel": "",
+                                    "orgId": "",
+                                    "useAjax": ""
+                                }
+                            },
+                            "permissionHidden": "",
+                            "readonly": "true",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "#requestParam.replaceUser#",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "aid",
+                            "label": "Id Atividade",
+                            "maxlength": "",
+                            "permissionHidden": "",
+                            "placeholder": "",
+                            "readonly": "true",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "#requestParam.aid#",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "department",
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "#currentUser.department.id#",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "department",
+                            "id": "user",
+                            "label": "Realocar para",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.plugin.enterprise.UserOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "",
+                                    "cacheInterval": "",
+                                    "deptId": "",
+                                    "emptyLabel": "",
+                                    "groupId": "",
+                                    "grouping": "dept",
+                                    "optionLabel": "",
+                                    "orgId": "PL",
+                                    "useAjax": "true"
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextArea",
+                        "properties": {
+                            "cols": "20",
+                            "id": "comentarios_realocacao",
+                            "label": "Comentários",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "rows": "5",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field6",
+                            "label": "",
+                            "value": "<script>\n    $(document).ready(function(){\n        \n        \n        $(\"input[type=submit]\").val(\"REALOCAR\");\n        \n    });\n    \n    \n<\/script>"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section2",
+                "join": "",
+                "label": "Realocar",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        }
+    ],
+    "properties": {
+        "description": "",
+        "id": "HIPrealocarProcesso",
+        "loadBinder": {
+            "className": "",
+            "properties": {}
+        },
+        "name": "HIP - Realocar Processo",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "org.joget.apps.app.lib.BeanShellTool",
+            "properties": {"script": "\nimport org.joget.workflow.model.service.WorkflowManager;\nimport org.joget.apps.app.service.AppUtil;\nimport org.joget.workflow.model.service.WorkflowUserManager;\nimport org.joget.apps.app.model.AppDefinition;\nimport javax.servlet.http.HttpServletRequest;\nimport org.joget.commons.util.LogUtil;\n\nimport java.sql.Connection;\nimport java.sql.PreparedStatement;\nimport java.sql.ResultSet;\nimport java.sql.SQLException;\nimport javax.sql.DataSource;\n\n\npublic Object execute(AppDefinition appDef, HttpServletRequest request) {\n    WorkflowManager wm = (WorkflowManager) AppUtil.getApplicationContext().getBean(\"workflowManager\");\n    WorkflowUserManager wum = (WorkflowUserManager) AppUtil.getApplicationContext().getBean(\"workflowUserManager\");\n    \n    //get the values from the \n    String aid = \"#requestParam.aid#\";\n    String replaceUser = \"#requestParam.replaceUser#\";\n    String username = \"#form.realocar_processo.user#\";\n    String comentarios = \"\";\n    String idProcesso=\"#form.realocar_processo.id_processo#\";\n    String idRealocacao = \"#form.realocar_processo.id#\";\n\n\n    //getCurrentThreadUser() Method used by system to get current thread user\n    String currentUser = wum.getCurrentThreadUser();\n    wum.setCurrentThreadUser(replaceUser);\n    wum.setCurrentThreadUser(currentUser);\n    \n    //Reassigns the assignment from a user (replaceUser) to another user (username)\n    wm.assignmentReassign(\"\", \"\", aid, username, replaceUser);\n    \n    //set workflow variable \"approver\" to the new user as well\n    //wm.activityVariable(aid, \"approver\", username);\n    \n    \n    Connection con = null;\n    PreparedStatement stmt = null;\n    ResultSet rs = null;\n    try{\n            DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\n            con = ds.getConnection();\n            \n            if(!con.isClosed()){\n                String queryGetComments = \"SELECT c_comentarios_realocacao FROM app_fd_realocar_processo WHERE id=?\";\n                stmt = con.prepareStatement(queryGetComments);\n                stmt.setObject(1, idRealocacao);\n                rs = stmt.executeQuery();\n                if(rs.next()){\n                    comentarios=rs.getObject(\"c_comentarios_realocacao\");\n                    String queryUpdateRealocationComment = \"UPDATE app_fd_detalhe_processo SET c_comentarios_realocacao = ? WHERE c_id_processo = ?\";\n                    stmt = con.prepareStatement(queryUpdateRealocationComment);\n                    stmt.setObject(1, comentarios);\n                    stmt.setObject(2, idProcesso); \n                    rs = stmt.executeQuery();\n                }\n                \n                \n            }\n            \n    }catch(Exception e){\n            LogUtil.error(appDef.toString(), e, \"Error getting info from DB\");\n        }finally{\n            try{\n                if(rs != null){\n                rs.close();\n                }\n                if(stmt != null){\n                    stmt.close();\n                }\n                if(con != null && !con.isClosed()) {\n                    con.close();\n                }\n            }catch(Exception e){\n                LogUtil.error(appDef.toString(), e, \"Error closing DB connection\");\n            }\n            \n        }\n\n    \n    return null;\n}\n\n//call execute method with injected variable\nreturn execute(appDef, request);\n\n"}
+        },
+        "postProcessorRunOn": "both",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "realocar_processo"
+    }
+}

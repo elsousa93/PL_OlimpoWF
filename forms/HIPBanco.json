@@ -1,0 +1,1642 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section4",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                    "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                    "6345a174-2189-0106-d3df-42d99f971d4e": {},
+                    "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                    "91f3a9e7-06fa-1619-f8ea-58214999d664": {},
+                    "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                    "cc7ee957-82dd-2431-9fcb-0a20c0305ce4": {},
+                    "cf816f5e-34c1-aa26-b58c-9096dfe15803": {},
+                    "eb643c5c-439c-71a8-6591-f30f44104ccf": {},
+                    "ed614f02-8cde-7e73-6465-2a0ebb85ffb0": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "nome_banco",
+                            "label": "Nome do Banco",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "true",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "extraCondition": "c_nome_campo = 'nome_banco' AND e.customProperties.servico LIKE '%HIP%'",
+                                    "formDefId": "adicionarOpcaoLV",
+                                    "groupingColumn": "",
+                                    "idColumn": "value",
+                                    "labelColumn": "label",
+                                    "useAjax": ""
+                                }
+                            },
+                            "permission_rules": {
+                                "0113cd59-1c7e-e30a-e3a6-1aa792cd971d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "6345a174-2189-0106-d3df-42d99f971d4e": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "91f3a9e7-06fa-1619-f8ea-58214999d664": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "cc7ee957-82dd-2431-9fcb-0a20c0305ce4": {},
+                                "cf816f5e-34c1-aa26-b58c-9096dfe15803": {},
+                                "eb643c5c-439c-71a8-6591-f30f44104ccf": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "ed614f02-8cde-7e73-6465-2a0ebb85ffb0": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "*",
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        \r\n        //Configure field to validate - UPDATE HERE\r\n        String fieldId = \"nome_banco\";\r\n        \r\n        //Get element value\r\n        Form form = FormUtil.findRootForm(element);\r\n        Element field = FormUtil.findElement(fieldId, form, formData);\r\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n        \r\n        //If element is not filled give error message\r\n        if (fieldValue == null || fieldValue.equals(\"\")){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else{\r\n            result = true;\r\n        }\r\n    }else{\r\n        result = true;\r\n    }\r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "nome_banco",
+                            "label": "Nome do Banco",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "true",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "extraCondition": "c_nome_campo = 'nome_banco' AND e.customProperties.servico LIKE '%LEA%'",
+                                    "formDefId": "adicionarOpcaoLV",
+                                    "groupingColumn": "",
+                                    "idColumn": "value",
+                                    "labelColumn": "label",
+                                    "useAjax": ""
+                                }
+                            },
+                            "permission_rules": {
+                                "0113cd59-1c7e-e30a-e3a6-1aa792cd971d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "6345a174-2189-0106-d3df-42d99f971d4e": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "91f3a9e7-06fa-1619-f8ea-58214999d664": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "cc7ee957-82dd-2431-9fcb-0a20c0305ce4": {},
+                                "cf816f5e-34c1-aa26-b58c-9096dfe15803": {},
+                                "eb643c5c-439c-71a8-6591-f30f44104ccf": {},
+                                "ed614f02-8cde-7e73-6465-2a0ebb85ffb0": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "*",
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        \r\n        //Configure field to validate - UPDATE HERE\r\n        String fieldId = \"nome_banco\";\r\n        \r\n        //Get element value\r\n        Form form = FormUtil.findRootForm(element);\r\n        Element field = FormUtil.findElement(fieldId, form, formData);\r\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n        \r\n        //If element is not filled give error message\r\n        if (fieldValue == null || fieldValue.equals(\"\")){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else{\r\n            result = true;\r\n        }\r\n    }else{\r\n        result = true;\r\n    }\r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "banco",
+                "join": "",
+                "label": "Banco",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "0113cd59-1c7e-e30a-e3a6-1aa792cd971d": {},
+                    "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                    "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                    "6345a174-2189-0106-d3df-42d99f971d4e": {},
+                    "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                    "91f3a9e7-06fa-1619-f8ea-58214999d664": {},
+                    "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                    "cc7ee957-82dd-2431-9fcb-0a20c0305ce4": {},
+                    "cf816f5e-34c1-aa26-b58c-9096dfe15803": {},
+                    "eb643c5c-439c-71a8-6591-f30f44104ccf": {},
+                    "ed614f02-8cde-7e73-6465-2a0ebb85ffb0": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.TextArea",
+                        "properties": {
+                            "cols": "20",
+                            "id": "nome_balcao",
+                            "label": "Nome do Balcão",
+                            "permission_rules": {
+                                "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "eb643c5c-439c-71a8-6591-f30f44104ccf": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "rows": "5",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextArea",
+                        "properties": {
+                            "cols": "20",
+                            "id": "nome_gestor",
+                            "label": "Nome do Gestor",
+                            "permission_rules": {
+                                "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "eb643c5c-439c-71a8-6591-f30f44104ccf": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "rows": "5",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextArea",
+                        "properties": {
+                            "cols": "20",
+                            "id": "email_gestor_bcp",
+                            "label": "E-mail do Gestor",
+                            "permission_rules": {
+                                "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "eb643c5c-439c-71a8-6591-f30f44104ccf": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "rows": "5",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "BCP",
+                "id": "seccao_bcp",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "0113cd59-1c7e-e30a-e3a6-1aa792cd971d": {},
+                    "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                    "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                    "6345a174-2189-0106-d3df-42d99f971d4e": {},
+                    "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                    "91f3a9e7-06fa-1619-f8ea-58214999d664": {},
+                    "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                    "cc7ee957-82dd-2431-9fcb-0a20c0305ce4": {},
+                    "cf816f5e-34c1-aa26-b58c-9096dfe15803": {
+                        "permissionHidden": "",
+                        "readonly": ""
+                    },
+                    "eb643c5c-439c-71a8-6591-f30f44104ccf": {},
+                    "ed614f02-8cde-7e73-6465-2a0ebb85ffb0": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "nome_banco",
+                "visibilityValue": "BCP"
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "email_gestor_bcp",
+                "join": ";",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                    "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                    "6345a174-2189-0106-d3df-42d99f971d4e": {},
+                    "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                    "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                    "eb643c5c-439c-71a8-6591-f30f44104ccf": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": ";",
+                "reverse": ";",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "email_gestor;nome_banco",
+                "visibilityValue": ";BCP"
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "tel_gestor_bcp",
+                "join": ";",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                    "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                    "6345a174-2189-0106-d3df-42d99f971d4e": {},
+                    "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                    "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                    "eb643c5c-439c-71a8-6591-f30f44104ccf": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": ";",
+                "reverse": ";",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "telefone_gestor;nome_banco",
+                "visibilityValue": ";BCP"
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "direcao_coordenadora_mtg",
+                            "label": "Direção Coordenadora",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "true",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "extraCondition": "e.customProperties.nivel_1 IN (select distinct vb.customProperties.nivel_1 from app_fd_list_values_mtg vb)",
+                                    "formDefId": "listaValoresBancoMTG",
+                                    "groupingColumn": "",
+                                    "idColumn": "nivel_1",
+                                    "labelColumn": "nivel_1",
+                                    "useAjax": ""
+                                }
+                            },
+                            "permission_rules": {
+                                "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "6345a174-2189-0106-d3df-42d99f971d4e": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "cf816f5e-34c1-aa26-b58c-9096dfe15803": {},
+                                "eb643c5c-439c-71a8-6591-f30f44104ccf": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "direcao_coordenadora_mtg",
+                            "id": "direcao_regional_mtg",
+                            "label": "Direção Regional",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "true",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "extraCondition": "",
+                                    "formDefId": "listaValoresBancoMTG",
+                                    "groupingColumn": "nivel_1",
+                                    "idColumn": "nivel_2",
+                                    "labelColumn": "nivel_2",
+                                    "useAjax": ""
+                                }
+                            },
+                            "permission_rules": {
+                                "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "6345a174-2189-0106-d3df-42d99f971d4e": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "cf816f5e-34c1-aa26-b58c-9096dfe15803": {},
+                                "eb643c5c-439c-71a8-6591-f30f44104ccf": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextArea",
+                        "properties": {
+                            "cols": "20",
+                            "id": "nome_balcao_mtg",
+                            "label": "Nome do Balcão",
+                            "permission_rules": {
+                                "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "eb643c5c-439c-71a8-6591-f30f44104ccf": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "rows": "5",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "email_balcao_mtg",
+                            "label": "E-mail do Balcão",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0113cd59-1c7e-e30a-e3a6-1aa792cd971d": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "6345a174-2189-0106-d3df-42d99f971d4e": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "91f3a9e7-06fa-1619-f8ea-58214999d664": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "cc7ee957-82dd-2431-9fcb-0a20c0305ce4": {},
+                                "cf816f5e-34c1-aa26-b58c-9096dfe15803": {},
+                                "eb643c5c-439c-71a8-6591-f30f44104ccf": {},
+                                "ed614f02-8cde-7e73-6465-2a0ebb85ffb0": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "",
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        \r\n        //Configure field to validate - UPDATE HERE\r\n        String fieldId = \"email_balcao_mtg\";\r\n        \r\n        //Get element value\r\n        Form form = FormUtil.findRootForm(element);\r\n        Element field = FormUtil.findElement(fieldId, form, formData);\r\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n        \r\n        //If element is not filled give error message\r\n        if (fieldValue == null || fieldValue.equals(\"\")){\r\n            result = true;\r\n        }else{\r\n            if (fieldValue.matches(\"^[\\\\w-\\\\.]+@([\\\\w-]+\\\\.)+[\\\\w-]{2,4}$\")){\r\n                result = true;\r\n            }else{\r\n                String id = FormUtil.getElementParameterName(element);\r\n                formData.addFormError(id, \"Formato de email inválido\");\r\n                result = false;\r\n            }\r\n            \r\n        }\r\n    }else{\r\n        result = true;\r\n    }\r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextArea",
+                        "properties": {
+                            "cols": "20",
+                            "id": "email_gestor_mtg",
+                            "label": "E-mail do Gestor",
+                            "permission_rules": {
+                                "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "eb643c5c-439c-71a8-6591-f30f44104ccf": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "rows": "5",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextArea",
+                        "properties": {
+                            "cols": "20",
+                            "id": "telefone_gestor_mtg",
+                            "label": "Telefone do Gestor",
+                            "permission_rules": {
+                                "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "eb643c5c-439c-71a8-6591-f30f44104ccf": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "rows": "5",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "MTG",
+                "id": "seccao_mtg",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                    "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                    "6345a174-2189-0106-d3df-42d99f971d4e": {},
+                    "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                    "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                    "cf816f5e-34c1-aa26-b58c-9096dfe15803": {
+                        "permissionHidden": "",
+                        "readonly": ""
+                    },
+                    "eb643c5c-439c-71a8-6591-f30f44104ccf": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "nome_banco",
+                "visibilityValue": "MTG"
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "email_gestor_mtg",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                    "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                    "6345a174-2189-0106-d3df-42d99f971d4e": {},
+                    "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                    "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                    "eb643c5c-439c-71a8-6591-f30f44104ccf": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "tel_gestor_mtg",
+                "join": ";",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                    "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                    "6345a174-2189-0106-d3df-42d99f971d4e": {},
+                    "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                    "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                    "eb643c5c-439c-71a8-6591-f30f44104ccf": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": ";",
+                "reverse": ";",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "telefone_gestor_mtg;nome_banco",
+                "visibilityValue": ";MTG"
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "direcao_regional_bic",
+                            "label": "Direção Regional",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "extraCondition": "e.customProperties.nivel_1 IN (select distinct vb.customProperties.nivel_1 from app_fd_list_values_bic vb)",
+                                    "formDefId": "listaValoresBancoBIC",
+                                    "groupingColumn": "",
+                                    "idColumn": "nivel_1",
+                                    "labelColumn": "nivel_1",
+                                    "useAjax": ""
+                                }
+                            },
+                            "permission_rules": {
+                                "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "6345a174-2189-0106-d3df-42d99f971d4e": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "cf816f5e-34c1-aa26-b58c-9096dfe15803": {},
+                                "eb643c5c-439c-71a8-6591-f30f44104ccf": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "direcao_regional_bic",
+                            "id": "agencia_bic",
+                            "label": "Agência",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "true",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "extraCondition": "",
+                                    "formDefId": "listaValoresBancoBIC",
+                                    "groupingColumn": "nivel_1",
+                                    "idColumn": "nivel_2",
+                                    "labelColumn": "nivel_2",
+                                    "useAjax": ""
+                                }
+                            },
+                            "permission_rules": {
+                                "0113cd59-1c7e-e30a-e3a6-1aa792cd971d": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "6345a174-2189-0106-d3df-42d99f971d4e": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "77b4fd0a-b965-8163-d5d6-a6ff25c9fc01": {},
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "91f3a9e7-06fa-1619-f8ea-58214999d664": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "cc7ee957-82dd-2431-9fcb-0a20c0305ce4": {},
+                                "cf816f5e-34c1-aa26-b58c-9096dfe15803": {},
+                                "d7abc52f-950f-ae8c-bd3c-76183c6afa8c": {},
+                                "ed614f02-8cde-7e73-6465-2a0ebb85ffb0": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "*",
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        \r\n        //Configure field to validate - UPDATE HERE\r\n        String fieldId = \"agencia_bic\";\r\n        \r\n        //Get element value\r\n        Form form = FormUtil.findRootForm(element);\r\n        Element field = FormUtil.findElement(fieldId, form, formData);\r\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n        \r\n        //If element is not filled give error message\r\n        if (fieldValue == null || fieldValue.equals(\"\")){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else{\r\n            result = true;\r\n        }\r\n    }else{\r\n        result = true;\r\n    }\r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "agencia_bic",
+                            "id": "email_balcao_bic",
+                            "label": "E-mail do Balcão",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "true",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "extraCondition": "",
+                                    "formDefId": "listaValoresBancoBIC",
+                                    "groupingColumn": "nivel_2",
+                                    "idColumn": "nivel_5",
+                                    "labelColumn": "nivel_5",
+                                    "useAjax": ""
+                                }
+                            },
+                            "permission_rules": {
+                                "0113cd59-1c7e-e30a-e3a6-1aa792cd971d": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "6345a174-2189-0106-d3df-42d99f971d4e": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "77b4fd0a-b965-8163-d5d6-a6ff25c9fc01": {},
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "91f3a9e7-06fa-1619-f8ea-58214999d664": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "cc7ee957-82dd-2431-9fcb-0a20c0305ce4": {},
+                                "cf816f5e-34c1-aa26-b58c-9096dfe15803": {},
+                                "d7abc52f-950f-ae8c-bd3c-76183c6afa8c": {},
+                                "ed614f02-8cde-7e73-6465-2a0ebb85ffb0": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "*",
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        \r\n        //Configure field to validate - UPDATE HERE\r\n        String fieldId = \"email_balcao_bic\";\r\n        \r\n        //Get element value\r\n        Form form = FormUtil.findRootForm(element);\r\n        Element field = FormUtil.findElement(fieldId, form, formData);\r\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n        \r\n        //If element is not filled give error message\r\n        if (fieldValue == null || fieldValue.equals(\"\")){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else{\r\n            if (fieldValue.matches(\"^[\\\\w-\\\\.]+@([\\\\w-]+\\\\.)+[\\\\w-]{2,4}$\")){\r\n                result = true;\r\n            }else{\r\n                String id = FormUtil.getElementParameterName(element);\r\n                formData.addFormError(id, \"Formato de email inválido\");\r\n                result = false;\r\n            }\r\n            \r\n        }\r\n    }else{\r\n        result = true;\r\n    }\r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "email_gestor_bic",
+                            "label": "Email do Gestor",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "BIC",
+                "id": "seccao_bic",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                    "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                    "6345a174-2189-0106-d3df-42d99f971d4e": {},
+                    "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                    "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                    "cf816f5e-34c1-aa26-b58c-9096dfe15803": {
+                        "permissionHidden": "",
+                        "readonly": ""
+                    },
+                    "eb643c5c-439c-71a8-6591-f30f44104ccf": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "nome_banco",
+                "visibilityValue": "BIC"
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "zona_balcao_nvb",
+                            "label": "Zona do Balcão",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "true",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "extraCondition": "e.customProperties.nivel_1 IN (select distinct vb.customProperties.nivel_1 from app_fd_list_values_nvb vb)",
+                                    "formDefId": "listaValoresBancoNVB",
+                                    "groupingColumn": "",
+                                    "idColumn": "nivel_1",
+                                    "labelColumn": "nivel_1",
+                                    "useAjax": ""
+                                }
+                            },
+                            "permission_rules": {
+                                "0113cd59-1c7e-e30a-e3a6-1aa792cd971d": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "6345a174-2189-0106-d3df-42d99f971d4e": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "77b4fd0a-b965-8163-d5d6-a6ff25c9fc01": {},
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "91f3a9e7-06fa-1619-f8ea-58214999d664": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "cc7ee957-82dd-2431-9fcb-0a20c0305ce4": {},
+                                "cf816f5e-34c1-aa26-b58c-9096dfe15803": {},
+                                "d7abc52f-950f-ae8c-bd3c-76183c6afa8c": {},
+                                "eb643c5c-439c-71a8-6591-f30f44104ccf": {},
+                                "ed614f02-8cde-7e73-6465-2a0ebb85ffb0": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "zona_balcao_nvb",
+                            "id": "nome_balcao_nvb",
+                            "label": "Nome do Balcão",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "true",
+                                    "cacheInterval": "",
+                                    "emptyLabel": "",
+                                    "extraCondition": "",
+                                    "formDefId": "listaValoresBancoNVB",
+                                    "groupingColumn": "nivel_1",
+                                    "idColumn": "nivel_2",
+                                    "labelColumn": "nivel_2",
+                                    "useAjax": ""
+                                }
+                            },
+                            "permission_rules": {
+                                "0113cd59-1c7e-e30a-e3a6-1aa792cd971d": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "6345a174-2189-0106-d3df-42d99f971d4e": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "77b4fd0a-b965-8163-d5d6-a6ff25c9fc01": {},
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "91f3a9e7-06fa-1619-f8ea-58214999d664": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "cc7ee957-82dd-2431-9fcb-0a20c0305ce4": {},
+                                "cf816f5e-34c1-aa26-b58c-9096dfe15803": {},
+                                "d7abc52f-950f-ae8c-bd3c-76183c6afa8c": {},
+                                "eb643c5c-439c-71a8-6591-f30f44104ccf": {},
+                                "ed614f02-8cde-7e73-6465-2a0ebb85ffb0": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "email_balcao_nvb",
+                            "label": "E-mail do Balcão",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0113cd59-1c7e-e30a-e3a6-1aa792cd971d": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "6345a174-2189-0106-d3df-42d99f971d4e": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "77b4fd0a-b965-8163-d5d6-a6ff25c9fc01": {},
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "91f3a9e7-06fa-1619-f8ea-58214999d664": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "cc7ee957-82dd-2431-9fcb-0a20c0305ce4": {},
+                                "cf816f5e-34c1-aa26-b58c-9096dfe15803": {},
+                                "d7abc52f-950f-ae8c-bd3c-76183c6afa8c": {},
+                                "eb643c5c-439c-71a8-6591-f30f44104ccf": {},
+                                "ed614f02-8cde-7e73-6465-2a0ebb85ffb0": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextArea",
+                        "properties": {
+                            "cols": "20",
+                            "id": "email_gestor_nvb",
+                            "label": "E-mail do Gestor",
+                            "permission_rules": {
+                                "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "eb643c5c-439c-71a8-6591-f30f44104ccf": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "rows": "5",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextArea",
+                        "properties": {
+                            "cols": "20",
+                            "id": "telefone_gestor_nvb",
+                            "label": "Telefone do Gestor",
+                            "permission_rules": {
+                                "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "eb643c5c-439c-71a8-6591-f30f44104ccf": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "rows": "5",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "NVB",
+                "id": "seccao_nvb",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                    "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                    "6345a174-2189-0106-d3df-42d99f971d4e": {
+                        "permissionHidden": "",
+                        "readonly": ""
+                    },
+                    "77b4fd0a-b965-8163-d5d6-a6ff25c9fc01": {
+                        "permissionHidden": "",
+                        "readonly": "true"
+                    },
+                    "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                    "91f3a9e7-06fa-1619-f8ea-58214999d664": {},
+                    "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                    "cf816f5e-34c1-aa26-b58c-9096dfe15803": {},
+                    "d7abc52f-950f-ae8c-bd3c-76183c6afa8c": {},
+                    "eb643c5c-439c-71a8-6591-f30f44104ccf": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "nome_banco",
+                "visibilityValue": "NVB"
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "email_balcao_bst",
+                            "label": "E-mail do Balcão",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0113cd59-1c7e-e30a-e3a6-1aa792cd971d": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "6345a174-2189-0106-d3df-42d99f971d4e": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "77b4fd0a-b965-8163-d5d6-a6ff25c9fc01": {},
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "91f3a9e7-06fa-1619-f8ea-58214999d664": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "cc7ee957-82dd-2431-9fcb-0a20c0305ce4": {},
+                                "cf816f5e-34c1-aa26-b58c-9096dfe15803": {},
+                                "d7abc52f-950f-ae8c-bd3c-76183c6afa8c": {},
+                                "eb643c5c-439c-71a8-6591-f30f44104ccf": {},
+                                "ed614f02-8cde-7e73-6465-2a0ebb85ffb0": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "",
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        \r\n        //Configure field to validate - UPDATE HERE\r\n        String fieldId = \"email_balcao_bst\";\r\n        \r\n        //Get element value\r\n        Form form = FormUtil.findRootForm(element);\r\n        Element field = FormUtil.findElement(fieldId, form, formData);\r\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n        \r\n            if (fieldValue.matches(\"^[\\\\w-\\\\.]+@([\\\\w-]+\\\\.)+[\\\\w-]{2,4}$\")){\r\n                result = true;\r\n            }else{\r\n                String id = FormUtil.getElementParameterName(element);\r\n                formData.addFormError(id, \"Formato de email inválido\");\r\n                result = false;\r\n            }\r\n    \r\n    }else{\r\n        result = true;\r\n    }\r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "email_gestor_bst",
+                            "label": "E-mail do Gestor",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "6345a174-2189-0106-d3df-42d99f971d4e": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "77b4fd0a-b965-8163-d5d6-a6ff25c9fc01": {},
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "91f3a9e7-06fa-1619-f8ea-58214999d664": {},
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "d7abc52f-950f-ae8c-bd3c-76183c6afa8c": {},
+                                "eb643c5c-439c-71a8-6591-f30f44104ccf": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "BST",
+                "id": "seccao_bst",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                    "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                    "6345a174-2189-0106-d3df-42d99f971d4e": {},
+                    "77b4fd0a-b965-8163-d5d6-a6ff25c9fc01": {
+                        "permissionHidden": "",
+                        "readonly": "true"
+                    },
+                    "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                    "91f3a9e7-06fa-1619-f8ea-58214999d664": {},
+                    "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                    "cf816f5e-34c1-aa26-b58c-9096dfe15803": {
+                        "permissionHidden": "",
+                        "readonly": ""
+                    },
+                    "d7abc52f-950f-ae8c-bd3c-76183c6afa8c": {},
+                    "eb643c5c-439c-71a8-6591-f30f44104ccf": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "nome_banco",
+                "visibilityValue": "BST"
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "email_balcao_abn",
+                            "label": "E-mail do Balcão",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "0113cd59-1c7e-e30a-e3a6-1aa792cd971d": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "6345a174-2189-0106-d3df-42d99f971d4e": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "77b4fd0a-b965-8163-d5d6-a6ff25c9fc01": {},
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "91f3a9e7-06fa-1619-f8ea-58214999d664": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "cc7ee957-82dd-2431-9fcb-0a20c0305ce4": {},
+                                "cf816f5e-34c1-aa26-b58c-9096dfe15803": {},
+                                "d7abc52f-950f-ae8c-bd3c-76183c6afa8c": {},
+                                "eb643c5c-439c-71a8-6591-f30f44104ccf": {},
+                                "ed614f02-8cde-7e73-6465-2a0ebb85ffb0": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "email_gestor_abn",
+                            "label": "E-mail do Gestor",
+                            "maxlength": "",
+                            "permission_rules": {
+                                "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                                "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                                "6345a174-2189-0106-d3df-42d99f971d4e": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "77b4fd0a-b965-8163-d5d6-a6ff25c9fc01": {},
+                                "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                                "91f3a9e7-06fa-1619-f8ea-58214999d664": {},
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "d7abc52f-950f-ae8c-bd3c-76183c6afa8c": {},
+                                "eb643c5c-439c-71a8-6591-f30f44104ccf": {}
+                            },
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "ABANCA",
+                "id": "seccao_abn",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "29d1f3c5-1209-d08f-24f7-b6dcda160ef1": {},
+                    "3107e40f-9169-9bac-9da4-3c9abf442b0d": {},
+                    "6345a174-2189-0106-d3df-42d99f971d4e": {},
+                    "77b4fd0a-b965-8163-d5d6-a6ff25c9fc01": {
+                        "permissionHidden": "",
+                        "readonly": "true"
+                    },
+                    "796f733b-72db-8dde-b928-99ca71ebd63d": {},
+                    "91f3a9e7-06fa-1619-f8ea-58214999d664": {},
+                    "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                    "d7abc52f-950f-ae8c-bd3c-76183c6afa8c": {},
+                    "eb643c5c-439c-71a8-6591-f30f44104ccf": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "nome_banco",
+                "visibilityValue": "ABN"
+            }
+        }
+    ],
+    "properties": {
+        "description": "",
+        "id": "HIPBanco",
+        "loadBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "name": "HIP - Banco",
+        "permission_rules": [
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": " String servico = \"#form.processos_hip.servico#\";\n \n if(servico.equals(\"HIP\")){\n     return true;\n }\n return false;\n "}
+                },
+                "permission_key": "29d1f3c5-1209-d08f-24f7-b6dcda160ef1",
+                "permission_name": "Hipotecas"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": " String servico = \"#form.processos_hip.servico#\";\n \n if(servico.equals(\"LEA\")){\n     return true;\n }\n return false;\n "}
+                },
+                "permission_key": "eb643c5c-439c-71a8-6591-f30f44104ccf",
+                "permission_name": "Leasing"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_CNT_BCP_COM_CRH;PL_INT_CNT_BCP_NOR_CRH",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "a7d20ca5-03bc-9069-0b63-779dd448a737",
+                "permission_name": "Contratação BCP"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_CNT_BST_COM_CRH;PL_INT_CNT_BST_NOR_CRH",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "796f733b-72db-8dde-b928-99ca71ebd63d",
+                "permission_name": "Contratação BST"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_CNT_BIC_COM_CRH;PL_INT_CNT_BIC_NOR_CRH",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "3107e40f-9169-9bac-9da4-3c9abf442b0d",
+                "permission_name": "Contratação BIC"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_CNT_ABN_COM_CRH;PL_INT_CNT_ABN_NOR_CRH",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "cc7ee957-82dd-2431-9fcb-0a20c0305ce4",
+                "permission_name": "Contratação ABN"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_CNT_NVB_COM_CRH;PL_INT_CNT_NVB_NOR_CRH",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "cf816f5e-34c1-aa26-b58c-9096dfe15803",
+                "permission_name": "Contratação NVB"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_CNT_MTG_COM_CRH;PL_INT_CNT_MTG_NOR_CRH",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "ed614f02-8cde-7e73-6465-2a0ebb85ffb0",
+                "permission_name": "Contratação MTG"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_FLT_GEN_COM_CRH;PL_INT_FLT_GEN_NOR_CRH",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "6345a174-2189-0106-d3df-42d99f971d4e",
+                "permission_name": "Filtro"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_PRD_GEN_COM_CRH;PL_INT_PRD_GEN_NOR_CRH;PL_INT_PRD_GEN_RPA_CRH",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "0113cd59-1c7e-e30a-e3a6-1aa792cd971d",
+                "permission_name": "Produção"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_VAL_BCP_COM_CRH;PL_INT_VAL_BCP_NOR_CRH;PL_INT_VAL_BNI_COM_CRH;PL_INT_VAL_BNI_NOR_CRH;PL_INT_VAL_BST_COM_CRH;PL_INT_VAL_BST_NOR_CRH;PL_INT_VAL_GEN_COM_CRH;PL_INT_VAL_GEN_NOR_CRH",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "91f3a9e7-06fa-1619-f8ea-58214999d664",
+                "permission_name": "Validação"
+            }
+        ],
+        "storeBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "tableName": "banco_hip"
+    }
+}

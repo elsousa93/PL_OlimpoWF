@@ -1,0 +1,346 @@
+{
+    "actions": [],
+    "binder": {
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "idProc",
+            "sql": "SELECT p.id as idProc, dp.c_n_processo as NProc, dp.c_n_agenda as NAgenda, dp.c_banco_fundo as Banco, dp.c_tipo_processo as TipoProcesso, \nsp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee, p.dateCreated, \nsact.Id AS ActivityId, hpp.c_gestor, hpp.c_data_puxar, ato.c_status as EstadoAgendamento\nFROM shkprocesses sp \nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id \nLEFT JOIN app_fd_processos_procu p on sp.ActivityRequesterProcessId = p.id \nLEFT JOIN app_fd_detalhe_proce_procu dp ON dp.id = p.c_detalhe_processo LEFT JOIN shkprocessstates sps ON sps.oid = sp.State \nLEFT JOIN app_fd_atos ato ON ato.c_id_processo = p.id\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id LEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State \nLEFT JOIN (SELECT id, t.c_id_processo, t.c_gestor, c_data_puxar FROM (SELECT MAX(c_data_puxar) as max_date, h.c_id_processo FROM app_fd_hist_puxar_procu h WHERE h.c_gestor != 'procuradoria_geral' GROUP BY h.c_id_processo) r \nINNER JOIN app_fd_hist_puxar_procu t ON r.c_id_processo = t.c_id_processo AND r.max_date = t.c_data_puxar AND c_gestor != 'procuradoria_geral') hpp ON hpp.c_id_processo = p.id \nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId \nWHERE sps.KeyValue LIKE 'open.running' AND p.id is not null AND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND (ato.dateCreated = (SELECT MAX(dateCreated) FROM app_fd_atos a2 WHERE a2.c_id_processo = p.id) || ato.dateCreated IS null)\nAND sp.id like '%PCDProcuradoria%' AND sass.ResourceId LIKE \"%procuradoria_geral%\""
+        }
+    },
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'estado_agendamento'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_7",
+            "label": "Estado Agendamento",
+            "name": "EstadoAgendamento",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_1",
+            "label": "Número Agenda",
+            "name": "NAgenda",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_3",
+            "label": "Número do Processo",
+            "name": "NProc",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'nome_banco' AND e.customProperties.servico LIKE '%PROCU%'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_4",
+            "label": "Banco",
+            "name": "Banco",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'tipo_processo' AND e.customProperties.servico LIKE '%PROCU%'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_6",
+            "label": "Tipo Processo",
+            "name": "TipoProcesso",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_5",
+            "label": "Gestor",
+            "name": "assignee",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.DateFormatter",
+                "properties": {
+                    "dateStoreInUTC": "true",
+                    "displayFormat": "dd/MM/yyyy HH:mm"
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_0",
+            "label": "Data de Registo",
+            "name": "dateCreated",
+            "sortable": "true",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_2",
+            "label": "Último Gestor",
+            "name": "c_gestor",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
+    "description": "",
+    "filters": [
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-5759123-fn_NProc",
+            "hidden": "",
+            "id": "filter_0",
+            "label": "Número de Processo",
+            "name": "NProc",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {"defaultValue": ""}
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-5759123-fn_Banco",
+            "hidden": "",
+            "id": "filter_2",
+            "label": "Banco",
+            "name": "Banco",
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "controlField": "",
+                    "defaultValue": "",
+                    "multiple": "",
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'nome_banco' AND e.customProperties.servico LIKE '%PROCU%'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    },
+                    "size": ""
+                }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-5759123-fn_TipoProcesso",
+            "hidden": "",
+            "id": "filter_1",
+            "label": "Tipo Processo",
+            "name": "TipoProcesso",
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "controlField": "",
+                    "defaultValue": "",
+                    "multiple": "",
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'tipo_processo' AND e.customProperties.servico LIKE '%PROCU%'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    },
+                    "size": ""
+                }
+            }
+        }
+    ],
+    "id": "list_fila_comum_procuradoria",
+    "name": "Procuradoria - Fila Comum",
+    "order": "",
+    "orderBy": "",
+    "pageSize": "0",
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "rowActions": [{
+        "className": "org.joget.plugin.enterprise.BeanShellDatalistAction",
+        "icon": "<i class=\"fas fa-code\"><\/i>",
+        "id": "rowAction_0",
+        "label": "Bean Shell",
+        "name": "Bean Shell Datalist Action",
+        "properties": {
+            "confirmation": "",
+            "datalist_type": "row_action",
+            "label": "Puxar Processo",
+            "rules": [],
+            "script": "\r\nimport org.joget.workflow.model.service.WorkflowManager;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.workflow.model.service.WorkflowUserManager;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport javax.servlet.http.HttpServletRequest;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.datalist.model.DataListBinderDefaultimport;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport org.joget.commons.util.UuidGenerator;\r\n\r\n\r\n\r\nString idProcesso=\"\";\r\nString aid = \"\";\r\nString resourceId = \"\";\r\nfor (String key : rowKeys) {\r\n    idProcesso = key;\r\n    \r\n}\r\n    Connection con = null;\r\n    PreparedStatement stmt = null;\r\n    ResultSet rs = null;\r\n    try{\r\n            DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n            con = ds.getConnection();\r\n            \r\n            if(!con.isClosed()){\r\n                String queryGetAid = \"SELECT a.id as 'Aid', sass.ResourceId as 'ResourceId' FROM shkprocesses p LEFT JOIN shkactivities a ON p.id = ProcessId LEFT JOIN shkprocessstates ps ON ps.oid = p.State LEFT JOIN SHKActivityStates acs ON acs.oid = a.State LEFT JOIN shkassignmentstable sass ON sass.ActivityId = a.id WHERE p.ActivityRequesterProcessId = ? AND ps.KeyValue LIKE 'open.running' AND (acs.KeyValue LIKE 'open.not_running.not_started' OR acs.KeyValue LIKE 'open.running');\";\r\n                stmt = con.prepareStatement(queryGetAid);\r\n                stmt.setObject(1, idProcesso);\r\n                rs = stmt.executeQuery();\r\n                if(rs.next()){\r\n                    aid = rs.getObject(\"Aid\");\r\n                    resourceId= rs.getObject(\"ResourceId\");\r\n                    \r\n                    /*\r\n                    LogUtil.info(\"Process\", \"AAAAA\" + idProcesso);\r\n                    LogUtil.info(\"ActivityId\", \"AAAAA\" + aid);\r\n                    LogUtil.info(\"UTILIZADOR\", \"BBBB\" + resourceId);\r\n                    */\r\n                    \r\n                    WorkflowManager wm = (WorkflowManager) AppUtil.getApplicationContext().getBean(\"workflowManager\");\r\n                    WorkflowUserManager wum = (WorkflowUserManager) AppUtil.getApplicationContext().getBean(\"workflowUserManager\");\r\n                    \r\n                    //get the values from the \r\n                    String replaceUser = resourceId;\r\n                    String username = \"#currentUser.username#\";\r\n                \r\n                \r\n                    //getCurrentThreadUser() Method used by system to get current thread user\r\n                    String currentUser = wum.getCurrentThreadUser();\r\n                    wum.setCurrentThreadUser(replaceUser);\r\n                    wum.setCurrentThreadUser(currentUser);\r\n                    \r\n                    //Reassigns the assignment from a user (replaceUser) to another user (username)\r\n                    wm.assignmentReassign(\"\", \"\", aid, username, replaceUser);\r\n                    \r\n                    String queryGetNProcesso = \"SELECT c_n_processo, c_n_agenda FROM app_fd_detalhe_proce_procu WHERE c_id_processo = ?\";\r\n                    stmt = con.prepareStatement(queryGetNProcesso);\r\n                    stmt.setObject(1, idProcesso);\r\n                    rs = stmt.executeQuery();\r\n                    String nProcesso = \"\";\r\n                    String nAgenda = \"\";\r\n                    if(rs.next()){\r\n                        nProcesso = rs.getObject(\"c_n_processo\");\r\n                        nAgenda = rs.getObject(\"c_n_agenda\");\r\n                    }\r\n                    \r\n                    String queryInsertHistorico = \"INSERT INTO app_fd_hist_puxar_procu(id, dateCreated, dateModified , createdBy, modifiedBy, c_id_processo, c_n_processo, c_n_agenda, c_gestor, c_data_puxar) VALUES (?,?,?,?,?,?,?,?,?,?);\";\r\n                    stmt = con.prepareStatement(queryInsertHistorico);\r\n                    \r\n                    String id = UuidGenerator.getInstance().getUuid();\r\n                    \r\n                    stmt.setObject(1, id);\r\n                    stmt.setObject(2, null);\r\n                    stmt.setObject(3,  null);\r\n                    stmt.setObject(4, \"#currentUser.username#\");\r\n                    stmt.setObject(5, \"#currentUser.username#\");\r\n                    stmt.setObject(6, idProcesso);\r\n                    stmt.setObject(7, nProcesso);\r\n                    stmt.setObject(8, nAgenda);\r\n                    stmt.setObject(9, username);\r\n                    stmt.setObject(10, \"#date.yyyy-MM-dd HH:mm#\");\r\n                    \r\n                    stmt.executeQuery();\r\n                    \r\n                    \r\n                }\r\n   \r\n            }\r\n            \r\n    }catch(Exception e){\r\n            LogUtil.error(\"Procuradoria - Puxar Processo\", e, \"Error getting info from DB\");\r\n        }finally{\r\n            try{\r\n                if(rs != null){\r\n                rs.close();\r\n                }\r\n                if(stmt != null){\r\n                    stmt.close();\r\n                }\r\n                if(con != null && !con.isClosed()) {\r\n                    con.close();\r\n                }\r\n            }catch(Exception e){\r\n                LogUtil.error(appDef.toString(), e, \"Error closing DB connection\");\r\n            }\r\n            \r\n        }"
+        },
+        "type": "text"
+    }],
+    "showPageSizeSelector": "true",
+    "useSession": "false"
+}

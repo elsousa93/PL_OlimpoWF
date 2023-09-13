@@ -1,0 +1,305 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "id_processo",
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.plugin.enterprise.FormGrid",
+                        "properties": {
+                            "abortRelatedRunningProcesses": "",
+                            "deleteFiles": "true",
+                            "deleteGridData": "true",
+                            "deleteMessage": "Delete row?",
+                            "deleteSubformData": "true",
+                            "disabledAdd": "",
+                            "disabledDelete": "",
+                            "enableSorting": "true",
+                            "errorMessage": "Invalid number of rows",
+                            "formDefId": "detalheDocumentoDistrates",
+                            "height": "85%",
+                            "id": "field1",
+                            "label": "LISTA DE DOCUMENTOS",
+                            "loadBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "id_doc",
+                                    "formDefId": "detalheDocumentoDistrates"
+                                }
+                            },
+                            "options": [
+                                {
+                                    "format": "",
+                                    "formatType": "options",
+                                    "label": "Tipo do Documento",
+                                    "value": "tipo_documento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "text",
+                                    "label": "Estado do Documento",
+                                    "value": "estado_documento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "",
+                                    "formatType": "date",
+                                    "label": "Data de Validade",
+                                    "value": "data_validade",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "detalheDocumentoDistrates",
+                                    "formatType": "file",
+                                    "label": "Ficheiro",
+                                    "value": "upload_docs",
+                                    "width": ""
+                                }
+                            ],
+                            "pageSize": "20",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "showRowNumber": "",
+                            "sortField": "id_sorting",
+                            "storeBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "id_doc",
+                                    "formDefId": "detalheDocumentoDistrates"
+                                }
+                            },
+                            "submit-label-normal": "ADICIONAR",
+                            "submit-label-readonly": "ADICIONAR",
+                            "uniqueKey": "",
+                            "validateMaxRow": "",
+                            "validateMinRow": "",
+                            "validator": {
+                                "className": "org.joget.plugin.enterprise.MultirowBasicValidator",
+                                "properties": {"validationrules": [{
+                                    "fieldId": "tipo_documento",
+                                    "mandatory": "false",
+                                    "message": "",
+                                    "validationType": ""
+                                }]}
+                            },
+                            "width": "85%"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field5",
+                            "label": "",
+                            "permission_rules": {
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "value": "<script type=\"text/javascript\">\r\n    $(document).ready(function(){\r\n        //get value from field that controls if the WF number is automatically generated or not\r\n        var value = FormUtil.getValue(\"id_processo\");\r\n        \r\n        sessionStorage.setItem(\"id_processo\", value);\r\n    });\r\n    \r\n<\/script>\r\n"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field4",
+                            "label": "",
+                            "permission_rules": {
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "value": "<script type=\"text/javascript\">\r\n$(function(){\r\n     $('.grid-action-add').html(\"<br> <b>ADICIONAR FICHEIRO ÚNICO<\/b>\"); \r\n     $('.grid-action-add').css(\"display\", \"inline\"); \r\n     $('.grid-action-add').css(\"vertical-align\", \"text-bottom\"); \r\n});\r\n<\/script>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "visualizarPDF",
+                            "label": "",
+                            "permission_rules": {
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "value": "<div id=\"pdfPreview\" style=\"display:none;\">\r\n    <object\r\n      data=\"pdfFilePath\" width=\"100%\" height=\"100%\">\r\n      <iframe src=\"pdfFilePath\" width=\"100%\" height=\"100%\" style=\"border: none;\">\r\n        <p>Your browser does not support PDFs. <a href=\"pdfFilePath\">Download the PDF<\/a>.<\/p>\r\n      <\/iframe>\r\n    <\/object>\r\n<\/div>\r\n\r\n<script type=\"text/javascript\">\r\n\r\n $(document).change(function(){\r\n        var fileChange = sessionStorage.getItem(\"fileChange\");\r\n        \r\n        if(fileChange === \"SIM\"){\r\n            $(\"#field2_4_documentosDistrates_field61_multiplosDocsDistrates_documento > a\").attr(\"href\",\"#\");\r\n            $(\"#field2_4_documentosDistrates_field61_multiplosDocsDistrates_documento > a\").unbind(\"click\").bind(\"click\", function(e){\r\n                e.preventDefault();\r\n                alert(\"É necessário gravar o formulário antes de visualizar os ficheiros\");\r\n            });\r\n            \r\n        }\r\n });     \r\n \r\nfunction saveFilesWarning(){\r\n    alert(\"É necessário guardar o formulário para aceder aos ficheiros\");\r\n}\r\n\r\n<\/script>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field60",
+                            "label": "",
+                            "permission_rules": {
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "value": "<script>\n    $(document).ready(function(){\n        \n        $(\"div[id*=multiDocs]\").hide();\n        $(\"button#singleDocument\").hide();\n        \n        $(\"button#multipleDocuments\").click(function(e){\n            e.preventDefault();\n            $(\"a[class=grid-action-add]\").hide();\n            $(\"div[id*=multiDocs]\").show();\n            $(\"button#singleDocument\").show();\n            $(\"button#multipleDocuments\").hide();\n            \n        });\n        \n        $(\"button#singleDocument\").click(function(e){\n            e.preventDefault();\n            $(\"a[class=grid-action-add]\").show();\n            $(\"div[id*=multiDocs]\").hide();\n            $(\"button#multipleDocuments\").show();\n            $(\"button#singleDocument\").hide();\n            $(\"ul[class=form-fileupload-value]\").children().remove();\n        });\n        \n    });\n    \n<\/script>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field62",
+                            "label": "",
+                            "permission_rules": {
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "value": "<div>\r\n    <button id=\"multipleDocuments\">ADICIONAR VÁRIOS FICHEIROS<\/button>\r\n    <button id=\"singleDocument\">ADICIONAR APENAS UM FICHEIRO<\/button>\r\n<\/div>"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "documentos",
+                "join": "",
+                "label": "Documentos",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field63",
+                            "label": "",
+                            "permission_rules": {
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "value": "<div class=\"col text-start\">\r\n\t<div class = \"subform-section-title\">\r\n\t\t<span>MÚLTIPLOS DOCUMENTOS<\/span>\r\n\t\t \r\n\t<\/div> \r\n<\/div>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SubForm",
+                        "properties": {
+                            "formDefId": "multiplosDocsDistrates",
+                            "id": "field61",
+                            "label": "",
+                            "loadBinder": {
+                                "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+                                "properties": {}
+                            },
+                            "noframe": "",
+                            "parentSubFormId": "",
+                            "permission_rules": {
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "storeBinder": {
+                                "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                                "properties": {
+                                    "autoHandleFiles": "",
+                                    "autoHandleWorkflowVariable": "true",
+                                    "cacheInterval": "",
+                                    "script": "import java.io.File;\r\nimport java.util.ArrayList;\r\nimport java.util.Collection;\r\nimport java.util.HashMap;\r\nimport java.util.Map;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport org.joget.apps.app.service.AppService;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.dao.FormDataDao;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormBinder;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormDataDeletableBinder;\r\nimport org.joget.apps.form.model.FormLoadBinder;\r\nimport org.joget.apps.form.model.FormLoadMultiRowElementBinder;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.FormStoreBinder;\r\nimport org.joget.apps.form.model.FormStoreMultiRowElementBinder;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.commons.util.FileManager;\r\nimport org.joget.apps.form.service.FileUtil;\r\nimport org.joget.commons.util.UuidGenerator;\r\n\r\n   \r\npublic FormRowSet store(Element element, FormRowSet rows, FormData formData) {\r\n    if (rows == null) {\r\n        return null;\r\n    }\r\n    LogUtil.info(\"Inicio:\", \" \" );\r\n    LogUtil.info(\"Inicio:\", \" \");\r\n    \r\n    FormRow firstRow = rows.iterator().next();\r\n    \r\n    //LogUtil.info(\"A seguir firstRow:\", \" \");\r\n    //LogUtil.info(\"Inicio:\", \" \" + firstRow.get(\"upload_docs\"));\r\n    \r\n    if(!firstRow.get(\"upload_docs\").isEmpty() && firstRow.get(\"upload_docs\") != \"\"){\r\n \r\n        try {\r\n            String tableName = \"documentos_dist\";\r\n            String formDefId = \"documentosDistrates\";\r\n            String foreignKey = \"fk\";\r\n            String fileField = \"upload_docs\";\r\n             \r\n            FormDataDao formDataDao = (FormDataDao) AppUtil.getApplicationContext().getBean(\"formDataDao\");\r\n            \r\n            //LogUtil.info(\"Entra formDataDao:\" + formDataDao.toString());\r\n             \r\n            Form parentForm = FormUtil.findRootForm(element);\r\n            String primaryKeyValue = parentForm.getPrimaryKeyValue(formData);\r\n             \r\n            \r\n            Date currentDate = new Date();\r\n            \r\n            //LogUtil.info(\"Entra Data:\" + currentDate);\r\n            \r\n            for (FormRow row : rows) {\r\n                \r\n                //LogUtil.info(\"Entra for:\");\r\n                \r\n                String uploadedDocuments = row.get(\"upload_docs\");\r\n                String[] documentos = uploadedDocuments.split(\";\");\r\n                String id_processo = row.get(\"id_processo\");\r\n                String id_doc = row.get(\"id_doc\");\r\n                String data_validade_documento = row.get(\"data_validade_documento\");\r\n                \r\n                String uuid=\"\";\r\n                String initUuid = \"\";\r\n                \r\n                //LogUtil.info(\"Entra for:\" + uploadedDocuments + \";\" + id_processo + \";\" + id_doc + \";\" + data_validade_documento);\r\n                \r\n                for(int i = 0; i<documentos.length; i++){\r\n                    FormRowSet rowSet = new FormRowSet();\r\n                    FormRow oneDocRow = new FormRow();\r\n                    //row;\r\n                    \r\n                    uuid= UuidGenerator.getInstance().getUuid();\r\n                    \r\n                    row.setId(uuid);\r\n                    \r\n                    //LogUtil.info(\"Entra for documentos:\" + documentos.length);\r\n                    \r\n                    // set created date\r\n                    row.setDateCreated(currentDate);\r\n                    \r\n                    // set modified date\r\n                    row.setDateModified(currentDate);\r\n                    row.put(\"upload_docs\", documentos[i]);\r\n                    row.put(\"nome_ficheiro\", documentos[i].toString());\r\n                    row.put(\"id_processo\", id_processo);\r\n                    row.put(\"id_doc\", id_doc);\r\n                    row.put(\"createdBy\", \"#currentUser.username#\");\r\n                    row.put(\"createdByName\", \"#currentUser.fullName#\");\r\n                    row.put(\"data_validade_documento\", data_validade_documento);\r\n                    \r\n                    rowSet.add(row);\r\n                    \r\n                    //Check and update filename if exists\r\n                    FileUtil.checkAndUpdateFileName(rowSet, tableName, uuid);\r\n            \r\n                    // save data\r\n                    formDataDao.saveOrUpdate(formDefId, tableName, rowSet);\r\n\r\n                    if(i>0){\r\n                        String sourceDocs = \"#envVariable.sourceDocumentsPathDist#\";\r\n                        File destPath = new File(sourceDocs + uuid);\r\n                        destPath.mkdir();\r\n                        File sourceFile = new File(sourceDocs+  initUuid + \"\\\\\" + documentos[i].toString());\r\n                        sourceFile.renameTo(new File(destPath + \"\\\\\" + documentos[i].toString()));\r\n\r\n                        \r\n                    }else{\r\n                    //store files\r\n                    FileUtil.storeFileFromFormRowSet(rowSet, tableName, uuid);\r\n                    initUuid = uuid;\r\n                    }\r\n                    \r\n                    \r\n                    \r\n                }\r\n                \r\n               \r\n            }\r\n\r\n\r\n        } catch (Exception e) {\r\n            LogUtil.error(\"File Handling in Bean Shell Binder Sample - Grid Form\", e, \"Store data error!!\");\r\n        }\r\n    }\r\n    return rows;\r\n}\r\n   \r\n//call store method with injected variable\r\nreturn store(element, rows, formData);",
+                                    "useAjax": ""
+                                }
+                            },
+                            "subFormParentId": ""
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "multiDocs",
+                "join": "",
+                "label": "",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
+                    "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        }
+    ],
+    "properties": {
+        "description": "",
+        "id": "documentosDistrates",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "Distrates - Documentos",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "documentos_dist"
+    }
+}

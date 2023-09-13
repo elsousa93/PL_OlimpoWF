@@ -1,0 +1,588 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [{
+        "className": "org.joget.apps.form.model.Section",
+        "elements": [{
+            "className": "org.joget.apps.form.model.Column",
+            "elements": [
+                {
+                    "className": "org.joget.apps.form.lib.HiddenField",
+                    "properties": {
+                        "id": "id_processo",
+                        "permission_rules": {
+                            "5ee42406-9f6c-fbe3-35ff-508ce9d1f294": {},
+                            "728ab7bc-8346-ae22-64f5-3a4815d79acc": {},
+                            "83637e6f-3fe9-f5d3-0394-fb14a1ef53d3": {},
+                            "b4c18e58-d844-b963-2770-3257d9c7cefe": {},
+                            "d1d6996e-389d-35e9-3acf-1f95d1c30cd1": {},
+                            "e0225c76-302c-9aba-4b69-9cce67038591": {},
+                            "f1926293-b24b-1c59-d60b-c0c9c520646f": {},
+                            "fac6bdeb-6e9c-3eb1-3ecf-80d489711aba": {},
+                            "ffa341f0-9905-34c5-6ffb-8e1fdb024561": {}
+                        },
+                        "useDefaultWhenEmpty": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.SelectBox",
+                    "properties": {
+                        "controlField": "",
+                        "id": "status",
+                        "label": "Estado Agendamento",
+                        "multiple": "",
+                        "options": [],
+                        "optionsBinder": {
+                            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                            "properties": {
+                                "cacheInterval": "",
+                                "script": "import org.joget.apps.app.service.AppUtil;\nimport org.joget.apps.form.model.Element;\nimport org.joget.apps.form.model.FormData;\nimport org.joget.apps.form.model.FormRow;\nimport org.joget.apps.form.model.FormRowSet;\nimport org.joget.apps.form.model.FormStoreBinder;\nimport java.sql.Connection;\nimport java.sql.PreparedStatement;\nimport java.sql.ResultSet;\nimport java.sql.SQLException;\nimport javax.sql.DataSource;\nimport org.joget.apps.form.service.FormUtil;\nimport org.joget.apps.app.model.AppDefinition;\nimport org.joget.commons.util.LogUtil;\n\n\npublic FormRowSet getStatusAgendamento() {\n    Connection con = null;\n    PreparedStatement stmt = null;\n    ResultSet rs = null;\n    String status = \"\";\n    String statusLabel = \"\";\n    \n    AppDefinition appDef = AppUtil.getCurrentAppDefinition();\n    \n    \n    try{\n            DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\n            con = ds.getConnection();\n            \n            if(!con.isClosed()){\n                \n                String idProcesso = \"#form.processos_procu.id#\";\n                \n                String queryGetLastAto = \"SELECT c_status FROM app_fd_atos WHERE c_id_processo = ? ORDER BY dateCreated DESC LIMIT 1\";\n                stmt = con.prepareStatement(queryGetLastAto);\n                stmt.setObject(1, idProcesso);\n                rs = stmt.executeQuery();\n                if(rs.next()){\n                    status = rs.getObject(\"c_status\");\n                    String queryGetValueLabel = \"SELECT c_label FROM app_fd_listas_de_valores WHERE c_nome_campo = 'estado_agendamento' AND c_value = ? ;\";\n                    stmt = con.prepareStatement(queryGetValueLabel);\n                    stmt.setObject(1, status);\n                    rs = stmt.executeQuery();\n                    if(rs.next()){\n                        statusLabel = rs.getObject(\"c_label\");\n                    }\n                }\n                    \n            }\n            \n    }catch(Exception e){\n        LogUtil.error(appDef.toString(), e, \"Error getting info from DB\");\n    }finally{\n        try{\n            if(rs != null){\n            rs.close();\n            }\n            if(stmt != null){\n                stmt.close();\n            }\n            if(con != null && !con.isClosed()) {\n                con.close();\n            }\n        }catch(Exception e){\n            LogUtil.error(appDef.toString(), e, \"Error closing DB connection\");\n        }\n        \n    }\n    FormRowSet f = new FormRowSet();\n    FormRow r1 = new FormRow();\n    r1.put(FormUtil.PROPERTY_VALUE, status);\n    r1.put(FormUtil.PROPERTY_LABEL, statusLabel);\n    f.add(r1);\n    return f;\n}\n \nreturn getStatusAgendamento();\n        ",
+                                "useAjax": ""
+                            }
+                        },
+                        "permissionHidden": "",
+                        "permission_rules": {
+                            "5ee42406-9f6c-fbe3-35ff-508ce9d1f294": {},
+                            "728ab7bc-8346-ae22-64f5-3a4815d79acc": {
+                                "permissionHidden": "",
+                                "readonly": ""
+                            },
+                            "83637e6f-3fe9-f5d3-0394-fb14a1ef53d3": {
+                                "permissionHidden": "",
+                                "readonly": ""
+                            },
+                            "b4c18e58-d844-b963-2770-3257d9c7cefe": {},
+                            "d1d6996e-389d-35e9-3acf-1f95d1c30cd1": {
+                                "permissionHidden": "",
+                                "readonly": ""
+                            },
+                            "e0225c76-302c-9aba-4b69-9cce67038591": {
+                                "permissionHidden": "",
+                                "readonly": ""
+                            },
+                            "f1926293-b24b-1c59-d60b-c0c9c520646f": {
+                                "permissionHidden": "",
+                                "readonly": ""
+                            },
+                            "fac6bdeb-6e9c-3eb1-3ecf-80d489711aba": {
+                                "permissionHidden": "",
+                                "readonly": ""
+                            },
+                            "ffa341f0-9905-34c5-6ffb-8e1fdb024561": {
+                                "permissionHidden": "",
+                                "readonly": ""
+                            }
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.SelectBox",
+                    "properties": {
+                        "controlField": "",
+                        "id": "motivo",
+                        "label": "Motivo Desmarcação",
+                        "multiple": "",
+                        "options": [],
+                        "optionsBinder": {
+                            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                            "properties": {
+                                "cacheInterval": "",
+                                "script": "import org.joget.apps.app.service.AppUtil;\nimport org.joget.apps.form.model.Element;\nimport org.joget.apps.form.model.FormData;\nimport org.joget.apps.form.model.FormRow;\nimport org.joget.apps.form.model.FormRowSet;\nimport org.joget.apps.form.model.FormStoreBinder;\nimport java.sql.Connection;\nimport java.sql.PreparedStatement;\nimport java.sql.ResultSet;\nimport java.sql.SQLException;\nimport javax.sql.DataSource;\nimport org.joget.apps.form.service.FormUtil;\nimport org.joget.apps.app.model.AppDefinition;\nimport org.joget.commons.util.LogUtil;\n\n\npublic FormRowSet getStatusAgendamento() {\n    Connection con = null;\n    PreparedStatement stmt = null;\n    ResultSet rs = null;\n    String motivo = \"\";\n    String motivoLabel = \"\";\n    \n    AppDefinition appDef = AppUtil.getCurrentAppDefinition();\n    \n    \n    try{\n            DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\n            con = ds.getConnection();\n            \n            if(!con.isClosed()){\n                \n                String idProcesso = \"#form.processos_procu.id#\";\n                \n                String queryGetLastAto = \"SELECT c_motivo_desmarcacao FROM app_fd_atos_procu WHERE c_id_processo = ? ORDER BY dateCreated DESC LIMIT 1\";\n                stmt = con.prepareStatement(queryGetLastAto);\n                stmt.setObject(1, idProcesso);\n                rs = stmt.executeQuery();\n                if(rs.next()){\n                    motivo = rs.getObject(\"c_motivo_desmarcacao\");\n                    if(motivo == null){\n                        motivo = \"\";\n                    }\n                    String queryGetValueLabel = \"SELECT c_label FROM app_fd_listas_de_valores WHERE c_nome_campo = 'motivo_reagendamento' AND c_value = ?;\";\n                    stmt = con.prepareStatement(queryGetValueLabel);\n                    stmt.setObject(1, motivo);\n                    rs = stmt.executeQuery();\n                    if(rs.next()){\n                        motivoLabel = rs.getObject(\"c_label\");\n                    }\n                }\n                    \n            }\n            \n    }catch(Exception e){\n        LogUtil.error(appDef.toString(), e, \"Error getting info from DB\");\n    }finally{\n        try{\n            if(rs != null){\n            rs.close();\n            }\n            if(stmt != null){\n                stmt.close();\n            }\n            if(con != null && !con.isClosed()) {\n                con.close();\n            }\n        }catch(Exception e){\n            LogUtil.error(appDef.toString(), e, \"Error closing DB connection\");\n        }\n        \n    }\n    FormRowSet f = new FormRowSet();\n    FormRow r1 = new FormRow();\n    if(motivo!=null){\n        \n    }\n    r1.put(FormUtil.PROPERTY_VALUE, motivo);\n    r1.put(FormUtil.PROPERTY_LABEL, motivoLabel);\n    f.add(r1);\n    return f;\n}\n \nreturn getStatusAgendamento();\n        ",
+                                "useAjax": ""
+                            }
+                        },
+                        "permission_rules": {
+                            "5ee42406-9f6c-fbe3-35ff-508ce9d1f294": {},
+                            "728ab7bc-8346-ae22-64f5-3a4815d79acc": {},
+                            "83637e6f-3fe9-f5d3-0394-fb14a1ef53d3": {},
+                            "b4c18e58-d844-b963-2770-3257d9c7cefe": {},
+                            "d1d6996e-389d-35e9-3acf-1f95d1c30cd1": {},
+                            "e0225c76-302c-9aba-4b69-9cce67038591": {},
+                            "f1926293-b24b-1c59-d60b-c0c9c520646f": {},
+                            "fac6bdeb-6e9c-3eb1-3ecf-80d489711aba": {},
+                            "ffa341f0-9905-34c5-6ffb-8e1fdb024561": {}
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.DatePicker",
+                    "properties": {
+                        "allowManual": "",
+                        "currentDateAs": "",
+                        "dataFormat": "yyyy-MM-dd",
+                        "datePickerType": "dateTime",
+                        "endDateFieldId": "",
+                        "format": "",
+                        "format24hr": "true",
+                        "id": "data_comunicacao_informal",
+                        "label": "Data de Comunicação Informal",
+                        "permission_rules": {
+                            "5ee42406-9f6c-fbe3-35ff-508ce9d1f294": {},
+                            "728ab7bc-8346-ae22-64f5-3a4815d79acc": {},
+                            "83637e6f-3fe9-f5d3-0394-fb14a1ef53d3": {},
+                            "b4c18e58-d844-b963-2770-3257d9c7cefe": {},
+                            "d1d6996e-389d-35e9-3acf-1f95d1c30cd1": {},
+                            "e0225c76-302c-9aba-4b69-9cce67038591": {},
+                            "f1926293-b24b-1c59-d60b-c0c9c520646f": {},
+                            "fac6bdeb-6e9c-3eb1-3ecf-80d489711aba": {},
+                            "ffa341f0-9905-34c5-6ffb-8e1fdb024561": {}
+                        },
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "startDateFieldId": "",
+                        "validator": {
+                            "className": "org.joget.apps.form.lib.BeanShellValidator",
+                            "properties": {
+                                "decoration": "",
+                                "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\nimport java.time.LocalDateTime; \r\nimport java.time.format.DateTimeFormatter;\r\nimport java.time.ZoneId;\r\n\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values){\r\n    \r\n    boolean result = true;\r\n    \r\n    \r\n    \r\n    Form form = FormUtil.findRootForm(element);\r\n    Element status = FormUtil.findElement(\"status\", form, formData);\r\n    \r\n    Form form = FormUtil.findRootForm(element);\r\n    Element dataConclusao = FormUtil.findElement(\"data_conclusao\", form, formData);\r\n    \r\n\r\n    \r\n    if(values.length > 0 && !values[0].isEmpty()){\r\n        \r\n        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"dd/MM/yyyy HH:mm\");\r\n        LocalDateTime dataConclusao = LocalDateTime.parse(values[0], formatter);\r\n        LocalDateTime now = LocalDateTime.parse(\"#date.dd/MM/yyyy HH:mm#\", formatter);\r\n        if(dataConclusao.isAfter(now)){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"A data selecionada não pode ser posterior à data atual\");\r\n            result = false;\r\n        }\r\n        \r\n    }else{\r\n        \r\n        if(dataConclusao!=null){\r\n        String[] dataConclusaoVal = FormUtil.getElementPropertyValues(dataConclusao, formData);\r\n        if(dataConclusaoVal.length > 0 && dataConclusaoVal[0].isEmpty()){\r\n            if (status != null) {\r\n                String[] statusVal = FormUtil.getElementPropertyValues(status, formData);\r\n                if(statusVal.length > 0 && (statusVal[0].equals(\"NOUT\") || statusVal[0].equals(\"OUT\"))){\r\n                    String id = FormUtil.getElementParameterName(element);\r\n                    formData.addFormError(id, \"É obrigatório ter pelo menos uma data de comunicação\");\r\n                    result=false;\r\n                    return result;\r\n                \r\n                    }\r\n                }\r\n            }\r\n        }\r\n        \r\n    }\r\n    \r\n    \r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                            }
+                        },
+                        "value": "",
+                        "workflowVariable": "",
+                        "yearRange": "c-10:c"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.DatePicker",
+                    "properties": {
+                        "allowManual": "",
+                        "currentDateAs": "",
+                        "dataFormat": "yyyy-MM-dd",
+                        "datePickerType": "dateTime",
+                        "endDateFieldId": "",
+                        "format": "",
+                        "format24hr": "true",
+                        "id": "data_conclusao",
+                        "label": "Data de Conclusão/Formal",
+                        "permission_rules": {
+                            "1804038d-e85d-3ea4-4ef3-4c4143e5145b": {},
+                            "5ee42406-9f6c-fbe3-35ff-508ce9d1f294": {},
+                            "728ab7bc-8346-ae22-64f5-3a4815d79acc": {},
+                            "83637e6f-3fe9-f5d3-0394-fb14a1ef53d3": {},
+                            "b4c18e58-d844-b963-2770-3257d9c7cefe": {},
+                            "d1d6996e-389d-35e9-3acf-1f95d1c30cd1": {},
+                            "e0225c76-302c-9aba-4b69-9cce67038591": {},
+                            "f1926293-b24b-1c59-d60b-c0c9c520646f": {},
+                            "fac6bdeb-6e9c-3eb1-3ecf-80d489711aba": {},
+                            "ffa341f0-9905-34c5-6ffb-8e1fdb024561": {}
+                        },
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "startDateFieldId": "",
+                        "validator": {
+                            "className": "org.joget.apps.form.lib.BeanShellValidator",
+                            "properties": {
+                                "decoration": "",
+                                "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\nimport java.time.LocalDateTime; \r\nimport java.time.format.DateTimeFormatter;\r\nimport java.time.ZoneId; \r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values){\r\n    \r\n    boolean result = true;\r\n    \r\n    \r\n    \r\n    Form form = FormUtil.findRootForm(element);\r\n    Element status = FormUtil.findElement(\"status\", form, formData);\r\n    \r\n    Form form = FormUtil.findRootForm(element);\r\n    Element dataComunicacaoInf = FormUtil.findElement(\"data_comunicacao_informal\", form, formData);\r\n    \r\n\r\n    \r\n    if(values.length > 0 && !values[0].isEmpty()){\r\n        \r\n        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"dd/MM/yyyy HH:mm\");\r\n        LocalDateTime dataConclusao = LocalDateTime.parse(values[0], formatter);\r\n        LocalDateTime now = LocalDateTime.parse(\"#date.dd/MM/yyyy HH:mm#\", formatter);\r\n        if(dataConclusao.isAfter(now)){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"A data selecionada não pode ser posterior à data atual\");\r\n            result = false;\r\n        }\r\n        \r\n    }else{\r\n        if(dataComunicacaoInf!=null){\r\n        String[] dataComInfVal = FormUtil.getElementPropertyValues(dataComunicacaoInf, formData);\r\n        if(dataComInfVal.length > 0 && dataComInfVal[0].isEmpty()){\r\n            if (status != null) {\r\n                String[] statusVal = FormUtil.getElementPropertyValues(status, formData);\r\n                if(statusVal.length > 0 && (statusVal[0].equals(\"NOUT\") || statusVal[0].equals(\"OUT\"))){\r\n                    String id = FormUtil.getElementParameterName(element);\r\n                    formData.addFormError(id, \"É obrigatório ter pelo menos uma data de comunicação\");\r\n                    result=false;\r\n                    return result;\r\n                \r\n                    }\r\n                }\r\n            }\r\n        }\r\n    \r\n        \r\n    }\r\n    \r\n    \r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                            }
+                        },
+                        "value": "",
+                        "workflowVariable": "",
+                        "yearRange": "c-10:c"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.TextField",
+                    "properties": {
+                        "encryption": "",
+                        "id": "n_selo",
+                        "label": "Nº do Selo",
+                        "maxlength": "",
+                        "permission_rules": {
+                            "5ee42406-9f6c-fbe3-35ff-508ce9d1f294": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "728ab7bc-8346-ae22-64f5-3a4815d79acc": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "83637e6f-3fe9-f5d3-0394-fb14a1ef53d3": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "b4c18e58-d844-b963-2770-3257d9c7cefe": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "d1d6996e-389d-35e9-3acf-1f95d1c30cd1": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "e0225c76-302c-9aba-4b69-9cce67038591": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "f1926293-b24b-1c59-d60b-c0c9c520646f": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "fac6bdeb-6e9c-3eb1-3ecf-80d489711aba": {},
+                            "ffa341f0-9905-34c5-6ffb-8e1fdb024561": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            }
+                        },
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "storeNumeric": "",
+                        "style": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.DatePicker",
+                    "properties": {
+                        "allowManual": "",
+                        "currentDateAs": "",
+                        "dataFormat": "yyyy-MM-dd",
+                        "datePickerType": "",
+                        "endDateFieldId": "",
+                        "format": "",
+                        "id": "rececao_originais",
+                        "label": "Receção de Originais",
+                        "permission_rules": {
+                            "5ee42406-9f6c-fbe3-35ff-508ce9d1f294": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "728ab7bc-8346-ae22-64f5-3a4815d79acc": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "83637e6f-3fe9-f5d3-0394-fb14a1ef53d3": {},
+                            "b4c18e58-d844-b963-2770-3257d9c7cefe": {},
+                            "d1d6996e-389d-35e9-3acf-1f95d1c30cd1": {},
+                            "e0225c76-302c-9aba-4b69-9cce67038591": {},
+                            "f1926293-b24b-1c59-d60b-c0c9c520646f": {
+                                "permissionHidden": "",
+                                "readonly": ""
+                            },
+                            "fac6bdeb-6e9c-3eb1-3ecf-80d489711aba": {
+                                "permissionHidden": "",
+                                "readonly": ""
+                            },
+                            "ffa341f0-9905-34c5-6ffb-8e1fdb024561": {
+                                "permissionHidden": "",
+                                "readonly": ""
+                            }
+                        },
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "startDateFieldId": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": "",
+                        "yearRange": "c-10:c+10"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.DatePicker",
+                    "properties": {
+                        "allowManual": "",
+                        "currentDateAs": "",
+                        "dataFormat": "yyyy-MM-dd",
+                        "datePickerType": "",
+                        "endDateFieldId": "",
+                        "format": "",
+                        "id": "envio_originais_ao_cliente",
+                        "label": "Envio dos Originais ao Cliente",
+                        "permission_rules": {
+                            "5ee42406-9f6c-fbe3-35ff-508ce9d1f294": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "728ab7bc-8346-ae22-64f5-3a4815d79acc": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "83637e6f-3fe9-f5d3-0394-fb14a1ef53d3": {},
+                            "b4c18e58-d844-b963-2770-3257d9c7cefe": {},
+                            "d1d6996e-389d-35e9-3acf-1f95d1c30cd1": {},
+                            "e0225c76-302c-9aba-4b69-9cce67038591": {},
+                            "f1926293-b24b-1c59-d60b-c0c9c520646f": {
+                                "permissionHidden": "",
+                                "readonly": ""
+                            },
+                            "fac6bdeb-6e9c-3eb1-3ecf-80d489711aba": {
+                                "permissionHidden": "",
+                                "readonly": ""
+                            },
+                            "ffa341f0-9905-34c5-6ffb-8e1fdb024561": {
+                                "permissionHidden": "",
+                                "readonly": ""
+                            }
+                        },
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "startDateFieldId": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": "",
+                        "yearRange": "c-10:c+10"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.DatePicker",
+                    "properties": {
+                        "allowManual": "",
+                        "currentDateAs": "",
+                        "dataFormat": "yyyy-MM-dd",
+                        "datePickerType": "",
+                        "endDateFieldId": "",
+                        "format": "",
+                        "id": "envio_crp_registos_averbados",
+                        "label": "Envio da CRP com Registos Averbados",
+                        "permission_rules": {
+                            "5ee42406-9f6c-fbe3-35ff-508ce9d1f294": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "728ab7bc-8346-ae22-64f5-3a4815d79acc": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "83637e6f-3fe9-f5d3-0394-fb14a1ef53d3": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "b4c18e58-d844-b963-2770-3257d9c7cefe": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "d1d6996e-389d-35e9-3acf-1f95d1c30cd1": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "e0225c76-302c-9aba-4b69-9cce67038591": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "f1926293-b24b-1c59-d60b-c0c9c520646f": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            },
+                            "fac6bdeb-6e9c-3eb1-3ecf-80d489711aba": {},
+                            "ffa341f0-9905-34c5-6ffb-8e1fdb024561": {
+                                "permissionHidden": "true",
+                                "readonly": ""
+                            }
+                        },
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "startDateFieldId": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": "",
+                        "yearRange": "c-10:c+10"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field6",
+                        "label": "",
+                        "permission_rules": {
+                            "5ee42406-9f6c-fbe3-35ff-508ce9d1f294": {},
+                            "728ab7bc-8346-ae22-64f5-3a4815d79acc": {},
+                            "83637e6f-3fe9-f5d3-0394-fb14a1ef53d3": {},
+                            "b4c18e58-d844-b963-2770-3257d9c7cefe": {},
+                            "d1d6996e-389d-35e9-3acf-1f95d1c30cd1": {},
+                            "e0225c76-302c-9aba-4b69-9cce67038591": {},
+                            "f1926293-b24b-1c59-d60b-c0c9c520646f": {},
+                            "fac6bdeb-6e9c-3eb1-3ecf-80d489711aba": {},
+                            "ffa341f0-9905-34c5-6ffb-8e1fdb024561": {}
+                        },
+                        "value": "<script>\n    $(document).ready(function(){\n        atualizarVisibilidadeBCP();\n        //$(\"select[id*=status]\").prop(\"disabled\", \"disabled\");\n        //$(\"select[id*=motivo]\").prop(\"disabled\", \"disabled\");\n        var status = $(\"select[id*=status]\").val();\n        if(!status.includes('DES')){\n            $(\"select[id*=motivo]\").parent().remove();\n        }\n        \n        if(status !== 'DESC' && status !== 'OUT' && status !== 'NOUT'){\n            $(\"input#assignmentComplete\").parent().hide();\n        \n        }\n        \n    });\n\n    \n    function atualizarVisibilidadeBCP(){\n        var tipoProcesso = \"#form.detalhe_proce_procu.tipo_processo[{form.processos_procu.detalhe_processo}]#\";\n        var banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\n    \n        \n        if(banco_fundo === 'BCP'){\n            if(tipoProcesso === 'DIST' || tipoProcesso === 'MUT' || tipoProcesso === 'LEAS'){\n                $(\"input[id*=n_selo]\").parent().hide();\n                $(\"input[id*=envio_crp_registos_averbados]\").parent().hide();\n                $(\"input[id*=envio_originais_ao_cliente]\").parent().hide();\n                $(\"input[id*=rececao_originais]\").parent().hide();\n            }else{\n                $(\"input[id*=n_selo]\").parent().show();\n                $(\"input[id*=envio_crp_registos_averbados]\").parent().show();\n                $(\"input[id*=envio_originais_ao_cliente]\").parent().show();\n                $(\"input[id*=rececao_originais]\").parent().show();\n            }\n        } \n        \n    }\n    \n    \n    \n<\/script>"
+                    }
+                }
+            ],
+            "properties": {"width": "100%"}
+        }],
+        "properties": {
+            "comment": "",
+            "id": "section1",
+            "join": "",
+            "label": "Conclusão",
+            "loadBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "permission": {
+                "className": "",
+                "properties": {}
+            },
+            "permissionReadonly": "",
+            "permission_rules": {
+                "5ee42406-9f6c-fbe3-35ff-508ce9d1f294": {},
+                "728ab7bc-8346-ae22-64f5-3a4815d79acc": {},
+                "83637e6f-3fe9-f5d3-0394-fb14a1ef53d3": {},
+                "b4c18e58-d844-b963-2770-3257d9c7cefe": {},
+                "d1d6996e-389d-35e9-3acf-1f95d1c30cd1": {},
+                "e0225c76-302c-9aba-4b69-9cce67038591": {},
+                "f1926293-b24b-1c59-d60b-c0c9c520646f": {},
+                "fac6bdeb-6e9c-3eb1-3ecf-80d489711aba": {},
+                "ffa341f0-9905-34c5-6ffb-8e1fdb024561": {}
+            },
+            "readonly": "",
+            "readonlyLabel": "",
+            "regex": "",
+            "reverse": "",
+            "storeBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "visibilityControl": "",
+            "visibilityValue": ""
+        }
+    }],
+    "properties": {
+        "description": "",
+        "id": "conclusaoProcuradoria",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "Procuradoria - Conclusão",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "permission_rules": [
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\nif(banco_fundo.equals(\"NVB\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "5ee42406-9f6c-fbe3-35ff-508ce9d1f294",
+                "permission_name": "NVB"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\nif(banco_fundo.equals(\"MTG\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "d1d6996e-389d-35e9-3acf-1f95d1c30cd1",
+                "permission_name": "MTG"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\nif(banco_fundo.equals(\"BIC\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "728ab7bc-8346-ae22-64f5-3a4815d79acc",
+                "permission_name": "BIC"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\nif(banco_fundo.equals(\"BNI\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "f1926293-b24b-1c59-d60b-c0c9c520646f",
+                "permission_name": "BNI"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\nif(banco_fundo.equals(\"BCP\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "fac6bdeb-6e9c-3eb1-3ecf-80d489711aba",
+                "permission_name": "BCP"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\nif(banco_fundo.equals(\"HPG\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "ffa341f0-9905-34c5-6ffb-8e1fdb024561",
+                "permission_name": "Hipoges (HPG)"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\nif(banco_fundo.equals(\"DHM\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "b4c18e58-d844-b963-2770-3257d9c7cefe",
+                "permission_name": "DHM"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\nif(banco_fundo.equals(\"NOR\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "83637e6f-3fe9-f5d3-0394-fb14a1ef53d3",
+                "permission_name": "Norfin (NOR)"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString banco_fundo = \"#form.detalhe_proce_procu.banco_fundo[{form.processos_procu.detalhe_processo}]#\";\nif(banco_fundo.equals(\"WHS\")){\n    return true;\n}else{\n    return false;\n}\n"}
+                },
+                "permission_key": "e0225c76-302c-9aba-4b69-9cce67038591",
+                "permission_name": "Whitestar (WHS)"
+            }
+        ],
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+            "properties": {
+                "autoHandleFiles": "",
+                "autoHandleWorkflowVariable": "true",
+                "cacheInterval": "",
+                "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.plugin.base.PluginManager;\r\nimport org.joget.apps.form.model.FormStoreBinder;\r\n\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport org.joget.commons.util.UuidGenerator;\r\nimport java.time.LocalDate;\r\nimport org.joget.workflow.model.service.*;\r\n\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport java.time.LocalDateTime; \r\nimport java.time.format.DateTimeFormatter;\r\nimport java.time.DayOfWeek;\r\nimport java.time.temporal.ChronoUnit;\r\n\r\n\r\n//Calcular Duração Final do SLA\r\npublic String calculateSLADuration(String dataInit, String dateEnd, Collection holidays){\r\n    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"dd/MM/yyyy HH:mm\");\r\n    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(\"yyyy-MM-dd\");\r\n    String result=\"\";\r\n    //if Data Init date format is not \"dd/MM/yyyy HH:mm\"\r\n    //LogUtil.info(\"DATE INIT\", \"AAA\" + dataInit);\r\n    if(dataInit.charAt(2) != '/'){\r\n        //if Data Init date format is of the format \"yyyy-MM-dd HH:mm\"\r\n        if(dataInit.charAt(4) == '-' && dataInit.charAt(10) == ' ' && dataInit.charAt(13) == ':'){\r\n            dataInit =  dataInit.substring(8,10) + \"/\" + dataInit.substring(5,7) + \"/\" + dataInit.substring(0,4) + \" \" + dataInit.substring(11,16);\r\n        }\r\n    }\r\n    \r\n    if(dateEnd.charAt(2) != '/'){\r\n         //if Data Init date format is of the format \"yyyy-MM-dd HH:mm\"\r\n        if(dateEnd.charAt(4) == '-' && dateEnd.charAt(10) == ' ' && dateEnd.charAt(13) == ':'){\r\n            dateEnd =  dateEnd.substring(8,10) + \"/\" + dateEnd.substring(5,7) + \"/\" + dateEnd.substring(0,4) + \" \" + dateEnd.substring(11,16);\r\n        }\r\n    }\r\n\r\n    LocalDateTime dateInit = LocalDateTime.parse(dataInit, formatter);\r\n    LocalDateTime dateFinish = LocalDateTime.parse(dateEnd,formatter);\r\n    \r\n    long days = ChronoUnit.DAYS.between(dateInit, dateFinish);\r\n    int initHours = dateInit.getHour();\r\n    int finishHours = dateFinish.getHour();\r\n    \r\n    \r\n    if(initHours > 12 && finishHours < 12){\r\n        days= days - 1;    \r\n    }else if(days>0 && initHours < 12 && finishHours >= 12){\r\n        days = days + 1;\r\n    }\r\n    \r\n    \r\n    long workDays = days;\r\n    \r\n    while(days>0){\r\n        \r\n        if(holidays.contains(dateInit.format(dateFormatter))){\r\n            workDays-=1;\r\n            \r\n        }else{\r\n            String day = dateInit.getDayOfWeek().toString();\r\n        \r\n            switch(day) {\r\n                case \"SATURDAY\":{\r\n                    workDays-=1;\r\n                    break;\r\n                }\r\n                case \"SUNDAY\":{\r\n                    workDays-=1;\r\n                    break;\r\n                }\r\n            }\r\n        }\r\n        \r\n\r\n        dateInit = dateInit.plusDays(1);\r\n  \r\n        days-=1;\r\n    }\r\n    \r\n    result = \"D\";\r\n    if(workDays>0){\r\n        result =result + \"+\" + workDays;\r\n    }\r\n    \r\n    \r\n    \r\n    return result;\r\n}\r\n\r\n//Verificar de o dia é fim de semana\r\npublic boolean isWeekend(LocalDateTime dt) {\r\n    String dayOfWeek = dt.getDayOfWeek().toString();\r\n    switch(dayOfWeek) {\r\n        case \"SATURDAY\":{\r\n            return true;\r\n        }\r\n        case \"SUNDAY\":{\r\n            return true;\r\n        }\r\n        default:{\r\n            return false;\r\n        }\r\n    }\r\n}\r\n\r\npublic FormRowSet store(Element element, FormRowSet rows, FormData formData) {\r\n       //check the rows is not empty before store it\r\n       FormRow row = null;\r\n    if (rows != null && !rows.isEmpty()) {\r\n        //Get the submitted data\r\n        row = rows.get(0);\r\n        \r\n\r\n        String ProcessID = \"#process.processId#\";\r\n        String mainProcessId = rows.get(0).get(\"id_processo\");\r\n        String dataComInformal = rows.get(0).get(\"data_comunicacao_informal\");\r\n        String dataComunicacao = rows.get(0).get(\"data_conclusao\");\r\n        String dataFimSLA = \"\";\r\n        if(dataComInformal.isEmpty()){\r\n            if(!dataComunicacao.isEmpty()){\r\n                dataFimSLA = dataComunicacao;\r\n            }\r\n             \r\n        }else{\r\n            dataFimSLA = dataComInformal;\r\n        }\r\n        String status = rows.get(0).get(\"status\");\r\n        \r\n        \r\n        boolean SLAIsOpen = false;\r\n        \r\n        \r\n        //Caso exista uma data de Conclusão e o Ato tenha o estado de Outorgado ou Não Outorgado verificar o SLA para o fechar\r\n        if(!dataFimSLA.isEmpty() && status.equals(\"OUT\") || status.equals(\"NOUT\")){\r\n            Connection con = null;\r\n            PreparedStatement stmt = null;\r\n            ResultSet rs = null;\r\n        \r\n            try{\r\n                \r\n                DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n                con = ds.getConnection();\r\n                \r\n                if(!con.isClosed()){    \r\n                    \r\n                    if(ProcessID.startsWith(\"#process.processId\")){\r\n                                                     \r\n                        String queryGetProcessId = \"SELECT Id FROM shkprocesses WHERE ActivityRequesterProcessId = ? order by created desc ;\";\r\n                        stmt = con.prepareStatement(queryGetProcessId);\r\n                        stmt.setObject(1, mainProcessId);\r\n                        rs = stmt.executeQuery();\r\n                        if(rs.next()){\r\n                            ProcessID = rs.getObject(\"Id\");\r\n                        }\r\n                    \r\n                    }\r\n                    \r\n                    \r\n                    \r\n                    //Verificar se existe algum SLA do processo em aberto\r\n                    String queryGetOpenSLA = \"SELECT id, c_data_inicio FROM app_fd_sla_atividade WHERE c_id_processo=? AND c_estado_atividade = 'Em curso';\";\r\n                    stmt = con.prepareStatement(queryGetOpenSLA);\r\n                    stmt.setObject(1, ProcessID);\r\n                    rs = stmt.executeQuery();\r\n                    String idSLA = \"\";\r\n                    String dataInicio = \"\";\r\n                    if(rs.next()){\r\n                        SLAIsOpen = true;\r\n                        idSLA = rs.getObject(\"id\");\r\n                        dataInicio = rs.getObject(\"c_data_inicio\");\r\n                        \r\n                    }\r\n                    \r\n                    \r\n                    //Se existir SLA 'Em curso'\r\n                    if(SLAIsOpen && !dataInicio.isEmpty()){\r\n                        //Obter feriados para o cálculo do SLA\r\n                        Collection holidays = getHolidays(con);\r\n    \r\n                        String slaDuration = calculateSLADuration(dataInicio, dataFimSLA,holidays);\r\n                        //Fechar SLA 'Em curso'\r\n                        String queryCloseSLA = \"UPDATE app_fd_sla_atividade SET c_estado_atividade = 'Fechada', c_data_conclusao=? , c_duracao = ? WHERE id = ?;\";\r\n                        stmt = con.prepareStatement(queryCloseSLA);\r\n                        stmt.setObject(1, dataFimSLA);\r\n                        stmt.setObject(2, slaDuration);\r\n                        stmt.setObject(3, idSLA);\r\n                        rs = stmt.executeQuery();\r\n    \r\n                    }\r\n                }\r\n                \r\n            }catch(Exception e){\r\n                LogUtil.error(\"Olimpo- Store Binder Conclusões Procuradoria\", e, \"Error getting info from DB\");\r\n            \r\n            }finally{\r\n                try{\r\n                    if(rs != null){\r\n                    rs.close();\r\n                    }\r\n                    if(stmt != null){\r\n                        stmt.close();\r\n                    }\r\n                    if(con != null && !con.isClosed()) {\r\n                        con.close();\r\n                    }\r\n                }catch(Exception e){\r\n                    LogUtil.error(\"Olimpo- Store Binder Conclusões Procuradoria\", e, \"Error closing DB connection\");\r\n                }\r\n                \r\n            }\r\n        }\r\n        \r\n\r\n    \r\n     //Reuse Workflow Form Binder to store data\r\n        PluginManager pluginManager = (PluginManager) AppUtil.getApplicationContext().getBean(\"pluginManager\");\r\n        FormStoreBinder binder = (FormStoreBinder) pluginManager.getPlugin(\"org.joget.apps.form.lib.WorkflowFormBinder\");\r\n        binder.store(element, rows, formData);\r\n    } \r\n    \r\n    return rows;\r\n}\r\n\r\npublic Collection getHolidays(Connection con){\r\n    Collection holidays = new ArrayList(); \r\n    try{\r\n        String queryGetHolidays = \"SELECT * FROM app_fd_lista_feriados;\";\r\n        PreparedStatement stmt = con.prepareStatement(queryGetHolidays);\r\n        ResultSet rs = stmt.executeQuery();\r\n        while(rs.next()){\r\n            holidays.add(rs.getObject(\"c_data\"));\r\n        }\r\n    } catch(Exception e) {\r\n        LogUtil.error(\"Load Binder - Resumo Procuradoria \", e, \"Error getting holidays\");\r\n    } \r\n    \r\n    return holidays;\r\n}\r\n\r\n\r\nreturn store(element, rows, formData);",
+                "useAjax": ""
+            }
+        },
+        "tableName": "conclusao_procu"
+    }
+}

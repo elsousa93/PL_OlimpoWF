@@ -1,0 +1,165 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [{
+        "className": "org.joget.apps.form.model.Section",
+        "elements": [{
+            "className": "org.joget.apps.form.model.Column",
+            "elements": [{
+                "className": "org.joget.plugin.enterprise.SpreadSheetGrid",
+                "properties": {
+                    "customSettings": "",
+                    "disabledAdd": "",
+                    "disabledDelete": "",
+                    "errorMessage": "Invalid number of rows",
+                    "fixedColumnsLeft": "0",
+                    "headerSorting": "",
+                    "id": "checklist_reg",
+                    "label": "",
+                    "loadBinder": {
+                        "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                        "properties": {
+                            "autoHandleFiles": "",
+                            "autoHandleWorkflowVariable": "true",
+                            "cacheInterval": "",
+                            "script": "import org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport org.joget.apps.app.service.AppService;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.plugin.base.PluginManager;\r\nimport org.joget.apps.form.model.FormLoadBinder;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport org.joget.commons.util.LogUtil;\r\n\r\npublic FormRowSet load(Element element, String primaryKey, FormData formData) {\r\n    String formDefId = \"op_registos_qual\"; //change this to the form id used to store grid data\r\n    String foreignKey = \"fk\"; //change this to the foreign key\r\n    \r\n    FormRowSet f = new FormRowSet();\r\n    f.setMultiRow(true);\r\n    \r\n    // Reuse Multi Row Binder to load data\r\n    PluginManager pluginManager = (PluginManager) FormUtil.getApplicationContext().getBean(\"pluginManager\");\r\n    FormLoadBinder binder = (FormLoadBinder) pluginManager.getPlugin(\"org.joget.plugin.enterprise.MultirowFormBinder\");\r\n     \r\n    //Load from the grid table\r\n    binder.setProperty(\"formDefId\", formDefId);\r\n    binder.setProperty(\"foreignKey\", foreignKey);\r\n    f = binder.load(element, primaryKey, formData);\r\n    \r\n    if (f == null || f.isEmpty()) {\r\n    \r\n        Connection con = null;\r\n        PreparedStatement stmt = null;\r\n        ResultSet rs = null;\r\n        \r\n        try{\r\n            DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n            con = ds.getConnection();\r\n            \r\n            if(!con.isClosed()){\r\n                //Build sql query with the number of inputs needed based on loop iteration\r\n                String sql = \"SELECT id, c_tipo_documento as tipoDocumento FROM app_fd_checklist_docs WHERE c_checklist = ? AND c_servico = ? ORDER BY CASE WHEN c_tipo_documento = 'Outro' THEN 1 ELSE 0 END, c_tipo_documento ASC\";\r\n                \r\n                //Here you can query from one or multiple tables using JOIN etc\r\n                PreparedStatement stmt = con.prepareStatement(sql);\r\n                stmt.setObject(1, \"validacaoRegisto\");\r\n                stmt.setString(2, \"REG\");\r\n                \r\n                //Execute the SELECT SQL statement\r\n                ResultSet rs = stmt.executeQuery();\r\n                \r\n                //Get value from columns of record(s)\r\n                while (rs.next()) {\r\n                    FormRow r1 = new FormRow();\r\n                    r1.put(\"tipo_documento\", rs.getObject(\"tipoDocumento\"));\r\n                    r1.put(\"validacao_qual\", \"\");\r\n                    r1.put(\"motivo_qual\", \"\");\r\n                    f.add(r1);\r\n                }    \r\n            }\r\n                \r\n        }catch(Exception e){\r\n            LogUtil.error(\"Registos\", e, \"Error getting info from DB\");\r\n        }finally{\r\n            try{\r\n                if(rs != null){\r\n                    rs.close();\r\n                }\r\n                if(stmt != null){\r\n                    stmt.close();\r\n                }\r\n                if(con != null && !con.isClosed()) {\r\n                    con.close();\r\n                }\r\n            }catch(Exception e){\r\n                LogUtil.error(\"Registos\", e, \"Error closing DB connection\");\r\n            }\r\n        }\r\n    }\r\n    \r\n    return f;\r\n}\r\n\r\n//call load method with injected variable\r\nreturn load(element, primaryKey, formData);",
+                            "useAjax": ""
+                        }
+                    },
+                    "maxHeight": "",
+                    "minSpareRows": "1",
+                    "options": [
+                        {
+                            "format": "",
+                            "formatType": "",
+                            "formula": "",
+                            "label": "Tipo de Documento",
+                            "readonly": "",
+                            "regexValidator": "",
+                            "value": "tipo_documento",
+                            "width": "20"
+                        },
+                        {
+                            "format": "op_registos_qual",
+                            "formatType": "dropdown",
+                            "formula": "",
+                            "label": "Validação",
+                            "readonly": "",
+                            "regexValidator": "",
+                            "value": "validacao_qual",
+                            "width": "14"
+                        },
+                        {
+                            "format": "",
+                            "formatType": "",
+                            "formula": "",
+                            "label": "Motivo",
+                            "readonly": "",
+                            "regexValidator": "",
+                            "value": "motivo_qual",
+                            "width": "18"
+                        },
+                        {
+                            "format": "op_registos_qual",
+                            "formatType": "dropdown",
+                            "formula": "",
+                            "label": "Solução",
+                            "readonly": "",
+                            "regexValidator": "",
+                            "value": "solucao_qual",
+                            "width": "22"
+                        },
+                        {
+                            "format": "",
+                            "formatType": "",
+                            "formula": "",
+                            "label": "Solução Outra",
+                            "readonly": "",
+                            "regexValidator": "",
+                            "value": "solucao_outra_qual",
+                            "width": "18"
+                        }
+                    ],
+                    "permission_rules": {
+                        "1300a907-31a2-48ed-bf4c-1a7567ccad20": {},
+                        "973de9e9-e890-860f-035e-b234371b728e": {},
+                        "c6f523f5-c981-dd70-ca03-ea8e9a69f2f1": {}
+                    },
+                    "readonly": "",
+                    "showRowNumber": "",
+                    "sortingField": "",
+                    "storeBinder": {
+                        "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                        "properties": {
+                            "foreignKey": "fk",
+                            "formDefId": "reg_op_qual"
+                        }
+                    },
+                    "validateMaxRow": "",
+                    "validateMinRow": "",
+                    "validator": {
+                        "className": "org.joget.apps.form.lib.BeanShellMultiRowValidator",
+                        "properties": {
+                            "decoration": "",
+                            "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormRowSet rows, FormData formData) {\r\n    boolean result = true;\r\n    \r\n    //Get value from workflow variable\r\n    String flagValidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    //Get fase de processo through processId\r\n    String subfaseProcesso = \"#assignment.activityName#\";\r\n    \r\n    //Get id checklist\r\n    String campo = FormUtil.getElementParameterName(element);\r\n    \r\n    //FormData Errors\r\n    Boolean falta_validacao_qual = false;\r\n    Boolean falta_motivo_qual = false;\r\n    Boolean falta_solucao_qual = false;\r\n    Boolean falta_solucao_outra_qual = false;\r\n    \r\n    //LogUtil.info(\"String\", \"Fase Processo \" + subfaseProcesso);\r\n    if(!subfaseProcesso.contains(\"Qualidade\")) {\r\n        return true;\r\n    }\r\n        \r\n    //Validações das várias colunas da checklist\r\n    if (rows != null && !rows.isEmpty()) {\r\n        for (FormRow row : rows) {\r\n            try {\r\n\r\n                //Validar que nenhuma linha está vazia\r\n                if(row.getProperty(\"validacao_qual\") == null || row.getProperty(\"validacao_qual\").isEmpty()){\r\n                    String id = FormUtil.getElementParameterName(element);\r\n                    falta_validacao_qual = true;\r\n                    result = false;\r\n                }\r\n                \r\n                //Validar que se validacao not ok motivo está preenchido\r\n                if(row.getProperty(\"validacao_qual\").equals(\"NOK\") && (row.getProperty(\"motivo_qual\") == null || row.getProperty(\"motivo_qual\").isEmpty() || row.getProperty(\"motivo_qual\").equals(\"\"))){\r\n                    String id = FormUtil.getElementParameterName(element);\r\n                    falta_motivo_qual = true;\r\n                    result = false;\r\n                }\r\n                \r\n                //Validar que se validacao not ok solução está preenchida\r\n                if(row.getProperty(\"validacao_qual\").equals(\"NOK\") && (row.getProperty(\"solucao_qual\") == null || row.getProperty(\"solucao_qual\").isEmpty() || row.getProperty(\"solucao_qual\").equals(\"\"))){\r\n                    String id = FormUtil.getElementParameterName(element);\r\n                    falta_solucao_qual = true;\r\n                    result = false;\r\n                }\r\n                \r\n                //Validar que se solução é outra o campo solucao outra é preenchida\r\n                if(row.getProperty(\"validacao_qual\").equals(\"NOK\") && row.getProperty(\"solucao_qual\").equals(\"OUT\") && (row.getProperty(\"solucao_outra_qual\") == null || row.getProperty(\"solucao_outra_qual\").isEmpty() || row.getProperty(\"solucao_outra_qual\").equals(\"\"))){\r\n                    String id = FormUtil.getElementParameterName(element);\r\n                    falta_solucao_outra_qual = true;\r\n                    result = false;\r\n                }\r\n                \r\n                \r\n                \r\n            } catch (Exception e) {}\r\n        }\r\n    }\r\n    \r\n    //Escrever mensagem de erro de validação no form\r\n    if(falta_validacao_qual){\r\n        formData.addFormError(campo, \"Validações em falta\");\r\n    }\r\n    \r\n    if(falta_motivo_qual){\r\n        formData.addFormError(campo, \"Motivo em falta\");\r\n    }\r\n\r\n    if(falta_solucao_qual){\r\n        formData.addFormError(campo, \"Solução em falta\");\r\n    }\r\n    \r\n    if(falta_solucao_outra_qual){\r\n       formData.addFormError(campo, \"Solução Outra em falta\"); \r\n    }\r\n  \r\n    return result;\r\n}\r\n  \r\n//call validate method with injected variable\r\nreturn validate(element, rows, formData);"
+                        }
+                    }
+                }
+            }],
+            "properties": {"width": "100%"}
+        }],
+        "properties": {
+            "comment": "",
+            "id": "section18",
+            "join": "",
+            "label": "Checklist Validação Registo",
+            "loadBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "permission": {
+                "className": "",
+                "properties": {}
+            },
+            "permissionReadonly": "",
+            "permission_rules": {
+                "1300a907-31a2-48ed-bf4c-1a7567ccad20": {},
+                "973de9e9-e890-860f-035e-b234371b728e": {},
+                "c6f523f5-c981-dd70-ca03-ea8e9a69f2f1": {}
+            },
+            "readonly": "",
+            "readonlyLabel": "",
+            "regex": "",
+            "reverse": "",
+            "storeBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "visibilityControl": "",
+            "visibilityValue": ""
+        }
+    }],
+    "properties": {
+        "description": "",
+        "id": "reg_op_qual",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "Registos: Operativas - Validação Registo",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "check_op_reg_qual"
+    }
+}

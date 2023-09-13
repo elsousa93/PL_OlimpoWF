@@ -1,0 +1,211 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [{
+                    "className": "org.joget.apps.form.lib.Grid",
+                    "properties": {
+                        "errorMessage": "Invalid number of rows",
+                        "id": "realocar_multi_processos",
+                        "label": "",
+                        "loadBinder": {
+                            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                            "properties": {
+                                "autoHandleFiles": "",
+                                "autoHandleWorkflowVariable": "true",
+                                "cacheInterval": "",
+                                "script": "import java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.text.DecimalFormat;\r\nimport javax.sql.DataSource;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.apps.form.model.*;\r\nimport org.joget.apps.form.service.*;\r\nimport java.sql.*;\r\nimport org.apache.commons.collections.SequencedHashMap;\r\nimport java.util.*;\r\nimport org.joget.commons.util.LogUtil;\r\n\r\npublic FormRowSet getgridData() {\r\n    FormRowSet fgrid = new FormRowSet();\r\n    fgrid.setMultiRow(true);\r\n    Connection con = null;\r\n    PreparedStatement stmt = null;\r\n    ResultSet rs = null;\r\n    try{\r\n            DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n            con = ds.getConnection();\r\n            \r\n            if(!con.isClosed()){\r\n                \r\n                String multiActivityIds = \"#requestParam.aid#\";\r\n                String[] aid = multiActivityIds.split(\";\");\r\n                \r\n                for(int i=0; i<aid.length; i++){\r\n                    \r\n                String queryGetSubProcessId=\"SELECT processId FROM shkactivities WHERE id=?\";\r\n                stmt = con.prepareStatement(queryGetSubProcessId);\r\n                stmt.setObject(1, aid[i]);\r\n                rs = stmt.executeQuery();\r\n                \r\n                    if(rs.next()){\r\n                        String subProcessId = rs.getObject(\"processId\").toString();\r\n                        if(subProcessId != null || !subProcessId.isEmpty()){\r\n                            \r\n                            String queryGetProcessId = \"SELECT ActivityRequesterProcessId, sass.ResourceId AS 'assignee' FROM shkprocesses sp JOIN SHKActivities sact ON sact.ProcessId = sp.Id JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId WHERE sp.id=?  ORDER BY created DESC ;\";\r\n                            stmt = con.prepareStatement(queryGetProcessId);\r\n                            stmt.setObject(1, subProcessId);\r\n                            rs = stmt.executeQuery();\r\n                            \r\n                            if(rs.next()){\r\n                                String processId = rs.getObject(\"ActivityRequesterProcessId\").toString();\r\n                                String assignee = rs.getObject(\"assignee\").toString();\r\n                                \r\n                                if(processId != null || !processId.isEmpty()){\r\n                                    String queryGetProcessDetail;\r\n                                    if( processId.contains(\"CreditoHabitacao\")){\r\n                                        queryGetProcessDetail = \"SELECT c_n_wf_pl as 'NWFPL', c_n_wf_banco as 'NWFB' FROM app_fd_detalhe_processo WHERE c_id_processo = ?\";\r\n                                    }else if(processId.contains(\"hipotecas\")){\r\n                                        queryGetProcessDetail = \"SELECT c_n_wf_pl as 'NWFPL', c_n_wf_banco as 'NWFB' FROM app_fd_detalhe_proce_hip WHERE c_id_processo = ?\";\r\n                                    }else{\r\n                                        //do nothing\r\n                                    }\r\n                                    \r\n                                    stmt = con.prepareStatement(queryGetProcessDetail);\r\n                                    stmt.setObject(1, processId);\r\n                                    rs = stmt.executeQuery();\r\n                                    \r\n                                    if(rs.next()){\r\n                                        FormRow gr1 = new FormRow();\r\n                                        gr1.put(\"gridColumn1\", rs.getObject(\"NWFPL\").toString());\r\n                                        gr1.put(\"gridColumn2\", rs.getObject(\"NWFB\").toString());\r\n                                        gr1.put(\"gridColumn3\", assignee);\r\n                                        fgrid.add(gr1);\r\n                                    }\r\n                                }\r\n                                \r\n                            }\r\n     \r\n                        }\r\n       \r\n                    }\r\n                }\r\n            }\r\n  \r\n    }catch(Exception e){\r\n            LogUtil.error(appDef.toString(), e, \"Error getting info from DB\");\r\n        }finally{\r\n            try{\r\n                if(rs != null){\r\n                rs.close();\r\n                }\r\n                if(stmt != null){\r\n                    stmt.close();\r\n                }\r\n                if(con != null && !con.isClosed()) {\r\n                    con.close();\r\n                }\r\n            }catch(Exception e){\r\n                LogUtil.error(appDef.toString(), e, \"Error closing DB connection\");\r\n            }\r\n            \r\n        }\r\n\r\n\r\n\r\nreturn fgrid;\r\n}\r\nreturn getgridData();",
+                                "useAjax": ""
+                            }
+                        },
+                        "options": [
+                            {
+                                "label": "Número Workflow PL",
+                                "value": "gridColumn1"
+                            },
+                            {
+                                "label": "Número Workflow Banco",
+                                "value": "gridColumn2"
+                            },
+                            {
+                                "label": "Utilizador Atual",
+                                "value": "gridColumn3"
+                            }
+                        ],
+                        "permissionHidden": "",
+                        "readonly": "true",
+                        "storeBinder": {
+                            "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                            "properties": {
+                                "foreignKey": "id",
+                                "formDefId": "realocar_multi_processo"
+                            }
+                        },
+                        "validateMaxRow": "",
+                        "validateMinRow": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        }
+                    }
+                }],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section1",
+                "join": "",
+                "label": "Processos",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "aid",
+                            "useDefaultWhenEmpty": "",
+                            "value": "#requestParam.aid#",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "user",
+                            "label": "Realocar para",
+                            "multiple": "",
+                            "options": [],
+                            "optionsBinder": {
+                                "className": "org.joget.plugin.enterprise.UserOptionsBinder",
+                                "properties": {
+                                    "addEmptyOption": "",
+                                    "cacheInterval": "",
+                                    "deptId": "",
+                                    "emptyLabel": "",
+                                    "groupId": "",
+                                    "grouping": "dept",
+                                    "optionLabel": "",
+                                    "orgId": "PL",
+                                    "useAjax": ""
+                                }
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextArea",
+                        "properties": {
+                            "cols": "20",
+                            "id": "comentarios_realocacao",
+                            "label": "Comentários",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "rows": "5",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field6",
+                            "label": "",
+                            "value": "<script>\n    $(document).ready(function(){\n        \n        \n        $(\"input[type=submit]\").val(\"REALOCAR\");\n        \n    });\n    \n    \n<\/script>"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section2",
+                "join": "",
+                "label": "Realocar",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        }
+    ],
+    "properties": {
+        "description": "",
+        "id": "realocar_multi_processo",
+        "loadBinder": {
+            "className": "",
+            "properties": {}
+        },
+        "name": "CH - Realocar Multi Processos",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "org.joget.apps.app.lib.BeanShellTool",
+            "properties": {"script": "\nimport org.joget.workflow.model.service.WorkflowManager;\nimport org.joget.apps.app.service.AppUtil;\nimport org.joget.workflow.model.service.WorkflowUserManager;\nimport org.joget.apps.app.model.AppDefinition;\nimport javax.servlet.http.HttpServletRequest;\nimport org.joget.commons.util.LogUtil;\nimport java.sql.Connection;\nimport java.sql.PreparedStatement;\nimport java.sql.ResultSet;\nimport java.text.DecimalFormat;\nimport javax.sql.DataSource;\nimport org.joget.apps.form.model.FormRow;\nimport org.joget.apps.form.model.FormRowSet;\nimport org.joget.apps.form.service.FormUtil;\nimport org.joget.apps.form.model.*;\nimport org.joget.apps.form.service.*;\nimport java.sql.*;\n\n\npublic Object execute(AppDefinition appDef, HttpServletRequest request) {\n    WorkflowManager wm = (WorkflowManager) AppUtil.getApplicationContext().getBean(\"workflowManager\");\n    WorkflowUserManager wum = (WorkflowUserManager) AppUtil.getApplicationContext().getBean(\"workflowUserManager\");\n    \n    //get the values from the \n    String multiActivityIds = \"#requestParam.aid#\";\n    String[] aid = multiActivityIds.split(\";\");\n    String username = \"#form.realocar_processo.user#\";\n    String idRealocacao = \"#form.realocar_processo.id#\";\n    String comentarios = \"\";\n    String subflowProcessId = \"\";\n    String processDefId = \"workflowPL#421#CHAcompanhamentoOutorgas\";\n    \n    \n    Connection con = null;\n    PreparedStatement stmt = null;\n    ResultSet rs = null;\n    String processId = \"\";\n    try{\n        DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\n        con = ds.getConnection();\n        \n        if(!con.isClosed()){\n            String queryGetComments = \"SELECT c_comentarios_realocacao FROM app_fd_realocar_processo WHERE id=?\";\n            stmt = con.prepareStatement(queryGetComments);\n            stmt.setObject(1, idRealocacao);\n            rs = stmt.executeQuery();\n            if(rs.next()){\n                comentarios=rs.getObject(\"c_comentarios_realocacao\");\n            }\n            \n            for(int i=0; i<aid.length; i++){\n                String queryGetSubProcessId=\"SELECT processId FROM shkactivities WHERE id=?\";\n                stmt = con.prepareStatement(queryGetSubProcessId);\n                stmt.setObject(1, aid[i]);\n                rs = stmt.executeQuery();\n                if(rs.next()){\n                    String subProcessId = rs.getObject(\"processId\").toString();\n                    if(subProcessId != null || !subProcessId.isEmpty()){\n                        \n                        String queryGetProcessId = \"SELECT ActivityRequesterProcessId, sass.ResourceId AS 'assignee' FROM shkprocesses sp JOIN SHKActivities sact ON sact.ProcessId = sp.Id JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId WHERE sp.id=?  ORDER BY created DESC ;\";\n                        stmt = con.prepareStatement(queryGetProcessId);\n                        stmt.setObject(1, subProcessId);\n                        rs = stmt.executeQuery();\n                        \n                        if(rs.next()){\n                            processId = rs.getObject(\"ActivityRequesterProcessId\").toString();\n                            String replaceUser = rs.getObject(\"assignee\").toString();\n                            \n                            if(processId != null || !processId.isEmpty()) {\n                                \n                                if(replaceUser.contains(\",\")){\n                                    replaceUser = replaceUser.split(\",\")[0];\n                                }\n                                \n                                \n                                \n                                \n                                //getCurrentThreadUser() Method used by system to get current thread user\n                                String currentUser = wum.getCurrentThreadUser();\n                                wum.setCurrentThreadUser(replaceUser);\n                                wum.setCurrentThreadUser(currentUser);\n                                \n                                String banco = AppUtil.processHashVariable(\"#form.banco.nome_banco[{form.processos.banco[\"+processId+\"]}]#\", null, null, null);\n                                \n                                \n                                String variableUserContratacao = \"user_contratacao_\" + banco.toLowerCase();\n                                if(banco.equals(\"MTG\")){\n                                    variableUserContName += \"2\";\n                                }\n\n                                //Reassigns the assignment from a user (replaceUser) to another user (username)\n                                wm.assignmentReassign(\"\", \"\", aid[i], username, replaceUser);\n                                if(aid[i].contains(\"CHContratacao\")){\n                                    wm.activityVariable(aid[i],variableUserContratacao, username);    \n                                }\n                                \n                                \n                                //set workflow variable \"approver\" to the new user as well\n                                //wm.activityVariable(aid[i], \"approver\", username);\n                                \n                                String queryUpdateRealocationComment;\n                                if( processId.contains(\"CreditoHabitacao\") ){\n                                    queryUpdateRealocationComment = \"UPDATE app_fd_detalhe_processo SET c_comentarios_realocacao = ? WHERE c_id_processo = ?\";\n                                }else if( processId.contains(\"hipotecas\") ){\n                                    queryUpdateRealocationComment = \"UPDATE app_fd_detalhe_proce_hip SET c_comentarios_realocacao = ? WHERE c_id_processo = ?\";\n                                }else{\n                                    //do nothing\n                                }\n                                \n                                stmt = con.prepareStatement(queryUpdateRealocationComment);\n                                stmt.setObject(1, comentarios);\n                                stmt.setObject(2, processId); \n                                rs = stmt.executeQuery();\n                                \n                                \n                                // Atualizar o colaborador de arquivo na BD\n                                if (aid[i].contains(\"Arquivo\")) {\n                                    String idToUpdate = \"\";\n                                    \n                                    String queryGetIdToUpdate = \"SELECT id FROM app_fd_geral WHERE c_id_processo = ?\";\n                                    stmt = con.prepareStatement(queryGetIdToUpdate);\n                                    stmt.setObject(1, processId);\n                                    rs = stmt.executeQuery();\n                                    \n                                    if(rs.next()) {\n                                        idToUpdate = rs.getObject(\"id\");\n                                    }\n                                    \n                                    String queryUpdateColaborador = \"UPDATE app_fd_geral SET c_colaborador_arquivo = ? WHERE id = ?\";\n                                    stmt = con.prepareStatement(queryUpdateColaborador);\n                                    stmt.setObject(1, username);\n                                    stmt.setObject(2, idToUpdate);\n                                    rs = stmt.executeQuery();\n                                }\n                            }\n                        }\n                    }\n                }\n            }\n            \n            String queryGetSubflowProcessId = \"SELECT * FROM shkprocesses sp LEFT JOIN shkprocessstates sps ON sps.oid = sp.State WHERE ActivityRequesterProcessId = ? AND sps.KeyValue LIKE 'open.running';\";\n            stmt = con.prepareStatement(queryGetSubflowProcessId);\n            stmt.setObject(1, processId);\n            rs = stmt.executeQuery();\n            if(rs.next()) {\n                subflowProcessId = rs.getObject(\"sp.Id\");  \n            }\n        }\n    }catch(Exception e) {\n        LogUtil.error(appDef.toString(), e, \"Error getting info from DB\");\n    }finally{\n        try{\n            if(rs != null){\n                rs.close();\n            }\n            if(stmt != null){\n                stmt.close();\n            }\n            if(con != null && !con.isClosed()) {\n                con.close();\n            }\n        }catch(Exception e){\n            LogUtil.error(appDef.toString(), e, \"Error closing DB connection\");\n        }\n    }\n        \n    for(int i=0; i<aid.length; i++){ \n        if (aid[i].contains(\"holdProcesses\")) {\n            \n            // Store the username of the replace user in Wf Variable\n            wm.processVariable(subflowProcessId, \"username_distribuicao_manual\", username);\n            \n            // Force the completion of the hold processes activity\n            wm.assignmentForceComplete(processDefId, subflowProcessId, aid[i], username); \n        }\n    }\n    \n    return null;\n}\n\n//call execute method with injected variable\nreturn execute(appDef, request);"}
+        },
+        "postProcessorRunOn": "both",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "realocar_processo"
+    }
+}

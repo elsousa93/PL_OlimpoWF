@@ -1,0 +1,434 @@
+{
+    "actions": [],
+    "binder": {
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "id",
+            "sql": "SELECT ip.id as id, ip.c_nome, ip.c_numero_cc, ip.c_nif, ip.c_estado_civil, ip.c_regime_casamento, ip.c_conjugue, ip.c_validade, ip.c_naturalidade, ip.c_morada, ip.c_codigo_interveniente, ip.c_segundo_papel, ip.c_segundo_papel_interveniente, ip.c_procurador_interveniente, ip.c_autorizante_interveniente, ip.c_interprete_do,iproc.id as 'IntervenienteID' FROM app_fd_intervenientes_proc ip\r\nLEFT JOIN app_fd_interv_processo iproc ON ip.c_id_intervenientes = iproc.id\r\n\r\nUNION\r\n\r\nSELECT ip.id as id, ip.c_nome, ip.c_numero_cc, ip.c_nif, ip.c_estado_civil, ip.c_regime_casamento, ip.c_conjugue, ip.c_validade, ip.c_naturalidade, ip.c_morada, ip.c_codigo_interveniente, ip.c_segundo_papel, ip.c_segundo_papel_interveniente, ip.c_procurador_interveniente, ip.c_autorizante_interveniente, ip.c_interprete_do,iproc.id as 'IntervenienteID' FROM app_fd_interv_processo_hip ip\r\nLEFT JOIN app_fd_interv_proce_hip iproc ON ip.c_id_intervenientes = iproc.id"
+        }
+    },
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_0",
+            "label": "Nome",
+            "name": "c_nome",
+            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_2",
+            "label": "NIF",
+            "name": "c_nif",
+            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_8",
+            "label": "CC",
+            "name": "c_numero_cc",
+            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_3",
+            "label": "Estado Civil",
+            "name": "c_estado_civil",
+            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_4",
+            "label": "Regime Casamento",
+            "name": "c_regime_casamento",
+            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "true",
+            "id": "column_6",
+            "include_export": "true",
+            "label": "Validade",
+            "name": "c_validade",
+            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {
+                "exclude_export": "",
+                "hidden": "false",
+                "include_export": ""
+            }},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "true",
+            "id": "column_7",
+            "include_export": "true",
+            "label": "Naturalidade",
+            "name": "c_naturalidade",
+            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {
+                "exclude_export": "",
+                "hidden": "false",
+                "include_export": ""
+            }},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "true",
+            "id": "column_10",
+            "include_export": "true",
+            "label": "Morada",
+            "name": "c_morada",
+            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {
+                "exclude_export": "",
+                "hidden": "false",
+                "include_export": ""
+            }},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "true",
+            "id": "column_11",
+            "include_export": "true",
+            "label": "ID",
+            "name": "id",
+            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {
+                "exclude_export": "",
+                "hidden": "false",
+                "include_export": ""
+            }},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "true",
+            "id": "column_12",
+            "include_export": "true",
+            "label": "Código do Interveniente",
+            "name": "c_codigo_interveniente",
+            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {
+                "exclude_export": "",
+                "hidden": "false",
+                "include_export": ""
+            }},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "true",
+            "id": "column_14",
+            "include_export": "true",
+            "label": "Segundo Interveniente",
+            "name": "c_segundo_papel_interveniente",
+            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {
+                "exclude_export": "",
+                "hidden": "false",
+                "include_export": ""
+            }},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "true",
+            "id": "column_13",
+            "include_export": "true",
+            "label": "Desempenha outra função?",
+            "name": "c_segundo_papel",
+            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {
+                "exclude_export": "",
+                "hidden": "false",
+                "include_export": ""
+            }},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "true",
+            "id": "column_9",
+            "include_export": "true",
+            "label": "Intérprete Do",
+            "name": "c_interprete_do",
+            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "true",
+            "id": "column_17",
+            "include_export": "true",
+            "label": "Procurador do Interveniente",
+            "name": "c_procurador_interveniente",
+            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "true",
+            "id": "column_18",
+            "include_export": "true",
+            "label": "Autorizante do Interveniente",
+            "name": "c_autorizante_interveniente",
+            "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
+    "description": "",
+    "filters": [{
+        "datalist_type": "filter",
+        "filterParamName": "d-5393809-fn_IntervenienteID",
+        "hidden": "",
+        "id": "filter_0",
+        "label": "IntervenienteID",
+        "name": "IntervenienteID",
+        "permission_rules": {"3dcb3509-7a33-867b-6811-d4713161d7e5": {}},
+        "type": {
+            "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+            "properties": {"defaultValue": ""}
+        }
+    }],
+    "id": "intervenientes",
+    "name": "Intervenientes",
+    "order": "",
+    "orderBy": "",
+    "pageSize": "0",
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "permission_rules": [{
+        "permission": {
+            "className": "org.joget.apps.userview.lib.DepartmentPermission",
+            "properties": {
+                "allowedDeptIds": "PL_INT_PRD_GEN_RPA_CRH",
+                "orgId": "PL"
+            }
+        },
+        "permission_key": "3dcb3509-7a33-867b-6811-d4713161d7e5",
+        "permission_name": "Robot"
+    }],
+    "rowActions": [],
+    "showPageSizeSelector": "true",
+    "useSession": "false"
+}

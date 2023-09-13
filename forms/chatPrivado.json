@@ -1,0 +1,154 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [{
+        "className": "org.joget.apps.form.model.Section",
+        "elements": [{
+            "className": "org.joget.apps.form.model.Column",
+            "elements": [
+                {
+                    "className": "org.joget.apps.form.lib.SelectBox",
+                    "properties": {
+                        "controlField": "",
+                        "id": "para",
+                        "label": "Para",
+                        "multiple": "",
+                        "options": [],
+                        "optionsBinder": {
+                            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                            "properties": {
+                                "cacheInterval": "",
+                                "script": "import java.util.Collection;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.directory.model.User;\r\nimport org.joget.directory.model.service.ExtDirectoryManager;\r\n \r\npublic FormRowSet load(String[] values) {\r\n    FormRowSet rows = new FormRowSet();\r\n     \r\n    ExtDirectoryManager directoryManager = (ExtDirectoryManager) AppUtil.getApplicationContext().getBean(\"directoryManager\");\r\n     \r\n    //set groupId based on dependency value\r\n    String groupId = null;\r\n    if (values != null && values.length > 0) {\r\n        groupId = values[0];\r\n    }\r\n     \r\n    //Get users using directory manager\r\n    Collection userList = directoryManager.getUsers(null, null, null, null, groupId, null, null, \"username\", false, null, null);\r\n    for(Object u : userList){\r\n        User user = (User) u;\r\n        FormRow option = new FormRow();\r\n        if (\"#currentUser.username#\".compareTo(user.getUsername()) > 0) {\r\n            option.setProperty(FormUtil.PROPERTY_VALUE, \"#currentUser.username#\" + \"-\" + user.getUsername());\r\n        } else if (\"#currentUser.username#\".compareTo(user.getUsername()) < 0) {\r\n            option.setProperty(FormUtil.PROPERTY_VALUE, user.getUsername() + \"-\" + \"#currentUser.username#\");\r\n        } else {\r\n            continue;\r\n        }\r\n        option.setProperty(FormUtil.PROPERTY_LABEL, user.getFirstName() + \" \" + user.getLastName());\r\n        rows.add(option);\r\n    }\r\n     \r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(values);",
+                                "useAjax": ""
+                            }
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.plugin.enterprise.AjaxSubForm",
+                    "properties": {
+                        "ajax": "true",
+                        "collapsible": "",
+                        "collapsibleExpanded": "true",
+                        "collapsibleLabelCollapsed": "View Details",
+                        "collapsibleLabelExpanded": "Hide Details",
+                        "formDefId": "chatSubform",
+                        "hideEmpty": "",
+                        "id": "chat_ajax_subform",
+                        "label": "",
+                        "noLoad": "",
+                        "noframe": "true",
+                        "parentSubFormId": "para",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "storeBinder": {
+                            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+                            "properties": {}
+                        },
+                        "subFormParentId": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.TextField",
+                    "properties": {
+                        "encryption": "",
+                        "id": "mensagem",
+                        "label": "Mensagem",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "storeNumeric": "",
+                        "style": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "chat_privado_script",
+                        "label": "",
+                        "value": "<script>\n$(document).ready(function() {\n    $(\"#submit\").prop(\"disabled\", true);\n    \n    $(\"#mensagem\").keyup(function() {\n        if ($(\"#mensagem\").val() === \"\") {\n            $(\"#submit\").prop(\"disabled\", true);\n        } else {\n            $(\"#submit\").prop(\"disabled\", false);\n        }\n    });\n    \n    $(\"#submit\").click(function() {\n\t    $(\"#chat_ajax_subform_chatSubform_mensagem_dataChat_mensagem\").val($(\"#mensagem\").val());\n\t    $(\"#mensagem\").val(\"\");\n    });\n    \n    setInterval(function(){ refreshMessage(); }, 30000);\n    refreshMessage();\n});\n\nfunction refreshMessage() {\n    FormUtil.getField(\"chat_ajax_subform\").attr(\"loadedValue\",\"\");\n    FormUtil.getField(\"para\").trigger(\"change\");\n}\n\nfunction decorateTable() {\n    //Reset chat area\n    $(\"#chatLog\").html(\"\");\n    \n    $(\"#chat_ajax_subform_chatSubform_painel_mensagem\").find(\"tr\").each(function(){\n    var alignment = \"\";\n    var content = \"\";\n    var messageAuthor = $(this).find(\"td:nth-child(1)\").text().trim();\n    var timeStamp = $(this).find(\"td:nth-child(3)\").text();\n    var message = $(this).find(\"td:nth-child(4)\").text();\n    \n    var currentUser = \"#currentUser.id#\";\n    \n    if (message.trim()) {\n        if (currentUser === messageAuthor) {\n            alignment = \"right\";\n        } else {\n            alignment = \"left\";\n        }\n        content = '<div class=\"chat\"><div class=\"speech-bubble-' + alignment + '\" id=\"speech-content\"><div id=\"message-style-me\">' + message + '<div><div id=\"timestamp\">' + timeStamp + '<\/div><\/div><\/div>'\n        $(\"#chatLog\").append(content);\n    }\n    \n    //scroll to the bottom\n    var objDiv = document.getElementById(\"chatLog\");\n    objDiv.scrollTop = objDiv.scrollHeight;\n});\n}\n<\/script>"
+                    }
+                }
+            ],
+            "properties": {"width": "100%"}
+        }],
+        "properties": {
+            "comment": "",
+            "id": "section1",
+            "join": "",
+            "label": "",
+            "loadBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "permission": {
+                "className": "",
+                "properties": {}
+            },
+            "permissionReadonly": "",
+            "readonly": "",
+            "readonlyLabel": "",
+            "regex": "",
+            "reverse": "",
+            "storeBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "visibilityControl": "",
+            "visibilityValue": ""
+        }
+    }],
+    "properties": {
+        "description": "",
+        "id": "chatPrivado",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+            "properties": {
+                "autoHandleFiles": "",
+                "autoHandleWorkflowVariable": "",
+                "cacheInterval": "",
+                "script": "return null;",
+                "useAjax": ""
+            }
+        },
+        "name": "Chat Novo",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "both",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+            "properties": {
+                "autoHandleFiles": "",
+                "autoHandleWorkflowVariable": "",
+                "cacheInterval": "",
+                "script": "return null;",
+                "useAjax": ""
+            }
+        },
+        "tableName": "mensagens_chat"
+    }
+}

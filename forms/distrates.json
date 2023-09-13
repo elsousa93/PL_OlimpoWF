@@ -1,0 +1,237 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [{
+        "className": "org.joget.apps.form.model.Section",
+        "elements": [{
+            "className": "org.joget.apps.form.model.Column",
+            "elements": [
+                {
+                    "className": "org.joget.apps.form.lib.HiddenField",
+                    "properties": {
+                        "id": "servico",
+                        "useDefaultWhenEmpty": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field6",
+                        "label": "",
+                        "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
+                        "value": "<script>\n    $(document).ready(function(){\n        var text = \"Versão do Formulário \" + #appDef.version# + \" | Versão atual \" + $(\"select[id*=versaoRecente]\").val();\n        $(\"h2#versaoRecenteText\").text(text);\n        $(\"select[id*=versaoRecente\").parent().hide();\n        //<h2>#appDef.published#<\/h2>\n    });\n    \n<\/script>\n<h1 class=\"headertext\">#form.detalhe_proce_dist.num_pedido[{form.processos_distrates.detalhe_processo}]#<\/h1>\n<h2 id=\"versaoRecenteText\"><\/h2>\n"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.SubForm",
+                    "properties": {
+                        "formDefId": "alertas",
+                        "id": "alertas",
+                        "label": "",
+                        "loadBinder": {
+                            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                            "properties": {
+                                "autoHandleFiles": "",
+                                "autoHandleWorkflowVariable": "true",
+                                "cacheInterval": "",
+                                "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.*;\r\nimport org.joget.commons.util.LogUtil;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport java.time.format.DateTimeFormatter;\r\nimport java.time.LocalDateTime; \r\nimport java.time.LocalDate;\r\nimport org.joget.apps.app.model.AppDefinition;\r\n\r\nString htmlAlertas = \"\";\r\nAppDefinition appDef = AppUtil.getCurrentAppDefinition();\r\nConnection con = null;\r\nPreparedStatement stmt = null;\r\nResultSet rs = null;\r\nResultSet rs2 = null;\r\n\r\ntry {\r\n//Alerta finalidadeEmprestimo\r\nString finalidadeEmprestimo = \"#form.detalhe_proce_dist.finalidade_emprestimo[{form.processos_distrates.detalhe_processo}]#\";\r\n//LogUtil.info(\"finalidadeEmprestimo\", \"FE\" +  finalidadeEmprestimo);\r\nString destinoImovel = \"#form.detalhe_proce_dist.destino_imovel[{form.processos_distrates.detalhe_processo}]#\";\r\n//LogUtil.info(\"imovel\", \"DestinoImovel\" +  destinoImovel);\r\nString htmlAlertaFM= \"<div class=\\\"container text-start\\\"><div class=\\\"row justify-content-start text-start\\\"><div class=\\\"col text-start\\\"><b><small class=\\\"text-muted m-align\\\"> | <span class=\\\"material-symbols-rounded\\\"> warning <\/span><span> || ALERTA: \";\r\nboolean alertaFM = false;\r\n    //if(!finalidadeEmprestimo.isEmpty() && !finalidadeEmprestimo.startsWith(\"#form.detalhe_proce_dist.finalidade_emprestimo[{form.processos_distrates.detalhe_processo}]#\")){\r\n    if((finalidadeEmprestimo.equals(\"AQS\")|| finalidadeEmprestimo.equals(\"AQO\")||finalidadeEmprestimo.equals(\"CNS\")) && destinoImovel.equals(\"HPP\") ){\r\n       // LogUtil.info(\"dentro\", \"dentro\" + finalidadeEmprestimo);\r\n        alertaFM = true;\r\n        htmlAlertaFM += \"Comissão de reembolso antecipado - isento ao abrigo do DL 80-A/2022|\";\r\n        //LogUtil.info(\"Alerta\", \"Alerta\" + htmlAlertaFM);\r\n    }\r\n    //}   \r\n    htmlAlertaFM = htmlAlertaFM.substring(0, htmlAlertaFM.length() -1);\r\n    htmlAlertaFM += \"<\/span><\/small><\/b><\/div><\/div><\/div>\";\r\n    //LogUtil.info(\"AlertaFinal\", \"AlertaFinal\" + htmlAlertaFM);\r\n        \r\n    if(alertaFM){\r\n        htmlAlertas += htmlAlertaFM;\r\n    }\r\n\r\n\r\n}catch(Exception e){\r\n    LogUtil.error(appDef.toString(), e, \"Error getting info from DB\");\r\n}finally{\r\n    try{\r\n        if(rs != null){\r\n            rs.close();\r\n        }\r\n        if(stmt != null){\r\n            stmt.close();\r\n        }\r\n        if(con != null && !con.isClosed()) {\r\n            con.close();\r\n        }\r\n    }catch(Exception e){\r\n        LogUtil.error(appDef.toString(), e, \"Error closing DB connection\");\r\n    }\r\n}\r\n\r\n \r\nFormRowSet f = new FormRowSet();\r\nFormRow r1 = new FormRow();\r\n//r1.put(\"alertas\", \"Alertas\");\r\n\r\nr1.put(\"tb_alertas\", htmlAlertas);\r\nf.add(r1);\r\n \r\nreturn f;",
+                                "useAjax": ""
+                            }
+                        },
+                        "noframe": "",
+                        "parentSubFormId": "alertas",
+                        "permissionHidden": "",
+                        "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "storeBinder": {
+                            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+                            "properties": {}
+                        },
+                        "subFormParentId": ""
+                    }
+                },
+                {
+                    "className": "org.joget.plugin.enterprise.MultiPagedForm",
+                    "properties": {
+                        "ajaxMode": "",
+                        "css": "p {\n    display: inline;\n    position: relative;\n    top: -52px;\n    left: 320px;\n    color: #777!important;\n}\n\ndiv#section-actions {\n    width: 75%;\n    position: relative;\n    top: -121px;\n    left: 250px;\n    padding-bottom: 0px!important;\n}\n\ni.page-button-prev.btn.button.waves-input-wrapper.waves-effect.btn.waves-button.waves-float {\n    background-color: #67a168!important;\n}\n\ni.page-button-next.btn.button.waves-input-wrapper.waves-effect.btn.waves-button.waves-float {\n    background-color: #67a168!important;\n}\n\n.panel.panel-default.formRecordLockContainer {\n    height: 48px!important;\n    margin: 0px!important;\n    padding: 0px!important;\n}\n\n.panel-heading {\n    background-color: #EAEE7A!important;\n}\n\n/* borda_exterior-formulários */ \nbody #form-canvas .form-section {\n  padding-bottom: 100px;\n}\n\nh4.panel-title {\n    color: #777;\n}\n\n.page-container {\n    min-height: 500px;\n}",
+                        "displayMode": "wizard",
+                        "id": "field2",
+                        "nextButtonlabel": "PRÓXIMO",
+                        "numberOfPage": {
+                            "className": "11",
+                            "properties": {
+                                "page10_formDefId": "planoFinanceiroDist",
+                                "page10_label": "Reposição do Plano Financeiro",
+                                "page10_parentSubFormId": "plano_financeiro",
+                                "page10_readonly": "",
+                                "page10_readonlyLabel": "",
+                                "page10_subFormParentId": "id_processo",
+                                "page10_validate": "true",
+                                "page11_formDefId": "agendamentoProcuradoria",
+                                "page11_label": "Agendamento",
+                                "page11_parentSubFormId": "agendamento",
+                                "page11_readonly": "",
+                                "page11_readonlyLabel": "",
+                                "page11_subFormParentId": "",
+                                "page11_validate": "true",
+                                "page1_formDefId": "resumoDistrates",
+                                "page1_label": "Resumo",
+                                "page1_parentSubFormId": "detalhe_processo",
+                                "page1_readonly": "",
+                                "page1_readonlyLabel": "",
+                                "page1_subFormParentId": "",
+                                "page1_validate": "",
+                                "page2_formDefId": "detalheProcessoDistrates",
+                                "page2_label": "Processo",
+                                "page2_parentSubFormId": "detalhe_processo",
+                                "page2_readonly": "",
+                                "page2_readonlyLabel": "",
+                                "page2_subFormParentId": "id_processo",
+                                "page2_validate": "",
+                                "page3_formDefId": "posLiquidacaoDistrates",
+                                "page3_label": "Pós Liquidação",
+                                "page3_parentSubFormId": "posLiquidacao",
+                                "page3_readonly": "",
+                                "page3_readonlyLabel": "",
+                                "page3_subFormParentId": "id_processo",
+                                "page3_validate": "",
+                                "page4_formDefId": "documentosDistrates",
+                                "page4_label": "Documentos",
+                                "page4_parentSubFormId": "documentos",
+                                "page4_readonly": "",
+                                "page4_readonlyLabel": "",
+                                "page4_subFormParentId": "id_processo",
+                                "page4_validate": "",
+                                "page5_formDefId": "comunicacoes",
+                                "page5_label": "Comunicações",
+                                "page5_parentSubFormId": "comunicacoes",
+                                "page5_readonly": "",
+                                "page5_readonlyLabel": "",
+                                "page5_subFormParentId": "id_processo",
+                                "page5_validate": "",
+                                "page6_formDefId": "correios",
+                                "page6_label": "Correio",
+                                "page6_parentSubFormId": "correio",
+                                "page6_readonly": "",
+                                "page6_readonlyLabel": "",
+                                "page6_subFormParentId": "id_processo",
+                                "page6_validate": "",
+                                "page7_formDefId": "esclarecimentos",
+                                "page7_label": "Diligências",
+                                "page7_parentSubFormId": "esclarecimentos",
+                                "page7_readonly": "",
+                                "page7_readonlyLabel": "",
+                                "page7_subFormParentId": "id_processo",
+                                "page7_validate": "",
+                                "page8_formDefId": "procuradoriaDistrates",
+                                "page8_label": "Procuradoria",
+                                "page8_parentSubFormId": "procuradoria",
+                                "page8_readonly": "",
+                                "page8_readonlyLabel": "",
+                                "page8_subFormParentId": "id_processo",
+                                "page8_validate": "",
+                                "page9_formDefId": "parametrizacaoDistrates",
+                                "page9_label": "Parametrização",
+                                "page9_parentSubFormId": "parametrizacao",
+                                "page9_readonly": "",
+                                "page9_readonlyLabel": "",
+                                "page9_subFormParentId": "id_processo",
+                                "page9_validate": "true"
+                            }
+                        },
+                        "onlyAllowSubmitOnLastPage": "",
+                        "partiallyStore": "true",
+                        "prevButtonlabel": "ANTERIOR",
+                        "storeMainFormOnPartiallyStore": "true"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "visibilidades_tab",
+                        "label": "",
+                        "value": "<script>\n\n    $(document).change(function(){\n        var banco = \"#form.detalhe_proce_dist.nome_banco[{form.processos_distrates.detalhe_processo}]#\"; \n        $(\"button[rel=9]\").hide();\n        $(\"button[rel=6]\").hide();\n        console.log(banco);\n        if(banco === \"MTG\"){\n         $(\"button[rel=3]\").hide();\n         $(\"button[rel=10]\").hide();\n         $(\"button[rel=9]\").hide();\n        }\n        if(banco === \"BIC\"){\n            $(\"button[rel=9]\").show();\n        }\n        \n  });\n\n<\/script>\n\n"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field4",
+                        "label": "",
+                        "value": "<script>\n\n//Alterar labels de botões\n$(document).ready(function(){\n    $(\"input#saveAsDraft\").val(\"GUARDAR\");\n    $(\"input#submit\").val(\"GUARDAR\");\n    $(\"button#cancel\").html(\"CANCELAR\");\n    $(\"button[name=cancel]\").click(function() {\n            window.sessionStorage.setItem(\"button\", \"null\");\n            window.sessionStorage.setItem(\"previousPage\", \"processo\");\n        });\n        \n        $(\"form\").submit(function() {\n            var btnVal = $(document.activeElement).val();\n            \n            if(btnVal === 'GUARDAR'){\n                window.sessionStorage.setItem(\"button\", \"guardar\");\n            } else if(btnVal === \"REALOCAR\"  || btnVal.includes(\"ENVIAR PARA\")){\n                window.sessionStorage.setItem(\"button\", \"null\");\n            } else {\n                window.sessionStorage.setItem(\"button\", \"tabChange\");\n            }\n        });\n    $(\"button[name=cancel]\").click(function() {\n            window.sessionStorage.setItem(\"button\", \"null\");\n            window.sessionStorage.setItem(\"previousPage\", \"processo\");\n        });\n        \n        $(\"form\").submit(function() {\n            var btnVal = $(document.activeElement).val();\n            \n            if(btnVal === 'GUARDAR'){\n                window.sessionStorage.setItem(\"button\", \"guardar\");\n            } else if(btnVal === \"REALOCAR\"  || btnVal.includes(\"ENVIAR PARA\")){\n                window.sessionStorage.setItem(\"button\", \"null\");\n            } else {\n                window.sessionStorage.setItem(\"button\", \"tabChange\");\n            }\n        });\n});\n\n<\/script>\n"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "edicao_botoes_default",
+                        "label": "",
+                        "permission_rules": {"c0d6089f-5c41-67ce-3c8d-c24ca172207e": {}},
+                        "value": "<script type=\"text/javascript\">\r\n\r\n\r\n$(function(){\r\n\r\n    var assignmentButton;\r\n    \r\n    nomeBotao();\r\n    \r\n    $(\"select[name=field2_2_detalheProcessoDistrates_estado_processo]\").on('change', function() {\r\n        nomeBotao();\r\n    });\r\n    \r\n    $(window).on('load', function() {\r\n        nomeBotao();\r\n    });\r\n    \r\n    function nomeBotao(){\r\n        var estadoProcesso = $(\"select[name=field2_2_detalheProcessoDistrates_estado_processo] :selected\").val();\r\n        var flagUltimaAtividade='#variable.flag_ultima_atividade#';\r\n        \r\n        if(estadoProcesso === undefined){\r\n            estadoProcesso = \"#form.detalhe_proce_dist.estado_processo[{form.processos_distrates.detalhe_processo}]#\";\r\n        }\r\n        \r\n        /*Botão Assignment Complete*/\r\n        if(estadoProcesso == 'PND' || estadoProcesso =='PNDEQ'){\r\n            //assignmentButton = \"COLOCAR PENDENTE\";\r\n            $(\"#assignmentComplete\").hide();\r\n            //$(\"#enviar_processo_hidden\").val(\"PND\");\r\n        }else{\r\n            $(\"#assignmentComplete\").show();\r\n            if(flagUltimaAtividade == 1){\r\n                assignmentButton = \"FINALIZAR PROCESSO\";\r\n            }else{\r\n                assignmentButton = \"PROXIMA ATIVIDADE\";\r\n            }\r\n            $(\"#assignmentComplete\").val(assignmentButton);\r\n        }\r\n        \r\n        /*Botão Guardar*/\r\n        if(estadoProcesso == 'PND' || estadoProcesso == 'PNDEQ'){\r\n            $(\"#saveAsDraft\").val(\"COLOCAR PENDENTE\");\r\n        }else{\r\n            $(\"#saveAsDraft\").val(\"GUARDAR\");\r\n        }\r\n    }\r\n    \r\n    $(\"#cancel\").text(\"CANCELAR\"); \r\n    \r\n    /*Hide the Reassign button*/\r\n    var listGroups = '#currentUser.groups.name#';\r\n    if(listGroups.toLowerCase().includes(\"coordenadores\")){\r\n\r\n    }else{\r\n\r\n        $('#process_reassign').parent().hide()\r\n    }\r\n \r\n});\r\n<\/script>"
+                    }
+                }
+            ],
+            "properties": {"width": "100%"}
+        }],
+        "properties": {
+            "comment": "",
+            "id": "section1",
+            "join": "",
+            "label": "",
+            "loadBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "permission": {
+                "className": "",
+                "properties": {}
+            },
+            "permissionReadonly": "",
+            "readonly": "",
+            "readonlyLabel": "",
+            "regex": "",
+            "reverse": "",
+            "storeBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "visibilityControl": "",
+            "visibilityValue": ""
+        }
+    }],
+    "properties": {
+        "description": "",
+        "id": "distrates",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "Distrates - Processos",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "processos_distrates"
+    }
+}

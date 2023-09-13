@@ -1,0 +1,559 @@
+{
+    "actions": [],
+    "binder": {
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "procId",
+            "sql": "SELECT p.id AS procId, dp.*, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName,\n        sass.ResourceId AS assignee, dp.c_n_wf_banco AS NwfBanco, ip.c_nome AS cliente, CONCAT(ato.c_dataOutorga, ' ', ato.c_horaOutorga) AS DataAgendamento, \n        val.c_inicializacao_gestor AS InicializacaoGestor,g.c_estadosConclusoes AS EstadoConclusoes, g.c_incidencias AS GrauIncidencias\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN app_fd_geral g ON g.c_id_processo = p.id\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id\n    AND ip.c_cliente_principal LIKE (SELECT i.c_cliente_principal\n                                    FROM app_fd_intervenientes_proc i\n                                    WHERE i.c_id_processo = p.id\n                                    AND i.c_cliente_principal = 'CHECK')\nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id AND ato.c_status = 'AGD'\nLEFT JOIN app_fd_validacao val ON  val.id = p.c_geral\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id not like '%Credito%'\nAND sass.ResourceId LIKE \"%conclusoes_geral%\""
+        }
+    },
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_6",
+            "label": "Nº Workflow Banco",
+            "name": "c_n_wf_banco",
+            "permission_rules": {
+                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
+                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
+            },
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_4",
+            "label": "PID",
+            "name": "c_pid",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'nome_banco'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_2",
+            "label": "Banco",
+            "name": "c_nome_banco",
+            "permission_rules": {
+                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
+                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
+            },
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_1",
+            "label": "Cliente",
+            "name": "cliente",
+            "permission_rules": {
+                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
+                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
+            },
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_0",
+            "label": "Atividade",
+            "name": "activityName",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'estado_conclusoes'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_3",
+            "label": "Estado Conclusões",
+            "name": "EstadoConclusoes",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_5",
+            "label": "Incidencias",
+            "name": "GrauIncidencias",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.DateFormatter",
+                "properties": {
+                    "dataFormat": "yyyy-MM-dd HH:mm:ss",
+                    "dateStoreInUTC": "",
+                    "displayFormat": "dd/MM/yyyy HH:mm:ss"
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_11",
+            "label": "Última Alteração",
+            "name": "dateModified",
+            "permission_rules": {
+                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
+                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {
+                    "exclude_export": "",
+                    "hidden": "true",
+                    "include_export": "true"
+                }
+            },
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
+    "description": "",
+    "disableResponsive": "",
+    "filters": [
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-2614187-fn_c_n_wf_banco",
+            "hidden": "",
+            "id": "filter_1",
+            "label": "Nº Workflow Banco",
+            "name": "c_n_wf_banco",
+            "permission_rules": {
+                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
+                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
+            },
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {"defaultValue": ""}
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-2614187-fn_c_gestor_pl",
+            "hidden": "",
+            "id": "filter_2",
+            "label": "Gestor PL",
+            "name": "c_gestor_pl",
+            "permission_rules": {
+                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
+                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
+            },
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "defaultValue": "",
+                    "multiple": "autocomplete",
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.plugin.enterprise.UserOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "deptId": "",
+                            "emptyLabel": "",
+                            "groupId": "",
+                            "grouping": "",
+                            "optionLabel": "",
+                            "orgId": "",
+                            "useAjax": ""
+                        }
+                    },
+                    "size": ""
+                }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-2614187-fn_c_nome_banco",
+            "hidden": "",
+            "id": "filter_3",
+            "label": "Nome do Banco",
+            "name": "c_nome_banco",
+            "permission_rules": {
+                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
+                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
+            },
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "controlField": "",
+                    "defaultValue": "",
+                    "multiple": "",
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'nome_banco'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    },
+                    "size": ""
+                }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-2614187-fn_cliente",
+            "hidden": "",
+            "id": "filter_4",
+            "label": "Cliente",
+            "name": "cliente",
+            "permission_rules": {
+                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
+                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
+            },
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {"defaultValue": ""}
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-2614187-fn_c_tipo_processo",
+            "hidden": "",
+            "id": "filter_5",
+            "label": "Tipo de Processo",
+            "name": "c_tipo_processo",
+            "permission_rules": {
+                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
+                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
+            },
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "controlField": "",
+                    "defaultValue": "",
+                    "multiple": "",
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'tipo_processo'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "label",
+                            "labelColumn": "value",
+                            "useAjax": ""
+                        }
+                    },
+                    "size": ""
+                }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-2614187-fn_c_origem_processo",
+            "hidden": "",
+            "id": "filter_6",
+            "label": "Origem do Processo",
+            "name": "c_origem_processo",
+            "permission_rules": {
+                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
+                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
+            },
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "controlField": "",
+                    "defaultValue": "",
+                    "multiple": "",
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "emptyLabel": "",
+                            "extraCondition": "c_nome_campo = 'origem_processo'",
+                            "formDefId": "adicionarOpcaoLV",
+                            "groupingColumn": "",
+                            "idColumn": "value",
+                            "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    },
+                    "size": ""
+                }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-2614187-fn_dateModified",
+            "hidden": "",
+            "id": "filter_10",
+            "label": "Última Alteração",
+            "name": "dateModified",
+            "permission_rules": {
+                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {},
+                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
+            },
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {"defaultValue": ""}
+            }
+        },
+        {
+            "id": "filter_0",
+            "label": "GrauIncidencias",
+            "name": "GrauIncidencias",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-2614187-fn_DataAgendamento",
+            "hidden": "",
+            "id": "filter_11",
+            "label": "Data Agendamento",
+            "name": "DataAgendamento",
+            "permission_rules": {
+                "1081155f-1700-be08-9c6f-364a49cf8d0b": {},
+                "5ef76f30-3a46-461b-e85b-26e07d368c1e": {"hidden": "true"},
+                "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {}
+            },
+            "type": {
+                "className": "org.joget.plugin.enterprise.DateDataListFilterType",
+                "properties": {
+                    "defaultValue": "",
+                    "format": "mm/dd/yy",
+                    "formatJava": "MM/dd/yyyy",
+                    "yearRange": "c-10:c+10"
+                }
+            }
+        }
+    ],
+    "hidePageSize": "",
+    "id": "list_fila_comum_conclusao",
+    "name": "Conclusao - Fila Comum",
+    "order": "1",
+    "orderBy": "GrauIncidencias",
+    "pageSize": "0",
+    "pageSizeSelectorOptions": "5,10,20,30,40,50,100",
+    "permission_rules": [
+        {
+            "permission": {
+                "className": "org.joget.apps.userview.lib.GroupPermission",
+                "properties": {
+                    "allowedGroupIds": "apoioCoordenador;Coordenador;DiretorCoordenador",
+                    "orgId": "PL"
+                }
+            },
+            "permission_key": "1081155f-1700-be08-9c6f-364a49cf8d0b",
+            "permission_name": "Coordenadores (Vários tipos)"
+        },
+        {
+            "permission": {
+                "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                "properties": {
+                    "allowedDeptIds": "PL_INT_CNT_ABN_COM_CRH;PL_INT_CNT_ABN_NOR_CRH;PL_INT_CNT_BCP_COM_CRH;PL_INT_CNT_BCP_NOR_CRH;PL_INT_CNT_BIC_COM_CRH;PL_INT_CNT_BIC_NOR_CRH;PL_INT_CNT_BST_COM_CRH;PL_INT_CNT_BST_NOR_CRH;PL_INT_CNT_CTT_COM_CRH;PL_INT_CNT_CTT_NOR_CRH;PL_INT_CNT_GEN_COM_CRH;PL_INT_CNT_GEN_NOR_CRH;PL_INT_CNT_MTG_COM_CRH;PL_INT_CNT_MTG_NOR_CRH;PL_INT_CNT_NVB_COM_CRH;PL_INT_CNT_NVB_NOR_CRH;PL_INT_FLT_GEN_COM_CRH;PL_INT_FLT_GEN_NOR_CRH;PL_INT_PRD_GEN_COM_CRH;PL_INT_PRD_GEN_NOR_CRH;PL_INT_PRD_GEN_RPA_CRH",
+                    "orgId": "PL"
+                }
+            },
+            "permission_key": "5ef76f30-3a46-461b-e85b-26e07d368c1e",
+            "permission_name": "Contratação/Filtro/Produção"
+        },
+        {
+            "permission": {
+                "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                "properties": {
+                    "allowedDeptIds": "PL_INT_VAL_BCP_COM_CRH;PL_INT_VAL_BCP_NOR_CRH;PL_INT_VAL_BNI_COM_CRH;PL_INT_VAL_BNI_NOR_CRH;PL_INT_VAL_BST_COM_CRH;PL_INT_VAL_BST_NOR_CRH;PL_INT_VAL_GEN_COM_CRH;PL_INT_VAL_GEN_NOR_CRH",
+                    "orgId": "PL"
+                }
+            },
+            "permission_key": "e0b223db-b2f1-9e66-7db4-112f9da0c40a",
+            "permission_name": "Validacao"
+        }
+    ],
+    "responsiveView": [
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Mobile"
+        },
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Tablet"
+        }
+    ],
+    "rowActions": [{
+        "className": "org.joget.plugin.enterprise.BeanShellDatalistAction",
+        "icon": "<i class=\"fas fa-code\"><\/i>",
+        "id": "rowAction_1",
+        "label": "Bean Shell",
+        "name": "Bean Shell Datalist Action",
+        "properties": {
+            "confirmation": "",
+            "datalist_type": "row_action",
+            "label": "Puxar Processo",
+            "rules": [],
+            "script": "import org.joget.workflow.model.service.WorkflowManager;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.workflow.model.service.WorkflowUserManager;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport javax.servlet.http.HttpServletRequest;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.datalist.model.DataListBinderDefaultimport;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport org.joget.commons.util.UuidGenerator;\r\n\r\npublic void puxarProcesso() {\r\n    String idProcesso=\"\";\r\n    String aid = \"\";\r\n    String resourceId = \"\";\r\n\r\n    for (String key : rowKeys) {\r\n        idProcesso = key;\r\n    }\r\n    \r\n    Connection con = null;\r\n    PreparedStatement stmt = null;\r\n    ResultSet rs = null;\r\n    \r\n    try{\r\n        DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n        con = ds.getConnection();\r\n        \r\n        if(!con.isClosed()){\r\n            String queryGetAid = \"SELECT a.id as 'Aid', sass.ResourceId as 'ResourceId' FROM shkprocesses p LEFT JOIN shkactivities a ON p.id = ProcessId LEFT JOIN shkprocessstates ps ON ps.oid = p.State LEFT JOIN SHKActivityStates acs ON acs.oid = a.State LEFT JOIN shkassignmentstable sass ON sass.ActivityId = a.id WHERE p.ActivityRequesterProcessId = ? AND a.id LIKE '%CHConclusoes%' AND a.id LIKE '%CHConclusoes%' AND ps.KeyValue LIKE 'open.running' AND (acs.KeyValue LIKE 'open.not_running.not_started' OR acs.KeyValue LIKE 'open.running');\";\r\n            stmt = con.prepareStatement(queryGetAid);\r\n            stmt.setObject(1, idProcesso);\r\n            rs = stmt.executeQuery();\r\n            \r\n            if(rs.next()) {\r\n                aid = rs.getObject(\"Aid\");\r\n                resourceId= rs.getObject(\"ResourceId\");\r\n                    \r\n                WorkflowManager wm = (WorkflowManager) AppUtil.getApplicationContext().getBean(\"workflowManager\");\r\n                WorkflowUserManager wum = (WorkflowUserManager) AppUtil.getApplicationContext().getBean(\"workflowUserManager\");\r\n                \r\n                //get the values from the \r\n                String replaceUser = resourceId;\r\n                String username = \"#currentUser.username#\";\r\n                \r\n                //getCurrentThreadUser() Method used by system to get current thread user\r\n                String currentUser = wum.getCurrentThreadUser();\r\n                wum.setCurrentThreadUser(replaceUser);\r\n                wum.setCurrentThreadUser(currentUser);\r\n                    \r\n                //Reassigns the assignment from a user (replaceUser) to another user (username)\r\n                wm.assignmentReassign(\"\", \"\", aid, username, replaceUser);\r\n                    \r\n                String queryGetNProcesso = \"SELECT c_n_processo FROM app_fd_detalhe_proce_procu WHERE c_id_processo = ?\";\r\n                stmt = con.prepareStatement(queryGetNProcesso);\r\n                stmt.setObject(1, idProcesso);\r\n                rs = stmt.executeQuery();\r\n                \r\n                String nProcesso = \"\";\r\n                if(rs.next()){\r\n                    nProcesso = rs.getObject(\"c_n_processo\");\r\n                }\r\n                \r\n                /*\r\n                    Atualizar histórico de processos puxados -> Procuradoria\r\n                \r\n                    String queryInsertHistorico = \"INSERT INTO app_fd_hist_puxar_procu(id, dateCreated, dateModified , createdBy, modifiedBy, c_id_processo, c_n_processo, c_gestor, c_data_puxar) VALUES (?,?,?,?,?,?,?,?,?);\";\r\n                    stmt = con.prepareStatement(queryInsertHistorico);\r\n                        \r\n                    String id = UuidGenerator.getInstance().getUuid();\r\n                    \r\n                    stmt.setObject(1, id);\r\n                    stmt.setObject(2, null);\r\n                    stmt.setObject(3,  null);\r\n                    stmt.setObject(4, \"#currentUser.username#\");\r\n                    stmt.setObject(5, \"#currentUser.username#\");\r\n                    stmt.setObject(6, idProcesso);\r\n                    stmt.setObject(7, nProcesso);\r\n                    stmt.setObject(8, username);\r\n                    stmt.setObject(9, \"#date.yyyy-mm-dd HH:mm#\");\r\n                    \r\n                    rs = stmt.executeQuery();\r\n                */\r\n            }\r\n        }\r\n            \r\n    }catch(Exception e){\r\n        LogUtil.error(\"Conclusões - Puxar Processo\", e, \"Error getting info from DB\");\r\n    }finally{\r\n        try{\r\n            if(rs != null) {\r\n                rs.close();\r\n            }\r\n                \r\n            if(stmt != null) {\r\n                stmt.close();\r\n            }\r\n            \r\n            if(con != null && !con.isClosed()) {\r\n                con.close();\r\n            }\r\n        }catch(Exception e){\r\n            LogUtil.error(appDef.toString(), e, \"Error closing DB connection\");\r\n        }\r\n    }    \r\n}\r\n\r\n\r\npuxarProcesso();"
+        },
+        "type": "text"
+    }],
+    "searchPopup": "",
+    "showDataWhenFilterSet": "",
+    "showPageSizeSelector": "true",
+    "useSession": ""
+}

@@ -1,0 +1,106 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [{
+        "className": "org.joget.apps.form.model.Section",
+        "elements": [{
+            "className": "org.joget.apps.form.model.Column",
+            "elements": [
+                {
+                    "className": "org.joget.apps.form.lib.HiddenField",
+                    "properties": {
+                        "id": "fk_parentKey",
+                        "useDefaultWhenEmpty": "",
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.TextArea",
+                    "properties": {
+                        "cols": "20",
+                        "id": "tb_alertas",
+                        "label": "",
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "rows": "5",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field2",
+                        "label": "",
+                        "value": "<script type=\"text/javascript\">\r\n    $(document).ready(function(){\r\n            \r\n        var textAreaid =  document.getElementById(\"alertas_alertas_tb_alertas\");\r\n        var htmlAlerta = textAreaid.value;\r\n        textAreaid.style.display = \"none\";\r\n        \r\n        if(htmlAlerta === \"\" || htmlAlerta == null){\r\n            $(\"div#alertas_alertas_section1\").parent().remove();\r\n        }\r\n\r\n    });\r\n<\/script>"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field5",
+                        "label": "",
+                        "value": "<script type=\"text/javascript\">\r\n    $(window).load(function(){\r\n        //var alertasID = \"field2\";\r\n        \r\n        \r\n        //store the value to a field\r\n        var tbAlertaId = \"alertas_alertas_tb_alertas\";\r\n        var htmlAlerta = $('[name='+tbAlertaId+']:enabled').val();\r\n\r\n\r\n         \r\n        //present in HTML\r\n        $(\".field2\").html(htmlAlerta)\r\n    });\r\n<\/script>"
+                    }
+                }
+            ],
+            "properties": {"width": "100%"}
+        }],
+        "properties": {
+            "comment": "",
+            "id": "section1",
+            "join": "",
+            "label": "",
+            "loadBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "permission": {
+                "className": "",
+                "properties": {}
+            },
+            "permissionReadonly": "",
+            "readonly": "",
+            "readonlyLabel": "",
+            "regex": "",
+            "reverse": "",
+            "storeBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "visibilityControl": "",
+            "visibilityValue": ""
+        }
+    }],
+    "properties": {
+        "description": "",
+        "id": "alertas",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "Alertas",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "tableName": "alertas"
+    }
+}

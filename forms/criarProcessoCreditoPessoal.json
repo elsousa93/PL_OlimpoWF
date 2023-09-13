@@ -1,0 +1,214 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [{
+        "className": "org.joget.apps.form.model.Section",
+        "elements": [{
+            "className": "org.joget.apps.form.model.Column",
+            "elements": [
+                {
+                    "className": "org.joget.apps.form.lib.HiddenField",
+                    "properties": {
+                        "id": "processo_manual",
+                        "useDefaultWhenEmpty": "",
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.TextField",
+                    "properties": {
+                        "encryption": "",
+                        "id": "scoring",
+                        "label": "Scoring",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "storeNumeric": "",
+                        "style": "",
+                        "validator": {
+                            "className": "org.joget.apps.form.lib.BeanShellValidator",
+                            "properties": {
+                                "decoration": "*",
+                                "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values){\r\n    Connection con = null;\r\n    PreparedStatement stmt = null;\r\n    ResultSet rs = null;\r\n    \r\n    boolean result = true;\r\n\r\n    String id = FormUtil.getElementParameterName(element);\r\n    //If element is not filled give error message\r\n    if (values == null || values[0].isEmpty()){\r\n        formData.addFormError(id, \"Campo obrigatório\");\r\n        return false;\r\n    }\r\n    \r\n    //Set fieldId of the field to compare\r\n    String fieldId = \"scoring\";\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n    \r\n    //Get porcesso_manual\r\n    Element procManual = FormUtil.findElement(\"processo_manual\", form, formData);\r\n    String processo_manual = FormUtil.getElementPropertyValue(procManual, formData);\r\n    \r\n    String scoring = values[0];\r\n    \r\n    try{ \r\n        //Construção de número Agenda\r\n        String numeroAgenda = \"CP\" + scoring;\r\n        \r\n        /**Check if process exists**/\r\n        boolean processExists = false;\r\n        String processId = \"\";\r\n        \r\n        DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n        con = ds.getConnection();\r\n        \r\n        if(!con.isClosed()) { \r\n            String queryGetProcessId = \"SELECT p.id FROM app_fd_processos_cp p JOIN app_fd_detalhe_proce_cp dp ON dp.id = p.c_detalhe_processo WHERE dp.c_n_agenda = ?\";\r\n            stmt = con.prepareStatement(queryGetProcessId);\r\n            stmt.setObject(1, numeroAgenda);\r\n            rs = stmt.executeQuery();\r\n            \r\n            if(rs.next()) {\r\n                processId = rs.getObject(\"p.id\");\r\n                processExists = true;\r\n            }\r\n        }\r\n        \r\n        if(!processExists) { \r\n            result = true;    \r\n        } else { \r\n            if (processo_manual.equals(\"SIM\")) { \r\n                String id = FormUtil.getElementParameterName(element);\r\n                formData.addFormError(id, \"O processo já existe\");\r\n                result = false;    \r\n            }\r\n        }\r\n        \r\n    } catch(Exception e) {\r\n        LogUtil.error(appDef.toString(), e, \"Crédito Pessoal | Erro ao criar processo\");\r\n    } finally {\r\n        try {\r\n            if(rs != null) {\r\n                rs.close();\r\n            }\r\n            if(stmt != null) {\r\n                stmt.close();\r\n            }\r\n            if(con != null && !con.isClosed()) {\r\n                con.close();\r\n            }\r\n        } catch(Exception e) {\r\n            LogUtil.error(appDef.toString(), e, \"Crédito Pessoal - Criar Processo | Error closing DB connection\");\r\n        }\r\n    }\r\n    \r\n    \r\n    return result;\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                            }
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.SelectBox",
+                    "properties": {
+                        "controlField": "",
+                        "id": "gestor",
+                        "label": "Gestor",
+                        "multiple": "",
+                        "options": [],
+                        "optionsBinder": {
+                            "className": "org.joget.plugin.enterprise.UserOptionsBinder",
+                            "properties": {
+                                "addEmptyOption": "true",
+                                "cacheInterval": "",
+                                "deptId": "PL_INT_CP",
+                                "emptyLabel": "",
+                                "groupId": "",
+                                "grouping": "",
+                                "optionLabel": "",
+                                "orgId": "PL",
+                                "useAjax": ""
+                            }
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.DatePicker",
+                    "properties": {
+                        "allowManual": "true",
+                        "currentDateAs": "",
+                        "dataFormat": "",
+                        "datePickerType": "dateTime",
+                        "endDateFieldId": "",
+                        "format": "",
+                        "format24hr": "true",
+                        "id": "data_entrada",
+                        "label": "Data de Entrada",
+                        "permission_rules": {},
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "startDateFieldId": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": "",
+                        "yearRange": "c-10:c"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.SelectBox",
+                    "properties": {
+                        "controlField": "",
+                        "id": "via_entrada",
+                        "label": "Via de Entrada",
+                        "multiple": "",
+                        "options": [],
+                        "optionsBinder": {
+                            "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                            "properties": {
+                                "addEmptyOption": "true",
+                                "cacheInterval": "",
+                                "emptyLabel": "",
+                                "extraCondition": "c_nome_campo = 'cp_via_entrada' AND e.customProperties.servico LIKE '%CH%'",
+                                "formDefId": "adicionarOpcaoLV",
+                                "groupingColumn": "",
+                                "idColumn": "value",
+                                "labelColumn": "label",
+                                "useAjax": ""
+                            }
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "validator": {
+                            "className": "org.joget.apps.form.lib.DefaultValidator",
+                            "properties": {
+                                "mandatory": "true",
+                                "message": "#i18n.mandatorymsg#",
+                                "type": ""
+                            }
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field3",
+                        "label": "",
+                        "value": "<script type=\"text/javascript\">\r\n$(function(){\r\n    $(\"#submit\").val(\"SUBMETER\");\r\n    \r\n    $(\"#submit\").on('click', function(){\r\n        $(\"#submit\").parent().hide();\r\n    });\r\n});\r\n<\/script>"
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "set_manual",
+                        "label": "",
+                        "value": "<script type=\"text/javascript\">\r\n    $(document).change(function(){\r\n        var processo_manual_id = \"processo_manual\";\r\n        \r\n        //get values\r\n        var processo_manual = FormUtil.getValue(\"processo_manual_id\");\r\n        \r\n        //verify if it's a manual process creation\r\n        if (processo_manual != null && processo_manual !== \"SIM\"){\r\n            //store the value to a field\r\n            processo_manual = \"SIM\";\r\n            \r\n            var field = FormUtil.getField(processo_manual_id);\r\n            $(field).val(processo_manual); //set value\r\n        }\r\n    });\r\n<\/script>"
+                    }
+                }
+            ],
+            "properties": {"width": "100%"}
+        }],
+        "properties": {
+            "comment": "",
+            "id": "criarProcesso",
+            "join": "",
+            "label": "Criar Processo",
+            "loadBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "permission": {
+                "className": "",
+                "properties": {}
+            },
+            "permissionReadonly": "",
+            "readonly": "",
+            "readonlyLabel": "",
+            "regex": "",
+            "reverse": "",
+            "storeBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "visibilityControl": "",
+            "visibilityValue": ""
+        }
+    }],
+    "properties": {
+        "description": "",
+        "id": "criarProcessoCreditoPessoal",
+        "loadBinder": {
+            "className": "org.joget.apps.form.lib.WorkflowFormBinder",
+            "properties": {}
+        },
+        "name": "CP - Criar/Importar Processo",
+        "noPermissionMessage": "",
+        "permission": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessor": {
+            "className": "",
+            "properties": {}
+        },
+        "postProcessorRunOn": "create",
+        "storeBinder": {
+            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+            "properties": {
+                "autoHandleFiles": "",
+                "autoHandleWorkflowVariable": "true",
+                "cacheInterval": "",
+                "script": "import org.joget.apps.app.model.AppDefinition;\nimport org.joget.apps.app.service.AppService;\nimport org.joget.apps.app.service.AppUtil;\nimport org.joget.plugin.base.PluginManager;\nimport org.joget.plugin.base.Plugin;\nimport org.joget.directory.model.service.ExtDirectoryManager;\nimport org.joget.workflow.model.service.WorkflowManager;\nimport org.joget.workflow.model.service.*;\nimport org.joget.workflow.model.WorkflowAssignment;\nimport org.joget.workflow.model.WorkflowProcess;\nimport org.joget.workflow.model.WorkflowProcessResult;\nimport org.joget.workflow.model.WorkflowActivity;\nimport org.joget.apps.form.model.Element;\nimport org.joget.apps.form.service.FormUtil;\nimport org.joget.apps.form.model.FormData;\nimport org.joget.apps.form.model.FormRow;\nimport org.joget.apps.form.model.FormRowSet;\nimport org.joget.commons.util.UuidGenerator;\nimport org.joget.commons.util.LogUtil;\nimport org.joget.workflow.model.service.*;\nimport java.sql.Connection;\nimport java.sql.PreparedStatement;\nimport java.sql.ResultSet;\nimport java.sql.SQLException;\nimport javax.sql.DataSource;\nimport java.time.LocalDateTime; \nimport java.time.format.DateTimeFormatter;\nimport java.time.LocalDate;\nimport java.time.DayOfWeek;\nimport java.time.temporal.ChronoUnit;\nimport java.util.Map;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.Collection;\nimport java.util.regex.Pattern;\nimport java.util.regex.Matcher;\n\n\npublic FormRowSet storeData(Element element, FormRowSet rows, FormData formData) {\n    AppService appService = (AppService) AppUtil.getApplicationContext().getBean(\"appService\");\n    PluginManager pluginManager = (PluginManager) AppUtil.getApplicationContext().getBean(\"pluginManager\");\n    ExtDirectoryManager directoryManager = (ExtDirectoryManager) pluginManager.getBean(\"directoryManager\");\n    WorkflowManager workflowManager = (WorkflowManager) AppUtil.getApplicationContext().getBean(\"workflowManager\");\n    AppDefinition appDef = AppUtil.getCurrentAppDefinition();\n    \n    Connection con = null;\n    PreparedStatement stmt = null;\n    ResultSet rs = null;\n    \n    try {\n        \n        //check for empty data\n        if (rows == null || rows.isEmpty()) {\n            return rows;\n        }\n        \n        //get value from form to set workflow variables\n        FormRow originalRow = rows.get(0);\n        String scoring = originalRow.getProperty(\"scoring\");\n        String gestor = originalRow.getProperty(\"gestor\");\n        String dataEntrada = originalRow.getProperty(\"data_entrada\");\n        String viaEntrada = originalRow.getProperty(\"via_entrada\");\n        String numeroAgenda = \"\";\n        \n        if (dataEntrada != null && dataEntrada.length() > 0) { // Se data estiver preenchida\n            dataEntrada = dataEntrada.substring(6,10) + \"-\" + dataEntrada.substring(3,5) + \"-\" + dataEntrada.substring(0,2) + \" \" + dataEntrada.substring(11,16);\n        } else {\n            dataEntrada = \"#date.yyyy-MM-dd HH:mm#\"; // Caso a data não seja preenchida\n        }\n        \n        int flagNumeroSequencial = 0;\n        \n        //Construção de número Agenda\n        numeroAgenda = \"CP\" + scoring;\n        \n        /**Check if process exists**/\n        boolean processExists = false;\n        String processId = \"\";\n        \n        DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\n        con = ds.getConnection();\n        \n        if(!con.isClosed()) { \n            String queryGetProcessId = \"SELECT p.id FROM app_fd_processos_cp p JOIN app_fd_detalhe_proce_cp dp ON dp.id = p.c_detalhe_processo WHERE dp.c_n_agenda = ?\";\n            stmt = con.prepareStatement(queryGetProcessId);\n            stmt.setObject(1, numeroAgenda);\n            rs = stmt.executeQuery();\n            \n            if(rs.next()) {\n                processId = rs.getObject(\"p.id\");\n                processExists = true;\n            }\n        }\n        \n        //Se o processo não existir\n        if(!processExists) { \n            //start process with variables\n            Map variables = new HashMap();\n            variables.put(\"user_creditoPessoal\", \"#currentUser.username#\");\n            variables.put(\"gestor\", gestor);\n            \n            //get process\n            WorkflowProcess process = appService.getWorkflowProcessForApp(appDef.getAppId(), appDef.getVersion().toString(), \"CreditoPessoal\");\n            \n            //start process\n            WorkflowProcessResult result = workflowManager.processStart(process.getId(), variables);\n            \n            //get process id\n            processId = result.getProcess().getInstanceId();\n            \n            FormRowSet multipagedForms = new FormRowSet();\n            FormRow formPrimaryKey = new FormRow();\n            \n            //definition of the fields of table processos where to store each generated primary key\n            String[] fieldIds = {\"detalhe_processo\", \"viso\"};\n            \n            //definition of the formIds that correspond to the pages of the multipage form\n            String[] formIds = {\"detalheProcessoCreditoPessoal\", \"visoCreditoPessoal\"};\n            \n            for(int i = 0; i < fieldIds.length; i++) { \n                String foreignKey = UuidGenerator.getInstance().getUuid();\n                formPrimaryKey.setProperty(fieldIds[i], foreignKey);\n                \n                FormRowSet newRows = new FormRowSet();\n                FormRow newRow = new FormRow();\n                \n                if(fieldIds[i].equals(\"detalhe_processo\")) { \n                    newRow.put(\"scoring\", scoring);\n                    newRow.put(\"gestor\", gestor);\n                    newRow.put(\"data_entrada\", dataEntrada);\n                    newRow.put(\"via_entrada\", viaEntrada);\n                    newRow.put(\"n_agenda\", numeroAgenda);\n                    \n                } else if (fieldIds[i].equals(\"viso\")) {\n                    \n                }\n                \n                newRow.setProperty(\"id_processo\", processId);\n                newRows.add(newRow);\n                \n                storeToOtherFormDataTable(appDef, element, newRows, formData, formIds[i], foreignKey);\n            }\n            \n            formPrimaryKey.setProperty(\"servico\", \"CP\");\n            multipagedForms.add(formPrimaryKey);\n            \n            storeToOtherFormDataTable(appDef, element, multipagedForms, formData, \"creditoPessoal\", processId);\n            \n        } else {\n            //Se o processo já existir\n            \n            FormRowSet newRows = new FormRowSet();\n            FormRow newRow = new FormRow();\n            \n            String fase = \"REE\";\n            String estado = \"NAO\"; // Comentar se quiser obter o valor do estado ao criar\n            \n            /*\n                Descomentar se quiser obter o valor do estado ao criar\n                \n                String estado = \"\";\n                if(originalRow.getProperty(\"pendente\") == null || originalRow.getProperty(\"pendente\").length() <= 0) {\n                    estado = \"NAO\";\n                } else {\n                    estado = originalRow.getProperty(\"pendente\");\n                }\n            */\n            \n            String dataEntrada = originalRow.getProperty(\"data_entrada\");\n            if (dataEntrada != null && dataEntrada.length() > 0){ //se data esta preenchida\n                dataEntrada = dataEntrada.substring(6,10) + \"-\" + dataEntrada.substring(3,5) + \"-\" + dataEntrada.substring(0,2) + \" \" + dataEntrada.substring(11,16);\n            }else{\n                dataEntrada = \"#date.yyyy-MM-dd HH:mm#\";\n            }\n            \n            newRow.put(\"fase\", fase);\n            newRow.put(\"pendente\", estado);\n            newRow.put(\"data_entrada\", dataEntrada);\n            workflowManager.processVariable(processId, \"cp_estado_processo\" , estado);\n            \n            newRows.add(newRow);\n            \n            String detalheProcessoPK = \"#form.processos_cp.detalhe_processo[\"+ processId + \"]#\";\n            detalheProcessoPK = AppUtil.processHashVariable(detalheProcessoPK, null, null, null);\n            \n            storeToOtherFormDataTable(appDef, element, newRows, formData, \"detalheProcessoCreditoPessoal\", detalheProcessoPK);\n        }\n    \n    } catch(Exception e) {\n        LogUtil.error(appDef.toString(), e, \"Crédito Pessoal | Erro ao criar processo\");\n    } finally {\n        try {\n            if(rs != null) {\n                rs.close();\n            }\n            if(stmt != null) {\n                stmt.close();\n            }\n            if(con != null && !con.isClosed()) {\n                con.close();\n            }\n        } catch(Exception e) {\n            LogUtil.error(appDef.toString(), e, \"Crédito Pessoal - Criar Processo | Error closing DB connection\");\n        }\n    }\n    \n    return rows;      \n}\n\n\npublic void storeToOtherFormDataTable(AppDefinition appDef, Element element, FormRowSet rows, FormData formData, String formId, String id) {\n    try{\n        AppService appService = (AppService) AppUtil.getApplicationContext().getBean(\"appService\");\n        FormRowSet storedInfo = appService.storeFormData(appDef.getId(), appDef.getVersion().toString(), formId, rows, id);\n        \n    } catch(Exception e) {\n        LogUtil.error(appDef.toString(), e, \"Crédito Pessoal - Criar Processo | Error storing data\");\n    }\n}\n\n\n//call execute method with injected variable\nreturn storeData(element, rows, formData);",
+                "useAjax": ""
+            }
+        },
+        "tableName": "processos_cp"
+    }
+}

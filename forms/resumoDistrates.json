@@ -1,0 +1,349 @@
+{
+    "className": "org.joget.apps.form.model.Form",
+    "elements": [{
+        "className": "org.joget.apps.form.model.Section",
+        "elements": [{
+            "className": "org.joget.apps.form.model.Column",
+            "elements": [
+                {
+                    "className": "org.joget.apps.form.lib.HiddenField",
+                    "properties": {
+                        "id": "id_processo",
+                        "permissionHidden": "",
+                        "readonly": "",
+                        "useDefaultWhenEmpty": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.TextField",
+                    "properties": {
+                        "encryption": "",
+                        "id": "field12",
+                        "label": "Text Field",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "storeNumeric": "",
+                        "style": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "#form.detalhe_proce_dist.num_pedido[{form.processos_distrates.detalhe_processo[{variable.id_distrates}]}]#",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.SelectBox",
+                    "properties": {
+                        "controlField": "",
+                        "id": "nome_banco",
+                        "label": "Nome do Banco",
+                        "multiple": "",
+                        "options": [],
+                        "optionsBinder": {
+                            "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                            "properties": {
+                                "addEmptyOption": "true",
+                                "cacheInterval": "",
+                                "emptyLabel": "",
+                                "extraCondition": "c_nome_campo = 'nome_banco' AND e.customProperties.servico LIKE '%DIST%'",
+                                "formDefId": "adicionarOpcaoLV",
+                                "groupingColumn": "",
+                                "idColumn": "value",
+                                "labelColumn": "label",
+                                "useAjax": ""
+                            }
+                        },
+                        "permissionHidden": "",
+                        "readonly": "true",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.TextField",
+                    "properties": {
+                        "encryption": "",
+                        "id": "num_workflow",
+                        "label": "Número(s) do(s) Empréstimo(s)",
+                        "maxlength": "",
+                        "permissionHidden": "",
+                        "placeholder": "",
+                        "readonly": "true",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "storeNumeric": "",
+                        "style": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.TextField",
+                    "properties": {
+                        "encryption": "",
+                        "id": "num_pedido",
+                        "label": "Número do Workflow",
+                        "maxlength": "",
+                        "permissionHidden": "",
+                        "placeholder": "",
+                        "readonly": "true",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "storeNumeric": "",
+                        "style": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.TextField",
+                    "properties": {
+                        "encryption": "",
+                        "id": "nome_cliente",
+                        "label": "Nome do Cliente",
+                        "maxlength": "",
+                        "permissionHidden": "",
+                        "placeholder": "",
+                        "readonly": "true",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "storeNumeric": "",
+                        "style": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.SelectBox",
+                    "properties": {
+                        "controlField": "nome_banco",
+                        "id": "tipo_distrate",
+                        "label": "Tipo de Distrate",
+                        "multiple": "",
+                        "options": [],
+                        "optionsBinder": {
+                            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                            "properties": {
+                                "cacheInterval": "",
+                                "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.FormStoreBinder;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport org.joget.commons.util.LogUtil;\r\n\r\n \r\npublic FormRowSet load(String[] values) {\r\n\r\n    \r\n    FormRowSet rows = new FormRowSet();\r\n    \r\n    FormRow option = new FormRow();\r\n    option.setProperty(FormUtil.PROPERTY_VALUE, \"\");\r\n    option.setProperty(FormUtil.PROPERTY_LABEL, \"\");\r\n    rows.add(option);\r\n    \r\n    String banco = null;\r\n    if (values != null && values.length > 0) {\r\n        banco = \"%\" + values[0] + \"%\";\r\n    \r\n        Connection con = null;\r\n        PreparedStatement stmt = null;\r\n        ResultSet rs = null;\r\n        String origem_value = \"\";\r\n        String origem_label = \"\";\r\n        \r\n        AppDefinition appDef = AppUtil.getCurrentAppDefinition();\r\n        \r\n        try{\r\n                DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n                con = ds.getConnection();\r\n                \r\n                \r\n                if(!con.isClosed()){\r\n                    String idDetalhe_processo = \"#form.processos.detalhe_processo#\";\r\n                    //Verificar o utilizador atribuido e atualizar caso esteja errado\r\n                    String query=\"SELECT c_value, c_label FROM app_fd_listas_de_valores WHERE c_nome_campo = ? AND c_banco LIKE ? AND c_servico LIKE '%DIST%';\";\r\n                    stmt = con.prepareStatement(query);\r\n                    stmt.setObject(1, \"tipo_distrate\");\r\n                    stmt.setObject(2, banco);\r\n                    rs = stmt.executeQuery();\r\n                    \r\n                    while(rs.next()){\r\n                        //LogUtil.info(\"Aaa\" , \"BBB\");\r\n                        origem_value = rs.getString(1);\r\n                        origem_label = rs.getString(2);\r\n                        \r\n                        FormRow option = new FormRow();\r\n                        option.setProperty(FormUtil.PROPERTY_VALUE, origem_value);\r\n                        option.setProperty(FormUtil.PROPERTY_LABEL, origem_label);\r\n                        \r\n                        rows.add(option);\r\n                        \r\n                    }\r\n                }\r\n                \r\n        }catch(Exception e){\r\n            LogUtil.error(\"Importa processo - origem de processo\", e, \"Error getting info from DB\");\r\n        }finally{\r\n            try{\r\n                if(rs != null){\r\n                rs.close();\r\n                }\r\n                if(stmt != null){\r\n                    stmt.close();\r\n                }\r\n                if(con != null && !con.isClosed()) {\r\n                    con.close();\r\n                }\r\n            }catch(Exception e){\r\n                LogUtil.error(\"Importa processo - origem de processo\", e, \"Error closing DB connection\");\r\n            }\r\n            \r\n        }\r\n        \r\n    }\r\n\r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(values);",
+                                "useAjax": "true"
+                            }
+                        },
+                        "permissionHidden": "",
+                        "permission_rules": {"178fdc63-b293-18b9-8aa9-e1b40619226d": {}},
+                        "readonly": "true",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.SelectBox",
+                    "properties": {
+                        "controlField": "nome_banco",
+                        "id": "estado_processo",
+                        "label": "Estado do Processo",
+                        "multiple": "",
+                        "options": [],
+                        "optionsBinder": {
+                            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                            "properties": {
+                                "cacheInterval": "",
+                                "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.FormStoreBinder;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport org.joget.commons.util.LogUtil;\r\n\r\n \r\npublic FormRowSet load(String[] values) {\r\n\r\n    \r\n    FormRowSet rows = new FormRowSet();\r\n    \r\n    FormRow option = new FormRow();\r\n    option.setProperty(FormUtil.PROPERTY_VALUE, \"\");\r\n    option.setProperty(FormUtil.PROPERTY_LABEL, \"\");\r\n    rows.add(option);\r\n    \r\n    String banco = null;\r\n    if (values != null && values.length > 0) {\r\n        banco = \"%\" + values[0] + \"%\";\r\n    \r\n        Connection con = null;\r\n        PreparedStatement stmt = null;\r\n        ResultSet rs = null;\r\n        String origem_value = \"\";\r\n        String origem_label = \"\";\r\n        \r\n        AppDefinition appDef = AppUtil.getCurrentAppDefinition();\r\n        \r\n        try{\r\n                DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n                con = ds.getConnection();\r\n                \r\n                \r\n                if(!con.isClosed()){\r\n                    String idDetalhe_processo = \"#form.processos_distrates.detalhe_proce_dist#\";\r\n                    //Verificar o utilizador atribuido e atualizar caso esteja errado\r\n                    String query=\"SELECT c_value, c_label FROM app_fd_listas_de_valores WHERE c_nome_campo = ? AND c_banco LIKE ? AND c_servico LIKE '%DIST%';\";\r\n                    stmt = con.prepareStatement(query);\r\n                    stmt.setObject(1, \"estado_processo\");\r\n                    stmt.setObject(2, banco);\r\n                    rs = stmt.executeQuery();\r\n                    \r\n                    while(rs.next()){\r\n                        //LogUtil.info(\"Aaa\" , \"BBB\");\r\n                        origem_value = rs.getString(1);\r\n                        origem_label = rs.getString(2);\r\n                        \r\n                        FormRow option = new FormRow();\r\n                        option.setProperty(FormUtil.PROPERTY_VALUE, origem_value);\r\n                        option.setProperty(FormUtil.PROPERTY_LABEL, origem_label);\r\n                        \r\n                        rows.add(option);\r\n                        \r\n                    }\r\n                }\r\n                \r\n        }catch(Exception e){\r\n            LogUtil.error(\"Importa processo - origem de processo\", e, \"Error getting info from DB\");\r\n        }finally{\r\n            try{\r\n                if(rs != null){\r\n                rs.close();\r\n                }\r\n                if(stmt != null){\r\n                    stmt.close();\r\n                }\r\n                if(con != null && !con.isClosed()) {\r\n                    con.close();\r\n                }\r\n            }catch(Exception e){\r\n                LogUtil.error(\"Importa processo - origem de processo\", e, \"Error closing DB connection\");\r\n            }\r\n            \r\n        }\r\n        \r\n    }\r\n\r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(values);",
+                                "useAjax": "true"
+                            }
+                        },
+                        "permissionHidden": "",
+                        "permission_rules": {"178fdc63-b293-18b9-8aa9-e1b40619226d": {}},
+                        "readonly": "true",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.TextField",
+                    "properties": {
+                        "encryption": "",
+                        "id": "num_agenda",
+                        "label": "Número da Agenda",
+                        "maxlength": "",
+                        "permissionHidden": "",
+                        "placeholder": "",
+                        "readonly": "true",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "storeNumeric": "",
+                        "style": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.Radio",
+                    "properties": {
+                        "controlField": "",
+                        "id": "urgencia_pedido",
+                        "label": "Urgência Geral",
+                        "options": [
+                            {
+                                "grouping": "",
+                                "label": "Sim",
+                                "value": "SIM"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Não",
+                                "value": "NAO"
+                            }
+                        ],
+                        "optionsBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "permissionHidden": "",
+                        "readonly": "true",
+                        "readonlyLabel": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.Radio",
+                    "properties": {
+                        "controlField": "",
+                        "id": "urgencia_outorga",
+                        "label": "Urgência Outorga",
+                        "options": [
+                            {
+                                "grouping": "",
+                                "label": "Sim",
+                                "value": "SIM"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Não",
+                                "value": "NAO"
+                            }
+                        ],
+                        "optionsBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "permissionHidden": "",
+                        "readonly": "true",
+                        "readonlyLabel": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "visibilidadesBancos",
+                        "label": "",
+                        "permission_rules": {
+                            "0c699003-580e-7faf-a39c-f2e5303bd5b5": {},
+                            "1804038d-e85d-3ea4-4ef3-4c4143e5145b": {},
+                            "2dd4cc96-cc40-f285-e376-ebda47490646": {},
+                            "40b85e69-a77b-cdfa-05ef-6bd9811e4410": {},
+                            "44639061-b6ba-a2ef-a47c-c5bab888544c": {},
+                            "710a05c8-c837-e0d0-670a-720473cb5a7c": {},
+                            "787c67d4-d157-ca8e-655e-43717638627d": {},
+                            "87e7b01c-e92b-e732-c50f-c2c7020e5482": {},
+                            "dccd1818-864d-54e3-09c2-6e246cfcf5fe": {},
+                            "ee177599-9c69-d878-10f8-9aebde208e06": {},
+                            "f8c01627-bf37-05aa-5732-90fe1b2327b3": {}
+                        },
+                        "value": "<script>\n    $(document).ready(function(){\n        atualizarVisibilidadeBCP();\n        atualizarVisibilidadesMTG();\n        atualizarVisibilidadesABN();\n        atualizarVisibilidadesBIC();\n\n        $(\"select[id*=nome_banco]\").change(function(){\n            atualizarVisibilidadeBCP();\n            atualizarVisibilidadesMTG();\n            atualizarVisibilidadesABN();\n            atualizarVisibilidadesBIC();\n        });\n\n    });\n    \n    function atualizarVisibilidadeBCP(){\n        var banco = \"#form.detalhe_proce_dist.nome_banco[{form.processos_distrates.detalhe_processo}]#\"; \n        if(banco==='BCP'){\n            $(\"label[for=field2_1_resumoDistrates_num_pedido]\").text(\"Número de Pedido\");\n        }\n    }\n    \n    function atualizarVisibilidadesMTG(){\n        var banco = \"#form.detalhe_proce_dist.nome_banco[{form.processos_distrates.detalhe_processo}]#\"; \n        if(banco==='MTG'){\n            $(\"label[for=field2_1_resumoDistrates_num_pedido]\").text(\"Número de Pedido\");\n        }\n    }\n    \n    function atualizarVisibilidadesABN(){\n        var banco = \"#form.detalhe_proce_dist.nome_banco[{form.processos_distrates.detalhe_processo}]#\"; \n        var numero_ordem = \"#form.detalhe_proce_dist.num_pedido[{form.processos_distrates.detalhe_processo}]#\"; \n        var numero_agenda = \"\";\n        //console.log(\"Nome Banco\" + nome_banco);\n        if(banco==='ABN'){\n            $(\"label[for=field2_1_resumoDistrates_num_pedido]\").text(\"Número de Ordem\");\n            numero_agenda = \"ABDIST\" + numero_ordem;\n            $(\"input[id*=num_agenda]\").val(numero_agenda);\n        }\n    }\n    \n    function atualizarVisibilidadesBIC(){\n         var banco = \"#form.detalhe_proce_dist.nome_banco[{form.processos_distrates.detalhe_processo}]#\"; \n         console.log(banco);\n        //console.log(\"Nome Banco: \" + nome_banco);\n        if(banco==='BIC'){\n            $(\"label[for=field2_1_resumoDistrates_num_pedido]\").text(\"Número(s) do(s) Empréstimo(s)\");\n            $(\"label[for*=num_workflow]\").text(\"Número WorKflow\");\n           //$(\"input[id*=num_workflow]\").parent().hide();\n        }\n     $(\"input[id*=field2_1_resumoDistrates_field12]\").parent().hide();\n    }\n<\/script>"
+                    }
+                }
+            ],
+            "properties": {"width": "100%"}
+        }],
+        "properties": {
+            "comment": "",
+            "id": "resumoDistrates",
+            "join": "",
+            "label": "Resumo",
+            "loadBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "permission": {
+                "className": "",
+                "properties": {}
+            },
+            "permissionReadonly": "",
+            "readonly": "",
+            "readonlyLabel": "",
+            "regex": "",
+            "reverse": "",
+            "storeBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "visibilityControl": "",
+            "visibilityValue": ""
+        }
+    }],
+    "properties": {
+        "description": "",
+        "id": "resumoDistrates",
+        "loadBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "name": "Distrates - Resumo Processo",
+        "storeBinder": {"className": "org.joget.apps.form.lib.WorkflowFormBinder"},
+        "tableName": "detalhe_proce_dist"
+    }
+}
