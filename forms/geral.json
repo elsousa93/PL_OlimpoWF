@@ -29,6 +29,19 @@
                         }
                     },
                     {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "atualizar_envio_processo",
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
                         "className": "org.joget.plugin.enterprise.FormGrid",
                         "properties": {
                             "abortRelatedRunningProcesses": "",
@@ -292,7 +305,7 @@
                                 "d67dd740-a534-0622-e4d4-23ac70079d84": {},
                                 "da72b193-5d49-3480-a58d-f843460fb94c": {}
                             },
-                            "value": "<script>\n    $(document).ready(function() {\n        ////$(\"div[name=multiPaged_12_geral_lista_notas] td.grid-action-cell\").hide();\n        ////$(\"div[name=multiPaged_12_geral_lista_notas] th.grid-action-header\").hide();\n    });\n    $(window).load(function(){\n         var flag_validacao = '#variable.flag_validacao#';\n         \n        if(flag_validacao === '1' || flag_validacao.startsWith(\"#variable.flag_validacao\")){\n            $(\"form#processo :input\").change(function(){\n                $(\"input#flag_alteracoes\").attr(\"value\",\"SIM\");    \n            });\n        }\n    });\n<\/script>"
+                            "value": "<script>\n    $(document).ready(function() {\n        //Atualizar valor do hidden field do envio_processo\n        $('input[id*=atualizar_envio_processo]').val(\"#form.detalhe_processo.envio_processo[{form.processos.detalhe_processo}]#\");\n    });\n    \n    $(window).load(function(){\n         var flag_validacao = '#variable.flag_validacao#';\n         \n        if(flag_validacao === '1' || flag_validacao.startsWith(\"#variable.flag_validacao\")){\n            $(\"form#processo :input\").change(function(){\n                $(\"input#flag_alteracoes\").attr(\"value\",\"SIM\");    \n            });\n        }\n    });\n<\/script>"
                         }
                     }
                 ],
