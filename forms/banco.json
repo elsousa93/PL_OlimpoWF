@@ -5,27 +5,42 @@
             "className": "org.joget.apps.form.model.Section",
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
-                "elements": [{
-                    "className": "org.joget.apps.form.lib.CustomHTML",
-                    "properties": {
-                        "autoPopulate": "",
-                        "id": "field31",
-                        "label": "",
-                        "permission_rules": {
-                            "0113cd59-1c7e-e30a-e3a6-1aa792cd971d": {},
-                            "6345a174-2189-0106-d3df-42d99f971d4e": {
-                                "permissionHidden": "",
-                                "readonly": "true"
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field31",
+                            "label": "",
+                            "permission_rules": {
+                                "0113cd59-1c7e-e30a-e3a6-1aa792cd971d": {},
+                                "6345a174-2189-0106-d3df-42d99f971d4e": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "77b4fd0a-b965-8163-d5d6-a6ff25c9fc01": {},
+                                "91f3a9e7-06fa-1619-f8ea-58214999d664": {},
+                                "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
+                                "adc0b526-e702-6bff-f46b-bd7491e1225b": {},
+                                "d7abc52f-950f-ae8c-bd3c-76183c6afa8c": {}
                             },
-                            "77b4fd0a-b965-8163-d5d6-a6ff25c9fc01": {},
-                            "91f3a9e7-06fa-1619-f8ea-58214999d664": {},
-                            "a7d20ca5-03bc-9069-0b63-779dd448a737": {},
-                            "adc0b526-e702-6bff-f46b-bd7491e1225b": {},
-                            "d7abc52f-950f-ae8c-bd3c-76183c6afa8c": {}
-                        },
-                        "value": "<script>\n    $(window).load(function(){\n         var flag_validacao = '#variable.flag_validacao#';\n         \n        if(flag_validacao === '1' || flag_validacao.startsWith(\"#variable.flag_validacao\")){\n            $(\"form#processo :input\").change(function(){\n                $(\"input#flag_alteracoes\").attr(\"value\",\"SIM\");    \n            });\n        }\n    });\n    \n    $(window).ready(function(){\n        $(\"#processo\").submit(function(){\n            $('input[id*=email]').each(function() {\n                $(this).val($(this).val().trim());\n            });\n        });\n    });\n    \n<\/script>"
+                            "value": "<script>\n    $(document).ready(function(){\n        //Atualizar valor do hidden field do envio_processo\n        $('input[id*=atualizar_envio_processo]').val(\"#form.detalhe_processo.envio_processo[{form.processos.detalhe_processo}]#\");\n    });\n    \n    $(window).load(function(){\n         var flag_validacao = '#variable.flag_validacao#';\n         \n        if(flag_validacao === '1' || flag_validacao.startsWith(\"#variable.flag_validacao\")){\n            $(\"form#processo :input\").change(function(){\n                $(\"input#flag_alteracoes\").attr(\"value\",\"SIM\");    \n            });\n        }\n    });\n    \n    $(window).ready(function(){\n        $(\"#processo\").submit(function(){\n            $('input[id*=email]').each(function() {\n                $(this).val($(this).val().trim());\n            });\n        });\n    });\n    \n<\/script>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "atualizar_envio_processo",
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
                     }
-                }],
+                ],
                 "properties": {"width": "100%"}
             }],
             "properties": {
