@@ -31,6 +31,19 @@
                     }
                 },
                 {
+                    "className": "org.joget.apps.form.lib.HiddenField",
+                    "properties": {
+                        "id": "atualizar_envio_processo",
+                        "useDefaultWhenEmpty": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
                     "className": "org.joget.apps.form.lib.CustomHTML",
                     "properties": {
                         "autoPopulate": "",
@@ -42,7 +55,7 @@
                             "9dbdfc37-e367-7134-3775-0ed0b5fe10bb": {},
                             "c62e9ac9-2029-c302-f4ac-c80d01fb0c03": {}
                         },
-                        "value": "<script> \nvar url, processId;\n    $(document).ready(function(){\n        processId =$(\"input[id*=comunicacoes_id_processo]\").val();\n        url=  \"#request.scheme#://#request.serverName#:#request.serverPort##request.contextPath#/web/userview/workflowPL/UV_PL_Geral/_/enviarEmail?fk_id_processo=\" + processId + \"&id_atividade=#assignment.activityId#\";\n        //urlMailTo=  \"mailto:abc@example.com?subject=Feedback&body=\" + \"<!DOCTYPE html><html><body><p>Message<\/p><p>Message2<\/p><\/body><\/html>\";\n        \n        var activityId = \"#requestParam.activityId#\";\n        if(activityId.includes(\"Procuradoria\")){\n            //Remover botão de concluir apenas para Procuradoria\n            $(\"input#assignmentComplete\").remove();\n        }\n\n    });   \n        \n\n<\/script>\n<!--button type=\"button\" onclick=\"location.replace(url)\" >Novo Email<\/button-->\n<button type=\"button\" onclick=\"window.open(url, '_blank');\" >Novo Email<\/button>\n"
+                        "value": "<script> \nvar url, processId;\n    $(document).ready(function(){\n        //Atualizar valor do hidden field do envio_processo\n        $('input[id*=atualizar_envio_processo]').val(\"#form.detalhe_processo.envio_processo[{form.processos.detalhe_processo}]#\");\n        \n        processId =$(\"input[id*=comunicacoes_id_processo]\").val();\n        url=  \"#request.scheme#://#request.serverName#:#request.serverPort##request.contextPath#/web/userview/workflowPL/UV_PL_Geral/_/enviarEmail?fk_id_processo=\" + processId + \"&id_atividade=#assignment.activityId#\";\n        //urlMailTo=  \"mailto:abc@example.com?subject=Feedback&body=\" + \"<!DOCTYPE html><html><body><p>Message<\/p><p>Message2<\/p><\/body><\/html>\";\n        \n        var activityId = \"#requestParam.activityId#\";\n        if(activityId.includes(\"Procuradoria\")){\n            //Remover botão de concluir apenas para Procuradoria\n            $(\"input#assignmentComplete\").remove();\n        }\n\n    });   \n        \n\n<\/script>\n<!--button type=\"button\" onclick=\"location.replace(url)\" >Novo Email<\/button-->\n<button type=\"button\" onclick=\"window.open(url, '_blank');\" >Novo Email<\/button>\n"
                     }
                 },
                 {
