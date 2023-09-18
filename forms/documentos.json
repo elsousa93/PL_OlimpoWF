@@ -549,6 +549,7 @@
                             "id": "docs_processo",
                             "permission_rules": {
                                 "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
                                 "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
                             },
                             "useDefaultWhenEmpty": "",
@@ -566,6 +567,7 @@
                             "id": "atualizar_envio_processo",
                             "permission_rules": {
                                 "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
+                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
                                 "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {}
                             },
                             "useDefaultWhenEmpty": "",
@@ -1440,29 +1442,23 @@
             {
                 "permission": {
                     "className": "org.joget.apps.userview.lib.BeanShellPermission",
-                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nif(fase.equals(\"AO\")){\n    return true;\n}else{\n    return false;\n}"}
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\n\nif(fase.equals(\"AO\")){\n    return true;\n}else{\n    return false;\n}"}
                 },
                 "permission_key": "0ccd6329-a205-14d1-b885-f026bfe54bc7",
                 "permission_name": "Acompanhamento de Outorgas"
             },
             {
                 "permission": {
-                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
-                    "properties": {
-                        "allowedDeptIds": "PL_INT_QUAL_REG",
-                        "orgId": "PL"
-                    }
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nString departamento = \"#currentUser.department.id#\";\n\nif(fase.equals(\"REG\") && departamento.contains(\"PL_INT_QUAL_REG\")){\n    return true;\n}else{\n    return false;\n}"}
                 },
                 "permission_key": "61ac1506-03a2-c3ca-8103-7e96c6eecd6c",
                 "permission_name": "Registos - Equipa Qualidade"
             },
             {
                 "permission": {
-                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
-                    "properties": {
-                        "allowedDeptIds": "PL_INT_REG",
-                        "orgId": "PL"
-                    }
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nString departamento = \"#currentUser.department.id#\";\n\nif(fase.equals(\"REG\") && departamento.contains(\"PL_INT_REG\")){\n    return true;\n}else{\n    return false;\n}"}
                 },
                 "permission_key": "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7",
                 "permission_name": "Registos"
