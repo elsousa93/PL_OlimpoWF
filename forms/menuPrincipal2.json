@@ -5225,36 +5225,6 @@
             },
             {
                 "permission": {
-                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
-                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString grupo = \"#currentUser.groups.id#\";\nString departamento = \"#currentUser.department.id#\";\n\nif(grupo.contains(\"Coordenador\") && (departamento.contains(\"PL_INT_REG\") || departamento.contains(\"PL_INT_QUAL_REG\"))){\n    return true; \n} else{\n    return false;\n}\n\n"}
-                },
-                "permission_key": "2940eb02-3781-26bf-b45d-0562d53698f8",
-                "permission_name": "Coordenadores Registos"
-            },
-            {
-                "permission": {
-                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
-                    "properties": {
-                        "allowedDeptIds": "PL_INT_QUAL_REG",
-                        "orgId": "PL"
-                    }
-                },
-                "permission_key": "72fb2b9f-2537-a54f-60e0-251f39c75424",
-                "permission_name": "Registos Qualidade"
-            },
-            {
-                "permission": {
-                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
-                    "properties": {
-                        "allowedDeptIds": "PL_INT_REG",
-                        "orgId": "PL"
-                    }
-                },
-                "permission_key": "ef4b83d7-c9b4-50cf-e735-584bc5d96c28",
-                "permission_name": "Registos"
-            },
-            {
-                "permission": {
                     "className": "org.joget.apps.userview.lib.DepartmentPermission",
                     "properties": {
                         "allowedDeptIds": "PL_INT_CON;PL_INT_CON_VAL",
@@ -5263,17 +5233,6 @@
                 },
                 "permission_key": "cf41d852-8769-5507-356b-aa08e7f23301",
                 "permission_name": "Conclusões"
-            },
-            {
-                "permission": {
-                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
-                    "properties": {
-                        "allowedDeptIds": "PL_INT_AO",
-                        "orgId": "PL"
-                    }
-                },
-                "permission_key": "32ee12d9-9652-2de9-8655-018292520365",
-                "permission_name": "AO"
             },
             {
                 "permission": {
@@ -5354,6 +5313,41 @@
                 },
                 "permission_key": "cd6f2e6f-37c5-3520-7799-b867e80ad498",
                 "permission_name": "Contratação BNI"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nif(fase.equals(\"AO\")){\n    return true;\n}else{\n    return false;\n}"}
+                },
+                "permission_key": "32ee12d9-9652-2de9-8655-018292520365",
+                "permission_name": "AO"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString grupo = \"#currentUser.groups.id#\";\nString departamento = \"#currentUser.department.id#\";\n\nif(grupo.contains(\"Coordenador\") && (departamento.contains(\"PL_INT_REG\") || departamento.contains(\"PL_INT_QUAL_REG\"))){\n    return true; \n} else{\n    return false;\n}\n\n"}
+                },
+                "permission_key": "2940eb02-3781-26bf-b45d-0562d53698f8",
+                "permission_name": "Coordenadores Registos"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nif(fase.equals(\"REG\")){\n    return true;\n}else{\n    return false;\n}"}
+                },
+                "permission_key": "ef4b83d7-c9b4-50cf-e735-584bc5d96c28",
+                "permission_name": "Registos"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_INT_QUAL_REG",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "72fb2b9f-2537-a54f-60e0-251f39c75424",
+                "permission_name": "Registos Qualidade"
             }
         ],
         "postProcessor": {
