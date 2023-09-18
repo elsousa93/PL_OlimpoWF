@@ -232,7 +232,10 @@
                         "className": "org.joget.apps.form.lib.HiddenField",
                         "properties": {
                             "id": "atualizar_envio_processo",
-                            "permission_rules": {"d199304d-533b-4262-2d03-af9fd4ca82af": {}},
+                            "permission_rules": {
+                                "093a1241-e305-8c58-bf20-1cefd6a6df94": {},
+                                "d199304d-533b-4262-2d03-af9fd4ca82af": {}
+                            },
                             "useDefaultWhenEmpty": "",
                             "validator": {
                                 "className": "",
@@ -1290,14 +1293,6 @@
             {
                 "permission": {
                     "className": "org.joget.apps.userview.lib.BeanShellPermission",
-                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nif(fase.equals(\"AO\")){\n    LogUtil.info(\"STRING\", \"VISIBILIDADES AO - AGENDAMENTO\");\n    return true;\n}else{\n    return false;\n}"}
-                },
-                "permission_key": "093a1241-e305-8c58-bf20-1cefd6a6df94",
-                "permission_name": "Acompanhamento de Outorgas"
-            },
-            {
-                "permission": {
-                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
                     "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nif(fase.equals(\"FLT\")){\n    return true;\n}else{\n    return false;\n}"}
                 },
                 "permission_key": "8f7b8a9d-4999-7784-7a33-918d09fbdc0d",
@@ -1374,6 +1369,14 @@
                 },
                 "permission_key": "7dcda20a-eb2d-d47b-aa3c-1decb7a775a8",
                 "permission_name": "Contratação BNI"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nif(fase.equals(\"AO\")){\n    return true;\n}else{\n    return false;\n}"}
+                },
+                "permission_key": "093a1241-e305-8c58-bf20-1cefd6a6df94",
+                "permission_name": "Acompanhamento de Outorgas"
             }
         ],
         "postProcessor": {
