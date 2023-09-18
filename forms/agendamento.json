@@ -232,6 +232,7 @@
                         "className": "org.joget.apps.form.lib.HiddenField",
                         "properties": {
                             "id": "atualizar_envio_processo",
+                            "permission_rules": {"d199304d-533b-4262-2d03-af9fd4ca82af": {}},
                             "useDefaultWhenEmpty": "",
                             "validator": {
                                 "className": "",
@@ -1289,6 +1290,14 @@
             {
                 "permission": {
                     "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nif(fase.equals(\"AO\")){\n    LogUtil.info(\"STRING\", \"VISIBILIDADES AO - AGENDAMENTO\");\n    return true;\n}else{\n    return false;\n}"}
+                },
+                "permission_key": "093a1241-e305-8c58-bf20-1cefd6a6df94",
+                "permission_name": "Acompanhamento de Outorgas"
+            },
+            {
+                "permission": {
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
                     "properties": {"script": "import org.joget.commons.util.LogUtil;\n\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nif(fase.equals(\"FLT\")){\n    return true;\n}else{\n    return false;\n}"}
                 },
                 "permission_key": "8f7b8a9d-4999-7784-7a33-918d09fbdc0d",
@@ -1309,17 +1318,6 @@
                 },
                 "permission_key": "c1ad5abb-3437-3755-3fac-bbbe4c8ed572",
                 "permission_name": "Validação"
-            },
-            {
-                "permission": {
-                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
-                    "properties": {
-                        "allowedDeptIds": "PL_EXT_ENT;PL_EXT_ENT_A;PL_EXT_ENT_NA;PL_EXT_ENT_SA;PL_INT_AO",
-                        "orgId": "PL"
-                    }
-                },
-                "permission_key": "093a1241-e305-8c58-bf20-1cefd6a6df94",
-                "permission_name": "Acompanhamento de Outorgas"
             },
             {
                 "permission": {
