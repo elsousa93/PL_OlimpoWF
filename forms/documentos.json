@@ -1450,18 +1450,18 @@
             {
                 "permission": {
                     "className": "org.joget.apps.userview.lib.BeanShellPermission",
-                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nString departamento = \"#currentUser.department.id#\";\n\nif(fase.equals(\"REG\")){\n    if(departamento.contains(\"PL_INT_QUAL_REG\")){\n        LogUtil.info(\"String\", \"Registos - EQUIPA QUALIDADE\");\n    }\n    \n    if(departamento.contains(\"PL_INT_QUAL_REG\")){\n        LogUtil.info(\"String\", \"Registos - EQUIPA REGISTOS\");\n    }\n    \n    LogUtil.info(\"String\", \"Registos - DOCUMENTOS REGISTO\");\n    return true;\n}else{\n    return false;\n}"}
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nString departamento = \"#currentUser.department.id#\";\nString mode = \"#requestParam._mode#\";\n\nif(fase.equals(\"REG\") && mode.equals(\"edit\")){\n    LogUtil.info(\"String\", \"Registos - DOCUMENTOS QUALIDADE CONSULTAR\");\n    return false;\n}else{\n    return false;\n}"}
                 },
-                "permission_key": "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7",
-                "permission_name": "Registos"
+                "permission_key": "61ac1506-03a2-c3ca-8103-7e96c6eecd6c",
+                "permission_name": "Registos - Equipa Qualidade"
             },
             {
                 "permission": {
                     "className": "org.joget.apps.userview.lib.BeanShellPermission",
-                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nString departamento = \"#currentUser.department.id#\";\nString mode = \"#requestParam._mode#\";\n\nif(fase.equals(\"REG\") && departamento.contains(\"PL_INT_QUAL_REG\") && mode.equals(\"edit\")){\n    LogUtil.info(\"String\", \"Registos - DOCUMENTOS QUALIDADE CONSULTAR\");\n    return false;\n}else{\n    return false;\n}"}
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nString departamento = \"#currentUser.department.id#\";\n\nif(fase.equals(\"REG\")){\n    if(departamento.contains(\"PL_INT_QUAL_REG\")){\n        LogUtil.info(\"String\", \"Registos - EQUIPA QUALIDADE\");\n    }\n    \n    if(departamento.contains(\"PL_INT_QUAL_REG\")){\n        LogUtil.info(\"String\", \"Registos - EQUIPA REGISTOS\");\n    }\n    \n    LogUtil.info(\"String\", \"Registos - DOCUMENTOS REGISTO\");\n    return true;\n}else{\n    return false;\n}"}
                 },
-                "permission_key": "61ac1506-03a2-c3ca-8103-7e96c6eecd6c",
-                "permission_name": "Registos - Equipa Qualidade"
+                "permission_key": "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7",
+                "permission_name": "Registos"
             }
         ],
         "postProcessor": {
