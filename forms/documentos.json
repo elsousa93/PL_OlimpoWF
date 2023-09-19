@@ -1450,7 +1450,7 @@
             {
                 "permission": {
                     "className": "org.joget.apps.userview.lib.BeanShellPermission",
-                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nString mode = \"#requestParam._mode#\";\n\nif(fase.equals(\"REG\") && mode.equals(\"edit\")){\n    LogUtil.info(\"String\", \"Registos - DOCUMENTOS QUALIDADE CONSULTAR\");\n    return true;\n}else{\n    return false;\n}"}
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nString mode = \"#requestParam._mode#\";\nString URLREF = \"#request.header.Referer#\";\nString URL = \"#request.requestURL#\";\n\n\nif(fase.equals(\"REG\") && mode.equals(\"edit\")){\n    LogUtil.info(\"String\", \"Registos - DOCUMENTOS QUALIDADE CONSULTAR \" +  URLREF + \"  \" +  URL);\n    return true;\n}else{\n    return false;\n}"}
                 },
                 "permission_key": "61ac1506-03a2-c3ca-8103-7e96c6eecd6c",
                 "permission_name": "Consultar Registos"
