@@ -1450,7 +1450,7 @@
             {
                 "permission": {
                     "className": "org.joget.apps.userview.lib.BeanShellPermission",
-                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\n\nif(fase.equals(\"REG\")){\n    LogUtil.info(\"String\", \"Registos - DOCUMENTOS REGISTO\");\n    return true;\n}else{\n    return false;\n}"}
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nString departamento = \"#currentUser.department.id#\";\n\nif(fase.equals(\"REG\")){\n    if(departamento.contains(\"PL_INT_QUAL_REG\")){\n        LogUtil.info(\"String\", \"Registos - EQUIPA QUALIDADE\");\n    }\n    \n    if(departamento.contains(\"PL_INT_QUAL_REG\")){\n        LogUtil.info(\"String\", \"Registos - EQUIPA REGISTOS\");\n    }\n    \n    LogUtil.info(\"String\", \"Registos - DOCUMENTOS REGISTO\");\n    return true;\n}else{\n    return false;\n}"}
                 },
                 "permission_key": "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7",
                 "permission_name": "Registos"
