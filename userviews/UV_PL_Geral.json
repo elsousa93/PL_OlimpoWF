@@ -8259,7 +8259,7 @@
                         "list-abortRelatedRunningProcesses": "",
                         "list-confirmation": "",
                         "list-customFooter": "",
-                        "list-customHeader": "<script>\n    $(document).ready(function(){\n        $(\"input[type=submit]\").val(\"FILTRAR\")\n        \n    });\n    \n<\/script>",
+                        "list-customHeader": "<script>\n    $(document).ready(function(){\n\n        let button = sessionStorage.getItem(\"button\");\n        let novoUrl = \"#request.scheme#://#request.serverName#:#request.serverPort##request.contextPath#/web/userview/workflowPL/UV_PL_Geral/_/consultaHabiitacaoHerdeiros?\";\n        let paramString = document.referrer.split('?')[1];\n        let queryString = new URLSearchParams(paramString);\n            \n        for (let pair of queryString.entries()) {\n            if(pair[0] != '_action'){\n                novoUrl += pair[0] + \"=\" + pair[1] + \"&\";\n            }\n        }\n        \n        if(button === 'guardar'){\n            window.location.href = novoUrl;\n            //window.history.back();\n        } else if(button === 'tabChange'){\n            window.location.href = novoUrl;\n        }\n        \n        window.sessionStorage.removeItem(\"button\");\n        \n        $(\"input[type=submit]\").val(\"FILTRAR\")\n        \n    });\n    \n<\/script>",
                         "list-deleteButtonLabel": "APAGAR",
                         "list-deleteFiles": "",
                         "list-deleteGridData": "true",
