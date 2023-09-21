@@ -3729,11 +3729,8 @@
         "permission_rules": [
             {
                 "permission": {
-                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
-                    "properties": {
-                        "allowedDeptIds": "PL_INT_AO",
-                        "orgId": "PL"
-                    }
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\nif(fase.equals(\"AO\")){\n    return true;\n}else{\n    return false;\n}"}
                 },
                 "permission_key": "d1feb8e1-e231-592d-2773-31ada2992103",
                 "permission_name": "Acompanhamento de Outorgas"
