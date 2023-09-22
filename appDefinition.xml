@@ -1434,6 +1434,7 @@
                   <processDefId>CreditoHabitacao</processDefId>
                   <activityDefId>set_flag_end_conclusoes2</activityDefId>
                   <pluginName>org.joget.apps.app.lib.BeanShellTool</pluginName>
+                  <pluginProperties>{&quot;script&quot;:&quot;import org.joget.workflow.model.service.*;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport java.time.LocalDateTime; \r\nimport java.time.format.DateTimeFormatter;\r\nimport java.time.DayOfWeek;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport javax.sql.DataSource;\r\nimport org.joget.commons.util.UuidGenerator;\r\nimport java.time.temporal.ChronoUnit;\r\n\r\nString ProcessID = workflowAssignment.getProcessId();\r\n\r\n\/\/Set the workflow variable\r\nWorkflowManager wm = (WorkflowManager) pluginManager.getBean(\&quot;workflowManager\&quot;);\r\nwm.processVariable(ProcessID, \&quot;flag_end_Conclusoes\&quot; , \&quot;1\&quot;);\r\n&quot;}</pluginProperties>
                </packageActivityPlugin>
             </entry>
             <entry>
