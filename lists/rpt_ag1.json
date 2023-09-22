@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT pro.c_servico,det.c_nome_banco AS Banco, det.c_n_wf_pl AS WF,\nato.c_status AS Estado, ato.c_dataOutorga , ato.c_motivo_desc, ato.c_motivo_desmarcacao_ato\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id\n\n\n"
+            "sql": "SELECT pro.c_servico AS Servico,det.c_nome_banco AS Banco, det.c_n_wf_pl AS WF,\nato.c_status AS Estado, ato.c_dataOutorga AS DataAg, ato.c_motivo_desc AS 'Motivo Des.', ato.c_motivo_desmarcacao_ato AS 'Motivo Des. Ato'\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
