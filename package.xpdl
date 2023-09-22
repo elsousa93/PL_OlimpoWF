@@ -3256,11 +3256,10 @@
                     <Performer>participant3</Performer>
                     <TransitionRestrictions>
                         <TransitionRestriction>
-                            <Join Type="XOR"/>
                             <Split Type="XOR">
                                 <TransitionRefs>
-                                    <TransitionRef Id="transition43"/>
                                     <TransitionRef Id="transition30"/>
+                                    <TransitionRef Id="transition61"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
@@ -3440,8 +3439,8 @@
                             <Split Type="AND">
                                 <TransitionRefs>
                                     <TransitionRef Id="transition34"/>
-                                    <TransitionRef Id="transition35"/>
                                     <TransitionRef Id="transition36"/>
+                                    <TransitionRef Id="transition62"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
@@ -3487,8 +3486,8 @@
                                 <TransitionRefs>
                                     <TransitionRef Id="transition42"/>
                                     <TransitionRef Id="transition38"/>
-                                    <TransitionRef Id="transition39"/>
                                     <TransitionRef Id="transition48"/>
+                                    <TransitionRef Id="transition57"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
@@ -3498,7 +3497,7 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="888,187"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="update_end_Modelo11" Name="Update flag end Modelo 11">
+                <Activity Id="update_end_Modelo11" Name="Set flag end Modelo 11">
                     <Implementation>
                         <Tool Id="default_application"/>
                     </Implementation>
@@ -3508,7 +3507,7 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1648,341"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="update_end_Arquivo" Name="Update flag end Arquivo">
+                <Activity Id="update_end_Arquivo" Name="Set flag end Arquivo">
                     <Implementation>
                         <Tool Id="default_application"/>
                     </Implementation>
@@ -3518,7 +3517,7 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1742,418"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="update_end_conclusoes" Name="Update flag end Conclusoes">
+                <Activity Id="update_end_conclusoes" Name="Set flag end Conclusoes">
                     <Implementation>
                         <Tool Id="default_application"/>
                     </Implementation>
@@ -3536,6 +3535,31 @@
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process3_participant2"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="491,28"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="set_flag_end_conclusoes" Name="Set flag start Conclusoes">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>participant3</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1832,243"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="set_flag_end_arquivo" Name="Set flag start Arquivo">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>participant3</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1910,582"/>
                     </ExtendedAttributes>
                 </Activity>
             </Activities>
@@ -3599,12 +3623,6 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route5" Id="transition27" To="route6">
-                    <Condition Type="OTHERWISE"/>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="route6" Id="transition43" To="subConclusao">
                     <Condition Type="OTHERWISE"/>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
@@ -3677,11 +3695,6 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="route11" Id="transition35" To="sub_arquivo">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="route11" Id="transition36" To="alterarJaProcessadoMod11">
                     <Condition Type="CONDITION">elegibilidade_processo === 'SIM' &amp;&amp; ja_processado_mod11 !== 'SIM'</Condition>
                     <ExtendedAttributes>
@@ -3714,14 +3727,6 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;validacao&quot;}]"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="route11_1" Id="transition39" To="subConclusao">
-                    <Condition Type="CONDITION">proxima_operativa === 'conclusoes'</Condition>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;conclusoes&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="sub_contratacao_normal_crh" Id="transition40" To="route2">
@@ -3794,6 +3799,36 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="inicar_flag_end" Id="transition56" To="sub_contratacao_normal_crh">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route11_1" Id="transition57" To="set_flag_end_conclusoes">
+                    <Condition Type="CONDITION">proxima_operativa === 'conclusoes'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;conclusoes&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route6" Id="transition61" To="set_flag_end_conclusoes">
+                    <Condition Type="OTHERWISE"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="set_flag_end_conclusoes" Id="transition43" To="subConclusao">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route11" Id="transition62" To="set_flag_end_arquivo">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="set_flag_end_arquivo" Id="transition63" To="sub_arquivo">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
