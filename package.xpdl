@@ -3522,15 +3522,18 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2143,380"/>
                     </ExtendedAttributes>
                 </Activity>
+                <Activity Id="inicar_flag_end" Name="Configuração de flag Modelo 11, Conclusões e Arquivo">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>process3_participant2</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process3_participant2"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="491,28"/>
+                    </ExtendedAttributes>
+                </Activity>
             </Activities>
             <Transitions>
-                <Transition From="route1" Id="transition10" To="sub_contratacao_normal_crh">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;complexidade&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;NOR&quot;}]"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="route2" Id="transition14" To="sub_filtro_normal_crh">
                     <Condition Type="CONDITION">proxima_operativa === 'filtro' || proxima_operativa === ''</Condition>
                     <ExtendedAttributes>
@@ -3775,6 +3778,16 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="update_end_conclusoes" Id="transition52" To="route14">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route1" Id="transition55" To="inicar_flag_end">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="inicar_flag_end" Id="transition56" To="sub_contratacao_normal_crh">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
