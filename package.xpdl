@@ -7139,7 +7139,7 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="748,35.787509155273426"/>
                     </ExtendedAttributes>
                 </Activity>
-                <Activity Id="autenticacao" Name="Aguarda Fundos (Autenticação e Depósito)">
+                <Activity Id="autenticacao" Name="Aguarda Fundos">
                     <Implementation>
                         <No/>
                     </Implementation>
@@ -7151,7 +7151,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_mtg_2"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1065.0000305175781,35.237506103515614"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="917,35.81248779296874"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="efetuarDeposito" Name="Efetuar Depósito">
@@ -7262,7 +7262,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_bcp_2"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1018,47.1875030517578"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1019,47.987506103515614"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="autenticacao2" Name="Autenticação">
@@ -7414,7 +7414,7 @@
                     <Performer>dist_mtg_2</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_mtg_2"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="917.6000061035156,34.675006103515614"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1224.6000366210938,36.849993896484364"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="route7">
@@ -7480,6 +7480,26 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="881,53.099993896484364"/>
                     </ExtendedAttributes>
                 </Activity>
+                <Activity Id="certificacao" Name="Certificação">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>dist_mtg_2</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_mtg_2"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1075.800048828125,36.62498779296874"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="correio" Name="Correio/Depósito">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>dist_mtg_2</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="dist_mtg_2"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1399.6000366210938,34.974993896484364"/>
+                    </ExtendedAttributes>
+                </Activity>
             </Activities>
             <Transitions>
                 <Transition From="route5" Id="transition17" To="preenchimentoProcesso">
@@ -7496,12 +7516,6 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                         <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;sub_banco&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;MTG&quot;}]"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="autenticacao" Id="transition21" To="finalizarProcesso">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route5" Id="transition13" To="preenchimentoProcesso3">
@@ -7607,16 +7621,6 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
                 </Transition>
-                <Transition From="validacaoProcesso" Id="transition57" To="updateUltimaAtividade3">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="updateUltimaAtividade3" Id="transition58" To="autenticacao">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
                 <Transition From="vaiProcuradoria" Id="transition60" To="route7">
                     <Condition Type="OTHERWISE"/>
                     <ExtendedAttributes>
@@ -7683,6 +7687,31 @@
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="criarProcessoProcuradoria4" Id="transition45" To="aguardaCertificacao">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="validacaoProcesso" Id="transition47" To="autenticacao">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="autenticacao" Id="transition33" To="certificacao">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="certificacao" Id="transition48" To="updateUltimaAtividade3">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="updateUltimaAtividade3" Id="transition53" To="correio">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="correio" Id="transition57" To="finalizarProcesso">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
                     </ExtendedAttributes>
