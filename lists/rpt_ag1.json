@@ -6,16 +6,93 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT pro.c_servico,det.c_nome_banco, det.c_n_wf_pl,\nag.c_data_agendamento, ag.c_estado_agendamento,\nato.c_status, ato.c_dataOutorga, ato.c_motivo_desc, ato.c_motivo_desmarcacao_ato\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id\n\n\n"
+            "sql": "SELECT pro.c_servico AS Serviço,det.c_nome_banco AS Banco, det.c_n_wf_pl AS WF,\nato.c_status AS Estado, ato.c_dataOutorga AS DataAg, ato.c_motivo_desc AS 'Motivo Des.', ato.c_motivo_desmarcacao_ato AS 'Motivo Des. Ato'\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
-    "columns": [],
+    "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_0",
+            "label": "Banco",
+            "name": "Banco",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_3",
+            "label": "WF",
+            "name": "WF",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "DataAg",
+            "name": "DataAg",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_2",
+            "label": "Estado",
+            "name": "Estado",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "Motivo Des.",
+            "name": "Motivo Des.",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_5",
+            "label": "Motivo Des. Ato",
+            "name": "Motivo Des. Ato",
+            "sortable": "false"
+        }
+    ],
     "considerFilterWhenGetTotal": "",
     "description": "",
     "disableResponsive": "",
-    "filters": [],
+    "filters": [
+        {
+            "id": "filter_1",
+            "label": "WF",
+            "name": "WF",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        },
+        {
+            "id": "filter_0",
+            "label": "Serviço",
+            "name": "Serviço",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        },
+        {
+            "id": "filter_2",
+            "label": "DataAg",
+            "name": "DataAg",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        }
+    ],
     "hidePageSize": "",
     "id": "rpt_ag1",
     "name": "RPT - Listagem agendamento",
