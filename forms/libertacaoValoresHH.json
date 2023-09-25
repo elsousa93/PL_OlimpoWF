@@ -712,31 +712,6 @@
                     "className": "org.joget.apps.form.lib.CheckBox",
                     "properties": {
                         "controlField": "",
-                        "id": "pendentes_lv",
-                        "label": "Pendentes",
-                        "options": [{
-                            "grouping": "",
-                            "label": "",
-                            "value": "SIM"
-                        }],
-                        "optionsBinder": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.CheckBox",
-                    "properties": {
-                        "controlField": "",
                         "id": "urgencia_lv",
                         "label": "Urgência",
                         "options": [
@@ -757,6 +732,149 @@
                         },
                         "readonly": "",
                         "readonlyLabel": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CheckBox",
+                    "properties": {
+                        "controlField": "",
+                        "id": "pendentes_lv",
+                        "label": "Pendente",
+                        "options": [{
+                            "grouping": "",
+                            "label": "",
+                            "value": "SIM"
+                        }],
+                        "optionsBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.SelectBox",
+                    "properties": {
+                        "controlField": "",
+                        "id": "pendencias_1_lv",
+                        "label": "Pendente de",
+                        "multiple": "",
+                        "options": [
+                            {
+                                "grouping": "",
+                                "label": "",
+                                "value": ""
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Análise Financeira",
+                                "value": "ANFINAN"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Aguarda Parecer",
+                                "value": "AGPARECER"
+                            }
+                        ],
+                        "optionsBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CheckBox",
+                    "properties": {
+                        "controlField": "",
+                        "id": "devolvido_lv",
+                        "label": "Devolvido",
+                        "options": [{
+                            "grouping": "",
+                            "label": "",
+                            "value": "SIM"
+                        }],
+                        "optionsBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.SelectBox",
+                    "properties": {
+                        "controlField": "",
+                        "id": "motivo_lv",
+                        "label": "Motivo",
+                        "multiple": "",
+                        "options": [],
+                        "optionsBinder": {
+                            "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                            "properties": {
+                                "addEmptyOption": "true",
+                                "cacheInterval": "",
+                                "emptyLabel": "",
+                                "extraCondition": "c_nome_campo = 'hh_pendencia_lv'",
+                                "formDefId": "adicionarOpcaoLV",
+                                "groupingColumn": "",
+                                "idColumn": "value",
+                                "labelColumn": "label",
+                                "useAjax": ""
+                            }
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.TextField",
+                    "properties": {
+                        "encryption": "",
+                        "id": "outro_motivo_lv",
+                        "label": "Outro Motivo",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "storeNumeric": "",
+                        "style": "",
                         "validator": {
                             "className": "",
                             "properties": {}
@@ -824,24 +942,6 @@
                         "readonly": "",
                         "readonlyLabel": "",
                         "size": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
-                },
-                {
-                    "className": "org.joget.apps.form.lib.TextArea",
-                    "properties": {
-                        "cols": "20",
-                        "id": "docsSolicitados_lv",
-                        "label": "Se Pendente, Docs Solicitados:",
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "rows": "5",
                         "validator": {
                             "className": "",
                             "properties": {}
@@ -1002,7 +1102,7 @@
                         "autoPopulate": "",
                         "id": "atualizar",
                         "label": "",
-                        "value": "<script>\n\n    $(document).ready(function(){\n        //Atualizar valor do hidden field do envio_processo\n        $('input[id*=atualizar_fase]').val(\"#form.detalhe_proce_hh.faseProcesso[{form.processos_hh.detalhe_processo}]#\");\n    });\n\n    \n<\/script>"
+                        "value": "<script>\n\n    $(document).ready(function(){\n        //Atualizar valor do hidden field do envio_processo\n        $('input[id*=atualizar_fase]').val(\"#form.detalhe_proce_hh.faseProcesso[{form.processos_hh.detalhe_processo}]#\");\n    });\n    \n     $(document).change(function(){\n        //Atualizar valor do hidden field do envio_processo\n        if( $(\"input[name$=_pendentes_lv]\").is(\":checked\") === true){\n            $(\"select[name$=_pendencias_1_lv]\").parent().show();\n        } else {\n            $(\"select[name$=_pendencias_1_lv]\").parent().hide();\n        }\n        if( $(\"input[name$=_devolvido_lv]\").is(\":checked\") === true){\n            $(\"select[name$=_motivo_lv]\").parent().show();\n        }else{\n            $(\"select[name$=_motivo_lv]\").parent().hide(); \n        }\n        if($(\"select[name$=_motivo_lv]\").val() === \"HHOTRLV\"){\n            $(\"input[name$=_outro_motivo_lv]\").parent().show();\n        }else{\n            $(\"input[name$=_outro_motivo_lv]\").parent().hide();\n        }\n    });\n\n    \n<\/script>"
                     }
                 }
             ],
