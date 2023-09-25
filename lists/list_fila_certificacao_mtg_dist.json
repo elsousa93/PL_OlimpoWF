@@ -1,0 +1,90 @@
+{
+    "actions": [],
+    "binder": {
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "idDist",
+            "sql": "SELECT p.id as idDist, dp.c_num_pedido as NumPedido, dp.c_nome_banco as Banco,dp.c_estado_processo as 'Estado Processo', dp.c_nome_cliente as 'Nome Cliente', sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos_distrates p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_proce_dist dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nWHERE sps.KeyValue LIKE 'open.running'\nAND p.id is not null\nAND sact.Name = 'Validação do Processo'\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id like '%DSTDistrates%'\nAND sass.ResourceId LIKE \"%distrates_geral_mtg%\"\n"
+        }
+    },
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "NumPedido",
+            "name": "NumPedido",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_0",
+            "label": "Banco",
+            "name": "Banco",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_2",
+            "label": "assignee",
+            "name": "assignee",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_3",
+            "label": "activityName",
+            "name": "activityName",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "Estado Processo",
+            "name": "Estado Processo",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_5",
+            "label": "Nome Cliente",
+            "name": "Nome Cliente",
+            "sortable": "false"
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
+    "description": "",
+    "filters": [],
+    "id": "list_fila_certificacao_mtg_dist",
+    "name": "Distrates - Fila Certificação MTG",
+    "order": "",
+    "orderBy": "",
+    "pageSize": "0",
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "rowActions": [{
+        "className": "org.joget.plugin.enterprise.BeanShellDatalistAction",
+        "icon": "<i class=\"fas fa-code\"><\/i>",
+        "id": "rowAction_0",
+        "label": "Bean Shell",
+        "name": "Bean Shell Datalist Action",
+        "properties": {
+            "confirmation": "",
+            "datalist_type": "row_action",
+            "label": "Atribuir Processo",
+            "rules": [],
+            "script": "import org.joget.workflow.model.service.WorkflowManager;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.workflow.model.service.WorkflowUserManager;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport javax.servlet.http.HttpServletRequest;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.datalist.model.DataListBinderDefaultimport;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\n\r\nString idProcesso=\"\";\r\nString aid = \"\";\r\nString resourceId = \"\";\r\nfor (String key : rowKeys) {\r\n    idProcesso = key;\r\n    \r\n}\r\n\r\n    Connection con = null;\r\n    PreparedStatement stmt = null;\r\n    ResultSet rs = null;\r\n    \r\n    try{\r\n        DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n        con = ds.getConnection();\r\n        \r\n        if(!con.isClosed()){\r\n\t\t\tString queryGetAid = \"SELECT a.id as 'Aid', sass.ResourceId as 'ResourceId' FROM shkprocesses p LEFT JOIN shkactivities a ON p.id = ProcessId LEFT JOIN shkprocessstates ps ON ps.oid = p.State LEFT JOIN SHKActivityStates acs ON acs.oid = a.State LEFT JOIN shkassignmentstable sass ON sass.ActivityId = a.id WHERE p.ActivityRequesterProcessId = ? AND ps.KeyValue LIKE 'open.running' AND (acs.KeyValue LIKE 'open.not_running.not_started' OR acs.KeyValue LIKE 'open.running');\";\r\n\t\t\tstmt = con.prepareStatement(queryGetAid);\r\n\t\t\tstmt.setObject(1, idProcesso);\r\n\t\t\trs = stmt.executeQuery();\r\n    \t\t\r\n    \t\tif(rs.next()){\r\n    \t\t\taid = rs.getObject(\"Aid\");\r\n                resourceId = rs.getObject(\"ResourceId\");\r\n\t\t\t\r\n\t\t\t    WorkflowManager wm = (WorkflowManager) AppUtil.getApplicationContext().getBean(\"workflowManager\");\r\n                WorkflowUserManager wum = (WorkflowUserManager) AppUtil.getApplicationContext().getBean(\"workflowUserManager\");\r\n                \r\n                //get the values from the \r\n                String replaceUser = resourceId;\r\n                String username = \"#currentUser.username#\";\r\n            \r\n            \r\n                //getCurrentThreadUser() Method used by system to get current thread user\r\n                String currentUser = wum.getCurrentThreadUser();\r\n                wum.setCurrentThreadUser(replaceUser);\r\n                wum.setCurrentThreadUser(currentUser);\r\n                \r\n                //Reassigns the assignment from a user (replaceUser) to another user (username)\r\n                wm.assignmentReassign(\"\", \"\", aid, username, replaceUser);\r\n    \t\t}\r\n        }\r\n            \r\n    }catch(Exception e){\r\n            LogUtil.error(appDef.toString(), e, \"Error getting info from DB\");\r\n    }finally{\r\n        try{\r\n            if(rs != null){\r\n            rs.close();\r\n            }\r\n            if(stmt != null){\r\n                stmt.close();\r\n            }\r\n            if(con != null && !con.isClosed()) {\r\n                con.close();\r\n            }\r\n        }catch(Exception e){\r\n            LogUtil.error(appDef.toString(), e, \"Error closing DB connection\");\r\n        }\r\n        \r\n    }"
+        },
+        "type": "text"
+    }],
+    "showPageSizeSelector": "true",
+    "useSession": "false"
+}
