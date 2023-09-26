@@ -252,8 +252,24 @@
             "exclude_export": "",
             "filterable": true,
             "format": {
-                "className": "org.joget.plugin.enterprise.BeanShellFormatter",
-                "properties": {"script": "import org.joget.apps.datalist.service.DataListService;\nimport org.joget.apps.app.service.AppUtil;\nimport java.time.LocalDateTime; \nimport java.time.format.DateTimeFormatter;\nimport java.time.temporal.ChronoUnit;\nimport org.joget.commons.util.LogUtil;\nimport java.lang.Math;\nimport java.sql.SQLException;\nimport java.sql.Connection;\nimport java.sql.PreparedStatement;\nimport java.sql.ResultSet;\nimport java.sql.SQLException;\nimport javax.sql.DataSource;\n\n\nif (!value.isEmpty()) {\n    \n    //Obter Nome do Gestor\n    String nomeGestor = \"#user.[{value}].fullName#\";\n}\n\n\nreturn nomeGestor;"}
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.plugin.enterprise.UserOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "deptId": "",
+                            "emptyLabel": "",
+                            "groupId": "",
+                            "grouping": "",
+                            "optionLabel": "fullname",
+                            "orgId": "PL",
+                            "useAjax": ""
+                        }
+                    }
+                }
             },
             "headerAlignment": "",
             "hidden": "false",
