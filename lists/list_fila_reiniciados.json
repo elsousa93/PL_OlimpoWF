@@ -1,11 +1,51 @@
 {
     "actions": [],
     "binder": {
-        "className": "",
-        "name": "",
-        "properties": {}
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "idProc",
+            "sql": "SELECT p.id as idProc, dp.c_nome_banco as Banco, dp.c_tipo_processo as TipoProcesso, \nsp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, p.dateCreated, \nsact.Id AS ActivityId\nFROM shkprocesses sp \nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id \nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id \nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo \nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State \nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id \nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN  SHKAssignmentsTable sass on sact.Id = sass.ActivityId\nWHERE sps.KeyValue LIKE 'open.running' AND p.id is not null AND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id LIKE '%CH%'\nAND sass.ResourceId LIKE \"%reiniciar_geral%\""
+        }
     },
-    "columns": [],
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "idProc",
+            "name": "idProc",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_3",
+            "label": "Banco",
+            "name": "Banco",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_0",
+            "label": "TipoProcesso",
+            "name": "TipoProcesso",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_2",
+            "label": "dateCreated",
+            "name": "dateCreated",
+            "sortable": "false"
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
     "description": "",
     "filters": [],
     "id": "list_fila_reiniciados",
@@ -13,5 +53,8 @@
     "order": "",
     "orderBy": "",
     "pageSize": "0",
-    "rowActions": []
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "rowActions": [],
+    "showPageSizeSelector": "true",
+    "useSession": "false"
 }
