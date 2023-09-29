@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT det.c_id_processo AS IDProc, det.c_data_entrada as Data_entrada, det.c_nome_banco AS Banco, det.c_tipo_processo AS Tipo_processo, det.c_urgencia AS Urgente,\ndet.c_forma_outorga as Forma_outorga, det.c_n_wf_pl as WF_PL, det.c_nome_cliente AS Nome_cliente,\ndet.c_origem_processo AS Origem, det.c_complex_processo AS Complexidade, det.c_estado_contratacao AS Estado_contratacao, det.c_fase_processo AS Fase,\nag.c_data_agendamento AS Data_agendamento, ag.c_estado_agendamento AS Estado_agendamento, ag.c_urgencia_agendamento AS Urgencia_agendamento, ag.c_reagendamento AS Reagendamento,\nSUM(IF(imo.c_imovel_banco='Sim',1,0)) AS Imovel_banco\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nLEFT JOIN app_fd_imoveis imo ON det.c_id_processo = imo.c_id_processo\nWHERE det.c_data_entrada != ''\nGROUP BY IDProc, Data_entrada, Banco, Tipo_processo, Urgente, Forma_outorga, WF_PL, Nome_cliente, Origem, Complexidade, Estado_contratacao, Fase,\nData_agendamento, Estado_agendamento, Urgencia_agendamento, Reagendamento \n\n\n\n\n\n"
+            "sql": "SELECT det.c_gestor_validacao_deposito,\nYEAR(ato.c_dataOutorga) AS AnoAgendamento, MONTH(ato.c_dataOutorga) AS  MesAgendamento, ato.c_status as StatusAgendamento, COUNT(det.id) AS Total\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id AND ato.c_status = 'OUT'\nWHERE ato.c_status != ''\nGROUP BY det.c_gestor_validacao_deposito, AnoAgendamento, MesAgendamento, StatusAgendamento\n\n\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -15,136 +15,67 @@
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_0",
-            "label": "Data_entrada",
-            "name": "Data_entrada",
+            "id": "column_16",
+            "label": "AnoAgendamento",
+            "name": "AnoAgendamento",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_1",
-            "label": "Nome_cliente",
-            "name": "Nome_cliente",
+            "id": "column_17",
+            "label": "MesAgendamento",
+            "name": "MesAgendamento",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_3",
-            "label": "Banco",
-            "name": "Banco",
+            "id": "column_18",
+            "label": "StatusAgendamento",
+            "name": "StatusAgendamento",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_2",
-            "label": "WF_PL",
-            "name": "WF_PL",
+            "id": "column_19",
+            "label": "c_gestor_validacao_deposito",
+            "name": "c_gestor_validacao_deposito",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_4",
-            "label": "Urgente",
-            "name": "Urgente",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_5",
-            "label": "Tipo_processo",
-            "name": "Tipo_processo",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_6",
-            "label": "Forma_outorga",
-            "name": "Forma_outorga",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_7",
-            "label": "Complexidade",
-            "name": "Complexidade",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_8",
-            "label": "Origem",
-            "name": "Origem",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_9",
-            "label": "Fase",
-            "name": "Fase",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_10",
-            "label": "Estado_contratacao",
-            "name": "Estado_contratacao",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_11",
-            "label": "Data_agendamento",
-            "name": "Data_agendamento",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_12",
-            "label": "Urgencia_agendamento",
-            "name": "Urgencia_agendamento",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_13",
-            "label": "Estado_agendamento",
-            "name": "Estado_agendamento",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_14",
-            "label": "Reagendamento",
-            "name": "Reagendamento",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_15",
-            "label": "Imovel_banco",
-            "name": "Imovel_banco",
+            "id": "column_20",
+            "label": "Total",
+            "name": "Total",
             "sortable": "false"
         }
     ],
     "considerFilterWhenGetTotal": "",
     "description": "",
     "disableResponsive": "",
-    "filters": [],
+    "filters": [
+        {
+            "id": "filter_1",
+            "label": "AnoAgendamento",
+            "name": "AnoAgendamento",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        },
+        {
+            "id": "filter_0",
+            "label": "MesAgendamento",
+            "name": "MesAgendamento",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        }
+    ],
     "hidePageSize": "",
     "id": "rpt_ql2",
     "name": "RPT - Qualidade Val. depósito Total",
