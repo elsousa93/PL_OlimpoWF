@@ -6,28 +6,12 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT det.c_id_processo AS IDProc, det.c_data_entrada as Data_entrada, det.c_nome_banco AS Banco, det.c_tipo_processo AS Tipo_processo, det.c_urgencia AS Urgente,\ndet.c_forma_outorga as Forma_outorga, det.c_n_wf_pl as WF_PL, det.c_nome_cliente AS Nome_cliente,\ndet.c_origem_processo AS Origem, det.c_complex_processo AS Complexidade, det.c_estado_contratacao AS Estado_contratacao, det.c_fase_processo AS Fase,\nag.c_data_agendamento AS Data_agendamento, ag.c_estado_agendamento AS Estado_agendamento, ag.c_urgencia_agendamento AS Urgencia_agendamento, ag.c_reagendamento AS Reagendamento,\nSUM(IF(imo.c_imovel_banco='Sim',1,0)) AS Imovel_banco\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nLEFT JOIN app_fd_imoveis imo ON det.c_id_processo = imo.c_id_processo\nWHERE det.c_data_entrada != ''\nGROUP BY IDProc, Data_entrada, Banco, Tipo_processo, Urgente, Forma_outorga, WF_PL, Nome_cliente, Origem, Complexidade, Estado_contratacao, Fase,\nData_agendamento, Estado_agendamento, Urgencia_agendamento, Reagendamento \n\n\n\n\n\n"
+            "sql": "SELECT det.c_n_wf_pl as WF,det.c_nome_banco AS Banco, det.c_categoria_processo AS Categoria, DATE_FORMAT(det.c_data_de_registo, \"%Y-%m-%d\") AS DataRegisto, \ndet.c_gestor_deposito, det.c_gestor_validacao_deposito, det.c_gestor_validacao_pendencias, det.c_gestor_validacao_registo,\nato.c_dataOutorga AS DataAgendamento, ato.c_status as StatusAgendamento\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id AND ato.c_status = 'OUT'\nWHERE ato.c_status != ''\n\n\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
     "columns": [
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_0",
-            "label": "Data_entrada",
-            "name": "Data_entrada",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_1",
-            "label": "Nome_cliente",
-            "name": "Nome_cliente",
-            "sortable": "false"
-        },
         {
             "filterable": true,
             "hidden": "false",
@@ -39,106 +23,130 @@
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_2",
-            "label": "WF_PL",
-            "name": "WF_PL",
+            "id": "column_16",
+            "label": "WF",
+            "name": "WF",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_4",
-            "label": "Urgente",
-            "name": "Urgente",
+            "id": "column_17",
+            "label": "DataAgendamento",
+            "name": "DataAgendamento",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_5",
-            "label": "Tipo_processo",
-            "name": "Tipo_processo",
+            "id": "column_18",
+            "label": "StatusAgendamento",
+            "name": "StatusAgendamento",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_6",
-            "label": "Forma_outorga",
-            "name": "Forma_outorga",
+            "id": "column_19",
+            "label": "DataRegisto",
+            "name": "DataRegisto",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_7",
-            "label": "Complexidade",
-            "name": "Complexidade",
+            "id": "column_20",
+            "label": "Categoria",
+            "name": "Categoria",
             "sortable": "false"
         },
         {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
             "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
             "hidden": "false",
-            "id": "column_8",
-            "label": "Origem",
-            "name": "Origem",
-            "sortable": "false"
+            "id": "column_21",
+            "label": "GESTOR DEPÓSITO",
+            "name": "c_gestor_deposito",
+            "sortable": "false",
+            "style": "",
+            "width": ""
         },
         {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
             "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
             "hidden": "false",
-            "id": "column_9",
-            "label": "Fase",
-            "name": "Fase",
-            "sortable": "false"
+            "id": "column_22",
+            "label": "GESTOR VALIDAÇÃO DEPÓSITO",
+            "name": "c_gestor_validacao_deposito",
+            "sortable": "false",
+            "style": "",
+            "width": ""
         },
         {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
             "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
             "hidden": "false",
-            "id": "column_10",
-            "label": "Estado_contratacao",
-            "name": "Estado_contratacao",
-            "sortable": "false"
+            "id": "column_24",
+            "label": "GESTOR VALIDAÇÃO PENDENCIAS",
+            "name": "c_gestor_validacao_pendencias",
+            "sortable": "false",
+            "style": "",
+            "width": ""
         },
         {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
             "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
             "hidden": "false",
-            "id": "column_11",
-            "label": "Data_agendamento",
-            "name": "Data_agendamento",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_12",
-            "label": "Urgencia_agendamento",
-            "name": "Urgencia_agendamento",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_13",
-            "label": "Estado_agendamento",
-            "name": "Estado_agendamento",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_14",
-            "label": "Reagendamento",
-            "name": "Reagendamento",
-            "sortable": "false"
-        },
-        {
-            "filterable": true,
-            "hidden": "false",
-            "id": "column_15",
-            "label": "Imovel_banco",
-            "name": "Imovel_banco",
-            "sortable": "false"
+            "id": "column_23",
+            "label": "GESTOR VALIDAÇÃO REGISTO",
+            "name": "c_gestor_validacao_registo",
+            "sortable": "false",
+            "style": "",
+            "width": ""
         }
     ],
     "considerFilterWhenGetTotal": "",
