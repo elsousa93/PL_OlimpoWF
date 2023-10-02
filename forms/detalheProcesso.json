@@ -123,6 +123,10 @@
                             "className": "org.joget.apps.form.lib.HiddenField",
                             "properties": {
                                 "id": "flag_expurgo",
+                                "permission_rules": {
+                                    "4686233f-e0df-ed34-d3b2-1005caf9470c": {},
+                                    "838ffac8-681d-e9c7-87d9-66be9f1d0443": {}
+                                },
                                 "useDefaultWhenEmpty": "",
                                 "validator": {
                                     "className": "",
@@ -432,6 +436,7 @@
                                 "permission_rules": {
                                     "0d7e4d1f-cd72-0522-8336-34124a217002": {},
                                     "435fad6b-d318-04ad-4d78-95912977f590": {},
+                                    "4686233f-e0df-ed34-d3b2-1005caf9470c": {},
                                     "48b48ad7-5499-aa5d-69b5-3f6bc87b7133": {},
                                     "838ffac8-681d-e9c7-87d9-66be9f1d0443": {},
                                     "94c61551-208b-5093-fbad-41d5f6b323c0": {},
@@ -5085,6 +5090,17 @@
         "permission_rules": [
             {
                 "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_EXT_ENT;PL_EXT_ENT_A;PL_EXT_ENT_NA;PL_EXT_ENT_SA",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "4686233f-e0df-ed34-d3b2-1005caf9470c",
+                "permission_name": "Entidades Não-Autónomas"
+            },
+            {
+                "permission": {
                     "className": "org.joget.apps.userview.lib.BeanShellPermission",
                     "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString mode = \"#requestParam._mode#\";\nif(mode.equals(\"edit\")){\n    return true;\n}else{\n    return false;\n}"}
                 },
@@ -5138,17 +5154,6 @@
                 },
                 "permission_key": "6c9a9c6d-bd10-4f4a-0682-541bcbb1222b",
                 "permission_name": "Validação"
-            },
-            {
-                "permission": {
-                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
-                    "properties": {
-                        "allowedDeptIds": "PL_EXT_ENT;PL_EXT_ENT_A;PL_EXT_ENT_NA;PL_EXT_ENT_SA",
-                        "orgId": "PL"
-                    }
-                },
-                "permission_key": "4686233f-e0df-ed34-d3b2-1005caf9470c",
-                "permission_name": "Entidades Não-Autónomas"
             },
             {
                 "permission": {
