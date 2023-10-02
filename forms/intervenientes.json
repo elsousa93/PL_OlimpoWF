@@ -238,6 +238,7 @@
                             "id": "atualizar_envio_processo",
                             "permission_rules": {
                                 "1f965d24-e2c9-38b4-d9fc-b449b5cf7d59": {},
+                                "af05024d-eace-f30c-cea0-32485ecb7b2a": {},
                                 "b37783e0-ffd8-c58e-c509-b9c47cbfdf36": {}
                             },
                             "useDefaultWhenEmpty": "",
@@ -1413,6 +1414,17 @@
         "permission_rules": [
             {
                 "permission": {
+                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                    "properties": {
+                        "allowedDeptIds": "PL_EXT_ENT_NA",
+                        "orgId": "PL"
+                    }
+                },
+                "permission_key": "af05024d-eace-f30c-cea0-32485ecb7b2a",
+                "permission_name": "Entidade Não-Autónoma"
+            },
+            {
+                "permission": {
                     "className": "org.joget.apps.userview.lib.BeanShellPermission",
                     "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString mode = \"#requestParam._mode#\";\nif(mode.equals(\"edit\")){\n    return true;\n}else{\n    return false;\n}"}
                 },
@@ -1442,17 +1454,6 @@
                 },
                 "permission_key": "b30c3291-9376-6a3b-a9dd-37d7b0e17f25",
                 "permission_name": "Validação"
-            },
-            {
-                "permission": {
-                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
-                    "properties": {
-                        "allowedDeptIds": "PL_EXT_ENT_NA",
-                        "orgId": "PL"
-                    }
-                },
-                "permission_key": "af05024d-eace-f30c-cea0-32485ecb7b2a",
-                "permission_name": "Entidade Não-Autónoma"
             },
             {
                 "permission": {
