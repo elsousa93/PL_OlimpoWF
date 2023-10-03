@@ -943,56 +943,79 @@
             "className": "org.joget.apps.form.model.Section",
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
-                "elements": [{
-                    "className": "org.joget.apps.form.lib.Radio",
-                    "properties": {
-                        "controlField": "",
-                        "id": "intervencao_juridica_novo",
-                        "label": "Teve intervenção do Novo Projeto?",
-                        "options": [
-                            {
-                                "grouping": "",
-                                "label": "Sim",
-                                "value": "SIM"
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.Radio",
+                        "properties": {
+                            "controlField": "",
+                            "id": "intervencao_juridica_novo",
+                            "label": "Teve intervenção do Novo Projeto?",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Sim",
+                                    "value": "SIM"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Não",
+                                    "value": "NAO"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Por Validar",
+                                    "value": "PAP"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
                             },
-                            {
-                                "grouping": "",
-                                "label": "Não",
-                                "value": "NAO"
+                            "permission_rules": {
+                                "53700863-35b8-fcf7-b5a3-deffa46b2f19": {},
+                                "7f8e8db0-dcc1-fbab-51b7-91b99d146dbf": {},
+                                "950c7e5e-1ed7-1d34-274d-9c2de99e55f5": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "b30c3291-9376-6a3b-a9dd-37d7b0e17f25": {},
+                                "f88c8048-04f7-1389-3bd3-a597abd6714a": {}
                             },
-                            {
-                                "grouping": "",
-                                "label": "Por Validar",
-                                "value": "PAP"
-                            }
-                        ],
-                        "optionsBinder": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "permission_rules": {
-                            "53700863-35b8-fcf7-b5a3-deffa46b2f19": {},
-                            "7f8e8db0-dcc1-fbab-51b7-91b99d146dbf": {},
-                            "950c7e5e-1ed7-1d34-274d-9c2de99e55f5": {
-                                "permissionHidden": "",
-                                "readonly": "true"
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "*",
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        \r\n        //If element is not filled give error message\r\n        if (values.length <= 0 || values[0].isEmpty() || values[0].equals(\"PAP\")){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }\r\n    }else{\r\n        result = true;\r\n    }\r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                }
                             },
-                            "b30c3291-9376-6a3b-a9dd-37d7b0e17f25": {},
-                            "f88c8048-04f7-1389-3bd3-a597abd6714a": {}
-                        },
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "validator": {
-                            "className": "org.joget.apps.form.lib.BeanShellValidator",
-                            "properties": {
-                                "decoration": "*",
-                                "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        \r\n        //If element is not filled give error message\r\n        if (values.length <= 0 || values[0].isEmpty() || values[0].equals(\"PAP\")){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }\r\n    }else{\r\n        result = true;\r\n    }\r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
-                            }
-                        },
-                        "value": "",
-                        "workflowVariable": ""
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextField",
+                        "properties": {
+                            "encryption": "",
+                            "id": "codigo_crc",
+                            "label": "Código CRC",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "storeNumeric": "",
+                            "style": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
                     }
-                }],
+                ],
                 "properties": {"width": "100%"}
             }],
             "properties": {
