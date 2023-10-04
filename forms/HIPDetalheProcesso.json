@@ -603,14 +603,21 @@
                             "id": "origem_processo",
                             "label": "Origem do Processo",
                             "multiple": "",
-                            "options": [],
-                            "optionsBinder": {
-                                "className": "org.joget.apps.form.lib.BeanShellFormBinder",
-                                "properties": {
-                                    "cacheInterval": "",
-                                    "script": "import org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.model.FormStoreBinder;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport org.joget.commons.util.LogUtil;\r\n\r\n \r\npublic FormRowSet load(String[] values) {\r\n    \r\n    FormRowSet rows = new FormRowSet();\r\n    \r\n    FormRow option = new FormRow();\r\n    option.setProperty(FormUtil.PROPERTY_VALUE, \"\");\r\n    option.setProperty(FormUtil.PROPERTY_LABEL, \"\");\r\n    rows.add(option);\r\n    \r\n    String formaOutorga = null;\r\n    \r\n    if (values != null && values.length > 0) {\r\n\r\n        formaOutorga = values[0];\r\n        String banco = \"#form.banco.nome_banco[{form.processos.banco}]#\";\r\n\r\n        Connection con = null;\r\n        PreparedStatement stmt = null;\r\n        ResultSet rs = null;\r\n        String origem_value = \"\";\r\n        String origem_label = \"\";\r\n        \r\n        AppDefinition appDef = AppUtil.getCurrentAppDefinition();\r\n        \r\n        try{\r\n                DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n                con = ds.getConnection();\r\n                \r\n                \r\n                if(!con.isClosed()){\r\n                    String idDetalhe_processo = \"#form.processos.detalhe_processo#\";\r\n                    //Verificar o utilizador atribuido e atualizar caso esteja errado\r\n                    String query=\"SELECT c_value, c_label FROM app_fd_listas_de_valores WHERE c_nome_campo = ? AND c_servico LIKE '%HIP%' AND c_banco LIKE ? AND c_grouping LIKE ?;\";\r\n                    stmt = con.prepareStatement(query);\r\n                    stmt.setObject(1, \"origem_processo\");\r\n                    stmt.setObject(2, \"%\" +  banco.trim() + \"%\");\r\n                    if(banco.equals(\"GEN\")){\r\n                        stmt.setObject(3, \"%%\");\r\n                    }else{\r\n                        stmt.setObject(3, \"%\" + banco + \"_\" + formaOutorga + \"%\");\r\n                    }\r\n                    rs = stmt.executeQuery();\r\n                    \r\n                    while(rs.next()){\r\n                        origem_value = rs.getString(1);\r\n                        origem_label = rs.getString(2);\r\n                        \r\n                        FormRow option = new FormRow();\r\n                        option.setProperty(FormUtil.PROPERTY_VALUE, origem_value);\r\n                        option.setProperty(FormUtil.PROPERTY_LABEL, origem_label);\r\n                        rows.add(option);\r\n                        \r\n                    }\r\n                }\r\n                \r\n        }catch(Exception e){\r\n            LogUtil.error(\"Importa processo - origem de processo\", e, \"Error getting info from DB\");\r\n        }finally{\r\n            try{\r\n                if(rs != null){\r\n                rs.close();\r\n                }\r\n                if(stmt != null){\r\n                    stmt.close();\r\n                }\r\n                if(con != null && !con.isClosed()) {\r\n                    con.close();\r\n                }\r\n            }catch(Exception e){\r\n                LogUtil.error(\"Importa processo - origem de processo\", e, \"Error closing DB connection\");\r\n            }\r\n            \r\n        }\r\n        \r\n    }\r\n\r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(values);",
-                                    "useAjax": "true"
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Parcial",
+                                    "value": "PARCIAL"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Total",
+                                    "value": "TOTAL"
                                 }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
                             },
                             "permission_rules": {
                                 "04d94e96-37aa-1e4b-d5fe-5595f325e232": {},
