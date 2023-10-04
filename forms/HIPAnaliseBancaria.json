@@ -22,6 +22,7 @@
                                 "aa6ccea8-6e7f-1433-8d14-32132e9bf1e0": {},
                                 "d07f81ea-a80c-4560-01fd-7772c1762b0f": {},
                                 "d6fe0da9-3aa3-9d28-ded2-07a6fb980292": {},
+                                "e65f7ec0-8c54-5c64-f115-db763624cf5f": {},
                                 "f6d47cc6-84dc-c359-9ec5-794a6dcbf118": {}
                             },
                             "value": "<script>\n     \n     $(window).load(function(){\n\n         var flag_validacao = '#variable.flag_validacao#';\n         \n        if(flag_validacao === '1' || flag_validacao.startsWith(\"#variable.flag_validacao\")){\n            $(\"form#processo :input\").change(function(){\n                $(\"input#flag_alteracoes\").attr(\"value\",\"SIM\");    \n            });\n        }\n    });\n    \n    \n    \n<\/script>"
@@ -166,6 +167,7 @@
                             "id": "valor_garantia",
                             "label": "Valor da Garantia",
                             "maxlength": "",
+                            "permission_rules": {"e65f7ec0-8c54-5c64-f115-db763624cf5f": {}},
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -365,6 +367,7 @@
                             "id": "campanhas",
                             "label": "Campanhas/Promoções",
                             "maxlength": "",
+                            "permission_rules": {"e65f7ec0-8c54-5c64-f115-db763624cf5f": {}},
                             "placeholder": "",
                             "readonly": "",
                             "readonlyLabel": "",
@@ -615,6 +618,16 @@
                                 "fc7f2cce-9755-d638-d121-60a5210256d3": {}
                             },
                             "value": "<script>\n    $(document).ready(function(){\n        \n       //validade da proposta\n        var banco = \"#form.banco_hip.nome_banco[{form.processos_hip.banco}]#\"; \n        //Calculate field \"Validade da proposta\"  \n        $(\"input[id*=data_despacho]\").change(function(){\n            if($(\"input[id*=validade_proposta]\").datepicker('getDate') == null){\n                var dataDespacho = $(\"input[id*=data_despacho]\").datepicker('getDate');\n                if(dataDespacho != null){\n    \n                    if(banco === \"BCP\"){\n                        dataDespacho.setDate(dataDespacho.getDate() + 60);\n                    \n                    }else if(banco===\"MTG\"){\n                        dataDespacho.setDate(dataDespacho.getDate() + 120);\n                        \n                    }/*else if(banco === \"ABN\"){\n                        dataDespacho.setDate(dataDespacho.getDate() + 45);\n                        \n                    }else if(banco === \"BIC\"){\n                        dataDespacho.setDate(dataDespacho.getDate() + 120);\n                        \n                    }else if(banco === \"NVB\"){\n                        dataDespacho.setDate(dataDespacho.getDate() + 120);\n                        \n                    }*/\n                    \n                    var day = dataDespacho.getDate();\n                    var month = dataDespacho.getMonth() + 1; //Javascript months start at 0\n                    if(day<10){\n                        day=\"0\" + day;\n                    }\n                    if(month<10){\n                        month = \"0\" + month;\n                    }\n                    var validade = day + \"/\" + month + \"/\" + dataDespacho.getFullYear();\n                    \n                    if(banco ==\"BCP\" || banco ==\"MTG\" ){\n                        $(\"input[id*=validade_proposta]\").datepicker('setDate', validade);\n                    }\n                    \n                }\n            }\n        });\n        \n        //Calcular Data de Validade do Relatório de Avaliação\n        $(\"input[id*=data_relatorio_avaliacao]\").change(function(){\n            var dataRelatorioAvaliacao = $(\"input[id*=data_relatorio_avaliacao]\").datepicker('getDate');\n            \n            if($(\"input[id*=validade_relatorio_avaliacao]\").datepicker('getDate') == null && dataRelatorioAvaliacao!= null){\n                var date = new Date(dataRelatorioAvaliacao);\n                if(banco === \"BCP\"){\n                    date.setFullYear(date.getFullYear() + 1);\n                    \n                }else if (banco ===\"MTG\"){\n                    date.setFullYear(date.getFullYear() + 1);\n                    \n                }else if(banco === \"BIC\" ){\n                    date.setFullYear(date.getFullYear() + 1);\n                }\n                    \n            \n                var day = date.getDate();\n                var month = date.getMonth() + 1;\n                var year = date.getFullYear();\n                \n                if(day<10){\n                   day=\"0\" + day;\n                }\n                if(month<10){\n                   month = \"0\" + month;\n                }\n                \n                var data = day + \"/\" + month + \"/\" + year;\n                \n                if(banco!==\"NVB\" && banco!==\"ABN\" && banco!=\"BST\"){\n                    $(\"input[id*=validade_relatorio_avaliacao]\").datepicker('setDate',data);\n                }    \n            }\n        });\n        \n  \n        \n        \n\n    });\n    \n   \n    \n    \n<\/script>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field35",
+                            "label": "",
+                            "permission_rules": {"e65f7ec0-8c54-5c64-f115-db763624cf5f": {}},
+                            "value": "<script>\n    $(document).change(function(){\n        atualizarVisibilidadesABN();\n    });\n    \n    \n    function atualizarVisibilidadesABN(){\n        var nome_banco = '#form.detalhe_proce_dist.nome_banco[{form.processos_distrates.detalhe_processo}]#';\n       \n        if(nome_banco==='ABN'){\n            $(\"input[id*=periodo_utilizacao]\").parent().hide();\n            $(\"input[id*=campanhas]\").parent().hide();\n            $(\"input[id*=data_despacho]\").parent().hide();\n            $(\"input[id*=valor_garantia]\").parent().hide();\n        }\n    }\n    \n<\/script>"
                         }
                     }
                 ],
