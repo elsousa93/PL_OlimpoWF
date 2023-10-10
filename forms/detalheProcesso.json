@@ -124,6 +124,7 @@
                             "properties": {
                                 "id": "flag_expurgo",
                                 "permission_rules": {
+                                    "435fad6b-d318-04ad-4d78-95912977f590": {},
                                     "4686233f-e0df-ed34-d3b2-1005caf9470c": {},
                                     "838ffac8-681d-e9c7-87d9-66be9f1d0443": {},
                                     "e43944ee-a329-cbb2-13bf-98bd5dfc033d": {}
@@ -5214,11 +5215,8 @@
             },
             {
                 "permission": {
-                    "className": "org.joget.apps.userview.lib.DepartmentPermission",
-                    "properties": {
-                        "allowedDeptIds": "PL_INT_MOD11;PL_INT_MOD11_GEN_RPA_CRH",
-                        "orgId": "PL"
-                    }
+                    "className": "org.joget.apps.userview.lib.BeanShellPermission",
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\n\nif(fase.equals(\"MOD\")){\n    return true;\n}else{\n    return false;\n}"}
                 },
                 "permission_key": "435fad6b-d318-04ad-4d78-95912977f590",
                 "permission_name": "Modelo 11"
