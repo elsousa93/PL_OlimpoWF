@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT det.c_gestor_validacao_deposito,\nYEAR(ato.c_dataOutorga) AS AnoAgendamento, MONTH(ato.c_dataOutorga) AS  MesAgendamento, ato.c_status as StatusAgendamento, COUNT(det.id) AS Total\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id AND ato.c_status = 'OUT'\nWHERE ato.c_status != ''\nGROUP BY det.c_gestor_validacao_deposito, AnoAgendamento, MesAgendamento, StatusAgendamento\n\n\n\n\n"
+            "sql": "SELECT det.c_n_wf_pl as WF,det.c_nome_banco AS Banco, det.c_categoria_processo AS Categoria, DATE_FORMAT(det.c_data_de_registo, \"%Y-%m-%d\") AS DataRegisto, \ndet.c_gestor_registo, det.c_gestor_deposito, det.c_gestor_validacao_deposito, det.c_gestor_validacao_pendencias, det.c_gestor_validacao_registo,\ndocs.id, ql.c_tipo_documento, ql.c_validacao_qual\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_docs_processo docs ON docs.id = pro.c_docs\nLEFT JOIN app_fd_check_op_reg_qual ql ON ql.c_fk = docs.id\n\n\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -15,25 +15,41 @@
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_16",
-            "label": "AnoAgendamento",
-            "name": "AnoAgendamento",
+            "id": "column_1",
+            "label": "DataRegisto",
+            "name": "DataRegisto",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_17",
-            "label": "MesAgendamento",
-            "name": "MesAgendamento",
+            "id": "column_0",
+            "label": "Banco",
+            "name": "Banco",
             "sortable": "false"
         },
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_18",
-            "label": "StatusAgendamento",
-            "name": "StatusAgendamento",
+            "id": "column_2",
+            "label": "WF",
+            "name": "WF",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_3",
+            "label": "c_gestor_registo",
+            "name": "c_gestor_registo",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "c_gestor_deposito",
+            "name": "c_gestor_deposito",
             "sortable": "false"
         },
         {
@@ -47,35 +63,48 @@
         {
             "filterable": true,
             "hidden": "false",
-            "id": "column_20",
-            "label": "Total",
-            "name": "Total",
+            "id": "column_5",
+            "label": "c_gestor_validacao_pendencias",
+            "name": "c_gestor_validacao_pendencias",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_6",
+            "label": "c_gestor_validacao_registo",
+            "name": "c_gestor_validacao_registo",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_7",
+            "label": "Categoria",
+            "name": "Categoria",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_8",
+            "label": "c_tipo_documento",
+            "name": "c_tipo_documento",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_9",
+            "label": "c_validacao_qual",
+            "name": "c_validacao_qual",
             "sortable": "false"
         }
     ],
     "considerFilterWhenGetTotal": "",
     "description": "",
     "disableResponsive": "",
-    "filters": [
-        {
-            "id": "filter_1",
-            "label": "AnoAgendamento",
-            "name": "AnoAgendamento",
-            "type": {
-                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
-                "properties": {}
-            }
-        },
-        {
-            "id": "filter_0",
-            "label": "MesAgendamento",
-            "name": "MesAgendamento",
-            "type": {
-                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
-                "properties": {}
-            }
-        }
-    ],
+    "filters": [],
     "hidePageSize": "",
     "id": "rpt_ql2",
     "name": "RPT - Qualidade erros registo",
