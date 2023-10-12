@@ -615,6 +615,66 @@
                     }
                 },
                 {
+                    "className": "org.joget.apps.form.lib.SelectBox",
+                    "properties": {
+                        "controlField": "",
+                        "id": "status",
+                        "label": "Estado Agendamento",
+                        "multiple": "",
+                        "options": [],
+                        "optionsBinder": {
+                            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                            "properties": {
+                                "cacheInterval": "",
+                                "script": "import org.joget.apps.app.service.AppUtil;\nimport org.joget.apps.form.model.Element;\nimport org.joget.apps.form.model.FormData;\nimport org.joget.apps.form.model.FormRow;\nimport org.joget.apps.form.model.FormRowSet;\nimport org.joget.apps.form.model.FormStoreBinder;\nimport java.sql.Connection;\nimport java.sql.PreparedStatement;\nimport java.sql.ResultSet;\nimport java.sql.SQLException;\nimport javax.sql.DataSource;\nimport org.joget.apps.form.service.FormUtil;\nimport org.joget.apps.app.model.AppDefinition;\nimport org.joget.commons.util.LogUtil;\n\n\npublic FormRowSet getStatusAgendamento() {\n    Connection con = null;\n    PreparedStatement stmt = null;\n    ResultSet rs = null;\n    String status = \"\";\n    String statusLabel = \"\";\n    \n    AppDefinition appDef = AppUtil.getCurrentAppDefinition();\n    \n    \n    try{\n            DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\n            con = ds.getConnection();\n            \n            if(!con.isClosed()){\n                \n                String idProcesso = \"#form.processos_procu.id#\";\n                \n                String queryGetLastAto = \"SELECT c_status FROM app_fd_atos WHERE c_id_processo = ? ORDER BY dateCreated DESC LIMIT 1\";\n                stmt = con.prepareStatement(queryGetLastAto);\n                stmt.setObject(1, idProcesso);\n                rs = stmt.executeQuery();\n                if(rs.next()){\n                    status = rs.getObject(\"c_status\");\n                    String queryGetValueLabel = \"SELECT c_label FROM app_fd_listas_de_valores WHERE c_nome_campo = 'estado_agendamento' AND c_value = ? ;\";\n                    stmt = con.prepareStatement(queryGetValueLabel);\n                    stmt.setObject(1, status);\n                    rs = stmt.executeQuery();\n                    if(rs.next()){\n                        statusLabel = rs.getObject(\"c_label\");\n                    }\n                }\n                    \n            }\n            \n    }catch(Exception e){\n        LogUtil.error(appDef.toString(), e, \"Error getting info from DB\");\n    }finally{\n        try{\n            if(rs != null){\n            rs.close();\n            }\n            if(stmt != null){\n                stmt.close();\n            }\n            if(con != null && !con.isClosed()) {\n                con.close();\n            }\n        }catch(Exception e){\n            LogUtil.error(appDef.toString(), e, \"Error closing DB connection\");\n        }\n        \n    }\n    FormRowSet f = new FormRowSet();\n    FormRow r1 = new FormRow();\n    r1.put(FormUtil.PROPERTY_VALUE, status);\n    r1.put(FormUtil.PROPERTY_LABEL, statusLabel);\n    f.add(r1);\n    return f;\n}\n \nreturn getStatusAgendamento();\n        ",
+                                "useAjax": ""
+                            }
+                        },
+                        "permissionHidden": "",
+                        "permission_rules": {
+                            "5ee42406-9f6c-fbe3-35ff-508ce9d1f294": {},
+                            "728ab7bc-8346-ae22-64f5-3a4815d79acc": {
+                                "permissionHidden": "",
+                                "readonly": ""
+                            },
+                            "83637e6f-3fe9-f5d3-0394-fb14a1ef53d3": {
+                                "permissionHidden": "",
+                                "readonly": ""
+                            },
+                            "b4c18e58-d844-b963-2770-3257d9c7cefe": {},
+                            "d1d6996e-389d-35e9-3acf-1f95d1c30cd1": {
+                                "permissionHidden": "",
+                                "readonly": ""
+                            },
+                            "e0225c76-302c-9aba-4b69-9cce67038591": {
+                                "permissionHidden": "",
+                                "readonly": ""
+                            },
+                            "f1926293-b24b-1c59-d60b-c0c9c520646f": {
+                                "permissionHidden": "",
+                                "readonly": ""
+                            },
+                            "fac6bdeb-6e9c-3eb1-3ecf-80d489711aba": {
+                                "permissionHidden": "",
+                                "readonly": ""
+                            },
+                            "ffa341f0-9905-34c5-6ffb-8e1fdb024561": {
+                                "permissionHidden": "",
+                                "readonly": ""
+                            }
+                        },
+                        "readonly": "",
+                        "readonlyLabel": "",
+                        "size": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
                     "className": "org.joget.apps.form.lib.TextField",
                     "properties": {
                         "encryption": "",
