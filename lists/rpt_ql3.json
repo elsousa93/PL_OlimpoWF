@@ -1,11 +1,107 @@
 {
     "actions": [],
     "binder": {
-        "className": "",
-        "name": "",
-        "properties": {}
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "id",
+            "sql": "SELECT det.c_n_wf_pl as WF,det.c_nome_banco AS Banco, det.c_categoria_processo AS Categoria, DATE_FORMAT(det.c_data_de_registo, \"%Y-%m-%d\") AS DataRegisto, \ndet.c_gestor_registo, det.c_gestor_deposito, det.c_gestor_validacao_deposito, det.c_gestor_validacao_pendencias, det.c_gestor_validacao_registo,\ndocs.id, dep.c_tipo_documento, dep.c_validacao_reg, 'DEPOSITO' AS TABELA_ERRO\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_docs_processo docs ON docs.id = pro.c_docs\nLEFT JOIN app_fd_check_op_reg_val_dep dep ON dep.c_fk = docs.id\nWHERE det.c_data_de_registo != '' AND dep.c_validacao_reg != ''\n"
+        }
     },
-    "columns": [],
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_0",
+            "label": "DataRegisto",
+            "name": "DataRegisto",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "Banco",
+            "name": "Banco",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_2",
+            "label": "WF",
+            "name": "WF",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_3",
+            "label": "c_gestor_registo",
+            "name": "c_gestor_registo",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "c_gestor_validacao_deposito",
+            "name": "c_gestor_validacao_deposito",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_5",
+            "label": "c_gestor_validacao_pendencias",
+            "name": "c_gestor_validacao_pendencias",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_6",
+            "label": "c_gestor_validacao_registo",
+            "name": "c_gestor_validacao_registo",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_7",
+            "label": "Categoria",
+            "name": "Categoria",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_8",
+            "label": "c_tipo_documento",
+            "name": "c_tipo_documento",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_9",
+            "label": "c_validacao_reg",
+            "name": "c_validacao_reg",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_10",
+            "label": "TABELA_ERRO",
+            "name": "TABELA_ERRO",
+            "sortable": "false"
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
     "description": "",
     "filters": [],
     "id": "rpt_ql3",
@@ -13,5 +109,8 @@
     "order": "",
     "orderBy": "",
     "pageSize": "0",
-    "rowActions": []
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "rowActions": [],
+    "showPageSizeSelector": "true",
+    "useSession": "false"
 }
