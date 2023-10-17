@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT det.c_n_wf_pl as WF,det.c_nome_banco AS Banco, det.c_categoria_processo AS Categoria, DATE_FORMAT(det.c_data_de_registo, \"%Y-%m-%d\") AS DataRegisto, \ndet.c_gestor_registo, det.c_gestor_deposito, det.c_gestor_validacao_deposito, det.c_gestor_validacao_pendencias, det.c_gestor_validacao_registo,\nato.c_dataOutorga AS DataAgendamento, ato.c_status as StatusAgendamento\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id\nWHERE ato.c_status != '' AND ato.c_status = 'OUT'\n\n\n\n\n"
+            "sql": "SELECT det.c_n_wf_pl as WF,det.c_nome_banco AS Banco, det.c_categoria_processo AS Categoria, DATE_FORMAT(det.c_data_de_pedido_registo, \"%Y-%m-%d\") AS PedidoRegisto, \ndet.c_gestor_registo, det.c_gestor_deposito, det.c_gestor_validacao_deposito, det.c_gestor_validacao_pendencias, det.c_gestor_validacao_registo,\nato.c_dataOutorga AS DataAgendamento, ato.c_status as StatusAgendamento\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id\nWHERE ato.c_status != '' AND ato.c_status = 'OUT'\n\n\n\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -89,26 +89,12 @@
             "width": ""
         },
         {
-            "action": {
-                "className": "",
-                "properties": {}
-            },
-            "alignment": "",
-            "datalist_type": "column",
-            "exclude_export": "",
             "filterable": true,
-            "format": {
-                "className": "",
-                "properties": {}
-            },
-            "headerAlignment": "",
             "hidden": "false",
-            "id": "column_19",
-            "label": "Data Registo",
-            "name": "DataRegisto",
-            "sortable": "false",
-            "style": "",
-            "width": ""
+            "id": "column_1",
+            "label": "PedidoRegisto",
+            "name": "PedidoRegisto",
+            "sortable": "false"
         },
         {
             "action": {
