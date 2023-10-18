@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT MONTH(det.c_data_de_pedido_registo) AS Mes, det.c_gestor_deposito, COUNT(docs.id) AS Erros\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_docs_processo docs ON docs.id = pro.c_docs\nLEFT JOIN app_fd_check_op_reg_val_dep dep ON dep.c_fk = docs.id\nWHERE dep.c_validacao_reg = 'NOK'\nGROUP BY Mes, det.c_gestor_deposito\n\n\n\n"
+            "sql": "SELECT MONTH(det.c_data_de_pedido_registo) AS Mes, det.c_gestor_registo, COUNT(docs.id) AS Erros\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_docs_processo docs ON docs.id = pro.c_docs\nLEFT JOIN app_fd_check_op_reg_qual ql ON ql.c_fk = docs.id\nWHERE ql.c_validacao_qual = 'NOK'\nGROUP BY Mes, det.c_gestor_registo\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -49,9 +49,9 @@
             },
             "headerAlignment": "",
             "hidden": "false",
-            "id": "column_4",
-            "label": "Gestor depósito",
-            "name": "c_gestor_deposito",
+            "id": "column_0",
+            "label": "Gestor Registo",
+            "name": "c_gestor_registo",
             "sortable": "false",
             "style": "",
             "width": ""
