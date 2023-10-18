@@ -6,18 +6,36 @@
             "className": "org.joget.apps.form.model.Column",
             "elements": [
                 {
-                    "className": "org.joget.apps.form.lib.TextField",
+                    "className": "org.joget.apps.form.lib.SelectBox",
                     "properties": {
-                        "encryption": "",
+                        "controlField": "",
                         "id": "codigo",
                         "label": "Código",
-                        "maxlength": "",
-                        "placeholder": "",
+                        "multiple": "",
+                        "options": [
+                            {
+                                "grouping": "",
+                                "label": "",
+                                "value": ""
+                            },
+                            {
+                                "grouping": "",
+                                "label": "PS04",
+                                "value": "PS04"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "PE05",
+                                "value": "PE05"
+                            }
+                        ],
+                        "optionsBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
                         "readonly": "",
                         "readonlyLabel": "",
                         "size": "",
-                        "storeNumeric": "",
-                        "style": "",
                         "validator": {
                             "className": "",
                             "properties": {}
@@ -27,18 +45,36 @@
                     }
                 },
                 {
-                    "className": "org.joget.apps.form.lib.TextField",
+                    "className": "org.joget.apps.form.lib.SelectBox",
                     "properties": {
-                        "encryption": "",
+                        "controlField": "",
                         "id": "descricao",
                         "label": "Descrição",
-                        "maxlength": "",
-                        "placeholder": "",
+                        "multiple": "",
+                        "options": [
+                            {
+                                "grouping": "",
+                                "label": "",
+                                "value": ""
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Despesas - Depósito de Contrato",
+                                "value": "PS04"
+                            },
+                            {
+                                "grouping": "",
+                                "label": "Despesas - Hipoteca",
+                                "value": "PE05"
+                            }
+                        ],
+                        "optionsBinder": {
+                            "className": "",
+                            "properties": {}
+                        },
                         "readonly": "",
                         "readonlyLabel": "",
                         "size": "",
-                        "storeNumeric": "",
-                        "style": "",
                         "validator": {
                             "className": "",
                             "properties": {}
@@ -94,6 +130,15 @@
                         },
                         "value": "",
                         "workflowVariable": ""
+                    }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field4",
+                        "label": "",
+                        "value": "<script>\n    $(document).ready(function(){\n        $(\"select#codigo\").change(function(){\n            var codigo = $(this).val();\n            var descricao = $(\"select#descricao\").val();\n            if(codigo !== descricao){\n               $(\"select#descricao\").val(codigo); \n            }\n        });\n        \n        $(\"select#descricao\").change(function(){\n            var descricao = $(this).val();\n            var codigo = $(\"select#codigo\").val();\n            if(codigo !== descricao){\n               $(\"select#codigo\").val(descricao); \n            }\n        });\n        \n        \n    });\n    \n    \n    \n    \n    \n<\/script>"
                     }
                 }
             ],
