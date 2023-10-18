@@ -1748,6 +1748,50 @@
                         "userviewCacheDuration": "20",
                         "userviewCacheScope": ""
                     }
+                },
+                {
+                    "className": "org.joget.plugin.enterprise.SqlChartMenu",
+                    "properties": {
+                        "binder": {
+                            "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+                            "properties": {
+                                "jdbcDatasource": "default",
+                                "optimisePaging": "",
+                                "primaryKey": "id",
+                                "sql": "SELECT ql.c_tipo_documento AS Tipo, COUNT(docs.id) AS Erros\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_docs_processo docs ON docs.id = pro.c_docs\nLEFT JOIN app_fd_check_op_reg_qual ql ON ql.c_fk = docs.id\nWHERE ql.c_validacao_qual = 'NOK'\nGROUP BY ql.c_tipo_documento"
+                            }
+                        },
+                        "categoryAxisLabel": "Categoria",
+                        "chartHeight": "80%",
+                        "chartType": "bar",
+                        "chartWidth": "100%",
+                        "colors": "",
+                        "customFooter": "",
+                        "customHeader": "",
+                        "customId": "rptch_qualidade_erros",
+                        "datasource": "binder",
+                        "enableOffline": "",
+                        "horizontal": "",
+                        "id": "9E7B0867F7114C899F39D44F7ADABEB8",
+                        "keyName": "",
+                        "label": "Qualidade - tipos de erro (ch)",
+                        "mapping_x": "Tipo",
+                        "mapping_ys": [{
+                            "legend": "Erros",
+                            "y": "Erros"
+                        }],
+                        "showLegend": "true",
+                        "showValueLabel": "true",
+                        "sortingOrder": "ASC",
+                        "sortingOrderByColumn": "",
+                        "stack": "",
+                        "title": "Chart Title",
+                        "userviewCacheDuration": "20",
+                        "userviewCacheScope": "",
+                        "valueAxisLabel": "Qt",
+                        "xAxisDisplayAS": "",
+                        "yaxisPrefix": ""
+                    }
                 }
             ],
             "properties": {
