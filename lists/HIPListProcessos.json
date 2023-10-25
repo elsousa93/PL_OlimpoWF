@@ -596,14 +596,14 @@
                     "controlField": "",
                     "defaultValue": "",
                     "multiple": "",
-                    "options": [],
+                    "options": [{
+                        "grouping": "",
+                        "label": "CV",
+                        "value": "cv"
+                    }],
                     "optionsBinder": {
-                        "className": "org.joget.apps.form.lib.BeanShellFormBinder",
-                        "properties": {
-                            "cacheInterval": "",
-                            "script": "import java.util.Collection;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.directory.model.User;\r\nimport org.joget.directory.model.service.ExtDirectoryManager;\r\n \r\npublic FormRowSet load(String[] values) {\r\n    FormRowSet rows = new FormRowSet();\r\n     \r\n    ExtDirectoryManager directoryManager = (ExtDirectoryManager) AppUtil.getApplicationContext().getBean(\"directoryManager\");\r\n     \r\n    //set groupId based on dependency value\r\n    String tipo_processo = null;\r\n    if (values != null && values.length > 0) {\r\n        tipo_processo = values[0];\r\n    }\r\n     \r\n    //Get users using directory manager\r\n    Collection userList = directoryManager.getUsers(null, null, null, null, groupId, null, null, \"firstName\", false, null, null);\r\n    for(Object u : userList){\r\n        User user = (User) u;\r\n        FormRow option = new FormRow();\r\n        option.setProperty(FormUtil.PROPERTY_VALUE, user.getUsername());\r\n        option.setProperty(FormUtil.PROPERTY_LABEL, user.getFirstName() + \" \" + user.getLastName());\r\n        rows.add(option);\r\n    }\r\n     \r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(values);",
-                            "useAjax": ""
-                        }
+                        "className": "",
+                        "properties": {}
                     },
                     "size": ""
                 }
