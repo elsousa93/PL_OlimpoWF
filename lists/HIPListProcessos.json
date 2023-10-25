@@ -591,8 +591,22 @@
             "label": "Tipo Processo",
             "name": "c_tipo_processo_final",
             "type": {
-                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
-                "properties": {"defaultValue": ""}
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "controlField": "",
+                    "defaultValue": "",
+                    "multiple": "",
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                        "properties": {
+                            "cacheInterval": "",
+                            "script": "import org.joget.apps.form.model.*;\r\n \r\nFormRowSet f = new FormRowSet();\r\nFormRow r1 = new FormRow();\r\nr1.put(\"Tipo Processo\", \"CV\");\r\nf.add(r1);\r\n \r\nreturn f;",
+                            "useAjax": ""
+                        }
+                    },
+                    "size": ""
+                }
             }
         },
         {
