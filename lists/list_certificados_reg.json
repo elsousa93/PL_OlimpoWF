@@ -45,6 +45,20 @@
                 "script": "import java.io.BufferedInputStream;\nimport java.io.FileOutputStream;\nimport java.io.IOException;\nimport java.net.URL;\nimport org.joget.commons.util.LogUtil;\n\npublic void downloadFile() {\n    \n    LogUtil.info(\"Repositório Certificados\", \"Download File\");\n            \n    URL url = new URL(\"http://192.168.0.104:8080/jw/web/client/app/workflowPL/5/form/download/importacao_certificados_reg/a544b135-ac84-4b06-8189-c7d32cb937b5/lu%20tem%20selo.pdf.\");\n    //String destino = \"file:///D:/Users/rgoncalves/Downloads/lu%20tem%20selo.pdf\";\n    \n    InputStream inputStream = url.openStream();\n    FileOutputStream fileOutputStream = new FileOutputStream(\"pdf/java_book.pdf\");\n    \n    byte[] bytes = new byte[1024];\n    int len;\n    \n    while((len = inputStream.read(bytes)) != -1){\n        fileOutputStream.write(bytes, 0, len);\n    }\n    \n    fileOutputStream.close();\n    inputStream.close();\n    \n     LogUtil.info(\"Repositório Certificados 2\", \"Download File\");\n}\n\n   \n\ndownloadFile();"
             },
             "type": "text"
+        },
+        {
+            "className": "org.joget.plugin.enterprise.BeanShellDatalistAction",
+            "icon": "<i class=\"fas fa-code\"><\/i>",
+            "id": "action_3",
+            "label": "Bean Shell",
+            "name": "Bean Shell Datalist Action",
+            "properties": {
+                "confirmation": "",
+                "datalist_type": "action",
+                "label": "EXPORTAR",
+                "script": "import java.io.BufferedInputStream;\nimport java.io.FileOutputStream;\nimport java.io.IOException;\nimport java.net.URL;\nimport org.joget.commons.util.LogUtil;\n\npublic void downloadFile() {\n    \n    LogUtil.info(\"Repositório Certificados\", \"Download File\");\n            \n    URL url = new URL(\"http://192.168.0.104:8080/jw/web/client/app/workflowPL/5/form/download/importacao_certificados_reg/a544b135-ac84-4b06-8189-c7d32cb937b5/lu%20tem%20selo.pdf.\");\n    //String destino = \"file:///D:/Users/rgoncalves/Downloads/lu%20tem%20selo.pdf\";\n    \n    BufferedInputStream in = new BufferedInputStream(new URL(\"http://192.168.0.104:8080/jw/web/client/app/workflowPL/5/form/download/importacao_certificados_reg/a544b135-ac84-4b06-8189-c7d32cb937b5/lu%20tem%20selo.pdf.\").openStream())\n    byte data[] = new byte[1024];\n    int count;\n    while((count = in.read(data, 0, 1024)) != -1)\n    {\n        out.write(data, 0, count);\n    }\n}\n\n   \n\ndownloadFile();"
+            },
+            "type": "text"
         }
     ],
     "binder": {
