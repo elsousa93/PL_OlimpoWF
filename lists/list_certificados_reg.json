@@ -45,6 +45,20 @@
                 "script": "import java.io.*;\nimport java.net.HttpURLConnection;\nimport java.net.URL;\nimport org.joget.commons.util.LogUtil;\n\n\npublic void downloadFile() {\n    \n   String fileUrl = \"https://www.metrolisboa.pt/wp-content/uploads/2022/06/Metropolitano-De_Lisboa_Diagrama-da-Rede_maio2022.pdf\";\n   \n   try {\n       URL url = new URL(fileUrl);\n       LogUtil.info(\"STRING\", \"STRING\");\n       \n       HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();\n       int responseCode = httpURLConnection.getResponseCode();\n       if (responseCode == HttpURLConnection.HTTP_OK) {\n           LogUtil.info(\"STRING\", \"STRING 2\");\n           InputStream inputStream = httpURLConnection.getInputStream();\n           // Crie um OutputStream para escrever os dados no cliente (resposta)\n           OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(\"D:/Users/rgoncalves/Downloads\"));\n           // Leia os dados do InputStream e escreva no OutputStream\n           byte[] buffer = new byte[1024];\n           int bytesRead;\n           while ((bytesRead = inputStream.read(buffer)) != -1) {\n               outputStream.write(buffer, 0, bytesRead);\n           }\n           // Feche os fluxos\n           inputStream.close();\n           outputStream.close();\n           System.out.println(\"Download e envio para o cliente concluídos com sucesso.\");\n       } else {\n           System.out.println(\"Falha na conexão. Código de resposta: \" + responseCode);\n       }\n   } catch (IOException e) {\n       e.printStackTrace();\n   }\n}\n\ndownloadFile();"
             },
             "type": "text"
+        },
+        {
+            "className": "org.joget.plugin.enterprise.BeanShellDatalistAction",
+            "icon": "<i class=\"fas fa-code\"><\/i>",
+            "id": "action_1",
+            "label": "Bean Shell",
+            "name": "Bean Shell Datalist Action",
+            "properties": {
+                "confirmation": "",
+                "datalist_type": "action",
+                "label": "DUDU",
+                "script": "import org.apache.commons.io.IOUtils;\nimport java.io.File;\nimport java.io.FileInputStream;\nimport java.io.IOException;\nimport java.io.OutputStream;\nimport java.net.URL;\nimport com.sun.net.httpserver.HttpServer;\nimport com.sun.net.httpserver.HttpHandler;\nimport com.sun.net.httpserver.HttpExchange;\n \n// Replace this with your file URL\nString fileURL = \"https://www.metrolisboa.pt/wp-content/uploads/2022/06/Metropolitano-De_Lisboa_Diagrama-da-Rede_maio2022.pdf\";\n \nHttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);\n \nserver.createContext(\"/download\", new HttpHandler() {\n    @Override\n    public void handle(HttpExchange exchange) throws IOException {\n        try {\n            URL url = new URL(fileURL);\n \n            // Extract the filename from the URL\n            String fileName = url.getFile().substring(url.getFile().lastIndexOf(\"/\") + 1);\n \n            // Create a connection to the remote file\n            try (InputStream inputStream = url.openStream()) {\n                exchange.sendResponseHeaders(200, 0);\n                OutputStream os = exchange.getResponseBody();\n                IOUtils.copy(inputStream, os);\n                os.close();\n            } catch (IOException e) {\n                e.printStackTrace();\n                exchange.sendResponseHeaders(500, 0);\n            }\n        } catch (Exception e) {\n            e.printStackTrace();\n            exchange.sendResponseHeaders(500, 0);\n        } finally {\n            exchange.close();\n        }\n    }\n});\n \nserver.setExecutor(null); // creates a default executor\nserver.start();"
+            },
+            "type": "text"
         }
     ],
     "binder": {
