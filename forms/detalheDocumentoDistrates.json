@@ -338,7 +338,7 @@
                         "autoPopulate": "",
                         "id": "field15",
                         "label": "",
-                        "value": "<script>\n    $(document).ready(function(){\n        removerStatusOptions();\n    });\n\n    \n    function removerStatusOptions(){\n        var nome_banco = $(\"select[id*=nome_banco]\").val();\n        if(nome_banco === 'BIC'){\n            $(\"select[id*=tipo_documento] option[value=CARP],[value=PPL]\").remove();\n        }\n        \n  }   \n    \n    }\n<\/script>"
+                        "value": "<script>\n    $(document).ready(function(){\n        removerStatusOptions();\n    });\n\n    \n    function removerStatusOptions(){\n        \n        var formData = window.getFormData(document.getElementById(\"detalheProcessoDistrates\"));\n        var valor = formData.get(\"nome_banco\");\n        if(nome_banco === 'BIC'){\n            $(\"select[id*=tipo_documento] option[value=CARP],[value=PPL]\").remove();\n        }\n        \n  }   \n    \n    }\n<\/script>"
                     }
                 }
             ],
