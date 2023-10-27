@@ -280,6 +280,15 @@
                         "label": "",
                         "value": "<script type=\"text/javascript\">\r\n\r\n$(function(){\r\n    \r\n    var assignmentButton;\r\n    \r\n    nomeBotao();\r\n    \r\n    $(\"select[name*=multiPaged_1_menuPrincipal2_envio_processo]\").on('change', function() {\r\n        nomeBotao();\r\n    });\r\n    \r\n    $(window).on('load', function() {\r\n        nomeBotao();\r\n    });\r\n    \r\n    $(\"div[id*=valido_para_registos]\").change(function() {\r\n        nomeBotao();\r\n    });\r\n    \r\n    /*Botão Assignment Complete*/\r\n    function nomeBotao(){\r\n        \r\n        var flagUltimaAtividade='#variable.flag_ultima_atividade#';\r\n        var proxFase = '';\r\n        \r\n        assignmentButton = \"ENVIAR PARA \";\r\n         \r\n        if(flagUltimaAtividade == 0) {\r\n            \r\n            // Remover Select de \"enviar para\" (Só pode ir para Validação Final)\r\n            $(\"select[id*=multiPaged_1_menuPrincipal2_envio_processo]\").parent().remove();\r\n            \r\n            assignmentButton += \"VALIDAÇÃO FINAL\";\r\n        } else if(flagUltimaAtividade == 1) {\r\n            \r\n            proxFase = $(\"select[id*=multiPaged_1_menuPrincipal2_envio_processo]\").val();\r\n            \r\n            if (proxFase !== undefined) {\r\n                assignmentButton += proxFase.toUpperCase();    \r\n            }\r\n        \t\r\n        } else {\r\n            assignmentButton = \"PROXIMA ATIVIDADE\";\r\n        }\r\n        \r\n        $(\"#assignmentComplete\").val(assignmentButton);\r\n    }\r\n    \r\n    //Botão Guardar\r\n    $(\"#saveAsDraft\").val(\"GUARDAR\");\r\n    \r\n    //Botão Cancelar\r\n    $(\"#cancel\").text(\"CANCELAR\");\r\n    \r\n});\r\n\r\n<\/script>"
                     }
+                },
+                {
+                    "className": "org.joget.apps.form.lib.CustomHTML",
+                    "properties": {
+                        "autoPopulate": "",
+                        "id": "field9",
+                        "label": "",
+                        "value": "<script type=\"text/javascript\">\r\n    $(document).ready(function(){\r\n        \r\n        $(\"button[name=cancel]\").click(function() {\r\n            window.sessionStorage.setItem(\"button\", \"null\");\r\n            window.sessionStorage.setItem(\"previousPage\", \"processo\");\r\n        });\r\n        \r\n        $(\"form\").submit(function() {\r\n            var btnVal = $(document.activeElement).val();\r\n            \r\n            if(btnVal === 'GUARDAR'){\r\n                window.sessionStorage.setItem(\"button\", \"guardar\");\r\n            } else if(btnVal === \"REALOCAR\"  || btnVal.includes(\"ENVIAR PARA\")){\r\n                window.sessionStorage.setItem(\"button\", \"null\");\r\n            } else {\r\n                window.sessionStorage.setItem(\"button\", \"tabChange\");\r\n            }\r\n            \r\n        });\r\n    });\r\n    \r\n<\/script>\r\n"
+                    }
                 }
             ],
             "properties": {"width": "100%"}
