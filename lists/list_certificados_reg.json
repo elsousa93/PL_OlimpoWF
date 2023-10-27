@@ -1,66 +1,22 @@
 {
-    "actions": [
-        {
-            "className": "org.joget.apps.datalist.lib.FormRowDeleteDataListAction",
-            "icon": "<i class=\"fas fa-trash-alt\"><\/i>",
-            "id": "action_0",
-            "label": "Delete",
-            "name": "Form Row Delete Action",
-            "properties": {
-                "abortRelatedRunningProcesses": "",
-                "confirmation": "",
-                "datalist_type": "action",
-                "deleteFiles": "",
-                "deleteGridData": "",
-                "deleteSubformData": "",
-                "formDefId": "importacao_certificados_reg",
-                "label": "ELIMINAR"
-            },
-            "type": "text"
+    "actions": [{
+        "className": "org.joget.apps.datalist.lib.FormRowDeleteDataListAction",
+        "icon": "<i class=\"fas fa-trash-alt\"><\/i>",
+        "id": "action_0",
+        "label": "Delete",
+        "name": "Form Row Delete Action",
+        "properties": {
+            "abortRelatedRunningProcesses": "",
+            "confirmation": "",
+            "datalist_type": "action",
+            "deleteFiles": "",
+            "deleteGridData": "",
+            "deleteSubformData": "",
+            "formDefId": "importacao_certificados_reg",
+            "label": "ELIMINAR"
         },
-        {
-            "className": "org.joget.plugin.enterprise.BeanShellDatalistAction",
-            "icon": "<i class=\"fas fa-code\"><\/i>",
-            "id": "action_2",
-            "label": "Bean Shell",
-            "name": "Bean Shell Datalist Action",
-            "properties": {
-                "confirmation": "",
-                "datalist_type": "action",
-                "label": "FUNCIONA NA MÁQUINA",
-                "script": "import java.net.URL;\nimport java.net.URLConnection;\nimport java.io.FileOutputStream;\nimport java.io.InputStream;\nimport java.io.InputStream;\nimport java.io.OutputStream;\nimport java.net.URLConnection;\nimport org.apache.commons.io.IOUtils;\nimport org.joget.commons.util.LogUtil;\nimport java.io.File;\n \npublic void downloadFile() {\n    //LogUtil.info(\"Repositório Certificados\", \"Download File\");\n    String fileLink = \"https://www.metrolisboa.pt/wp-content/uploads/2022/06/Metropolitano-De_Lisboa_Diagrama-da-Rede_maio2022.pdf\";\n    //String savePath = \"C:\" + File.separator + \"Users\" + File.separator + \"duart\" + File.separator + \"Desktop\" + File.separator + \"Teste\" + File.separator + \"Metropolitano-De_Lisboa_Diagrama-da-Rede_maio2022.pdf\";\n    \n    // Extract the filename from the URL    \n    String fileName = fileLink.substring(fileLink.lastIndexOf(\"/\") + 1);     \n    \n    // Hardcoded save path with File.separator for the separator    \n    String savePath = \"C:/Users/Administrador/Downloads\";  \n    String savePath = savePath + File.separator + fileName;\n    URL url = new URL(fileLink);\n    URLConnection connection = url.openConnection();\n    LogUtil.info(\"Repositório Certificados\", \"SAVE PATH\" + savePath);\n    URL url = new URL(fileLink);     \n    InputStream inputStream = url.openStream();     \n    \n    // Download the file using Apache Commons IO    \n    IOUtils.copy(inputStream, new FileOutputStream(savePath));\n    //LogUtil.info(\"Repositório Certificados 2\", \"Download File\");\n}\n \n   \n \ndownloadFile();"
-            },
-            "type": "text"
-        },
-        {
-            "className": "org.joget.plugin.enterprise.BeanShellDatalistAction",
-            "icon": "<i class=\"fas fa-code\"><\/i>",
-            "id": "action_4",
-            "label": "Bean Shell",
-            "name": "Bean Shell Datalist Action",
-            "properties": {
-                "confirmation": "",
-                "datalist_type": "action",
-                "label": "EXPORTAR 4",
-                "script": "import java.io.*;\nimport java.net.HttpURLConnection;\nimport java.net.URL;\nimport org.joget.commons.util.LogUtil;\n\n\npublic void downloadFile() {\n    \n   String fileUrl = \"https://www.metrolisboa.pt/wp-content/uploads/2022/06/Metropolitano-De_Lisboa_Diagrama-da-Rede_maio2022.pdf\";\n   \n   try {\n       URL url = new URL(fileUrl);\n       LogUtil.info(\"STRING\", \"STRING\");\n       \n       HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();\n       int responseCode = httpURLConnection.getResponseCode();\n       if (responseCode == HttpURLConnection.HTTP_OK) {\n           LogUtil.info(\"STRING\", \"STRING 2\");\n           InputStream inputStream = httpURLConnection.getInputStream();\n           // Crie um OutputStream para escrever os dados no cliente (resposta)\n           OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(\"D:/Users/rgoncalves/Downloads\"));\n           // Leia os dados do InputStream e escreva no OutputStream\n           byte[] buffer = new byte[1024];\n           int bytesRead;\n           while ((bytesRead = inputStream.read(buffer)) != -1) {\n               outputStream.write(buffer, 0, bytesRead);\n           }\n           // Feche os fluxos\n           inputStream.close();\n           outputStream.close();\n           System.out.println(\"Download e envio para o cliente concluídos com sucesso.\");\n       } else {\n           System.out.println(\"Falha na conexão. Código de resposta: \" + responseCode);\n       }\n   } catch (IOException e) {\n       e.printStackTrace();\n   }\n}\n\ndownloadFile();"
-            },
-            "type": "text"
-        },
-        {
-            "className": "org.joget.plugin.enterprise.BeanShellDatalistAction",
-            "icon": "<i class=\"fas fa-code\"><\/i>",
-            "id": "action_1",
-            "label": "Bean Shell",
-            "name": "Bean Shell Datalist Action",
-            "properties": {
-                "confirmation": "",
-                "datalist_type": "action",
-                "label": "DUDU",
-                "script": "import org.apache.commons.io.IOUtils;\nimport java.io.File;\nimport java.io.FileInputStream;\nimport java.io.IOException;\nimport java.io.OutputStream;\nimport java.net.URL;\nimport com.sun.net.httpserver.HttpServer;\nimport com.sun.net.httpserver.HttpHandler;\nimport com.sun.net.httpserver.HttpExchange;\nimport org.joget.commons.util.LogUtil;\n\n \n    // Replace this with your file URL\n    String fileURL = \"https://www.metrolisboa.pt/wp-content/uploads/2022/06/Metropolitano-De_Lisboa_Diagrama-da-Rede_maio2022.pdf\";\n     \n    HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);\n     \n    server.createContext(\"/download\", new HttpHandler() {\n        @Override\n        public void handle(HttpExchange exchange) throws IOException {\n            try {\n                \n                LogUtil.info(\"STRING\", \"STRING\");\n                URL url = new URL(fileURL);\n     \n                // Extract the filename from the URL\n                String fileName = url.getFile().substring(url.getFile().lastIndexOf(\"/\") + 1);\n     \n                // Create a connection to the remote file\n                try (InputStream inputStream = url.openStream()) {\n                    exchange.sendResponseHeaders(200, 0);\n                    OutputStream os = exchange.getResponseBody();\n                    IOUtils.copy(inputStream, os);\n                    os.close();\n                } catch (IOException e) {\n                    e.printStackTrace();\n                    exchange.sendResponseHeaders(500, 0);\n                }\n            } catch (Exception e) {\n                e.printStackTrace();\n                exchange.sendResponseHeaders(500, 0);\n            } finally {\n                exchange.close();\n            }\n        }\n    });\n     \n    server.setExecutor(null); // creates a default executor\n    server.start();"
-            },
-            "type": "text"
-        }
-    ],
+        "type": "text"
+    }],
     "binder": {
         "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
         "properties": {
