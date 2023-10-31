@@ -10049,7 +10049,7 @@
             {
                 "permission": {
                     "className": "org.joget.apps.userview.lib.BeanShellPermission",
-                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString group = \"#currentUser.groups.id#\";\nString ambiente = \"#envVariable.passagem#\"; //Se for 3 é produção\nBoolean coordenador = false;\n\nString[] groups = group.split(\";\");\n\nfor (String group : groups) {\n    if (group.equals(\"Coordenador\")) {\n        coordenador = true;\n    }\n}\n\nif(coordenador && ambiente.equals(\"1\")) {\n    return true;\n} else {\n    return false;\n}"}
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString group = \"#currentUser.groups.id#\";\nString ambiente = \"#envVariable.passagem#\"; //Se for 3 é produção\nBoolean coordenador = false;\n\nString[] groups = group.split(\";\");\n\nfor (String group : groups) {\n    if (group.equals(\"Coordenador\")) {\n        coordenador = true;\n    }\n}\n\nif(coordenador && ambiente.equals(\"3\")) {\n    return true;\n} else {\n    return false;\n}"}
                 },
                 "permission_key": "a5cf926b-8982-506a-191d-02e9a9372eee",
                 "permission_name": "Coordenadores Produção - Só para CH"
