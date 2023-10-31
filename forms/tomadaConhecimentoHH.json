@@ -70,6 +70,19 @@
                     }
                 },
                 {
+                    "className": "org.joget.apps.form.lib.HiddenField",
+                    "properties": {
+                        "id": "atualizar_historico",
+                        "useDefaultWhenEmpty": "",
+                        "validator": {
+                            "className": "",
+                            "properties": {}
+                        },
+                        "value": "",
+                        "workflowVariable": ""
+                    }
+                },
+                {
                     "className": "org.joget.apps.form.lib.TextField",
                     "properties": {
                         "encryption": "",
@@ -1083,7 +1096,7 @@
                         "autoPopulate": "",
                         "id": "atualizar",
                         "label": "",
-                        "value": "<script>\n\n    $(document).ready(function(){\n        //Atualizar valor do hidden field do envio_processo\n        $('input[id*=atualizar_fase]').val(\"#form.detalhe_proce_hh.faseProcesso[{form.processos_hh.detalhe_processo}]#\");\n    });\n    \n     $(document).change(function(){\n        //Atualizar valor do hidden field do envio_processo\n        if( $(\"input[name$=_pendentes_tc]\").is(\":checked\") === true){\n            $(\"select[name$=_pendencias_1]\").parent().show();\n        } else {\n            $(\"select[name$=_pendencias_1]\").parent().hide();\n        }\n        if( $(\"input[name$=_devolvido_tc]\").is(\":checked\") === true){\n            $(\"select[name$=_motivo_tc]\").parent().show();\n        }else{\n            $(\"select[name$=_motivo_tc]\").parent().hide(); \n        }\n    });\n\n    \n<\/script>"
+                        "value": "<script>\n\n    $(document).ready(function(){\n        //Atualizar valor do hidden field do envio_processo\n        $('input[id*=atualizar_fase]').val(\"#form.detalhe_proce_hh.faseProcesso[{form.processos_hh.detalhe_processo}]#\");\n        $('input[id*=atualizar_historico]').val(\"#form.detalhe_proce_hh.historico[{form.processos_hh.detalhe_processo}]#\");\n    });\n    \n     $(document).change(function(){\n        //Atualizar valor do hidden field do envio_processo\n        if( $(\"input[name$=_pendentes_tc]\").is(\":checked\") === true){\n            $(\"select[name$=_pendencias_1]\").parent().show();\n        } else {\n            $(\"select[name$=_pendencias_1]\").parent().hide();\n        }\n        if( $(\"input[name$=_devolvido_tc]\").is(\":checked\") === true){\n            $(\"select[name$=_motivo_tc]\").parent().show();\n        }else{\n            $(\"select[name$=_motivo_tc]\").parent().hide(); \n        }\n    });\n\n    \n<\/script>"
                     }
                 }
             ],
