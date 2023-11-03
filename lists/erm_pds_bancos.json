@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT MAX(det.c_data_entrada) AS Data_entrada, det.c_nome_banco AS Banco, Count(det.c_id_processo) as Processos\nFROM app_fd_detalhe_processo det\nWHERE det.c_nome_banco != ''\nGroup BY Banco\nORDER BY Banco\n\n\n"
+            "sql": "SELECT det.c_nome_banco AS Banco, Count(det.c_id_processo) AS Processos\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nGROUP BY  Banco\nORDER BY Banco\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -96,7 +96,7 @@
     }],
     "hidePageSize": "",
     "id": "erm_pds_bancos",
-    "name": "RPT - Processos por banco Totais",
+    "name": "RPTds - Processos por banco",
     "order": "1",
     "orderBy": "",
     "pageSize": "100",
