@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT pro.c_servico AS Servico,det.c_nome_banco AS Banco, det.c_n_wf_pl AS WF,\nato.c_status AS Status, ato.c_data_solicitada, ato.c_dataOutorga\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id\nWHERE ato.c_status != ''\n\n\n"
+            "sql": "SELECT pro.c_servico AS Servico,det.c_nome_banco AS Banco, det.c_n_wf_pl AS WF,\nato.c_status AS Status, ato.c_data_solicitada, ato.c_dataOutorga, ato.c_motivo_desc AS MOTIVO_DES, ato.c_motivo_desmarcacao_ato AS MOTIVO_DES_ATO\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id\nWHERE ato.c_status != ''\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -139,6 +139,22 @@
             "sortable": "false",
             "style": "",
             "width": ""
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "MOTIVO_DES",
+            "name": "MOTIVO_DES",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_5",
+            "label": "MOTIVO_DES_ATO",
+            "name": "MOTIVO_DES_ATO",
+            "sortable": "false"
         }
     ],
     "considerFilterWhenGetTotal": "",
