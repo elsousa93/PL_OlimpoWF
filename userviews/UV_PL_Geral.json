@@ -971,18 +971,32 @@
                         "id": "9B42D9DBABCF4466826ED57D308C3A69",
                         "label": "Geral",
                         "mode": "url",
-                        "urlPortletSetting": [{
-                            "autoHeight": "true",
-                            "autoReload": "",
-                            "fixed": "false",
-                            "height": "",
-                            "label": "Processos por banco",
-                            "resizable": "false",
-                            "url": "rptds_processos_bancos?embed=true",
-                            "width": "1",
-                            "x": "",
-                            "y": ""
-                        }],
+                        "urlPortletSetting": [
+                            {
+                                "autoHeight": "true",
+                                "autoReload": "",
+                                "fixed": "false",
+                                "height": "",
+                                "label": "Processos por banco",
+                                "resizable": "false",
+                                "url": "rptds_processos_bancos?embed=true",
+                                "width": "1",
+                                "x": "",
+                                "y": ""
+                            },
+                            {
+                                "autoHeight": "false",
+                                "autoReload": "",
+                                "fixed": "false",
+                                "height": "",
+                                "label": "Processos por banco",
+                                "resizable": "false",
+                                "url": "rptch_geral_processos_banco?embed=true",
+                                "width": "1",
+                                "x": "",
+                                "y": ""
+                            }
+                        ],
                         "userviewCacheDuration": "20",
                         "userviewCacheScope": ""
                     }
@@ -1403,7 +1417,7 @@
                         "enableOffline": "",
                         "id": "9630B2118B144E4EAB431FDEBD877F36",
                         "keyName": "",
-                        "label": "Geral - processos por banco",
+                        "label": "Geral - processos por banco (ds)",
                         "permission_rules": {
                             "08b69e0d-1ad0-f127-2c0e-3d119e36fc33": {},
                             "15aa4e8f-818c-b980-5741-7dc48d2fab49": {},
@@ -1430,6 +1444,50 @@
                         "selectionType": "multiple",
                         "userviewCacheDuration": "20",
                         "userviewCacheScope": ""
+                    }
+                },
+                {
+                    "className": "org.joget.plugin.enterprise.SqlChartMenu",
+                    "properties": {
+                        "binder": {
+                            "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+                            "properties": {
+                                "jdbcDatasource": "default",
+                                "optimisePaging": "",
+                                "primaryKey": "id",
+                                "sql": "SELECT det.c_nome_banco AS Banco, Count(det.c_id_processo) AS Processos\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nGROUP BY  Banco\nORDER BY Banco"
+                            }
+                        },
+                        "categoryAxisLabel": "Banco",
+                        "chartHeight": "80%",
+                        "chartType": "bar",
+                        "chartWidth": "100%",
+                        "colors": "",
+                        "customFooter": "",
+                        "customHeader": "",
+                        "customId": "rptch_geral_processos_banco",
+                        "datasource": "binder",
+                        "enableOffline": "",
+                        "horizontal": "",
+                        "id": "CA4F3333E4D549029D9C1944BE569837",
+                        "keyName": "",
+                        "label": "Geral - Processos por banco (ch)",
+                        "mapping_x": "Banco",
+                        "mapping_ys": [{
+                            "legend": "Processos",
+                            "y": "Processos"
+                        }],
+                        "showLegend": "",
+                        "showValueLabel": "",
+                        "sortingOrder": "ASC",
+                        "sortingOrderByColumn": "",
+                        "stack": "",
+                        "title": "",
+                        "userviewCacheDuration": "20",
+                        "userviewCacheScope": "",
+                        "valueAxisLabel": "Processso",
+                        "xAxisDisplayAS": "",
+                        "yaxisPrefix": ""
                     }
                 },
                 {
