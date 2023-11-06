@@ -6,12 +6,34 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "idProc",
-            "sql": "SELECT p.id as idProc, dp.c_n_processo as NProc, dp.c_n_agenda as NAgenda, dp.c_banco_fundo as Banco, dp.c_tipo_processo as TipoProcesso, \nsp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee, p.dateCreated, \nsact.Id AS ActivityId, hpp.c_gestor, hpp.c_data_puxar, ato.c_status as EstadoAgendamento\nFROM shkprocesses sp \nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id \nLEFT JOIN app_fd_processos_procu p on sp.ActivityRequesterProcessId = p.id \nLEFT JOIN app_fd_detalhe_proce_procu dp ON dp.id = p.c_detalhe_processo LEFT JOIN shkprocessstates sps ON sps.oid = sp.State \nLEFT JOIN app_fd_atos ato ON ato.c_id_processo = p.id\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id LEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State \nLEFT JOIN (SELECT id, t.c_id_processo, t.c_gestor, c_data_puxar FROM (SELECT MAX(c_data_puxar) as max_date, h.c_id_processo FROM app_fd_hist_puxar_procu h WHERE h.c_gestor != 'procuradoria_geral' GROUP BY h.c_id_processo) r \nINNER JOIN app_fd_hist_puxar_procu t ON r.c_id_processo = t.c_id_processo AND r.max_date = t.c_data_puxar AND c_gestor != 'procuradoria_geral') hpp ON hpp.c_id_processo = p.id \nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId \nWHERE sps.KeyValue LIKE 'open.running' AND p.id is not null AND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND (ato.dateCreated = (SELECT MAX(dateCreated) FROM app_fd_atos a2 WHERE a2.c_id_processo = p.id) || ato.dateCreated IS null)\nAND sp.id like '%PCDProcuradoria%' AND sass.ResourceId LIKE \"%procuradoria_geral%\""
+            "sql": "SELECT p.id as idProc, dp.c_n_processo as NProc, dp.c_n_agenda as NAgenda, dp.c_banco_fundo as Banco, dp.c_tipo_processo as TipoProcesso, \nsp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee, p.dateCreated, \nsact.Id AS ActivityId, hpp.c_gestor, hpp.c_data_puxar, ato.c_status as EstadoAgendamento, ato.c_flag_alteracoes_agenda as FlagAlteracoesAgenda\nFROM shkprocesses sp \nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id \nLEFT JOIN app_fd_processos_procu p on sp.ActivityRequesterProcessId = p.id \nLEFT JOIN app_fd_detalhe_proce_procu dp ON dp.id = p.c_detalhe_processo LEFT JOIN shkprocessstates sps ON sps.oid = sp.State \nLEFT JOIN app_fd_atos ato ON ato.c_id_processo = p.id\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id LEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State \nLEFT JOIN (SELECT id, t.c_id_processo, t.c_gestor, c_data_puxar FROM (SELECT MAX(c_data_puxar) as max_date, h.c_id_processo FROM app_fd_hist_puxar_procu h WHERE h.c_gestor != 'procuradoria_geral' GROUP BY h.c_id_processo) r \nINNER JOIN app_fd_hist_puxar_procu t ON r.c_id_processo = t.c_id_processo AND r.max_date = t.c_data_puxar AND c_gestor != 'procuradoria_geral') hpp ON hpp.c_id_processo = p.id \nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId \nWHERE sps.KeyValue LIKE 'open.running' AND p.id is not null AND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND (ato.dateCreated = (SELECT MAX(dateCreated) FROM app_fd_atos a2 WHERE a2.c_id_processo = p.id) || ato.dateCreated IS null)\nAND sp.id like '%PCDProcuradoria%' AND sass.ResourceId LIKE \"%procuradoria_geral%\""
         }
     },
     "buttonPosition": "bottomLeft",
     "checkboxPosition": "left",
     "columns": [
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.BeanShellFormatter",
+                "properties": {"script": "\n\nString result = \"\";\nif(value != null && !value.isEmpty() && !value.trim().equals(\"\")) {\n    if(value.equals(\"1\"))\n        result = \"Sim\";\n}\n\nreturn result;\n"}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_8",
+            "label": "FlagAlteracoesAgenda",
+            "name": "FlagAlteracoesAgenda",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
         {
             "action": {
                 "className": "",
