@@ -11,7 +11,9 @@
                 "1081155f-1700-be08-9c6f-364a49cf8d0b": {"hidden": ""},
                 "230d5174-9050-f08d-3232-ba468273f0d2": {},
                 "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
+                "4f5f803a-82b4-5e06-b70e-1744fac306b9": {},
                 "5ef76f30-3a46-461b-e85b-26e07d368c1e": {"hidden": "true"},
+                "74fcbc80-3b3c-84e3-a67b-7f23093fa6ee": {},
                 "7acc8ca8-49d2-41f4-f9fe-98060e5c2333": {},
                 "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {"hidden": "true"}
             },
@@ -34,7 +36,11 @@
             "id": "action_1",
             "label": "Delete",
             "name": "Form Row Delete Action",
-            "permission_rules": {"230d5174-9050-f08d-3232-ba468273f0d2": {}},
+            "permission_rules": {
+                "230d5174-9050-f08d-3232-ba468273f0d2": {},
+                "4f5f803a-82b4-5e06-b70e-1744fac306b9": {},
+                "74fcbc80-3b3c-84e3-a67b-7f23093fa6ee": {}
+            },
             "properties": {
                 "abortRelatedRunningProcesses": "true",
                 "confirmation": "",
@@ -54,7 +60,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "idDist",
-            "sql": "SELECT p.id as idDist, dp.c_num_pedido as NumPedido, p.dateCreated as DataCriacao ,dp.c_num_workflow as NumWorkflow, dp.c_nome_banco as Banco, dp.c_nif as NIF , dp.c_tipo_distrate as TipoDistrate, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos_distrates p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_proce_dist dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nWHERE sps.KeyValue LIKE 'open.running'\nAND p.id is not null\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id like '%DSTDistrates%'"
+            "sql": "SELECT p.id as idDist, dp.c_num_pedido as NumPedido, p.dateCreated as DataCriacao ,dp.c_num_workflow as NumWorkflow,dp.c_numero_cliente as NumeroCliente, dp.c_nome_banco as Banco, dp.c_nif as NIF , dp.c_tipo_distrate as TipoDistrate, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos_distrates p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_proce_dist dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nWHERE sps.KeyValue LIKE 'open.running'\nAND p.id is not null\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id like '%DSTDistrates%'"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -66,7 +72,11 @@
             "id": "column_1",
             "label": "NumPedido",
             "name": "NumPedido",
-            "permission_rules": {"230d5174-9050-f08d-3232-ba468273f0d2": {}},
+            "permission_rules": {
+                "230d5174-9050-f08d-3232-ba468273f0d2": {},
+                "4f5f803a-82b4-5e06-b70e-1744fac306b9": {},
+                "74fcbc80-3b3c-84e3-a67b-7f23093fa6ee": {}
+            },
             "sortable": "false"
         },
         {
@@ -75,7 +85,11 @@
             "id": "column_3",
             "label": "NumWorkflow",
             "name": "NumWorkflow",
-            "permission_rules": {"230d5174-9050-f08d-3232-ba468273f0d2": {}},
+            "permission_rules": {
+                "230d5174-9050-f08d-3232-ba468273f0d2": {},
+                "4f5f803a-82b4-5e06-b70e-1744fac306b9": {},
+                "74fcbc80-3b3c-84e3-a67b-7f23093fa6ee": {}
+            },
             "sortable": "false"
         },
         {
@@ -100,7 +114,11 @@
             "id": "column_6",
             "label": "DataCriacao",
             "name": "DataCriacao",
-            "permission_rules": {"230d5174-9050-f08d-3232-ba468273f0d2": {}},
+            "permission_rules": {
+                "230d5174-9050-f08d-3232-ba468273f0d2": {},
+                "4f5f803a-82b4-5e06-b70e-1744fac306b9": {},
+                "74fcbc80-3b3c-84e3-a67b-7f23093fa6ee": {}
+            },
             "sortable": "false",
             "style": "",
             "width": ""
@@ -111,7 +129,11 @@
             "id": "column_5",
             "label": "TipoDistrate",
             "name": "TipoDistrate",
-            "permission_rules": {"230d5174-9050-f08d-3232-ba468273f0d2": {}},
+            "permission_rules": {
+                "230d5174-9050-f08d-3232-ba468273f0d2": {},
+                "4f5f803a-82b4-5e06-b70e-1744fac306b9": {},
+                "74fcbc80-3b3c-84e3-a67b-7f23093fa6ee": {}
+            },
             "sortable": "false"
         },
         {
@@ -120,7 +142,11 @@
             "id": "column_4",
             "label": "activityName",
             "name": "activityName",
-            "permission_rules": {"230d5174-9050-f08d-3232-ba468273f0d2": {}},
+            "permission_rules": {
+                "230d5174-9050-f08d-3232-ba468273f0d2": {},
+                "4f5f803a-82b4-5e06-b70e-1744fac306b9": {},
+                "74fcbc80-3b3c-84e3-a67b-7f23093fa6ee": {}
+            },
             "sortable": "false"
         },
         {
@@ -129,7 +155,11 @@
             "id": "column_0",
             "label": "Banco",
             "name": "Banco",
-            "permission_rules": {"230d5174-9050-f08d-3232-ba468273f0d2": {}},
+            "permission_rules": {
+                "230d5174-9050-f08d-3232-ba468273f0d2": {},
+                "4f5f803a-82b4-5e06-b70e-1744fac306b9": {},
+                "74fcbc80-3b3c-84e3-a67b-7f23093fa6ee": {}
+            },
             "sortable": "false"
         },
         {
@@ -150,7 +180,11 @@
             "id": "column_2",
             "label": "Alocado a",
             "name": "assignee",
-            "permission_rules": {"230d5174-9050-f08d-3232-ba468273f0d2": {}},
+            "permission_rules": {
+                "230d5174-9050-f08d-3232-ba468273f0d2": {},
+                "4f5f803a-82b4-5e06-b70e-1744fac306b9": {},
+                "74fcbc80-3b3c-84e3-a67b-7f23093fa6ee": {}
+            },
             "sortable": "false",
             "style": "",
             "width": ""
@@ -162,10 +196,32 @@
     "filters": [
         {
             "datalist_type": "filter",
+            "filterParamName": "d-3893304-fn_NumeroCliente",
+            "hidden": "",
+            "id": "filter_6",
+            "label": "Número Cliente",
+            "name": "NumeroCliente",
+            "permission_rules": {
+                "230d5174-9050-f08d-3232-ba468273f0d2": {},
+                "4f5f803a-82b4-5e06-b70e-1744fac306b9": {},
+                "74fcbc80-3b3c-84e3-a67b-7f23093fa6ee": {"hidden": "true"}
+            },
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {"defaultValue": ""}
+            }
+        },
+        {
+            "datalist_type": "filter",
             "filterParamName": "d-3893304-fn_NumWorkflow",
             "id": "filter_0",
             "label": "NumWorkflow",
             "name": "NumWorkflow",
+            "permission_rules": {
+                "230d5174-9050-f08d-3232-ba468273f0d2": {},
+                "4f5f803a-82b4-5e06-b70e-1744fac306b9": {},
+                "74fcbc80-3b3c-84e3-a67b-7f23093fa6ee": {}
+            },
             "type": {
                 "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
                 "properties": {}
@@ -178,6 +234,11 @@
             "id": "filter_5",
             "label": "NIF",
             "name": "NIF",
+            "permission_rules": {
+                "230d5174-9050-f08d-3232-ba468273f0d2": {},
+                "4f5f803a-82b4-5e06-b70e-1744fac306b9": {},
+                "74fcbc80-3b3c-84e3-a67b-7f23093fa6ee": {}
+            },
             "type": {
                 "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
                 "properties": {"defaultValue": ""}
@@ -187,6 +248,11 @@
             "id": "filter_4",
             "label": "NumPedido",
             "name": "NumPedido",
+            "permission_rules": {
+                "230d5174-9050-f08d-3232-ba468273f0d2": {},
+                "4f5f803a-82b4-5e06-b70e-1744fac306b9": {},
+                "74fcbc80-3b3c-84e3-a67b-7f23093fa6ee": {}
+            },
             "type": {
                 "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
                 "properties": {}
@@ -199,6 +265,11 @@
             "id": "filter_3",
             "label": "Alocado a",
             "name": "assignee",
+            "permission_rules": {
+                "230d5174-9050-f08d-3232-ba468273f0d2": {},
+                "4f5f803a-82b4-5e06-b70e-1744fac306b9": {},
+                "74fcbc80-3b3c-84e3-a67b-7f23093fa6ee": {}
+            },
             "type": {
                 "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
                 "properties": {
@@ -234,6 +305,11 @@
             "id": "filter_2",
             "label": "Banco",
             "name": "Banco",
+            "permission_rules": {
+                "230d5174-9050-f08d-3232-ba468273f0d2": {},
+                "4f5f803a-82b4-5e06-b70e-1744fac306b9": {},
+                "74fcbc80-3b3c-84e3-a67b-7f23093fa6ee": {}
+            },
             "type": {
                 "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
                 "properties": {}
@@ -246,6 +322,11 @@
             "id": "filter_1",
             "label": "DataCriacao",
             "name": "DataCriacao",
+            "permission_rules": {
+                "230d5174-9050-f08d-3232-ba468273f0d2": {},
+                "4f5f803a-82b4-5e06-b70e-1744fac306b9": {},
+                "74fcbc80-3b3c-84e3-a67b-7f23093fa6ee": {}
+            },
             "type": {
                 "className": "org.joget.plugin.enterprise.DateDataListFilterType",
                 "properties": {
@@ -264,17 +345,41 @@
     "orderBy": "",
     "pageSize": "0",
     "pageSizeSelectorOptions": "10,20,30,40,50,100",
-    "permission_rules": [{
-        "permission": {
-            "className": "org.joget.apps.userview.lib.GroupPermission",
-            "properties": {
-                "allowedGroupIds": "EquipaNeyond",
-                "orgId": ""
-            }
+    "permission_rules": [
+        {
+            "permission": {
+                "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                "properties": {
+                    "allowedDeptIds": "PL_INT_DIST_BCP;PL_INT_DIST_MTG",
+                    "orgId": "PL"
+                }
+            },
+            "permission_key": "74fcbc80-3b3c-84e3-a67b-7f23093fa6ee",
+            "permission_name": "MTG, BCP"
         },
-        "permission_key": "230d5174-9050-f08d-3232-ba468273f0d2",
-        "permission_name": "Equipa Neyond"
-    }],
+        {
+            "permission": {
+                "className": "org.joget.apps.userview.lib.DepartmentPermission",
+                "properties": {
+                    "allowedDeptIds": "PL_INT_DIST_ABN;PL_INT_DIST_BIC",
+                    "orgId": "PL"
+                }
+            },
+            "permission_key": "4f5f803a-82b4-5e06-b70e-1744fac306b9",
+            "permission_name": "ABN,BIC"
+        },
+        {
+            "permission": {
+                "className": "org.joget.apps.userview.lib.GroupPermission",
+                "properties": {
+                    "allowedGroupIds": "EquipaNeyond",
+                    "orgId": ""
+                }
+            },
+            "permission_key": "230d5174-9050-f08d-3232-ba468273f0d2",
+            "permission_name": "Equipa Neyond"
+        }
+    ],
     "responsiveView": [
         {
             "breakpoint": "",
@@ -298,7 +403,9 @@
             "1081155f-1700-be08-9c6f-364a49cf8d0b": {"hidden": ""},
             "230d5174-9050-f08d-3232-ba468273f0d2": {},
             "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
+            "4f5f803a-82b4-5e06-b70e-1744fac306b9": {},
             "5ef76f30-3a46-461b-e85b-26e07d368c1e": {"hidden": "true"},
+            "74fcbc80-3b3c-84e3-a67b-7f23093fa6ee": {},
             "7acc8ca8-49d2-41f4-f9fe-98060e5c2333": {},
             "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {"hidden": "true"}
         },
