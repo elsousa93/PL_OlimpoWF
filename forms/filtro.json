@@ -1,176 +1,486 @@
 {
     "className": "org.joget.apps.form.model.Form",
-    "elements": [{
-        "className": "org.joget.apps.form.model.Section",
-        "elements": [{
-            "className": "org.joget.apps.form.model.Column",
-            "elements": [
-                {
-                    "className": "org.joget.apps.form.lib.Radio",
-                    "properties": {
-                        "controlField": "",
-                        "id": "urgencia_filtro",
-                        "label": "Urgência de Filtro",
-                        "options": [
-                            {
-                                "grouping": "",
-                                "label": "Sim",
-                                "value": "SIM"
+    "elements": [
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.Radio",
+                        "properties": {
+                            "controlField": "",
+                            "id": "urgencia_filtro",
+                            "label": "Urgência de Filtro",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Sim",
+                                    "value": "SIM"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Não",
+                                    "value": "NAO"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Por Validar",
+                                    "value": "VAL"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
                             },
-                            {
-                                "grouping": "",
-                                "label": "Não",
-                                "value": "NAO"
+                            "permission_rules": {
+                                "03904bb4-efc7-26be-4d68-720f31608388": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "34b8563d-fc6a-fe6e-5470-8c4529360f20": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "7d671916-f62e-b786-5eb0-1da4685cd44b": {},
+                                "cba813cc-5e0b-1535-22f1-5aeab8a7ecd6": {}
                             },
-                            {
-                                "grouping": "",
-                                "label": "Por Validar",
-                                "value": "VAL"
-                            }
-                        ],
-                        "optionsBinder": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "permission_rules": {
-                            "03904bb4-efc7-26be-4d68-720f31608388": {
-                                "permissionHidden": "",
-                                "readonly": "true"
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
                             },
-                            "34b8563d-fc6a-fe6e-5470-8c4529360f20": {
-                                "permissionHidden": "",
-                                "readonly": "true"
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.TextArea",
+                        "properties": {
+                            "cols": "20",
+                            "id": "motivo_urgencia_filtro",
+                            "label": "Motivo de Urgência de Filtro",
+                            "permission_rules": {
+                                "03904bb4-efc7-26be-4d68-720f31608388": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "34b8563d-fc6a-fe6e-5470-8c4529360f20": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "7d671916-f62e-b786-5eb0-1da4685cd44b": {},
+                                "cba813cc-5e0b-1535-22f1-5aeab8a7ecd6": {}
                             },
-                            "7d671916-f62e-b786-5eb0-1da4685cd44b": {},
-                            "cba813cc-5e0b-1535-22f1-5aeab8a7ecd6": {}
-                        },
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "rows": "5",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "",
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values) {\r\n    boolean result = true;\r\n    \r\n    String faseProcesso = \"#process.processId#\";\r\n    if(!faseProcesso.contains(\"Filtro\")){\r\n        return true;\r\n    }\r\n     \r\n    String origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo.equals(\"ACE\") || origem_processo.equals(\"PRE\") || origem_processo.equals(\"TRD\"))){\r\n        return true;\r\n    }\r\n     \r\n    //get dropdown select box value\r\n    String field1Id = \"urgencia_filtro\";\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field1 = FormUtil.findElement(field1Id, form, formData);\r\n  \r\n    if (field1 != null) {\r\n        //get value of field 1\r\n        String field1Values = FormUtil.getElementPropertyValue(field1, formData);\r\n  \r\n        if(field1Values != null && field1Values.equalsIgnoreCase(\"sim\") && (values.length <= 0 || values[0].isEmpty()) ){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório quando existe Urgência de Filtro\");\r\n            result = false;\r\n        }\r\n    } else {\r\n        //ignore if the dropdown does not exist\r\n    }\r\n    \r\n    \r\n  \r\n    return result;\r\n}\r\n  \r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                }
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.Radio",
+                        "properties": {
+                            "controlField": "",
+                            "id": "ok_filtro",
+                            "label": "Ok do Filtro",
+                            "options": [
+                                {
+                                    "grouping": "",
+                                    "label": "Ok",
+                                    "value": "OK"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Not Ok",
+                                    "value": "NOK"
+                                },
+                                {
+                                    "grouping": "",
+                                    "label": "Por Validar",
+                                    "value": "VAL"
+                                }
+                            ],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "permission_rules": {
+                                "03904bb4-efc7-26be-4d68-720f31608388": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "34b8563d-fc6a-fe6e-5470-8c4529360f20": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "7d671916-f62e-b786-5eb0-1da4685cd44b": {},
+                                "cba813cc-5e0b-1535-22f1-5aeab8a7ecd6": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
                     }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "informacao_geral",
+                "join": "",
+                "label": "Informação Geral",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
                 },
-                {
-                    "className": "org.joget.apps.form.lib.TextArea",
-                    "properties": {
-                        "cols": "20",
-                        "id": "motivo_urgencia_filtro",
-                        "label": "Motivo de Urgência de Filtro",
-                        "permission_rules": {
-                            "03904bb4-efc7-26be-4d68-720f31608388": {
-                                "permissionHidden": "",
-                                "readonly": "true"
-                            },
-                            "34b8563d-fc6a-fe6e-5470-8c4529360f20": {
-                                "permissionHidden": "",
-                                "readonly": "true"
-                            },
-                            "7d671916-f62e-b786-5eb0-1da4685cd44b": {},
-                            "cba813cc-5e0b-1535-22f1-5aeab8a7ecd6": {}
-                        },
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "rows": "5",
-                        "validator": {
-                            "className": "org.joget.apps.form.lib.BeanShellValidator",
-                            "properties": {
-                                "decoration": "",
-                                "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] values) {\r\n    boolean result = true;\r\n    \r\n    String faseProcesso = \"#process.processId#\";\r\n    if(!faseProcesso.contains(\"Filtro\")){\r\n        return true;\r\n    }\r\n     \r\n    String origem_processo = \"#form.detalhe_processo.origem_processo[{form.processos.detalhe_processo}]#\";\r\n    if(!(origem_processo.equals(\"ACE\") || origem_processo.equals(\"PRE\") || origem_processo.equals(\"TRD\"))){\r\n        return true;\r\n    }\r\n     \r\n    //get dropdown select box value\r\n    String field1Id = \"urgencia_filtro\";\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field1 = FormUtil.findElement(field1Id, form, formData);\r\n  \r\n    if (field1 != null) {\r\n        //get value of field 1\r\n        String field1Values = FormUtil.getElementPropertyValue(field1, formData);\r\n  \r\n        if(field1Values != null && field1Values.equalsIgnoreCase(\"sim\") && (values.length <= 0 || values[0].isEmpty()) ){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório quando existe Urgência de Filtro\");\r\n            result = false;\r\n        }\r\n    } else {\r\n        //ignore if the dropdown does not exist\r\n    }\r\n    \r\n    \r\n  \r\n    return result;\r\n}\r\n  \r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
-                            }
-                        },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
+                "permission": {
+                    "className": "",
+                    "properties": {}
                 },
-                {
-                    "className": "org.joget.apps.form.lib.Radio",
-                    "properties": {
-                        "controlField": "",
-                        "id": "ok_filtro",
-                        "label": "Ok do Filtro",
-                        "options": [
-                            {
-                                "grouping": "",
-                                "label": "Ok",
-                                "value": "OK"
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "03904bb4-efc7-26be-4d68-720f31608388": {},
+                    "34b8563d-fc6a-fe6e-5470-8c4529360f20": {},
+                    "7d671916-f62e-b786-5eb0-1da4685cd44b": {},
+                    "cba813cc-5e0b-1535-22f1-5aeab8a7ecd6": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.plugin.enterprise.SpreadSheetGrid",
+                        "properties": {
+                            "customSettings": "",
+                            "disabledAdd": "",
+                            "disabledDelete": "",
+                            "errorMessage": "Invalid number of rows",
+                            "fixedColumnsLeft": "0",
+                            "headerSorting": "",
+                            "id": "checklist",
+                            "label": "",
+                            "loadBinder": {
+                                "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                                "properties": {
+                                    "autoHandleFiles": "",
+                                    "autoHandleWorkflowVariable": "true",
+                                    "cacheInterval": "",
+                                    "script": "import org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport org.joget.apps.app.service.AppService;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.plugin.base.PluginManager;\r\nimport org.joget.apps.form.model.FormLoadBinder;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport org.joget.commons.util.LogUtil;\r\n \r\npublic FormRowSet load(Element element, String primaryKey, FormData formData) {\r\n    String formDefId = \"checkDocsImovel\";  //change this to the form id used to store grid data\r\n    String foreignKey = \"fk\"; //change this to the foreign key\r\n    \r\n    FormRowSet f = new FormRowSet();\r\n    f.setMultiRow(true);\r\n    \r\n    // Reuse Multi Row Binder to load data\r\n    PluginManager pluginManager = (PluginManager) FormUtil.getApplicationContext().getBean(\"pluginManager\");\r\n    FormLoadBinder binder = (FormLoadBinder) pluginManager.getPlugin(\"org.joget.plugin.enterprise.MultirowFormBinder\");\r\n    \r\n    //Load from the grid table\r\n    binder.setProperty(\"formDefId\", formDefId);\r\n    binder.setProperty(\"foreignKey\", foreignKey);\r\n    f = binder.load(element, primaryKey, formData);\r\n    \r\n    String forma_outorga = \"#form.detalhe_processo.forma_outorga[{form.processos.detalhe_processo}]#\";\r\n    String banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\r\n    \r\n    //if no grid data is retrieved, get from default table\r\n    if (f == null || f.isEmpty()) {\r\n        String tipo_processo = \"#form.detalhe_processo.tipo_processo[{form.processos.detalhe_processo}]#\";\r\n        String[] tipos_processo = tipo_processo.split(\"\\\\+\");\r\n        \r\n        Connection con = null;\r\n        PreparedStatement stmt = null;\r\n        ResultSet rs = null;\r\n        \r\n        try{\r\n            DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n            con = ds.getConnection();\r\n            \r\n            if(!con.isClosed()){\r\n                //Build sql query with the number of inputs needed based on loop iteration\r\n                String sql = \"SELECT c_tipo_documento FROM app_fd_checklist_docs WHERE c_checklist = ? AND c_servico = ? AND ( c_mostra LIKE \";\r\n                \r\n                StringBuilder parameterBuilder = new StringBuilder();\r\n                \r\n                for (int i = 0; i < tipos_processo.length*3; i++) {\r\n                    parameterBuilder.append(\"?\");\r\n                    if (tipos_processo.length*3 > i + 1) {\r\n                        parameterBuilder.append(\"OR c_mostra LIKE\");\r\n                    }\r\n                }\r\n                parameterBuilder.append(\")\");\r\n                \r\n                //Here you can query from one or multiple tables using JOIN etc\r\n                PreparedStatement stmt = con.prepareStatement(sql + parameterBuilder);\r\n                stmt.setString(1, \"interveniente\");\r\n                stmt.setString(2, \"CH\");\r\n                \r\n                int count = 3;\r\n                //set values to the needed inputs\r\n                for(int i = 0; i < tipos_processo.length; i++){\r\n                    String tipo_processo1 = tipos_processo[i] + \";%\";\r\n                    String tipo_processo2 = \"%;\" + tipos_processo[i] + \";%\";\r\n                    String tipo_processo3 = \"%;\" + tipos_processo[i];\r\n                    \r\n                    stmt.setString(count++, tipo_processo1);\r\n                    stmt.setString(count++, tipo_processo2);\r\n                    stmt.setString(count++, tipo_processo3);\r\n                    \r\n                }\r\n                \r\n                //Execute the SELECT SQL statement\r\n                ResultSet rs = stmt.executeQuery();\r\n                \r\n                //Get value from columns of record(s)\r\n                while (rs.next()) {\r\n                    //LogUtil.info(\"imovel\", \"entra\");\r\n                    FormRow r1 = new FormRow();\r\n                    r1.put(\"tipo_documento\", rs.getString(1));\r\n                   // r1.put(\"gestor\", \"\");\r\n                   // r1.put(\"gestor_senior\", \"\");\r\n                    //r1.put(\"validacao\", \"\");\r\n                    r1.put(\"filtro\", \"\");\r\n                   // r1.put(\"acompanhamento_outorgas\", \"\");\r\n                    f.add(r1);\r\n                }\r\n            }\r\n            \r\n        }catch(Exception e){\r\n            LogUtil.error(\"CREDITO HABITACAO - Interveniente - Checklist\", e, \"Error getting info from DB\");\r\n        }finally{\r\n            try{\r\n                if(rs != null){\r\n                    rs.close();\r\n                }\r\n                if(stmt != null){\r\n                    stmt.close();\r\n                }\r\n                if(con != null && !con.isClosed()) {\r\n                    con.close();\r\n                }\r\n            }catch(Exception e){\r\n                LogUtil.error(\"CREDITO HABITACAO - Interveniente - Checklist\", e, \"Error closing DB connection\");\r\n            }\r\n        }\r\n    }\r\n    //}\r\n    \r\n    return f;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(element, primaryKey, formData);",
+                                    "useAjax": ""
+                                }
                             },
-                            {
-                                "grouping": "",
-                                "label": "Not Ok",
-                                "value": "NOK"
+                            "maxHeight": "",
+                            "minSpareRows": "1",
+                            "options": [
+                                {
+                                    "format": "",
+                                    "formatType": "",
+                                    "formula": "",
+                                    "label": "Tipo de Documento",
+                                    "readonly": "",
+                                    "regexValidator": "",
+                                    "value": "tipo_documento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "checkDocsImovel",
+                                    "formatType": "dropdown",
+                                    "formula": "",
+                                    "label": "Filtro",
+                                    "readonly": "",
+                                    "regexValidator": "",
+                                    "value": "filtro",
+                                    "width": ""
+                                }
+                            ],
+                            "permission_rules": {
+                                "1300a907-31a2-48ed-bf4c-1a7567ccad20": {},
+                                "197a8854-1304-fc77-205b-1d8db4b32f50": {},
+                                "3e334771-7c1d-4882-b298-443c91d6bf3e": {},
+                                "88ba4623-f952-8e79-62c1-4968316287be": {},
+                                "973de9e9-e890-860f-035e-b234371b728e": {},
+                                "c44d872b-cea6-6a40-8ece-c4160cfe0079": {},
+                                "c6f523f5-c981-dd70-ca03-ea8e9a69f2f1": {},
+                                "d1feb8e1-e231-592d-2773-31ada2992103": {}
                             },
-                            {
-                                "grouping": "",
-                                "label": "Por Validar",
-                                "value": "VAL"
+                            "readonly": "",
+                            "showRowNumber": "",
+                            "sortingField": "",
+                            "storeBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "fk",
+                                    "formDefId": "checkDocsImovel"
+                                }
+                            },
+                            "validateMaxRow": "",
+                            "validateMinRow": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
                             }
-                        ],
-                        "optionsBinder": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "permission_rules": {
-                            "03904bb4-efc7-26be-4d68-720f31608388": {
-                                "permissionHidden": "",
-                                "readonly": "true"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "resultado_checklist",
+                            "permission_rules": {
+                                "1300a907-31a2-48ed-bf4c-1a7567ccad20": {},
+                                "197a8854-1304-fc77-205b-1d8db4b32f50": {},
+                                "3e334771-7c1d-4882-b298-443c91d6bf3e": {},
+                                "88ba4623-f952-8e79-62c1-4968316287be": {},
+                                "973de9e9-e890-860f-035e-b234371b728e": {},
+                                "c44d872b-cea6-6a40-8ece-c4160cfe0079": {},
+                                "c6f523f5-c981-dd70-ca03-ea8e9a69f2f1": {},
+                                "d1feb8e1-e231-592d-2773-31ada2992103": {}
                             },
-                            "34b8563d-fc6a-fe6e-5470-8c4529360f20": {
-                                "permissionHidden": "",
-                                "readonly": "true"
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
                             },
-                            "7d671916-f62e-b786-5eb0-1da4685cd44b": {},
-                            "cba813cc-5e0b-1535-22f1-5aeab8a7ecd6": {}
-                        },
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field20",
+                            "label": "",
+                            "permission_rules": {
+                                "1300a907-31a2-48ed-bf4c-1a7567ccad20": {},
+                                "197a8854-1304-fc77-205b-1d8db4b32f50": {},
+                                "3e334771-7c1d-4882-b298-443c91d6bf3e": {},
+                                "88ba4623-f952-8e79-62c1-4968316287be": {},
+                                "973de9e9-e890-860f-035e-b234371b728e": {},
+                                "c44d872b-cea6-6a40-8ece-c4160cfe0079": {},
+                                "c6f523f5-c981-dd70-ca03-ea8e9a69f2f1": {},
+                                "d1feb8e1-e231-592d-2773-31ada2992103": {}
+                            },
+                            "value": "<script type=\"text/javascript\">\r\n    \r\n    $(\"div[name=checklist]\").change(function(){\r\n        \r\n        //get value from field that controls if the WF number is automatically generated or not\r\n        var values = FormUtil.getValues(\"checklist.filtro\");\r\n        var count = 0;\r\n        var i = 0;\r\n        \r\n        if(values != null && values.length > 0){\r\n            while (count == 0 && i < values.length) {\r\n                if(values[i] === \"\"){\r\n                    count++;\r\n                }\r\n                i++;\r\n            }\r\n        }\r\n        \r\n        var field = FormUtil.getField(\"resultado_checklist\");\r\n        if(count != 0){\r\n            $(field).val(\"NOK\"); //set value\r\n        }else{\r\n            $(field).val(\"OK\"); //set value\r\n        }\r\n    });\r\n<\/script>"
+                        }
                     }
-                }
-            ],
-            "properties": {"width": "100%"}
-        }],
-        "properties": {
-            "comment": "",
-            "id": "informacao_geral",
-            "join": "",
-            "label": "Informação Geral",
-            "loadBinder": {
-                "className": "",
-                "properties": {}
-            },
-            "permission": {
-                "className": "",
-                "properties": {}
-            },
-            "permissionReadonly": "",
-            "permission_rules": {
-                "03904bb4-efc7-26be-4d68-720f31608388": {},
-                "34b8563d-fc6a-fe6e-5470-8c4529360f20": {},
-                "7d671916-f62e-b786-5eb0-1da4685cd44b": {},
-                "cba813cc-5e0b-1535-22f1-5aeab8a7ecd6": {}
-            },
-            "readonly": "",
-            "readonlyLabel": "",
-            "regex": "",
-            "reverse": "",
-            "storeBinder": {
-                "className": "",
-                "properties": {}
-            },
-            "visibilityControl": "",
-            "visibilityValue": ""
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section18",
+                "join": "",
+                "label": "Checklist de Documentos Intervenientes",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "1300a907-31a2-48ed-bf4c-1a7567ccad20": {},
+                    "197a8854-1304-fc77-205b-1d8db4b32f50": {},
+                    "3e334771-7c1d-4882-b298-443c91d6bf3e": {},
+                    "88ba4623-f952-8e79-62c1-4968316287be": {},
+                    "973de9e9-e890-860f-035e-b234371b728e": {},
+                    "c44d872b-cea6-6a40-8ece-c4160cfe0079": {},
+                    "c6f523f5-c981-dd70-ca03-ea8e9a69f2f1": {},
+                    "d1feb8e1-e231-592d-2773-31ada2992103": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.plugin.enterprise.SpreadSheetGrid",
+                        "properties": {
+                            "customSettings": "",
+                            "disabledAdd": "",
+                            "disabledDelete": "",
+                            "errorMessage": "Invalid number of rows",
+                            "fixedColumnsLeft": "0",
+                            "headerSorting": "",
+                            "id": "checklist",
+                            "label": "",
+                            "loadBinder": {
+                                "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                                "properties": {
+                                    "autoHandleFiles": "",
+                                    "autoHandleWorkflowVariable": "true",
+                                    "cacheIdlePause": "60",
+                                    "cacheInterval": "500",
+                                    "script": "import org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport org.joget.apps.app.service.AppService;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.plugin.base.PluginManager;\r\nimport org.joget.apps.form.model.FormLoadBinder;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport org.joget.commons.util.LogUtil;\r\n \r\npublic FormRowSet load(Element element, String primaryKey, FormData formData) {\r\n    String formDefId = \"checkDocsImovel\";  //change this to the form id used to store grid data\r\n    String foreignKey = \"fk\"; //change this to the foreign key\r\n     \r\n    FormRowSet f = new FormRowSet();\r\n    f.setMultiRow(true);\r\n    \r\n    // Reuse Multi Row Binder to load data\r\n    PluginManager pluginManager = (PluginManager) FormUtil.getApplicationContext().getBean(\"pluginManager\");\r\n    FormLoadBinder binder = (FormLoadBinder) pluginManager.getPlugin(\"org.joget.plugin.enterprise.MultirowFormBinder\");\r\n     \r\n    //Load from the grid table\r\n    binder.setProperty(\"formDefId\", formDefId);\r\n    binder.setProperty(\"foreignKey\", foreignKey);\r\n    f = binder.load(element, primaryKey, formData);\r\n    \r\n    //if no grid data is retrieved, get from default table\r\n    if (f == null || f.isEmpty()) {\r\n        String tipo_processo = \"#form.detalhe_processo.tipo_processo[{form.processos.detalhe_processo}]#\";\r\n        String[] tipos_processo = tipo_processo.split(\"\\\\+\");\r\n        \r\n        Connection con = null;\r\n        PreparedStatement stmt = null;\r\n        ResultSet rs = null;\r\n    \r\n        try{\r\n            DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n            con = ds.getConnection();\r\n            \r\n            if(!con.isClosed()){\r\n                //Build sql query with the number of inputs needed based on loop iteration\r\n                String sql = \"SELECT c_tipo_documento FROM app_fd_checklist_docs WHERE c_checklist = ? AND c_servico = ? AND ( c_mostra LIKE \";\r\n\r\n                StringBuilder parameterBuilder = new StringBuilder();\r\n                \r\n                for (int i = 0; i < tipos_processo.length*3; i++) {\r\n                    parameterBuilder.append(\"?\");\r\n                    if (tipos_processo.length*3 > i + 1) {\r\n                        parameterBuilder.append(\"OR c_mostra LIKE\");\r\n                    }\r\n                }\r\n                parameterBuilder.append(\")\");\r\n                \r\n                //Here you can query from one or multiple tables using JOIN etc\r\n                PreparedStatement stmt = con.prepareStatement(sql + parameterBuilder);\r\n                stmt.setString(1, \"imovel\");\r\n                stmt.setString(2, \"CH\");\r\n                \r\n                int count = 3;\r\n                //set values to the needed inputs\r\n                for(int i = 0; i < tipos_processo.length; i++){\r\n                    String tipo_processo1 = tipos_processo[i] + \";%\";\r\n                    String tipo_processo2 = \"%;\" + tipos_processo[i] + \";%\";\r\n                    String tipo_processo3 = \"%;\" + tipos_processo[i];\r\n                    //LogUtil.info(\"imovel\", \"inputs: \" + tipo_processo1 + \", \" + tipo_processo2 + \", \" + tipo_processo3);\r\n                    stmt.setString(count++, tipo_processo1);\r\n                    stmt.setString(count++, tipo_processo2);\r\n                    stmt.setString(count++, tipo_processo3);\r\n                }\r\n                \r\n           \r\n                //Execute the SELECT SQL statement\r\n                ResultSet rs = stmt.executeQuery();\r\n                     \r\n                //Get value from columns of record(s)\r\n                while (rs.next()) {\r\n                    ////LogUtil.info(\"imovel\", \"entra\");\r\n                    FormRow r1 = new FormRow();\r\n                    r1.put(\"tipo_documento\", rs.getString(1));\r\n                    //r1.put(\"gestor\", \"\");\r\n                    //r1.put(\"gestor_senior\", \"\");\r\n                   // r1.put(\"validacao\", \"\");\r\n                    r1.put(\"filtro\", \"\");\r\n                    //r1.put(\"acompanhamento_outorgas\", \"\");\r\n                    f.add(r1);\r\n                }\r\n            }\r\n                \r\n        }catch(Exception e){\r\n            LogUtil.error(\"CREDITO HABITACAO - Imóvel - Checklist\", e, \"Error getting info from DB\");\r\n        }finally{\r\n            try{\r\n                if(rs != null){\r\n                    rs.close();\r\n                }\r\n                if(stmt != null){\r\n                    stmt.close();\r\n                }\r\n                if(con != null && !con.isClosed()) {\r\n                    con.close();\r\n                }\r\n            }catch(Exception e){\r\n                LogUtil.error(\"CREDITO HABITACAO - Imóvel - Checklist\", e, \"Error closing DB connection\");\r\n            }\r\n            \r\n        }\r\n    }\r\n    \r\n    return f;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(element, primaryKey, formData);",
+                                    "useAjax": ""
+                                }
+                            },
+                            "maxHeight": "",
+                            "minSpareRows": "1",
+                            "options": [
+                                {
+                                    "format": "",
+                                    "formatType": "",
+                                    "formula": "",
+                                    "label": "Tipo de Documento",
+                                    "readonly": "",
+                                    "regexValidator": "",
+                                    "value": "tipo_documento",
+                                    "width": ""
+                                },
+                                {
+                                    "format": "checkDocsImovel",
+                                    "formatType": "dropdown",
+                                    "formula": "",
+                                    "label": "Filtro",
+                                    "readonly": "",
+                                    "regexValidator": "",
+                                    "value": "filtro",
+                                    "width": ""
+                                }
+                            ],
+                            "permission_rules": {
+                                "04c4f36b-3dc7-5a89-5b12-78bc188b5be9": {},
+                                "276487d8-0482-7519-09fd-807e28473a83": {},
+                                "740d9ecd-911b-7df4-474a-0d7f0cf81147": {
+                                    "permissionHidden": "",
+                                    "readonly": ""
+                                },
+                                "7cb0a003-f9de-cb30-4a9f-c17080392739": {},
+                                "8ed12735-d92c-74bd-444f-888db20bd46a": {}
+                            },
+                            "readonly": "",
+                            "showRowNumber": "",
+                            "sortingField": "",
+                            "storeBinder": {
+                                "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                                "properties": {
+                                    "foreignKey": "fk",
+                                    "formDefId": "checkDocsImovel"
+                                }
+                            },
+                            "validateMaxRow": "",
+                            "validateMinRow": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            }
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "resultado_checklist",
+                            "permission_rules": {
+                                "04c4f36b-3dc7-5a89-5b12-78bc188b5be9": {},
+                                "276487d8-0482-7519-09fd-807e28473a83": {},
+                                "7cb0a003-f9de-cb30-4a9f-c17080392739": {},
+                                "8ed12735-d92c-74bd-444f-888db20bd46a": {}
+                            },
+                            "useDefaultWhenEmpty": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field20",
+                            "label": "",
+                            "permission_rules": {
+                                "04c4f36b-3dc7-5a89-5b12-78bc188b5be9": {},
+                                "276487d8-0482-7519-09fd-807e28473a83": {},
+                                "7cb0a003-f9de-cb30-4a9f-c17080392739": {},
+                                "8ed12735-d92c-74bd-444f-888db20bd46a": {}
+                            },
+                            "value": "<script type=\"text/javascript\">\r\n    \r\n    $(\"div[name=checklist]\").change(function(){\r\n        \r\n        //get value from field that controls if the WF number is automatically generated or not\r\n        var values = FormUtil.getValues(\"checklist.filtro\");\r\n        var count = 0;\r\n        var i = 0;\r\n\r\n        if(values != null && values.length > 0){\r\n            while (count == 0 && i < values.length) {\r\n                if(values[i] === \"\"){\r\n                    count++;\r\n                }\r\n                i++;\r\n            }\r\n        }\r\n        \r\n        var field = FormUtil.getField(\"resultado_checklist\");\r\n        if(count != 0){\r\n            $(field).val(\"NOK\"); //set value\r\n        }else{\r\n            $(field).val(\"OK\"); //set value\r\n        }\r\n        \r\n        \r\n\r\n\r\n    });\r\n<\/script>"
+                        }
+                    }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section3",
+                "join": "",
+                "label": "Checklist de Documentos Imovéis",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "permission_rules": {
+                    "04c4f36b-3dc7-5a89-5b12-78bc188b5be9": {},
+                    "276487d8-0482-7519-09fd-807e28473a83": {},
+                    "740d9ecd-911b-7df4-474a-0d7f0cf81147": {},
+                    "7cb0a003-f9de-cb30-4a9f-c17080392739": {},
+                    "8ed12735-d92c-74bd-444f-888db20bd46a": {}
+                },
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
         }
-    }],
+    ],
     "properties": {
         "description": "",
         "id": "filtro",
