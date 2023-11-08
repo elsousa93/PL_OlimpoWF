@@ -186,7 +186,7 @@
                             "errorMessage": "Invalid number of rows",
                             "fixedColumnsLeft": "0",
                             "headerSorting": "",
-                            "id": "checklist",
+                            "id": "checklist_interv",
                             "label": "",
                             "loadBinder": {
                                 "className": "org.joget.apps.form.lib.BeanShellFormBinder",
@@ -212,7 +212,7 @@
                                     "width": ""
                                 },
                                 {
-                                    "format": "checkDocsImovel",
+                                    "format": "check_docs_interve",
                                     "formatType": "dropdown",
                                     "formula": "",
                                     "label": "Filtro",
@@ -239,7 +239,7 @@
                                 "className": "org.joget.plugin.enterprise.MultirowFormBinder",
                                 "properties": {
                                     "foreignKey": "fk",
-                                    "formDefId": "checkDocsImovel"
+                                    "formDefId": "checkDocsIntervenientes"
                                 }
                             },
                             "validateMaxRow": "",
@@ -253,7 +253,7 @@
                     {
                         "className": "org.joget.apps.form.lib.HiddenField",
                         "properties": {
-                            "id": "resultado_checklist",
+                            "id": "resultado_checklist_interv",
                             "permission_rules": {
                                 "1300a907-31a2-48ed-bf4c-1a7567ccad20": {},
                                 "197a8854-1304-fc77-205b-1d8db4b32f50": {},
@@ -289,7 +289,7 @@
                                 "c6f523f5-c981-dd70-ca03-ea8e9a69f2f1": {},
                                 "d1feb8e1-e231-592d-2773-31ada2992103": {}
                             },
-                            "value": "<script type=\"text/javascript\">\r\n    \r\n    $(\"div[name=checklist]\").change(function(){\r\n        \r\n        //get value from field that controls if the WF number is automatically generated or not\r\n        var values = FormUtil.getValues(\"checklist.filtro\");\r\n        var count = 0;\r\n        var i = 0;\r\n        \r\n        if(values != null && values.length > 0){\r\n            while (count == 0 && i < values.length) {\r\n                if(values[i] === \"\"){\r\n                    count++;\r\n                }\r\n                i++;\r\n            }\r\n        }\r\n        \r\n        var field = FormUtil.getField(\"resultado_checklist\");\r\n        if(count != 0){\r\n            $(field).val(\"NOK\"); //set value\r\n        }else{\r\n            $(field).val(\"OK\"); //set value\r\n        }\r\n    });\r\n<\/script>"
+                            "value": "<script type=\"text/javascript\">\r\n    \r\n    $(\"div[name=checklist]\").change(function(){\r\n        \r\n        //get value from field that controls if the WF number is automatically generated or not\r\n        var values = FormUtil.getValues(\"checklist_interv.filtro\");\r\n        var count = 0;\r\n        var i = 0;\r\n        \r\n        if(values != null && values.length > 0){\r\n            while (count == 0 && i < values.length) {\r\n                if(values[i] === \"\"){\r\n                    count++;\r\n                }\r\n                i++;\r\n            }\r\n        }\r\n        \r\n        var field = FormUtil.getField(\"resultado_checklist_interv\");\r\n        if(count != 0){\r\n            $(field).val(\"NOK\"); //set value\r\n        }else{\r\n            $(field).val(\"OK\"); //set value\r\n        }\r\n    });\r\n<\/script>"
                         }
                     }
                 ],
