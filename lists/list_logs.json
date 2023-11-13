@@ -88,6 +88,28 @@
             "exclude_export": "",
             "filterable": true,
             "format": {
+                "className": "org.joget.plugin.enterprise.BeanShellFormatter",
+                "properties": {"script": "import java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.commons.util.LogUtil;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.defaultHashVariablePlugin;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport java.util.Collection;\r\nimport org.joget.apps.form.dao.FormDataDao;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport org.joget.apps.app.model.FormDefinition;\r\nimport org.joget.apps.app.dao.FormDefinitionDao;\r\nimport org.joget.apps.form.service.FormService;\r\n\r\npublic FormRowSet load(String[] values) {\r\n    \r\n    FormRowSet rows = new FormRowSet();\r\n    Connection con = null;\r\n    \r\n    //set value of formulario based on dependency value\r\n    String formulario = \"\";\r\n    \r\n    \r\n    if (values != null && values.length > 0) {\r\n        formulario = values[0];\r\n    }\r\n    \r\n\r\n    if(formulario.isEmpty()){\r\n        FormRow option = new FormRow();\r\n        option.setProperty(FormUtil.PROPERTY_VALUE, \"\");\r\n        option.setProperty(FormUtil.PROPERTY_LABEL, \"\");\r\n        rows.add(option);\r\n    }else{\r\n    \r\n    FormDataDao formDataDao = (FormDataDao) AppUtil.getApplicationContext().getBean(\"formDataDao\");\r\n    FormDefinitionDao formDefinitionDao = (FormDefinitionDao) AppUtil.getApplicationContext().getBean(\"formDefinitionDao\");\r\n    FormService formService = (FormService) AppUtil.getApplicationContext().getBean(\"formService\");\r\n    \r\n    \r\n    \r\n    AppDefinition appDef = AppUtil.getCurrentAppDefinition();\r\n    FormDefinition formDef = formDefinitionDao.loadById(formulario, appDef);\r\n    \r\n    HashSet map = formDataDao.getFormDefinitionColumnNames(formDef.getTableName());\r\n    map.add(\"dateCreated\");\r\n    map.add(\"dateModified\");\r\n    if(formDef != null){\r\n        String formJson = formDef.getJson();\r\n        if(formJson != null) {\r\n            Form form = (Form) formService.createElementFromJson(formJson, false);\r\n\r\n            for(String field : map){\r\n                \r\n                //Condição de excessão para hiddenField de adicionar ficheiros\r\n                if(formulario.equals(\"documentos\") && field.equals(\"docs_processo\")){\r\n                    FormRow option = new FormRow();\r\n                    option.setProperty(FormUtil.PROPERTY_VALUE, field);\r\n                    option.setProperty(FormUtil.PROPERTY_LABEL, \"Adicionar Ficheiros\");\r\n                    rows.add(option);\r\n                }\r\n                    \r\n                String label = \"\";\r\n                Element element = FormUtil.findElement(field, form, null, true);\r\n                if(element != null){\r\n                    label = element.getPropertyString(FormUtil.PROPERTY_LABEL);\r\n                }\r\n                if(label != null  && !label.isEmpty() && label != \"\"){\r\n                    FormRow option = new FormRow();\r\n                    option.setProperty(FormUtil.PROPERTY_VALUE, field);\r\n                    option.setProperty(FormUtil.PROPERTY_LABEL, label);\r\n                    rows.add(option);\r\n                }\r\n            }\r\n        \r\n        }\r\n    }\r\n\r\n    }\r\n    \r\n\r\n    return rows;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(values);"}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_3",
+            "label": "Label do campo",
+            "name": "c_campo",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
                 "className": "",
                 "properties": {}
             },
