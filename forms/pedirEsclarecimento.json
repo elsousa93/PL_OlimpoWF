@@ -571,37 +571,6 @@
                             "label": "",
                             "value": "<script>\n    \n    $(document).change(function(){\n        \n        var tipo_diligencia = FormUtil.getValue(\"tipo_diligencia\");\n        if( tipo_diligencia === \"FALTA_DOCS\" ){\n            var field = FormUtil.getField(\"diligencia\");\n            $(field).val(\"Documentos obrigatórios em falta. Avançar com processo independentemente?\"); //set value\n        }\n        \n        var operativa_de = FormUtil.getValue(\"operativa_remetente\");\n        var operativa_para = FormUtil.getValue(\"operativa_destinataria\");\n        \n        if (operativa_de === \"AO\" || operativa_para === \"AO\") {\n            var diligencia_prioritaria = $('select[id*=diligencia_prioritaria]');\n            diligencia_prioritaria.val('1');\n        }\n    });\n\n<\/script>"
                         }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.CustomHTML",
-                        "properties": {
-                            "autoPopulate": "",
-                            "id": "field62",
-                            "label": "",
-                            "permission_rules": {
-                                "0ccd6329-a205-14d1-b885-f026bfe54bc7": {},
-                                "0dcd2bd8-587c-f62d-2114-0ab80db0f7a7": {},
-                                "276487d8-0482-7519-09fd-807e28473a83": {},
-                                "61ac1506-03a2-c3ca-8103-7e96c6eecd6c": {},
-                                "7cb0a003-f9de-cb30-4a9f-c17080392739": {},
-                                "8ed12735-d92c-74bd-444f-888db20bd46a": {}
-                            },
-                            "value": "<div>\r\n    <button id=\"historicoalteracoes\"><i class=\"fas fa-search\"><\/i> Histórico de alterações <\/button>\r\n<\/div>"
-                        }
-                    },
-                    {
-                        "className": "org.joget.apps.form.lib.CustomHTML",
-                        "properties": {
-                            "autoPopulate": "",
-                            "id": "pesquisa_historico",
-                            "label": "",
-                            "permission_rules": {
-                                "276487d8-0482-7519-09fd-807e28473a83": {},
-                                "7cb0a003-f9de-cb30-4a9f-c17080392739": {},
-                                "8ed12735-d92c-74bd-444f-888db20bd46a": {}
-                            },
-                            "value": "<script type=\"text/javascript\">\r\n\r\n    //Quando clicam no botão para pesquisar o imóvel independentemente do preenchimento dos campos\r\n    $(document).ready(function(){\r\n        //Fazer a pesquisa quando o botão é clicado\r\n        $(\"button[id*=historicoalteracoes]\").click(function(e){\r\n             e.preventDefault();\r\n            // Obter o texto dos campos\r\n            var nwf_pl = \"#form.detalhe_processo.n_wf_pl[{form.processos.detalhe_processo[{requestParam.fk_id_processo}]}]#\";\r\n            console.log(nwf_pl);\r\n            //var freguesia = document.getElementById(\"freguesia\").value;\r\n\r\n            pesquisaHistorico(nwf_pl);\r\n         });\r\n    });\r\n    \r\n    function pesquisaHistorico(nwf_pl) {\r\n        //window.open('#request.scheme#://#request.serverName#:#request.serverPort##request.contextPath#/web/userview/colossus/listaProcessos/_/listaProcessos?d-7672090-fn_Predio=' + predio + '&d-7672090-fn_Freguesia=' + freguesia);\r\n         window.open('#request.scheme#://#request.serverName#:#request.serverPort##request.contextPath#/web/userview/workflowPL/UV_PL_Geral/_/consultaAlteracoes?d-3656786-fn_c_numero_proce_pl=' + nwf_pl);\r\n    }\r\n\r\n<\/script> "
-                        }
                     }
                 ],
                 "properties": {"width": "100%"}
