@@ -1,93 +1,192 @@
 {
     "className": "org.joget.apps.form.model.Form",
-    "elements": [{
-        "className": "org.joget.apps.form.model.Section",
-        "elements": [{
-            "className": "org.joget.apps.form.model.Column",
-            "elements": [
-                {
-                    "className": "org.joget.apps.form.lib.SelectBox",
-                    "properties": {
-                        "controlField": "",
-                        "id": "gestor_atual",
-                        "label": "Gestor Atual",
-                        "multiple": "",
-                        "options": [{
-                            "grouping": "",
-                            "label": "#currentUser.fullName#",
-                            "value": "#currentUser.username#"
-                        }],
-                        "optionsBinder": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "size": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
+    "elements": [
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.SelectBox",
+                        "properties": {
+                            "controlField": "",
+                            "id": "gestor_atual",
+                            "label": "Gestor Atual",
+                            "multiple": "",
+                            "options": [{
+                                "grouping": "",
+                                "label": "#currentUser.fullName#",
+                                "value": "#currentUser.username#"
+                            }],
+                            "optionsBinder": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.HiddenField",
+                        "properties": {
+                            "id": "id_diligencia",
+                            "useDefaultWhenEmpty": "",
+                            "value": "",
+                            "workflowVariable": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.plugin.enterprise.RichTextEditorField",
+                        "properties": {
+                            "editor": "quill",
+                            "height": "",
+                            "id": "mensagem_com_imagens",
+                            "label": "Com Imagens",
+                            "permissionType": "",
+                            "placeholder": "",
+                            "qmode": "",
+                            "readonly": "",
+                            "switch": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            },
+                            "value": ""
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "setTextAreaValue",
+                            "label": "",
+                            "value": "<script type=\"text/javascript\">\n    $(document).ready(function() {\n        /*console.log(\"in\");\n        $(\".ql-editor\").on('input', function() {\n            console.log(\"inside\" + $(\".ql-editor\")[0].innerText);\n            //console.log($(\".ql-editor\")[0].innerText);\n            $(\"textarea#mensagem\").val($(\".ql-editor\")[0].innerText);;\n        }).trigger(\"change\");*/\n        \n        $(\".ql-editor\").on('DOMSubtreeModified', function(){\n            var text = $(\".ql-editor\")[0].innerText;\n            \n            $(\"textarea#mensagem\").val(text);\n            \n        });\n        \n    });\n\n    \n<\/script>"
+                        }
                     }
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section1_1",
+                "join": "",
+                "label": "Adicionar observações:",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
                 },
-                {
-                    "className": "org.joget.apps.form.lib.TextArea",
-                    "properties": {
-                        "cols": "20",
-                        "id": "observacao_diligencia",
-                        "label": "",
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "rows": "5",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
+                "permission": {
+                    "className": "",
+                    "properties": {}
                 },
-                {
-                    "className": "org.joget.apps.form.lib.HiddenField",
-                    "properties": {
-                        "id": "id_diligencia",
-                        "useDefaultWhenEmpty": "",
-                        "value": "",
-                        "workflowVariable": ""
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
+        },
+        {
+            "className": "org.joget.apps.form.model.Section",
+            "elements": [{
+                "className": "org.joget.apps.form.model.Column",
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.FileUpload",
+                        "properties": {
+                            "attachment": "",
+                            "fileType": "",
+                            "fileTypeMsg": "Invalid file type",
+                            "id": "anexos",
+                            "label": "Upload de Anexos",
+                            "maxSize": "",
+                            "maxSizeMsg": "File size limit exceeded",
+                            "multiple": "true",
+                            "padding": "",
+                            "permissionType": "",
+                            "readonly": "",
+                            "removeFile": "",
+                            "resizeHeight": "",
+                            "resizeMethod": "",
+                            "resizeQuality": "0.8",
+                            "resizeWidth": "",
+                            "size": "",
+                            "validator": {
+                                "className": "",
+                                "properties": {}
+                            }
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "traduzirMensagemUpload",
+                            "label": "",
+                            "value": "<script>\n    $(document).ready(function(){\n        $('div.dz-message').text(\"Solte os ficheiros aqui ou clique para fazer upload.\");\n    });  \n<\/script>"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field5",
+                            "label": "",
+                            "value": "<script>\n    $(document).ready(function(){\n        \n        $(\"textarea#mensagem\").parent().hide();\n        \n        var dateCreated = FormUtil.getValue(\"dateCreated\");\n        //console.log(\"Imprime: \" + dateCreated);\n        \n        if(dateCreated !== null && dateCreated !== \"\"){\n            $(\"textarea[id=mensagem]\").prop('disabled', true);\n            $(\"div[id^=mensagem_com_imagens] div.ql-editor\").attr('contenteditable', false);\n            $(\"select[name=operativa1]\").prop('disabled', true);\n            $(\"select[name=gestor_atual]\").prop('disabled', true);\n            $(\"input[type=file]\").prop('disabled', true);\n            $(\"div.dz-message\").hide();\n            $(\"a.remove\").hide();\n            //console.log(\"Imprime: \" + dateCreated);\n            //$(\"input[type=submit]\").remove();\n        }\n    });\n<\/script>\n"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field7",
+                            "label": "",
+                            "value": "<script>\n    $(\"div[class='dz-message needsclick']\").text(\"Arraste os documentos que deseja carregar ou clique aqui\");\n<\/script>"
+                        }
                     }
-                }
-            ],
-            "properties": {"width": "100%"}
-        }],
-        "properties": {
-            "comment": "",
-            "id": "section1_1",
-            "join": "",
-            "label": "Adicionar observações:",
-            "loadBinder": {
-                "className": "",
-                "properties": {}
-            },
-            "permission": {
-                "className": "",
-                "properties": {}
-            },
-            "permissionReadonly": "",
-            "readonly": "",
-            "readonlyLabel": "",
-            "regex": "",
-            "reverse": "",
-            "storeBinder": {
-                "className": "",
-                "properties": {}
-            },
-            "visibilityControl": "",
-            "visibilityValue": ""
+                ],
+                "properties": {"width": "100%"}
+            }],
+            "properties": {
+                "comment": "",
+                "id": "section3",
+                "join": "",
+                "label": "Anexos",
+                "loadBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permission": {
+                    "className": "",
+                    "properties": {}
+                },
+                "permissionReadonly": "",
+                "readonly": "",
+                "readonlyLabel": "",
+                "regex": "",
+                "reverse": "",
+                "storeBinder": {
+                    "className": "",
+                    "properties": {}
+                },
+                "visibilityControl": "",
+                "visibilityValue": ""
+            }
         }
-    }],
+    ],
     "properties": {
         "description": "",
         "id": "observacaoDiligencia",
