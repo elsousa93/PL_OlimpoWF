@@ -2300,52 +2300,63 @@
             "className": "org.joget.apps.form.model.Section",
             "elements": [{
                 "className": "org.joget.apps.form.model.Column",
-                "elements": [{
-                    "className": "org.joget.apps.form.lib.DatePicker",
-                    "properties": {
-                        "allowManual": "true",
-                        "currentDateAs": "",
-                        "dataFormat": "yyyy-MM-dd",
-                        "datePickerType": "",
-                        "endDateFieldId": "",
-                        "format": "dd/mm/yy",
-                        "id": "validade",
-                        "label": "Validade do Documento de Identificação",
-                        "permission_rules": {
-                            "1300a907-31a2-48ed-bf4c-1a7567ccad20": {},
-                            "197a8854-1304-fc77-205b-1d8db4b32f50": {
-                                "permissionHidden": "",
-                                "readonly": "true"
+                "elements": [
+                    {
+                        "className": "org.joget.apps.form.lib.DatePicker",
+                        "properties": {
+                            "allowManual": "true",
+                            "currentDateAs": "",
+                            "dataFormat": "yyyy-MM-dd",
+                            "datePickerType": "",
+                            "endDateFieldId": "",
+                            "format": "dd/mm/yy",
+                            "id": "validade",
+                            "label": "Validade do Documento de Identificação",
+                            "permission_rules": {
+                                "1300a907-31a2-48ed-bf4c-1a7567ccad20": {},
+                                "197a8854-1304-fc77-205b-1d8db4b32f50": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "3e334771-7c1d-4882-b298-443c91d6bf3e": {},
+                                "88ba4623-f952-8e79-62c1-4968316287be": {},
+                                "973de9e9-e890-860f-035e-b234371b728e": {},
+                                "c44d872b-cea6-6a40-8ece-c4160cfe0079": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "c6f523f5-c981-dd70-ca03-ea8e9a69f2f1": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "d1feb8e1-e231-592d-2773-31ada2992103": {}
                             },
-                            "3e334771-7c1d-4882-b298-443c91d6bf3e": {},
-                            "88ba4623-f952-8e79-62c1-4968316287be": {},
-                            "973de9e9-e890-860f-035e-b234371b728e": {},
-                            "c44d872b-cea6-6a40-8ece-c4160cfe0079": {
-                                "permissionHidden": "",
-                                "readonly": "true"
+                            "placeholder": "",
+                            "readonly": "",
+                            "readonlyLabel": "",
+                            "startDateFieldId": "",
+                            "validator": {
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                "properties": {
+                                    "decoration": "",
+                                    "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    \r\n    boolean result = true;\r\n        //Configure field to validate - UPDATE HERE\r\n        String fieldId = \"validade\";\r\n        \r\n        //Get element value\r\n        Form form = FormUtil.findRootForm(element);\r\n        Element field = FormUtil.findElement(fieldId, form, formData);\r\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n        if(fieldValue.contains(\"-\")){\r\n            fieldValue.replace(\"-\",\"/\");\r\n        }\r\n        \r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                }
                             },
-                            "c6f523f5-c981-dd70-ca03-ea8e9a69f2f1": {
-                                "permissionHidden": "",
-                                "readonly": "true"
-                            },
-                            "d1feb8e1-e231-592d-2773-31ada2992103": {}
-                        },
-                        "placeholder": "",
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "startDateFieldId": "",
-                        "validator": {
-                            "className": "org.joget.apps.form.lib.BeanShellValidator",
-                            "properties": {
-                                "decoration": "",
-                                "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    \r\n    boolean result = true;\r\n        //Configure field to validate - UPDATE HERE\r\n        String fieldId = \"validade\";\r\n        \r\n        //Get element value\r\n        Form form = FormUtil.findRootForm(element);\r\n        Element field = FormUtil.findElement(fieldId, form, formData);\r\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n        if(fieldValue.contains(\"-\")){\r\n            fieldValue.replace(\"-\",\"/\");\r\n        }\r\n        \r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
-                            }
-                        },
-                        "value": "",
-                        "workflowVariable": "",
-                        "yearRange": "c-10:c+10"
+                            "value": "",
+                            "workflowVariable": "",
+                            "yearRange": "c-10:c+10"
+                        }
+                    },
+                    {
+                        "className": "org.joget.apps.form.lib.CustomHTML",
+                        "properties": {
+                            "autoPopulate": "",
+                            "id": "field65",
+                            "label": "",
+                            "value": "<script type=\"text/javascript\">\r\n    $(document).ready(function(){\r\n    var data = FormUtil.getField(\"validade\");\r\n    console.log(\"Data1\" + data);\r\n           \r\n    });\r\n    $(data).change(function(){\r\n        console.log(\"Data2\" + data);\r\n        function formatarDate(data){\r\n        var date = new Date(data);\r\n        var day = date.getDate();\r\n        var month = date.getMonth() + 1;\r\n        var year = date.getFullYear();\r\n        if(day<10){\r\n           day=\"0\" + day;\r\n        }\r\n        if(month<10){\r\n           month = \"0\" + month;\r\n        }\r\n        var dateFormated = day + \"/\" + month + \"/\" + year;\r\n        return dateFormated;\r\n        }\r\n    });\r\n<\/script>"
+                        }
                     }
-                }],
+                ],
                 "properties": {"width": "100%"}
             }],
             "properties": {
