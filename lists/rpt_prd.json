@@ -1,0 +1,126 @@
+{
+    "actions": [],
+    "binder": {
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "id",
+            "sql": "SELECT det.c_nome_banco AS Banco,\nato.c_status AS Status, Month(ato.c_dataOutorga) as Mes, ato.c_motivo_desmarcacao_ato, COUNT(det.c_id_processo) AS Processos\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_agendamento ag ON pro.c_agendamento = ag.id\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id\nWHERE ato.c_status != ''\nGROUP BY det.c_nome_banco,ato.c_status, Mes, ato.c_motivo_desmarcacao_ato\n\n\n\n"
+        }
+    },
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_8",
+            "label": "Banco",
+            "name": "Banco",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_5",
+            "label": "Mes",
+            "name": "Mes",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_7",
+            "label": "Status",
+            "name": "Status",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "c_motivo_desmarcacao_ato",
+            "name": "c_motivo_desmarcacao_ato",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_6",
+            "label": "Processos",
+            "name": "Processos",
+            "sortable": "false"
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
+    "description": "",
+    "disableResponsive": "",
+    "filters": [{
+        "datalist_type": "filter",
+        "filterParamName": "d-3622638-fn_Banco",
+        "hidden": "",
+        "id": "filter_0",
+        "label": "Banco",
+        "name": "Banco",
+        "type": {
+            "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+            "properties": {
+                "controlField": "",
+                "defaultValue": "",
+                "multiple": "",
+                "options": [],
+                "optionsBinder": {
+                    "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                    "properties": {
+                        "addEmptyOption": "",
+                        "cacheInterval": "",
+                        "emptyLabel": "",
+                        "extraCondition": "c_nome_campo = 'nome_banco'",
+                        "formDefId": "adicionarOpcaoLV",
+                        "groupingColumn": "",
+                        "idColumn": "value",
+                        "labelColumn": "label",
+                        "useAjax": ""
+                    }
+                },
+                "size": ""
+            }
+        }
+    }],
+    "hidePageSize": "",
+    "id": "rpt_prd",
+    "name": "RPT - Produção",
+    "order": "",
+    "orderBy": "",
+    "pageSize": "100",
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "permission_rules": [{
+        "permission": {
+            "className": "org.joget.apps.userview.lib.DepartmentPermission",
+            "properties": {
+                "allowedDeptIds": "PL_INT_PRD_GEN_RPA_CRH",
+                "orgId": "PL"
+            }
+        },
+        "permission_key": "3dcb3509-7a33-867b-6811-d4713161d7e5",
+        "permission_name": "Robot"
+    }],
+    "responsiveView": [
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Mobile"
+        },
+        {
+            "breakpoint": "",
+            "columns": "",
+            "view": "Tablet"
+        }
+    ],
+    "rowActions": [],
+    "searchPopup": "",
+    "showDataWhenFilterSet": "",
+    "showPageSizeSelector": "true",
+    "useSession": ""
+}
