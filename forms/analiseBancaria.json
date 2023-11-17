@@ -103,8 +103,17 @@
                         "properties": {
                             "id": "atualizar_envio_processo",
                             "permission_rules": {
+                                "3d413454-11f8-a8ab-ce78-cac0bce6f59b": {},
+                                "607861ec-6ead-d50c-842c-2aa73dec24a0": {},
+                                "7382f1a1-5604-563f-ca2a-b5600f921006": {},
+                                "73aa20c7-f9ca-9da7-089b-9008a5f9acab": {},
                                 "7fa183dc-70b8-12ca-9ddf-e3f11d83f06b": {},
-                                "be0ae92d-a00d-83ce-2c77-453e6972fdd9": {}
+                                "bafc1ddc-0d15-0cf9-c615-91abfb48c636": {},
+                                "be0ae92d-a00d-83ce-2c77-453e6972fdd9": {},
+                                "c991cad6-1e54-4bbf-0406-8dd2a733c81d": {},
+                                "d3ad26eb-c6f2-0304-3fb3-c3b3875470a2": {},
+                                "e65f7ec0-8c54-5c64-f115-db763624cf5f": {},
+                                "fc7f2cce-9755-d638-d121-60a5210256d3": {}
                             },
                             "useDefaultWhenEmpty": "",
                             "validator": {
@@ -2184,14 +2193,50 @@
                                 "className": "",
                                 "properties": {}
                             },
+                            "permission_rules": {
+                                "3d413454-11f8-a8ab-ce78-cac0bce6f59b": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "607861ec-6ead-d50c-842c-2aa73dec24a0": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "7382f1a1-5604-563f-ca2a-b5600f921006": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "73aa20c7-f9ca-9da7-089b-9008a5f9acab": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "7fa183dc-70b8-12ca-9ddf-e3f11d83f06b": {},
+                                "bafc1ddc-0d15-0cf9-c615-91abfb48c636": {},
+                                "be0ae92d-a00d-83ce-2c77-453e6972fdd9": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "c991cad6-1e54-4bbf-0406-8dd2a733c81d": {
+                                    "permissionHidden": "",
+                                    "readonly": "true"
+                                },
+                                "d3ad26eb-c6f2-0304-3fb3-c3b3875470a2": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "e65f7ec0-8c54-5c64-f115-db763624cf5f": {
+                                    "permissionHidden": "true",
+                                    "readonly": ""
+                                },
+                                "fc7f2cce-9755-d638-d121-60a5210256d3": {}
+                            },
                             "readonly": "",
                             "readonlyLabel": "",
                             "validator": {
-                                "className": "org.joget.apps.form.lib.DefaultValidator",
+                                "className": "org.joget.apps.form.lib.BeanShellValidator",
                                 "properties": {
-                                    "mandatory": "true",
-                                    "message": "#i18n.mandatorymsg#",
-                                    "type": ""
+                                    "decoration": "",
+                                    "script": "\nimport java.util.Arrays;\nimport org.joget.apps.app.service.AppUtil;\nimport org.joget.apps.form.model.Element;\nimport org.joget.apps.form.model.Form;\nimport org.joget.apps.form.model.FormData;\nimport org.joget.apps.form.service.FormUtil;\nimport org.joget.commons.util.LogUtil;\nimport org.joget.commons.util.LogUtil;\n  \npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\n    \n    //Get value from workflow variable\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\n    String banco = \"#form.detalhe_processo.nome_banco[{form.processos.detalhe_processo}]#\";\n    String fase = \"#form.detalhe_processo.fase_processo[{form.processos.detalhe_processo}]#\";\n\n    boolean result = true;\n    \n    //Only validate if it is the last activity of the subflow\n    if(flagvalidate.equals(\"1\")){\n        \n        //Configure field to validate - UPDATE HERE\n        String fieldId = \"livranca\";\n        \n        //Get element value\n        Form form = FormUtil.findRootForm(element);\n        Element field = FormUtil.findElement(fieldId, form, formData);\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\n        \n        if(banco.equals(\"BNI\")){\n            //If element is not filled give error message\n            if (fieldValue == null || fieldValue.equals(\"\")){\n                String id = FormUtil.getElementParameterName(element);\n                formData.addFormError(id, \"Campo obrigatório\");\n                result = false;\n            }else{\n                result = true;\n            }\n        }else{\n            result true;\n        }\n        \n    }else{\n        result = true;\n    }\n\n    return result;\n\n}\n\n//call validate method with injected variable\nreturn validate(element, formData, values);"
                                 }
                             },
                             "value": "",
@@ -2221,11 +2266,13 @@
                                 "properties": {}
                             },
                             "permission_rules": {
+                                "3d413454-11f8-a8ab-ce78-cac0bce6f59b": {},
                                 "607861ec-6ead-d50c-842c-2aa73dec24a0": {},
                                 "7382f1a1-5604-563f-ca2a-b5600f921006": {
                                     "permissionHidden": "",
                                     "readonly": "true"
                                 },
+                                "73aa20c7-f9ca-9da7-089b-9008a5f9acab": {},
                                 "7fa183dc-70b8-12ca-9ddf-e3f11d83f06b": {},
                                 "bafc1ddc-0d15-0cf9-c615-91abfb48c636": {},
                                 "be0ae92d-a00d-83ce-2c77-453e6972fdd9": {},
@@ -3199,8 +3246,17 @@
                                 "properties": {}
                             },
                             "permission_rules": {
+                                "3d413454-11f8-a8ab-ce78-cac0bce6f59b": {},
+                                "607861ec-6ead-d50c-842c-2aa73dec24a0": {},
+                                "7382f1a1-5604-563f-ca2a-b5600f921006": {},
+                                "73aa20c7-f9ca-9da7-089b-9008a5f9acab": {},
                                 "7fa183dc-70b8-12ca-9ddf-e3f11d83f06b": {},
-                                "be0ae92d-a00d-83ce-2c77-453e6972fdd9": {}
+                                "bafc1ddc-0d15-0cf9-c615-91abfb48c636": {},
+                                "be0ae92d-a00d-83ce-2c77-453e6972fdd9": {},
+                                "c991cad6-1e54-4bbf-0406-8dd2a733c81d": {},
+                                "d3ad26eb-c6f2-0304-3fb3-c3b3875470a2": {},
+                                "e65f7ec0-8c54-5c64-f115-db763624cf5f": {},
+                                "fc7f2cce-9755-d638-d121-60a5210256d3": {}
                             },
                             "readonly": "",
                             "readonlyLabel": "",
