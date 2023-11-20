@@ -286,6 +286,12 @@
         <Participant Id="process44_process43_process36_process34_process33_process32_participant58" Name="Participant 58">
             <ParticipantType Type="ROLE"/>
         </Participant>
+        <Participant Id="process45_remetente" Name="Remetente">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
+        <Participant Id="diligencia_DJ_DJ" Name="Direção Jurídica">
+            <ParticipantType Type="ROLE"/>
+        </Participant>
     </Participants>
     <Applications>
         <Application Id="default_application"/>
@@ -11707,6 +11713,223 @@
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="process44_process43_process36_process34_process33_process32_participant58"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process44_process43_process36_process34_process33_process32_participant58,CONNECTING_ACTIVITY_ID=distribuicaoProcessos,X_OFFSET=75,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process44_process43_process36_process34_process33_process32_participant58,CONNECTING_ACTIVITY_ID=distribuicaoProcessos,X_OFFSET=386,Y_OFFSET=41,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+            </ExtendedAttributes>
+        </WorkflowProcess>
+        <WorkflowProcess Id="diligencias_DJ" Name="Diligências Direção Jurídica">
+            <ProcessHeader DurationUnit="h"/>
+            <FormalParameters>
+                <FormalParameter Id="gestor_remetente" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="gestor_destinatario" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="equipa_destinataria" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+                <FormalParameter Id="id_processo_pai" Mode="INOUT">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </FormalParameter>
+            </FormalParameters>
+            <DataFields>
+                <DataField Id="estado" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="equipa_remetente" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="gestor_remetente" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="equipa_destinataria" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="gestor_destinatario" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="flag_alerta" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="tipo_alerta" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="id_processo_pai" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+                <DataField Id="id_diligencia" IsArray="FALSE">
+                    <DataType>
+                        <BasicType Type="STRING"/>
+                    </DataType>
+                </DataField>
+            </DataFields>
+            <Activities>
+                <Activity Id="fecha" Name="Fechado?">
+                    <Route/>
+                    <Performer>process45_remetente</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition4"/>
+                                    <TransitionRef Id="transition7"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process45_remetente"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="864.9826583862305,38.09027549804688"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="confirmarDiligencia" Name="2 - Confirmar Diligência">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>process45_remetente</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process45_remetente"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="678,33"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="resolverDiligencia1" Name="1 - Resolver Diligencia">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>diligencia_DJ_DJ</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="diligencia_DJ_DJ"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="299.984375,58.09375"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="resolverDiligencia2" Name="3 - Resolver Diligência">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>diligencia_DJ_DJ</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="diligencia_DJ_DJ"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="825.989616394043,59.09723350585938"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route2">
+                    <Route/>
+                    <Performer>process45_remetente</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Join Type="XOR"/>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process45_remetente"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="439,58"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route3">
+                    <Route/>
+                    <Performer>process45_remetente</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process45_remetente"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1103,36"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="tool1" Name="Atualizar variáveis de Alerta">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>process45_remetente</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process45_remetente"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="963,35"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="UpdateVariables" Name="Update Variables">
+                    <Implementation>
+                        <Tool Id="default_application"/>
+                    </Implementation>
+                    <Performer>process45_remetente</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="process45_remetente"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="144.98265838623047,28.87152549804688"/>
+                    </ExtendedAttributes>
+                </Activity>
+            </Activities>
+            <Transitions>
+                <Transition From="confirmarDiligencia" Id="transition2" To="fecha">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="fecha" Id="transition4" To="resolverDiligencia2">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="resolverDiligencia2" Id="transition3" To="route2">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route2" Id="transition5" To="confirmarDiligencia">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="resolverDiligencia1" Id="transition6" To="route2">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="fecha" Id="transition7" To="tool1">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="tool1" Id="transition8" To="route3">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="UpdateVariables" Id="transition9" To="resolverDiligencia1">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
+                    </ExtendedAttributes>
+                </Transition>
+            </Transitions>
+            <ExtendedAttributes>
+                <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="process45_remetente;diligencia_DJ_DJ"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process45_remetente,CONNECTING_ACTIVITY_ID=route3,X_OFFSET=1362,Y_OFFSET=46,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=process45_remetente,CONNECTING_ACTIVITY_ID=UpdateVariables,X_OFFSET=69,Y_OFFSET=45,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
     </WorkflowProcesses>
