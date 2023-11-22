@@ -63,8 +63,11 @@
                         "validateMaxRow": "",
                         "validateMinRow": "",
                         "validator": {
-                            "className": "",
-                            "properties": {}
+                            "className": "org.joget.apps.form.lib.BeanShellMultiRowValidator",
+                            "properties": {
+                                "decoration": "",
+                                "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormRowSet rows, FormData formData) {\r\n    boolean result = true;\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n\r\n    //Get fase de processo through processId\r\n    String faseProcesso = \"#process.processId#\";\r\n    if(!faseProcesso.contains(\"Filtro\")){\r\n        return true;\r\n    }\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        if (rows != null && !rows.isEmpty()) {\r\n        //Sum the values from column \"amount\"\r\n            for (FormRow row : rows) {\r\n                try {\r\n                    //LogUtil.info(\"imoveis\", \"element: \" + element);\r\n                    if(row.getProperty(\"filtro\") == null || row.getProperty(\"filtro\").isEmpty()){\r\n                        String id = FormUtil.getElementParameterName(element);\r\n                        formData.addFormError(id, \"Checklist incompleta\");\r\n                        result = false;\r\n                    }\r\n                } catch (Exception e) {}\r\n            }\r\n        }\r\n    }\r\n  \r\n    return result;\r\n}\r\n  \r\n//call validate method with injected variable\r\nreturn validate(element, rows, formData);"
+                            }
                         }
                     }
                 },
@@ -93,7 +96,7 @@
                             "7cb0a003-f9de-cb30-4a9f-c17080392739": {},
                             "8ed12735-d92c-74bd-444f-888db20bd46a": {}
                         },
-                        "value": "<script type=\"text/javascript\">\r\n    \r\n    $(\"div[name=checklist]\").change(function(){\r\n        \r\n        //get value from field that controls if the WF number is automatically generated or not\r\n        var values = FormUtil.getValues(\"checklist.filtro\");\r\n        var count = 0;\r\n        var i = 0;\r\n\r\n        if(values != null && values.length > 0){\r\n            while (count == 0 && i < values.length) {\r\n                if(values[i] === \"\"){\r\n                    count++;\r\n                }\r\n                i++;\r\n            }\r\n        }\r\n        \r\n        var field = FormUtil.getField(\"resultado_checklist\");\r\n        if(count != 0){\r\n            $(field).val(\"NOK\"); //set value\r\n        }else{\r\n            $(field).val(\"OK\"); //set value\r\n        }\r\n        \r\n        \r\n\r\n\r\n    });\r\n<\/script>"
+                        "value": "<script type=\"text/javascript\">\r\n    \r\n    $(\"div[name=checklist]\").change(function(){\r\n        \r\n      /*  //get value from field that controls if the WF number is automatically generated or not\r\n        var values = FormUtil.getValues(\"checklist.filtro\");\r\n        var count = 0;\r\n        var i = 0;\r\n\r\n        if(values != null && values.length > 0){\r\n            while (count == 0 && i < values.length) {\r\n                if(values[i] === \"\"){\r\n                    count++;\r\n                }\r\n                i++;\r\n            }\r\n        }\r\n        \r\n        var field = FormUtil.getField(\"resultado_checklist\");\r\n        if(count != 0){\r\n            $(field).val(\"NOK\"); //set value\r\n        }else{\r\n            $(field).val(\"OK\"); //set value\r\n        }*/\r\n        \r\n        \r\n\r\n\r\n    });\r\n<\/script>"
                     }
                 }
             ],
