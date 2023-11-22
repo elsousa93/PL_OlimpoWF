@@ -4,12 +4,138 @@
         "className": "org.joget.apps.form.model.Section",
         "elements": [{
             "className": "org.joget.apps.form.model.Column",
-            "elements": [],
+            "elements": [{
+                "className": "org.joget.plugin.enterprise.SpreadSheetGrid",
+                "properties": {
+                    "customSettings": "",
+                    "disabledAdd": "",
+                    "disabledDelete": "",
+                    "errorMessage": "Invalid number of rows",
+                    "fixedColumnsLeft": "0",
+                    "headerSorting": "",
+                    "id": "checklist",
+                    "label": "",
+                    "loadBinder": {
+                        "className": "org.joget.apps.form.lib.BeanShellFormBinder",
+                        "properties": {
+                            "autoHandleFiles": "",
+                            "autoHandleWorkflowVariable": "true",
+                            "cacheInterval": "",
+                            "script": "import org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.app.model.AppDefinition;\r\nimport org.joget.apps.app.service.AppService;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.plugin.base.PluginManager;\r\nimport org.joget.apps.form.model.FormLoadBinder;\r\nimport java.sql.Connection;\r\nimport java.sql.PreparedStatement;\r\nimport java.sql.ResultSet;\r\nimport java.sql.SQLException;\r\nimport javax.sql.DataSource;\r\nimport org.joget.commons.util.LogUtil;\r\n \r\npublic FormRowSet load(Element element, String primaryKey, FormData formData) {\r\n    String formDefId = \"checkDocsAnaliseLegal\";  //change this to the form id used to store grid data\r\n    String foreignKey = \"fk\"; //change this to the foreign key\r\n     \r\n    FormRowSet f = new FormRowSet();\r\n    f.setMultiRow(true);\r\n    \r\n    // Reuse Multi Row Binder to load data\r\n    PluginManager pluginManager = (PluginManager) FormUtil.getApplicationContext().getBean(\"pluginManager\");\r\n    FormLoadBinder binder = (FormLoadBinder) pluginManager.getPlugin(\"org.joget.plugin.enterprise.MultirowFormBinder\");\r\n     \r\n    //Load from the grid table\r\n    binder.setProperty(\"formDefId\", formDefId);\r\n    binder.setProperty(\"foreignKey\", foreignKey);\r\n    f = binder.load(element, primaryKey, formData);\r\n    \r\n    //if no grid data is retrieved, get from default table\r\n    if (f == null || f.isEmpty()) {\r\n        String tipo_processo = \"#form.detalhe_processo.tipo_processo[{form.processos.detalhe_processo}]#\";\r\n        tipo_processo = AppUtil.processHashVariable(tipo_processo,null,null,null);\r\n        //LogUtil.info(\"Analise Bancaria checklist\", \"tipo_processo: \" + tipo_processo);\r\n        String[] tipos_processo = tipo_processo.split(\"\\\\+\");\r\n        \r\n        Connection con = null;\r\n        PreparedStatement stmt = null;\r\n        ResultSet rs = null;\r\n    \r\n        try{\r\n            DataSource ds = (DataSource)AppUtil.getApplicationContext().getBean(\"setupDataSource\");\r\n            con = ds.getConnection();\r\n            \r\n            if(!con.isClosed()){\r\n                //Build sql query with the number of inputs needed based on loop iteration\r\n                String sql = \"SELECT c_tipo_documento FROM app_fd_checklist_docs WHERE (c_checklist = ? OR c_checklist = ?) AND c_servico = ? AND ( c_mostra LIKE \";\r\n\r\n                StringBuilder parameterBuilder = new StringBuilder();\r\n                \r\n                for (int i = 0; i < tipos_processo.length*3; i++) {\r\n                    parameterBuilder.append(\"?\");\r\n                    if (tipos_processo.length*3 > i + 1) {\r\n                        parameterBuilder.append(\"OR c_mostra LIKE\");\r\n                    }\r\n                }\r\n                parameterBuilder.append(\")\");\r\n                \r\n                //Here you can concatenate parts of a query\r\n                PreparedStatement stmt = con.prepareStatement(sql + parameterBuilder);\r\n                stmt.setString(1, \"analiseBancaria\");\r\n                stmt.setString(2, \"processual\");\r\n                stmt.setString(3, \"CH\");\r\n                \r\n                int count = 4;\r\n                //set values to the needed inputs\r\n                for(int i = 0; i < tipos_processo.length; i++){\r\n                    String tipo_processo1 = tipos_processo[i] + \";%\";\r\n                    String tipo_processo2 = \"%;\" + tipos_processo[i] + \";%\";\r\n                    String tipo_processo3 = \"%;\" + tipos_processo[i];\r\n\r\n                    stmt.setString(count++, tipo_processo1);\r\n                    stmt.setString(count++, tipo_processo2);\r\n                    stmt.setString(count++, tipo_processo3);\r\n                }\r\n                //Execute the SELECT SQL statement\r\n                ResultSet rs = stmt.executeQuery();\r\n                     \r\n                //Get value from columns of record(s)\r\n                while (rs.next()) {\r\n                    //LogUtil.info(\"imovel\", \"entra\");\r\n                    FormRow r1 = new FormRow();\r\n                   // r1.put(\"checklist\", rs.getString(2));\r\n                    r1.put(\"tipo_documento\", rs.getString(1));\r\n                   // r1.put(\"gestor\", \"\");\r\n                   // r1.put(\"gestor_senior\", \"\");\r\n                   // r1.put(\"validacao\", \"\");\r\n                    r1.put(\"filtro\", \"\");\r\n                    f.add(r1);\r\n                }\r\n            }\r\n                \r\n        }catch(Exception e){\r\n            LogUtil.error(\"CREDITO HABITACAO - Análise Bancária - Checklist\", e, \"Error getting info from DB\");\r\n        }finally{\r\n            try{\r\n                if(rs != null){\r\n                    rs.close();\r\n                }\r\n                if(stmt != null){\r\n                    stmt.close();\r\n                }\r\n                if(con != null && !con.isClosed()) {\r\n                    con.close();\r\n                }\r\n            }catch(Exception e){\r\n                LogUtil.error(\"CREDITO HABITACAO - Análise Bancária - Checklist\", e, \"Error closing DB connection\");\r\n            }\r\n            \r\n        }\r\n    }\r\n    \r\n    return f;\r\n}\r\n \r\n//call load method with injected variable\r\nreturn load(element, primaryKey, formData);",
+                            "useAjax": ""
+                        }
+                    },
+                    "maxHeight": "",
+                    "minSpareRows": "1",
+                    "options": [
+                        {
+                            "format": "",
+                            "formatType": "",
+                            "formula": "",
+                            "label": "Tipo de Documento",
+                            "readonly": "",
+                            "regexValidator": "",
+                            "value": "tipo_documento",
+                            "width": ""
+                        },
+                        {
+                            "format": "checkDocsAnaliseLegal",
+                            "formatType": "dropdown",
+                            "formula": "",
+                            "label": "Filtro",
+                            "readonly": "",
+                            "regexValidator": "",
+                            "value": "filtro",
+                            "width": ""
+                        }
+                    ],
+                    "permission_rules": {
+                        "0784be0d-cf94-c67c-a91e-b939722d1cf2": {},
+                        "308de489-d5c4-4e1c-83dd-88359733df2c": {},
+                        "318f3801-229c-89be-0e49-0d867b5a7899": {},
+                        "3d413454-11f8-a8ab-ce78-cac0bce6f59b": {},
+                        "607861ec-6ead-d50c-842c-2aa73dec24a0": {},
+                        "7382f1a1-5604-563f-ca2a-b5600f921006": {},
+                        "73aa20c7-f9ca-9da7-089b-9008a5f9acab": {},
+                        "97a03de1-7bb9-bc74-8c31-4aa187d2009b": {},
+                        "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                        "bafc1ddc-0d15-0cf9-c615-91abfb48c636": {},
+                        "be0ae92d-a00d-83ce-2c77-453e6972fdd9": {},
+                        "c991cad6-1e54-4bbf-0406-8dd2a733c81d": {
+                            "permissionHidden": "",
+                            "readonly": ""
+                        },
+                        "d3ad26eb-c6f2-0304-3fb3-c3b3875470a2": {},
+                        "e65f7ec0-8c54-5c64-f115-db763624cf5f": {},
+                        "f1cfd4c6-da96-0380-4224-42d1e280e57d": {}
+                    },
+                    "readonly": "",
+                    "showRowNumber": "",
+                    "sortingField": "",
+                    "storeBinder": {
+                        "className": "org.joget.plugin.enterprise.MultirowFormBinder",
+                        "properties": {
+                            "foreignKey": "fk",
+                            "formDefId": "checkDocsAnaliseLegal"
+                        }
+                    },
+                    "validateMaxRow": "",
+                    "validateMinRow": "",
+                    "validator": {
+                        "className": "org.joget.apps.form.lib.BeanShellMultiRowValidator",
+                        "properties": {
+                            "decoration": "",
+                            "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.model.FormRow;\r\nimport org.joget.apps.form.model.FormRowSet;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormRowSet rows, FormData formData) {\r\n    boolean result = true;\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n\r\n    //Get fase de processo through processId\r\n    String faseProcesso = \"#process.processId#\";\r\n    if(!faseProcesso.contains(\"Filtro\")){\r\n        return true;\r\n    }\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        if (rows != null && !rows.isEmpty()) {\r\n        //Sum the values from column \"amount\"\r\n            for (FormRow row : rows) {\r\n                try {\r\n                    //LogUtil.info(\"imoveis\", \"element: \" + element);\r\n                    if(row.getProperty(\"filtro\") == null || row.getProperty(\"filtro\").isEmpty()){\r\n                        String id = FormUtil.getElementParameterName(element);\r\n                        formData.addFormError(id, \"Checklist incompleta\");\r\n                        result = false;\r\n                    }\r\n                } catch (Exception e) {}\r\n            }\r\n        }\r\n    }\r\n  \r\n    return result;\r\n}\r\n  \r\n//call validate method with injected variable\r\nreturn validate(element, rows, formData);"
+                        }
+                    }
+                }
+            }],
             "properties": {"width": "100%"}
         }],
         "properties": {
-            "id": "section1",
-            "label": "Section"
+            "comment": "",
+            "id": "section18",
+            "join": "",
+            "label": "Checklist de Documentos Processuais e Bancários",
+            "loadBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "permission": {
+                "className": "",
+                "properties": {}
+            },
+            "permissionReadonly": "",
+            "permission_rules": {
+                "0784be0d-cf94-c67c-a91e-b939722d1cf2": {},
+                "308de489-d5c4-4e1c-83dd-88359733df2c": {},
+                "318f3801-229c-89be-0e49-0d867b5a7899": {
+                    "permissionHidden": "",
+                    "readonly": "true"
+                },
+                "3d413454-11f8-a8ab-ce78-cac0bce6f59b": {},
+                "607861ec-6ead-d50c-842c-2aa73dec24a0": {},
+                "7382f1a1-5604-563f-ca2a-b5600f921006": {},
+                "73aa20c7-f9ca-9da7-089b-9008a5f9acab": {},
+                "97a03de1-7bb9-bc74-8c31-4aa187d2009b": {},
+                "af7028ee-276d-8bf5-397d-ff434825b605": {},
+                "bafc1ddc-0d15-0cf9-c615-91abfb48c636": {},
+                "be0ae92d-a00d-83ce-2c77-453e6972fdd9": {},
+                "c991cad6-1e54-4bbf-0406-8dd2a733c81d": {},
+                "d3ad26eb-c6f2-0304-3fb3-c3b3875470a2": {},
+                "e65f7ec0-8c54-5c64-f115-db763624cf5f": {},
+                "f1cfd4c6-da96-0380-4224-42d1e280e57d": {}
+            },
+            "readonly": "",
+            "readonlyLabel": "",
+            "regex": "",
+            "reverse": "",
+            "storeBinder": {
+                "className": "",
+                "properties": {}
+            },
+            "visibilityControl": "",
+            "visibilityValue": ""
         }
     }],
     "properties": {
