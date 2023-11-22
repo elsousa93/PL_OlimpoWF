@@ -479,6 +479,248 @@
                             }
                         },
                         {
+                            "className": "org.joget.apps.form.lib.SelectBox",
+                            "properties": {
+                                "controlField": "",
+                                "id": "estado_contratacao",
+                                "label": "Estado da Contratação",
+                                "multiple": "",
+                                "options": [],
+                                "optionsBinder": {
+                                    "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                    "properties": {
+                                        "addEmptyOption": "true",
+                                        "cacheInterval": "",
+                                        "emptyLabel": "",
+                                        "extraCondition": "c_nome_campo = 'estado_contratacao' AND e.customProperties.servico LIKE '%CH%'",
+                                        "formDefId": "adicionarOpcaoLV",
+                                        "groupingColumn": "",
+                                        "idColumn": "value",
+                                        "labelColumn": "label",
+                                        "useAjax": ""
+                                    }
+                                },
+                                "permission_rules": {
+                                    "04d94e96-37aa-1e4b-d5fe-5595f325e232": {},
+                                    "0d7e4d1f-cd72-0522-8336-34124a217002": {},
+                                    "1fb8f1eb-7717-2af5-ccf1-03a73c560f16": {},
+                                    "435fad6b-d318-04ad-4d78-95912977f590": {
+                                        "permissionHidden": "",
+                                        "readonly": "true"
+                                    },
+                                    "4686233f-e0df-ed34-d3b2-1005caf9470c": {
+                                        "permissionHidden": "",
+                                        "readonly": "true"
+                                    },
+                                    "48b48ad7-5499-aa5d-69b5-3f6bc87b7133": {
+                                        "permissionHidden": "",
+                                        "readonly": "true"
+                                    },
+                                    "6c9a9c6d-bd10-4f4a-0682-541bcbb1222b": {
+                                        "permissionHidden": "",
+                                        "readonly": "true"
+                                    },
+                                    "838ffac8-681d-e9c7-87d9-66be9f1d0443": {},
+                                    "94c61551-208b-5093-fbad-41d5f6b323c0": {
+                                        "permissionHidden": "",
+                                        "readonly": "true"
+                                    },
+                                    "966fc1ca-d0b8-439f-6ab3-76cf9a599c75": {},
+                                    "9f700b46-bde2-cc69-98a7-c562c400ad6d": {
+                                        "permissionHidden": "",
+                                        "readonly": "true"
+                                    },
+                                    "9fb8a08a-3747-1f8e-48ac-fff77f61d611": {
+                                        "permissionHidden": "",
+                                        "readonly": "true"
+                                    },
+                                    "aa6ccea8-6e7f-1433-8d14-32132e9bf1e0": {},
+                                    "d07f81ea-a80c-4560-01fd-7772c1762b0f": {},
+                                    "d6fe0da9-3aa3-9d28-ded2-07a6fb980292": {},
+                                    "de0223e9-d62d-f5f5-f75a-4f6199b32f73": {
+                                        "permissionHidden": "",
+                                        "readonly": "true"
+                                    },
+                                    "e43944ee-a329-cbb2-13bf-98bd5dfc033d": {
+                                        "permissionHidden": "",
+                                        "readonly": ""
+                                    },
+                                    "f6d47cc6-84dc-c359-9ec5-794a6dcbf118": {}
+                                },
+                                "readonly": "",
+                                "readonlyLabel": "",
+                                "size": "",
+                                "validator": {
+                                    "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                    "properties": {
+                                        "decoration": "*",
+                                        "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    //Configure field to validate - UPDATE HERE\r\n    String fieldId = \"estado_contratacao\";\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n\r\n    if (fieldValue.equals(\"DEF\")){\r\n        String id = FormUtil.getElementParameterName(element);\r\n        formData.addFormError(id, \"Tentativa de carregamento de um processo com este Número de processo PL. Necessário verificar e alterá-lo para outro que não 'A definir'\");\r\n        result = false;\r\n    }\r\n    //Only validate if it is the last activity of the subflow\r\n    else if(flagvalidate.equals(\"1\")){\r\n        //If element is not filled give error message\r\n        if (fieldValue == null || fieldValue.equals(\"\")){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else{\r\n            result = true;\r\n        }\r\n    }else{\r\n        result = true;\r\n    }\r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                    }
+                                },
+                                "value": "",
+                                "workflowVariable": "estado"
+                            }
+                        },
+                        {
+                            "className": "org.joget.apps.form.lib.SelectBox",
+                            "properties": {
+                                "controlField": "",
+                                "id": "pendente",
+                                "label": "Pendente de",
+                                "multiple": "",
+                                "options": [],
+                                "optionsBinder": {
+                                    "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                                    "properties": {
+                                        "addEmptyOption": "true",
+                                        "cacheInterval": "",
+                                        "emptyLabel": "",
+                                        "extraCondition": "c_nome_campo = 'pendente'",
+                                        "formDefId": "adicionarOpcaoLV",
+                                        "groupingColumn": "",
+                                        "idColumn": "value",
+                                        "labelColumn": "label",
+                                        "useAjax": ""
+                                    }
+                                },
+                                "permission_rules": {
+                                    "04d94e96-37aa-1e4b-d5fe-5595f325e232": {},
+                                    "0d7e4d1f-cd72-0522-8336-34124a217002": {},
+                                    "1fb8f1eb-7717-2af5-ccf1-03a73c560f16": {},
+                                    "435fad6b-d318-04ad-4d78-95912977f590": {
+                                        "permissionHidden": "",
+                                        "readonly": "true"
+                                    },
+                                    "4686233f-e0df-ed34-d3b2-1005caf9470c": {
+                                        "permissionHidden": "",
+                                        "readonly": "true"
+                                    },
+                                    "48b48ad7-5499-aa5d-69b5-3f6bc87b7133": {
+                                        "permissionHidden": "",
+                                        "readonly": "true"
+                                    },
+                                    "6c9a9c6d-bd10-4f4a-0682-541bcbb1222b": {
+                                        "permissionHidden": "",
+                                        "readonly": ""
+                                    },
+                                    "838ffac8-681d-e9c7-87d9-66be9f1d0443": {},
+                                    "94c61551-208b-5093-fbad-41d5f6b323c0": {
+                                        "permissionHidden": "",
+                                        "readonly": "true"
+                                    },
+                                    "966fc1ca-d0b8-439f-6ab3-76cf9a599c75": {},
+                                    "9f700b46-bde2-cc69-98a7-c562c400ad6d": {
+                                        "permissionHidden": "",
+                                        "readonly": "true"
+                                    },
+                                    "9fb8a08a-3747-1f8e-48ac-fff77f61d611": {
+                                        "permissionHidden": "",
+                                        "readonly": ""
+                                    },
+                                    "aa6ccea8-6e7f-1433-8d14-32132e9bf1e0": {},
+                                    "d07f81ea-a80c-4560-01fd-7772c1762b0f": {},
+                                    "d6fe0da9-3aa3-9d28-ded2-07a6fb980292": {},
+                                    "de0223e9-d62d-f5f5-f75a-4f6199b32f73": {
+                                        "permissionHidden": "",
+                                        "readonly": "true"
+                                    },
+                                    "e43944ee-a329-cbb2-13bf-98bd5dfc033d": {},
+                                    "f6d47cc6-84dc-c359-9ec5-794a6dcbf118": {}
+                                },
+                                "readonly": "",
+                                "readonlyLabel": "",
+                                "size": "",
+                                "validator": {
+                                    "className": "org.joget.apps.form.lib.DefaultValidator",
+                                    "properties": {
+                                        "mandatory": "",
+                                        "message": "#i18n.mandatorymsg#",
+                                        "type": ""
+                                    }
+                                },
+                                "value": "",
+                                "workflowVariable": ""
+                            }
+                        },
+                        {
+                            "className": "org.joget.apps.form.lib.DatePicker",
+                            "properties": {
+                                "allowManual": "true",
+                                "currentDateAs": "",
+                                "dataFormat": "yyyy-MM-dd",
+                                "datePickerType": "dateTime",
+                                "endDateFieldId": "",
+                                "format": "dd/mm/yy",
+                                "format24hr": "true",
+                                "id": "data_entrada",
+                                "label": "Data de Última Entrada",
+                                "permission_rules": {
+                                    "04d94e96-37aa-1e4b-d5fe-5595f325e232": {},
+                                    "0d7e4d1f-cd72-0522-8336-34124a217002": {
+                                        "permissionHidden": "",
+                                        "readonly": ""
+                                    },
+                                    "1fb8f1eb-7717-2af5-ccf1-03a73c560f16": {},
+                                    "435fad6b-d318-04ad-4d78-95912977f590": {
+                                        "permissionHidden": "",
+                                        "readonly": "true"
+                                    },
+                                    "4686233f-e0df-ed34-d3b2-1005caf9470c": {
+                                        "permissionHidden": "",
+                                        "readonly": "true"
+                                    },
+                                    "48b48ad7-5499-aa5d-69b5-3f6bc87b7133": {
+                                        "permissionHidden": "",
+                                        "readonly": "true"
+                                    },
+                                    "6c9a9c6d-bd10-4f4a-0682-541bcbb1222b": {
+                                        "permissionHidden": "",
+                                        "readonly": "true"
+                                    },
+                                    "838ffac8-681d-e9c7-87d9-66be9f1d0443": {},
+                                    "94c61551-208b-5093-fbad-41d5f6b323c0": {
+                                        "permissionHidden": "",
+                                        "readonly": "true"
+                                    },
+                                    "966fc1ca-d0b8-439f-6ab3-76cf9a599c75": {},
+                                    "9f700b46-bde2-cc69-98a7-c562c400ad6d": {
+                                        "permissionHidden": "",
+                                        "readonly": "true"
+                                    },
+                                    "9fb8a08a-3747-1f8e-48ac-fff77f61d611": {
+                                        "permissionHidden": "",
+                                        "readonly": "true"
+                                    },
+                                    "aa6ccea8-6e7f-1433-8d14-32132e9bf1e0": {
+                                        "permissionHidden": "",
+                                        "readonly": ""
+                                    },
+                                    "d07f81ea-a80c-4560-01fd-7772c1762b0f": {},
+                                    "d6fe0da9-3aa3-9d28-ded2-07a6fb980292": {},
+                                    "de0223e9-d62d-f5f5-f75a-4f6199b32f73": {
+                                        "permissionHidden": "",
+                                        "readonly": "true"
+                                    },
+                                    "e43944ee-a329-cbb2-13bf-98bd5dfc033d": {},
+                                    "f6d47cc6-84dc-c359-9ec5-794a6dcbf118": {}
+                                },
+                                "placeholder": "",
+                                "readonly": "",
+                                "readonlyLabel": "",
+                                "startDateFieldId": "",
+                                "validator": {
+                                    "className": "org.joget.apps.form.lib.BeanShellValidator",
+                                    "properties": {
+                                        "decoration": "*",
+                                        "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        \r\n        //Configure field to validate - UPDATE HERE\r\n        String fieldId = \"data_entrada\";\r\n        \r\n        //Get element value\r\n        Form form = FormUtil.findRootForm(element);\r\n        Element field = FormUtil.findElement(fieldId, form, formData);\r\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n        \r\n        //If element is not filled give error message\r\n        if (fieldValue == null || fieldValue.equals(\"\")){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else{\r\n            result = true;\r\n        }\r\n    }else{\r\n        result = true;\r\n    }\r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
+                                    }
+                                },
+                                "value": "",
+                                "workflowVariable": "",
+                                "yearRange": "c-10:c"
+                            }
+                        },
+                        {
                             "className": "org.joget.apps.form.lib.CheckBox",
                             "properties": {
                                 "controlField": "",
@@ -2621,89 +2863,6 @@
                             }
                         },
                         {
-                            "className": "org.joget.apps.form.lib.SelectBox",
-                            "properties": {
-                                "controlField": "",
-                                "id": "estado_contratacao",
-                                "label": "Estado da Contratação",
-                                "multiple": "",
-                                "options": [],
-                                "optionsBinder": {
-                                    "className": "org.joget.apps.form.lib.FormOptionsBinder",
-                                    "properties": {
-                                        "addEmptyOption": "true",
-                                        "cacheInterval": "",
-                                        "emptyLabel": "",
-                                        "extraCondition": "c_nome_campo = 'estado_contratacao' AND e.customProperties.servico LIKE '%CH%'",
-                                        "formDefId": "adicionarOpcaoLV",
-                                        "groupingColumn": "",
-                                        "idColumn": "value",
-                                        "labelColumn": "label",
-                                        "useAjax": ""
-                                    }
-                                },
-                                "permission_rules": {
-                                    "04d94e96-37aa-1e4b-d5fe-5595f325e232": {},
-                                    "0d7e4d1f-cd72-0522-8336-34124a217002": {},
-                                    "1fb8f1eb-7717-2af5-ccf1-03a73c560f16": {},
-                                    "435fad6b-d318-04ad-4d78-95912977f590": {
-                                        "permissionHidden": "",
-                                        "readonly": "true"
-                                    },
-                                    "4686233f-e0df-ed34-d3b2-1005caf9470c": {
-                                        "permissionHidden": "",
-                                        "readonly": "true"
-                                    },
-                                    "48b48ad7-5499-aa5d-69b5-3f6bc87b7133": {
-                                        "permissionHidden": "",
-                                        "readonly": "true"
-                                    },
-                                    "6c9a9c6d-bd10-4f4a-0682-541bcbb1222b": {
-                                        "permissionHidden": "",
-                                        "readonly": "true"
-                                    },
-                                    "838ffac8-681d-e9c7-87d9-66be9f1d0443": {},
-                                    "94c61551-208b-5093-fbad-41d5f6b323c0": {
-                                        "permissionHidden": "",
-                                        "readonly": "true"
-                                    },
-                                    "966fc1ca-d0b8-439f-6ab3-76cf9a599c75": {},
-                                    "9f700b46-bde2-cc69-98a7-c562c400ad6d": {
-                                        "permissionHidden": "",
-                                        "readonly": "true"
-                                    },
-                                    "9fb8a08a-3747-1f8e-48ac-fff77f61d611": {
-                                        "permissionHidden": "",
-                                        "readonly": "true"
-                                    },
-                                    "aa6ccea8-6e7f-1433-8d14-32132e9bf1e0": {},
-                                    "d07f81ea-a80c-4560-01fd-7772c1762b0f": {},
-                                    "d6fe0da9-3aa3-9d28-ded2-07a6fb980292": {},
-                                    "de0223e9-d62d-f5f5-f75a-4f6199b32f73": {
-                                        "permissionHidden": "",
-                                        "readonly": "true"
-                                    },
-                                    "e43944ee-a329-cbb2-13bf-98bd5dfc033d": {
-                                        "permissionHidden": "",
-                                        "readonly": ""
-                                    },
-                                    "f6d47cc6-84dc-c359-9ec5-794a6dcbf118": {}
-                                },
-                                "readonly": "",
-                                "readonlyLabel": "",
-                                "size": "",
-                                "validator": {
-                                    "className": "org.joget.apps.form.lib.BeanShellValidator",
-                                    "properties": {
-                                        "decoration": "*",
-                                        "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    //Configure field to validate - UPDATE HERE\r\n    String fieldId = \"estado_contratacao\";\r\n    \r\n    //Get element value\r\n    Form form = FormUtil.findRootForm(element);\r\n    Element field = FormUtil.findElement(fieldId, form, formData);\r\n    String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n\r\n    if (fieldValue.equals(\"DEF\")){\r\n        String id = FormUtil.getElementParameterName(element);\r\n        formData.addFormError(id, \"Tentativa de carregamento de um processo com este Número de processo PL. Necessário verificar e alterá-lo para outro que não 'A definir'\");\r\n        result = false;\r\n    }\r\n    //Only validate if it is the last activity of the subflow\r\n    else if(flagvalidate.equals(\"1\")){\r\n        //If element is not filled give error message\r\n        if (fieldValue == null || fieldValue.equals(\"\")){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else{\r\n            result = true;\r\n        }\r\n    }else{\r\n        result = true;\r\n    }\r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
-                                    }
-                                },
-                                "value": "",
-                                "workflowVariable": "estado"
-                            }
-                        },
-                        {
                             "className": "org.joget.apps.form.lib.CheckBox",
                             "properties": {
                                 "controlField": "",
@@ -2840,87 +2999,6 @@
                                 "validator": {
                                     "className": "",
                                     "properties": {}
-                                },
-                                "value": "",
-                                "workflowVariable": ""
-                            }
-                        },
-                        {
-                            "className": "org.joget.apps.form.lib.SelectBox",
-                            "properties": {
-                                "controlField": "",
-                                "id": "pendente",
-                                "label": "Pendente de",
-                                "multiple": "",
-                                "options": [],
-                                "optionsBinder": {
-                                    "className": "org.joget.apps.form.lib.FormOptionsBinder",
-                                    "properties": {
-                                        "addEmptyOption": "true",
-                                        "cacheInterval": "",
-                                        "emptyLabel": "",
-                                        "extraCondition": "c_nome_campo = 'pendente'",
-                                        "formDefId": "adicionarOpcaoLV",
-                                        "groupingColumn": "",
-                                        "idColumn": "value",
-                                        "labelColumn": "label",
-                                        "useAjax": ""
-                                    }
-                                },
-                                "permission_rules": {
-                                    "04d94e96-37aa-1e4b-d5fe-5595f325e232": {},
-                                    "0d7e4d1f-cd72-0522-8336-34124a217002": {},
-                                    "1fb8f1eb-7717-2af5-ccf1-03a73c560f16": {},
-                                    "435fad6b-d318-04ad-4d78-95912977f590": {
-                                        "permissionHidden": "",
-                                        "readonly": "true"
-                                    },
-                                    "4686233f-e0df-ed34-d3b2-1005caf9470c": {
-                                        "permissionHidden": "",
-                                        "readonly": "true"
-                                    },
-                                    "48b48ad7-5499-aa5d-69b5-3f6bc87b7133": {
-                                        "permissionHidden": "",
-                                        "readonly": "true"
-                                    },
-                                    "6c9a9c6d-bd10-4f4a-0682-541bcbb1222b": {
-                                        "permissionHidden": "",
-                                        "readonly": ""
-                                    },
-                                    "838ffac8-681d-e9c7-87d9-66be9f1d0443": {},
-                                    "94c61551-208b-5093-fbad-41d5f6b323c0": {
-                                        "permissionHidden": "",
-                                        "readonly": "true"
-                                    },
-                                    "966fc1ca-d0b8-439f-6ab3-76cf9a599c75": {},
-                                    "9f700b46-bde2-cc69-98a7-c562c400ad6d": {
-                                        "permissionHidden": "",
-                                        "readonly": "true"
-                                    },
-                                    "9fb8a08a-3747-1f8e-48ac-fff77f61d611": {
-                                        "permissionHidden": "",
-                                        "readonly": ""
-                                    },
-                                    "aa6ccea8-6e7f-1433-8d14-32132e9bf1e0": {},
-                                    "d07f81ea-a80c-4560-01fd-7772c1762b0f": {},
-                                    "d6fe0da9-3aa3-9d28-ded2-07a6fb980292": {},
-                                    "de0223e9-d62d-f5f5-f75a-4f6199b32f73": {
-                                        "permissionHidden": "",
-                                        "readonly": "true"
-                                    },
-                                    "e43944ee-a329-cbb2-13bf-98bd5dfc033d": {},
-                                    "f6d47cc6-84dc-c359-9ec5-794a6dcbf118": {}
-                                },
-                                "readonly": "",
-                                "readonlyLabel": "",
-                                "size": "",
-                                "validator": {
-                                    "className": "org.joget.apps.form.lib.DefaultValidator",
-                                    "properties": {
-                                        "mandatory": "",
-                                        "message": "#i18n.mandatorymsg#",
-                                        "type": ""
-                                    }
                                 },
                                 "value": "",
                                 "workflowVariable": ""
@@ -3401,84 +3479,6 @@
                                 "validator": {
                                     "className": "",
                                     "properties": {}
-                                },
-                                "value": "",
-                                "workflowVariable": "",
-                                "yearRange": "c-10:c"
-                            }
-                        },
-                        {
-                            "className": "org.joget.apps.form.lib.DatePicker",
-                            "properties": {
-                                "allowManual": "true",
-                                "currentDateAs": "",
-                                "dataFormat": "yyyy-MM-dd",
-                                "datePickerType": "dateTime",
-                                "endDateFieldId": "",
-                                "format": "dd/mm/yy",
-                                "format24hr": "true",
-                                "id": "data_entrada",
-                                "label": "Data de Última Entrada",
-                                "permission_rules": {
-                                    "04d94e96-37aa-1e4b-d5fe-5595f325e232": {},
-                                    "0d7e4d1f-cd72-0522-8336-34124a217002": {
-                                        "permissionHidden": "",
-                                        "readonly": ""
-                                    },
-                                    "1fb8f1eb-7717-2af5-ccf1-03a73c560f16": {},
-                                    "435fad6b-d318-04ad-4d78-95912977f590": {
-                                        "permissionHidden": "",
-                                        "readonly": "true"
-                                    },
-                                    "4686233f-e0df-ed34-d3b2-1005caf9470c": {
-                                        "permissionHidden": "",
-                                        "readonly": "true"
-                                    },
-                                    "48b48ad7-5499-aa5d-69b5-3f6bc87b7133": {
-                                        "permissionHidden": "",
-                                        "readonly": "true"
-                                    },
-                                    "6c9a9c6d-bd10-4f4a-0682-541bcbb1222b": {
-                                        "permissionHidden": "",
-                                        "readonly": "true"
-                                    },
-                                    "838ffac8-681d-e9c7-87d9-66be9f1d0443": {},
-                                    "94c61551-208b-5093-fbad-41d5f6b323c0": {
-                                        "permissionHidden": "",
-                                        "readonly": "true"
-                                    },
-                                    "966fc1ca-d0b8-439f-6ab3-76cf9a599c75": {},
-                                    "9f700b46-bde2-cc69-98a7-c562c400ad6d": {
-                                        "permissionHidden": "",
-                                        "readonly": "true"
-                                    },
-                                    "9fb8a08a-3747-1f8e-48ac-fff77f61d611": {
-                                        "permissionHidden": "",
-                                        "readonly": "true"
-                                    },
-                                    "aa6ccea8-6e7f-1433-8d14-32132e9bf1e0": {
-                                        "permissionHidden": "",
-                                        "readonly": ""
-                                    },
-                                    "d07f81ea-a80c-4560-01fd-7772c1762b0f": {},
-                                    "d6fe0da9-3aa3-9d28-ded2-07a6fb980292": {},
-                                    "de0223e9-d62d-f5f5-f75a-4f6199b32f73": {
-                                        "permissionHidden": "",
-                                        "readonly": "true"
-                                    },
-                                    "e43944ee-a329-cbb2-13bf-98bd5dfc033d": {},
-                                    "f6d47cc6-84dc-c359-9ec5-794a6dcbf118": {}
-                                },
-                                "placeholder": "",
-                                "readonly": "",
-                                "readonlyLabel": "",
-                                "startDateFieldId": "",
-                                "validator": {
-                                    "className": "org.joget.apps.form.lib.BeanShellValidator",
-                                    "properties": {
-                                        "decoration": "*",
-                                        "script": "import java.util.Arrays;\r\nimport org.joget.apps.app.service.AppUtil;\r\nimport org.joget.apps.form.model.Element;\r\nimport org.joget.apps.form.model.Form;\r\nimport org.joget.apps.form.model.FormData;\r\nimport org.joget.apps.form.service.FormUtil;\r\nimport org.joget.commons.util.LogUtil;\r\n  \r\npublic boolean validate(Element element, FormData formData, String[] fileUploadValues){\r\n    \r\n    //Get value from workflow variable\r\n    String flagvalidate = \"#variable.flag_ultima_atividade#\";\r\n    \r\n    boolean result = true;\r\n    \r\n    //Only validate if it is the last activity of the subflow\r\n    if(flagvalidate.equals(\"1\")){\r\n        \r\n        //Configure field to validate - UPDATE HERE\r\n        String fieldId = \"data_entrada\";\r\n        \r\n        //Get element value\r\n        Form form = FormUtil.findRootForm(element);\r\n        Element field = FormUtil.findElement(fieldId, form, formData);\r\n        String fieldValue = FormUtil.getElementPropertyValue(field, formData);\r\n        \r\n        //If element is not filled give error message\r\n        if (fieldValue == null || fieldValue.equals(\"\")){\r\n            String id = FormUtil.getElementParameterName(element);\r\n            formData.addFormError(id, \"Campo obrigatório\");\r\n            result = false;\r\n        }else{\r\n            result = true;\r\n        }\r\n    }else{\r\n        result = true;\r\n    }\r\n\r\n    return result;\r\n\r\n}\r\n\r\n//call validate method with injected variable\r\nreturn validate(element, formData, values);"
-                                    }
                                 },
                                 "value": "",
                                 "workflowVariable": "",
