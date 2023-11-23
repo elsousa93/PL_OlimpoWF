@@ -1,11 +1,102 @@
 {
-    "actions": [],
+    "actions": [{
+        "className": "org.joget.apps.datalist.lib.HyperlinkDataListAction",
+        "hidden": "true",
+        "icon": "<i class=\"fas fa-link\"><\/i>",
+        "id": "action_0",
+        "label": "Hyperlink",
+        "name": "Data List Hyperlink Action",
+        "permission_rules": {
+            "1081155f-1700-be08-9c6f-364a49cf8d0b": {"hidden": ""},
+            "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
+            "5ef76f30-3a46-461b-e85b-26e07d368c1e": {"hidden": "true"},
+            "7acc8ca8-49d2-41f4-f9fe-98060e5c2333": {},
+            "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+            "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {},
+            "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {"hidden": "true"}
+        },
+        "properties": {
+            "confirmation": "",
+            "datalist_type": "action",
+            "href": "realocar_multi_proc",
+            "hrefColumn": "instanceId",
+            "hrefParam": "aid",
+            "label": "Realocar",
+            "target": "_self",
+            "visible": ""
+        },
+        "type": "text"
+    }],
     "binder": {
-        "className": "",
-        "name": "",
-        "properties": {}
+        "className": "org.joget.plugin.enterprise.JdbcDataListBinder",
+        "properties": {
+            "jdbcDatasource": "default",
+            "optimisePaging": "",
+            "primaryKey": "id",
+            "sql": "SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, d.c_operativa_remetente AS OperativaRemetente, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_origem_processo as OrigemProcesso, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco, dp.c_n_wf_pl as NumeroWFPL, dp.c_tipo_processo as TipoProcesso, dp.c_nome_cliente as NomeCliente, sact.Id AS ActivityId, ip.c_nome AS Cliente, p.c_servico as Servico, dp.c_categoria_processo as CategoriaProcesso, dp.c_tipo_entidade as TipoEntidade, ato.c_cedula_entidade as entidadeAutenticadora\nFROM shkprocesses sp \nJOIN app_fd_info_diligencia d ON sp.Id = d.id \nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State \nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id \nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State \nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId \nLEFT JOIN app_fd_processos p ON p.id = d.c_id_processo \nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo \nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK' \nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id \nAND sass.resourceid LIKE 'dj_geral'\nAND sact.ProcessID LIKE '%_DJ'"
+        }
     },
-    "columns": [],
+    "buttonPosition": "bottomLeft",
+    "checkboxPosition": "left",
+    "columns": [
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_0",
+            "label": "NumeroWFPL",
+            "name": "NumeroWFPL",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_1",
+            "label": "NumeroWFBanco",
+            "name": "NumeroWFBanco",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_2",
+            "label": "OperativaRemetente",
+            "name": "OperativaRemetente",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_3",
+            "label": "OrigemProcesso",
+            "name": "OrigemProcesso",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_4",
+            "label": "TipoProcesso",
+            "name": "TipoProcesso",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_5",
+            "label": "dateCreated",
+            "name": "dateCreated",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_6",
+            "label": "Urgencia",
+            "name": "Urgencia",
+            "sortable": "false"
+        }
+    ],
+    "considerFilterWhenGetTotal": "",
     "description": "",
     "filters": [],
     "id": "consultar_dj",
@@ -13,5 +104,35 @@
     "order": "",
     "orderBy": "",
     "pageSize": "0",
-    "rowActions": []
+    "pageSizeSelectorOptions": "10,20,30,40,50,100",
+    "rowActions": [{
+        "className": "org.joget.apps.datalist.lib.HyperlinkDataListAction",
+        "hidden": "true",
+        "icon": "<i class=\"fas fa-link\"><\/i>",
+        "id": "rowAction_0",
+        "label": "Hyperlink",
+        "name": "Data List Hyperlink Action",
+        "permission_rules": {
+            "1081155f-1700-be08-9c6f-364a49cf8d0b": {"hidden": ""},
+            "33c0d158-664d-9c5c-a4f5-47ef2f503b6b": {},
+            "5ef76f30-3a46-461b-e85b-26e07d368c1e": {"hidden": "true"},
+            "7acc8ca8-49d2-41f4-f9fe-98060e5c2333": {},
+            "800fccfb-8f04-e988-d120-94634c25f6d8": {},
+            "a0548376-37e7-d6de-e2c4-dd124c7ba5db": {},
+            "e0b223db-b2f1-9e66-7db4-112f9da0c40a": {"hidden": "true"}
+        },
+        "properties": {
+            "confirmation": "",
+            "datalist_type": "row_action",
+            "href": "realocar_proc_reg",
+            "hrefColumn": "id;resourceId;ActivityId;NumeroWFBanco;NumeroWFPL",
+            "hrefParam": "aid;replaceUser;procId;n_wf_banco;n_wf_pl",
+            "label": "Realocar",
+            "rules": [],
+            "target": "_self"
+        },
+        "type": "text"
+    }],
+    "showPageSizeSelector": "true",
+    "useSession": "false"
 }
