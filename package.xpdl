@@ -7975,10 +7975,6 @@
                         <No/>
                     </Implementation>
                     <Performer>AOGeral</Performer>
-                    <Deadline Execution="SYNCHR">
-                        <DeadlineCondition>var d = new java.text.SimpleDateFormat('dd/MM/yyyy HH:mm'); d.parse("#date.dd/MM/yyyy# 12:55");</DeadlineCondition>
-                        <ExceptionName>distribuirProcesso</ExceptionName>
-                    </Deadline>
                     <Deadline Execution="ASYNCHR">
                         <DeadlineCondition>var d = new java.text.SimpleDateFormat('yyyy-MM-dd'); d.parse("#date.yyyy-MM-dd#");</DeadlineCondition>
                         <ExceptionName>notifyEntity</ExceptionName>
@@ -7987,7 +7983,6 @@
                         <TransitionRestriction>
                             <Split Type="AND">
                                 <TransitionRefs>
-                                    <TransitionRef Id="transition12"/>
                                     <TransitionRef Id="transition13"/>
                                     <TransitionRef Id="transition16"/>
                                 </TransitionRefs>
@@ -8033,13 +8028,6 @@
                 <Transition From="configurarUltimaAtividade" Id="transition9" To="validacaoFinal">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="holdProcesses" Id="transition12" To="ConfigurarProcessoAO">
-                    <Condition Type="EXCEPTION">distribuirProcesso</Condition>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="holdProcesses" Id="transition13" To="route2">
