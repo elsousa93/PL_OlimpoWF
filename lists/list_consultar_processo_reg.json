@@ -33,7 +33,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "procId",
-            "sql": "SELECT p.id as procId, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName,\n sass.ResourceId AS assignee, dp.c_n_wf_pl AS NwfPL, dp.c_pid AS PID, dp.c_n_wf_banco AS NwfBanco, dp.c_nome_banco AS NomeBanco, dp.dateCreated AS DataCriacao, dp.c_urgencia_registo AS Urgencia, dp.c_tipo_processo as TipoProcesso, dp.dateModified AS DataModificacao,\n dp.c_origem_processo as OrigemProcesso, dp.c_fase_processo AS FaseProcesso, ip.c_nome AS cliente, d.c_necessarias_correcoes AS CorrecoesRegistos,  \n d.c_observacoes_correcao AS ObservacoesRegistos, dp.c_tipo_entidade as Entidade, atos.c_dataOutorga, atos.c_horaOutorga, dp.c_categoria_processo as CategoriaProcesso,\n atos.c_status as EstadoAgendamento, CONCAT(atos.c_dataOutorga, ' ', atos.c_horaOutorga) AS DataAgendamento, atos.c_cedula_entidade as entidadeAutenticadora, dp.c_n_wf_pl_relacionado AS ProcessosRelacionados, ROW_NUMBER() OVER (ORDER BY atos.c_dataOutorga ASC, atos.c_horaOutorga ASC, dp.c_urgencia DESC) AS No, g.c_estado_processamento_mod11 AS EstadoProcessamento\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK'\nLEFT JOIN app_fd_docs_processo d ON  d.id = p.c_docs\nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nLEFT JOIN app_fd_geral g ON g.c_id_processo = p.id\nLEFT JOIN (SELECT c_dataOutorga, c_horaOutorga, c_id_agendamento, c_status, c_cedula_entidade FROM app_fd_atos ORDER BY dateCreated DESC) atos ON atos.c_id_agendamento = ag.id\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id not like '%Credito%'\nAND (Select count(ID) from shkprocesses \n   where ActivityRequesterProcessId = sp2.id\n    AND (ID like '%Registos%'\n\t     OR ID like '%AcompanhamentoOutorgas%')\n) > 0"
+            "sql": "SELECT p.id as procId, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName,\n sass.ResourceId AS assignee, dp.c_n_wf_pl AS NwfPL, dp.c_pid AS PID, dp.c_n_wf_banco AS NwfBanco, dp.c_nome_banco AS NomeBanco, dp.dateCreated AS DataCriacao, dp.c_urgencia_registo AS Urgencia, dp.c_tipo_processo as TipoProcesso, dp.dateModified AS DataModificacao,\n dp.c_origem_processo as OrigemProcesso, dp.c_fase_processo AS FaseProcesso, ip.c_nome AS cliente, d.c_necessarias_correcoes AS CorrecoesRegistos,  \n d.c_observacoes_correcao AS ObservacoesRegistos, dp.c_tipo_entidade as Entidade, atos.c_dataOutorga, atos.c_horaOutorga, dp.c_categoria_processo as CategoriaProcesso,\n atos.c_status as EstadoAgendamento, CONCAT(atos.c_dataOutorga, ' ', atos.c_horaOutorga) AS DataAgendamento, atos.c_cedula_entidade as entidadeAutenticadora, dp.c_entidade_autenticadora AS NomeEntidadeAutenticadora, dp.c_n_wf_pl_relacionado AS ProcessosRelacionados, ROW_NUMBER() OVER (ORDER BY atos.c_dataOutorga ASC, atos.c_horaOutorga ASC, dp.c_urgencia DESC) AS No, g.c_estado_processamento_mod11 AS EstadoProcessamento\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK'\nLEFT JOIN app_fd_docs_processo d ON  d.id = p.c_docs\nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nLEFT JOIN app_fd_geral g ON g.c_id_processo = p.id\nLEFT JOIN (SELECT c_dataOutorga, c_horaOutorga, c_id_agendamento, c_status, c_cedula_entidade FROM app_fd_atos ORDER BY dateCreated DESC) atos ON atos.c_id_agendamento = ag.id\nWHERE sps.KeyValue LIKE 'open.running'\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id not like '%Credito%'\nAND (Select count(ID) from shkprocesses \n   where ActivityRequesterProcessId = sp2.id\n    AND (ID like '%Registos%'\n\t     OR ID like '%AcompanhamentoOutorgas%')\n) > 0"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -297,6 +297,14 @@
             "id": "column_18",
             "label": "PID",
             "name": "PID",
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_19",
+            "label": "NomeEntidadeAutenticadora",
+            "name": "NomeEntidadeAutenticadora",
             "sortable": "false"
         },
         {
@@ -702,6 +710,15 @@
             }
         },
         {
+            "id": "filter_13",
+            "label": "entidadeAutenticadora",
+            "name": "entidadeAutenticadora",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        },
+        {
             "datalist_type": "filter",
             "filterParamName": "d-2989778-fn_NomeBanco",
             "hidden": "",
@@ -740,6 +757,15 @@
                     },
                     "size": ""
                 }
+            }
+        },
+        {
+            "id": "filter_14",
+            "label": "NomeEntidadeAutenticadora",
+            "name": "NomeEntidadeAutenticadora",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
             }
         },
         {
