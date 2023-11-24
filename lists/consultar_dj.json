@@ -33,7 +33,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, d.c_operativa_remetente AS OperativaRemetente, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_origem_processo as OrigemProcesso, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco, dp.c_n_wf_pl as NumeroWFPL, dp.c_tipo_processo as TipoProcesso, dp.c_nome_cliente as NomeCliente, sact.Id AS ActivityId, ip.c_nome AS Cliente, p.c_servico as Servico, dp.c_categoria_processo as CategoriaProcesso, dp.c_tipo_entidade as TipoEntidade, ato.c_cedula_entidade as entidadeAutenticadora\nFROM shkprocesses sp \nJOIN app_fd_info_diligencia d ON sp.Id = d.id \nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State \nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id \nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State \nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId \nLEFT JOIN app_fd_processos p ON p.id = d.c_id_processo \nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo \nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK' \nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id \nAND sass.resourceid LIKE 'dj_geral'\nAND sact.ProcessID LIKE '%_DJ'"
+            "sql": "SELECT sp.Id as id, FROM_UNIXTIME(floor(sact.activated/1000)) as dateCreated, sass.resourceid as resourceId, d.c_operativa_remetente AS OperativaRemetente, sp.Name AS Processo, dp.c_urgencia AS Urgencia, dp.c_origem_processo as OrigemProcesso, dp.c_nome_banco AS NomeBanco, dp.c_n_wf_banco AS NumeroWFBanco, dp.c_n_wf_pl as NumeroWFPL, dp.c_tipo_processo as TipoProcesso, dp.c_nome_cliente as NomeCliente, sact.Id AS ActivityId, ip.c_nome AS Cliente, p.c_servico as Servico, dp.c_categoria_processo as CategoriaProcesso, dp.c_tipo_entidade as TipoEntidade, ato.c_cedula_entidade as entidadeAutenticadora, c_assunto as Assunto\nFROM shkprocesses sp \nJOIN app_fd_info_diligencia d ON sp.Id = d.id \nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State \nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id \nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State \nLEFT JOIN SHKAssignmentsTable sass ON sact.Id = sass.ActivityId \nLEFT JOIN app_fd_processos p ON p.id = d.c_id_processo \nLEFT JOIN app_fd_detalhe_processo dp ON dp.id = p.c_detalhe_processo \nLEFT JOIN app_fd_intervenientes_proc ip ON ip.c_id_processo = p.id AND ip.c_cliente_principal = 'CHECK' \nLEFT JOIN app_fd_agendamento ag ON  ag.id = p.c_agendamento\nLEFT JOIN app_fd_atos ato ON ato.c_id_agendamento = ag.id \nAND sass.resourceid LIKE 'dj_geral'\nAND sact.ProcessID LIKE '%_DJ'"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -104,6 +104,14 @@
             "sortable": "false",
             "style": "",
             "width": ""
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_7",
+            "label": "Assunto",
+            "name": "Assunto",
+            "sortable": "false"
         },
         {
             "action": {
@@ -225,6 +233,15 @@
             }
         },
         {
+            "id": "filter_0",
+            "label": "Assunto",
+            "name": "Assunto",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
+            }
+        },
+        {
             "id": "filter_5",
             "label": "OrigemProcesso",
             "name": "OrigemProcesso",
@@ -286,9 +303,9 @@
         "properties": {
             "confirmation": "",
             "datalist_type": "row_action",
-            "href": "realocar_proc_reg",
-            "hrefColumn": "id;resourceId;ActivityId;NumeroWFBanco;NumeroWFPL",
-            "hrefParam": "aid;replaceUser;procId;n_wf_banco;n_wf_pl",
+            "href": "dj_realocar_diligencia",
+            "hrefColumn": "id;resourceId;ActivityId;NumeroWFBanco;NumeroWFPL;Assunto",
+            "hrefParam": "aid;replaceUser;procId;n_wf_banco;n_wf_pl;assunto",
             "label": "Realocar",
             "rules": [],
             "target": "_self"
