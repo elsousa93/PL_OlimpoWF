@@ -5571,10 +5571,10 @@
             {
                 "permission": {
                     "className": "org.joget.apps.userview.lib.BeanShellPermission",
-                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString mode = \"#requestParam._mode#\";\nvar url = \"#request.requestURL#\";\n\nif(mode.equals(\"edit\") && url.contains(\"filaPagamentoDepositoReg\")){\n    return true;\n}else{\n    return false;\n}"}
+                    "properties": {"script": "import org.joget.commons.util.LogUtil;\n\nString mode = \"#requestParam._mode#\";\nvar url = \"#request.requestURL#\";\n\nif(mode.equals(\"edit\") && (url.contains(\"filaPagamentoDepositoReg\") ||  url.contains(\"pagamentoRegistosReg\"))){\n    return true;\n}else{\n    return false;\n}"}
                 },
                 "permission_key": "9cb2a77c-4eff-4d8c-2049-ac0933cefaf3",
-                "permission_name": "Consultar Pagamento do Depósito"
+                "permission_name": "Consultar Pagamento do Depósito e Registo"
             },
             {
                 "permission": {
