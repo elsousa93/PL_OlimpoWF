@@ -60,7 +60,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "idDist",
-            "sql": "SELECT p.id as idDist, dp.c_num_pedido as NumPedido, p.dateCreated as DataCriacao ,dp.c_num_workflow  as NumWorkflow,dp.c_numero_cliente as NumeroCliente, dp.c_nome_banco as Banco, dp.c_nif as NIF , dp.c_tipo_distrate as TipoDistrate, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos_distrates p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_proce_dist dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nWHERE sps.KeyValue LIKE 'open.running'\nAND p.id is not null\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id like '%DSTDistrates%'"
+            "sql": "SELECT p.id as idDist, dp.c_num_pedido as NumPedido, p.dateCreated as DataCriacao ,dp.c_num_workflow  as NumWorkflow,dp.c_nome_cliente as Cliente, dp.c_numero_cliente as NumeroCliente, dp.c_nome_banco as Banco, dp.c_nif as NIF , dp.c_tipo_distrate as TipoDistrate, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos_distrates p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_proce_dist dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nWHERE sps.KeyValue LIKE 'open.running'\nAND p.id is not null\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id like '%DSTDistrates%'"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -134,6 +134,14 @@
                 "4f5f803a-82b4-5e06-b70e-1744fac306b9": {},
                 "74fcbc80-3b3c-84e3-a67b-7f23093fa6ee": {}
             },
+            "sortable": "false"
+        },
+        {
+            "filterable": true,
+            "hidden": "false",
+            "id": "column_7",
+            "label": "Cliente",
+            "name": "Cliente",
             "sortable": "false"
         },
         {
@@ -242,6 +250,15 @@
             "type": {
                 "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
                 "properties": {"defaultValue": ""}
+            }
+        },
+        {
+            "id": "filter_7",
+            "label": "Cliente",
+            "name": "Cliente",
+            "type": {
+                "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
+                "properties": {}
             }
         },
         {
