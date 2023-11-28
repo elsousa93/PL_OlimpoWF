@@ -7947,7 +7947,7 @@
                     </TransitionRestrictions>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="validadorInicial"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="707,42.1875"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="680,44.1875"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="validacaoFinal" Name="Validação Final">
@@ -7957,7 +7957,7 @@
                     <Performer>validadorFinal</Performer>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="validadorFinal"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="985,48"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1023,48"/>
                     </ExtendedAttributes>
                 </Activity>
                 <Activity Id="configurarUltimaAtividade" Name="Configurar Última Atividade">
@@ -8012,17 +8012,38 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="166,32"/>
                     </ExtendedAttributes>
                 </Activity>
+                <Activity Id="route3">
+                    <Route/>
+                    <Performer>validadorInicial</Performer>
+                    <TransitionRestrictions>
+                        <TransitionRestriction>
+                            <Split Type="XOR">
+                                <TransitionRefs>
+                                    <TransitionRef Id="transition11"/>
+                                    <TransitionRef Id="transition12"/>
+                                    <TransitionRef Id="transition19"/>
+                                </TransitionRefs>
+                            </Split>
+                        </TransitionRestriction>
+                    </TransitionRestrictions>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="validadorInicial"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="839,48"/>
+                    </ExtendedAttributes>
+                </Activity>
+                <Activity Id="route4">
+                    <Route/>
+                    <Performer>validadorInicial</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="validadorInicial"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="1085,47"/>
+                    </ExtendedAttributes>
+                </Activity>
             </Activities>
             <Transitions>
                 <Transition From="ConfigurarProcessoAO" Id="transition4" To="validacaoInicial">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="validacaoInicial" Id="transition8" To="configurarUltimaAtividade">
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="configurarUltimaAtividade" Id="transition9" To="validacaoFinal">
@@ -8066,13 +8087,39 @@
                         <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;tipo_entidade&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;NAUT&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
+                <Transition From="validacaoInicial" Id="transition10" To="route3">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route3" Id="transition11" To="route4">
+                    <Condition Type="CONDITION">proxima_operativa === 'contratacao'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;contratacao&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route3" Id="transition12" To="configurarUltimaAtividade">
+                    <Condition Type="CONDITION">proxima_operativa === 'validacaoFinal'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;validacaoFinal&quot;}]"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route3" Id="transition19" To="validacaoInicial">
+                    <Condition Type="OTHERWISE"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
             </Transitions>
             <ExtendedAttributes>
                 <ExtendedAttribute Name="JaWE_GRAPH_WORKFLOW_PARTICIPANT_ORDER" Value="AOGeral;validadorInicial;validadorFinal;AO_Sistema"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=AO_Sistema,CONNECTING_ACTIVITY_ID=notificarEntidade,X_OFFSET=1012,Y_OFFSET=65,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=AO_Sistema,CONNECTING_ACTIVITY_ID=notificarEntidade2,X_OFFSET=1013,Y_OFFSET=171,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
-                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=validadorFinal,CONNECTING_ACTIVITY_ID=validacaoFinal,X_OFFSET=1163,Y_OFFSET=59,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=validadorFinal,CONNECTING_ACTIVITY_ID=validacaoFinal,X_OFFSET=1239,Y_OFFSET=59,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
                 <ExtendedAttribute Name="JaWE_GRAPH_START_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=AOGeral,CONNECTING_ACTIVITY_ID=verificarDataOutorga,X_OFFSET=80,Y_OFFSET=49,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=START_DEFAULT"/>
+                <ExtendedAttribute Name="JaWE_GRAPH_END_OF_WORKFLOW" Value="JaWE_GRAPH_PARTICIPANT_ID=validadorInicial,CONNECTING_ACTIVITY_ID=route4,X_OFFSET=1202,Y_OFFSET=55,JaWE_GRAPH_TRANSITION_STYLE=NO_ROUTING_ORTHOGONAL,TYPE=END_DEFAULT"/>
             </ExtendedAttributes>
         </WorkflowProcess>
         <WorkflowProcess Id="processoTesteAssync" Name="Processo Teste Assync">
