@@ -60,7 +60,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "idDist",
-            "sql": "SELECT p.id as idDist, dp.c_num_pedido as NumPedido, p.dateCreated as DataCriacao ,dp.c_num_workflow  as NumWorkflow,dp.c_nome_cliente as Cliente, dp.c_numero_cliente as NumeroCliente, dp.c_nome_banco as Banco, dp.c_nif as NIF , dp.c_tipo_distrate as TipoDistrate, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos_distrates p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_proce_dist dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nWHERE sps.KeyValue LIKE 'open.running'\nAND p.id is not null\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id like '%DSTDistrates%'"
+            "sql": "SELECT p.id as idDist, dp.c_num_pedido as NumPedido, p.dateCreated as DataCriacao ,dp.c_num_workflow  as NumEmprestimo,dp.c_nome_cliente as Cliente, dp.c_n_wf_pl as NumeroPL, dp.c_numero_cliente as NumeroCliente, dp.c_nome_banco as Banco, dp.c_nif as NIF , dp.c_tipo_distrate as TipoDistrate, sp.Id AS processId, sp.Name AS processName, sact.Id AS instanceId, sact.Name AS activityName, sass.ResourceId AS assignee\nFROM shkprocesses sp\nLEFT JOIN shkprocesses sp2 on sp.ActivityRequesterProcessId = sp2.Id\nLEFT JOIN app_fd_processos_distrates p on sp.ActivityRequesterProcessId = p.id\nLEFT JOIN app_fd_detalhe_proce_dist dp ON dp.id = p.c_detalhe_processo\nLEFT JOIN shkprocessstates sps ON sps.oid = sp.State\nLEFT JOIN SHKActivities sact ON sact.ProcessId = sp.Id\nLEFT JOIN SHKActivityStates ssta ON ssta.oid = sact.State\nLEFT JOIN (select ActivityId, group_concat(ResourceId separator '; ') as ResourceId from SHKAssignmentsTable group by ActivityId) sass on sact.Id = sass.ActivityId\nWHERE sps.KeyValue LIKE 'open.running'\nAND p.id is not null\nAND (ssta.oid = '1000001' OR ssta.oid = '1000003' OR ssta.oid = '1000005')\nAND sp.id like '%DSTDistrates%'"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -94,14 +94,31 @@
             },
             "headerAlignment": "",
             "hidden": "false",
-            "id": "column_3",
-            "label": "Nº Empréstimo",
-            "name": "NumWorkflow",
-            "permission_rules": {
-                "230d5174-9050-f08d-3232-ba468273f0d2": {},
-                "4f5f803a-82b4-5e06-b70e-1744fac306b9": {},
-                "74fcbc80-3b3c-84e3-a67b-7f23093fa6ee": {}
+            "id": "column_8",
+            "label": "Número Empréstimo",
+            "name": "NumEmprestimo",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
             },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "",
+                "properties": {}
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_9",
+            "label": "Nº Workflow PL",
+            "name": "NumeroPL",
             "sortable": "false",
             "style": "",
             "width": ""
@@ -235,16 +252,11 @@
         },
         {
             "datalist_type": "filter",
-            "filterParamName": "d-3893304-fn_NumWorkflow",
+            "filterParamName": "d-3893304-fn_NumEmprestimo",
             "hidden": "",
-            "id": "filter_0",
-            "label": "Nº Empréstimo",
-            "name": "NumWorkflow",
-            "permission_rules": {
-                "230d5174-9050-f08d-3232-ba468273f0d2": {},
-                "4f5f803a-82b4-5e06-b70e-1744fac306b9": {},
-                "74fcbc80-3b3c-84e3-a67b-7f23093fa6ee": {}
-            },
+            "id": "filter_8",
+            "label": "Número Empréstimo",
+            "name": "NumEmprestimo",
             "type": {
                 "className": "org.joget.apps.datalist.lib.TextFieldDataListFilterType",
                 "properties": {"defaultValue": ""}
