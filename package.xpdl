@@ -3391,8 +3391,8 @@
                             <Join Type="XOR"/>
                             <Split Type="AND">
                                 <TransitionRefs>
-                                    <TransitionRef Id="transition28"/>
                                     <TransitionRef Id="transition47"/>
+                                    <TransitionRef Id="transition66"/>
                                 </TransitionRefs>
                             </Split>
                         </TransitionRestriction>
@@ -3584,6 +3584,14 @@
                         <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2154,258"/>
                     </ExtendedAttributes>
                 </Activity>
+                <Activity Id="route12">
+                    <Route/>
+                    <Performer>participant3</Performer>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_PARTICIPANT_ID" Value="participant3"/>
+                        <ExtendedAttribute Name="JaWE_GRAPH_OFFSET" Value="2030,59"/>
+                    </ExtendedAttributes>
+                </Activity>
             </Activities>
             <Transitions>
                 <Transition From="route2" Id="transition14" To="sub_filtro_normal_crh">
@@ -3675,14 +3683,6 @@
                     <Condition Type="OTHERWISE"/>
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                    </ExtendedAttributes>
-                </Transition>
-                <Transition From="sub_acompanhamento_outorgas" Id="transition28" To="sub_registos">
-                    <Condition Type="CONDITION">proxima_operativa === 'registos'</Condition>
-                    <ExtendedAttributes>
-                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
-                        <ExtendedAttribute Name="JaWE_GRAPH_BREAK_POINTS" Value="orthogonal"/>
-                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;registos&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
                 <Transition From="route6" Id="transition30" To="sub_acompanhamento_outorgas">
@@ -3858,6 +3858,18 @@
                 <Transition From="set_flag_end_conclusoes2" Id="transition65" To="subConclusao">
                     <ExtendedAttributes>
                         <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="sub_acompanhamento_outorgas" Id="transition66" To="route12">
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition From="route12" Id="transition67" To="sub_registos">
+                    <Condition Type="CONDITION">proxima_operativa === 'registos'</Condition>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="JaWE_GRAPH_TRANSITION_STYLE" Value="NO_ROUTING_ORTHOGONAL"/>
+                        <ExtendedAttribute Name="PBUILDER_TRANSITION_CONDITIONS" Value="[{&quot;join&quot;:&quot;&amp;&amp;&quot;,&quot;variable&quot;:&quot;proxima_operativa&quot;,&quot;operator&quot;:&quot;===&quot;,&quot;value&quot;:&quot;registos&quot;}]"/>
                     </ExtendedAttributes>
                 </Transition>
             </Transitions>
