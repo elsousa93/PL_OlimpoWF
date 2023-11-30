@@ -212,75 +212,18 @@
                     }
                 },
                 {
-                    "className": "org.joget.apps.form.lib.Radio",
-                    "properties": {
-                        "controlField": "",
-                        "id": "field8",
-                        "label": "Radio",
-                        "options": [{
-                            "grouping": "",
-                            "label": "Por validar",
-                            "value": "VAL"
-                        }],
-                        "optionsBinder": {
-                            "className": "org.joget.apps.form.lib.FormOptionsBinder",
-                            "properties": {
-                                "addEmptyOption": "",
-                                "cacheInterval": "",
-                                "emptyLabel": "",
-                                "extraCondition": "c_id_processo = '#form.detalhe_processo.id_processo#' ORDER BY dateCreated ASC",
-                                "formDefId": "analiseBancaria",
-                                "groupingColumn": "",
-                                "idColumn": "penhor",
-                                "labelColumn": "penhor",
-                                "useAjax": ""
-                            }
-                        },
-                        "readonly": "",
-                        "readonlyLabel": "",
-                        "validator": {
-                            "className": "",
-                            "properties": {}
-                        },
-                        "value": "",
-                        "workflowVariable": ""
-                    }
-                },
-                {
                     "className": "org.joget.apps.form.lib.SelectBox",
                     "properties": {
                         "controlField": "",
                         "id": "penhor",
                         "label": "Penhor",
                         "multiple": "",
-                        "options": [
-                            {
-                                "grouping": "",
-                                "label": "Sim",
-                                "value": "SIM"
-                            },
-                            {
-                                "grouping": "",
-                                "label": "Por Validar",
-                                "value": "VAL"
-                            },
-                            {
-                                "grouping": "",
-                                "label": "Não",
-                                "value": "NAO"
-                            }
-                        ],
+                        "options": [],
                         "optionsBinder": {
-                            "className": "org.joget.apps.form.lib.FormOptionsBinder",
+                            "className": "org.joget.apps.form.lib.BeanShellFormBinder",
                             "properties": {
-                                "addEmptyOption": "",
                                 "cacheInterval": "",
-                                "emptyLabel": "",
-                                "extraCondition": "c_id_processo = '#form.detalhe_processo.id_processo#' ORDER BY dateCreated ASC",
-                                "formDefId": "analiseBancaria",
-                                "groupingColumn": "",
-                                "idColumn": "penhor",
-                                "labelColumn": "penhor",
+                                "script": "String penhor = \"#form.anal_banc_processo.penhor[{form.processos.anal_banc[{form.detalhe_processo.id_processo[{requastParam.id}]}]}]#\"",
                                 "useAjax": ""
                             }
                         },
