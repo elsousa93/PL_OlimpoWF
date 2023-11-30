@@ -6,7 +6,7 @@
             "jdbcDatasource": "default",
             "optimisePaging": "",
             "primaryKey": "id",
-            "sql": "SELECT det.c_nome_banco, det.c_n_wf_pl,  ger.c_data_envio_producao AS EnvioProducao, STR_TO_DATE(ger.c_data_envio_producao,'%d/%m/%Y') AS EnvioProducaoDT,\nger.c_estado_processamento, ger.c_lista_alertas, ger.c_lista_documentos_obrigatorios\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_geral ger ON pro.id = ger.c_id_processo\nORDER BY EnvioProducao DESC\n\n\n"
+            "sql": "SELECT det.c_nome_banco, det.c_n_wf_pl, det.c_gestor_pl,  ger.c_data_envio_producao AS EnvioProducao, STR_TO_DATE(ger.c_data_envio_producao,'%d/%m/%Y') AS EnvioProducaoDT,\nger.c_estado_processamento, ger.c_lista_alertas, ger.c_lista_documentos_obrigatorios\nFROM app_fd_processos pro\nLEFT JOIN app_fd_detalhe_processo det ON pro.c_detalhe_processo = det.id\nLEFT JOIN app_fd_geral ger ON pro.id = ger.c_id_processo\nORDER BY EnvioProducao DESC\n\n\n"
         }
     },
     "buttonPosition": "bottomLeft",
@@ -131,6 +131,44 @@
                 "properties": {
                     "options": [],
                     "optionsBinder": {
+                        "className": "org.joget.plugin.enterprise.UserOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "deptId": "",
+                            "emptyLabel": "",
+                            "groupId": "",
+                            "grouping": "",
+                            "optionLabel": "fullname",
+                            "orgId": "PL",
+                            "useAjax": ""
+                        }
+                    }
+                }
+            },
+            "headerAlignment": "",
+            "hidden": "false",
+            "id": "column_4",
+            "label": "Gestor",
+            "name": "c_gestor_pl",
+            "sortable": "false",
+            "style": "",
+            "width": ""
+        },
+        {
+            "action": {
+                "className": "",
+                "properties": {}
+            },
+            "alignment": "",
+            "datalist_type": "column",
+            "exclude_export": "",
+            "filterable": true,
+            "format": {
+                "className": "org.joget.plugin.enterprise.OptionsValueFormatter",
+                "properties": {
+                    "options": [],
+                    "optionsBinder": {
                         "className": "org.joget.apps.form.lib.FormOptionsBinder",
                         "properties": {
                             "addEmptyOption": "",
@@ -229,6 +267,38 @@
                             "groupingColumn": "",
                             "idColumn": "value",
                             "labelColumn": "label",
+                            "useAjax": ""
+                        }
+                    },
+                    "size": ""
+                }
+            }
+        },
+        {
+            "datalist_type": "filter",
+            "filterParamName": "d-1344079-fn_c_gestor_pl",
+            "hidden": "",
+            "id": "filter_4",
+            "label": "Gestor",
+            "name": "c_gestor_pl",
+            "type": {
+                "className": "org.joget.plugin.enterprise.SelectBoxDataListFilterType",
+                "properties": {
+                    "controlField": "",
+                    "defaultValue": "",
+                    "multiple": "",
+                    "options": [],
+                    "optionsBinder": {
+                        "className": "org.joget.plugin.enterprise.UserOptionsBinder",
+                        "properties": {
+                            "addEmptyOption": "",
+                            "cacheInterval": "",
+                            "deptId": "",
+                            "emptyLabel": "",
+                            "groupId": "",
+                            "grouping": "",
+                            "optionLabel": "fullname",
+                            "orgId": "PL",
                             "useAjax": ""
                         }
                     },
