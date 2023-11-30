@@ -223,7 +223,7 @@
                             "className": "org.joget.apps.form.lib.BeanShellFormBinder",
                             "properties": {
                                 "cacheInterval": "",
-                                "script": "String penhor = \"#form.anal_banc_processo.penhor[{form.processos.anal_banc[{form.detalhe_processo.id_processo[{requastParam.id}]}]}]#\"",
+                                "script": "    \npublic FormRowSet getPenhor(){     \n    String penhor = \"#form.anal_banc_processo.penhor[{form.processos.anal_banc[{form.detalhe_processo.id_processo[{requastParam.id}]}]}]#\";\n    String labelPenhor = \"\";\n    \n    switch(penhor){\n        \n        case: \"SIM\"\n            labelPenhor = \"Sim\";\n            break;\n        case: \"NAO\"\n            labelPenhor = \"Não\";\n            break;\n        case: \"VAL\"\n            labelPenhor = \"Por Validar\";\n            break;\n    }\n\n    FormRowSet f = new FormRowSet();\n    FormRow r1 = new FormRow();\n\n    r1.put(FormUtil.PROPERTY_VALUE, penhor);\n    r1.put(FormUtil.PROPERTY_LABEL, labelPenhor);\n    f.add(r1);\n    return f;\n}\n\nreturn getPenhor();\n\n\n",
                                 "useAjax": ""
                             }
                         },
